@@ -18,11 +18,11 @@ class ModuleCustom {
 
         String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
 
-        if(command[0].toLowerCase().equals(Configuration.PREFIX + "newcommand")) {
+        if(command[0].toLowerCase().equals(Configuration.PREFIX + "newcc")) {
             addCustomCommand(command[1], command[2]);
         } else if(command[0].toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX)) {
             commandCustom(command);
-        } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "delcommand")) {
+        } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "delcc")) {
             removeCustomCommand(command[1]);
         }
 
@@ -51,6 +51,12 @@ class ModuleCustom {
      */
     private void addCustomCommand(String commandName, String commandContents) {
         Database database = new Database();
+
+        if(commandContents.length() > 2000) {
+            e.getTextChannel().sendMessage("Command too long, maximum length of 2000 characters.").queue();
+            return;
+        }
+
         if(database.addCustomCommand(commandName, commandContents, serverLong, e.getAuthor().getIdLong()+"")) {
             e.getTextChannel().sendMessage(commandName + " added successfully!").queue();
         } else {

@@ -7,7 +7,10 @@ package basketbandit.core;
 import basketbandit.core.module.Controller;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageReaction;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
@@ -17,7 +20,6 @@ import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +29,7 @@ public class BasketBandit extends ListenerAdapter {
     private int commandCount = 0;
 
     private UserInterface ui;
+    private TimeKeeper tk;
 
     /**
      * Initialises the bot and JDA.
@@ -45,6 +48,7 @@ public class BasketBandit extends ListenerAdapter {
                 .setEventManager(new ThreadedEventManager())
                 .buildAsync()
                 .getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
+
     }
 
     /**
@@ -52,6 +56,7 @@ public class BasketBandit extends ListenerAdapter {
      */
     private BasketBandit() {
         ui = new UserInterface();
+        tk = new TimeKeeper(ui);
     }
 
     /**

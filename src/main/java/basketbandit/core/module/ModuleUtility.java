@@ -31,8 +31,10 @@ class ModuleUtility {
 
         if(command[0].toLowerCase().equals(Configuration.PREFIX + "nuke") && e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
             commandNuke(command);
-        } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "info")) {
-            commandInfo(command);
+        } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "user")) {
+            commandUser(command);
+        } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "server")) {
+            commandServer();
         }
     }
 
@@ -91,7 +93,7 @@ class ModuleUtility {
      * Info command will return information about the given user.
      * @param command the original command.
      */
-    private void commandInfo(String[] command) {
+    private void commandUser(String[] command) {
         Member infoMember = null;
         EmbedBuilder commandInfo = null;
 
@@ -105,15 +107,15 @@ class ModuleUtility {
         if(infoMember != null) {
             // Gets user's roles, replaces the last comma with nothing.
             List<Role> infoRoles = infoMember.getRoles();
-            String infoString = "";
+            String roleString = "";
 
             for(Role role : infoRoles) {
-                infoString += role.getName() + ", ";
+                roleString += role.getName() + ", ";
             }
 
-            if(!infoString.equals("")) {
-                int index = infoString.lastIndexOf(", ");
-                infoString = new StringBuilder(infoString).replace(index, index + 1, "").toString();
+            if(!roleString.equals("")) {
+                int index = roleString.lastIndexOf(", ");
+                roleString = new StringBuilder(roleString).replace(index, index + 1, "").toString();
             }
 
             commandInfo = new EmbedBuilder()
@@ -126,7 +128,7 @@ class ModuleUtility {
                                     "Account Created   \u200a\u200a::  " + infoMember.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
                                     "Joined Server          \u200a\u200a::  " + infoMember.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
                                     "Mutual Servers       ::  " + infoMember.getUser().getMutualGuilds().size() + "\n" +
-                                    "Roles                         ::  " + infoString + "\n"
+                                    "Roles                         ::  " + roleString + "\n"
                     )
                     .setFooter("Version: " + Configuration.VERSION + ", Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
         }
@@ -135,6 +137,35 @@ class ModuleUtility {
             e.getTextChannel().sendMessage(commandInfo.build()).queue();
         } else {
             e.getTextChannel().sendMessage("Sorry... I couldn't find that user... <:SagiriIzumi:420417275359657986>").queue();
+        }
+    }
+
+    /**
+     * Info command will return information about the server.
+     */
+    private void commandServer() {
+        Guild server = e.getGuild();
+
+        EmbedBuilder commandInfo = new EmbedBuilder()
+                .setColor(Color.RED)
+                .setTitle("Server information for: " + server.getName(), null)
+                .setThumbnail(server.getIconUrl())
+                .setDescription(
+                        "Server Owner                 ::  " + server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator() + " (" + server.getOwner().getEffectiveName() + ")" + "\n" +
+                        "Server ID                         ::  " + server.getIdLong() + "\n" +
+                        "Server Created               ::  " + server.getCreationTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")) + "\n" +
+                        "Server Region                 ::  " + server.getRegion().getName() + "\n" +
+                        "Total Users                     ::  " + server.getMembers().size() + "\n" +
+                        "Total Text Channels     \u200a::  " + server.getTextChannels().size() + "\n" +
+                        "Total Voice Channels   ::  " + server.getVoiceChannels().size() + "\n" +
+                        "Total Roles                      ::  " + server.getRoles().size() + "\n"
+                )
+                .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+
+        if(commandInfo != null) {
+            e.getTextChannel().sendMessage(commandInfo.build()).queue();
+        } else {
+            e.getTextChannel().sendMessage("Sorry... Something went wrong! :(").queue();
         }
     }
 

@@ -8,13 +8,14 @@ import javax.swing.*;
 
 class UserInterface{
 
+    private JFrame frame;
     private JLabel[] labels = new JLabel[12];
 
     /**
      * Interface constructor
      */
     UserInterface() {
-        JFrame frame = new JFrame("BasketBandit " + Configuration.VERSION);
+        frame = new JFrame("BasketBandit " + Configuration.VERSION);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setSize(600,290);
@@ -34,5 +35,16 @@ class UserInterface{
      */
     void updateCount(int msg, int cmd) {
         labels[0].setText("Messages Processed: " + msg + ", Commands Processed: " + cmd + ".");
+    }
+
+    /**
+     * Updates system runtime.
+     * @param d; days.
+     * @param h; hours.
+     * @param m; minutes.
+     * @param s; seconds.
+     */
+    void updateRuntime(String d, String h, String m, String s) {
+        frame.setTitle("BasketBandit " + Configuration.VERSION + " (" + d + ":" + h + ":" + m + ":" + s + ")");
     }
 }

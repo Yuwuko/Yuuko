@@ -7,13 +7,14 @@ package basketbandit.core.module;
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
-import java.sql.ResultSet;
 
 class ModuleCore {
 
@@ -116,15 +117,18 @@ class ModuleCore {
                 .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
                 .setTitle("Below are a list of available commands!")
                 .setDescription(
-                        Configuration.PREFIX + "hello                              ::  Simply greets you. \n" +
-                                Configuration.PREFIX + "roll <value>                 ::  Rolls for a given number, within the bounds of computation. \n" +
-                                Configuration.PREFIX + "nuke <value>              ::  Removes self and then a set amount of messages. (ADMIN) \n" +
-                                Configuration.PREFIX + "overreact                     ::  Overreacts to the previous message. \n" +
-                                Configuration.PREFIX + "insult                            \u200a::  Insults a random person on the server. \n" +
-                                Configuration.PREFIX + "rsstats <value>          \u200a::  Retrieves RuneScape 3 stats for the given player. \n" +
-                                Configuration.PREFIX + "osstats <value>         \u200a\u200a::  Retrieves Oldschool RuneScape stats for the given player. \n" +
-                                Configuration.PREFIX + "info <value>                ::  Retrieves information about a user. \n" +
-                                Configuration.PREFIX + "sum <value>               ::  Performs simple 2 variable sums. Operators: (+, -, *, /, ^, %) \n"
+                        "This part of the bot is being redone, the basic commands are listed below!\n\n?n " +
+                        Configuration.PREFIX + "roll d<value>\n" +
+                        Configuration.PREFIX + "nuke <value>\n" +
+                        Configuration.PREFIX + "overreact\n" +
+                        Configuration.PREFIX + "insult\n" +
+                        Configuration.PREFIX + "rsstats <name>\n" +
+                        Configuration.PREFIX + "osstats <name>\n" +
+                        Configuration.PREFIX + "info <name>\n" +
+                        Configuration.PREFIX + "serverinfo\n" +
+                        Configuration.PREFIX + "sum <value> <operator> <value> - Operators: (+, -, *, /, ^, %)\n" +
+                        Configuration.PREFIX + "newcc <name> <value>\n" +
+                        Configuration.PREFIX + "delcc <name>\n"
 
                 )
                 .addField("Features", "I am able to log commands sent by adding a text-channel named \"command-log\".", false)

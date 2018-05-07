@@ -5,7 +5,8 @@
 package basketbandit.core.module;
 
 import basketbandit.core.Configuration;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.MessageReaction;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
@@ -48,7 +49,8 @@ public class Controller {
                 break;
 
             case Configuration.PREFIX + "nuke":
-            case Configuration.PREFIX + "info":
+            case Configuration.PREFIX + "user":
+            case Configuration.PREFIX + "server":
                 if(database.checkModuleSettings("modUtility", serverLong)) {
                     new ModuleUtility(e);
                 } else {

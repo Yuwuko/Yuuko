@@ -1,4 +1,4 @@
-# BasketBandit 2.0 (02/05/2018) 
+# BasketBandit 2.1.0 (07/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries for JAVA.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
@@ -6,9 +6,7 @@ To enable or disable a module you type the bot invocation (at current '?') modul
 
 Note: The logging module requires a text-channel named command-log to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed.
 
-![Build Status](https://travis-ci.org/Galaxiosaurus/BasketBandit.svg?branch=master)
-
-## Current Commands
+## Commands
 
 The invocation for the bot at this time is '?', this is used to prefix the below commands so the bot recognises that it is a command. Double invocation is used for custom commands, meaning that any custom commands should be prefixed with '??' instead.
 
@@ -20,7 +18,9 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 - __help__ will private message the user a list of these commands and some other information about BasketBandit. (__core__)
 
-- __info \<name\>__ will give account information about the user given, such as join date, online status and guild roles. (__utility__)
+- __user \<name\>__ will give account information about the user given, such as join date, online status and guild roles. (__utility__)
+
+- __server__ will give information about the current server, such as region and owner. (__utility__)
 
 - __nuke \<amount\>__ will delete the given number of previous messages, up to 100. (__utility__, __admin__)
 
@@ -44,7 +44,7 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 ## Other features
 
-As a part of the __utility__ module, reacting with :pushpin: (📌) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.
+As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.
 
 ## Notes
 

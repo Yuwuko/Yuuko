@@ -57,7 +57,7 @@ public class Database {
                     "\t`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
                     "\t`server` varchar(18) NOT NULL,\n" +
                     "\t`commandName` varchar(10) NOT NULL,\n" +
-                    "\t`commandContents` varchar(255) NOT NULL,\n" +
+                    "\t`commandContents` varchar(2000) NOT NULL,\n" +
                     "\t`commandAuthor` varchar(18) NOT NULL, \n" +
                     "\tPRIMARY KEY (`id`)\n" +
                     ");\n" +

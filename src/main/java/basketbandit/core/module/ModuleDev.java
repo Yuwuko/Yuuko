@@ -5,17 +5,13 @@
 package basketbandit.core.module;
 
 import basketbandit.core.Configuration;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 class ModuleDev {
 
     ModuleDev(MessageReceivedEvent e) {
         Message message = e.getMessage();
-        MessageChannel channel = e.getChannel();
-        User user = e.getAuthor();
-        Member member = e.getMember();
-
         String[] command = message.getContentRaw().split("\\s+",2);
 
         if(command[0].toLowerCase().equals(Configuration.PREFIX + "dbsetup")) {
