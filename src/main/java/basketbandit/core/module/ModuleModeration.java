@@ -66,7 +66,7 @@ class ModuleModeration {
     private void commandKick() {
         try {
             if(command[1].length() == 18 && Long.parseLong(command[1]) > 0) {
-                if(command[2].isEmpty()) {
+                if(command.length < 3) {
                     e.getGuild().getController().kick(command[1]).queue();
                 } else {
                     e.getGuild().getController().kick(command[1], command[2]).queue();

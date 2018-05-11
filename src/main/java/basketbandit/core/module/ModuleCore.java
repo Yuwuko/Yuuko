@@ -84,7 +84,7 @@ class ModuleCore {
             ResultSet resultSet = database.getModuleSettings(serverLong);
             resultSet.next();
 
-            for(int i = 4; i < 9; i++) {
+            for(int i = 4; i < 11; i++) {
                 ResultSetMetaData meta = resultSet.getMetaData();
                 if(resultSet.getBoolean(i)) {
                     enabled.add(meta.getColumnName(i));
@@ -115,22 +115,10 @@ class ModuleCore {
     private void commandHelp() {
         EmbedBuilder commandInfo = new EmbedBuilder()
                 .setColor(Color.RED)
-                .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
-                .setTitle("Below are a list of available commands!")
+                .setTitle("Hey " + e.getAuthor().getName() + ",")
                 .setDescription(
-                        "This part of the bot is being redone, the basic commands are listed below!\n\n?n " +
-                        Configuration.PREFIX + "roll d<value>\n" +
-                        Configuration.PREFIX + "nuke <value>\n" +
-                        Configuration.PREFIX + "overreact\n" +
-                        Configuration.PREFIX + "insult\n" +
-                        Configuration.PREFIX + "rsstats <name>\n" +
-                        Configuration.PREFIX + "osstats <name>\n" +
-                        Configuration.PREFIX + "info <name>\n" +
-                        Configuration.PREFIX + "serverinfo\n" +
-                        Configuration.PREFIX + "sum <value> <operator> <value> - Operators: (+, -, *, /, ^, %)\n" +
-                        Configuration.PREFIX + "newcc <name> <value>\n" +
-                        Configuration.PREFIX + "delcc <name>\n"
-
+                        "A full list of commands is available on my GitHub, which is located [here](https://github.com/Galaxiosaurus/BasketBandit)! \n" +
+                        "If you would like to suggest new features for me or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)!"
                 )
                 .addField("Features", "I am able to log commands sent by adding a text-channel named \"command-log\".", false)
                 .addField("Want me on your server?", "Click [here](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite! Also be sure to give me admin privileges if you wish to use the " + Configuration.PREFIX + "nuke command or any other admin commands.", false)
