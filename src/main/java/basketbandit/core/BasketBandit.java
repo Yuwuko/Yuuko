@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
+// Version: 07/05/2018 - JDK 10.0.1
 
 package basketbandit.core;
 

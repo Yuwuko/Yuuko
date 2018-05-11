@@ -5,7 +5,6 @@
 package basketbandit.core.module;
 
 import basketbandit.core.Configuration;
-import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.io.BufferedReader;
@@ -15,19 +14,19 @@ import java.net.URL;
 class ModuleRuneScape {
 
     private MessageReceivedEvent e;
+    private String[] command;
 
     ModuleRuneScape(MessageReceivedEvent e) {
         this.e = e;
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 
-        commandRsstats(command);
+        commandRsstats();
     }
 
     /**
      * RuneScape stats command returns given players RuneScape stats.
-     * @param command the original command.
      */
-    private void commandRsstats(String[] command) {
+    private void commandRsstats() {
 
         Boolean osrs = (command[0].toLowerCase().equals(Configuration.PREFIX + "osstats"));
 

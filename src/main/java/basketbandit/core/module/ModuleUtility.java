@@ -6,20 +6,19 @@ package basketbandit.core.module;
 
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
 import java.awt.*;
-import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 class ModuleUtility {
 
     private MessageReceivedEvent e;
+    private String[] command;
 
     /**
      * Module constructor for MessageReceivedEvents
@@ -27,12 +26,10 @@ class ModuleUtility {
      */
     ModuleUtility(MessageReceivedEvent e) {
         this.e = e;
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
+        command = e.getMessage().getContentRaw().split("\\s+", 2);
 
-        if(command[0].toLowerCase().equals(Configuration.PREFIX + "nuke") && e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
-            commandNuke(command);
-        } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "user")) {
-            commandUser(command);
+        if(command[0].toLowerCase().equals(Configuration.PREFIX + "user")) {
+            commandUser();
         } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "server")) {
             commandServer();
         }
@@ -67,33 +64,9 @@ class ModuleUtility {
     }
 
     /**
-     * Nuke command removes a set number of messages.
-     * @param command the original command.
-     */
-    private void commandNuke(String[] command) {
-        try {
-            List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(Integer.parseInt(command[1])).complete();
-            if(Integer.parseInt(command[1]) < 2) {
-                e.getTextChannel().deleteMessageById(nukeList.get(0).getId()).complete();
-            } else {
-                // If a message in the nuke list is older than 2 weeks it can't be mass deleted, so recursion will need to take place.
-                for(Message message: nukeList) {
-                    if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
-                        message.delete().complete();
-                    }
-                }
-                e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).complete();
-            }
-        } catch(Exception e) {
-            // Do nothing.
-        }
-    }
-
-    /**
      * Info command will return information about the given user.
-     * @param command the original command.
      */
-    private void commandUser(String[] command) {
+    private void commandUser() {
         Member infoMember = null;
         EmbedBuilder commandInfo = null;
 

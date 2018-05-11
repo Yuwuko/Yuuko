@@ -1,4 +1,4 @@
-# BasketBandit 2.1.0 (07/05/2018) 
+# BasketBandit 2.2.0 (07/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries for JAVA.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
@@ -10,37 +10,59 @@ Note: The logging module requires a text-channel named command-log to work corre
 
 The invocation for the bot at this time is '?', this is used to prefix the below commands so the bot recognises that it is a command. Double invocation is used for custom commands, meaning that any custom commands should be prefixed with '??' instead.
 
-- __setup__ this command needs to be run before the bot can be used. It will initialise the default settings for the bot. (__core__, __single use__)
+### Core
 
-- __module \<name\>__ will toggle a module on or off based on it's current value. (__core__)
+- __setup__ this command needs to be run before the bot can be used. It will initialise the default settings for the bot. (__single use__)
 
-- __modules__ will list all of the bots modules, noting which are currently enabled and which are disabled. (__core__)
+- __module \<name\>__ will toggle a module on or off based on it's current value.
 
-- __help__ will private message the user a list of these commands and some other information about BasketBandit. (__core__)
+- __modules__ will list all of the bots modules, noting which are currently enabled and which are disabled. 
 
-- __user \<name\>__ will give account information about the user given, such as join date, online status and guild roles. (__utility__)
+- __help__ will private message the user a list of these commands and some other information about BasketBandit.
 
-- __server__ will give information about the current server, such as region and owner. (__utility__)
+### Moderation
 
-- __nuke \<amount\>__ will delete the given number of previous messages, up to 100. (__utility__, __admin__)
+- __kick \<userID (18 digit)\> \<reason\> (optional)__ will kick the given user from the server with optional reason.
 
-- __rsstats \<name\>__ will return the RuneScape 3 stats for the given user. (__runescape__)
+- __ban \<userID (18 digit)\> \<days\> \<reason\> (optional)__ will ban the given user for the the given amount of time in days with optional reason.
 
-- __osstats \<name\>__ will return the OldSchool Runescape stats for the given user. (__runescape__)
+- __nuke \<amount\>__ will delete the given number of previous messages, up to 100.
 
-- __overreact__ will react with 20 random guild emotes to the previous message in the text channel. (__fun__)
+- __addchannel \<type\> \<name\> \<nsfw\>__ creates a new channel. (Type is "text" or "voice", NSFW (optional))
 
-- __insult__ will randomly insult a user in the guild. (__fun__)
+- __delchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice")
 
-- __roll \<value\>__ will roll a set die. [d6, d8, d10, d12, d20, d00] (__math__)
+### Utility
 
-- __sum \<value\> \<operator\> \<value\>__ will calculate and return a simple 2 variable sum. Supported operations: [+, -, *, /, ^, %] (__math__)
+- __user \<name\>__ will give account information about the user given, such as join date, online status and guild roles. 
 
-- __newcc \<name\> \<contents\>__ will create a new custom command. (__custom__)
+- __server__ will give information about the current server, such as region and owner.
 
-- __delcc \<name\>__ will delete a custom command. (__custom__)
+### Fun
 
-- __\<command\>__ will execute a custom command. (__custom__, __double invocation__)
+- __overreact__ will react with 20 random guild emotes to the previous message in the text channel.
+
+- __insult__ will randomly insult a user in the guild.
+
+### Math
+
+- __roll \<value\>__ will roll a set die. [d6, d8, d10, d12, d20, d00] 
+
+- __sum \<value\> \<operator\> \<value\>__ will calculate and return a simple 2 variable sum. Supported operations: [+, -, *, /, ^, %]
+
+### RuneScape
+
+- __rsstats \<name\>__ will return the RuneScape 3 stats for the given user.
+
+- __osstats \<name\>__ will return the OldSchool Runescape stats for the given user.
+
+### Custom
+
+- __newcc \<name\> \<contents\>__ will create a new custom command.
+
+- __delcc \<name\>__ will delete a custom command.
+
+- __\<command\>__ will execute a custom command. (__double invocation__)
 
 ## Other features
 

@@ -40,6 +40,7 @@ public class TimeKeeper implements Runnable {
                     }
                 }
 
+                // Add leading zeros.
                 ds = (d < 10) ? String.format("%02d", d) : d + "";
                 hs = (h < 10) ? String.format("%02d", h) : h + "";
                 ms = (m < 10) ? String.format("%02d", m) : m + "";

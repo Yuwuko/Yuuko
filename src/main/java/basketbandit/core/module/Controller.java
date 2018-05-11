@@ -49,8 +49,19 @@ public class Controller {
                 break;
 
             case Configuration.PREFIX + "nuke":
-            case Configuration.PREFIX + "user":
+            case Configuration.PREFIX + "kick":
+            case Configuration.PREFIX + "ban":
+            case Configuration.PREFIX + "addchannel":
+            case Configuration.PREFIX + "delchannel":
+                if(database.checkModuleSettings("modModeration", serverLong)) {
+                    new ModuleModeration(e);
+                } else {
+                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the moderation module is disabled.").queue();
+                }
+                break;
+
             case Configuration.PREFIX + "server":
+            case Configuration.PREFIX + "user":
                 if(database.checkModuleSettings("modUtility", serverLong)) {
                     new ModuleUtility(e);
                 } else {

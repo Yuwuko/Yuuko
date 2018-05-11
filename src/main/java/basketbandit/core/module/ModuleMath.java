@@ -14,23 +14,23 @@ import java.util.Random;
 class ModuleMath {
 
     private MessageReceivedEvent e;
+    private String[] command;
 
     ModuleMath(MessageReceivedEvent e) {
         this.e = e;
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 
         if(command[0].toLowerCase().equals(Configuration.PREFIX + "roll")) {
-            commandRoll(command);
+            commandRoll();
         } else if (command[0].toLowerCase().equals(Configuration.PREFIX + "sum")) {
-            commandSum(command);
+            commandSum();
         }
     }
 
     /**
      * Roll command, essentially random number generator.
-     * @param command the original given command.
      */
-    private void commandRoll(String[] command) {
+    private void commandRoll() {
         String[] rollString = command[1].split("d");
         int num = 0;
         int rollNum = 0;
@@ -62,9 +62,8 @@ class ModuleMath {
 
     /**
      * Sum command will make simple calculations.
-     * @param command the original given command.
      */
-    private void commandSum(String[] command) {
+    private void commandSum() {
         String sumString = "";
 
         if(command[1].contains("+")) {

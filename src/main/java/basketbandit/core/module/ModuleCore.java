@@ -20,6 +20,7 @@ class ModuleCore {
 
     private Database database = new Database();
     private MessageReceivedEvent e;
+    private String[] command;
     private String serverLong;
 
     ModuleCore(MessageReceivedEvent e) {
@@ -27,7 +28,7 @@ class ModuleCore {
         MessageChannel channel = e.getChannel();
         User user = e.getAuthor();
         serverLong = e.getGuild().getIdLong() + "";
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
+        command = e.getMessage().getContentRaw().split("\\s+", 2);
 
         if(command[0].toLowerCase().equals(Configuration.PREFIX + "setup")) {
             if(e.getMember().isOwner() || e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
@@ -53,10 +54,10 @@ class ModuleCore {
         if(command[0].toLowerCase().equals(Configuration.PREFIX + "module") || e.getMember().hasPermission(Permission.ADMINISTRATOR) && command[0].toLowerCase().equals(Configuration.PREFIX + "module")) {
             if(command[1].toLowerCase().equals("dev")) {
                 if(user.getIdLong() == 215161101460045834L) {
-                    commandToggle(command);
+                    commandToggle();
                 }
             } else {
-                commandToggle(command);
+                commandToggle();
             }
             return;
         }
@@ -142,7 +143,7 @@ class ModuleCore {
     /**
      * Toggles a module.
      */
-    private void commandToggle(String[] command) {
+    private void commandToggle() {
         if(database.toggleModule("mod" + command[1].toLowerCase(), serverLong)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor(command[1] + " was enabled on this server!");
             e.getTextChannel().sendMessage(embed.build()).queue();

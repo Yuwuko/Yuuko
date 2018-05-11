@@ -44,6 +44,7 @@ public class Database {
                     "\t`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
                     "\t`server` varchar(18) NOT NULL,\n" +
                     "\t`modDev` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
+                    "\t`modModeration` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
                     "\t`modCustom` BOOLEAN(1) NOT NULL DEFAULT '1',\n" +
                     "\t`modUtility` BOOLEAN(1) NOT NULL DEFAULT '1',\n" +
                     "\t`modLogging` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +

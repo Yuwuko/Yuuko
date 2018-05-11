@@ -10,30 +10,29 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 class ModuleCustom {
 
     private MessageReceivedEvent e;
+    private String[] command;
     private String serverLong = "";
 
     ModuleCustom(MessageReceivedEvent e) {
         this.e = e;
         serverLong = e.getGuild().getIdLong() + "";
 
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
+        command = e.getMessage().getContentRaw().split("\\s+", 3);
 
         if(command[0].toLowerCase().equals(Configuration.PREFIX + "newcc")) {
-            addCustomCommand(command[1], command[2]);
+            addCustomCommand();
         } else if(command[0].toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX)) {
-            commandCustom(command);
+            commandCustom();
         } else if(command[0].toLowerCase().equals(Configuration.PREFIX + "delcc")) {
             removeCustomCommand(command[1]);
         }
-
 
     }
 
     /**
      * Runs a custom command.
-     * @param command the name of the command.
      */
-    private void commandCustom(String[] command) {
+    private void commandCustom() {
         try {
             Database database = new Database();
             String commandReturn = database.getCustomCommand(command[0].replace("??", ""), serverLong);
@@ -46,19 +45,17 @@ class ModuleCustom {
 
     /**
      * Adds a new custom command.
-     * @param commandName the name of the command.
-     * @param commandContents the contents of the command.
      */
-    private void addCustomCommand(String commandName, String commandContents) {
+    private void addCustomCommand() {
         Database database = new Database();
 
-        if(commandContents.length() > 2000) {
+        if(command[2].length() > 2000) {
             e.getTextChannel().sendMessage("Command too long, maximum length of 2000 characters.").queue();
             return;
         }
 
-        if(database.addCustomCommand(commandName, commandContents, serverLong, e.getAuthor().getIdLong()+"")) {
-            e.getTextChannel().sendMessage(commandName + " added successfully!").queue();
+        if(database.addCustomCommand(command[1], command[2], serverLong, e.getAuthor().getIdLong()+"")) {
+            e.getTextChannel().sendMessage(command[1] + " added successfully!").queue();
         } else {
             e.getTextChannel().sendMessage("Failed to add command...").queue();
         }
