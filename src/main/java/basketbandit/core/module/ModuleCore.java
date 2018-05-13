@@ -84,7 +84,7 @@ class ModuleCore {
             ResultSet resultSet = database.getModuleSettings(serverLong);
             resultSet.next();
 
-            for(int i = 4; i < 11; i++) {
+            for(int i = 4; i < 12; i++) {
                 ResultSetMetaData meta = resultSet.getMetaData();
                 if(resultSet.getBoolean(i)) {
                     enabled.add(meta.getColumnName(i));

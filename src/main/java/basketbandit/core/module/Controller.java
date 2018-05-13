@@ -4,6 +4,7 @@
 
 package basketbandit.core.module;
 
+import basketbandit.core.BasketBandit;
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
@@ -20,7 +21,7 @@ public class Controller {
      * Controller constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    public Controller(MessageReceivedEvent e) {
+    public Controller(MessageReceivedEvent e, BasketBandit self) {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 
         System.out.println(Thread.currentThread().getName() + ": " + e.getGuild().getName() + " - " + command[0]);
@@ -40,6 +41,7 @@ public class Controller {
                 new ModuleCore(e);
                 break;
 
+            // ModuleDev
             case Configuration.PREFIX + "dbsetup":
                 if(user.getIdLong() == 215161101460045834L || database.checkModuleSettings("modDev", serverLong)) {
                     new ModuleDev(e);
@@ -48,6 +50,7 @@ public class Controller {
                 }
                 break;
 
+            // ModuleModeration
             case Configuration.PREFIX + "nuke":
             case Configuration.PREFIX + "kick":
             case Configuration.PREFIX + "ban":
@@ -60,6 +63,7 @@ public class Controller {
                 }
                 break;
 
+            // ModuleUtility
             case Configuration.PREFIX + "server":
             case Configuration.PREFIX + "user":
                 if(database.checkModuleSettings("modUtility", serverLong)) {
@@ -69,6 +73,7 @@ public class Controller {
                 }
                 break;
 
+            // ModuleMath
             case Configuration.PREFIX + "roll":
             case Configuration.PREFIX + "sum":
                 if(database.checkModuleSettings("modMath", serverLong)) {
@@ -78,6 +83,7 @@ public class Controller {
                 }
                 break;
 
+            // ModuleFun
             case Configuration.PREFIX + "insult":
             case Configuration.PREFIX + "overreact":
                 if(database.checkModuleSettings("modFun", serverLong)) {
@@ -87,6 +93,7 @@ public class Controller {
                 }
                 break;
 
+            // ModuleRuneScape
             case Configuration.PREFIX + "rsstats":
             case Configuration.PREFIX + "osstats":
                 if(database.checkModuleSettings("modRuneScape", serverLong)) {
@@ -96,6 +103,21 @@ public class Controller {
                 }
                 break;
 
+            // ModuleMusic
+            case Configuration.PREFIX + "play":
+            case Configuration.PREFIX + "stop":
+            case Configuration.PREFIX + "pause":
+            case Configuration.PREFIX + "track":
+            case Configuration.PREFIX + "skip":
+            case Configuration.PREFIX + "shuffle":
+            case Configuration.PREFIX + "queue":
+                if(database.checkModuleSettings("modMusic", serverLong)) {
+                    new ModuleMusic(e, self);
+                } else {
+                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the music module is disabled.").queue();
+                }
+
+            // ModuleCustom
             case Configuration.PREFIX + "newcc":
             case Configuration.PREFIX + "delcc":
                 if(database.checkModuleSettings("modCustom", serverLong)) {
@@ -113,6 +135,7 @@ public class Controller {
                 }
         }
 
+        // ModuleLogging
         if(database.checkModuleSettings("modLogging", serverLong)) {
             new ModuleLogging(e);
         }
@@ -125,6 +148,7 @@ public class Controller {
      */
     public Controller(MessageReactionAddEvent e) {
         MessageReaction react = e.getReaction();
+        serverLong = e.getGuild().getIdLong() + "";
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
             if(database.checkModuleSettings("modUtility", serverLong)) {
@@ -139,6 +163,7 @@ public class Controller {
      */
     public Controller(MessageReactionRemoveEvent e) {
         MessageReaction react = e.getReaction();
+        serverLong = e.getGuild().getIdLong() + "";
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
             if(database.checkModuleSettings("modUtility", serverLong)) {

@@ -45,6 +45,7 @@ public class Database {
                     "\t`server` varchar(18) NOT NULL,\n" +
                     "\t`modDev` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
                     "\t`modModeration` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
+                    "\t`modMusic` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
                     "\t`modCustom` BOOLEAN(1) NOT NULL DEFAULT '1',\n" +
                     "\t`modUtility` BOOLEAN(1) NOT NULL DEFAULT '1',\n" +
                     "\t`modLogging` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +

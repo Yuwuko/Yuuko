@@ -5,6 +5,7 @@
 package basketbandit.core;
 
 import basketbandit.core.module.Controller;
+import basketbandit.core.music.GuildMusicManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
@@ -20,6 +21,7 @@ import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,6 +32,7 @@ public class BasketBandit extends ListenerAdapter {
 
     private UserInterface ui;
     private TimeKeeper tk;
+    private HashMap<String, GuildMusicManager> managers;
 
     /**
      * Initialises the bot and JDA.
@@ -57,6 +60,7 @@ public class BasketBandit extends ListenerAdapter {
     private BasketBandit() {
         ui = new UserInterface();
         tk = new TimeKeeper(ui);
+        managers = new HashMap<>();
     }
 
     /**
@@ -79,7 +83,7 @@ public class BasketBandit extends ListenerAdapter {
         }
 
         if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-            new Controller(e);
+            new Controller(e, this);
             commandCount++;
             ui.updateCount(messageCount, commandCount);
         }
@@ -121,5 +125,29 @@ public class BasketBandit extends ListenerAdapter {
         public void handle(Event e) {
             threadPool.submit(() -> super.handle(e));
         }
+    }
+
+    //////////////////////////////////////////////////////////////////// MUSIC
+
+    /**
+     * Returns a guild's GuildMusicManager or null if there isn't one.
+     * @return trackScheduler or NULL.
+     */
+    public GuildMusicManager getGuildMusicManager(String guildID) {
+        return managers.get(guildID);
+    }
+
+    /**
+     * Returns full MusicManager HashMap.
+     */
+    public HashMap<String, GuildMusicManager> getGuildMusicManagers() {
+        return managers;
+    }
+
+    /**
+     * Adds tot the GuildMusicManager HashMap.
+     */
+    public void addGuildMusicManager(String guildID, GuildMusicManager manager) {
+        managers.put(guildID, manager);
     }
 }

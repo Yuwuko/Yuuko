@@ -1,5 +1,5 @@
-# BasketBandit 2.2.0 (11/05/2018) 
-BasketBandit is a Discord bot that I am developing based on the JDA libraries for JAVA.
+# BasketBandit 2.3.0 (13/05/2018) 
+BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
 To enable or disable a module you type the bot invocation (at current '?') module and the name of the module, e.g. '?module fun'
@@ -63,6 +63,22 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 - __delcc \<name\>__ will delete a custom command.
 
 - __\<command\>__ will execute a custom command. (__double invocation__)
+
+### Music
+
+- __play \<track\>__ will automatically make the bot join the voice channel you are in (must be in one) and start playback. If there is currently a track playing, it will instead add it to the queue. If you provide a playlist link, it will add the whole playlist to the queue. (track is optional and issuing this command without one will resume playback if paused)
+
+- __pause__ will pause playback.
+
+- __stop__ will stop playback, remove the queue and ask the bot to leave the channel.
+
+- __skip__ will skip the current track.
+
+- __shuffle__ will shuffle the current queue.
+
+- __track__ will give information about the current track.
+
+- __queue__ will display the current queue.
 
 ## Other features
 

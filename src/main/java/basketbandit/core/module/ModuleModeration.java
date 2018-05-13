@@ -44,6 +44,7 @@ class ModuleModeration {
     private void commandNuke() {
         try {
             List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(Integer.parseInt(command[1])).complete();
+
             if(Integer.parseInt(command[1]) < 2) {
                 e.getTextChannel().deleteMessageById(nukeList.get(0).getId()).complete();
             } else {
