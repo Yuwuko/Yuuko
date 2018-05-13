@@ -43,15 +43,15 @@ public class Database {
                     "CREATE TABLE `Settings` (\n" +
                     "\t`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
                     "\t`server` varchar(18) NOT NULL,\n" +
-                    "\t`modDev` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
-                    "\t`modModeration` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
-                    "\t`modMusic` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
-                    "\t`modCustom` BOOLEAN(1) NOT NULL DEFAULT '1',\n" +
-                    "\t`modUtility` BOOLEAN(1) NOT NULL DEFAULT '1',\n" +
-                    "\t`modLogging` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
-                    "\t`modMath` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
-                    "\t`modFun` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
-                    "\t`modRuneScape` BOOLEAN(1) NOT NULL DEFAULT '0',\n" +
+                    "\t`modDev` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                    "\t`modModeration` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                    "\t`modMusic` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                    "\t`modCustom` BOOLEAN NOT NULL DEFAULT '1',\n" +
+                    "\t`modUtility` BOOLEAN NOT NULL DEFAULT '1',\n" +
+                    "\t`modLogging` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                    "\t`modMath` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                    "\t`modFun` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                    "\t`modRuneScape` BOOLEAN NOT NULL DEFAULT '0',\n" +
                     "\tPRIMARY KEY (`id`,`server`)\n" +
                     ");\n" +
                     "\n" +
