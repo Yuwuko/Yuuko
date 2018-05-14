@@ -116,7 +116,7 @@ public class BasketBandit extends ListenerAdapter {
     }
 
     /**
-     * Thread Event Manager Class
+     * Threaded Event Manager Class
      */
     private static class ThreadedEventManager extends InterfacedEventManager {
         private final ExecutorService threadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
@@ -125,6 +125,7 @@ public class BasketBandit extends ListenerAdapter {
         public void handle(Event e) {
             threadPool.submit(() -> super.handle(e));
         }
+
     }
 
     //////////////////////////////////////////////////////////////////// MUSIC

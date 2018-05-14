@@ -32,7 +32,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
-public class ModuleMusic {
+class ModuleMusic {
 
     private MessageReceivedEvent e;
     private String[] command;
@@ -167,7 +167,7 @@ public class ModuleMusic {
         }
         i--;
 
-        if(i > 1) {
+        if(i > 0) {
             EmbedBuilder nextTracks = new EmbedBuilder()
                     .setColor(Color.RED)
                     .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())

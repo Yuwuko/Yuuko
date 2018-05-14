@@ -40,31 +40,31 @@ public class Database {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(
-                    "CREATE TABLE `Settings` (\n" +
-                    "\t`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
-                    "\t`server` varchar(18) NOT NULL,\n" +
-                    "\t`modDev` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\t`modModeration` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\t`modMusic` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\t`modCustom` BOOLEAN NOT NULL DEFAULT '1',\n" +
-                    "\t`modUtility` BOOLEAN NOT NULL DEFAULT '1',\n" +
-                    "\t`modLogging` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\t`modMath` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\t`modFun` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\t`modRuneScape` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                    "\tPRIMARY KEY (`id`,`server`)\n" +
-                    ");\n" +
-                    "\n" +
-                    "CREATE TABLE `CustomCommands` (\n" +
-                    "\t`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
-                    "\t`server` varchar(18) NOT NULL,\n" +
-                    "\t`commandName` varchar(10) NOT NULL,\n" +
-                    "\t`commandContents` varchar(2000) NOT NULL,\n" +
-                    "\t`commandAuthor` varchar(18) NOT NULL, \n" +
-                    "\tPRIMARY KEY (`id`)\n" +
-                    ");\n" +
-                    "\n" +
-                    "ALTER TABLE `CustomCommands` ADD CONSTRAINT `CustomCommands_fk0` FOREIGN KEY (`server`) REFERENCES `Settings`(`server`) ON DELETE CASCADE;"
+                "CREATE TABLE `Settings` (" +
+                "`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
+                "`server` varchar(18) NOT NULL,\n" +
+                "`modDev` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modModeration` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modMusic` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modCustom` BOOLEAN NOT NULL DEFAULT '1',\n" +
+                "`modUtility` BOOLEAN NOT NULL DEFAULT '1',\n" +
+                "`modLogging` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modMath` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modFun` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modRuneScape` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "PRIMARY KEY (`id`,`server`)\n" +
+                ");" +
+
+                "CREATE TABLE `CustomCommands` (\n" +
+                "`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
+                "`server` varchar(18) NOT NULL,\n" +
+                "`commandName` varchar(10) NOT NULL,\n" +
+                "`commandContents` varchar(2000) NOT NULL,\n" +
+                "`commandAuthor` varchar(18) NOT NULL, \n" +
+                "PRIMARY KEY (`id`)\n" +
+                ");\n" +
+
+                "ALTER TABLE `CustomCommands` ADD CONSTRAINT `CustomCommands_fk0` FOREIGN KEY (`server`) REFERENCES `Settings`(`server`) ON DELETE CASCADE;"
             );
         } catch(Exception e) {
             e.printStackTrace();
