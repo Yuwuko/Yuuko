@@ -1,4 +1,4 @@
-# BasketBandit 1.4.1 (14/05/2018) 
+# BasketBandit 1.4.3 (14/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.

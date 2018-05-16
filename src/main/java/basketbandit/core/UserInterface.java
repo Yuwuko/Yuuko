@@ -6,7 +6,7 @@ package basketbandit.core;
 
 import javax.swing.*;
 
-class UserInterface{
+public class UserInterface{
 
     private JFrame frame;
     private JLabel[] labels = new JLabel[12];
@@ -33,7 +33,7 @@ class UserInterface{
      * @param msg -> message count.
      * @param cmd -> command count.
      */
-    void updateCount(int msg, int cmd) {
+    public void updateCount(int msg, int cmd) {
         labels[0].setText("Messages Processed: " + msg + ", Commands Processed: " + cmd + ".");
     }
 
@@ -46,5 +46,9 @@ class UserInterface{
      */
     void updateRuntime(String d, String h, String m, String s) {
         frame.setTitle("BasketBandit " + Configuration.VERSION + " (" + d + ":" + h + ":" + m + ":" + s + ")");
+    }
+
+    public void setDebug(String input) {
+        labels[1].setText(input);
     }
 }

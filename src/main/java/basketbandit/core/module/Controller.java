@@ -6,6 +6,7 @@ package basketbandit.core.module;
 
 import basketbandit.core.BasketBandit;
 import basketbandit.core.Configuration;
+import basketbandit.core.UserInterface;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -21,7 +22,7 @@ public class Controller {
      * Controller constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    public Controller(MessageReceivedEvent e, BasketBandit self) {
+    public Controller(MessageReceivedEvent e, UserInterface ui, BasketBandit self) {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 
         System.out.println(Thread.currentThread().getName() + ": " + e.getGuild().getName() + " - " + command[0]);
@@ -32,107 +33,112 @@ public class Controller {
         User user = e.getAuthor();
         serverLong = e.getGuild().getIdLong() + "";
 
-        // Command switch -> chooses which module class to sent the message event to.
-        switch(command[0].toLowerCase()) {
-            case Configuration.PREFIX + "module":
-            case Configuration.PREFIX + "modules":
-            case Configuration.PREFIX + "setup":
-            case Configuration.PREFIX + "help":
-                new ModuleCore(e);
-                break;
+        try {
+            // Command switch -> chooses which module class to sent the message event to.
+            switch(command[0].toLowerCase()) {
+                case Configuration.PREFIX + "module":
+                case Configuration.PREFIX + "modules":
+                case Configuration.PREFIX + "setup":
+                case Configuration.PREFIX + "help":
+                    new ModuleCore(e);
+                    break;
 
-            // ModuleDev
-            case Configuration.PREFIX + "dbsetup":
-                if(user.getIdLong() == 215161101460045834L || database.checkModuleSettings("modDev", serverLong)) {
-                    new ModuleDev(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the dev module is disabled.").queue();
-                }
-                break;
+                // ModuleDev
+                case Configuration.PREFIX + "dbsetup":
+                    if(user.getIdLong() == 215161101460045834L || database.checkModuleSettings("modDev", serverLong)) {
+                        new ModuleDev(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the dev module is disabled.").queue();
+                    }
+                    break;
 
-            // ModuleModeration
-            case Configuration.PREFIX + "nuke":
-            case Configuration.PREFIX + "kick":
-            case Configuration.PREFIX + "ban":
-            case Configuration.PREFIX + "addchannel":
-            case Configuration.PREFIX + "delchannel":
-                if(database.checkModuleSettings("modModeration", serverLong)) {
-                    new ModuleModeration(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the moderation module is disabled.").queue();
-                }
-                break;
+                // ModuleModeration
+                case Configuration.PREFIX + "nuke":
+                case Configuration.PREFIX + "kick":
+                case Configuration.PREFIX + "ban":
+                case Configuration.PREFIX + "addchannel":
+                case Configuration.PREFIX + "delchannel":
+                    if(database.checkModuleSettings("modModeration", serverLong)) {
+                        new ModuleModeration(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the moderation module is disabled.").queue();
+                    }
+                    break;
 
-            // ModuleUtility
-            case Configuration.PREFIX + "server":
-            case Configuration.PREFIX + "user":
-                if(database.checkModuleSettings("modUtility", serverLong)) {
-                    new ModuleUtility(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
-                }
-                break;
+                // ModuleUtility
+                case Configuration.PREFIX + "server":
+                case Configuration.PREFIX + "user":
+                    if(database.checkModuleSettings("modUtility", serverLong)) {
+                        new ModuleUtility(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
+                    }
+                    break;
 
-            // ModuleMath
-            case Configuration.PREFIX + "roll":
-            case Configuration.PREFIX + "sum":
-                if(database.checkModuleSettings("modMath", serverLong)) {
-                    new ModuleMath(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the math module is disabled.").queue();
-                }
-                break;
+                // ModuleMath
+                case Configuration.PREFIX + "roll":
+                case Configuration.PREFIX + "sum":
+                    if(database.checkModuleSettings("modMath", serverLong)) {
+                        new ModuleMath(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the math module is disabled.").queue();
+                    }
+                    break;
 
-            // ModuleFun
-            case Configuration.PREFIX + "insult":
-            case Configuration.PREFIX + "overreact":
-                if(database.checkModuleSettings("modFun", serverLong)) {
-                    new ModuleFun(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the fun module is disabled.").queue();
-                }
-                break;
+                // ModuleFun
+                case Configuration.PREFIX + "insult":
+                case Configuration.PREFIX + "overreact":
+                    if(database.checkModuleSettings("modFun", serverLong)) {
+                        new ModuleFun(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the fun module is disabled.").queue();
+                    }
+                    break;
 
-            // ModuleRuneScape
-            case Configuration.PREFIX + "rsstats":
-            case Configuration.PREFIX + "osstats":
-                if(database.checkModuleSettings("modRuneScape", serverLong)) {
-                    new ModuleRuneScape(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the runescape module is disabled.").queue();
-                }
-                break;
+                // ModuleRuneScape
+                case Configuration.PREFIX + "rsstats":
+                case Configuration.PREFIX + "osstats":
+                    if(database.checkModuleSettings("modRuneScape", serverLong)) {
+                        new ModuleRuneScape(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the runescape module is disabled.").queue();
+                    }
+                    break;
 
-            // ModuleMusic
-            case Configuration.PREFIX + "play":
-            case Configuration.PREFIX + "stop":
-            case Configuration.PREFIX + "pause":
-            case Configuration.PREFIX + "track":
-            case Configuration.PREFIX + "skip":
-            case Configuration.PREFIX + "shuffle":
-            case Configuration.PREFIX + "queue":
-                if(database.checkModuleSettings("modMusic", serverLong)) {
-                    new ModuleMusic(e, self);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the music module is disabled.").queue();
-                }
+                // ModuleMusic
+                case Configuration.PREFIX + "play":
+                case Configuration.PREFIX + "stop":
+                case Configuration.PREFIX + "pause":
+                case Configuration.PREFIX + "track":
+                case Configuration.PREFIX + "skip":
+                case Configuration.PREFIX + "shuffle":
+                case Configuration.PREFIX + "queue":
+                    if(database.checkModuleSettings("modMusic", serverLong)) {
+                        new ModuleMusic(e, self);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the music module is disabled.").queue();
+                    }
 
-            // ModuleCustom
-            case Configuration.PREFIX + "newcc":
-            case Configuration.PREFIX + "delcc":
-                if(database.checkModuleSettings("modCustom", serverLong)) {
-                    new ModuleCustom(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
-                }
-                break;
+                    // ModuleCustom
+                case Configuration.PREFIX + "newcc":
+                case Configuration.PREFIX + "delcc":
+                    if(database.checkModuleSettings("modCustom", serverLong)) {
+                        new ModuleCustom(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
+                    }
+                    break;
 
-            default:
-                if(database.checkModuleSettings("modCustom", serverLong)) {
-                    new ModuleCustom(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
-                }
+                default:
+                    if(database.checkModuleSettings("modCustom", serverLong)) {
+                        new ModuleCustom(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
+                    }
+            }
+
+        } catch (Exception f) {
+            f.printStackTrace();
         }
 
         // ModuleLogging

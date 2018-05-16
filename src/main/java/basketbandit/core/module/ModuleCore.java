@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
+// Version: 15/05/2018 - JDK 10.0.1
 
 package basketbandit.core.module;
 
@@ -98,8 +98,8 @@ class ModuleCore {
                     .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
                     .setTitle("Below are the list of bot modules!")
                     .setDescription("Each module can be toggled on or off by using the " + Configuration.PREFIX + "module <module name> command.")
-                    .addField("Enabled Modules", enabled.toString().replace(",","\n").replace("MOD", "").replace("[", "").replace("]", "").replace(" ", "").toLowerCase(), false)
-                    .addField("Disabled Modules", disabled.toString().replace(",","\n").replace("MOD", "").replace("[", "").replace("]", "").replace(" ", "").toLowerCase(), false)
+                    .addField("Enabled Modules", enabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
+                    .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             e.getTextChannel().sendMessage(commandModules.build()).queue();
@@ -117,10 +117,11 @@ class ModuleCore {
                 .setColor(Color.RED)
                 .setTitle("Hey " + e.getAuthor().getName() + ",")
                 .setDescription(
-                        "A full list of commands is available on my GitHub, which is located [here](https://github.com/Galaxiosaurus/BasketBandit)! \n" +
-                        "If you would like to suggest new features for me or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)!"
+                        "A full list of commands and features is available on my GitHub, which is located [here](https://github.com/Galaxiosaurus/BasketBandit)! \n" +
+                        "If you would like to suggest new features or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)! \n\n" +
+
+                        "P.S, commands used to be listed here but formatting is a pain and nobody has time for that."
                 )
-                .addField("Features", "I am able to log commands sent by adding a text-channel named \"command-log\".", false)
                 .addField("Want me on your server?", "Click [here](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite! Also be sure to give me admin privileges if you wish to use the " + Configuration.PREFIX + "nuke command or any other admin commands.", false)
                 .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl())
                 ;

@@ -1,3 +1,7 @@
+// Program: BasketBandit (Discord Bot)
+// Programmer: Joshua Mark Hunt
+// Version: 15/05/2018 - JDK 10.0.1
+
 package basketbandit.core.module;
 
 import basketbandit.core.BasketBandit;
@@ -45,8 +49,8 @@ class ModuleMusic {
 
     ModuleMusic(MessageReceivedEvent e, BasketBandit core) {
         this.e = e;
-        command = e.getMessage().getContentRaw().split("\\s+", 2);
         this.core = core;
+        command = e.getMessage().getContentRaw().split("\\s+", 2);
 
         this.playerManager = new DefaultAudioPlayerManager();
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
@@ -57,7 +61,7 @@ class ModuleMusic {
         playerManager.registerSourceManager(new HttpAudioSourceManager());
         playerManager.registerSourceManager(new LocalAudioSourceManager());
 
-        playerManager.setFrameBufferDuration(1);
+        playerManager.setFrameBufferDuration(200);
 
         manager = getMusicManager();
         scheduler = manager.scheduler;
@@ -91,12 +95,15 @@ class ModuleMusic {
     private void commandPlay() {
         if(command.length == 1) {
             player.setPaused(false);
+            e.getTextChannel().sendMessage("Resuming playback of...").queue();
+            commandTrack();
+
         } else {
             e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             player.setPaused(false);
 
-            if(!command[1].startsWith("https://www.youtube.com/watch?v=")) {
+            if(!command[1].startsWith("https://www.youtube.com/watch?v=") || !command[1].startsWith("https://youtu.be/")) {
                 loadAndPlay(manager, e.getChannel(), searchYouTube());
             } else {
                 loadAndPlay(manager, e.getChannel(), command[1]);
@@ -112,6 +119,8 @@ class ModuleMusic {
         player.stopTrack();
         player.setPaused(false);
         e.getTextChannel().sendMessage("Playback has been stopped and the queue has been cleared.").queue();
+
+        e.getGuild().getAudioManager().setSendingHandler(null);
         e.getGuild().getAudioManager().closeAudioConnection();
     }
 
@@ -155,29 +164,31 @@ class ModuleMusic {
      * Returns the current queue.
      */
     private void commandQueue() {
-        String queue = "";
-        int i = 1;
+        synchronized(manager.scheduler.queue) {
+            String queue = "";
+            int i = 1;
 
-        for(AudioTrack track: scheduler.queue) {
-            queue += i + ": " + track.getInfo().title + ", (" + getTimestamp(track.getInfo().length) + ") \n";
-            i++;
-            if(i > 10) {
-                break;
+            for(AudioTrack track : scheduler.queue) {
+                queue += i + ": " + track.getInfo().title + ", (" + getTimestamp(track.getInfo().length) + ") \n";
+                i++;
+                if (i > 10) {
+                    break;
+                }
             }
-        }
-        i--;
+            i--;
 
-        if(i > 0) {
-            EmbedBuilder nextTracks = new EmbedBuilder()
-                    .setColor(Color.RED)
-                    .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
-                    .setTitle("Here are the next " + i + " tracks in the queue:")
-                    .setDescription(queue)
-                    .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+            if(i > 0) {
+                EmbedBuilder nextTracks = new EmbedBuilder()
+                        .setColor(Color.RED)
+                        .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
+                        .setTitle("Here are the next " + i + " tracks in the queue:")
+                        .setDescription(queue)
+                        .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            e.getTextChannel().sendMessage(nextTracks.build()).queue();
-        } else {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
+                e.getTextChannel().sendMessage(nextTracks.build()).queue();
+            } else {
+                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
+            }
         }
     }
 
@@ -192,7 +203,7 @@ class ModuleMusic {
                 manager = core.getGuildMusicManager(e.getGuild().getId());
                 if(manager == null) {
                     manager = new GuildMusicManager(playerManager);
-                    manager.player.setVolume(35);
+                    manager.player.setVolume(50);
                     core.addGuildMusicManager(e.getGuild().getId(), manager);
                 }
             }
@@ -227,7 +238,7 @@ class ModuleMusic {
                         .setColor(Color.RED)
                         .setAuthor(e.getMember().getEffectiveName() + " added to the queue!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .setDescription("Channel: " + track.getInfo().author + ", Duration: " + getTimestamp(track.getDuration()) )
+                        .setDescription("Channel: " + track.getInfo().author + ", Duration: " + getTimestamp(track.getDuration()) + "\nPosition in queue: " + scheduler.queue.size())
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 channel.sendMessage(queuedTrack.build()).queue();
@@ -264,8 +275,7 @@ class ModuleMusic {
      */
     private String searchYouTube() {
         try {
-            YouTube youtube;
-            youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
+            YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
             }).setApplicationName("basketbandit-204012").build();
 
             YouTube.Search.List search = youtube.search().list("id,snippet");
@@ -284,8 +294,7 @@ class ModuleMusic {
             return "https://www.youtube.com/watch?v=" + result.getId().getVideoId();
 
         } catch (GoogleJsonResponseException e) {
-            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
         } catch (IOException e) {
             System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
         } catch (Throwable t) {

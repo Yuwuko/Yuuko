@@ -64,19 +64,6 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     /**
-     * What to do if the track gets stuck (sometimes happens at the end)
-     * @param player; AudioPlayer
-     * @param track; Track
-     * @param thresholdMs; Long.
-     */
-    @Override
-    public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
-        if(thresholdMs > 1000) {
-            player.startTrack(queue.poll(), false);
-        }
-    }
-
-    /**
      * Checks if repeating.
      * @return boolean repeating.
      */

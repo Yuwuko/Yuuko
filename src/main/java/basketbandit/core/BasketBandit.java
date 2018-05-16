@@ -69,25 +69,31 @@ public class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
-        Message message = e.getMessage();
-        User user = e.getAuthor();
+        try {
+            Message message = e.getMessage();
+            User user = e.getAuthor();
 
-        messageCount++;
-        ui.updateCount(messageCount, commandCount);
-
-        if(user.isBot()
-                || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX + Configuration.PREFIX)
-                || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX )
-                || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX + Configuration.PREFIX)) {
-            return;
-        }
-
-        if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-            new Controller(e, this);
-            commandCount++;
+            messageCount++;
             ui.updateCount(messageCount, commandCount);
+
+            if(user.isBot()
+                    || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX + Configuration.PREFIX)
+                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX)
+                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX + Configuration.PREFIX)) {
+                return;
+            }
+
+            if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
+                new Controller(e, ui, this);
+                commandCount++;
+                ui.updateCount(messageCount, commandCount);
+            }
+        } catch(Exception f) {
+            f.printStackTrace();
         }
     }
+
+    // e.getGuild().getAudioManager().setReceivingHandler();
 
     /**
      * Captures and deals with reacts.
@@ -125,7 +131,6 @@ public class BasketBandit extends ListenerAdapter {
         public void handle(Event e) {
             threadPool.submit(() -> super.handle(e));
         }
-
     }
 
     //////////////////////////////////////////////////////////////////// MUSIC
