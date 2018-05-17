@@ -52,7 +52,7 @@ public class ModuleCore {
             return;
         }
 
-        if(command[0].toLowerCase().equals(Configuration.PREFIX + "modules") || e.getMember().hasPermission(Permission.ADMINISTRATOR) && command[0].toLowerCase().equals(Configuration.PREFIX + "modules")) {
+        if(command[0].toLowerCase().equals(Configuration.PREFIX + "module") || e.getMember().hasPermission(Permission.ADMINISTRATOR) && command[0].toLowerCase().equals(Configuration.PREFIX + "module")) {
             if(command[1].toLowerCase().equals("dev")) {
                 if(user.getIdLong() == 215161101460045834L) {
                     commandToggle();
