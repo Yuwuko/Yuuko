@@ -2,11 +2,9 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core;
 
-import basketbandit.core.BasketBandit;
-import basketbandit.core.Configuration;
-import basketbandit.core.UserInterface;
+import basketbandit.core.modules.*;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -34,7 +32,7 @@ public class Controller {
         serverLong = e.getGuild().getIdLong() + "";
 
         try {
-            // Command switch -> chooses which module class to sent the message event to.
+            // Command switch -> chooses which modules class to sent the message event to.
             switch(command[0].toLowerCase()) {
                 case Configuration.PREFIX + "module":
                 case Configuration.PREFIX + "modules":
@@ -48,7 +46,7 @@ public class Controller {
                     if(user.getIdLong() == 215161101460045834L || database.checkModuleSettings("modDev", serverLong)) {
                         new ModuleDev(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the dev module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the dev modules is disabled.").queue();
                     }
                     break;
 
@@ -61,7 +59,7 @@ public class Controller {
                     if(database.checkModuleSettings("modModeration", serverLong)) {
                         new ModuleModeration(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the moderation module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the moderation modules is disabled.").queue();
                     }
                     break;
 
@@ -71,7 +69,7 @@ public class Controller {
                     if(database.checkModuleSettings("modUtility", serverLong)) {
                         new ModuleUtility(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility modules is disabled.").queue();
                     }
                     break;
 
@@ -81,7 +79,7 @@ public class Controller {
                     if(database.checkModuleSettings("modMath", serverLong)) {
                         new ModuleMath(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the math module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the math modules is disabled.").queue();
                     }
                     break;
 
@@ -91,7 +89,7 @@ public class Controller {
                     if(database.checkModuleSettings("modFun", serverLong)) {
                         new ModuleFun(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the fun module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the fun modules is disabled.").queue();
                     }
                     break;
 
@@ -101,7 +99,7 @@ public class Controller {
                     if(database.checkModuleSettings("modRuneScape", serverLong)) {
                         new ModuleRuneScape(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the runescape module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the runescape modules is disabled.").queue();
                     }
                     break;
 
@@ -116,7 +114,7 @@ public class Controller {
                     if(database.checkModuleSettings("modMusic", serverLong)) {
                         new ModuleMusic(e, self);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the music module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the music modules is disabled.").queue();
                     }
 
                     // ModuleCustom
@@ -125,7 +123,7 @@ public class Controller {
                     if(database.checkModuleSettings("modCustom", serverLong)) {
                         new ModuleCustom(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom modules is disabled.").queue();
                     }
                     break;
 
@@ -133,7 +131,7 @@ public class Controller {
                     if(database.checkModuleSettings("modCustom", serverLong)) {
                         new ModuleCustom(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility modules is disabled.").queue();
                     }
             }
 

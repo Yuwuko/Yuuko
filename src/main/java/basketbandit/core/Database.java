@@ -2,7 +2,7 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -18,15 +18,15 @@ public class Database {
     /**
      * Database constructor.
      */
-    Database() {
+    public Database() {
         try {
             JdbcDataSource ds = new JdbcDataSource();
-            ds.setURL("jdbc:h2:˜/Dropbox/GitHub/BasketBandit/database/dbBasketBandit");
+            ds.setURL("jdbc:h2:˜/Dropbox/GitHub/BasketBandit-Java/database/dbBasketBandit");
             ds.setUser("admin");
             ds.setPassword("password");
 
             Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection ("jdbc:h2:~/Dropbox/GitHub/BasketBandit/database/dbBasketBandit;mode=mysql", "admin","password");
+            connection = DriverManager.getConnection ("jdbc:h2:~/Dropbox/GitHub/BasketBandit-Java/database/dbBasketBandit;mode=mysql", "admin","password");
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class Database {
     /**
      * Initial setup for the database. (Dev only)
      */
-    void setupDatabase() {
+    public void setupDatabase() {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(
@@ -76,7 +76,7 @@ public class Database {
      * @param server the server to add.
      * @return if the add was successful.
      */
-    boolean addNewServer(String server) {
+    public boolean addNewServer(String server) {
         try {
             Statement statementReturn = connection.createStatement();
             ResultSet resultSet = statementReturn.executeQuery("SELECT id FROM `Settings` WHERE server = " + server);
@@ -100,7 +100,7 @@ public class Database {
      * @param server the server id.
      * @return the results of the query.
      */
-    ResultSet getModuleSettings(String server) {
+    public ResultSet getModuleSettings(String server) {
         try {
             Statement statement = connection.createStatement();
             return statement.executeQuery("SELECT * FROM `Settings` WHERE server = " + server);
@@ -111,9 +111,9 @@ public class Database {
     }
 
     /**
-     * Checks to see if a module is active before parsing a command.
-     * @param modName the name of the module.
-     * @return (boolean) if the module is active or not.
+     * Checks to see if a modules is active before parsing a command.
+     * @param modName the name of the modules.
+     * @return (boolean) if the modules is active or not.
      */
     boolean checkModuleSettings(String modName, String server) {
         try {
@@ -130,12 +130,12 @@ public class Database {
     }
 
     /**
-     * Toggles a module for a server, returns the new value.
-     * @param modName the module to toggle
-     * @param server the server in which the module is to be toggled
+     * Toggles a modules for a server, returns the new value.
+     * @param modName the modules to toggle
+     * @param server the server in which the modules is to be toggled
      * @return the new value of the setting
      */
-    boolean toggleModule(String modName, String server) {
+    public boolean toggleModule(String modName, String server) {
         try {
             Statement statementLogic = connection.createStatement();
             statementLogic.executeUpdate("UPDATE `Settings` SET " + modName + " = NOT " + modName);
@@ -160,7 +160,7 @@ public class Database {
      * @param commandAuthor the author of the command.
      * @return if the command was added successfully.
      */
-    boolean addCustomCommand(String commandName, String commandContents, String server, String commandAuthor) {
+    public boolean addCustomCommand(String commandName, String commandContents, String server, String commandAuthor) {
         try {
             Statement statementCheck = connection.createStatement();
             ResultSet resultSet = statementCheck.executeQuery("SELECT commandContents FROM `CustomCommands` WHERE commandName = '" + commandName + "' AND server = '" + server + "'");
@@ -183,7 +183,7 @@ public class Database {
      * @param server name of the server.
      * @return if the removal was successful.
      */
-    boolean removeCustomCommand(String commandName, String server) {
+    public boolean removeCustomCommand(String commandName, String server) {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM `CustomCommands` WHERE commandName = '" + commandName + "' AND server = '" + server + "'");
@@ -200,7 +200,7 @@ public class Database {
      * @param server the server the command is on.
      * @return the command contents.
      */
-    String getCustomCommand(String commandName, String server) {
+    public String getCustomCommand(String commandName, String server) {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT commandContents FROM `CustomCommands` WHERE commandName = '" + commandName + "' AND server = '" + server + "'");

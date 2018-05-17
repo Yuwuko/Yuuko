@@ -2,7 +2,7 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.Permission;
@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-class ModuleModeration {
+public class ModuleModeration {
 
     private MessageReceivedEvent e;
     private String[] command;
@@ -21,7 +21,7 @@ class ModuleModeration {
      * Module constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    ModuleModeration(MessageReceivedEvent e) {
+    public ModuleModeration(MessageReceivedEvent e) {
         this.e = e;
         command = e.getMessage().getContentRaw().split("\\s+", 4);
 

@@ -2,18 +2,19 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Database;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-class ModuleCustom {
+public class ModuleCustom {
 
     private MessageReceivedEvent e;
     private String[] command;
     private String serverLong = "";
 
-    ModuleCustom(MessageReceivedEvent e) {
+    public ModuleCustom(MessageReceivedEvent e) {
         this.e = e;
         serverLong = e.getGuild().getIdLong() + "";
 

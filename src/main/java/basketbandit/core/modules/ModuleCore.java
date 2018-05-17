@@ -2,9 +2,10 @@
 // Programmer: Joshua Mark Hunt
 // Version: 15/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Database;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -16,14 +17,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 
-class ModuleCore {
+public class ModuleCore {
 
     private Database database = new Database();
     private MessageReceivedEvent e;
     private String[] command;
     private String serverLong;
 
-    ModuleCore(MessageReceivedEvent e) {
+    public ModuleCore(MessageReceivedEvent e) {
         this.e = e;
         MessageChannel channel = e.getChannel();
         User user = e.getAuthor();
@@ -51,7 +52,7 @@ class ModuleCore {
             return;
         }
 
-        if(command[0].toLowerCase().equals(Configuration.PREFIX + "module") || e.getMember().hasPermission(Permission.ADMINISTRATOR) && command[0].toLowerCase().equals(Configuration.PREFIX + "module")) {
+        if(command[0].toLowerCase().equals(Configuration.PREFIX + "modules") || e.getMember().hasPermission(Permission.ADMINISTRATOR) && command[0].toLowerCase().equals(Configuration.PREFIX + "modules")) {
             if(command[1].toLowerCase().equals("dev")) {
                 if(user.getIdLong() == 215161101460045834L) {
                     commandToggle();
@@ -97,7 +98,7 @@ class ModuleCore {
                     .setColor(Color.RED)
                     .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
                     .setTitle("Below are the list of bot modules!")
-                    .setDescription("Each module can be toggled on or off by using the " + Configuration.PREFIX + "module <module name> command.")
+                    .setDescription("Each modules can be toggled on or off by using the " + Configuration.PREFIX + "modules <modules name> command.")
                     .addField("Enabled Modules", enabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
@@ -130,7 +131,7 @@ class ModuleCore {
     }
 
     /**
-     * Toggles a module.
+     * Toggles a modules.
      */
     private void commandToggle() {
         if(database.toggleModule("mod" + command[1].toLowerCase(), serverLong)) {

@@ -2,7 +2,7 @@
 // Programmer: Joshua Mark Hunt
 // Version: 15/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.BasketBandit;
 import basketbandit.core.Configuration;
@@ -36,7 +36,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
-class ModuleMusic {
+public class ModuleMusic {
 
     private MessageReceivedEvent e;
     private String[] command;
@@ -47,7 +47,7 @@ class ModuleMusic {
     private final AudioPlayer player;
     private final AudioPlayerManager playerManager;
 
-    ModuleMusic(MessageReceivedEvent e, BasketBandit core) {
+    public ModuleMusic(MessageReceivedEvent e, BasketBandit core) {
         this.e = e;
         this.core = core;
         command = e.getMessage().getContentRaw().split("\\s+", 2);

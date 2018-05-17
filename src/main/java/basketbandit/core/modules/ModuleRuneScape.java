@@ -2,7 +2,7 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -11,12 +11,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-class ModuleRuneScape {
+public class ModuleRuneScape {
 
     private MessageReceivedEvent e;
     private String[] command;
 
-    ModuleRuneScape(MessageReceivedEvent e) {
+    public ModuleRuneScape(MessageReceivedEvent e) {
         this.e = e;
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 

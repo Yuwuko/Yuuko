@@ -2,7 +2,7 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -11,12 +11,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.awt.*;
 import java.util.Random;
 
-class ModuleMath {
+public class ModuleMath {
 
     private MessageReceivedEvent e;
     private String[] command;
 
-    ModuleMath(MessageReceivedEvent e) {
+    public ModuleMath(MessageReceivedEvent e) {
         this.e = e;
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 

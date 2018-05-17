@@ -4,7 +4,6 @@
 
 package basketbandit.core;
 
-import basketbandit.core.module.Controller;
 import basketbandit.core.music.GuildMusicManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -92,8 +91,6 @@ public class BasketBandit extends ListenerAdapter {
             f.printStackTrace();
         }
     }
-
-    // e.getGuild().getAudioManager().setReceivingHandler();
 
     /**
      * Captures and deals with reacts.

@@ -2,7 +2,7 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -15,7 +15,7 @@ import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-class ModuleUtility {
+public class ModuleUtility {
 
     private MessageReceivedEvent e;
     private String[] command;
@@ -24,7 +24,7 @@ class ModuleUtility {
      * Module constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    ModuleUtility(MessageReceivedEvent e) {
+    public ModuleUtility(MessageReceivedEvent e) {
         this.e = e;
         command = e.getMessage().getContentRaw().split("\\s+", 2);
 
@@ -39,7 +39,7 @@ class ModuleUtility {
      * Module constructor for MessageReactionAddEvents
      * @param e MessageReactionAddEvent
      */
-    ModuleUtility(MessageReactionAddEvent e) {
+    public ModuleUtility(MessageReactionAddEvent e) {
         if(e.getReaction().getReactionEmote().getName().equals("\uD83D\uDCCC")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
             message.pin().queue();
@@ -50,7 +50,7 @@ class ModuleUtility {
      * Module constructor for MessageReactionRemoveEvents
      * @param e MessageReactionRemoveEvent
      */
-    ModuleUtility(MessageReactionRemoveEvent e) {
+    public ModuleUtility(MessageReactionRemoveEvent e) {
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
         if(e.getReactionEmote().getName().equals("\uD83D\uDCCC")) {

@@ -2,10 +2,11 @@
 // Programmer: Joshua Mark Hunt
 // Version: 02/05/2018 - JDK 10.0.1
 
-package basketbandit.core.module;
+package basketbandit.core.modules;
 
 import basketbandit.core.Configuration;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Emote;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.io.BufferedReader;
@@ -13,11 +14,11 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Random;
 
-class ModuleFun {
+public class ModuleFun {
 
     private MessageReceivedEvent e;
 
-    ModuleFun(MessageReceivedEvent e) {
+    public ModuleFun(MessageReceivedEvent e) {
         this.e = e;
         Message message = e.getMessage();
         String[] command = message.getContentRaw().split("\\s+", 2);

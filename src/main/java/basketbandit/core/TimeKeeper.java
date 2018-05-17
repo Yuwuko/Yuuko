@@ -47,6 +47,9 @@ public class TimeKeeper implements Runnable {
                 ss = (s < 10) ? String.format("%02d", s) : s + "";
 
                 ui.updateRuntime(ds,hs,ms,ss);
+
+
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
