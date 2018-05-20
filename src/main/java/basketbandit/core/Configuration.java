@@ -1,0 +1,26 @@
+// Program: BasketBandit (Discord Bot)
+// Programmer: Joshua Mark Hunt
+// Version: 20/05/2018 - JDK 10.0.1
+
+package basketbandit.core;
+
+/**
+ * Configuration class, includes vital information about the bot such as Discord token and command prefix.
+ */
+public class Configuration {
+
+    // Bot version.
+    public static final String VERSION = "1.5.0";
+
+    // Google API key.
+    public static String GOOGLE_API;
+
+    // Bot's ID.
+    public static String BOT_ID;
+
+    // Bot's command prefix.
+    public static final String PREFIX = "?";
+
+    // Bot's status, e.g Playing with lottie's tits.
+    static String STATUS = "with lottie's tits (" + PREFIX + ")";
+}

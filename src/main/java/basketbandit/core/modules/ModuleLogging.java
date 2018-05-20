@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
+// Version: 20/05/2018 - JDK 10.0.1
 
 package basketbandit.core.modules;
 
@@ -16,13 +16,13 @@ public class ModuleLogging {
 
     public ModuleLogging(MessageReceivedEvent e) {
         this.e = e;
-        commandLogCommand();
+        logCommand();
     }
 
     /**
      * Attempts to log the most recent command into the command-log channel.
      */
-    private void commandLogCommand() {
+    private void logCommand() {
         try {
             List<TextChannel> log = e.getGuild().getTextChannelsByName("command-log", true);
             if(log.size() > 0) {

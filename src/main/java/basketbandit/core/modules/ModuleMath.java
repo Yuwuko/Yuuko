@@ -1,104 +1,31 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
+// Version: 20/05/2018 - JDK 10.0.1
 
 package basketbandit.core.modules;
 
-import basketbandit.core.Configuration;
-import net.dv8tion.jda.core.EmbedBuilder;
+import basketbandit.core.commands.C;
+import basketbandit.core.commands.CommandRoll;
+import basketbandit.core.commands.CommandSum;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-import java.awt.*;
-import java.util.Random;
 
 public class ModuleMath {
 
-    private MessageReceivedEvent e;
-    private String[] command;
-
     public ModuleMath(MessageReceivedEvent e) {
-        this.e = e;
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
+        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
+        String command = commandArray[0];
 
-        if(command[0].toLowerCase().equals(Configuration.PREFIX + "roll")) {
-            commandRoll();
-        } else if (command[0].toLowerCase().equals(Configuration.PREFIX + "sum")) {
-            commandSum();
-        }
-    }
-
-    /**
-     * Roll command, essentially random number generator.
-     */
-    private void commandRoll() {
-        String[] rollString = command[1].split("d");
-        int num = 0;
-        int rollNum = 0;
-
-        // I assume someone will try to roll something that isn't a number.
-        if(rollString[1].matches("[0-9]+")) {
-            rollNum = Integer.parseInt(rollString[1]);
-        } else if(rollString[1].contains("-")) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", you can't roll on a negative number or anything that isn't a number").queue();
+        if(command.equals(C.ROLL.getEffectiveName())) {
+            new CommandRoll(e);
             return;
         }
 
-        if(rollString[1].equals("00")) {
-            num = (new Random().nextInt(10) + 1) * 10;
-        } else {
-            num = new Random().nextInt(rollNum) + 1;
+        if(command.equals(C.SUM.getEffectiveName())) {
+            new CommandSum(e);
+            return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder()
-                .setColor(Color.RED)
-                .setAuthor(e.getGuild().getMemberById(e.getAuthor().getIdLong()).getEffectiveName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
-
-        if(num != 0) {
-            e.getTextChannel().sendMessage(embed.build()).queue();
-        } else {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", something has gone wrong...").queue();
-        }
+        System.out.println("[WARNING] End of constructor reached for ModuleMath.");
     }
 
-    /**
-     * Sum command will make simple calculations.
-     */
-    private void commandSum() {
-        String sumString = "";
-
-        if(command[1].contains("+")) {
-            String[] a = command[1].replace("+"," ").split("\\s+");
-            Double sum = Double.parseDouble(a[0]) + Double.parseDouble(a[1]);
-            sumString = a[0] + " + " + a[1] + " = " + sum;
-
-        } else if(command[1].contains("/")) {
-            String[] a = command[1].replace("/"," ").split("\\s+");
-            Double sum = Double.parseDouble(a[0]) / Double.parseDouble(a[1]);
-            sumString = a[0] + " / " + a[1] + " = " + sum;
-
-        } else if(command[1].contains("*")) {
-            String[] a = command[1].replace("*"," ").split("\\s+");
-            Double sum = Double.parseDouble(a[0]) * Double.parseDouble(a[1]);
-            sumString = a[0] + " * " + a[1] + " = " + sum;
-
-        } else if(command[1].contains("-")) {
-            String[] a = command[1].replace("-"," ").split("\\s+");
-            Double sum = Double.parseDouble(a[0]) - Double.parseDouble(a[1]);
-            sumString = a[0] + " - " + a[1] + " = " + sum;
-
-        } else if(command[1].contains("^")) {
-            String[] a = command[1].replace("^"," ").split("\\s+");
-            Double sum = Math.pow(Double.parseDouble(a[0]),Double.parseDouble(a[1]));
-            sumString = a[0] + "^" + a[1] + " = " + sum;
-
-        } else if(command[1].contains("%")) {
-            String[] a = command[1].replace("%"," ").split("\\s+");
-            Double sum = (Double.parseDouble(a[1])/100) * Double.parseDouble(a[0]);
-            sumString = a[0] + "% of " + a[1] + " = " + sum;
-
-        }
-
-        EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);
-        e.getTextChannel().sendMessage(embed.build()).queue();
-    }
 }

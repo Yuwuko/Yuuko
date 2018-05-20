@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
+// Version: 20/05/2018 - JDK 10.0.1
 
 package basketbandit.core;
 
@@ -8,8 +8,8 @@ import org.h2.jdbcx.JdbcDataSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Database {
 
@@ -37,9 +37,12 @@ public class Database {
      * Initial setup for the database. (Dev only)
      */
     public void setupDatabase() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(
+            conn = connection;
+            stmt = conn.prepareStatement(
                 "CREATE TABLE `Settings` (" +
                 "`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
                 "`server` varchar(18) NOT NULL,\n" +
@@ -66,8 +69,10 @@ public class Database {
 
                 "ALTER TABLE `CustomCommands` ADD CONSTRAINT `CustomCommands_fk0` FOREIGN KEY (`server`) REFERENCES `Settings`(`server`) ON DELETE CASCADE;"
             );
+            stmt.execute();
+
         } catch(Exception e) {
-            e.printStackTrace();
+            System.out.println("[ERROR] Unable to initiate database.");
         }
     }
 
@@ -77,22 +82,27 @@ public class Database {
      * @return if the add was successful.
      */
     public boolean addNewServer(String server) {
-        try {
-            Statement statementReturn = connection.createStatement();
-            ResultSet resultSet = statementReturn.executeQuery("SELECT id FROM `Settings` WHERE server = " + server);
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-            if(!resultSet.next()) {
-                Statement statementLogic = connection.createStatement();
-                statementLogic.executeUpdate("INSERT INTO `Settings` (server) VALUES (" + server + ")");
-                return true;
+        try {
+            conn = connection;
+            stmt = conn.prepareStatement("SELECT `id` FROM `Settings` WHERE `server` = '" + server + "'");
+            rs = stmt.executeQuery();
+
+            if(!rs.next()) {
+                stmt = conn.prepareStatement("INSERT INTO `Settings` (`server`) VALUES ('" + server + "')");
+                return stmt.execute();
             } else {
                 return false;
             }
 
         } catch(Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("[ERROR] Unable to add new server to the database. (ID: " + server + ")");
         }
+
+        return false;
     }
 
     /**
@@ -101,55 +111,71 @@ public class Database {
      * @return the results of the query.
      */
     public ResultSet getModuleSettings(String server) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
         try {
-            Statement statement = connection.createStatement();
-            return statement.executeQuery("SELECT * FROM `Settings` WHERE server = " + server);
+            conn = connection;
+            stmt = conn.prepareStatement("SELECT * FROM `Settings` WHERE `server` = '" + server + "'");
+            rs = stmt.executeQuery();
+            return rs;
+
         } catch(Exception e) {
-            e.printStackTrace();
-            return null;
+            System.out.println("[ERROR] Unable to get module settings. (ID: " + server + ")");
         }
+
+        return null;
     }
 
     /**
-     * Checks to see if a modules is active before parsing a command.
-     * @param modName the name of the modules.
-     * @return (boolean) if the modules is active or not.
+     * Checks to see if a module is active before parsing a command.
+     * @param modName the name of the module.
+     * @return (boolean) if the module is active or not.
      */
     boolean checkModuleSettings(String modName, String server) {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT " + modName + " FROM `Settings` WHERE server = " + server);
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean res;
 
-            resultSet.next();
-            return resultSet.getBoolean(1);
+        try {
+            conn = connection;
+            stmt = conn.prepareStatement("SELECT " + modName + " FROM `Settings` WHERE `server` = '" + server + "'");
+            rs = stmt.executeQuery();
+            rs.next();
+            return rs.getBoolean(1);
 
         } catch(Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("[ERROR] Unable to get individual module setting. (Module: " + modName + ", Server: " + server + ")");
         }
+
+        return false;
     }
 
     /**
-     * Toggles a modules for a server, returns the new value.
-     * @param modName the modules to toggle
-     * @param server the server in which the modules is to be toggled
+     * Toggles a module for a server, returns the new value.
+     * @param modName the module to toggle
+     * @param server the server in which the module is to be toggled
      * @return the new value of the setting
      */
     public boolean toggleModule(String modName, String server) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean res;
+
         try {
-            Statement statementLogic = connection.createStatement();
-            statementLogic.executeUpdate("UPDATE `Settings` SET " + modName + " = NOT " + modName);
-
-            Statement statementReturn = connection.createStatement();
-            ResultSet resultSet = statementReturn.executeQuery("SELECT " + modName + " FROM `Settings` WHERE server = '" + server + "'");
-
-            resultSet.next();
-            return resultSet.getBoolean(1);
+            conn = connection;
+            stmt = conn.prepareStatement("UPDATE `Settings` SET " + modName + " = NOT " + modName);
+            stmt.execute();
+            res = checkModuleSettings(modName, server);
+            return res;
 
         } catch(Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("[ERROR] Unable to toggle module setting. (Module: " + modName + ", Server: " + server + ")");
         }
+
+        return false;
     }
 
     /**
@@ -161,20 +187,26 @@ public class Database {
      * @return if the command was added successfully.
      */
     public boolean addCustomCommand(String commandName, String commandContents, String server, String commandAuthor) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
         try {
-            Statement statementCheck = connection.createStatement();
-            ResultSet resultSet = statementCheck.executeQuery("SELECT commandContents FROM `CustomCommands` WHERE commandName = '" + commandName + "' AND server = '" + server + "'");
-            if(resultSet.next()) {
+            conn = connection;
+            stmt = conn.prepareStatement("SELECT commandContents FROM `CustomCommands` WHERE `commandName` = '" + commandName + "' AND `server` = '" + server + "'");
+            rs = stmt.executeQuery();
+
+            if(rs.next()) {
                 return false;
             }
+            stmt = conn.prepareStatement("INSERT INTO `CustomCommands` (`server`, `commandName`, `commandContents`, `commandAuthor`) VALUES ('" + server + "', '" + commandName + "', '" + commandContents + "', '" + commandAuthor + "')");
+            return stmt.execute();
 
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO `CustomCommands` (server, commandName, commandContents, commandAuthor) VALUES ('" + server + "', '" + commandName + "', '" + commandContents + "', '" + commandAuthor + "')");
-            return true;
         } catch(Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("[ERROR] Unable to create new custom command. (Command: " + commandName + ", Server: " + server + ")");
         }
+
+        return false;
     }
 
     /**
@@ -184,14 +216,19 @@ public class Database {
      * @return if the removal was successful.
      */
     public boolean removeCustomCommand(String commandName, String server) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM `CustomCommands` WHERE commandName = '" + commandName + "' AND server = '" + server + "'");
-            return true;
+            conn = connection;
+            stmt = conn.prepareStatement("DELETE FROM `CustomCommands` WHERE `commandName` = '" + commandName + "' AND `server` = '" + server + "'");
+            return stmt.execute();
+
         } catch(Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("[ERROR] Unable to remove custom command. (Command: " + commandName + ", Server: " + server + ")");
         }
+
+        return false;
     }
 
     /**
@@ -201,19 +238,26 @@ public class Database {
      * @return the command contents.
      */
     public String getCustomCommand(String commandName, String server) {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT commandContents FROM `CustomCommands` WHERE commandName = '" + commandName + "' AND server = '" + server + "'");
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String res = null;
 
-            if(resultSet.next()) {
-                return resultSet.getNString(1);
+        try {
+            conn = connection;
+            stmt = conn.prepareStatement("SELECT commandContents FROM `CustomCommands` WHERE `commandName` = '" + commandName + "' AND `server` = '" + server + "'");
+            rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                res = rs.getNString(1);
+                return res;
             } else {
-                return "This command does not exist.";
+                return null;
             }
         } catch(Exception e) {
-            e.printStackTrace();
-            return null;
+            System.out.println("[ERROR] Unable to retrieve custom command. (Command: " + commandName + ", Server: " + server + ")");
         }
+        return null;
     }
 
 }

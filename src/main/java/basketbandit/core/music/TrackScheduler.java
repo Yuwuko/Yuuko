@@ -12,6 +12,7 @@ import java.util.Queue;
 
 public class TrackScheduler extends AudioEventAdapter {
 
+    private AudioTrack background = null;
     private boolean repeating = false;
     private final AudioPlayer player;
     public final Queue<AudioTrack> queue;
@@ -20,17 +21,20 @@ public class TrackScheduler extends AudioEventAdapter {
     /**
      * @param player The audio player this scheduler uses
      */
-    public TrackScheduler(AudioPlayer player) {
+    TrackScheduler(AudioPlayer player) {
         this.player = player;
         this.queue = new LinkedList<>();
     }
 
     /**
      * Add the next track to queue or play right away if nothing is in the queue.
+     * If the queue is empty play the background music if it isn't null.
      * @param track The track to play or add to queue.
      */
     public void queue(AudioTrack track) {
-        if(!player.startTrack(track, true)) {
+        if(player.getPlayingTrack() == background) {
+            player.startTrack(track, false);
+        } else if(!player.startTrack(track, true)) {
             queue.offer(track);
         }
     }
@@ -39,7 +43,9 @@ public class TrackScheduler extends AudioEventAdapter {
      * Start the next track, stopping the current one if it is playing.
      */
     public void nextTrack() {
-        player.startTrack(queue.poll(), false);
+        if(!player.startTrack(queue.poll(), false)) {
+            if(background != null) player.startTrack(background.makeClone(), false);
+        }
     }
 
     /**
@@ -84,5 +90,13 @@ public class TrackScheduler extends AudioEventAdapter {
      */
     public void shuffle() {
         Collections.shuffle((List<?>) queue);
+    }
+
+    /**
+     * Sets the background track.
+     * @param track;
+     */
+    public void setBackground(AudioTrack track) {
+        background = track;
     }
 }

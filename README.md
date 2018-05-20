@@ -1,4 +1,4 @@
-# BasketBandit 1.4.3 (14/05/2018) 
+# BasketBandit 1.5.0 (19/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
@@ -30,7 +30,7 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 - __addchannel \<type\> \<name\> \<nsfw\>__ creates a new channel. (Type is "text" or "voice", NSFW (optional))
 
-- __delchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice")
+- __remchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice")
 
 ### Utility
 
@@ -79,6 +79,10 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 - __track__ will give information about the current track.
 
 - __queue__ will display the current queue.
+
+- __setbackground \<track\>__ will set the background track which will play when nothing is in the queue. (Good for music streams!)
+
+- __unsetbackground__ will unset the background track.
 
 ## Other features
 

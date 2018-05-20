@@ -1,10 +1,10 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 07/05/2018 - JDK 10.0.1
+// Version: 20/05/2018 - JDK 10.0.1
 
 package basketbandit.core;
 
-import basketbandit.core.music.GuildMusicManager;
+import basketbandit.core.music.MusicManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
@@ -15,12 +15,10 @@ import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,26 +29,26 @@ public class BasketBandit extends ListenerAdapter {
 
     private UserInterface ui;
     private TimeKeeper tk;
-    private HashMap<String, GuildMusicManager> managers;
+    private Database database;
 
     /**
      * Initialises the bot and JDA.
      * @param args -> program arguments (currently unused)
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
-     * @throws InterruptedException -> If there was an unexpected interruption.
-     * @throws RateLimitedException -> If the bot was rate limited.
      */
-    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException, RateLimitedException {
+    public static void main(String[] args) throws LoginException, IllegalArgumentException {
         BasketBandit self = new BasketBandit();
 
         new JDABuilder(AccountType.BOT)
-                .setToken(Configuration.TOKEN)
+                .setToken(args[1])
                 .addEventListener(self)
                 .setEventManager(new ThreadedEventManager())
                 .buildAsync()
                 .getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
 
+        Configuration.BOT_ID = args[0];
+        Configuration.GOOGLE_API = args[2];
     }
 
     /**
@@ -59,7 +57,8 @@ public class BasketBandit extends ListenerAdapter {
     private BasketBandit() {
         ui = new UserInterface();
         tk = new TimeKeeper(ui);
-        managers = new HashMap<>();
+        database = new Database();
+        new MusicManagerHandler();
     }
 
     /**
@@ -83,7 +82,7 @@ public class BasketBandit extends ListenerAdapter {
             }
 
             if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-                new Controller(e, ui, this);
+                new Controller(e, database, this);
                 commandCount++;
                 ui.updateCount(messageCount, commandCount);
             }
@@ -130,27 +129,6 @@ public class BasketBandit extends ListenerAdapter {
         }
     }
 
-    //////////////////////////////////////////////////////////////////// MUSIC
-
-    /**
-     * Returns a guild's GuildMusicManager or null if there isn't one.
-     * @return trackScheduler or NULL.
-     */
-    public GuildMusicManager getGuildMusicManager(String guildID) {
-        return managers.get(guildID);
-    }
-
-    /**
-     * Returns full MusicManager HashMap.
-     */
-    public HashMap<String, GuildMusicManager> getGuildMusicManagers() {
-        return managers;
-    }
-
-    /**
-     * Adds tot the GuildMusicManager HashMap.
-     */
-    public void addGuildMusicManager(String guildID, GuildMusicManager manager) {
-        managers.put(guildID, manager);
-    }
 }
+
+
