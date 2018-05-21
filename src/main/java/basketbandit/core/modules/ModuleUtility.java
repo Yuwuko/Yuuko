@@ -5,6 +5,7 @@
 package basketbandit.core.modules;
 
 import basketbandit.core.commands.C;
+import basketbandit.core.commands.CommandLineStatus;
 import basketbandit.core.commands.CommandServer;
 import basketbandit.core.commands.CommandUser;
 import net.dv8tion.jda.core.entities.Message;
@@ -33,7 +34,12 @@ public class ModuleUtility {
             return;
         }
 
-        System.out.println("[WARNING] End of constructor reached for ModuleCore.");
+        if(command.equals(C.LINE_STATUS.getEffectiveName())) {
+            new CommandLineStatus(e);
+            return;
+        }
+
+        System.out.println("[WARNING] End of constructor reached for ModuleUtility.");
     }
 
     /**

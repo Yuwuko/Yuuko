@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
 import java.time.Instant;
 
-public class Controller {
+class Controller {
 
     private Database database;
     private String serverLong;
@@ -22,7 +22,7 @@ public class Controller {
      * Controller constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    public Controller(MessageReceivedEvent e, Database d, BasketBandit b) {
+    Controller(MessageReceivedEvent e, Database d) {
         this.database = d;
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
         User user = e.getAuthor();
@@ -72,6 +72,15 @@ public class Controller {
                         new ModuleUtility(e);
                     } else {
                         e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
+                    }
+                    break;
+
+                // ModuleTransport
+                case Configuration.PREFIX + "linestatus":
+                    if(database.checkModuleSettings("modTransport", serverLong)) {
+                        new ModuleTransport(e);
+                    } else {
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the transport module is disabled.").queue();
                     }
                     break;
 
@@ -155,7 +164,7 @@ public class Controller {
      * Controller constructor for MessageReactionAddEvents
      * @param e MessageReactionAddEvent
      */
-    public Controller(MessageReactionAddEvent e) {
+    Controller(MessageReactionAddEvent e) {
         MessageReaction react = e.getReaction();
         serverLong = e.getGuild().getIdLong() + "";
 
@@ -170,7 +179,7 @@ public class Controller {
      * Controller constructor for MessageReactionRemoveEvents
      * @param e MessageReactionRemoveEvent
      */
-    public Controller(MessageReactionRemoveEvent e) {
+    Controller(MessageReactionRemoveEvent e) {
         MessageReaction react = e.getReaction();
         serverLong = e.getGuild().getIdLong() + "";
 

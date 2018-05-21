@@ -51,6 +51,7 @@ public class Database {
                 "`modMusic` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modCustom` BOOLEAN NOT NULL DEFAULT '1',\n" +
                 "`modUtility` BOOLEAN NOT NULL DEFAULT '1',\n" +
+                "`modTransport` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modLogging` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modMath` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modFun` BOOLEAN NOT NULL DEFAULT '0',\n" +

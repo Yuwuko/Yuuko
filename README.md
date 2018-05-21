@@ -1,4 +1,4 @@
-# BasketBandit 1.5.0 (20/05/2018) 
+# BasketBandit 1.6.0 (21/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
@@ -37,6 +37,10 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 - __user \<name\>__ will give account information about the user given, such as join date, online status and guild roles. 
 
 - __server__ will give information about the current server, such as region and owner.
+
+### Transport
+
+- __linestatus__ will return full line coverage for London Underground, accurate to command execution.
 
 ### Fun
 

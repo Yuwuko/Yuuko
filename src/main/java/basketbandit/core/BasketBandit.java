@@ -49,6 +49,8 @@ public class BasketBandit extends ListenerAdapter {
 
         Configuration.BOT_ID = args[0];
         Configuration.GOOGLE_API = args[2];
+        Configuration.TFL_ID = args[3];
+        Configuration.TFL_API = args[4];
     }
 
     /**
@@ -82,7 +84,7 @@ public class BasketBandit extends ListenerAdapter {
             }
 
             if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-                new Controller(e, database, this);
+                new Controller(e, database);
                 commandCount++;
                 ui.updateCount(messageCount, commandCount);
             }

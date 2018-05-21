@@ -46,4 +46,7 @@ public final class C {
     public static final Command SET_BACKGROUND = new CommandSetBackground();
     public static final Command UNSET_BACKGROUND = new CommandUnsetBackground();
 
+    // Transport module commands.
+    public static final Command LINE_STATUS = new CommandLineStatus();
+
 }
