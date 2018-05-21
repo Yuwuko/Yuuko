@@ -30,11 +30,11 @@ public class CommandQueue extends Command {
         GuildMusicManager manager = ModuleMusic.getMusicManager(e.getGuild().getId());
 
         synchronized(manager.scheduler.queue) {
-            String queue = "";
+            StringBuilder queue = new StringBuilder();
             int i = 1;
 
             for(AudioTrack track : manager.scheduler.queue) {
-                queue += i + ": " + track.getInfo().title + ", (" + ModuleMusic.getTimestamp(track.getInfo().length) + ") \n";
+                queue.append(i).append(": ").append(track.getInfo().title).append(", (").append(ModuleMusic.getTimestamp(track.getInfo().length)).append(") \n");
                 i++;
                 if (i > 10) {
                     break;
@@ -47,7 +47,7 @@ public class CommandQueue extends Command {
                         .setColor(Color.RED)
                         .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
                         .setTitle("Here are the next " + i + " tracks in the queue:")
-                        .setDescription(queue)
+                        .setDescription(queue.toString())
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 e.getTextChannel().sendMessage(nextTracks.build()).queue();

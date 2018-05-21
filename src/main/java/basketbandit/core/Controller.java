@@ -119,11 +119,13 @@ class Controller {
                 case Configuration.PREFIX + "stop":
                 case Configuration.PREFIX + "pause":
                 case Configuration.PREFIX + "track":
+                case Configuration.PREFIX + "lasttrack":
                 case Configuration.PREFIX + "skip":
                 case Configuration.PREFIX + "shuffle":
                 case Configuration.PREFIX + "queue":
                 case Configuration.PREFIX + "setbackground":
                 case Configuration.PREFIX + "unsetbackground":
+                case Configuration.PREFIX + "togglerepeat":
                     if(database.checkModuleSettings("modMusic", serverLong)) {
                         new ModuleMusic(e);
                     } else {

@@ -30,7 +30,7 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 - __addchannel \<type\> \<name\> \<nsfw\>__ creates a new channel. (Type is "text" or "voice", NSFW (optional))
 
-- __remchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice")
+- __delchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice")
 
 ### Utility
 

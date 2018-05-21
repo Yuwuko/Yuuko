@@ -41,16 +41,16 @@ public class Disruption {
     private String created;
 
     @JsonProperty("affectedRoutes")
-    private List<Object> affectedRoutes = new ArrayList<Object>();
+    private List<Object> affectedRoutes = new ArrayList<>();
 
     @JsonProperty("affectedStops")
-    private List<Object> affectedStops = new ArrayList<Object>();
+    private List<Object> affectedStops = new ArrayList<>();
 
     @JsonProperty("closureText")
     private String closureText;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("$type")
     public String get$type() {

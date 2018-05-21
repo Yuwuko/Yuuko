@@ -6,10 +6,10 @@ package basketbandit.core;
 
 import javax.swing.*;
 
-public class UserInterface{
+class UserInterface{
 
-    private JFrame frame;
-    private JLabel[] labels = new JLabel[12];
+    private final JFrame frame;
+    private final JLabel[] labels = new JLabel[12];
 
     /**
      * Interface constructor
@@ -33,7 +33,7 @@ public class UserInterface{
      * @param msg -> message count.
      * @param cmd -> command count.
      */
-    public void updateCount(int msg, int cmd) {
+    void updateCount(int msg, int cmd) {
         labels[0].setText("Messages Processed: " + msg + ", Commands Processed: " + cmd + ".");
     }
 

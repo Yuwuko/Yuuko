@@ -37,7 +37,7 @@ public class LineManager {
     private String modeName;
 
     @JsonProperty("disruptions")
-    private List<Object> disruptions = new ArrayList<Object>();
+    private List<Object> disruptions = new ArrayList<>();
 
     @JsonProperty("created")
     private String created;
@@ -46,19 +46,19 @@ public class LineManager {
     private String modified;
 
     @JsonProperty("lineStatuses")
-    private List<LineStatus> lineStatuses = new ArrayList<LineStatus>();
+    private List<LineStatus> lineStatuses = new ArrayList<>();
 
     @JsonProperty("routeSections")
-    private List<Object> routeSections = new ArrayList<Object>();
+    private List<Object> routeSections = new ArrayList<>();
 
     @JsonProperty("serviceTypes")
-    private List<ServiceType> serviceTypes = new ArrayList<ServiceType>();
+    private List<ServiceType> serviceTypes = new ArrayList<>();
 
     @JsonProperty("crowding")
     private Crowding crowding;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("$type")
     public String get$type() {

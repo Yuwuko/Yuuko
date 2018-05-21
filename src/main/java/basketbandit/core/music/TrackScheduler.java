@@ -86,6 +86,13 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     /**
+     * Returns the last track.
+     */
+    public AudioTrack getLastTrack() {
+        return lastTrack;
+    }
+
+    /**
      * Shuffles the playlist.
      */
     public void shuffle() {

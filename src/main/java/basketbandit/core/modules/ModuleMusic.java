@@ -75,6 +75,16 @@ public class ModuleMusic {
             return;
         }
 
+        if(command.equals(C.LAST_TRACK.getEffectiveName())) {
+            new CommandLastTrack(e);
+            return;
+        }
+
+        if(command.equals(C.TOGGLE_REPEAT.getEffectiveName())) {
+            new CommandToggleRepeat(e);
+            return;
+        }
+
         System.out.println("[WARNING] End of constructor reached for ModuleMusic.");
     }
 

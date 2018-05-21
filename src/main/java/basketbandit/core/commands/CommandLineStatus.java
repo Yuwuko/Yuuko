@@ -70,7 +70,7 @@ public class CommandLineStatus extends Command {
                     .addField(lineManager.get(8).getName(),lineManager.get(8).getLineStatuses().get(0).getStatusSeverityDescription(),false)
                     .addField(lineManager.get(9).getName(),lineManager.get(9).getLineStatuses().get(0).getStatusSeverityDescription(),false)
                     .addField(lineManager.get(10).getName(),lineManager.get(10).getLineStatuses().get(0).getStatusSeverityDescription(),false)
-                    .setFooter("Version: " + Configuration.VERSION + ", data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl())
+                    .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl())
             ;
             e.getTextChannel().sendMessage(embed.build()).queue();
             return true;

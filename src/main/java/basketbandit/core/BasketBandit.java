@@ -22,14 +22,13 @@ import javax.security.auth.login.LoginException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class BasketBandit extends ListenerAdapter {
+class BasketBandit extends ListenerAdapter {
 
     private int messageCount = 0;
     private int commandCount = 0;
 
-    private UserInterface ui;
+    private final UserInterface ui;
     private TimeKeeper tk;
-    private Database database;
 
     /**
      * Initialises the bot and JDA.
@@ -59,7 +58,6 @@ public class BasketBandit extends ListenerAdapter {
     private BasketBandit() {
         ui = new UserInterface();
         tk = new TimeKeeper(ui);
-        database = new Database();
         new MusicManagerHandler();
     }
 
@@ -84,7 +82,7 @@ public class BasketBandit extends ListenerAdapter {
             }
 
             if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-                new Controller(e, database);
+                new Controller(e, new Database());
                 commandCount++;
                 ui.updateCount(messageCount, commandCount);
             }

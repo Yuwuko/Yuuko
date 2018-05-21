@@ -45,6 +45,8 @@ public final class C {
     public static final Command QUEUE = new CommandQueue();
     public static final Command SET_BACKGROUND = new CommandSetBackground();
     public static final Command UNSET_BACKGROUND = new CommandUnsetBackground();
+    public static final Command LAST_TRACK = new CommandLastTrack();
+    public static final Command TOGGLE_REPEAT = new CommandToggleRepeat();
 
     // Transport module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();

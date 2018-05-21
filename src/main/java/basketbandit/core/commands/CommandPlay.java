@@ -48,9 +48,9 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
             if(!commandArray[1].startsWith("https://www.youtube.com/watch?v=") || !commandArray[1].startsWith("https://youtu.be/")) {
-                loadAndPlay(manager, e.getChannel(), ModuleMusic.searchYouTube(e), e, true);
+                loadAndPlay(manager, e.getChannel(), ModuleMusic.searchYouTube(e), e);
             } else {
-                loadAndPlay(manager, e.getChannel(), commandArray[1], e, true);
+                loadAndPlay(manager, e.getChannel(), commandArray[1], e);
             }
             return true;
         }
@@ -59,11 +59,11 @@ public class CommandPlay extends Command {
 
     /**
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
-     * @param manager; GuildMusicManager.
-     * @param channel; MessageChannel.
-     * @param url; TrackUrl.
+     * @param manager ; GuildMusicManager.
+     * @param channel ; MessageChannel.
+     * @param url ; TrackUrl.
      */
-    private void loadAndPlay(GuildMusicManager manager, final MessageChannel channel, String url, MessageReceivedEvent e, final boolean addPlaylist) {
+    private void loadAndPlay(GuildMusicManager manager, final MessageChannel channel, String url, MessageReceivedEvent e) {
         final String trackUrl;
 
         if(url.startsWith("<") && url.endsWith(">")) {
@@ -90,20 +90,10 @@ public class CommandPlay extends Command {
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                AudioTrack firstTrack = playlist.getSelectedTrack();
                 List<AudioTrack> tracks = playlist.getTracks();
 
-                if(firstTrack == null) {
-                    firstTrack = playlist.getTracks().get(0);
-                }
-
-                if(addPlaylist) {
-                    channel.sendMessage("Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName()).queue();
-                    tracks.forEach(manager.scheduler::queue);
-                } else {
-                    channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")").queue();
-                    manager.scheduler.queue(firstTrack);
-                }
+                channel.sendMessage("Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName()).queue();
+                tracks.forEach(manager.scheduler::queue);
             }
 
             @Override

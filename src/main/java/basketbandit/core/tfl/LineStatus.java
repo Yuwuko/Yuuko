@@ -44,13 +44,13 @@ public class LineStatus {
     private String created;
 
     @JsonProperty("validityPeriods")
-    private List<ValidityPeriod> validityPeriods = new ArrayList<ValidityPeriod>();
+    private List<ValidityPeriod> validityPeriods = new ArrayList<>();
 
     @JsonProperty("disruption")
     private Disruption disruption;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("$type")
     public String get$type() {

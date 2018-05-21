@@ -12,17 +12,14 @@ import java.util.List;
 
 public class ModuleLogging {
 
-    private MessageReceivedEvent e;
-
     public ModuleLogging(MessageReceivedEvent e) {
-        this.e = e;
-        logCommand();
+        logCommand(e);
     }
 
     /**
      * Attempts to log the most recent command into the command-log channel.
      */
-    private void logCommand() {
+    private void logCommand(MessageReceivedEvent e) {
         try {
             List<TextChannel> log = e.getGuild().getTextChannelsByName("command-log", true);
             if(log.size() > 0) {

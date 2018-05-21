@@ -63,12 +63,9 @@ public class CommandRuneScapeStats extends Command {
                     + "Hunter          :: " + skills[45] + "\n"
                     + "Construction    :: " + skills[47] + "");
             if(!osrs) {
-                messageString.append("\n"+"Summoning       :: " + skills[49] + "\n"
-                        + "Dungeoneering   :: " + skills[51] + "\n"
-                        + "Divination      :: " + skills[53] + "\n"
-                        + "Invention       :: " + skills[55]);
+                messageString.append("\n" + "Summoning       :: ").append(skills[49]).append("\n").append("Dungeoneering   :: ").append(skills[51]).append("\n").append("Divination      :: ").append(skills[53]).append("\n").append("Invention       :: ").append(skills[55]);
             }
-            messageString.append("``````Total Level     :: " + skills[1] + "```");
+            messageString.append("``````Total Level     :: ").append(skills[1]).append("```");
 
             e.getTextChannel().sendMessage(messageString).queue();
             return true;

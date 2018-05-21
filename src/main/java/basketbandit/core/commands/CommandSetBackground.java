@@ -39,9 +39,9 @@ public class CommandSetBackground extends Command {
         manager.player.setPaused(false);
 
         if(!commandArray[1].startsWith("https://www.youtube.com/watch?v=") || !commandArray[1].startsWith("https://youtu.be/")) {
-            loadAndPlay(manager, e.getChannel(), ModuleMusic.searchYouTube(e), e, true);
+            loadAndPlay(manager, e.getChannel(), ModuleMusic.searchYouTube(e), e);
         } else {
-            loadAndPlay(manager, e.getChannel(), commandArray[1], e, true);
+            loadAndPlay(manager, e.getChannel(), commandArray[1], e);
         }
 
         return true;
@@ -54,7 +54,7 @@ public class CommandSetBackground extends Command {
      * @param channel; MessageChannel.
      * @param url; TrackUrl.
      */
-    private void loadAndPlay(GuildMusicManager manager, final MessageChannel channel, String url, MessageReceivedEvent e, final boolean addPlaylist) {
+    private void loadAndPlay(GuildMusicManager manager, final MessageChannel channel, String url, MessageReceivedEvent e) {
         final String trackUrl;
 
         if(url.startsWith("<") && url.endsWith(">")) {

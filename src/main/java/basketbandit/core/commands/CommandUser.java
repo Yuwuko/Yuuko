@@ -59,21 +59,22 @@ public class CommandUser extends Command {
 
         // Gets user's roles, replaces the last comma with nothing.
         List<Role> infoRoles = member.getRoles();
-        String roleString = "";
+        StringBuilder roleString = new StringBuilder();
 
         for(Role role : infoRoles) {
-            roleString += role.getName() + ", ";
+            roleString.append(role.getName()).append(", ");
         }
 
-        if(!roleString.equals("")) {
+        if(!roleString.toString().equals("")) {
             int index = roleString.lastIndexOf(", ");
-            roleString = new StringBuilder(roleString).replace(index, index + 1, "").toString();
+            roleString = new StringBuilder(new StringBuilder(roleString.toString()).replace(index, index + 1, "").toString());
         }
 
         commandInfo = new EmbedBuilder()
                 .setColor(Color.RED)
                 .setAuthor("User information about " + member.getEffectiveName() + ",", null, member.getUser().getAvatarUrl())
                 .setTitle("User is currently "+member.getOnlineStatus())
+                .setThumbnail(member.getUser().getAvatarUrl())
                 .setDescription(
                         "Username                ::  " + member.getUser().getName() + "#" + member.getUser().getDiscriminator() + "\n" +
                         "UserID                      ::  " + member.getUser().getIdLong() + "\n" +

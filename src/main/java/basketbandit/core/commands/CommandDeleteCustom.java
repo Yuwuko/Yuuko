@@ -30,7 +30,7 @@ public class CommandDeleteCustom extends Command {
         Database database = new Database();
 
         if(database.removeCustomCommand(commandName, serverLong)) {
-            e.getTextChannel().sendMessage(commandName + " sucessfully removed!").queue();
+            e.getTextChannel().sendMessage(commandName + " successfully removed!").queue();
             return true;
         }
         throw new NoSuchElementException();
