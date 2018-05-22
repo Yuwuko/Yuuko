@@ -13,7 +13,7 @@ public class Configuration {
     public static String BOT_ID;
 
     // Bot version.
-    public static final String VERSION = "1.6.1";
+    public static final String VERSION = "1.7.0";
 
     // Google API key.
     public static String GOOGLE_API;
