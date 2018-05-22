@@ -2,7 +2,6 @@ package basketbandit.core.commands;
 
 import basketbandit.core.modules.ModuleMusic;
 import basketbandit.core.music.GuildMusicManager;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CommandToggleRepeat extends Command {
@@ -23,7 +22,6 @@ public class CommandToggleRepeat extends Command {
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
         GuildMusicManager manager = ModuleMusic.getMusicManager(e.getGuild().getId());
-        AudioTrackInfo track = manager.scheduler.getLastTrack().getInfo();
 
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());
         e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating()).queue();

@@ -34,30 +34,33 @@ class Controller {
         System.out.println("[" + Thread.currentThread().getName() + "] - " + Instant.now() + " - " + e.getGuild().getName() + " - " + command[0]);
 
         try {
+            command[0] = command[0].replace(Configuration.PREFIX, "").toLowerCase();
+
             // Command switch -> chooses which module class to sent the message event to.
-            switch(command[0].toLowerCase()) {
-                case Configuration.PREFIX + "module":
-                case Configuration.PREFIX + "modules":
-                case Configuration.PREFIX + "setup":
-                case Configuration.PREFIX + "help":
+            switch(command[0]) {
+                case "module":
+                case "modules":
+                case "setup":
+                case "help":
                     new ModuleCore(e);
                     break;
 
                 // ModuleDev
-                case Configuration.PREFIX + "dbsetup":
-                    if(user.getIdLong() == 215161101460045834L || database.checkModuleSettings("modDev", serverLong)) {
+                case "dbsetup":
+                case "setstatus":
+                    if(user.getIdLong() == 215161101460045834L) {
                         new ModuleDev(e);
                     } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the dev module is disabled.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you don't have permission to do that! <:fiteme:443069990019530763>").queue();
                     }
                     break;
 
                 // ModuleModeration
-                case Configuration.PREFIX + "nuke":
-                case Configuration.PREFIX + "kick":
-                case Configuration.PREFIX + "ban":
-                case Configuration.PREFIX + "addchannel":
-                case Configuration.PREFIX + "delchannel":
+                case "nuke":
+                case "kick":
+                case "ban":
+                case "addchannel":
+                case "delchannel":
                     if(database.checkModuleSettings("modModeration", serverLong)) {
                         new ModuleModeration(e);
                     } else {
@@ -66,8 +69,8 @@ class Controller {
                     break;
 
                 // ModuleUtility
-                case Configuration.PREFIX + "server":
-                case Configuration.PREFIX + "user":
+                case "server":
+                case "user":
                     if(database.checkModuleSettings("modUtility", serverLong)) {
                         new ModuleUtility(e);
                     } else {
@@ -76,7 +79,7 @@ class Controller {
                     break;
 
                 // ModuleTransport
-                case Configuration.PREFIX + "linestatus":
+                case "linestatus":
                     if(database.checkModuleSettings("modTransport", serverLong)) {
                         new ModuleTransport(e);
                     } else {
@@ -85,8 +88,8 @@ class Controller {
                     break;
 
                 // ModuleMath
-                case Configuration.PREFIX + "roll":
-                case Configuration.PREFIX + "sum":
+                case "roll":
+                case "sum":
                     if(database.checkModuleSettings("modMath", serverLong)) {
                         new ModuleMath(e);
                     } else {
@@ -95,8 +98,8 @@ class Controller {
                     break;
 
                 // ModuleFun
-                case Configuration.PREFIX + "insult":
-                case Configuration.PREFIX + "overreact":
+                case "insult":
+                case "overreact":
                     if(database.checkModuleSettings("modFun", serverLong)) {
                         new ModuleFun(e);
                     } else {
@@ -105,8 +108,8 @@ class Controller {
                     break;
 
                 // ModuleRuneScape
-                case Configuration.PREFIX + "rsstats":
-                case Configuration.PREFIX + "osstats":
+                case "rsstats":
+                case "osstats":
                     if(database.checkModuleSettings("modRuneScape", serverLong)) {
                         new ModuleRuneScape(e);
                     } else {
@@ -115,17 +118,17 @@ class Controller {
                     break;
 
                 // ModuleMusic
-                case Configuration.PREFIX + "play":
-                case Configuration.PREFIX + "stop":
-                case Configuration.PREFIX + "pause":
-                case Configuration.PREFIX + "track":
-                case Configuration.PREFIX + "lasttrack":
-                case Configuration.PREFIX + "skip":
-                case Configuration.PREFIX + "shuffle":
-                case Configuration.PREFIX + "queue":
-                case Configuration.PREFIX + "setbackground":
-                case Configuration.PREFIX + "unsetbackground":
-                case Configuration.PREFIX + "togglerepeat":
+                case "play":
+                case "stop":
+                case "pause":
+                case "track":
+                case "lasttrack":
+                case "skip":
+                case "shuffle":
+                case "queue":
+                case "setbackground":
+                case "unsetbackground":
+                case "togglerepeat":
                     if(database.checkModuleSettings("modMusic", serverLong)) {
                         new ModuleMusic(e);
                     } else {
@@ -134,8 +137,8 @@ class Controller {
                     break;
 
                     // ModuleCustom
-                case Configuration.PREFIX + "addcc":
-                case Configuration.PREFIX + "delcc":
+                case "addcc":
+                case "delcc":
                     if(database.checkModuleSettings("modCustom", serverLong)) {
                         new ModuleCustom(e);
                     } else {

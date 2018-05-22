@@ -40,16 +40,18 @@ class BasketBandit extends ListenerAdapter {
         BasketBandit self = new BasketBandit();
 
         new JDABuilder(AccountType.BOT)
-                .setToken(args[1])
+                .setToken(args[2])
                 .addEventListener(self)
                 .setEventManager(new ThreadedEventManager())
                 .buildAsync()
                 .getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
 
-        Configuration.BOT_ID = args[0];
-        Configuration.GOOGLE_API = args[2];
-        Configuration.TFL_ID = args[3];
-        Configuration.TFL_API = args[4];
+        Configuration.PREFIX = args[0];
+        Configuration.BOT_ID = args[1];
+        Configuration.GOOGLE_API = args[3];
+        Configuration.TFL_ID = args[4];
+        Configuration.TFL_API = args[5];
+        Configuration.DATABASE_URL = args[6];
     }
 
     /**
@@ -86,6 +88,7 @@ class BasketBandit extends ListenerAdapter {
                 commandCount++;
                 ui.updateCount(messageCount, commandCount);
             }
+
         } catch(Exception f) {
             f.printStackTrace();
         }

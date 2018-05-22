@@ -21,12 +21,12 @@ public class Database {
     public Database() {
         try {
             JdbcDataSource ds = new JdbcDataSource();
-            ds.setURL("jdbc:h2:˜/Dropbox/GitHub/BasketBandit-Java/database/dbBasketBandit");
+            ds.setURL("jdbc:h2:" + Configuration.DATABASE_URL);
             ds.setUser("admin");
             ds.setPassword("password");
 
             Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection ("jdbc:h2:~/Dropbox/GitHub/BasketBandit-Java/database/dbBasketBandit;mode=mysql", "admin","password");
+            connection = DriverManager.getConnection ("jdbc:h2:" + Configuration.DATABASE_URL + ";mode=mysql", "admin","password");
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -36,9 +36,9 @@ public class Database {
     /**
      * Initial setup for the database. (Dev only)
      */
-    public void setupDatabase() {
-        Connection conn = null;
-        PreparedStatement stmt = null;
+    public boolean setupDatabase() {
+        Connection conn;
+        PreparedStatement stmt;
 
         try {
             conn = connection;
@@ -70,10 +70,11 @@ public class Database {
 
                 "ALTER TABLE `CustomCommands` ADD CONSTRAINT `CustomCommands_fk0` FOREIGN KEY (`server`) REFERENCES `Settings`(`server`) ON DELETE CASCADE;"
             );
-            stmt.execute();
+            return stmt.execute();
 
         } catch(Exception e) {
             System.out.println("[ERROR] Unable to initiate database.");
+            return false;
         }
     }
 
@@ -83,9 +84,9 @@ public class Database {
      * @return if the add was successful.
      */
     public boolean addNewServer(String server) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
 
         try {
             conn = connection;
@@ -112,9 +113,9 @@ public class Database {
      * @return the results of the query.
      */
     public ResultSet getModuleSettings(String server) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
 
         try {
             conn = connection;
@@ -135,10 +136,9 @@ public class Database {
      * @return (boolean) if the module is active or not.
      */
     boolean checkModuleSettings(String modName, String server) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean res;
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
 
         try {
             conn = connection;
@@ -161,8 +161,8 @@ public class Database {
      * @return the new value of the setting
      */
     public boolean toggleModule(String modName, String server) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
+        Connection conn;
+        PreparedStatement stmt;
         boolean res;
 
         try {
@@ -188,9 +188,9 @@ public class Database {
      * @return if the command was added successfully.
      */
     public boolean addCustomCommand(String commandName, String commandContents, String server, String commandAuthor) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
 
         try {
             conn = connection;
@@ -205,9 +205,9 @@ public class Database {
 
         } catch(Exception e) {
             System.out.println("[ERROR] Unable to create new custom command. (Command: " + commandName + ", Server: " + server + ")");
+            return false;
         }
 
-        return false;
     }
 
     /**
@@ -217,8 +217,8 @@ public class Database {
      * @return if the removal was successful.
      */
     public boolean removeCustomCommand(String commandName, String server) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
+        Connection conn;
+        PreparedStatement stmt;
 
         try {
             conn = connection;
@@ -227,9 +227,9 @@ public class Database {
 
         } catch(Exception e) {
             System.out.println("[ERROR] Unable to remove custom command. (Command: " + commandName + ", Server: " + server + ")");
+            return false;
         }
 
-        return false;
     }
 
     /**
@@ -239,10 +239,10 @@ public class Database {
      * @return the command contents.
      */
     public String getCustomCommand(String commandName, String server) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String res = null;
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
+        String res;
 
         try {
             conn = connection;
@@ -257,8 +257,9 @@ public class Database {
             }
         } catch(Exception e) {
             System.out.println("[ERROR] Unable to retrieve custom command. (Command: " + commandName + ", Server: " + server + ")");
+            return null;
         }
-        return null;
+
     }
 
 }

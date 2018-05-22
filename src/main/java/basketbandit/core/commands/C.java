@@ -2,6 +2,10 @@ package basketbandit.core.commands;
 
 public final class C {
 
+    // Dev module commands.
+    public static final Command DATABASE_SETUP = new CommandDatabaseSetup();
+    public static final Command SET_STATUS = new CommandSetStatus();
+
     // Core module commands.
     public static final Command SETUP = new CommandSetup();
     public static final Command MODULE = new CommandModule();

@@ -48,7 +48,4 @@ class UserInterface{
         frame.setTitle("BasketBandit " + Configuration.VERSION + " (" + d + ":" + h + ":" + m + ":" + s + ")");
     }
 
-    public void setDebug(String input) {
-        labels[1].setText(input);
-    }
 }

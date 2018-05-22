@@ -2,6 +2,15 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.7.0
+
++ [+] Added a notice a the bottom of the README.md concerning a verified voice bug.
++ [+] Added developer only command to change presence, finished refactor.
++ [~] Moved all hardcoded configurations to program arguments. [args[]]
++ [~] Changed [linestatus] embed format to inline fields, also added support for multiple statuses.
++ [~] Heavily modified the TFL classes, removing roughly 90% since they were not being used.
++ [~] Resolved the rest of the compiler warning I felt needed attention.
+
 ## 1.6.0
 
 + [+] TFL London Tube service status command. [linestatus]

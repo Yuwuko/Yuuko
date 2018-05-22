@@ -24,9 +24,12 @@ public class Configuration {
     // TFL API Key.
     public static String TFL_API;
 
+    // Database URL.
+    static String DATABASE_URL;
+
     // Bot's command prefix.
-    public static final String PREFIX = "?";
+    public static String PREFIX;
 
     // Bot's status, e.g Playing with lottie's tits.
-    static String STATUS = "with lottie's tits (" + PREFIX + ")";
+    static String STATUS = "with lottie's tits.";
 }

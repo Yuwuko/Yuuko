@@ -1,4 +1,4 @@
-# BasketBandit 1.6.0 (21/05/2018) 
+# BasketBandit 1.7.0 (22/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
@@ -82,16 +82,22 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 - __track__ will give information about the current track.
 
+- __lasttrack__ will give information about the previous track.
+
 - __queue__ will display the current queue.
 
 - __setbackground \<track\>__ will set the background track which will play when nothing is in the queue. (Good for music streams!)
 
 - __unsetbackground__ will unset the background track.
 
+- __togglerepeat__ will toggle repeat for the current song.
+
 ## Other features
 
 As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.
 
 ## Notes
+
+Can still hear audio after you have muted the bot and restarted your client or switched channels? This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
 
 If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any suggestions, feel free to post them in my Discord server [here](https://discord.gg/QcwghsA).
