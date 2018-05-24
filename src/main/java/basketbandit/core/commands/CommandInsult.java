@@ -10,11 +10,11 @@ import java.util.Random;
 public class CommandInsult extends Command{
 
     CommandInsult() {
-        super("insult", "fun", null);
+        super("insult", "basketbandit.core.modules.ModuleFun", null);
     }
 
     public CommandInsult(MessageReceivedEvent e) {
-        super("insult", "fun", null);
+        super("insult", "basketbandit.core.modules.ModuleFun", null);
         executeCommand(e);
     }
 

@@ -7,11 +7,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandSkip extends Command {
 
     CommandSkip() {
-        super("skip", "music", null);
+        super("skip", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandSkip(MessageReceivedEvent e) {
-        super("skip", "music", null);
+        super("skip", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
     }
 

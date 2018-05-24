@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 public class CommandBan extends Command {
 
     CommandBan() {
-        super("ban", "moderation", Permission.BAN_MEMBERS);
+        super("ban", "basketbandit.core.modules.ModuleModeration", Permission.BAN_MEMBERS);
     }
 
     public CommandBan(MessageReceivedEvent e) {
-        super("ban", "moderation", Permission.BAN_MEMBERS);
+        super("ban", "basketbandit.core.modules.ModuleModeration", Permission.BAN_MEMBERS);
         executeCommand(e);
     }
 

@@ -6,11 +6,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandDatabaseSetup extends Command  {
 
     CommandDatabaseSetup() {
-        super("dbsetup", "developer", null);
+        super("dbsetup", "basketbandit.core.modules.ModuleDeveloper", null);
     }
 
     public CommandDatabaseSetup(MessageReceivedEvent e) {
-        super("dbsetup", "developer", null);
+        super("dbsetup", "basketbandit.core.modules.ModuleDeveloper", null);
         executeCommand(e);
     }
 

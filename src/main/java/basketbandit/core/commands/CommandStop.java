@@ -7,11 +7,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandStop extends Command {
 
     CommandStop() {
-        super("stop", "music", null);
+        super("stop", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandStop(MessageReceivedEvent e) {
-        super("stop", "music", null);
+        super("stop", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
     }
 

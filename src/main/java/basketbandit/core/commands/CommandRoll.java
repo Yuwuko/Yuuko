@@ -9,11 +9,11 @@ import java.util.Random;
 public class CommandRoll extends Command {
 
     CommandRoll() {
-        super("roll", "math", null);
+        super("roll", "basketbandit.core.modules.ModuleMath", null);
     }
 
     public CommandRoll(MessageReceivedEvent e) {
-        super("roll", "math", null);
+        super("roll", "basketbandit.core.modules.ModuleMath", null);
         executeCommand(e);
     }
 

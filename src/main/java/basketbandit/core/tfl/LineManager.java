@@ -42,4 +42,23 @@ public class LineManager {
         return statuses.toString();
     }
 
+    public String getLineStatusReason() {
+        StringBuilder reasons = new StringBuilder();
+        String previous = "";
+
+        for(LineStatus line: lineStatuses) {
+            if(line.getReason() != null && !previous.equals(name)) {
+                reasons.append("**").append(line.getReason()).append("\n\n");
+                previous = name;
+            }
+        }
+
+        int index = reasons.lastIndexOf("\n\n");
+        if(index > -1) {
+            reasons.replace(index, index + 1, "");
+        }
+
+        return reasons.toString().replace("e:", "e**:");
+    }
+
 }

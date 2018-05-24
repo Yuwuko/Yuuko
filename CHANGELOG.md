@@ -2,6 +2,15 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.8.0
+
++ [+] Added search command for music. [search]
++ [+] Added about command. [about]
++ [+] Added a check to the [linestatus] command that allows for a minified version 
++ [~] Changed the [linestatus] command to add more details for services that are not 'good'.
++ [~] Another large refactor for modules similar to that of the commands refactor.
++ [~] Rewrite of the controller; module selection down from 120 lines to 9. (Yes, 9)
+
 ## 1.7.0
 
 + [+] Added a notice a the bottom of the README.md concerning a verified voice bug.

@@ -1,9 +1,13 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 20/05/2018 - JDK 10.0.1
+// Version: 24/05/2018 - JDK 10.0.1
 
 package basketbandit.core;
 
+import basketbandit.core.commands.C;
+import basketbandit.core.commands.Command;
+import basketbandit.core.modules.M;
+import basketbandit.core.modules.Module;
 import basketbandit.core.music.MusicManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -19,6 +23,8 @@ import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,6 +35,9 @@ class BasketBandit extends ListenerAdapter {
 
     private final UserInterface ui;
     private TimeKeeper tk;
+
+    private static ArrayList<Module> moduleList;
+    private static ArrayList<Command> commandList;
 
     /**
      * Initialises the bot and JDA.
@@ -55,12 +64,36 @@ class BasketBandit extends ListenerAdapter {
     }
 
     /**
-     * Constructor for the class, initialises the UI.
+     * Constructor for the class, initialises the UI, the internal clock.
+     * Retrieves a list of commands via reflection.
      */
     private BasketBandit() {
         ui = new UserInterface();
         tk = new TimeKeeper(ui);
         new MusicManagerHandler();
+
+        moduleList = new ArrayList<>();
+        try {
+            Field[] modules = M.class.getDeclaredFields();
+            for(Field module : modules) {
+                moduleList.add((Module)module.get(Module.class));
+            }
+            System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
+        commandList = new ArrayList<>();
+        try {
+            Field[] commands = C.class.getDeclaredFields();
+            for(Field command : commands) {
+                commandList.add((Command)command.get(Command.class));
+            }
+            System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     /**
@@ -84,9 +117,13 @@ class BasketBandit extends ListenerAdapter {
             }
 
             if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-                new Controller(e, new Database());
+                new Controller(e, commandList);
                 commandCount++;
                 ui.updateCount(messageCount, commandCount);
+            }
+
+            if(message.getContentRaw().matches("^[0-9]{1,2}$")) {
+                new Controller(e, commandList);
             }
 
         } catch(Exception f) {

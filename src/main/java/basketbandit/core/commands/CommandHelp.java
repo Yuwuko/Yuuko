@@ -9,11 +9,11 @@ import java.awt.*;
 public class CommandHelp extends Command {
 
     CommandHelp() {
-        super("help", "core", null);
+        super("help", "basketbandit.core.modules.ModuleCore", null);
     }
 
     public CommandHelp(MessageReceivedEvent e) {
-        super("help", "core", null);
+        super("help", "basketbandit.core.modules.ModuleCore", null);
         executeCommand(e);
     }
 

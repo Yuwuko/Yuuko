@@ -11,11 +11,11 @@ import java.time.format.DateTimeFormatter;
 public class CommandServer extends Command {
 
     CommandServer() {
-        super("server", "utility", null);
+        super("server", "basketbandit.core.modules.ModuleUtility", null);
     }
 
     public CommandServer(MessageReceivedEvent e) {
-        super("server", "utility", null);
+        super("server", "basketbandit.core.modules.ModuleUtility", null);
         executeCommand(e);
     }
 

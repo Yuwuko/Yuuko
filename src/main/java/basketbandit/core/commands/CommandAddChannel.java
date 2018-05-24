@@ -6,11 +6,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandAddChannel extends Command {
 
     CommandAddChannel() {
-        super("addchannel", "moderation", Permission.MANAGE_CHANNEL);
+        super("addchannel", "basketbandit.core.modules.ModuleModeration", Permission.MANAGE_CHANNEL);
     }
 
     public CommandAddChannel(MessageReceivedEvent e) {
-        super("addchannel", "moderation", Permission.MANAGE_CHANNEL);
+        super("addchannel", "basketbandit.core.modules.ModuleModeration", Permission.MANAGE_CHANNEL);
         executeCommand(e);
     }
 

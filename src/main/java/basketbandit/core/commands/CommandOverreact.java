@@ -10,11 +10,11 @@ import java.util.NoSuchElementException;
 public class CommandOverreact extends Command {
 
     CommandOverreact() {
-        super("overreact", "fun", null);
+        super("overreact", "basketbandit.core.modules.ModuleFun", null);
     }
 
     public CommandOverreact(MessageReceivedEvent e) {
-        super("overreact", "fun", null);
+        super("overreact", "basketbandit.core.modules.ModuleFun", null);
         executeCommand(e);
     }
 

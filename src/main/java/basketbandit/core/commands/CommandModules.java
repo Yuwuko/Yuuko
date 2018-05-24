@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class CommandModules extends Command {
 
     CommandModules() {
-        super("modules", "core", null);
+        super("modules", "basketbandit.core.modules.ModuleCore", null);
     }
 
     public CommandModules(MessageReceivedEvent e) {
-        super("modules", "core", null);
+        super("modules", "basketbandit.core.modules.ModuleCore", null);
         executeCommand(e);
     }
 

@@ -10,11 +10,11 @@ import java.util.List;
 public class CommandNuke extends Command {
 
     CommandNuke() {
-        super("nuke", "moderation", Permission.MESSAGE_MANAGE);
+        super("nuke", "basketbandit.core.modules.ModuleModeration", Permission.MESSAGE_MANAGE);
     }
 
     public CommandNuke(MessageReceivedEvent e) {
-        super("nuke", "moderation", Permission.MESSAGE_MANAGE);
+        super("nuke", "basketbandit.core.modules.ModuleModeration", Permission.MESSAGE_MANAGE);
         executeCommand(e);
     }
 

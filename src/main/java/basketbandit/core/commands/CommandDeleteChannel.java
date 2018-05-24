@@ -10,11 +10,11 @@ import java.util.NoSuchElementException;
 public class CommandDeleteChannel extends Command {
 
     CommandDeleteChannel() {
-        super("delchannel", "moderation", Permission.MANAGE_CHANNEL);
+        super("delchannel", "basketbandit.core.modules.ModuleModeration", Permission.MANAGE_CHANNEL);
     }
 
     public CommandDeleteChannel(MessageReceivedEvent e) {
-        super("delchannel", "moderation", Permission.MANAGE_CHANNEL);
+        super("delchannel", "basketbandit.core.modules.ModuleModeration", Permission.MANAGE_CHANNEL);
         executeCommand(e);
     }
 

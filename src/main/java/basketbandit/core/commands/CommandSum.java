@@ -8,11 +8,11 @@ import java.awt.*;
 public class CommandSum extends Command {
 
     CommandSum() {
-        super("sum", "math", null);
+        super("sum", "basketbandit.core.modules.ModuleMath", null);
     }
 
     public CommandSum(MessageReceivedEvent e) {
-        super("sum", "math", null);
+        super("sum", "basketbandit.core.modules.ModuleMath", null);
         executeCommand(e);
     }
 

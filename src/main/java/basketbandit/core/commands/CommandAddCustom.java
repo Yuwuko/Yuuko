@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 public class CommandAddCustom extends Command {
 
     CommandAddCustom() {
-        super(Configuration.PREFIX + "addcc", "custom", null);
+        super(Configuration.PREFIX + "addcc", "basketbandit.core.modules.ModuleCustom", null);
     }
 
     public CommandAddCustom(MessageReceivedEvent e) {
-        super(Configuration.PREFIX + "addcc", "custom", null);
+        super(Configuration.PREFIX + "addcc", "basketbandit.core.modules.ModuleCustom", null);
         executeCommand(e);
     }
 

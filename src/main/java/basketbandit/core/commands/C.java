@@ -1,7 +1,6 @@
 package basketbandit.core.commands;
 
 public final class C {
-
     // Dev module commands.
     public static final Command DATABASE_SETUP = new CommandDatabaseSetup();
     public static final Command SET_STATUS = new CommandSetStatus();
@@ -11,6 +10,7 @@ public final class C {
     public static final Command MODULE = new CommandModule();
     public static final Command MODULES = new CommandModules();
     public static final Command HELP = new CommandHelp();
+    public static final Command ABOUT = new CommandAbout();
 
     // Moderation module commands.
     public static final Command NUKE = new CommandNuke();
@@ -51,8 +51,8 @@ public final class C {
     public static final Command UNSET_BACKGROUND = new CommandUnsetBackground();
     public static final Command LAST_TRACK = new CommandLastTrack();
     public static final Command TOGGLE_REPEAT = new CommandToggleRepeat();
+    public static final Command SEARCH = new CommandSearch();
 
     // Transport module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();
-
 }

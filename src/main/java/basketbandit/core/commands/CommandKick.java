@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 public class CommandKick extends Command {
 
     CommandKick() {
-        super("kick", "moderation", Permission.KICK_MEMBERS);
+        super("kick", "basketbandit.core.modules.moderation", Permission.KICK_MEMBERS);
     }
 
     public CommandKick(MessageReceivedEvent e) {
-        super("kick", "moderation", Permission.KICK_MEMBERS);
+        super("kick", "basketbandit.core.modules.moderation", Permission.KICK_MEMBERS);
         executeCommand(e);
     }
 
@@ -24,16 +24,16 @@ public class CommandKick extends Command {
      * @throws NoSuchElementException;
      */
     protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
-        long value = Long.parseLong(command[1]);
+        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
+        long value = Long.parseLong(commandArray[1]);
         Member member = e.getGuild().getMemberById(value);
 
         if(member == null) throw new NoSuchElementException();
 
-        if(command.length < 3) {
-            e.getGuild().getController().kick(command[1]).queue();
+        if(commandArray.length < 3) {
+            e.getGuild().getController().kick(commandArray[1]).queue();
         } else {
-            e.getGuild().getController().kick(command[1], command[2]).queue();
+            e.getGuild().getController().kick(commandArray[1], commandArray[2]).queue();
         }
         return true;
 

@@ -1,166 +1,80 @@
-// Program: BasketBandit (Discord Bot)
-// Programmer: Joshua Mark Hunt
-// Version: 20/05/2018 - JDK 10.0.1
-
 package basketbandit.core;
 
-import basketbandit.core.modules.*;
+import basketbandit.core.commands.Command;
+import basketbandit.core.commands.CommandPlay;
+import basketbandit.core.modules.ModuleCustom;
+import basketbandit.core.modules.ModuleLogging;
+import basketbandit.core.modules.ModuleMusic;
+import basketbandit.core.modules.ModuleUtility;
 import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
+import java.lang.reflect.Constructor;
 import java.time.Instant;
+import java.util.ArrayList;
 
 class Controller {
 
-    private Database database;
+    private Database database = new Database();
     private String serverLong;
 
     /**
      * Controller constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    Controller(MessageReceivedEvent e, Database d) {
-        this.database = d;
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
-        User user = e.getAuthor();
+    Controller(MessageReceivedEvent e, ArrayList<Command> commandList) {
+        String[] input = e.getMessage().getContentRaw().split("\\s+", 2);
         serverLong = e.getGuild().getIdLong() + "";
+        boolean executed = false;
 
-        // Remove the command message.
+        // Remove the input message.
         e.getMessage().delete().complete();
 
-        System.out.println("[" + Thread.currentThread().getName() + "] - " + Instant.now() + " - " + e.getGuild().getName() + " - " + command[0]);
+        System.out.println("[" + Thread.currentThread().getName() + "] - " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
 
         try {
-            command[0] = command[0].replace(Configuration.PREFIX, "").toLowerCase();
+            // Search function check if regex matches. Used in conjunction with the search input.
+            if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
+                if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && !input[0].equals("cancel")) {
+                    // -1 because arrays start at 0.
+                    new CommandPlay(e, ModuleMusic.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
 
-            // Command switch -> chooses which module class to sent the message event to.
-            switch(command[0]) {
-                case "module":
-                case "modules":
-                case "setup":
-                case "help":
-                    new ModuleCore(e);
+                } else if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && input[0].equals("cancel")) {
+                    ModuleMusic.searchUsers.remove(e.getAuthor().getIdLong());
+                    e.getTextChannel().sendMessage("(" + e.getAuthor().getAsMention() + ") Search cancelled.").queue();
+
+                }
+            }
+
+            // Iterate through the command list, if the input matches the effective name (includes invocation)
+            // find the module class that belongs to the command itself and create a new instance of that
+            // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
+            for(Command c: commandList) {
+                if(input[0].equals(c.getEffectiveName())) {
+                    Class<?> clazz = Class.forName(c.getCommandModule());
+                    Constructor<?> constructor = clazz.getConstructor(MessageReceivedEvent.class);
+                    constructor.newInstance(e);
+                    executed = true;
                     break;
+                }
+            }
 
-                // ModuleDev
-                case "dbsetup":
-                case "setstatus":
-                    if(user.getIdLong() == 215161101460045834L) {
-                        new ModuleDev(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you don't have permission to do that! <:fiteme:443069990019530763>").queue();
-                    }
-                    break;
+            if(!executed) {
+                if(database.checkModuleSettings("modCustom", serverLong)) {
+                    new ModuleCustom(e);
+                } else {
+                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
+                }
+            }
 
-                // ModuleModeration
-                case "nuke":
-                case "kick":
-                case "ban":
-                case "addchannel":
-                case "delchannel":
-                    if(database.checkModuleSettings("modModeration", serverLong)) {
-                        new ModuleModeration(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the moderation module is disabled.").queue();
-                    }
-                    break;
-
-                // ModuleUtility
-                case "server":
-                case "user":
-                    if(database.checkModuleSettings("modUtility", serverLong)) {
-                        new ModuleUtility(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the utility module is disabled.").queue();
-                    }
-                    break;
-
-                // ModuleTransport
-                case "linestatus":
-                    if(database.checkModuleSettings("modTransport", serverLong)) {
-                        new ModuleTransport(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the transport module is disabled.").queue();
-                    }
-                    break;
-
-                // ModuleMath
-                case "roll":
-                case "sum":
-                    if(database.checkModuleSettings("modMath", serverLong)) {
-                        new ModuleMath(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the math module is disabled.").queue();
-                    }
-                    break;
-
-                // ModuleFun
-                case "insult":
-                case "overreact":
-                    if(database.checkModuleSettings("modFun", serverLong)) {
-                        new ModuleFun(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the fun module is disabled.").queue();
-                    }
-                    break;
-
-                // ModuleRuneScape
-                case "rsstats":
-                case "osstats":
-                    if(database.checkModuleSettings("modRuneScape", serverLong)) {
-                        new ModuleRuneScape(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the runescape module is disabled.").queue();
-                    }
-                    break;
-
-                // ModuleMusic
-                case "play":
-                case "stop":
-                case "pause":
-                case "track":
-                case "lasttrack":
-                case "skip":
-                case "shuffle":
-                case "queue":
-                case "setbackground":
-                case "unsetbackground":
-                case "togglerepeat":
-                    if(database.checkModuleSettings("modMusic", serverLong)) {
-                        new ModuleMusic(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the music module is disabled.").queue();
-                    }
-                    break;
-
-                    // ModuleCustom
-                case "addcc":
-                case "delcc":
-                    if(database.checkModuleSettings("modCustom", serverLong)) {
-                        new ModuleCustom(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
-                    }
-                    break;
-
-                default:
-                    if(database.checkModuleSettings("modCustom", serverLong)) {
-                        new ModuleCustom(e);
-                    } else {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
-                    }
+            if(database.checkModuleSettings("modLogging", serverLong)) {
+                new ModuleLogging(e);
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
-
-        // ModuleLogging
-        if(database.checkModuleSettings("modLogging", serverLong)) {
-            new ModuleLogging(e);
         }
 
     }

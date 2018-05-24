@@ -1,11 +1,6 @@
-// Program: BasketBandit (Discord Bot)
-// Programmer: Joshua Mark Hunt
-// Version: 20/05/2018 - JDK 10.0.1
-
 package basketbandit.core.modules;
 
 import basketbandit.core.commands.C;
-import basketbandit.core.commands.CommandLineStatus;
 import basketbandit.core.commands.CommandServer;
 import basketbandit.core.commands.CommandUser;
 import net.dv8tion.jda.core.entities.Message;
@@ -14,28 +9,21 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
-public class ModuleUtility {
+public class ModuleUtility extends Module {
 
-    /**
-     * Module constructor for MessageReceivedEvents
-     * @param e MessageReceivedEvent
-     */
+    ModuleUtility() {
+        super("ModuleUtility", "modUtility");
+    }
+
     public ModuleUtility(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        super("ModuleUtility", "modUtility");
 
-        if(command.equals(C.USER.getEffectiveName())) {
-            new CommandUser(e);
+        if(!checkModuleSettings(e)) {
             return;
         }
 
-        if(command.equals(C.SERVER.getEffectiveName())) {
-            new CommandServer(e);
-            return;
-        }
-
-        if(command.equals(C.LINE_STATUS.getEffectiveName())) {
-            new CommandLineStatus(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
             return;
         }
 
@@ -47,6 +35,8 @@ public class ModuleUtility {
      * @param e MessageReactionAddEvent
      */
     public ModuleUtility(MessageReactionAddEvent e) {
+        super("ModuleUtility", "modUtility");
+
         if(e.getReaction().getReactionEmote().getName().equals("\uD83D\uDCCC")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
             message.pin().queue();
@@ -58,6 +48,8 @@ public class ModuleUtility {
      * @param e MessageReactionRemoveEvent
      */
     public ModuleUtility(MessageReactionRemoveEvent e) {
+        super("ModuleUtility", "modUtility");
+
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
         if(e.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
@@ -70,4 +62,20 @@ public class ModuleUtility {
         }
     }
 
+    protected boolean executeCommand(MessageReceivedEvent e) {
+        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
+        String command = commandArray[0];
+
+        if(command.equals(C.USER.getEffectiveName())) {
+            new CommandUser(e);
+            return true;
+        }
+
+        if(command.equals(C.SERVER.getEffectiveName())) {
+            new CommandServer(e);
+            return true;
+        }
+
+        return false;
+    }
 }

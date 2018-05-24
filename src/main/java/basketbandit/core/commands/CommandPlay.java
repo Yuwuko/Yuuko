@@ -18,12 +18,17 @@ import java.util.List;
 public class CommandPlay extends Command {
 
     CommandPlay() {
-        super("play", "music", null);
+        super("play", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandPlay(MessageReceivedEvent e) {
-        super("play", "music", null);
+        super("play", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
+    }
+
+    public CommandPlay(MessageReceivedEvent e, String url) {
+        super("play", "basketbandit.core.modules.ModuleMusic", null);
+        executeCommandAux(e, url);
     }
 
     /**
@@ -55,6 +60,17 @@ public class CommandPlay extends Command {
             return true;
         }
 
+    }
+
+    private boolean executeCommandAux(MessageReceivedEvent e, String url) {
+        GuildMusicManager manager = ModuleMusic.getMusicManager(e.getGuild().getId());
+
+        e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
+        e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
+        manager.player.setPaused(false);
+
+        loadAndPlay(manager, e.getChannel(), "https://www.youtube.com/watch?v=" + url, e);
+        return true;
     }
 
     /**

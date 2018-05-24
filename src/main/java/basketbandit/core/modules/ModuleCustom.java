@@ -1,7 +1,3 @@
-// Program: BasketBandit (Discord Bot)
-// Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
-
 package basketbandit.core.modules;
 
 import basketbandit.core.commands.C;
@@ -10,28 +6,47 @@ import basketbandit.core.commands.CommandCustom;
 import basketbandit.core.commands.CommandDeleteCustom;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class ModuleCustom {
+public class ModuleCustom extends Module {
+
+    ModuleCustom() {
+        super("ModuleCustom", "modCustom");
+    }
 
     public ModuleCustom(MessageReceivedEvent e) {
+        super("ModuleCustom", "modCustom");
+
+        if(!checkModuleSettings(e)) {
+            return;
+        }
+
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
+            return;
+        }
+
+        System.out.println("[WARNING] End of constructor reached for ModuleCustom.");
+    }
+
+    protected boolean executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
         if(command.equals(C.ADD_CUSTOM.getEffectiveName())) {
             new CommandAddCustom(e);
-            return;
+            return true;
         }
 
         if(command.equals(C.DELETE_CUSTOM.getEffectiveName())) {
             new CommandDeleteCustom(e);
-            return;
+            return true;
         }
 
         if(command.startsWith(C.CUSTOM.getEffectiveName())) {
             new CommandCustom(e);
-            return;
+            return true;
         }
 
-        System.out.println("[WARNING] End of constructor reached for ModuleCustom.");
+        return false;
     }
 
 }

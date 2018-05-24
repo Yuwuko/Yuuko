@@ -7,11 +7,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandSetup extends Command {
 
     CommandSetup() {
-        super("setup", "core", Permission.ADMINISTRATOR);
+        super("setup", "basketbandit.core.modules.ModuleCore", Permission.ADMINISTRATOR);
     }
 
     public CommandSetup(MessageReceivedEvent e) {
-        super("setup", "core", Permission.ADMINISTRATOR);
+        super("setup", "basketbandit.core.modules.ModuleCore", Permission.ADMINISTRATOR);
         executeCommand(e);
     }
 

@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 public class CommandDeleteCustom extends Command {
 
     CommandDeleteCustom() {
-        super(Configuration.PREFIX + "delcc", "custom", null);
+        super(Configuration.PREFIX + "delcc", "basketbandit.core.modules.ModuleCustom", null);
     }
 
     public CommandDeleteCustom(MessageReceivedEvent e) {
-        super(Configuration.PREFIX + "delcc", "custom", null);
+        super(Configuration.PREFIX + "delcc", "basketbandit.core.modules.ModuleCustom", null);
         executeCommand(e);
     }
 

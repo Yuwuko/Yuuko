@@ -1,4 +1,4 @@
-# BasketBandit 1.7.0 (22/05/2018) 
+# BasketBandit 1.8.0 (23/05/2018) 
 BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
 
 It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
@@ -20,6 +20,8 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 - __help__ will private message the user a list of these commands and some other information about BasketBandit.
 
+- __about__ will return some technical information about the bot such as uptime and ping.
+
 ### Moderation
 
 - __kick \<userID (18 digit)\> \<reason\> (optional)__ will kick the given user from the server with optional reason.
@@ -40,7 +42,7 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 ### Transport
 
-- __linestatus__ will return full line coverage for London Underground, accurate to command execution.
+- __linestatus \<min\>__ will return full line coverage for London Underground, accurate to command execution. (__min__ is optional!)
 
 ### Fun
 
@@ -91,6 +93,8 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 - __unsetbackground__ will unset the background track.
 
 - __togglerepeat__ will toggle repeat for the current song.
+
+- __search \<track\>__ will search for and return the first 10 tracks from the given string.
 
 ## Other features
 

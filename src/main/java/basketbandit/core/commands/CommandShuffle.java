@@ -7,11 +7,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandShuffle extends Command {
 
     CommandShuffle() {
-        super("shuffle", "music", null);
+        super("shuffle", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandShuffle(MessageReceivedEvent e) {
-        super("shuffle", "music", null);
+        super("shuffle", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
     }
 

@@ -11,11 +11,11 @@ import java.util.NoSuchElementException;
 public class CommandModule extends Command {
 
     CommandModule() {
-        super("module", "core", Permission.MANAGE_PERMISSIONS);
+        super("module", "basketbandit.core.modules.ModuleCore", Permission.MANAGE_PERMISSIONS);
     }
 
     public CommandModule(MessageReceivedEvent e) {
-        super("module", "core", Permission.MANAGE_PERMISSIONS);
+        super("module", "basketbandit.core.modules.ModuleCore", Permission.MANAGE_PERMISSIONS);
         executeCommand(e);
     }
 

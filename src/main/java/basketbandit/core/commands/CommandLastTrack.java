@@ -12,11 +12,11 @@ import java.awt.*;
 public class CommandLastTrack extends Command {
 
     CommandLastTrack() {
-        super("lasttrack", "music", null);
+        super("lasttrack", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandLastTrack(MessageReceivedEvent e) {
-        super("lasttrack", "music", null);
+        super("lasttrack", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
     }
 

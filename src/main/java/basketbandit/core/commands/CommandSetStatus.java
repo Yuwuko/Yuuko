@@ -6,11 +6,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandSetStatus extends Command {
 
     CommandSetStatus() {
-        super("setstatus", "developer", null);
+        super("setstatus", "basketbandit.core.modules.ModuleDeveloper", null);
     }
 
     public CommandSetStatus(MessageReceivedEvent e) {
-        super("setstatus", "developer", null);
+        super("setstatus", "basketbandit.core.modules.ModuleDeveloper", null);
         executeCommand(e);
     }
 

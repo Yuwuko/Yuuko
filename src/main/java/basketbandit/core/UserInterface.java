@@ -1,7 +1,3 @@
-// Program: BasketBandit (Discord Bot)
-// Programmer: Joshua Mark Hunt
-// Version: 02/05/2018 - JDK 10.0.1
-
 package basketbandit.core;
 
 import javax.swing.*;
@@ -39,13 +35,10 @@ class UserInterface{
 
     /**
      * Updates system runtime.
-     * @param d; days.
-     * @param h; hours.
-     * @param m; minutes.
-     * @param s; seconds.
+     * @param runtime -> bot runtime
      */
-    void updateRuntime(String d, String h, String m, String s) {
-        frame.setTitle("BasketBandit " + Configuration.VERSION + " (" + d + ":" + h + ":" + m + ":" + s + ")");
+    void updateRuntime(String runtime) {
+        frame.setTitle("BasketBandit " + Configuration.VERSION + " " + runtime);
     }
 
 }

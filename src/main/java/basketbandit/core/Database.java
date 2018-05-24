@@ -1,7 +1,3 @@
-// Program: BasketBandit (Discord Bot)
-// Programmer: Joshua Mark Hunt
-// Version: 20/05/2018 - JDK 10.0.1
-
 package basketbandit.core;
 
 import org.h2.jdbcx.JdbcDataSource;
@@ -21,12 +17,12 @@ public class Database {
     public Database() {
         try {
             JdbcDataSource ds = new JdbcDataSource();
-            ds.setURL("jdbc:h2:" + Configuration.DATABASE_URL);
+            ds.setURL("jdbc:h2:~" + Configuration.DATABASE_URL);
             ds.setUser("admin");
             ds.setPassword("password");
 
             Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection ("jdbc:h2:" + Configuration.DATABASE_URL + ";mode=mysql", "admin","password");
+            connection = DriverManager.getConnection ("jdbc:h2:~" + Configuration.DATABASE_URL + ";mode=mysql", "admin","password");
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -104,7 +100,7 @@ public class Database {
             System.out.println("[ERROR] Unable to add new server to the database. (ID: " + server + ")");
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -135,7 +131,7 @@ public class Database {
      * @param modName the name of the module.
      * @return (boolean) if the module is active or not.
      */
-    boolean checkModuleSettings(String modName, String server) {
+    public boolean checkModuleSettings(String modName, String server) {
         Connection conn;
         PreparedStatement stmt;
         ResultSet rs;

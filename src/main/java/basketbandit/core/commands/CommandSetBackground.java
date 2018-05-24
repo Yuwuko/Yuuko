@@ -17,11 +17,11 @@ import java.awt.*;
 public class CommandSetBackground extends Command {
 
     CommandSetBackground() {
-        super("setbackground", "music", null);
+        super("setbackground", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandSetBackground(MessageReceivedEvent e) {
-        super("setbackground", "music", null);
+        super("setbackground", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
     }
 

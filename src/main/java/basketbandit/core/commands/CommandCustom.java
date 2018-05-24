@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 public class CommandCustom extends Command {
 
     CommandCustom() {
-        super(Configuration.PREFIX, "custom", null);
+        super(Configuration.PREFIX, "basketbandit.core.modules.ModuleCustom", null);
     }
 
     public CommandCustom(MessageReceivedEvent e) {
-        super(Configuration.PREFIX, "custom", null);
+        super(Configuration.PREFIX, "basketbandit.core.modules.ModuleCustom", null);
         executeCommand(e);
     }
 
@@ -26,7 +26,7 @@ public class CommandCustom extends Command {
     protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 3);
         String serverLong = e.getGuild().getIdLong()+"";
-        String command = commandArray[0].replace("??", "");
+        String command = commandArray[0].replace(Configuration.PREFIX + Configuration.PREFIX, "");
 
         Database database = new Database();
         String commandContent = database.getCustomCommand(command, serverLong);

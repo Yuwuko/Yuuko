@@ -1,8 +1,9 @@
 package basketbandit.core;
 
-class TimeKeeper implements Runnable {
+public class TimeKeeper implements Runnable {
 
     private final UserInterface ui;
+    public static String runtime;
 
     TimeKeeper(UserInterface ui) {
         this.ui = ui;
@@ -14,7 +15,6 @@ class TimeKeeper implements Runnable {
         try {
             int d = 0, h = 0, m = 0, s = 0;
             String ds, hs, ms, ss;
-
             while(true) {
                 Thread.sleep(1000);
 
@@ -39,7 +39,8 @@ class TimeKeeper implements Runnable {
                 ms = (m < 10) ? String.format("%02d", m) : m + "";
                 ss = (s < 10) ? String.format("%02d", s) : s + "";
 
-                ui.updateRuntime(ds,hs,ms,ss);
+                runtime = ds + ":" + hs + ":" + ms + ":" + ss;
+                ui.updateRuntime("(" + runtime + ")");
 
             }
         } catch (InterruptedException e) {

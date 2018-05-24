@@ -14,11 +14,11 @@ import java.util.NoSuchElementException;
 public class CommandUser extends Command {
 
     CommandUser() {
-        super("user", "utility", null);
+        super("user", "basketbandit.core.modules.ModuleUtility", null);
     }
 
     public CommandUser(MessageReceivedEvent e) {
-        super("user", "utility", null);
+        super("user", "basketbandit.core.modules.ModuleUtility", null);
         executeCommand(e);
     }
 

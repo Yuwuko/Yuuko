@@ -9,11 +9,11 @@ import java.net.URL;
 public class CommandRuneScapeStats extends Command {
 
     CommandRuneScapeStats() {
-        super("rsstats", "runescape", null);
+        super("rsstats", "basketbandit.core.modules.ModuleRuneScape", null);
     }
 
     public CommandRuneScapeStats(MessageReceivedEvent e) {
-        super("rsstats", "runescape", null);
+        super("rsstats", "basketbandit.core.modules.ModuleRuneScape", null);
         executeCommand(e);
     }
 

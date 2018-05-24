@@ -11,11 +11,11 @@ import java.awt.*;
 public class CommandTrack extends Command {
 
     CommandTrack() {
-        super("track", "music", null);
+        super("track", "basketbandit.core.modules.ModuleMusic", null);
     }
 
     public CommandTrack(MessageReceivedEvent e) {
-        super("track", "music", null);
+        super("track", "basketbandit.core.modules.ModuleMusic", null);
         executeCommand(e);
     }
 
