@@ -44,7 +44,7 @@ public final class C {
     public static final Command STOP = new CommandStop();
     public static final Command SKIP = new CommandSkip();
     public static final Command PAUSE = new CommandPause();
-    public static final Command TRACK = new CommandTrack();
+    public static final Command TRACK = new CommandCurrentTrack();
     public static final Command SHUFFLE = new CommandShuffle();
     public static final Command QUEUE = new CommandQueue();
     public static final Command SET_BACKGROUND = new CommandSetBackground();

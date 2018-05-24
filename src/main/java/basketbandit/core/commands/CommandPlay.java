@@ -45,7 +45,7 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
             e.getTextChannel().sendMessage("Resuming playback of...").queue();
-            new CommandTrack();
+            new CommandCurrentTrack();
             return true;
 
         } else {
@@ -93,12 +93,16 @@ public class CommandPlay extends Command {
             @Override
             public void trackLoaded(AudioTrack track) {
                 manager.scheduler.queue(track);
+                String[] uri = track.getInfo().uri.split("=");
 
                 EmbedBuilder queuedTrack = new EmbedBuilder()
                         .setColor(Color.RED)
                         .setAuthor(e.getMember().getEffectiveName() + " added to the queue!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .setDescription("Channel: " + track.getInfo().author + ", Duration: " + ModuleMusic.getTimestamp(track.getDuration()) + "\nPosition in queue: " + manager.scheduler.queue.size())
+                        .setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")
+                        .addField("Duration", ModuleMusic.getTimestamp(track.getDuration()), true)
+                        .addField("Channel", track.getInfo().author, true)
+                        .addField("Position in queue", manager.scheduler.queue.size()+"", true)
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 channel.sendMessage(queuedTrack.build()).queue();

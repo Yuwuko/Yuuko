@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.8.2
+
++ [~] Changed the structure of [currenttrack], [lasttrack] and [play] to give a little more info.
+
 ## 1.8.1
 
 + [~] Refactored UserInterface to Monitor since I only use it to monitor...

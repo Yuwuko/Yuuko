@@ -90,7 +90,7 @@ public class ModuleMusic extends Module {
         }
 
         if(command.equals(C.TRACK.getEffectiveName())) {
-            new CommandTrack(e);
+            new CommandCurrentTrack(e);
             return true;
         }
 
