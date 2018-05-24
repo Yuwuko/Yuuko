@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.8.1
+
++ [~] Refactored UserInterface to Monitor since I only use it to monitor...
++ [~] Changed field names in class M to match those of class C.
++ [-] Removed obsolete end of constructor warnings for modules.
+
 ## 1.8.0
 
 + [+] Added search command for music. [search]
