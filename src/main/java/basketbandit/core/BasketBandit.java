@@ -10,6 +10,7 @@ import basketbandit.core.modules.M;
 import basketbandit.core.modules.Module;
 import basketbandit.core.music.MusicManagerHandler;
 import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Message;
@@ -33,11 +34,13 @@ class BasketBandit extends ListenerAdapter {
     private int messageCount = 0;
     private int commandCount = 0;
 
-    private final UserInterface ui;
+    private final Monitor ui;
     private TimeKeeper tk;
 
-    private static ArrayList<Module> moduleList;
-    private static ArrayList<Command> commandList;
+    static JDA bot;
+
+    static ArrayList<Module> moduleList;
+    static ArrayList<Command> commandList;
 
     /**
      * Initialises the bot and JDA.
@@ -48,19 +51,20 @@ class BasketBandit extends ListenerAdapter {
     public static void main(String[] args) throws LoginException, IllegalArgumentException {
         BasketBandit self = new BasketBandit();
 
-        new JDABuilder(AccountType.BOT)
-                .setToken(args[2])
-                .addEventListener(self)
-                .setEventManager(new ThreadedEventManager())
-                .buildAsync()
-                .getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
-
         Configuration.PREFIX = args[0];
         Configuration.BOT_ID = args[1];
+        Configuration.BOT_TOKEN = args[2];
         Configuration.GOOGLE_API = args[3];
         Configuration.TFL_ID = args[4];
         Configuration.TFL_API = args[5];
         Configuration.DATABASE_URL = args[6];
+
+        bot = new JDABuilder(AccountType.BOT)
+            .setToken(Configuration.BOT_TOKEN)
+            .addEventListener(self)
+            .setEventManager(new ThreadedEventManager())
+            .buildAsync();
+        bot.getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
     }
 
     /**
@@ -68,7 +72,7 @@ class BasketBandit extends ListenerAdapter {
      * Retrieves a list of commands via reflection.
      */
     private BasketBandit() {
-        ui = new UserInterface();
+        ui = new Monitor();
         tk = new TimeKeeper(ui);
         new MusicManagerHandler();
 
@@ -93,7 +97,6 @@ class BasketBandit extends ListenerAdapter {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     /**

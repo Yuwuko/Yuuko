@@ -35,19 +35,6 @@ class Controller {
         System.out.println("[" + Thread.currentThread().getName() + "] - " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
 
         try {
-            // Search function check if regex matches. Used in conjunction with the search input.
-            if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && !input[0].equals("cancel")) {
-                    // -1 because arrays start at 0.
-                    new CommandPlay(e, ModuleMusic.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
-
-                } else if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && input[0].equals("cancel")) {
-                    ModuleMusic.searchUsers.remove(e.getAuthor().getIdLong());
-                    e.getTextChannel().sendMessage("(" + e.getAuthor().getAsMention() + ") Search cancelled.").queue();
-
-                }
-            }
-
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
@@ -61,7 +48,20 @@ class Controller {
                 }
             }
 
-            if(!executed) {
+            // Search function check if regex matches. Used in conjunction with the search input.
+            if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
+                if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && !input[0].equals("cancel")) {
+                    // -1 because arrays start at 0.
+                    new CommandPlay(e, ModuleMusic.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
+
+                } else if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && input[0].equals("cancel")) {
+                    ModuleMusic.searchUsers.remove(e.getAuthor().getIdLong());
+                    e.getTextChannel().sendMessage("(" + e.getAuthor().getAsMention() + ") Search cancelled.").queue();
+
+                }
+            }
+
+            if(!executed && input[0].startsWith(Configuration.PREFIX + Configuration.PREFIX)) {
                 if(database.checkModuleSettings("modCustom", serverLong)) {
                     new ModuleCustom(e);
                 } else {

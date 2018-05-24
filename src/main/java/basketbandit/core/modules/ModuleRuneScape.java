@@ -19,10 +19,8 @@ public class ModuleRuneScape extends Module {
 
         if(!executeCommand(e)) {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-            return;
         }
 
-        System.out.println("[WARNING] End of constructor reached for ModuleRuneScape.");
     }
 
     protected boolean executeCommand(MessageReceivedEvent e) {

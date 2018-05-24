@@ -21,10 +21,8 @@ public class ModuleLogging extends Module {
 
         if(!executeCommand(e)) {
             e.getTextChannel().sendMessage("This server has logging enabled but has no 'command-log' text channel, please add that channel or disable the module by typing the '" + Configuration.PREFIX + "module logging' command to stop this message.").queue();
-            return;
         }
 
-        System.out.println("[WARNING] End of constructor reached for ModuleLogging.");
     }
 
     protected boolean executeCommand(MessageReceivedEvent e) {
