@@ -13,6 +13,9 @@ public class TimeKeeper implements Runnable {
     @Override
     public void run() {
         try {
+            // Wait 5 seconds to give the system time to boot.
+            Thread.sleep(5000);
+
             int d = 0, h = 0, m = 0, s = 0;
             String ds, hs, ms, ss;
             int fm = 0, oh = 0;
