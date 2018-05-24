@@ -17,6 +17,11 @@ public class TimeKeeper implements Runnable {
             String ds, hs, ms, ss;
             int fm = 0, oh = 0;
 
+            // Init the monitor.
+            monitor.updateOneSecond("--:--:--:--");
+            monitor.updateFiveMinutes();
+            monitor.updateOneHour();
+
             while(true) {
                 Thread.sleep(1000);
 
