@@ -1,4 +1,4 @@
-# BasketBandit 1.8.2 (24/05/2018) 
+# BasketBandit 1.8.2 (25/05/2018) 
 ### Core
 
 - __setup__ this command needs to be run before the bot can be used. It will initialise the default settings for the bot. (__single use__)

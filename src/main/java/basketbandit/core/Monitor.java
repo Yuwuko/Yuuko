@@ -46,23 +46,35 @@ class Monitor {
         labels[2].setText("Messages Processed: " + msg + ", Commands Processed: " + cmd + ".");
     }
 
+    /**
+     * Updates the run once a second.
+     * @param runtime;
+     */
     void updateOneSecond(String runtime) {
         labels[0].setText("Runtime: " + runtime);
     }
 
+    /**
+     * Updates that run once every 5 minutes.
+     */
     void updateFiveMinutes() {
+        labels[3].setText("Version: " + Configuration.VERSION + ", Invocation: " + Configuration.PREFIX);
+        labels[5].setText("Modules: " + BasketBandit.moduleList.size() + ", Commands: " + BasketBandit.commandList.size());
+        labels[7].setText("Ping: " + bot.getPing());
+    }
+
+    /**
+     * Updates that happen once every hour.
+     */
+    void updateOneHour() {
         int users = 0;
         List<Guild> guilds = bot.getGuilds();
+
         for(Guild guild: guilds) {
             users += guild.getMembers().size();
         }
 
-        labels[3].setText("Version: " + Configuration.VERSION + ", Invocation: " + Configuration.PREFIX);
         labels[4].setText("Servers: " + guilds.size() + ", Users: " + users);
-        labels[5].setText("Modules: " + BasketBandit.moduleList.size() + ", Commands: " + BasketBandit.commandList.size());
-
-        labels[7].setText("Ping: " + bot.getPing());
-
     }
 
     //TODO: Not use swing and try to move over to FX if possible.

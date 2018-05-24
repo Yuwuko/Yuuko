@@ -15,7 +15,7 @@ public class TimeKeeper implements Runnable {
         try {
             int d = 0, h = 0, m = 0, s = 0;
             String ds, hs, ms, ss;
-            int fm = 0;
+            int fm = 0, oh = 0;
 
             while(true) {
                 Thread.sleep(1000);
@@ -24,6 +24,12 @@ public class TimeKeeper implements Runnable {
                 if(fm == 300) {
                     fm = 0;
                     monitor.updateFiveMinutes();
+                }
+
+                oh++;
+                if(oh == 3600) {
+                    oh = 0;
+                    monitor.updateOneHour();
                 }
 
                 s++;

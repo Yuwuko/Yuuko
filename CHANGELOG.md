@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified.
 ## 1.8.2
 
 + [~] Changed the structure of [currenttrack], [lasttrack] and [play] to give a little more info.
++ [~] Altered the Monitor and TimeKeeper to reduce rate limiting.
 
 ## 1.8.1
 
