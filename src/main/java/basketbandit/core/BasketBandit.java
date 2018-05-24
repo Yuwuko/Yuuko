@@ -34,7 +34,7 @@ class BasketBandit extends ListenerAdapter {
     private int messageCount = 0;
     private int commandCount = 0;
 
-    private final Monitor ui;
+    private final Monitor monitor;
     private TimeKeeper tk;
 
     static JDA bot;
@@ -72,8 +72,8 @@ class BasketBandit extends ListenerAdapter {
      * Retrieves a list of commands via reflection.
      */
     private BasketBandit() {
-        ui = new Monitor();
-        tk = new TimeKeeper(ui);
+        monitor = new Monitor();
+        tk = new TimeKeeper(monitor);
         new MusicManagerHandler();
 
         moduleList = new ArrayList<>();
@@ -110,7 +110,7 @@ class BasketBandit extends ListenerAdapter {
             User user = e.getAuthor();
 
             messageCount++;
-            ui.updateCount(messageCount, commandCount);
+            monitor.updateCount(messageCount, commandCount);
 
             if(user.isBot()
                     || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX + Configuration.PREFIX)
@@ -122,7 +122,7 @@ class BasketBandit extends ListenerAdapter {
             if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
                 new Controller(e, commandList);
                 commandCount++;
-                ui.updateCount(messageCount, commandCount);
+                monitor.updateCount(messageCount, commandCount);
             }
 
             if(message.getContentRaw().matches("^[0-9]{1,2}$")) {

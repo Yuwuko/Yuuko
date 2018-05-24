@@ -50,7 +50,7 @@ class Monitor {
         labels[0].setText("Runtime: " + runtime);
     }
 
-    void updateTenSeconds() {
+    void updateFiveMinutes() {
         int users = 0;
         List<Guild> guilds = bot.getGuilds();
         for(Guild guild: guilds) {
@@ -58,7 +58,7 @@ class Monitor {
         }
 
         labels[3].setText("Version: " + Configuration.VERSION + ", Invocation: " + Configuration.PREFIX);
-        labels[4].setText("Servers: " + bot.getGuilds().size() + ", Users: " + users);
+        labels[4].setText("Servers: " + guilds.size() + ", Users: " + users);
         labels[5].setText("Modules: " + BasketBandit.moduleList.size() + ", Commands: " + BasketBandit.commandList.size());
 
         labels[7].setText("Ping: " + bot.getPing());
