@@ -1,4 +1,16 @@
 # BasketBandit 1.8.2 (25/05/2018) 
+
+BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
+
+It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
+To enable or disable a module you type the bot invocation (at current '?') module and the name of the module, e.g. '?module fun'
+
+Note: The logging module requires a text-channel named command-log to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed.
+
+## Commands
+
+The invocation for the bot at this time is '?', this is used to prefix the below commands so the bot recognises that it is a command. Double invocation is used for custom commands, meaning that any custom commands should be prefixed with '??' instead.
+
 ### Core
 
 - __setup__ this command needs to be run before the bot can be used. It will initialise the default settings for the bot. (__single use__)
@@ -38,17 +50,6 @@
 - __overreact__ will react with 20 random guild emotes to the previous message in the text channel.
 
 - __insult__ will randomly insult a user in the guild.
-
-BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
-
-It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
-To enable or disable a module you type the bot invocation (at current '?') module and the name of the module, e.g. '?module fun'
-
-Note: The logging module requires a text-channel named command-log to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed.
-
-## Commands
-
-The invocation for the bot at this time is '?', this is used to prefix the below commands so the bot recognises that it is a command. Double invocation is used for custom commands, meaning that any custom commands should be prefixed with '??' instead.
 
 ### Math
 

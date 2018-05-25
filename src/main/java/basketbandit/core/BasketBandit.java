@@ -125,7 +125,7 @@ class BasketBandit extends ListenerAdapter {
                 monitor.updateCount(messageCount, commandCount);
             }
 
-            if(message.getContentRaw().matches("^[0-9]{1,2}$")) {
+            if(message.getContentRaw().matches("^[0-9]{1,2}$") || message.getContentRaw().toLowerCase().equals("cancel")) {
                 new Controller(e, commandList);
             }
 

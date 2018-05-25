@@ -25,14 +25,14 @@ class Controller {
      * @param e MessageReceivedEvent
      */
     Controller(MessageReceivedEvent e, ArrayList<Command> commandList) {
-        String[] input = e.getMessage().getContentRaw().split("\\s+", 2);
+        String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         serverLong = e.getGuild().getIdLong() + "";
         boolean executed = false;
 
         // Remove the input message.
         e.getMessage().delete().complete();
 
-        System.out.println("[" + Thread.currentThread().getName() + "] - " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
+        System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
 
         try {
             // Iterate through the command list, if the input matches the effective name (includes invocation)
@@ -50,13 +50,12 @@ class Controller {
 
             // Search function check if regex matches. Used in conjunction with the search input.
             if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && !input[0].equals("cancel")) {
-                    // -1 because arrays start at 0.
+                if(!input[0].equals("cancel") && ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong())) {
                     new CommandPlay(e, ModuleMusic.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
 
-                } else if(ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong()) && input[0].equals("cancel")) {
+                } else if(input[0].equals("cancel") && ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong())) {
                     ModuleMusic.searchUsers.remove(e.getAuthor().getIdLong());
-                    e.getTextChannel().sendMessage("(" + e.getAuthor().getAsMention() + ") Search cancelled.").queue();
+                    e.getTextChannel().sendMessage("[" + e.getAuthor().getAsMention() + "] Search cancelled.").queue();
 
                 }
             }
