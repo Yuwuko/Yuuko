@@ -52,7 +52,7 @@ public class TrackScheduler extends AudioEventAdapter {
      * What to do when the current track ends.
      * @param player; AudioPlayer.
      * @param track; Track.
-     * @param endReason; AudioTrackReason
+     * @param endReason; AudioTrackEndReason
      */
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
@@ -67,6 +67,19 @@ public class TrackScheduler extends AudioEventAdapter {
             }
         }
 
+    }
+
+    /**
+     * What to do if the track gets stuck.
+     * @param player; AudioPlayer
+     * @param track; Track.
+     * @param thresholdMs; Long
+     */
+    @Override
+    public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
+        if(!player.startTrack(queue.poll(), false)) {
+            if(background != null) player.startTrack(background.makeClone(), false);
+        }
     }
 
     /**

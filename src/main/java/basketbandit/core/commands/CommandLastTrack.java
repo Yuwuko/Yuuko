@@ -27,7 +27,7 @@ public class CommandLastTrack extends Command {
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
         GuildMusicManager manager = ModuleMusic.getMusicManager(e.getGuild().getId());
-        AudioTrack track = manager.player.getPlayingTrack();
+        AudioTrack track = manager.scheduler.getLastTrack();
         String[] uri = track.getInfo().uri.split("=");
 
         if(manager.player.getPlayingTrack() != null) {

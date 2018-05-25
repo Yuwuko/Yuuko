@@ -43,9 +43,11 @@ public class CommandPlay extends Command {
         if(commandArray.length == 1) {
             e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
-            manager.player.setPaused(false);
-            e.getTextChannel().sendMessage("Resuming playback of...").queue();
-            new CommandCurrentTrack();
+            if(manager.player.isPaused()) {
+                manager.player.setPaused(false);
+                e.getTextChannel().sendMessage("Resuming playback of...").queue();
+                new CommandCurrentTrack();
+            }
             return true;
 
         } else {
@@ -58,8 +60,8 @@ public class CommandPlay extends Command {
                 loadAndPlay(manager, e.getChannel(), commandArray[1], e);
             }
             return true;
-        }
 
+        }
     }
 
     private boolean executeCommandAux(MessageReceivedEvent e, String url) {
