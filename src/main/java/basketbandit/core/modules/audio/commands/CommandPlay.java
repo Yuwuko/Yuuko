@@ -19,16 +19,16 @@ import java.util.List;
 public class CommandPlay extends Command {
 
     public CommandPlay() {
-        super("play", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("play", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandPlay(MessageReceivedEvent e) {
-        super("play", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("play", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 
     public CommandPlay(MessageReceivedEvent e, String url) {
-        super("play", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("play", "basketbandit.core.modules.ModuleAudio", null);
         executeCommandAux(e, url);
     }
 

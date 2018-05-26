@@ -8,11 +8,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandPause extends Command {
 
     public CommandPause() {
-        super("pause", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("pause", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandPause(MessageReceivedEvent e) {
-        super("pause", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("pause", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 

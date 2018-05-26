@@ -12,11 +12,11 @@ import java.util.List;
 public class CommandSearch extends Command {
 
     public CommandSearch() {
-        super("search", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("search", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandSearch(MessageReceivedEvent e) {
-        super("search", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("search", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 

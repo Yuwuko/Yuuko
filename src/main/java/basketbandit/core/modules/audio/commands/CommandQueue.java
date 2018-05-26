@@ -13,11 +13,11 @@ import java.awt.*;
 public class CommandQueue extends Command {
 
     public CommandQueue() {
-        super("queue", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("queue", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandQueue(MessageReceivedEvent e) {
-        super("queue", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("queue", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 

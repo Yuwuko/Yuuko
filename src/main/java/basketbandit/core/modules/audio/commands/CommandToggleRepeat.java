@@ -8,11 +8,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandToggleRepeat extends Command {
 
     public CommandToggleRepeat() {
-        super("togglerepeat", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("togglerepeat", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandToggleRepeat(MessageReceivedEvent e) {
-        super("togglerepeat", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("togglerepeat", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 

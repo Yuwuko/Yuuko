@@ -8,11 +8,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandUnsetBackground extends Command {
 
     public CommandUnsetBackground() {
-        super("unsetbackground", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("unsetbackground", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandUnsetBackground(MessageReceivedEvent e) {
-        super("unsetbackground", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("unsetbackground", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 

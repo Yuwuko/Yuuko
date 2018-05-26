@@ -13,11 +13,11 @@ import java.awt.*;
 public class CommandCurrentTrack extends Command {
 
     public CommandCurrentTrack() {
-        super("currenttrack", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("currenttrack", "basketbandit.core.modules.ModuleAudio", null);
     }
 
     public CommandCurrentTrack(MessageReceivedEvent e) {
-        super("currenttrack", "basketbandit.core.modules.handlers.ModuleAudio", null);
+        super("currenttrack", "basketbandit.core.modules.ModuleAudio", null);
         executeCommand(e);
     }
 
