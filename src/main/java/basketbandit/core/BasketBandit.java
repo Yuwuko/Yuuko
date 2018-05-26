@@ -4,11 +4,11 @@
 
 package basketbandit.core;
 
-import basketbandit.core.commands.C;
-import basketbandit.core.commands.Command;
+import basketbandit.core.modules.C;
+import basketbandit.core.modules.Command;
 import basketbandit.core.modules.M;
 import basketbandit.core.modules.Module;
-import basketbandit.core.music.MusicManagerHandler;
+import basketbandit.core.modules.audio.handlers.MusicManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -17,6 +17,7 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
@@ -35,7 +36,6 @@ class BasketBandit extends ListenerAdapter {
     private int commandCount = 0;
 
     private final Monitor monitor;
-    private TimeKeeper tk;
 
     static JDA bot;
 
@@ -69,11 +69,11 @@ class BasketBandit extends ListenerAdapter {
 
     /**
      * Constructor for the class, initialises the UI, the internal clock.
-     * Retrieves a list of commands via reflection.
+     * Retrieves a list of modules via reflection.
      */
     private BasketBandit() {
         monitor = new Monitor();
-        tk = new TimeKeeper(monitor);
+        new TimeKeeper(monitor);
         new MusicManagerHandler();
 
         moduleList = new ArrayList<>();
@@ -82,7 +82,7 @@ class BasketBandit extends ListenerAdapter {
             for(Field module : modules) {
                 moduleList.add((Module)module.get(Module.class));
             }
-            System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
+            System.out.println("[INFO] " + moduleList.size() + " module successfully loaded.");
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -93,15 +93,24 @@ class BasketBandit extends ListenerAdapter {
             for(Field command : commands) {
                 commandList.add((Command)command.get(Command.class));
             }
-            System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
+            System.out.println("[INFO] " + commandList.size() + " modules successfully loaded.");
         } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
 
     /**
+     * Deals with what happens when the bot joins a server.
+     * @param e -> GuildJoinEvent
+     */
+    @Override
+    public void onGuildJoin(GuildJoinEvent e) {
+        new Controller(e);
+    }
+
+    /**
      * Captures and deals with messages starting with the correct invocation.
-     * @param e -> Message received event.
+     * @param e -> MessageReceivedEvent.
      */
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
@@ -114,8 +123,8 @@ class BasketBandit extends ListenerAdapter {
 
             if(user.isBot()
                     || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX + Configuration.PREFIX)
-                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX)
-                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX + Configuration.PREFIX)) {
+                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX + Configuration.PREFIX)
+                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX)) {
                 return;
             }
 
@@ -136,7 +145,7 @@ class BasketBandit extends ListenerAdapter {
 
     /**
      * Captures and deals with reacts.
-     * @param e -> React add event.
+     * @param e -> MessageReactionAddEvent.
      */
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent e) {
@@ -149,7 +158,7 @@ class BasketBandit extends ListenerAdapter {
 
     /**
      * Captures and deals with react removals.
-     * @param e -> React remove event.
+     * @param e -> MessageReactionRemoveEvent.
      */
     @Override
     public void onMessageReactionRemove(MessageReactionRemoveEvent e) {

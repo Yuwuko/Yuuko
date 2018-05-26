@@ -51,7 +51,7 @@ public class Database {
                 "`modLogging` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modMath` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modFun` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                "`modRuneScape` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modGame` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "PRIMARY KEY (`id`,`server`)\n" +
                 ");" +
 
@@ -176,7 +176,7 @@ public class Database {
     }
 
     /**
-     * Adds a custom command to the database. (Custom commands must be unique.)
+     * Adds a custom command to the database. (Custom modules must be unique.)
      * @param commandName the command name.
      * @param commandContents the contents of the command.
      * @param server the server the command is on.

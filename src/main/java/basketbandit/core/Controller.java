@@ -1,24 +1,68 @@
 package basketbandit.core;
 
-import basketbandit.core.commands.Command;
-import basketbandit.core.commands.CommandPlay;
-import basketbandit.core.modules.ModuleCustom;
-import basketbandit.core.modules.ModuleLogging;
-import basketbandit.core.modules.ModuleMusic;
-import basketbandit.core.modules.ModuleUtility;
+import basketbandit.core.modules.Command;
+import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.commands.CommandPlay;
+import basketbandit.core.modules.custom.ModuleCustom;
+import basketbandit.core.modules.logging.ModuleLogging;
+import basketbandit.core.modules.utility.ModuleUtility;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageReaction;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
+import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 class Controller {
 
     private Database database = new Database();
     private String serverLong;
+
+    /**
+     * Controller constructor for GuildJoinEvents
+     * @param e GuildJoinEvent
+     */
+    Controller(GuildJoinEvent e) {
+        List<TextChannel> channels = e.getGuild().getTextChannels();
+        User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
+
+        int users = 0;
+        for(Guild guild : bot.getJDA().getGuilds()) {
+            users += guild.getMemberCache().size();
+        }
+
+        EmbedBuilder about = new EmbedBuilder()
+                .setColor(Color.WHITE)
+                .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
+                .setDescription("Thanks for inviting me to your server! Below is a little bit of information about myself, and you can access a list of my modules [here](!")
+                .setThumbnail(bot.getAvatarUrl())
+                .addField("Author", "[0x00000000#0001](https://github.com/Galaxiosaurus/)", true)
+                .addField("Version", Configuration.VERSION, true)
+                .addField("Servers", bot.getJDA().getGuilds().size()+"", true)
+                .addField("Users", users+"", true)
+                .addField("Commands", "35", true)
+                .addField("Invocation", Configuration.PREFIX, true)
+                .addField("Uptime", TimeKeeper.runtime, true)
+                .addField("Ping", bot.getJDA().getPing()+"", true);
+
+        for(TextChannel c: channels) {
+            if(c.getName().toLowerCase().equals("general")) {
+                c.sendMessage(about.build()).queue();
+                break;
+            }
+        }
+
+        e.getGuild().getOwner().getUser().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(about.build()).queue());
+    }
 
     /**
      * Controller constructor for MessageReceivedEvents
@@ -50,11 +94,11 @@ class Controller {
 
             // Search function check if regex matches. Used in conjunction with the search input.
             if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                if(!input[0].equals("cancel") && ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong())) {
-                    new CommandPlay(e, ModuleMusic.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
+                if(!input[0].equals("cancel") && ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+                    new CommandPlay(e, ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
 
-                } else if(input[0].equals("cancel") && ModuleMusic.searchUsers.containsKey(e.getAuthor().getIdLong())) {
-                    ModuleMusic.searchUsers.remove(e.getAuthor().getIdLong());
+                } else if(input[0].equals("cancel") && ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+                    ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
                     e.getTextChannel().sendMessage("[" + e.getAuthor().getAsMention() + "] Search cancelled.").queue();
 
                 }

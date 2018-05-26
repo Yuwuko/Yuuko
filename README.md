@@ -1,11 +1,14 @@
-# BasketBandit 1.8.2 (25/05/2018) 
+[![GitHub release](https://img.shields.io/github/release/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java)
+[![Github All Releases](https://img.shields.io/github/downloads/Galaxiosaurus/BasketBandit-Java/total.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java)
+[![GitHub stars](https://img.shields.io/github/stars/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/issues)
+[![GitHub license](https://img.shields.io/github/license/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/blob/master/LICENSE)
 
-BasketBandit is a Discord bot that I am developing based on the JDA libraries and LavaPlayer for music.
+# BasketBandit 1.9.0 (26/05/2018) 
 
-It is a modular bot which means that you can enable or disable certain sets of commands where you see fit. The current modules are core (can't be disabled), custom, fun, logging, math, utility and runescape.
-To enable or disable a module you type the bot invocation (at current '?') module and the name of the module, e.g. '?module fun'
+BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
-Note: The logging module requires a text-channel named command-log to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed.
+If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any feature requests, feel free to post them in my Discord server [here](https://discord.gg/QcwghsA).
 
 ## Commands
 
@@ -103,6 +106,8 @@ As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will 
 
 ## Notes
 
-Can still hear audio after you have muted the bot and restarted your client or switched channels? This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
+For the welcome message a basic 'general' text-channel is used. If that does or doesn't exist the bot will also send a PM to the server owner but not attempt to send the message anywhere else.
 
-If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any suggestions, feel free to post them in my Discord server [here](https://discord.gg/QcwghsA).
+The logging module requires a text-channel named 'command-log' to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed
+
+Can still hear audio after you have muted the bot and restarted your client or switched channels? This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.

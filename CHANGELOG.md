@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.9.0
+
++ [+] Added a welcome message to give users the commands and some other information.
++ [~] Altered [__linestatus__] to account for a rare condition with uppercase text.
++ [~] Major restructure of project packages, refactored music into audio and runescape into games.
+
 ## 1.8.2
 
 + [~] Changed the structure of [__currenttrack__], [__lasttrack__] and [__play__] to give a little more info.
