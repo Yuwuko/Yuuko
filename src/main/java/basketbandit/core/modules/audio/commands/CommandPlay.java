@@ -3,8 +3,9 @@ package basketbandit.core.modules.audio.commands;
 import basketbandit.core.Configuration;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
-import basketbandit.core.modules.audio.handlers.MusicManagerHandler;
+import basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
@@ -24,12 +25,16 @@ public class CommandPlay extends Command {
 
     public CommandPlay(MessageReceivedEvent e) {
         super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
+        }
     }
 
-    public CommandPlay(MessageReceivedEvent e, String url) {
+    public CommandPlay(MessageReceivedEvent e, String trackUrl) {
         super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommandAux(e, url);
+        if(!executeCommandAux(e, trackUrl)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", there was a problem with your request.").queue();
+        }
     }
 
     /**
@@ -39,14 +44,14 @@ public class CommandPlay extends Command {
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         if(commandArray.length == 1) {
             e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             if(manager.player.isPaused()) {
                 manager.player.setPaused(false);
-                e.getTextChannel().sendMessage("Resuming playback of...").queue();
+                e.getTextChannel().sendMessage("Player unpaused.").queue();
                 new CommandCurrentTrack();
             }
             return true;
@@ -56,23 +61,31 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
             if(!commandArray[1].startsWith("https://www.youtube.com/watch?v=") || !commandArray[1].startsWith("https://youtu.be/")) {
-                loadAndPlay(manager, e.getChannel(), ModuleAudio.searchYouTube(e), e);
+                String trackUrl = YouTubeSearchHandler.search(commandArray[1]);
+
+                if(trackUrl == null) {
+                    return false;
+                } else {
+                    loadAndPlay(manager, e.getChannel(), trackUrl, e);
+                }
+
             } else {
                 loadAndPlay(manager, e.getChannel(), commandArray[1], e);
+
             }
             return true;
-
         }
+
     }
 
-    private boolean executeCommandAux(MessageReceivedEvent e, String url) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+    private boolean executeCommandAux(MessageReceivedEvent e, String trackId) {
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
         e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
         manager.player.setPaused(false);
 
-        loadAndPlay(manager, e.getChannel(), "https://www.youtube.com/watch?v=" + url, e);
+        loadAndPlay(manager, e.getChannel(), "https://www.youtube.com/watch?v=" + trackId, e);
         return true;
     }
 
@@ -91,11 +104,14 @@ public class CommandPlay extends Command {
             trackUrl = url;
         }
 
-        MusicManagerHandler.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
+        AudioManagerHandler.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
 
             @Override
             public void trackLoaded(AudioTrack track) {
-                manager.scheduler.queue(track);
+
+                if(!manager.scheduler.queue(track)) {
+                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", unable to queue track.").queue();
+                }
                 String[] uri = track.getInfo().uri.split("=");
 
                 EmbedBuilder queuedTrack = new EmbedBuilder()
@@ -105,7 +121,7 @@ public class CommandPlay extends Command {
                         .setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")
                         .addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
-                        .addField("Position in queue", manager.scheduler.queue.size()+"", true)
+                        .addField("Position in queue", manager.scheduler.queue.size()+"", false)
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 channel.sendMessage(queuedTrack.build()).queue();

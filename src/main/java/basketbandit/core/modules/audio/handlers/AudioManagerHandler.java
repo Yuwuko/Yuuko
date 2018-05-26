@@ -11,7 +11,7 @@ import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 
 import java.util.HashMap;
 
-public class MusicManagerHandler {
+public class AudioManagerHandler {
 
     private static HashMap<String, GuildAudioManager> managers;
     private static AudioPlayerManager playerManager;
@@ -20,7 +20,7 @@ public class MusicManagerHandler {
      * Handles full application runtime handlers
      * managers instead of leaving it to the main class.
      */
-    public MusicManagerHandler() {
+    public AudioManagerHandler() {
         managers = new HashMap<>();
         playerManager = new DefaultAudioPlayerManager();
 
@@ -34,27 +34,43 @@ public class MusicManagerHandler {
     }
 
     /**
-     * Returns a guild's GuildAudioManager or null if there isn't one.
-     * @return trackScheduler or NULL.
+     * Finds and sets the guild's handlers manager.
+     * @return GuildAudioManager.
      */
-    public static GuildAudioManager getGuildMusicManager(String guildID) {
-        return managers.get(guildID);
+    public static GuildAudioManager getGuildAudioManager(String id) {
+        GuildAudioManager manager;
+
+        if(managers.get(id) == null) {
+            synchronized(AudioManagerHandler.getGuildAudioManagers()) {
+                manager = new GuildAudioManager(playerManager);
+                manager.player.setVolume(50);
+                managers.put(id, manager);
+            }
+        } else {
+            manager = managers.get(id);
+        }
+        return manager;
     }
 
     /**
      * Returns full MusicManager HashMap.
+     * @return managers.
      */
-    public static HashMap<String, GuildAudioManager> getGuildMusicManagers() {
+    public static HashMap<String, GuildAudioManager> getGuildAudioManagers() {
         return managers;
     }
 
     /**
-     * Adds tot the GuildAudioManager HashMap.
+     * Adds to the GuildAudioManager HashMap.
      */
-    public static void addGuildMusicManager(String guildID, GuildAudioManager manager) {
-        managers.put(guildID, manager);
+    public static void addGuildMusicManager(String guild, GuildAudioManager manager) {
+        managers.put(guild, manager);
     }
 
+    /**
+     * Returns a guild's playerManager or null if there isn't one.
+     * @return playerManager or NULL.
+     */
     public static AudioPlayerManager getPlayerManager() {
         return playerManager;
     }

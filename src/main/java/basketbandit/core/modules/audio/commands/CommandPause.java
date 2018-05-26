@@ -1,7 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.modules.Command;
-import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -13,7 +13,9 @@ public class CommandPause extends Command {
 
     public CommandPause(MessageReceivedEvent e) {
         super("pause", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(executeCommand(e)) {
+            e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " paused playback.").queue();
+        }
     }
 
     /**
@@ -22,11 +24,10 @@ public class CommandPause extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.player.setPaused(true);
         return true;
-
     }
 
 }

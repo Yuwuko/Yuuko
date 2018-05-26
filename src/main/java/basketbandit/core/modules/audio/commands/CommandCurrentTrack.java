@@ -3,6 +3,7 @@ package basketbandit.core.modules.audio.commands;
 import basketbandit.core.Configuration;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -18,7 +19,9 @@ public class CommandCurrentTrack extends Command {
 
     public CommandCurrentTrack(MessageReceivedEvent e) {
         super("currenttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Nothing is currently playing...").queue();
+        }
     }
 
     /**
@@ -27,7 +30,7 @@ public class CommandCurrentTrack extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
         AudioTrack track = manager.player.getPlayingTrack();
         String[] uri = track.getInfo().uri.split("=");
 
@@ -44,10 +47,8 @@ public class CommandCurrentTrack extends Command {
             e.getTextChannel().sendMessage(queuedTrack.build()).queue();
             return true;
         } else {
-            e.getTextChannel().sendMessage("Nothing is currently playing...").queue();
             return false;
         }
-
     }
 
 }

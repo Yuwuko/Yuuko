@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 1.9.0 (26/05/2018) 
+# BasketBandit 1.9.0 (27/05/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 

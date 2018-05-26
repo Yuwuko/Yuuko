@@ -3,6 +3,7 @@ package basketbandit.core.modules.audio.commands;
 import basketbandit.core.Configuration;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -17,7 +18,9 @@ public class CommandSearch extends Command {
 
     public CommandSearch(MessageReceivedEvent e) {
         super("search", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.").queue();
+        }
     }
 
     /**
@@ -26,7 +29,7 @@ public class CommandSearch extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        List<SearchResult> results = ModuleAudio.searchYouTubeAux(e);
+        List<SearchResult> results = YouTubeSearchHandler.searchList(e);
 
         if(results != null) {
             EmbedBuilder presentResults = new EmbedBuilder()
@@ -46,8 +49,10 @@ public class CommandSearch extends Command {
 
             ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
             e.getTextChannel().sendMessage(presentResults.build()).queue();
+            return true;
+        } else {
+            return false;
         }
-        return true;
     }
 
 }

@@ -8,7 +8,7 @@ import basketbandit.core.modules.C;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.M;
 import basketbandit.core.modules.Module;
-import basketbandit.core.modules.audio.handlers.MusicManagerHandler;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -74,7 +74,7 @@ class BasketBandit extends ListenerAdapter {
     private BasketBandit() {
         monitor = new Monitor();
         new TimeKeeper(monitor);
-        new MusicManagerHandler();
+        new AudioManagerHandler();
 
         moduleList = new ArrayList<>();
         try {

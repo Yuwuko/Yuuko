@@ -6,7 +6,9 @@ Key: [+] added, [-] removed, [~] modified.
 
 + [+] Added a welcome message to give users the commands and some other information.
 + [~] Altered [__linestatus__] to account for a rare condition with uppercase text.
++ [~] Altered [__play__] embed to display correctly if no image is found.
 + [~] Major restructure of project packages, refactored music into audio and runescape into games.
++ [~] Refactoring some of the audio classes to make them more efficient, added some error messages.
 
 ## 1.8.2
 

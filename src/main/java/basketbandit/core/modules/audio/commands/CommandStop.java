@@ -1,7 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.modules.Command;
-import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -13,7 +13,9 @@ public class CommandStop extends Command {
 
     public CommandStop(MessageReceivedEvent e) {
         super("stop", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(executeCommand(e)) {
+            e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " stopped playback.").queue();
+        }
     }
 
     /**
@@ -22,16 +24,14 @@ public class CommandStop extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();
         manager.player.stopTrack();
         manager.player.setPaused(false);
         e.getGuild().getAudioManager().setSendingHandler(null);
         e.getGuild().getAudioManager().closeAudioConnection();
-        e.getTextChannel().sendMessage("Playback has been stopped and the queue has been cleared.").queue();
         return true;
-
     }
 
 }

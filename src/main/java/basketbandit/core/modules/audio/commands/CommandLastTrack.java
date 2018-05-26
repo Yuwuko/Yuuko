@@ -3,6 +3,7 @@ package basketbandit.core.modules.audio.commands;
 import basketbandit.core.Configuration;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -18,7 +19,9 @@ public class CommandLastTrack extends Command {
 
     public CommandLastTrack(MessageReceivedEvent e) {
         super("lasttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("There is no last track...").queue();
+        }
     }
 
     /**
@@ -27,7 +30,7 @@ public class CommandLastTrack extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
         AudioTrack track = manager.scheduler.getLastTrack();
         String[] uri = track.getInfo().uri.split("=");
 
@@ -44,7 +47,6 @@ public class CommandLastTrack extends Command {
             e.getTextChannel().sendMessage(queuedTrack.build()).queue();
             return true;
         } else {
-            e.getTextChannel().sendMessage("There is no last track...").queue();
             return false;
         }
 

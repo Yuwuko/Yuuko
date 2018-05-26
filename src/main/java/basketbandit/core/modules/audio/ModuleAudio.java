@@ -1,20 +1,11 @@
 package basketbandit.core.modules.audio;
 
-import basketbandit.core.Configuration;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
 import basketbandit.core.modules.audio.commands.*;
-import basketbandit.core.modules.audio.handlers.GuildAudioManager;
-import basketbandit.core.modules.audio.handlers.MusicManagerHandler;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -122,99 +113,6 @@ public class ModuleAudio extends Module {
         }
 
         return false;
-    }
-
-    /**
-     * Finds and sets the guild's handlers manager.
-     * @return GuildAudioManager.
-     */
-    public static GuildAudioManager getMusicManager(String id) {
-        GuildAudioManager manager;
-        if(MusicManagerHandler.getGuildMusicManager(id) == null) {
-            synchronized(MusicManagerHandler.getGuildMusicManagers()) {
-                manager = MusicManagerHandler.getGuildMusicManager(id);
-                if(manager == null) {
-                    manager = new GuildAudioManager(MusicManagerHandler.getPlayerManager());
-                    manager.player.setVolume(50);
-                    MusicManagerHandler.addGuildMusicManager(id, manager);
-                }
-            }
-        } else {
-            manager = MusicManagerHandler.getGuildMusicManager(id);
-        }
-        return manager;
-    }
-
-    /**
-     * Searches youtube using command[1] and returns the first result.
-     * @return youtube video url.
-     */
-    public static String searchYouTube(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+",2);
-
-        try {
-            YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
-            }).setApplicationName("basketbandit-204012").build();
-
-            YouTube.Search.List search = youtube.search().list("id,snippet");
-
-            search.setKey(Configuration.GOOGLE_API);
-            search.setQ(commandArray[1]);
-            search.setType("video");
-            search.setFields("items(id/videoId)");
-            search.setMaxResults(1L);
-
-            SearchListResponse searchResponse = search.execute();
-            List<SearchResult> searchResultList = searchResponse.getItems();
-            SearchResult result = searchResultList.get(0);
-
-            // Return the URL.
-            return "https://www.youtube.com/watch?v=" + result.getId().getVideoId();
-
-        } catch (GoogleJsonResponseException ex) {
-            System.err.println("There was a service error: " + ex.getDetails().getCode() + " : " + ex.getDetails().getMessage());
-        } catch (IOException cx) {
-            System.err.println("There was an IO error: " + cx.getCause() + " : " + e.getMessage());
-        } catch (Throwable tx) {
-            tx.printStackTrace();
-        }
-
-        return "err...";
-    }
-
-    /**
-     * Searches youtube using command[1] and returns the first 10 result.
-     * @return youtube video url.
-     */
-    public static List<SearchResult> searchYouTubeAux(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+",2);
-
-        try {
-            YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
-            }).setApplicationName("basketbandit-204012").build();
-
-            YouTube.Search.List search = youtube.search().list("id,snippet");
-
-            search.setKey(Configuration.GOOGLE_API);
-            search.setQ(commandArray[1]);
-            search.setType("video");
-            search.setFields("items(id/videoId,snippet/title)");
-            search.setMaxResults(10L);
-
-            SearchListResponse searchResponse = search.execute();
-
-            // Return the URL.
-            return searchResponse.getItems();
-
-        } catch (GoogleJsonResponseException ex) {
-            System.err.println("There was a service error: " + ex.getDetails().getCode() + " : " + ex.getDetails().getMessage());
-        } catch (IOException cx) {
-            System.err.println("There was an IO error: " + cx.getCause() + " : " + e.getMessage());
-        } catch (Throwable tx) {
-            tx.printStackTrace();
-        }
-
-        return null;
     }
 
     /**

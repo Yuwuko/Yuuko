@@ -1,7 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.modules.Command;
-import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -13,7 +13,9 @@ public class CommandSkip extends Command {
 
     public CommandSkip(MessageReceivedEvent e) {
         super("skip", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Failed to skip track... was there a track to skip?").queue();
+        }
     }
 
     /**
@@ -22,12 +24,14 @@ public class CommandSkip extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title).queue();
-        manager.scheduler.nextTrack();
-        return true;
-
+        if(manager.scheduler.nextTrack()) {
+            e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title).queue();
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

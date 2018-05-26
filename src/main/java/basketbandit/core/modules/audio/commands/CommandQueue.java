@@ -3,6 +3,7 @@ package basketbandit.core.modules.audio.commands;
 import basketbandit.core.Configuration;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -18,7 +19,9 @@ public class CommandQueue extends Command {
 
     public CommandQueue(MessageReceivedEvent e) {
         super("queue", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
+        }
     }
 
     /**
@@ -28,7 +31,7 @@ public class CommandQueue extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         synchronized(manager.scheduler.queue) {
             StringBuilder queue = new StringBuilder();
@@ -37,7 +40,7 @@ public class CommandQueue extends Command {
             for(AudioTrack track : manager.scheduler.queue) {
                 queue.append(i).append(": ").append(track.getInfo().title).append(", (").append(ModuleAudio.getTimestamp(track.getInfo().length)).append(") \n");
                 i++;
-                if (i > 10) {
+                if(i > 10) {
                     break;
                 }
             }
@@ -52,12 +55,11 @@ public class CommandQueue extends Command {
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 e.getTextChannel().sendMessage(nextTracks.build()).queue();
+                return true;
             } else {
-                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
+                return false;
             }
         }
-        return true;
-
     }
 
 }

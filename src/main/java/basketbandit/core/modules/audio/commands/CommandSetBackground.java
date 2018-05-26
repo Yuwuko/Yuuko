@@ -3,8 +3,9 @@ package basketbandit.core.modules.audio.commands;
 import basketbandit.core.Configuration;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
+import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import basketbandit.core.modules.audio.handlers.GuildAudioManager;
-import basketbandit.core.modules.audio.handlers.MusicManagerHandler;
+import basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
@@ -23,7 +24,9 @@ public class CommandSetBackground extends Command {
 
     public CommandSetBackground(MessageReceivedEvent e) {
         super("setbackground", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        if(!executeCommand(e)) {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
+        }
     }
 
     /**
@@ -33,18 +36,24 @@ public class CommandSetBackground extends Command {
      */
     protected boolean executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-        GuildAudioManager manager = ModuleAudio.getMusicManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
         e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
         manager.player.setPaused(false);
 
         if(!commandArray[1].startsWith("https://www.youtube.com/watch?v=") || !commandArray[1].startsWith("https://youtu.be/")) {
-            loadAndPlay(manager, e.getChannel(), ModuleAudio.searchYouTube(e), e);
-        } else {
-            loadAndPlay(manager, e.getChannel(), commandArray[1], e);
-        }
+            String trackUrl = YouTubeSearchHandler.search(commandArray[1]);
 
+            if(trackUrl == null) {
+                return false;
+            } else {
+                setAndPlay(manager, e.getChannel(), trackUrl, e);
+            }
+
+        } else {
+            setAndPlay(manager, e.getChannel(), commandArray[1], e);
+        }
         return true;
 
     }
@@ -55,7 +64,7 @@ public class CommandSetBackground extends Command {
      * @param channel; MessageChannel.
      * @param url; TrackUrl.
      */
-    private void loadAndPlay(GuildAudioManager manager, final MessageChannel channel, String url, MessageReceivedEvent e) {
+    private void setAndPlay(GuildAudioManager manager, final MessageChannel channel, String url, MessageReceivedEvent e) {
         final String trackUrl;
 
         if(url.startsWith("<") && url.endsWith(">")) {
@@ -64,7 +73,7 @@ public class CommandSetBackground extends Command {
             trackUrl = url;
         }
 
-        MusicManagerHandler.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
+        AudioManagerHandler.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
 
             @Override
             public void trackLoaded(AudioTrack track) {
