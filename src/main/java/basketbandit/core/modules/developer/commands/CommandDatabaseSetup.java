@@ -20,8 +20,12 @@ public class CommandDatabaseSetup extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         Database database = new Database();
-        return database.setupDatabase();
+        if(!database.setupDatabase()) {
+            e.getTextChannel().sendMessage("Database setup successfully.").queue();
+        } else {
+            e.getTextChannel().sendMessage("Database setup was unsuccessful.").queue();
+        }
     }
 }

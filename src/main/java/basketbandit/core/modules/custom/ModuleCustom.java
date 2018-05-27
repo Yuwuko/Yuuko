@@ -20,32 +20,29 @@ public class ModuleCustom extends Module {
             return;
         }
 
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-        }
-
+        executeCommand(e);
     }
 
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
         if(command.equals(C.ADD_CUSTOM.getEffectiveName())) {
             new CommandAddCustom(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.DELETE_CUSTOM.getEffectiveName())) {
             new CommandDeleteCustom(e);
-            return true;
+            return;
         }
 
         if(command.startsWith(C.CUSTOM.getEffectiveName())) {
             new CommandCustom(e);
-            return true;
+            return;
         }
 
-        return false;
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
     }
 
 }

@@ -41,10 +41,9 @@ public class Database {
             stmt = conn.prepareStatement(
                 "CREATE TABLE `Settings` (" +
                 "`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
-                "`server` varchar(18) NOT NULL,\n" +
-                "`modDev` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`server` VARCHAR(18) NOT NULL,\n" +
                 "`modModeration` BOOLEAN NOT NULL DEFAULT '0',\n" +
-                "`modMusic` BOOLEAN NOT NULL DEFAULT '0',\n" +
+                "`modAudio` BOOLEAN NOT NULL DEFAULT '0',\n" +
                 "`modCustom` BOOLEAN NOT NULL DEFAULT '1',\n" +
                 "`modUtility` BOOLEAN NOT NULL DEFAULT '1',\n" +
                 "`modTransport` BOOLEAN NOT NULL DEFAULT '0',\n" +
@@ -57,10 +56,10 @@ public class Database {
 
                 "CREATE TABLE `CustomCommands` (\n" +
                 "`id` INT(9) NOT NULL AUTO_INCREMENT,\n" +
-                "`server` varchar(18) NOT NULL,\n" +
-                "`commandName` varchar(10) NOT NULL,\n" +
-                "`commandContents` varchar(2000) NOT NULL,\n" +
-                "`commandAuthor` varchar(18) NOT NULL, \n" +
+                "`server` VARCHAR(18) NOT NULL,\n" +
+                "`commandName` VARCHAR(10) NOT NULL,\n" +
+                "`commandContents` VARCHAR(2000) NOT NULL,\n" +
+                "`commandAuthor` VARCHAR(18) NOT NULL, \n" +
                 "PRIMARY KEY (`id`)\n" +
                 ");\n" +
 

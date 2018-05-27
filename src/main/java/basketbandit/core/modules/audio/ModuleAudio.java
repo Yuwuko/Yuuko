@@ -14,24 +14,21 @@ public class ModuleAudio extends Module {
     public static HashMap<Long, List<SearchResult>> searchUsers = new HashMap<>();
 
     public ModuleAudio() {
-        super("ModuleAudio", "modMusic");
+        super("ModuleAudio", "modAudio");
     }
 
     public ModuleAudio(MessageReceivedEvent e) {
-        super("ModuleAudio", "modMusic");
+        super("ModuleAudio", "modAudio");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-        }
-
+        executeCommand(e);
     }
 
     public ModuleAudio(MessageReceivedEvent e, String url) {
-        super("ModuleAudio", "modMusic");
+        super("ModuleAudio", "modAudio");
 
         if(!checkModuleSettings(e)) {
             return;
@@ -43,76 +40,76 @@ public class ModuleAudio extends Module {
         }
     }
 
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:hehe:445200711438041090>").queue();
-            return true;
+            return;
         }
 
         if(command.equals(C.PLAY.getEffectiveName())) {
             new CommandPlay(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.PAUSE.getEffectiveName())) {
             new CommandPause(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.STOP.getEffectiveName())) {
             new CommandStop(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.SKIP.getEffectiveName())) {
             new CommandSkip(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.SET_BACKGROUND.getEffectiveName())) {
             new CommandSetBackground(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.UNSET_BACKGROUND.getEffectiveName())) {
             new CommandUnsetBackground(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.TRACK.getEffectiveName())) {
             new CommandCurrentTrack(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.SHUFFLE.getEffectiveName())) {
             new CommandShuffle(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.QUEUE.getEffectiveName())) {
             new CommandQueue(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.LAST_TRACK.getEffectiveName())) {
             new CommandLastTrack(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.TOGGLE_REPEAT.getEffectiveName())) {
             new CommandToggleRepeat(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.SEARCH.getEffectiveName())) {
             new CommandSearch(e);
-            return true;
+            return;
         }
 
-        return false;
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
     }
 
     /**

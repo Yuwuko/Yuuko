@@ -26,15 +26,10 @@ public class CommandModule extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
         String value = command[1].toLowerCase();
         String serverLong = e.getGuild().getIdLong()+"";
-
-        // Hard coded dev ID to stop bad actors.
-        if(value.equals("dev") && e.getAuthor().getIdLong() != 215161101460045834L) {
-            return false;
-        }
 
         if(new Database().toggleModule("mod" + value, serverLong)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor(value + " was enabled on this server!");
@@ -43,7 +38,6 @@ public class CommandModule extends Command {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(value + " was disabled on this server!");
             e.getTextChannel().sendMessage(embed.build()).queue();
         }
-        return true;
 
     }
 

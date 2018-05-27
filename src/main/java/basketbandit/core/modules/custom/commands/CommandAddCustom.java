@@ -24,14 +24,14 @@ public class CommandAddCustom extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("",3);
         String serverLong = e.getGuild().getIdLong()+"";
         Database database = new Database();
 
         if(commandArray[2].length() > 2000) {
             e.getTextChannel().sendMessage("Command too long, maximum length of 2000 characters.").queue();
-            return false;
+            return;
         }
 
         if(database.addCustomCommand(commandArray[1], commandArray[2], serverLong, e.getAuthor().getIdLong()+"")) {
@@ -39,7 +39,6 @@ public class CommandAddCustom extends Command {
         } else {
             e.getTextChannel().sendMessage("Failed to add command...").queue();
         }
-        return true;
     }
 
 }

@@ -25,7 +25,7 @@ public class CommandOverreact extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         List<Message> messageList = e.getTextChannel().getHistory().retrievePast(10).complete();
 
         int i = 0;
@@ -35,7 +35,6 @@ public class CommandOverreact extends Command {
                 i++;
             }
         }
-        return true;
     }
 
     // TODO: Redo overreact command. (Choose random emotes)

@@ -24,7 +24,7 @@ public class CommandKick extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
         long value = Long.parseLong(commandArray[1]);
         Member member = e.getGuild().getMemberById(value);
@@ -36,8 +36,6 @@ public class CommandKick extends Command {
         } else {
             e.getGuild().getController().kick(commandArray[1], commandArray[2]).queue();
         }
-        return true;
-
     }
 
 }

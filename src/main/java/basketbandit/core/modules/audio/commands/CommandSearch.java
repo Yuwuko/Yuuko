@@ -18,9 +18,7 @@ public class CommandSearch extends Command {
 
     public CommandSearch(MessageReceivedEvent e) {
         super("search", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.").queue();
-        }
+        executeCommand(e);
     }
 
     /**
@@ -28,7 +26,7 @@ public class CommandSearch extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         List<SearchResult> results = YouTubeSearchHandler.searchList(e);
 
         if(results != null) {
@@ -49,9 +47,8 @@ public class CommandSearch extends Command {
 
             ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
             e.getTextChannel().sendMessage(presentResults.build()).queue();
-            return true;
         } else {
-            return false;
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.").queue();
         }
     }
 

@@ -24,7 +24,7 @@ public class CommandCustom extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 3);
         String serverLong = e.getGuild().getIdLong()+"";
         String command = commandArray[0].replace(Configuration.PREFIX + Configuration.PREFIX, "");
@@ -35,8 +35,6 @@ public class CommandCustom extends Command {
         if(commandContent == null) throw new NoSuchElementException();
 
         e.getTextChannel().sendMessage(commandContent).queue();
-        return true;
-
     }
 
 }

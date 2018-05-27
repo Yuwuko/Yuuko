@@ -13,9 +13,7 @@ public class CommandPause extends Command {
 
     public CommandPause(MessageReceivedEvent e) {
         super("pause", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(executeCommand(e)) {
-            e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " paused playback.").queue();
-        }
+        executeCommand(e);
     }
 
     /**
@@ -23,11 +21,11 @@ public class CommandPause extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.player.setPaused(true);
-        return true;
+        e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " paused playback.").queue();
     }
 
 }

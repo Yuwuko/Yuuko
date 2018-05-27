@@ -23,7 +23,7 @@ public class CommandRuneScapeStats extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
         String command = commandArray[0].toLowerCase();
         String player = commandArray[1].toLowerCase();
@@ -69,10 +69,8 @@ public class CommandRuneScapeStats extends Command {
             messageString.append("``````Total Level     :: ").append(skills[1]).append("```");
 
             e.getTextChannel().sendMessage(messageString).queue();
-            return true;
-        } catch(Exception r) {
+        } catch(Exception ex) {
             e.getTextChannel().sendMessage("Oops, looks like I messed up! (Or that account doesn't exist!) <:ErioTouwa:420413779323650050>").queue();
-            return false;
         }
 
     }

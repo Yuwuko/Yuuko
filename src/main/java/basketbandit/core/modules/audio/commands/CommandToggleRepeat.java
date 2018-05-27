@@ -21,12 +21,11 @@ public class CommandToggleRepeat extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());
         e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating()).queue();
-        return true;
     }
 
 }

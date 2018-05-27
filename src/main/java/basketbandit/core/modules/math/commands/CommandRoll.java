@@ -24,7 +24,7 @@ public class CommandRoll extends Command {
      * @return boolean; if the command executed correctly.
      * @throws IllegalArgumentException;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
+    protected void executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
         String[] rollString = command[1].split("d");
         int num;
@@ -50,10 +50,8 @@ public class CommandRoll extends Command {
 
         if(num != 0) {
             e.getTextChannel().sendMessage(embed.build()).queue();
-            return true;
         } else {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", something has gone wrong...").queue();
-            return false;
         }
 
     }

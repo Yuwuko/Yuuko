@@ -24,7 +24,7 @@ public class CommandBan extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
         long value = Long.parseLong(command[1]);
         int time = Integer.parseInt(command[2]);
@@ -37,8 +37,6 @@ public class CommandBan extends Command {
         } else {
             e.getGuild().getController().ban(command[1], time, command[3]).queue();
         }
-        return true;
-
     }
 
 }

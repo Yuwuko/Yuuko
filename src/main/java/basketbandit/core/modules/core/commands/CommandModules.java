@@ -27,14 +27,14 @@ public class CommandModules extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
-        String serverLong = e.getGuild().getIdLong()+"";
+    protected void executeCommand(MessageReceivedEvent e) {
+        String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
         ArrayList<String> disabled = new ArrayList<>();
         ResultSet rs;
 
         try {
-            rs = new Database().getModuleSettings(serverLong);
+            rs = new Database().getModuleSettings(serverId);
             rs.next();
 
             for(int i = 4; i < 12; i++) {
@@ -59,7 +59,6 @@ public class CommandModules extends Command {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-        return true;
 
     }
 

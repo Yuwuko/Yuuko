@@ -19,9 +19,7 @@ public class CommandLastTrack extends Command {
 
     public CommandLastTrack(MessageReceivedEvent e) {
         super("lasttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("There is no last track...").queue();
-        }
+        executeCommand(e);
     }
 
     /**
@@ -29,7 +27,7 @@ public class CommandLastTrack extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
         AudioTrack track = manager.scheduler.getLastTrack();
         String[] uri = track.getInfo().uri.split("=");
@@ -45,9 +43,8 @@ public class CommandLastTrack extends Command {
                     .setFooter("Version: " + Configuration.VERSION + ", Requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             e.getTextChannel().sendMessage(queuedTrack.build()).queue();
-            return true;
         } else {
-            return false;
+            e.getTextChannel().sendMessage("There is no last track...").queue();
         }
 
     }

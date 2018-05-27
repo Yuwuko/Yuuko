@@ -24,9 +24,7 @@ public class CommandSetBackground extends Command {
 
     public CommandSetBackground(MessageReceivedEvent e) {
         super("setbackground", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
-        }
+        executeCommand(e);
     }
 
     /**
@@ -34,7 +32,7 @@ public class CommandSetBackground extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
@@ -46,7 +44,7 @@ public class CommandSetBackground extends Command {
             String trackUrl = YouTubeSearchHandler.search(commandArray[1]);
 
             if(trackUrl == null) {
-                return false;
+                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
             } else {
                 setAndPlay(manager, e.getChannel(), trackUrl, e);
             }
@@ -54,8 +52,6 @@ public class CommandSetBackground extends Command {
         } else {
             setAndPlay(manager, e.getChannel(), commandArray[1], e);
         }
-        return true;
-
     }
 
     /**

@@ -22,12 +22,11 @@ public class CommandShuffle extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " shuffled the queue.").queue();
         manager.scheduler.shuffle();
-        return true;
     }
 
 }

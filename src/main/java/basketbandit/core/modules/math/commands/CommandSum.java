@@ -23,7 +23,7 @@ public class CommandSum extends Command {
      * @return boolean; if the command executed correctly.
      * @throws IllegalArgumentException;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
+    protected void executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
         String sumString;
 
@@ -63,7 +63,6 @@ public class CommandSum extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);
         e.getTextChannel().sendMessage(embed.build()).queue();
-        return true;
     }
 
     // TODO: Remake the sum class, try to parse full equations using BODMAS.

@@ -33,7 +33,7 @@ public class CommandLineStatus extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         try {
             String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
 
@@ -105,11 +105,9 @@ public class CommandLineStatus extends Command {
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 e.getTextChannel().sendMessage(embed.build()).queue();
             }
-            return true;
 
         } catch(Exception ex) {
             ex.printStackTrace();
-            return false;
         }
 
     }

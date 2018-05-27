@@ -20,7 +20,7 @@ public class CommandSetStatus extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
 
         switch(commandArray[1]) {
@@ -38,7 +38,6 @@ public class CommandSetStatus extends Command {
                 break;
         }
 
-        return true;
     }
 
 }

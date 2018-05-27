@@ -20,30 +20,23 @@ public class ModuleDeveloper extends Module {
             return;
         }
 
-        if(!checkModuleSettings(e)) {
-            return;
-        }
-
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-        }
-
+        executeCommand(e);
     }
 
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+",2);
         String command = commandArray[0];
 
         if(command.equals(C.SET_STATUS.getEffectiveName())) {
             new CommandSetStatus(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.DATABASE_SETUP.getEffectiveName())) {
             new CommandDatabaseSetup(e);
-            return true;
+            return;
         }
 
-        return false;
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
     }
 }

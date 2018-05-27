@@ -19,26 +19,23 @@ public class ModuleFun extends Module {
             return;
         }
 
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-        }
-
+        executeCommand(e);
     }
 
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
         if(command.equals(C.OVERREACT.getEffectiveName())) {
             new CommandOverreact(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.INSULT.getEffectiveName())) {
             new CommandInsult(e);
-            return true;
+            return;
         }
 
-        return false;
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
     }
 }

@@ -25,7 +25,7 @@ public class CommandInsult extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         try {
             int lines = 0;
             BufferedReader insults;
@@ -38,11 +38,8 @@ public class CommandInsult extends Command {
             for(int i = 0; i < new Random().nextInt(lines); i++) insults.readLine();
             e.getTextChannel().sendMessage(e.getGuild().getMembers().get(new Random().nextInt(e.getGuild().getMembers().size())).getUser().getAsMention() + insults.readLine()).queue();
 
-            return true;
-
         } catch(Exception ex) {
-            e.getTextChannel().sendMessage("Oh... uh, there was an exception while executing the insult command...").queue();
-            return false;
+            ex.printStackTrace();
         }
     }
 

@@ -9,6 +9,8 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Altered [__play__] embed to display correctly if no image is found.
 + [~] Major restructure of project packages, refactored music into audio and runescape into games.
 + [~] Refactoring some of the audio classes to make them more efficient, added some error messages.
++ [~] Dealt with a YouTube search bug that throws exceptions instead of intended functionality.
++ [~] Changed return type of executeCommand from boolean to void to avoid jumping through hoops.
 
 ## 1.8.2
 

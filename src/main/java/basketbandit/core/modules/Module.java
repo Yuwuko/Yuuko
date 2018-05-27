@@ -21,7 +21,7 @@ public abstract class Module {
         return dbModuleName;
     }
 
-    public boolean checkModuleSettings(MessageReceivedEvent e) {
+    protected boolean checkModuleSettings(MessageReceivedEvent e) {
         Database db = new Database();
 
         if(!db.checkModuleSettings(dbModuleName, e.getGuild().getId())) {
@@ -33,5 +33,5 @@ public abstract class Module {
     }
 
     // Abstract method signature to ensure method is implemented.
-    protected abstract boolean executeCommand(MessageReceivedEvent e);
+    protected abstract void executeCommand(MessageReceivedEvent e);
 }

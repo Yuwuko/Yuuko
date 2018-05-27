@@ -33,5 +33,5 @@ public abstract class Command {
     }
 
     // Abstract method signature to ensure method is implemented.
-    protected abstract boolean executeCommand(MessageReceivedEvent e);
+    protected abstract void executeCommand(MessageReceivedEvent e);
 }

@@ -34,14 +34,13 @@ public class YouTubeSearchHandler {
 
             SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();
-            SearchResult result;
 
-            if(searchResultList != null) {
-                result = searchResultList.get(0);
-                return "https://www.youtube.com/watch?v=" + result.getId().getVideoId();
-            } else {
+            if(searchResultList.isEmpty()) {
                 return null;
             }
+
+            SearchResult result = searchResultList.get(0);
+            return "https://www.youtube.com/watch?v=" + result.getId().getVideoId();
 
         } catch (GoogleJsonResponseException ex) {
             System.err.println("There was a service error: " + ex.getDetails().getCode() + " : " + ex.getDetails().getMessage());

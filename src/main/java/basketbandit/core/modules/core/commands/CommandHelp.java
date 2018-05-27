@@ -23,7 +23,7 @@ public class CommandHelp extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         EmbedBuilder commandInfo = new EmbedBuilder()
                 .setColor(Color.RED)
                 .setTitle("Hey " + e.getAuthor().getName() + ",")
@@ -38,6 +38,5 @@ public class CommandHelp extends Command {
                 ;
         e.getTextChannel().sendMessage("Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>").queue();
         e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
-        return true;
     }
 }

@@ -20,7 +20,7 @@ public final class M  {
     public static final Module LOGGING = new ModuleLogging();
     public static final Module MATH = new ModuleMath();
     public static final Module MODERATION = new ModuleModeration();
-    public static final Module MUSIC = new ModuleAudio();
+    public static final Module AUDIO = new ModuleAudio();
     public static final Module RUNESCAPE = new ModuleGame();
     public static final Module TRANSPORT = new ModuleTransport();
     public static final Module UTILITY = new ModuleUtility();

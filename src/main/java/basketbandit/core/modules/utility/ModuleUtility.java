@@ -23,10 +23,7 @@ public class ModuleUtility extends Module {
             return;
         }
 
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-        }
-
+        executeCommand(e);
     }
 
     /**
@@ -61,20 +58,20 @@ public class ModuleUtility extends Module {
         }
     }
 
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
         if(command.equals(C.USER.getEffectiveName())) {
             new CommandUser(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.SERVER.getEffectiveName())) {
             new CommandServer(e);
-            return true;
+            return;
         }
 
-        return false;
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
     }
 }

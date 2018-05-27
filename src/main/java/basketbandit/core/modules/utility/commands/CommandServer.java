@@ -25,7 +25,7 @@ public class CommandServer extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         Guild server = e.getGuild();
 
         EmbedBuilder commandInfo = new EmbedBuilder()
@@ -45,7 +45,6 @@ public class CommandServer extends Command {
                 .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
         e.getTextChannel().sendMessage(commandInfo.build()).queue();
-        return true;
     }
 
 }

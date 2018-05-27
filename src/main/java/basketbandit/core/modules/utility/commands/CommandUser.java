@@ -29,7 +29,7 @@ public class CommandUser extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
         Member member = null;
         EmbedBuilder commandInfo;
@@ -87,6 +87,5 @@ public class CommandUser extends Command {
                     .setFooter("Version: " + Configuration.VERSION + ", Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
         e.getTextChannel().sendMessage(commandInfo.build()).queue();
-        return true;
     }
 }

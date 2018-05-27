@@ -18,41 +18,38 @@ public class ModuleModeration extends Module {
             return;
         }
 
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
-        }
-
+        executeCommand(e);
     }
 
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
         if(command.equals(C.NUKE.getEffectiveName()) && e.getMember().hasPermission(C.NUKE.getCommandPermission())) {
             new CommandNuke(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.KICK.getEffectiveName()) && e.getMember().hasPermission(C.KICK.getCommandPermission())){
             new CommandKick(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.BAN.getEffectiveName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
             new CommandBan(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.CREATE_CHANNEL.getEffectiveName()) && e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission())) {
             new CommandAddChannel(e);
-            return true;
+            return;
         }
 
         if(command.equals(C.DELETE_CHANNEL.getEffectiveName()) && e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission())) {
             new CommandDeleteChannel(e);
-            return true;
+            return;
         }
 
-        return false;
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
     }
 }

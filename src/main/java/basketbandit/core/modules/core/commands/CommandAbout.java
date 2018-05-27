@@ -24,9 +24,8 @@ public class CommandAbout extends Command {
     /**
      * Executes command using MessageReceivedEvent e.
      * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
         int users = 0;
@@ -53,7 +52,6 @@ public class CommandAbout extends Command {
                 .addField("Ping", bot.getJDA().getPing()+"", true);
 
         e.getTextChannel().sendMessage(about.build()).queue();
-        return true;
     }
 
 }

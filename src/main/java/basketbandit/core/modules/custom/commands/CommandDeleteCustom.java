@@ -24,7 +24,7 @@ public class CommandDeleteCustom extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("",2);
         String commandName = commandArray[1];
         String serverLong = e.getGuild().getIdLong()+"";
@@ -32,7 +32,6 @@ public class CommandDeleteCustom extends Command {
 
         if(database.removeCustomCommand(commandName, serverLong)) {
             e.getTextChannel().sendMessage(commandName + " successfully removed!").queue();
-            return true;
         }
         throw new NoSuchElementException();
 

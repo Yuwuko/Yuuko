@@ -25,7 +25,7 @@ public class CommandNuke extends Command {
      * @return boolean; if the command executed correctly.
      * @throws IllegalArgumentException;
      */
-    protected boolean executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
+    protected void executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
             String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
 
             int value = Integer.parseInt(command[1]);
@@ -44,7 +44,5 @@ public class CommandNuke extends Command {
                 }
                 e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).complete();
             }
-
-            return true;
     }
 }

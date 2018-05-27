@@ -13,21 +13,18 @@ public class CommandUnsetBackground extends Command {
 
     public CommandUnsetBackground(MessageReceivedEvent e) {
         super("unsetbackground", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(executeCommand(e)) {
-            e.getTextChannel().sendMessage("Background track removed.").queue();
-        }
+        executeCommand(e);
     }
 
     /**
      * Executes command using MessageReceivedEvent e.
      * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setBackground(null);
-        return true;
+        e.getTextChannel().sendMessage("Background track removed.").queue();
     }
 
 }

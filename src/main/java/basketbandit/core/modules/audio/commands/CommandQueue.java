@@ -19,9 +19,7 @@ public class CommandQueue extends Command {
 
     public CommandQueue(MessageReceivedEvent e) {
         super("queue", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
-        }
+        executeCommand(e);
     }
 
     /**
@@ -30,7 +28,7 @@ public class CommandQueue extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         synchronized(manager.scheduler.queue) {
@@ -55,9 +53,8 @@ public class CommandQueue extends Command {
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 e.getTextChannel().sendMessage(nextTracks.build()).queue();
-                return true;
             } else {
-                return false;
+                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
             }
         }
     }

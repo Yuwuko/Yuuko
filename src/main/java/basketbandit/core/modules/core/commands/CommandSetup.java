@@ -21,15 +21,12 @@ public class CommandSetup extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         String serverLong = e.getGuild().getIdLong()+"";
-
-        if(new Database().addNewServer(serverLong)) {
+        if(!new Database().addNewServer(serverLong)) {
             e.getTextChannel().sendMessage("Server setup successful. (You cannot do this again!)").queue();
-            return true;
         } else {
             e.getTextChannel().sendMessage("Server setup was unsuccessful. (Are you sure the setup command has not been run before?)").queue();
-            return false;
         }
     }
 

@@ -13,9 +13,7 @@ public class CommandSkip extends Command {
 
     public CommandSkip(MessageReceivedEvent e) {
         super("skip", "basketbandit.core.modules.audio.ModuleAudio", null);
-        if(!executeCommand(e)) {
-            e.getTextChannel().sendMessage("Failed to skip track... was there a track to skip?").queue();
-        }
+        executeCommand(e);
     }
 
     /**
@@ -23,14 +21,13 @@ public class CommandSkip extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected boolean executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         if(manager.scheduler.nextTrack()) {
             e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title).queue();
-            return true;
         } else {
-            return false;
+            e.getTextChannel().sendMessage("Failed to skip track... was there a track to skip?").queue();
         }
     }
 
