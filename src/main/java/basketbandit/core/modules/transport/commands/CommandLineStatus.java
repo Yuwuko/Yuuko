@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +38,7 @@ public class CommandLineStatus extends Command {
             String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
 
             URL url = new URL("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Configuration.TFL_ID + "&app_key=" + Configuration.TFL_API);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 

@@ -1,6 +1,6 @@
 package basketbandit.core.modules.core.commands;
 
-import basketbandit.core.Database;
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -23,7 +23,7 @@ public class CommandSetup extends Command {
      */
     protected void executeCommand(MessageReceivedEvent e) {
         String serverLong = e.getGuild().getIdLong()+"";
-        if(!new Database().addNewServer(serverLong)) {
+        if(!new DatabaseFunctions().addNewServer(serverLong)) {
             e.getTextChannel().sendMessage("Server setup successful. (You cannot do this again!)").queue();
         } else {
             e.getTextChannel().sendMessage("Server setup was unsuccessful. (Are you sure the setup command has not been run before?)").queue();

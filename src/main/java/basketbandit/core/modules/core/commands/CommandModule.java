@@ -1,6 +1,6 @@
 package basketbandit.core.modules.core.commands;
 
-import basketbandit.core.Database;
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -31,7 +31,7 @@ public class CommandModule extends Command {
         String value = command[1].toLowerCase();
         String serverLong = e.getGuild().getIdLong()+"";
 
-        if(new Database().toggleModule("mod" + value, serverLong)) {
+        if(new DatabaseFunctions().toggleModule("mod" + value, serverLong)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor(value + " was enabled on this server!");
             e.getTextChannel().sendMessage(embed.build()).queue();
         } else {

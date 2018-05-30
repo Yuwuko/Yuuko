@@ -2,11 +2,10 @@ package basketbandit.core;
 
 public class TimeKeeper implements Runnable {
 
-    private final Monitor monitor;
     public static String runtime;
+    private static long ping;
 
-    TimeKeeper(Monitor monitor) {
-        this.monitor = monitor;
+    TimeKeeper() {
         new Thread(this,"TimeKeeper").start();
     }
 
@@ -20,10 +19,6 @@ public class TimeKeeper implements Runnable {
             String ds, hs, ms, ss;
             int fm = 0, oh = 0;
 
-            // Init the monitor.
-            monitor.updateOneSecond("--:--:--:--");
-            monitor.updateFiveMinutes();
-            monitor.updateOneHour();
 
             while(true) {
                 Thread.sleep(1000);
@@ -31,13 +26,12 @@ public class TimeKeeper implements Runnable {
                 fm++;
                 if(fm == 300) {
                     fm = 0;
-                    monitor.updateFiveMinutes();
                 }
 
                 oh++;
                 if(oh == 3600) {
                     oh = 0;
-                    monitor.updateOneHour();
+                    ping = BasketBandit.bot.getPing();
                 }
 
                 s++;
@@ -61,8 +55,6 @@ public class TimeKeeper implements Runnable {
                 ss = (s < 10) ? String.format("%02d", s) : s + "";
 
                 runtime = ds + ":" + hs + ":" + ms + ":" + ss;
-                monitor.updateOneSecond(runtime);
-
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

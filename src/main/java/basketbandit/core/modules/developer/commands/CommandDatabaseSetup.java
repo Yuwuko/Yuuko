@@ -1,6 +1,6 @@
 package basketbandit.core.modules.developer.commands;
 
-import basketbandit.core.Database;
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -21,8 +21,7 @@ public class CommandDatabaseSetup extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected void executeCommand(MessageReceivedEvent e) {
-        Database database = new Database();
-        if(!database.setupDatabase()) {
+        if(new DatabaseFunctions().setupDatabase()) {
             e.getTextChannel().sendMessage("Database setup successfully.").queue();
         } else {
             e.getTextChannel().sendMessage("Database setup was unsuccessful.").queue();

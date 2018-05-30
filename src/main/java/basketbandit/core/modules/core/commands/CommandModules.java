@@ -1,7 +1,7 @@
 package basketbandit.core.modules.core.commands;
 
 import basketbandit.core.Configuration;
-import basketbandit.core.Database;
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class CommandModules extends Command {
 
     public CommandModules() {
-        super("module", "basketbandit.core.modules.core.ModuleCore", null);
+        super("modules", "basketbandit.core.modules.core.ModuleCore", null);
     }
 
     public CommandModules(MessageReceivedEvent e) {
-        super("module", "basketbandit.core.modules.core.ModuleCore", null);
+        super("modules", "basketbandit.core.modules.core.ModuleCore", null);
         executeCommand(e);
     }
 
@@ -31,15 +31,15 @@ public class CommandModules extends Command {
         String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
         ArrayList<String> disabled = new ArrayList<>();
-        ResultSet rs;
+        ResultSet resultSet;
 
         try {
-            rs = new Database().getModuleSettings(serverId);
-            rs.next();
+            resultSet = new DatabaseFunctions().getModuleSettings(serverId);
+            resultSet.next();
 
             for(int i = 4; i < 12; i++) {
-                ResultSetMetaData meta = rs.getMetaData();
-                if(rs.getBoolean(i)) {
+                ResultSetMetaData meta = resultSet.getMetaData();
+                if(resultSet.getBoolean(i)) {
                     enabled.add(meta.getColumnName(i));
                 } else {
                     disabled.add(meta.getColumnName(i));

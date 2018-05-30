@@ -1,9 +1,9 @@
 package basketbandit.core;
 
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
 import basketbandit.core.modules.audio.commands.CommandPlay;
-import basketbandit.core.modules.custom.ModuleCustom;
 import basketbandit.core.modules.logging.ModuleLogging;
 import basketbandit.core.modules.utility.ModuleUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -24,7 +24,6 @@ import java.util.List;
 
 class Controller {
 
-    private Database database = new Database();
     private String serverLong;
 
     /**
@@ -47,7 +46,7 @@ class Controller {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/Galaxiosaurus/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", bot.getJDA().getGuilds().size()+"", true)
+                .addField("Servers", bot.getJDA().getGuildCache().size()+"", true)
                 .addField("Users", users+"", true)
                 .addField("Commands", "35", true)
                 .addField("Invocation", Configuration.PREFIX, true)
@@ -71,7 +70,6 @@ class Controller {
     Controller(MessageReceivedEvent e, ArrayList<Command> commandList) {
         String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         serverLong = e.getGuild().getIdLong() + "";
-        boolean executed = false;
 
         // Remove the input message.
         e.getMessage().delete().complete();
@@ -87,7 +85,6 @@ class Controller {
                     Class<?> clazz = Class.forName(c.getCommandModule());
                     Constructor<?> constructor = clazz.getConstructor(MessageReceivedEvent.class);
                     constructor.newInstance(e);
-                    executed = true;
                     break;
                 }
             }
@@ -104,15 +101,7 @@ class Controller {
                 }
             }
 
-            if(!executed && input[0].startsWith(Configuration.PREFIX + Configuration.PREFIX)) {
-                if(database.checkModuleSettings("modCustom", serverLong)) {
-                    new ModuleCustom(e);
-                } else {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the custom module is disabled.").queue();
-                }
-            }
-
-            if(database.checkModuleSettings("modLogging", serverLong)) {
+            if(new DatabaseFunctions().checkModuleSettings("modLogging", serverLong)) {
                 new ModuleLogging(e);
             }
 
@@ -131,7 +120,7 @@ class Controller {
         serverLong = e.getGuild().getIdLong() + "";
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            if(database.checkModuleSettings("modUtility", serverLong)) {
+            if(new DatabaseFunctions().checkModuleSettings("modUtility", serverLong)) {
                 new ModuleUtility(e);
             }
         }
@@ -146,7 +135,7 @@ class Controller {
         serverLong = e.getGuild().getIdLong() + "";
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            if(database.checkModuleSettings("modUtility", serverLong)) {
+            if(new DatabaseFunctions().checkModuleSettings("modUtility", serverLong)) {
                 new ModuleUtility(e);
             }
         }

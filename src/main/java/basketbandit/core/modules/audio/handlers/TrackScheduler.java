@@ -30,6 +30,7 @@ public class TrackScheduler extends AudioEventAdapter {
      * Add the next track to queue or play right away if nothing is in the queue.
      * If the queue is empty play the background handlers if it isn't null.
      * @param track The track to play or add to queue.
+     * @return if the queue was successful.
      */
     public boolean queue(AudioTrack track) {
         if(player.getPlayingTrack() == background) {
@@ -45,6 +46,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     /**
      * Start the next track, stopping the current one if it is playing.
+     * @return if the next track was able to play.
      */
     public boolean nextTrack() {
         if(player.startTrack(queue.poll(), false)) {
@@ -111,6 +113,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     /**
      * Returns the last track.
+     * @return lasttrack.
      */
     public AudioTrack getLastTrack() {
         return lastTrack;

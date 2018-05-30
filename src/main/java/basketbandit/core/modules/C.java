@@ -2,9 +2,6 @@ package basketbandit.core.modules;
 
 import basketbandit.core.modules.audio.commands.*;
 import basketbandit.core.modules.core.commands.*;
-import basketbandit.core.modules.custom.commands.CommandAddCustom;
-import basketbandit.core.modules.custom.commands.CommandCustom;
-import basketbandit.core.modules.custom.commands.CommandDeleteCustom;
 import basketbandit.core.modules.developer.commands.CommandDatabaseSetup;
 import basketbandit.core.modules.developer.commands.CommandSetStatus;
 import basketbandit.core.modules.fun.commands.CommandInsult;
@@ -50,11 +47,6 @@ public final class C {
 
     // RuneScape module modules.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
-
-    // Custom module modules.
-    public static final Command CUSTOM = new CommandCustom();
-    public static final Command ADD_CUSTOM = new CommandAddCustom();
-    public static final Command DELETE_CUSTOM = new CommandDeleteCustom();
 
     // Music module modules.
     public static final Command PLAY = new CommandPlay();

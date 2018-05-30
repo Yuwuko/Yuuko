@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 1.9.0 (27/05/2018) 
+# BasketBandit 1.9.0 (30/05/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -65,14 +65,6 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 - __rsstats \<name\>__ will return the RuneScape 3 stats for the given user.
 
 - __osstats \<name\>__ will return the OldSchool Runescape stats for the given user.
-
-### Custom
-
-- __newcc \<name\> \<contents\>__ will create a new custom command.
-
-- __delcc \<name\>__ will delete a custom command.
-
-- __\<command\>__ will execute a custom command. (__double invocation__)
 
 ### Music
 

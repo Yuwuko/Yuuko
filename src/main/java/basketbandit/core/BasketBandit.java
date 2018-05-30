@@ -35,12 +35,10 @@ class BasketBandit extends ListenerAdapter {
     private int messageCount = 0;
     private int commandCount = 0;
 
-    private final Monitor monitor;
+    public static JDA bot;
 
-    static JDA bot;
-
-    static ArrayList<Module> moduleList;
-    static ArrayList<Command> commandList;
+    private static ArrayList<Module> moduleList;
+    private static ArrayList<Command> commandList;
 
     /**
      * Initialises the bot and JDA.
@@ -57,7 +55,10 @@ class BasketBandit extends ListenerAdapter {
         Configuration.GOOGLE_API = args[3];
         Configuration.TFL_ID = args[4];
         Configuration.TFL_API = args[5];
-        Configuration.DATABASE_URL = args[6];
+        Configuration.DATABASE_IP = args[6];
+        Configuration.DATABASE_NAME = args[7];
+        Configuration.DATABASE_USERNAME = args[8];
+        Configuration.DATABASE_PASSWORD = args[9];
 
         bot = new JDABuilder(AccountType.BOT)
             .setToken(Configuration.BOT_TOKEN)
@@ -72,8 +73,7 @@ class BasketBandit extends ListenerAdapter {
      * Retrieves a list of modules via reflection.
      */
     private BasketBandit() {
-        monitor = new Monitor();
-        new TimeKeeper(monitor);
+        new TimeKeeper();
         new AudioManagerHandler();
 
         moduleList = new ArrayList<>();
@@ -82,7 +82,7 @@ class BasketBandit extends ListenerAdapter {
             for(Field module : modules) {
                 moduleList.add((Module)module.get(Module.class));
             }
-            System.out.println("[INFO] " + moduleList.size() + " module successfully loaded.");
+            System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -93,10 +93,12 @@ class BasketBandit extends ListenerAdapter {
             for(Field command : commands) {
                 commandList.add((Command)command.get(Command.class));
             }
-            System.out.println("[INFO] " + commandList.size() + " modules successfully loaded.");
+            System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+
+        Configuration.COMMAND_COUNT = commandList.size() + "";
     }
 
     /**
@@ -119,7 +121,6 @@ class BasketBandit extends ListenerAdapter {
             User user = e.getAuthor();
 
             messageCount++;
-            monitor.updateCount(messageCount, commandCount);
 
             if(user.isBot()
                     || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX + Configuration.PREFIX)
@@ -131,7 +132,6 @@ class BasketBandit extends ListenerAdapter {
             if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
                 new Controller(e, commandList);
                 commandCount++;
-                monitor.updateCount(messageCount, commandCount);
             }
 
             if(message.getContentRaw().matches("^[0-9]{1,2}$") || message.getContentRaw().toLowerCase().equals("cancel")) {

@@ -5,12 +5,19 @@ Key: [+] added, [-] removed, [~] modified.
 ## 1.9.0
 
 + [+] Added a welcome message to give users the commands and some other information.
-+ [~] Altered [__linestatus__] to account for a rare condition with uppercase text.
++ [~] Altered [__linestatus__] to account for a rare condition with uppercase text, also to use HTTPS.
 + [~] Altered [__play__] embed to display correctly if no image is found.
 + [~] Major restructure of project packages, refactored music into audio and runescape into games.
 + [~] Refactoring some of the audio classes to make them more efficient, added some error messages.
 + [~] Dealt with a YouTube search bug that throws exceptions instead of intended functionality.
 + [~] Changed return type of executeCommand from boolean to void to avoid jumping through hoops.
++ [~] Updated the database to comply with refactoring and removed the dev setting.
++ [~] Changed database from H2 to MySQL for production.
++ [~] Split the database class into a connection class and a function class.
++ [~] Resolved the oldest database 'bug' I've had which turned out to be a WHERE clause overlook. *doh!*
++ [~] Fixed the [__modules__] command, issue was a late side effect of the many refactors.
++ [-] Became headless, as a result removed the Monitor class as it isn't used.
++ [-] Removed custom module because it wasn't being used and it was a pain to maintain.
 
 ## 1.8.2
 
