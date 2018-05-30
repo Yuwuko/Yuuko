@@ -25,7 +25,7 @@ public class CommandSetPrefix extends Command {
         String value = command[1].toLowerCase();
         String server = e.getGuild().getId();
 
-        if(new DatabaseFunctions().setServerPrefix(value, server)) {
+        if(!new DatabaseFunctions().setServerPrefix(value, server)) {
             e.getTextChannel().sendMessage("Server prefix set to: " + value).queue();
         }
     }

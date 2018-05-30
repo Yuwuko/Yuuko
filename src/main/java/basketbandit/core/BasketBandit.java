@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 24/05/2018 - JDK 10.0.1
+// Version: 30/05/2018 - JDK 10.0.1
 
 package basketbandit.core;
 
@@ -47,7 +47,7 @@ class BasketBandit extends ListenerAdapter {
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
-    public static void main(String[] args) throws LoginException, IllegalArgumentException {
+    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
         BasketBandit self = new BasketBandit();
 
         Configuration.BOT_ID = args[0];
@@ -64,7 +64,7 @@ class BasketBandit extends ListenerAdapter {
             .setToken(Configuration.BOT_TOKEN)
             .addEventListener(self)
             .setEventManager(new ThreadedEventManager())
-            .buildAsync();
+            .buildBlocking();
 
         botUser = bot.getSelfUser();
         Configuration.GLOBAL_PREFIX = botUser.getAsMention();
@@ -123,7 +123,11 @@ class BasketBandit extends ListenerAdapter {
             Message msg = e.getMessage();
             String msgRawLower = msg.getContentRaw().toLowerCase();
             User user = e.getAuthor();
-            String prefix = (new DatabaseFunctions().getServerPrefix(server) == null) ? Configuration.GLOBAL_PREFIX : new DatabaseFunctions().getServerPrefix(server);
+
+            String prefix = new DatabaseFunctions().getServerPrefix(server);
+            if(prefix == null || prefix.equals("")) {
+                prefix = Configuration.GLOBAL_PREFIX;
+            }
 
             messageCount++;
 

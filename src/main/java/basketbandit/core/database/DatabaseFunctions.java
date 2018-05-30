@@ -80,7 +80,7 @@ public class DatabaseFunctions {
                 return false;
             }
 
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `commandPrefix` = " + prefix + " WHERE `serverid` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `commandPrefix` = '" + prefix + "' WHERE `serverid` = '" + server + "'");
             return stmt.execute();
 
         } catch(Exception ex) {
@@ -95,6 +95,11 @@ public class DatabaseFunctions {
         }
     }
 
+    /**
+     * Returns the given server's command prefix.
+     * @param server the target server.
+     * @return String
+     */
     public String getServerPrefix(String server) {
         try {
             if(server.length() != 18) {
@@ -103,10 +108,10 @@ public class DatabaseFunctions {
 
             PreparedStatement stmt = conn.prepareStatement("SELECT `commandPrefix` FROM `ServerSettings` WHERE `serverid` = '" + server + "'");
             ResultSet resultSet = stmt.executeQuery();
-            return resultSet.getNString(1);
+            resultSet.next();
+            return resultSet.getString(1);
 
         } catch(Exception ex) {
-            System.out.println("[ERROR] Unable to return server prefix. (ID: " + server + ")");
             return null;
         } finally {
             try {

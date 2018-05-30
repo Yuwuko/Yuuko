@@ -24,8 +24,8 @@ public class CommandSkip extends Command {
     protected void executeCommand(MessageReceivedEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        manager.scheduler.nextTrack();
         e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title).queue();
+        manager.scheduler.nextTrack();
     }
 
 }
