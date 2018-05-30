@@ -26,12 +26,12 @@ public class ModuleFun extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.OVERREACT.getEffectiveName())) {
+        if(command.contains(C.OVERREACT.getCommandName())) {
             new CommandOverreact(e);
             return;
         }
 
-        if(command.equals(C.INSULT.getEffectiveName())) {
+        if(command.contains(C.INSULT.getCommandName())) {
             new CommandInsult(e);
             return;
         }

@@ -47,7 +47,7 @@ public class CommandAbout extends Command {
                 .addField("Servers", bot.getJDA().getGuilds().size()+"", true)
                 .addField("Users", users+"", true)
                 .addField("Commands", Configuration.COMMAND_COUNT, true)
-                .addField("Invocation", Configuration.PREFIX, true)
+                .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", TimeKeeper.runtime, true)
                 .addField("Ping", bot.getJDA().getPing()+"", true);
 

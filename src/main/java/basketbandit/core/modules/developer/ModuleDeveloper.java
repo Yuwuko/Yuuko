@@ -27,12 +27,12 @@ public class ModuleDeveloper extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+",2);
         String command = commandArray[0];
 
-        if(command.equals(C.SET_STATUS.getEffectiveName())) {
+        if(command.contains(C.SET_STATUS.getCommandName())) {
             new CommandSetStatus(e);
             return;
         }
 
-        if(command.equals(C.DATABASE_SETUP.getEffectiveName())) {
+        if(command.contains(C.DATABASE_SETUP.getCommandName())) {
             new CommandDatabaseSetup(e);
             return;
         }

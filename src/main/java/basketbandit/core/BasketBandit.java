@@ -4,6 +4,7 @@
 
 package basketbandit.core;
 
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.M;
@@ -36,6 +37,7 @@ class BasketBandit extends ListenerAdapter {
     private int commandCount = 0;
 
     public static JDA bot;
+    private static User botUser;
 
     private static ArrayList<Module> moduleList;
     private static ArrayList<Command> commandList;
@@ -49,16 +51,15 @@ class BasketBandit extends ListenerAdapter {
     public static void main(String[] args) throws LoginException, IllegalArgumentException {
         BasketBandit self = new BasketBandit();
 
-        Configuration.PREFIX = args[0];
-        Configuration.BOT_ID = args[1];
-        Configuration.BOT_TOKEN = args[2];
-        Configuration.GOOGLE_API = args[3];
-        Configuration.TFL_ID = args[4];
-        Configuration.TFL_API = args[5];
-        Configuration.DATABASE_IP = args[6];
-        Configuration.DATABASE_NAME = args[7];
-        Configuration.DATABASE_USERNAME = args[8];
-        Configuration.DATABASE_PASSWORD = args[9];
+        Configuration.BOT_ID = args[0];
+        Configuration.BOT_TOKEN = args[1];
+        Configuration.GOOGLE_API = args[2];
+        Configuration.TFL_ID = args[3];
+        Configuration.TFL_API = args[4];
+        Configuration.DATABASE_IP = args[5];
+        Configuration.DATABASE_NAME = args[6];
+        Configuration.DATABASE_USERNAME = args[7];
+        Configuration.DATABASE_PASSWORD = args[8];
 
         bot = new JDABuilder(AccountType.BOT)
             .setToken(Configuration.BOT_TOKEN)
@@ -66,6 +67,9 @@ class BasketBandit extends ListenerAdapter {
             .setEventManager(new ThreadedEventManager())
             .buildAsync();
         bot.getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
+
+        botUser = bot.getSelfUser();
+        Configuration.GLOBAL_PREFIX = botUser.getAsMention();
     }
 
     /**
@@ -107,7 +111,7 @@ class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onGuildJoin(GuildJoinEvent e) {
-        new Controller(e);
+        new Controller(e, commandList);
     }
 
     /**
@@ -117,25 +121,29 @@ class BasketBandit extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         try {
-            Message message = e.getMessage();
+            String server = e.getGuild().getId();
+            Message msg = e.getMessage();
+            String msgRawLower = msg.getContentRaw().toLowerCase();
             User user = e.getAuthor();
+            String prefix = (new DatabaseFunctions().getServerPrefix(server) == null) ? Configuration.GLOBAL_PREFIX : new DatabaseFunctions().getServerPrefix(server);
 
             messageCount++;
 
             if(user.isBot()
-                    || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX + Configuration.PREFIX + Configuration.PREFIX)
-                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX + Configuration.PREFIX)
-                    || message.getContentRaw().toLowerCase().equals(Configuration.PREFIX)) {
+                    || msgRawLower.equals(prefix)
+                    || msgRawLower.startsWith(prefix + prefix)
+                    || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
+                    || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
                 return;
             }
 
-            if(message.getContentRaw().startsWith(Configuration.PREFIX + Configuration.PREFIX) || message.getContentRaw().toLowerCase().startsWith(Configuration.PREFIX)) {
-                new Controller(e, commandList);
+            if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
+                new Controller(e, commandList, prefix);
                 commandCount++;
             }
 
-            if(message.getContentRaw().matches("^[0-9]{1,2}$") || message.getContentRaw().toLowerCase().equals("cancel")) {
-                new Controller(e, commandList);
+            if(msg.getContentRaw().matches("^[0-9]{1,2}$") || msg.getContentRaw().toLowerCase().equals("cancel")) {
+                new Controller(e);
             }
 
         } catch(Exception f) {

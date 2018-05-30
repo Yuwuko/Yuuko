@@ -25,27 +25,27 @@ public class ModuleModeration extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.NUKE.getEffectiveName()) && e.getMember().hasPermission(C.NUKE.getCommandPermission())) {
+        if(command.contains(C.NUKE.getCommandName()) && e.getMember().hasPermission(C.NUKE.getCommandPermission())) {
             new CommandNuke(e);
             return;
         }
 
-        if(command.equals(C.KICK.getEffectiveName()) && e.getMember().hasPermission(C.KICK.getCommandPermission())){
+        if(command.contains(C.KICK.getCommandName()) && e.getMember().hasPermission(C.KICK.getCommandPermission())){
             new CommandKick(e);
             return;
         }
 
-        if(command.equals(C.BAN.getEffectiveName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
+        if(command.contains(C.BAN.getCommandName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
             new CommandBan(e);
             return;
         }
 
-        if(command.equals(C.CREATE_CHANNEL.getEffectiveName()) && e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission())) {
+        if(command.contains(C.CREATE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission())) {
             new CommandAddChannel(e);
             return;
         }
 
-        if(command.equals(C.DELETE_CHANNEL.getEffectiveName()) && e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission())) {
+        if(command.contains(C.DELETE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission())) {
             new CommandDeleteChannel(e);
             return;
         }

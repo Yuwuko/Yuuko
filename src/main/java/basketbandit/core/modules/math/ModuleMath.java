@@ -26,12 +26,12 @@ public class ModuleMath extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.ROLL.getEffectiveName())) {
+        if(command.contains(C.ROLL.getCommandName())) {
             new CommandRoll(e);
             return;
         }
 
-        if(command.equals(C.SUM.getEffectiveName())) {
+        if(command.contains(C.SUM.getCommandName())) {
             new CommandSum(e);
             return;
         }

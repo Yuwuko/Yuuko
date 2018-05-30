@@ -25,7 +25,7 @@ public class ModuleGame extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.RUNESCAPE_STATS.getEffectiveName())) {
+        if(command.contains(C.RUNESCAPE_STATS.getCommandName())) {
             new CommandRuneScapeStats(e);
             return;
         }

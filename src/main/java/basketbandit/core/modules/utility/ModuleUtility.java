@@ -62,12 +62,12 @@ public class ModuleUtility extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.USER.getEffectiveName())) {
+        if(command.contains(C.USER.getCommandName())) {
             new CommandUser(e);
             return;
         }
 
-        if(command.equals(C.SERVER.getEffectiveName())) {
+        if(command.contains(C.SERVER.getCommandName())) {
             new CommandServer(e);
             return;
         }

@@ -12,7 +12,7 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The invocation for the bot at this time is '?', this is used to prefix the below commands so the bot recognises that it is a command. Double invocation is used for custom commands, meaning that any custom commands should be prefixed with '??' instead.
+The global invocation/prefix is @BasketBandit (mention), this is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the __setprefix__ command below.
 
 ### Core
 
@@ -26,17 +26,19 @@ The invocation for the bot at this time is '?', this is used to prefix the below
 
 - __about__ will return some technical information about the bot such as uptime and ping.
 
+- __setprefix__ will set the server's prefix (admin only)
+
 ### Moderation
 
-- __kick \<userID (18 digit)\> \<reason\> (optional)__ will kick the given user from the server with optional reason.
+- __kick \<userID (18 digit)\> \<reason\> (optional)__ will kick the given user from the server with optional reason. (relevant permission required)
 
-- __ban \<userID (18 digit)\> \<days\> \<reason\> (optional)__ will ban the given user for the the given amount of time in days with optional reason.
+- __ban \<userID (18 digit)\> \<days\> \<reason\> (optional)__ will ban the given user for the the given amount of time in days with optional reason. (relevant permission required)
 
-- __nuke \<amount\>__ will delete the given number of previous messages, up to 100.
+- __nuke \<amount\>__ will delete the given number of previous messages, up to 100. (relevant permission required)
 
-- __addchannel \<type\> \<name\> \<nsfw\>__ creates a new channel. (Type is "text" or "voice", NSFW (optional))
+- __addchannel \<type\> \<name\> \<nsfw\>__ creates a new channel. (Type is "text" or "voice", NSFW (optional)) (relevant permission required)
 
-- __delchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice")
+- __delchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice") (relevant permission required)
 
 ### Utility
 

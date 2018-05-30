@@ -24,28 +24,33 @@ public class ModuleCore extends Module {
         String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.SETUP.getEffectiveName()) && e.getMember().hasPermission(C.SETUP.getCommandPermission())) {
+        if(command.contains(C.SETUP.getCommandName()) && e.getMember().hasPermission(C.SETUP.getCommandPermission())) {
             new CommandSetup(e);
             return;
         }
 
-        if(command.equals(C.MODULE.getEffectiveName()) && e.getMember().hasPermission(C.MODULE.getCommandPermission())) {
+        if(command.contains(C.MODULE.getCommandName()) && e.getMember().hasPermission(C.MODULE.getCommandPermission())) {
             new CommandModule(e);
             return;
         }
 
-        if(command.equals(C.MODULES.getEffectiveName())) {
+        if(command.contains(C.MODULES.getCommandName())) {
             new CommandModules(e);
             return;
         }
 
-        if(command.equals(C.HELP.getEffectiveName())) {
+        if(command.contains(C.HELP.getCommandName())) {
             new CommandHelp(e);
             return;
         }
 
-        if(command.equals(C.ABOUT.getEffectiveName())) {
+        if(command.contains(C.ABOUT.getCommandName())) {
             new CommandAbout(e);
+            return;
+        }
+
+        if(command.contains(C.SET_PREFIX.getCommandName()) && e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission())) {
+            new CommandSetPrefix(e);
             return;
         }
 

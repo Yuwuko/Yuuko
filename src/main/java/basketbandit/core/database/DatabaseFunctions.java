@@ -19,7 +19,7 @@ public class DatabaseFunctions {
      */
     public boolean setupDatabase() {
         try {
-            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE `ServerSettings` (`id` INT(9) NOT NULL AUTO_INCREMENT, `serverid` VARCHAR(18) NOT NULL, `modModeration` BOOLEAN NOT NULL DEFAULT '1', `modAudio` BOOLEAN NOT NULL DEFAULT '1', `modCustom` BOOLEAN NOT NULL DEFAULT '1', `modUtility` BOOLEAN NOT NULL DEFAULT '1', `modTransport` BOOLEAN NOT NULL DEFAULT '1', `modLogging` BOOLEAN NOT NULL DEFAULT '0', `modMath` BOOLEAN NOT NULL DEFAULT '0',`modFun` BOOLEAN NOT NULL DEFAULT '0', `modGame` BOOLEAN NOT NULL DEFAULT '0', PRIMARY KEY (`id`,`serverid`)) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;");
+            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE `ServerSettings` (`id` INT(9) NOT NULL AUTO_INCREMENT, `serverid` VARCHAR(18) NOT NULL, `commandPrefix` VARCHAR(2), `modModeration` BOOLEAN NOT NULL DEFAULT '1', `modAudio` BOOLEAN NOT NULL DEFAULT '1', `modCustom` BOOLEAN NOT NULL DEFAULT '1', `modUtility` BOOLEAN NOT NULL DEFAULT '1', `modTransport` BOOLEAN NOT NULL DEFAULT '1', `modLogging` BOOLEAN NOT NULL DEFAULT '0', `modMath` BOOLEAN NOT NULL DEFAULT '0',`modFun` BOOLEAN NOT NULL DEFAULT '0', `modGame` BOOLEAN NOT NULL DEFAULT '0', PRIMARY KEY (`id`,`serverid`)) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;");
             return stmt.execute();
 
         } catch(Exception ex) {
@@ -66,7 +66,55 @@ public class DatabaseFunctions {
                 System.out.println("[ERROR] Unable to close connection to database.");
             }
         }
+    }
 
+    /**
+     * Sets a server's command prefix.
+     * @param prefix the command prefix.
+     * @param server the target server.
+     * @return boolean
+     */
+    public boolean setServerPrefix(String prefix, String server) {
+        try {
+            if(server.length() != 18) {
+                return false;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `commandPrefix` = " + prefix + " WHERE `serverid` = '" + server + "'");
+            return stmt.execute();
+
+        } catch(Exception ex) {
+            System.out.println("[ERROR] Unable to set server prefix. (Server: " + server + ")");
+            return false;
+        } finally {
+            try {
+                conn.close();
+            } catch(Exception ex) {
+                System.out.println("[ERROR] Unable to close connection to database.");
+            }
+        }
+    }
+
+    public String getServerPrefix(String server) {
+        try {
+            if(server.length() != 18) {
+                return null;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT `commandPrefix` FROM `ServerSettings` WHERE `serverid` = '" + server + "'");
+            ResultSet resultSet = stmt.executeQuery();
+            return resultSet.getNString(1);
+
+        } catch(Exception ex) {
+            System.out.println("[ERROR] Unable to return server prefix. (ID: " + server + ")");
+            return null;
+        } finally {
+            try {
+                conn.close();
+            } catch(Exception ex) {
+                System.out.println("[ERROR] Unable to close connection to database.");
+            }
+        }
     }
 
     /**
@@ -93,7 +141,6 @@ public class DatabaseFunctions {
                 System.out.println("[ERROR] Unable to close connection to database.");
             }
         }
-
     }
 
     /**
@@ -118,7 +165,6 @@ public class DatabaseFunctions {
                 System.out.println("[ERROR] Unable to close connection to database.");
             }
         }
-
     }
 
     /**
@@ -147,7 +193,6 @@ public class DatabaseFunctions {
                 System.out.println("[ERROR] Unable to close connection to database.");
             }
         }
-
     }
 
 }

@@ -38,8 +38,8 @@ public class Configuration {
     // Command Count
     public static String COMMAND_COUNT;
 
-    // Bot's command prefix.
-    public static String PREFIX;
+    // Bot's global command prefix.
+    public static String GLOBAL_PREFIX;
 
     // Bot's status, e.g Playing with lottie's tits.
     static String STATUS = "with lottie's tits.";

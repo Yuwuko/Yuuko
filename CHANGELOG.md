@@ -5,6 +5,9 @@ Key: [+] added, [-] removed, [~] modified.
 ## 1.9.0
 
 + [+] Added a welcome message to give users the commands and some other information.
++ [+] Added [__setprefix__] to allow admins to set their server command prefix.
++ [~] Changed how the whole command prefix system works, default prefix is now the bot's name.
++ [~] Migrated from a set prefix to a global prefix.
 + [~] Altered [__linestatus__] to account for a rare condition with uppercase text, also to use HTTPS.
 + [~] Altered [__play__] embed to display correctly if no image is found.
 + [~] Major restructure of project packages, refactored music into audio and runescape into games.

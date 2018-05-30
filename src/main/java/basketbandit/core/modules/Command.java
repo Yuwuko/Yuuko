@@ -20,8 +20,8 @@ public abstract class Command {
         return commandName;
     }
 
-    public String getEffectiveName() {
-        return Configuration.PREFIX + commandName;
+    public String getGlobalName() {
+        return Configuration.GLOBAL_PREFIX + commandName;
     }
 
     public String getCommandModule() {

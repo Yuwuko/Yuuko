@@ -49,62 +49,62 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        if(command.equals(C.PLAY.getEffectiveName())) {
+        if(command.contains(C.PLAY.getCommandName())) {
             new CommandPlay(e);
             return;
         }
 
-        if(command.equals(C.PAUSE.getEffectiveName())) {
+        if(command.contains(C.PAUSE.getCommandName())) {
             new CommandPause(e);
             return;
         }
 
-        if(command.equals(C.STOP.getEffectiveName())) {
+        if(command.contains(C.STOP.getCommandName())) {
             new CommandStop(e);
             return;
         }
 
-        if(command.equals(C.SKIP.getEffectiveName())) {
+        if(command.contains(C.SKIP.getCommandName())) {
             new CommandSkip(e);
             return;
         }
 
-        if(command.equals(C.SET_BACKGROUND.getEffectiveName())) {
+        if(command.contains(C.SET_BACKGROUND.getCommandName())) {
             new CommandSetBackground(e);
             return;
         }
 
-        if(command.equals(C.UNSET_BACKGROUND.getEffectiveName())) {
+        if(command.contains(C.UNSET_BACKGROUND.getCommandName())) {
             new CommandUnsetBackground(e);
             return;
         }
 
-        if(command.equals(C.TRACK.getEffectiveName())) {
+        if(command.contains(C.TRACK.getCommandName())) {
             new CommandCurrentTrack(e);
             return;
         }
 
-        if(command.equals(C.SHUFFLE.getEffectiveName())) {
+        if(command.contains(C.SHUFFLE.getCommandName())) {
             new CommandShuffle(e);
             return;
         }
 
-        if(command.equals(C.QUEUE.getEffectiveName())) {
+        if(command.contains(C.QUEUE.getCommandName())) {
             new CommandQueue(e);
             return;
         }
 
-        if(command.equals(C.LAST_TRACK.getEffectiveName())) {
+        if(command.contains(C.LAST_TRACK.getCommandName())) {
             new CommandLastTrack(e);
             return;
         }
 
-        if(command.equals(C.TOGGLE_REPEAT.getEffectiveName())) {
+        if(command.contains(C.TOGGLE_REPEAT.getCommandName())) {
             new CommandToggleRepeat(e);
             return;
         }
 
-        if(command.equals(C.SEARCH.getEffectiveName())) {
+        if(command.contains(C.SEARCH.getCommandName())) {
             new CommandSearch(e);
             return;
         }

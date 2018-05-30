@@ -25,7 +25,7 @@ public class ModuleTransport extends Module {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String command = commandArray[0];
 
-        if(command.equals(C.LINE_STATUS.getEffectiveName())) {
+        if(command.contains(C.LINE_STATUS.getCommandName())) {
             new CommandLineStatus(e);
             return;
         }

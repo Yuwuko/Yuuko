@@ -4,6 +4,7 @@ import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
 import basketbandit.core.modules.audio.commands.CommandPlay;
+import basketbandit.core.modules.core.commands.CommandSetup;
 import basketbandit.core.modules.logging.ModuleLogging;
 import basketbandit.core.modules.utility.ModuleUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -30,7 +31,7 @@ class Controller {
      * Controller constructor for GuildJoinEvents
      * @param e GuildJoinEvent
      */
-    Controller(GuildJoinEvent e) {
+    Controller(GuildJoinEvent e, ArrayList<Command> commandList) {
         List<TextChannel> channels = e.getGuild().getTextChannels();
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
@@ -42,14 +43,14 @@ class Controller {
         EmbedBuilder about = new EmbedBuilder()
                 .setColor(Color.WHITE)
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
-                .setDescription("Thanks for inviting me to your server! Below is a little bit of information about myself, and you can access a list of my modules [here](!")
+                .setDescription("Thanks for inviting me to your server! Below is a little bit of information about myself, and you can access a list of my modules [here](https://github.com/Galaxiosaurus/BasketBandit-Java)!")
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/Galaxiosaurus/)", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", bot.getJDA().getGuildCache().size()+"", true)
                 .addField("Users", users+"", true)
-                .addField("Commands", "35", true)
-                .addField("Invocation", Configuration.PREFIX, true)
+                .addField("Commands", commandList.size()+"", true)
+                .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", TimeKeeper.runtime, true)
                 .addField("Ping", bot.getJDA().getPing()+"", true);
 
@@ -60,19 +61,21 @@ class Controller {
             }
         }
 
+        new CommandSetup();
+
         e.getGuild().getOwner().getUser().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(about.build()).queue());
     }
 
     /**
-     * Controller constructor for MessageReceivedEvents
+     * Controller constructor for MessageReceivedEvents that contain a prefix.
      * @param e MessageReceivedEvent
      */
-    Controller(MessageReceivedEvent e, ArrayList<Command> commandList) {
+    Controller(MessageReceivedEvent e, ArrayList<Command> commandList, String prefix) {
         String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        serverLong = e.getGuild().getIdLong() + "";
+        serverLong = e.getGuild().getId();
 
         // Remove the input message.
-        e.getMessage().delete().complete();
+        e.getMessage().delete().queue();
 
         System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
 
@@ -81,7 +84,7 @@ class Controller {
             // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             for(Command c: commandList) {
-                if(input[0].equals(c.getEffectiveName())) {
+                if(input[0].equals(c.getGlobalName()) || input[0].equals(prefix + c.getCommandName())) {
                     Class<?> clazz = Class.forName(c.getCommandModule());
                     Constructor<?> constructor = clazz.getConstructor(MessageReceivedEvent.class);
                     constructor.newInstance(e);
@@ -89,6 +92,30 @@ class Controller {
                 }
             }
 
+            if(new DatabaseFunctions().checkModuleSettings("modLogging", serverLong)) {
+                new ModuleLogging(e);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Controller constructor for MessageReceivedEvents that do not contain a prefix.
+     * @param e MessageReceivedEvent
+     */
+    Controller(MessageReceivedEvent e) {
+        String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
+        serverLong = e.getGuild().getId();
+
+        // Remove the input message.
+        e.getMessage().delete().queue();
+
+        System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
+
+        try {
             // Search function check if regex matches. Used in conjunction with the search input.
             if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
                 if(!input[0].equals("cancel") && ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
