@@ -42,5 +42,5 @@ public class Configuration {
     public static String GLOBAL_PREFIX;
 
     // Bot's status, e.g Playing with lottie's tits.
-    static String STATUS = "with lottie's tits.";
+    static String STATUS;
 }

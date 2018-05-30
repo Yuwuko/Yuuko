@@ -13,7 +13,6 @@ import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
@@ -66,7 +65,6 @@ class BasketBandit extends ListenerAdapter {
             .addEventListener(self)
             .setEventManager(new ThreadedEventManager())
             .buildAsync();
-        bot.getPresence().setGame(Game.of(Game.GameType.DEFAULT,Configuration.STATUS));
 
         botUser = bot.getSelfUser();
         Configuration.GLOBAL_PREFIX = botUser.getAsMention();

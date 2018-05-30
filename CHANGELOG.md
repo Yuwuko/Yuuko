@@ -21,6 +21,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Fixed the [__modules__] command, issue was a late side effect of the many refactors.
 + [-] Became headless, as a result removed the Monitor class as it isn't used.
 + [-] Removed custom module because it wasn't being used and it was a pain to maintain.
++ [-] Stopped playing with lottie's tits. (Unset the default status)
 
 ## 1.8.2
 
