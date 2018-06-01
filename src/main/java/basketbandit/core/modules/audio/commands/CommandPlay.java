@@ -50,7 +50,7 @@ public class CommandPlay extends Command {
 
             if(manager.player.isPaused()) {
                 manager.player.setPaused(false);
-                e.getTextChannel().sendMessage("Player unpaused.").queue();
+                e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " resumed playback.").queue();
                 new CommandCurrentTrack();
             }
 
@@ -59,7 +59,10 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(!commandArray[1].startsWith("https://www.youtube.com/watch?v=") || !commandArray[1].startsWith("https://youtu.be/")) {
+            if(commandArray[1].startsWith("https://www.youtube.com/watch?v=") || commandArray[1].startsWith("https://youtu.be/") || commandArray[1].startsWith("https://www.youtube.com/playlist?list=") ) {
+                loadAndPlay(manager, e.getChannel(), commandArray[1], e);
+
+            } else {
                 String trackUrl = YouTubeSearchHandler.search(commandArray[1]);
 
                 if(trackUrl == null || trackUrl.equals("")) {
@@ -67,10 +70,6 @@ public class CommandPlay extends Command {
                 } else {
                     loadAndPlay(manager, e.getChannel(), trackUrl, e);
                 }
-
-            } else {
-                loadAndPlay(manager, e.getChannel(), commandArray[1], e);
-
             }
         }
 
@@ -132,6 +131,8 @@ public class CommandPlay extends Command {
 
                 channel.sendMessage("Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName()).queue();
                 tracks.forEach(manager.scheduler::queue);
+
+                new CommandCurrentTrack(e);
             }
 
             @Override

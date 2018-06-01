@@ -92,6 +92,7 @@ public class CommandSetBackground extends Command {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 // Playlist as background not currently supported but method needed implementation.
+                channel.sendMessage("Sorry, adding playlists to the background is currently unsupported but it will be soon!").queue();
             }
 
             @Override

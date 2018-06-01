@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.9.1
+
++ [~] Fixed a bug involving binding multiple channels and then using a command in one.
++ [~] Fixed a bug with the audio module that stopped playlists from working.
+
 ## 1.9.0
 
 + [+] Added a welcome message to give users the commands and some other information.

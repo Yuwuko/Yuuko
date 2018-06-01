@@ -132,7 +132,7 @@ class Controller {
 
             connection.close();
 
-            if(bound) {
+            if(bound && !executed) {
                 int index = boundChannels.lastIndexOf(", ");
                 if(index > -1) {
                     boundChannels.replace(index, index + 1, ".");
