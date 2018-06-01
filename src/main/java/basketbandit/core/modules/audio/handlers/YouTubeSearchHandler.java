@@ -61,7 +61,6 @@ public class YouTubeSearchHandler {
         try {
             YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
             }).setApplicationName("basketbandit-204012").build();
-
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
             search.setKey(Configuration.GOOGLE_API);

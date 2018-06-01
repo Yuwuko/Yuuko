@@ -8,24 +8,24 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleGame extends Module {
 
     public ModuleGame() {
-        super("ModuleGame", "modGame");
+        super("ModuleGame", "moduleGame");
     }
 
-    public ModuleGame(MessageReceivedEvent e) {
-        super("ModuleGame", "modGame");
+    public ModuleGame(MessageReceivedEvent e, String prefix) {
+        super("ModuleGame", "moduleGame");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        String command = commandArray[0].substring(prefix.length());
 
-        if(command.contains(C.RUNESCAPE_STATS.getCommandName())) {
+        if(command.equals(C.RUNESCAPE_STATS.getCommandName())) {
             new CommandRuneScapeStats(e);
             return;
         }

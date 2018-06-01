@@ -6,8 +6,12 @@ Key: [+] added, [-] removed, [~] modified.
 
 + [+] Added a welcome message to give users the commands and some other information.
 + [+] Added [__setprefix__] to allow admins to set their server command prefix.
++ [+] Added a bind/exclude system for all of the modules, allowing users to decide where the bot works.
++ [+] Added a function that makes the bot leave a voice channel if it is empty. (Nobody likes to be lonely! c:)
 + [~] Changed how the whole command prefix system works, default prefix is now the bot's name.
 + [~] Migrated from a set prefix to a global prefix.
++ [~] Redesigned the whole database schema to fit with the new bind/exclude system.
++ [~] Changed how the correct command is selected, making it exact and not /kinda/.
 + [~] Altered [__linestatus__] to account for a rare condition with uppercase text, also to use HTTPS.
 + [~] Altered [__play__] embed to display correctly if no image is found.
 + [~] Major restructure of project packages, refactored music into audio and runescape into games.
@@ -19,6 +23,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Split the database class into a connection class and a function class.
 + [~] Resolved the oldest database 'bug' I've had which turned out to be a WHERE clause overlook. *doh!*
 + [~] Fixed the [__modules__] command, issue was a late side effect of the many refactors.
++ [~] Resolved issue with [__search__] where a search would return less than 10 results.
 + [-] Became headless, as a result removed the Monitor class as it isn't used.
 + [-] Removed custom module because it wasn't being used and it was a pain to maintain.
 + [-] Stopped playing with lottie's tits. (Unset the default status)

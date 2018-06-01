@@ -21,11 +21,11 @@ public class CommandSetPrefix extends Command {
      * @param e; MessageReceivedEvent.
      */
     protected void executeCommand(MessageReceivedEvent e) {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
-        String value = command[1].toLowerCase();
-        String server = e.getGuild().getId();
+        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
+        String value = commandArray[1].toLowerCase();
+        String serverLong = e.getGuild().getId();
 
-        if(!new DatabaseFunctions().setServerPrefix(value, server)) {
+        if(!new DatabaseFunctions().setServerPrefix(value, serverLong)) {
             e.getTextChannel().sendMessage("Server prefix set to: " + value).queue();
         }
     }

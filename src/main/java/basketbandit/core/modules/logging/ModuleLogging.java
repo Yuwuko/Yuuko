@@ -10,19 +10,19 @@ import java.util.List;
 public class ModuleLogging extends Module {
 
     public ModuleLogging() {
-        super("ModuleLogging", "modLogging");
+        super("ModuleLogging", "moduleLogging");
     }
 
-    public ModuleLogging(MessageReceivedEvent e) {
-        super("ModuleLogging", "modLogging");
+    public ModuleLogging(MessageReceivedEvent e, String prefix) {
+        super("ModuleLogging", "moduleLogging");
 
         // We don't check inside the class if the module is active because the module
         // because it would be checked after every message and the Module super class
         // displays a message if it is off.
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         try {
             List<TextChannel> log = e.getGuild().getTextChannelsByName("command-log", true);
             if(log.size() > 0) {

@@ -3,7 +3,7 @@ package basketbandit.core;
 public class TimeKeeper implements Runnable {
 
     public static String runtime;
-    private static long ping;
+    private static Long ping;
 
     TimeKeeper() {
         new Thread(this,"TimeKeeper").start();

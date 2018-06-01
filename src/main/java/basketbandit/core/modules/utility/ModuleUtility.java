@@ -2,8 +2,7 @@ package basketbandit.core.modules.utility;
 
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
-import basketbandit.core.modules.utility.commands.CommandServer;
-import basketbandit.core.modules.utility.commands.CommandUser;
+import basketbandit.core.modules.utility.commands.*;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -13,17 +12,21 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 public class ModuleUtility extends Module {
 
     public ModuleUtility() {
-        super("ModuleUtility", "modUtility");
+        super("ModuleUtility", "moduleUtility");
     }
 
-    public ModuleUtility(MessageReceivedEvent e) {
-        super("ModuleUtility", "modUtility");
+    /**
+     * Module constructor for MessageReceivedEvents
+     * @param e MessageReceivedEvent
+     */
+    public ModuleUtility(MessageReceivedEvent e, String prefix) {
+        super("ModuleUtility", "moduleUtility");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
     /**
@@ -31,7 +34,7 @@ public class ModuleUtility extends Module {
      * @param e MessageReactionAddEvent
      */
     public ModuleUtility(MessageReactionAddEvent e) {
-        super("ModuleUtility", "modUtility");
+        super("ModuleUtility", "moduleUtility");
 
         if(e.getReaction().getReactionEmote().getName().equals("\uD83D\uDCCC")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
@@ -44,7 +47,7 @@ public class ModuleUtility extends Module {
      * @param e MessageReactionRemoveEvent
      */
     public ModuleUtility(MessageReactionRemoveEvent e) {
-        super("ModuleUtility", "modUtility");
+        super("ModuleUtility", "moduleUtility");
 
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
@@ -58,17 +61,37 @@ public class ModuleUtility extends Module {
         }
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        String command = commandArray[0].substring(prefix.length());
 
-        if(command.contains(C.USER.getCommandName())) {
+        if(command.equals(C.USER.getCommandName())) {
             new CommandUser(e);
             return;
         }
 
-        if(command.contains(C.SERVER.getCommandName())) {
+        if(command.equals(C.SERVER.getCommandName())) {
             new CommandServer(e);
+            return;
+        }
+
+        if(command.equals(C.BIND.getCommandName())) {
+            new CommandBind(e);
+            return;
+        }
+
+        if(command.equals(C.UNBIND.getCommandName())) {
+            new CommandUnbind(e);
+            return;
+        }
+
+        if(command.equals(C.EXCLUDE.getCommandName())) {
+            new CommandExclude(e);
+            return;
+        }
+
+        if(command.equals(C.INCLUDE.getCommandName())) {
+            new CommandUnexclude(e);
             return;
         }
 

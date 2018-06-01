@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 1.9.0 (30/05/2018) 
+# BasketBandit 1.9.0 (01/06/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -26,7 +26,7 @@ The global invocation/prefix is @BasketBandit (mention), this is used to prefix 
 
 - __about__ will return some technical information about the bot such as uptime and ping.
 
-- __setprefix__ will set the server's prefix (admin only)
+- __setprefix__ will set the server's prefix (__admin only__)
 
 ### Moderation
 
@@ -45,6 +45,14 @@ The global invocation/prefix is @BasketBandit (mention), this is used to prefix 
 - __user \<name\>__ will give account information about the user given, such as join date, online status and guild roles. 
 
 - __server__ will give information about the current server, such as region and owner.
+
+- __bind \<module\> \<channel\>__ will bind a module to a text channel, only allowing commands to be executed there. (__admin only__)
+
+- __unbind \<module\> \<channel\>__ will unbind a bound module from a text channel. (__admin only__)
+
+- __exclude \<module\> \<channel\>__ will exclude a module from a text channel, not allowing commands to be executed there. (__admin only__)
+
+- __unexclude \<module\> \<channel\>__ will unexclude an excluded module from a text channel. (__admin only__)
 
 ### Transport
 

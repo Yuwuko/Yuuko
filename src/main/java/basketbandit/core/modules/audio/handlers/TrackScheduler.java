@@ -46,15 +46,13 @@ public class TrackScheduler extends AudioEventAdapter {
 
     /**
      * Start the next track, stopping the current one if it is playing.
-     * @return if the next track was able to play.
      */
-    public boolean nextTrack() {
+    public void nextTrack() {
         if(!player.startTrack(queue.poll(), false)) {
             if(background != null) {
                 player.startTrack(background.makeClone(), false);
             }
         }
-        return true;
     }
 
     /**

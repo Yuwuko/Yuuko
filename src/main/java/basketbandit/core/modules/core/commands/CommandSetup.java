@@ -22,7 +22,8 @@ public class CommandSetup extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected void executeCommand(MessageReceivedEvent e) {
-        String serverLong = e.getGuild().getIdLong()+"";
+        String serverLong = e.getGuild().getId();
+
         if(!new DatabaseFunctions().addNewServer(serverLong)) {
             e.getTextChannel().sendMessage("Server setup successful. (You cannot do this again!)").queue();
         } else {

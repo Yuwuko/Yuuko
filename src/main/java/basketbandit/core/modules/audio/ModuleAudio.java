@@ -14,21 +14,21 @@ public class ModuleAudio extends Module {
     public static HashMap<Long, List<SearchResult>> searchUsers = new HashMap<>();
 
     public ModuleAudio() {
-        super("ModuleAudio", "modAudio");
+        super("ModuleAudio", "moduleAudio");
     }
 
-    public ModuleAudio(MessageReceivedEvent e) {
-        super("ModuleAudio", "modAudio");
+    public ModuleAudio(MessageReceivedEvent e, String prefix) {
+        super("ModuleAudio", "moduleAudio");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
-    public ModuleAudio(MessageReceivedEvent e, String url) {
-        super("ModuleAudio", "modAudio");
+    public ModuleAudio(MessageReceivedEvent e, String url, boolean unused) {
+        super("ModuleAudio", "moduleAudio");
 
         if(!checkModuleSettings(e)) {
             return;
@@ -40,71 +40,71 @@ public class ModuleAudio extends Module {
         }
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        String command = commandArray[0].substring(prefix.length());
 
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:hehe:445200711438041090>").queue();
             return;
         }
 
-        if(command.contains(C.PLAY.getCommandName())) {
+        if(command.equals(C.PLAY.getCommandName())) {
             new CommandPlay(e);
             return;
         }
 
-        if(command.contains(C.PAUSE.getCommandName())) {
+        if(command.equals(C.PAUSE.getCommandName())) {
             new CommandPause(e);
             return;
         }
 
-        if(command.contains(C.STOP.getCommandName())) {
+        if(command.equals(C.STOP.getCommandName())) {
             new CommandStop(e);
             return;
         }
 
-        if(command.contains(C.SKIP.getCommandName())) {
+        if(command.equals(C.SKIP.getCommandName())) {
             new CommandSkip(e);
             return;
         }
 
-        if(command.contains(C.SET_BACKGROUND.getCommandName())) {
+        if(command.equals(C.SET_BACKGROUND.getCommandName())) {
             new CommandSetBackground(e);
             return;
         }
 
-        if(command.contains(C.UNSET_BACKGROUND.getCommandName())) {
+        if(command.equals(C.UNSET_BACKGROUND.getCommandName())) {
             new CommandUnsetBackground(e);
             return;
         }
 
-        if(command.contains(C.TRACK.getCommandName())) {
+        if(command.equals(C.TRACK.getCommandName())) {
             new CommandCurrentTrack(e);
             return;
         }
 
-        if(command.contains(C.SHUFFLE.getCommandName())) {
+        if(command.equals(C.SHUFFLE.getCommandName())) {
             new CommandShuffle(e);
             return;
         }
 
-        if(command.contains(C.QUEUE.getCommandName())) {
+        if(command.equals(C.QUEUE.getCommandName())) {
             new CommandQueue(e);
             return;
         }
 
-        if(command.contains(C.LAST_TRACK.getCommandName())) {
+        if(command.equals(C.LAST_TRACK.getCommandName())) {
             new CommandLastTrack(e);
             return;
         }
 
-        if(command.contains(C.TOGGLE_REPEAT.getCommandName())) {
+        if(command.equals(C.TOGGLE_REPEAT.getCommandName())) {
             new CommandToggleRepeat(e);
             return;
         }
 
-        if(command.contains(C.SEARCH.getCommandName())) {
+        if(command.equals(C.SEARCH.getCommandName())) {
             new CommandSearch(e);
             return;
         }

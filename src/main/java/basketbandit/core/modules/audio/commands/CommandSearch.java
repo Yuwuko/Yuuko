@@ -27,29 +27,28 @@ public class CommandSearch extends Command {
      * @return boolean; if the command executed correctly.
      */
     protected void executeCommand(MessageReceivedEvent e) {
+        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
         List<SearchResult> results = YouTubeSearchHandler.searchList(e);
+        StringBuilder resultString = new StringBuilder();
 
         if(results != null) {
+            int i = 1;
+            for(SearchResult result : results) {
+                resultString.append("`").append(i).append(":` ").append(result.getSnippet().getTitle()).append("\n\n");
+                i++;
+            }
+        } else {
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.").queue();
+            return;
+        }
+
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setAuthor(e.getAuthor().getName(), null, e.getAuthor().getAvatarUrl())
-                    .setDescription("Type in the number of the track you would like to play or cancel.")
-                    .addField("", "`1:` " + results.get(0).getSnippet().getTitle(), false)
-                    .addField("", "`2:` " + results.get(1).getSnippet().getTitle(), false)
-                    .addField("", "`3:` " + results.get(2).getSnippet().getTitle(), false)
-                    .addField("", "`4:` " + results.get(3).getSnippet().getTitle(), false)
-                    .addField("", "`5:` " + results.get(4).getSnippet().getTitle(), false)
-                    .addField("", "`6:` " + results.get(5).getSnippet().getTitle(), false)
-                    .addField("", "`7:` " + results.get(6).getSnippet().getTitle(), false)
-                    .addField("", "`8:` " + results.get(7).getSnippet().getTitle(), false)
-                    .addField("", "`9:` " + results.get(8).getSnippet().getTitle(), false)
-                    .addField("", "`10:` " + results.get(9).getSnippet().getTitle(), false)
+                    .setAuthor(e.getAuthor().getName() + ", results for: " + commandArray[1], null, e.getAuthor().getAvatarUrl())
+                    .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
                     .setFooter("Version: " + Configuration.VERSION, null);
 
             ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
             e.getTextChannel().sendMessage(presentResults.build()).queue();
-        } else {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.").queue();
-        }
     }
 
 }

@@ -5,14 +5,14 @@ import basketbandit.core.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-class DatabaseConnection {
+public class DatabaseConnection {
 
     private Connection connection;
 
     /**
      * Database constructor.
      */
-    DatabaseConnection() {
+    public DatabaseConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + Configuration.DATABASE_IP + "/" + Configuration.DATABASE_NAME + "?useSSL=false", Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
@@ -25,7 +25,7 @@ class DatabaseConnection {
      * Gets the fresh database connection.
      * @return connection.
      */
-    Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 

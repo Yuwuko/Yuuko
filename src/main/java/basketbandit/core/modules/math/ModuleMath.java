@@ -9,29 +9,29 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleMath extends Module {
 
     public ModuleMath() {
-        super("ModuleMath", "modMath");
+        super("ModuleMath", "moduleMath");
     }
 
-    public ModuleMath(MessageReceivedEvent e) {
-        super("ModuleMath", "modMath");
+    public ModuleMath(MessageReceivedEvent e, String prefix) {
+        super("ModuleMath", "moduleMath");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        String command = commandArray[0].substring(prefix.length());
 
-        if(command.contains(C.ROLL.getCommandName())) {
+        if(command.equals(C.ROLL.getCommandName())) {
             new CommandRoll(e);
             return;
         }
 
-        if(command.contains(C.SUM.getCommandName())) {
+        if(command.equals(C.SUM.getCommandName())) {
             new CommandSum(e);
             return;
         }

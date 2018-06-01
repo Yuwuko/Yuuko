@@ -2,7 +2,6 @@ package basketbandit.core.modules;
 
 import basketbandit.core.modules.audio.commands.*;
 import basketbandit.core.modules.core.commands.*;
-import basketbandit.core.modules.developer.commands.CommandDatabaseSetup;
 import basketbandit.core.modules.developer.commands.CommandSetStatus;
 import basketbandit.core.modules.fun.commands.CommandInsult;
 import basketbandit.core.modules.fun.commands.CommandOverreact;
@@ -11,12 +10,10 @@ import basketbandit.core.modules.math.commands.CommandRoll;
 import basketbandit.core.modules.math.commands.CommandSum;
 import basketbandit.core.modules.moderation.commands.*;
 import basketbandit.core.modules.transport.commands.CommandLineStatus;
-import basketbandit.core.modules.utility.commands.CommandServer;
-import basketbandit.core.modules.utility.commands.CommandUser;
+import basketbandit.core.modules.utility.commands.*;
 
 public final class C {
     // Dev module modules.
-    public static final Command DATABASE_SETUP = new CommandDatabaseSetup();
     public static final Command SET_STATUS = new CommandSetStatus();
 
     // Core module modules.
@@ -41,6 +38,10 @@ public final class C {
     // Utility module modules.
     public static final Command USER = new CommandUser();
     public static final Command SERVER = new CommandServer();
+    public static final Command BIND = new CommandBind();
+    public static final Command UNBIND = new CommandUnbind();
+    public static final Command EXCLUDE = new CommandExclude();
+    public static final Command INCLUDE = new CommandUnexclude();
 
     // Fun module modules.
     public static final Command INSULT = new CommandInsult();

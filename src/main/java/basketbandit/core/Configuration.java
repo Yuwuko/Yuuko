@@ -43,4 +43,5 @@ public class Configuration {
 
     // Bot's status, e.g Playing with lottie's tits.
     static String STATUS;
+
 }

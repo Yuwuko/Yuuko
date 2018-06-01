@@ -28,7 +28,7 @@ public class CommandDeleteChannel extends Command {
     protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] command = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String type = command[1];
-        long idLong = Long.parseLong(command[2]);
+        Long idLong = Long.parseLong(command[2]);
         TextChannel textChannel = e.getGuild().getTextChannelById(idLong);
         VoiceChannel voiceChannel = e.getGuild().getVoiceChannelById(idLong);
 

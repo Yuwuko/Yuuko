@@ -27,11 +27,11 @@ public class CommandModule extends Command {
      * @throws NoSuchElementException ;
      */
     protected void executeCommand(MessageReceivedEvent e) {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
-        String value = command[1].toLowerCase();
-        String serverLong = e.getGuild().getIdLong()+"";
+        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
+        String value = commandArray[1].toLowerCase();
+        String serverLong = e.getGuild().getId();
 
-        if(new DatabaseFunctions().toggleModule("mod" + value, serverLong)) {
+        if(new DatabaseFunctions().toggleModule("module" + value, serverLong)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor(value + " was enabled on this server!");
             e.getTextChannel().sendMessage(embed.build()).queue();
         } else {

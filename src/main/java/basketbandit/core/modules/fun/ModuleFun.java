@@ -9,29 +9,29 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleFun extends Module {
 
     public ModuleFun() {
-        super("ModuleFun", "modFun");
+        super("ModuleFun", "moduleFun");
     }
 
-    public ModuleFun(MessageReceivedEvent e) {
-        super("ModuleFun", "modFun");
+    public ModuleFun(MessageReceivedEvent e, String prefix) {
+        super("ModuleFun", "moduleFun");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        String command = commandArray[0].substring(prefix.length());
 
-        if(command.contains(C.OVERREACT.getCommandName())) {
+        if(command.equals(C.OVERREACT.getCommandName())) {
             new CommandOverreact(e);
             return;
         }
 
-        if(command.contains(C.INSULT.getCommandName())) {
+        if(command.equals(C.INSULT.getCommandName())) {
             new CommandInsult(e);
             return;
         }

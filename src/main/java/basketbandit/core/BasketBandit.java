@@ -9,15 +9,18 @@ import basketbandit.core.modules.C;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.M;
 import basketbandit.core.modules.Module;
+import basketbandit.core.modules.audio.commands.CommandStop;
 import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
@@ -119,12 +122,13 @@ class BasketBandit extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         try {
-            String server = e.getGuild().getId();
+            //help command throws null point for serverLong (Obviously.)
+            String serverLong = e.getGuild().getId();
             Message msg = e.getMessage();
             String msgRawLower = msg.getContentRaw().toLowerCase();
             User user = e.getAuthor();
 
-            String prefix = new DatabaseFunctions().getServerPrefix(server);
+            String prefix = new DatabaseFunctions().getServerPrefix(serverLong);
             if(prefix == null || prefix.equals("")) {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
@@ -176,6 +180,21 @@ class BasketBandit extends ListenerAdapter {
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
             new Controller(e);
+        }
+    }
+
+    /**
+     * Captures and deals with voice channel leave events.
+     * @param e -> GuildVoiceLeaveEvent.
+     */
+    @Override
+    public void onGuildVoiceLeave(GuildVoiceLeaveEvent e) {
+        Member self = e.getGuild().getSelfMember();
+
+        if(self.getVoiceState().inVoiceChannel()) {
+            if(self.getVoiceState().getChannel().getMembers().size() == 1) {
+                new CommandStop(e);
+            }
         }
     }
 

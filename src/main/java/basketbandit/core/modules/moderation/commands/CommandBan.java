@@ -26,7 +26,7 @@ public class CommandBan extends Command {
      */
     protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
         String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
-        long value = Long.parseLong(command[1]);
+        Long value = Long.parseLong(command[1]);
         int time = Integer.parseInt(command[2]);
         Member member = e.getGuild().getMemberById(value);
 

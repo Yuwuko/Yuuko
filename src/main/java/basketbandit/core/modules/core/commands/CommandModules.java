@@ -1,12 +1,14 @@
 package basketbandit.core.modules.core.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.database.DatabaseConnection;
 import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -31,13 +33,15 @@ public class CommandModules extends Command {
         String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
         ArrayList<String> disabled = new ArrayList<>();
+        Connection connection = new DatabaseConnection().getConnection();
         ResultSet resultSet;
 
         try {
-            resultSet = new DatabaseFunctions().getModuleSettings(serverId);
+
+            resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
             resultSet.next();
 
-            for(int i = 4; i < 12; i++) {
+            for(int i = 2; i < 10; i++) {
                 ResultSetMetaData meta = resultSet.getMetaData();
                 if(resultSet.getBoolean(i)) {
                     enabled.add(meta.getColumnName(i));
@@ -58,6 +62,12 @@ public class CommandModules extends Command {
             e.getTextChannel().sendMessage(commandModules.build()).queue();
         } catch(Exception ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch(Exception ex) {
+                System.out.println("[ERROR] Unable to close connection to database.");
+            }
         }
 
     }

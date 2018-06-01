@@ -8,24 +8,24 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleTransport extends Module {
 
     public ModuleTransport() {
-        super("ModuleTransport", "modTransport");
+        super("ModuleTransport", "moduleTransport");
     }
 
-    public ModuleTransport(MessageReceivedEvent e) {
-        super("ModuleTransport", "modTransport");
+    public ModuleTransport(MessageReceivedEvent e, String prefix) {
+        super("ModuleTransport", "moduleTransport");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e);
+        executeCommand(e, prefix);
     }
 
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String prefix) {
         String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0];
+        String command = commandArray[0].substring(prefix.length());
 
-        if(command.contains(C.LINE_STATUS.getCommandName())) {
+        if(command.equals(C.LINE_STATUS.getCommandName())) {
             new CommandLineStatus(e);
             return;
         }
