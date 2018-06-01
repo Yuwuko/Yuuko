@@ -59,7 +59,7 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(commandArray[1].startsWith("https://www.youtube.com/watch?v=") || commandArray[1].startsWith("https://youtu.be/") || commandArray[1].startsWith("https://www.youtube.com/playlist?list=") ) {
+            if(commandArray[1].startsWith("https://") ) {
                 loadAndPlay(manager, e.getChannel(), commandArray[1], e);
 
             } else {
@@ -111,12 +111,13 @@ public class CommandPlay extends Command {
                 }
 
                 String[] uri = track.getInfo().uri.split("=");
+                String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
                 EmbedBuilder queuedTrack = new EmbedBuilder()
                         .setColor(Color.RED)
                         .setAuthor(e.getMember().getEffectiveName() + " added to the queue!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")
+                        .setThumbnail(imageUrl)
                         .addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
                         .addField("Position in queue", manager.scheduler.queue.size()+"", false)

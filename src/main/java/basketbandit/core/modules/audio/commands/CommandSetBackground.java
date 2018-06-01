@@ -40,7 +40,10 @@ public class CommandSetBackground extends Command {
         e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
         manager.player.setPaused(false);
 
-        if(!commandArray[1].startsWith("https://www.youtube.com/watch?v=") || !commandArray[1].startsWith("https://youtu.be/")) {
+        if(commandArray[1].startsWith("https://")) {
+            setAndPlay(manager, e.getChannel(), commandArray[1], e);
+
+        } else {
             String trackUrl = YouTubeSearchHandler.search(commandArray[1]);
 
             if(trackUrl == null) {
@@ -48,9 +51,6 @@ public class CommandSetBackground extends Command {
             } else {
                 setAndPlay(manager, e.getChannel(), trackUrl, e);
             }
-
-        } else {
-            setAndPlay(manager, e.getChannel(), commandArray[1], e);
         }
     }
 

@@ -6,6 +6,7 @@ Key: [+] added, [-] removed, [~] modified.
 
 + [~] Fixed a bug involving binding multiple channels and then using a command in one.
 + [~] Fixed a bug with the audio module that stopped playlists from working.
++ [~] Fixed an issue which only allowed YouTube track to be played and not from SoundCloud, etc.
 
 ## 1.9.0
 
