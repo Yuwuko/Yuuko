@@ -4,9 +4,12 @@ Key: [+] added, [-] removed, [~] modified.
 
 ## 1.9.1
 
++ [+] Added command execution time in milliseconds but with original resolution of nanoseconds.
++ [~] Changed the message delete procedure to only delete executed commands.
 + [~] Fixed a bug involving binding multiple channels and then using a command in one.
 + [~] Fixed a bug with the audio module that stopped playlists from working.
 + [~] Fixed an issue which only allowed YouTube track to be played and not from SoundCloud, etc.
++ [~] Altered the voice channel leave feature to work for all events instead of just leave.
 
 ## 1.9.0
 

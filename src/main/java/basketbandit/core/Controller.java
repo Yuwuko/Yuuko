@@ -20,6 +20,7 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
@@ -71,14 +72,9 @@ class Controller {
      * Controller constructor for MessageReceivedEvents that contain a prefix.
      * @param e MessageReceivedEvent
      */
-    Controller(MessageReceivedEvent e, ArrayList<Command> commandList, String prefix) {
+    Controller(MessageReceivedEvent e, long startExecutionNano, ArrayList<Command> commandList, String prefix) {
         String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String serverLong = e.getGuild().getId();
-
-        // Remove the input message.
-        e.getMessage().delete().queue();
-
-        System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
 
         try {
             Class<?> clazz;
@@ -97,9 +93,15 @@ class Controller {
             for(Command c : commandList) {
                 if(input[0].equals(c.getGlobalName()) || input[0].equals(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
-                    moduleDbName = commandModule.substring(commandModule.lastIndexOf(".")+1).toLowerCase();
+                    moduleDbName = commandModule.substring(commandModule.lastIndexOf(".") + 1).toLowerCase();
                     clazz = Class.forName(commandModule);
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String.class);
+
+                    // Print the command into the console.
+                    System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
+
+                    // Remove the input message.
+                    e.getMessage().delete().queue();
                     break;
                 }
             }
@@ -142,12 +144,15 @@ class Controller {
 
             if(constructor != null && !executed && !bound) {
                 constructor.newInstance(e, prefix);
+                executed = true;
             }
 
-            if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                new ModuleLogging(e, "");
+            if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
+                new ModuleLogging(e, startExecutionNano, "");
             }
 
+        } catch (InvocationTargetException ex) {
+            ex.getCause();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -158,7 +163,7 @@ class Controller {
      * Controller constructor for MessageReceivedEvents that do not contain a prefix.
      * @param e MessageReceivedEvent
      */
-    Controller(MessageReceivedEvent e) {
+    Controller(MessageReceivedEvent e, long startExecutionNano) {
         String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String serverLong = e.getGuild().getId();
 
@@ -180,8 +185,8 @@ class Controller {
                 }
             }
 
-            if(new DatabaseFunctions().checkModuleSettings("modLogging", serverLong)) {
-                new ModuleLogging(e, "");
+            if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
+                new ModuleLogging(e, startExecutionNano, "");
             }
 
         } catch (Exception ex) {
@@ -199,7 +204,7 @@ class Controller {
         String serverLong = e.getGuild().getId();
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            if(new DatabaseFunctions().checkModuleSettings("modUtility", serverLong)) {
+            if(new DatabaseFunctions().checkModuleSettings("moduleUtility", serverLong)) {
                 new ModuleUtility(e);
             }
         }
@@ -214,7 +219,7 @@ class Controller {
         String serverLong = e.getGuild().getId();
 
         if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            if(new DatabaseFunctions().checkModuleSettings("modUtility", serverLong)) {
+            if(new DatabaseFunctions().checkModuleSettings("moduleUtility", serverLong)) {
                 new ModuleUtility(e);
             }
         }

@@ -56,7 +56,7 @@ public class AudioManagerHandler {
      * Returns full MusicManager HashMap.
      * @return managers.
      */
-    public static HashMap<String, GuildAudioManager> getGuildAudioManagers() {
+    private static HashMap<String, GuildAudioManager> getGuildAudioManagers() {
         return managers;
     }
 
