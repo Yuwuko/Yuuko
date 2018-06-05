@@ -28,7 +28,7 @@ public class CommandHelp extends Command {
                 .setColor(Color.RED)
                 .setTitle("Hey " + e.getAuthor().getName() + ",")
                 .setDescription(
-                        "A full list of modules and features is available on my GitHub, which is located [here](https://github.com/Galaxiosaurus/BasketBandit)! \n" +
+                        "A full list of modules and features is available on my GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit)! \n" +
                         "If you would like to suggest new features or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)! \n\n" +
 
                         "P.S, modules used to be listed here but formatting is a pain and nobody has time for that."

@@ -1,8 +1,8 @@
-[![GitHub release](https://img.shields.io/github/release/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java)
-[![Github All Releases](https://img.shields.io/github/downloads/Galaxiosaurus/BasketBandit-Java/total.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java)
-[![GitHub stars](https://img.shields.io/github/stars/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/issues)
-[![GitHub license](https://img.shields.io/github/license/Galaxiosaurus/BasketBandit-Java.svg)](https://github.com/Galaxiosaurus/BasketBandit-Java/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java)
+[![Github All Releases](https://img.shields.io/github/downloads/BasketBandit/BasketBandit-Java/total.svg)](https://github.com/BasketBandit/BasketBandit-Java)
+[![GitHub stars](https://img.shields.io/github/stars/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
+[![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
 # BasketBandit 1.9.1 (05/06/2018) 
 

@@ -149,14 +149,15 @@ class BasketBandit extends ListenerAdapter {
             if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 new Controller(e, startExecutionNano, commandList, prefix);
                 commandCount++;
+                return;
             }
 
             if(msg.getContentRaw().matches("^[0-9]{1,2}$") || msg.getContentRaw().toLowerCase().equals("cancel")) {
                 new Controller(e, startExecutionNano);
             }
 
-        } catch(Exception f) {
-            f.printStackTrace();
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
     }
 

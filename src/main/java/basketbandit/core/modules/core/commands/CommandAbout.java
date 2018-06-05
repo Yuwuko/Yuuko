@@ -42,7 +42,7 @@ public class CommandAbout extends Command {
                         "If you would like me on your guild [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=267775062&scope=bot)"
                 )
                 .setThumbnail(bot.getAvatarUrl())
-                .addField("Author", "[0x00000000#0001](https://github.com/Galaxiosaurus/)", true)
+                .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", bot.getJDA().getGuilds().size()+"", true)
                 .addField("Users", users+"", true)
