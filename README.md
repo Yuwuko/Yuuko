@@ -60,7 +60,7 @@ The global invocation/prefix is @BasketBandit (mention), this is used to prefix 
 
 ### Math
 
-- __roll \<value\>__ will roll a set die. [d6, d8, d10, d12, d20, d00] 
+- __roll \<value\>__ will roll a set die. [<value>, 00] 
 
 - __sum \<value\> \<operator\> \<value\>__ will calculate and return a simple 2 variable sum. Supported operations: [+, -, *, /, ^, %]
 

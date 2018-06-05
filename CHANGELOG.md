@@ -7,6 +7,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [+] Prints into console when new server is joined (name, server id).
 + [-] Removed the 'fun' module, it was outdated and I can do better.
 + [~] Edited the README file to clarify potential misunderstandings with the default prefix.
++ [~] Remedied an unnecessary prefix for the roll command and updated the documentation accordingly.
 
 ## 1.9.1
 

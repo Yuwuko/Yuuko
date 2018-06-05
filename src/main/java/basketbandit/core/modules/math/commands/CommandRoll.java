@@ -25,20 +25,19 @@ public class CommandRoll extends Command {
      * @throws IllegalArgumentException;
      */
     protected void executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
-        String[] rollString = command[1].split("d");
+        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
         int num;
         int rollNum = 0;
 
         // I assume someone will try to roll something that isn't a number.
-        if(rollString[1].matches("[0-9]+")) {
-            rollNum = Integer.parseInt(rollString[1]);
-        } else if(rollString[1].contains("-")) {
+        if(commandArray[1].matches("[0-9]+")) {
+            rollNum = Integer.parseInt(commandArray[1]);
+        } else if(commandArray[1].contains("-")) {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", you can't roll on a negative number or anything that isn't a number").queue();
             throw new IllegalArgumentException();
         }
 
-        if(rollString[1].equals("00")) {
+        if(commandArray[1].equals("00")) {
             num = (new Random().nextInt(10) + 1) * 10;
         } else {
             num = new Random().nextInt(rollNum) + 1;
