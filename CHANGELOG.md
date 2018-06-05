@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.9.2
+
++ [+] Prints into console when new server is joined (name, server id).
++ [-] Removed the 'fun' module, it was outdated and I can do better.
++ [~] Edited the README file to clarify potential misunderstandings with the default prefix.
+
 ## 1.9.1
 
 + [+] Added command execution time in milliseconds but with original resolution of nanoseconds.

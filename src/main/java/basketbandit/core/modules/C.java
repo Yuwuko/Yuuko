@@ -3,8 +3,6 @@ package basketbandit.core.modules;
 import basketbandit.core.modules.audio.commands.*;
 import basketbandit.core.modules.core.commands.*;
 import basketbandit.core.modules.developer.commands.CommandSetStatus;
-import basketbandit.core.modules.fun.commands.CommandInsult;
-import basketbandit.core.modules.fun.commands.CommandOverreact;
 import basketbandit.core.modules.game.commands.CommandRuneScapeStats;
 import basketbandit.core.modules.math.commands.CommandRoll;
 import basketbandit.core.modules.math.commands.CommandSum;
@@ -42,10 +40,6 @@ public final class C {
     public static final Command UNBIND = new CommandUnbind();
     public static final Command EXCLUDE = new CommandExclude();
     public static final Command INCLUDE = new CommandUnexclude();
-
-    // Fun module modules.
-    public static final Command INSULT = new CommandInsult();
-    public static final Command OVERREACT = new CommandOverreact();
 
     // RuneScape module modules.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();

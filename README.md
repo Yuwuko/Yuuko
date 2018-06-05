@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 1.9.1 (05/06/2018) 
+# BasketBandit 1.9.2 (05/06/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -12,7 +12,7 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The global invocation/prefix is @BasketBandit (mention), this is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the __setprefix__ command below.
+The global invocation/prefix is @BasketBandit (mention), this is used to prefix the below commands so the bot recognises that it is a command. E.g. @BasketBanditabout (without a space) You can also set a custom prefix using the __setprefix__ command below which I recommend to make everything quicker.
 
 ### Core
 
@@ -57,12 +57,6 @@ The global invocation/prefix is @BasketBandit (mention), this is used to prefix 
 ### Transport
 
 - __linestatus \<min\>__ will return full line coverage for London Underground, accurate to command execution. (__min__ is optional!)
-
-### Fun
-
-- __overreact__ will react with 20 random guild emotes to the previous message in the text channel.
-
-- __insult__ will randomly insult a user in the guild.
 
 ### Math
 

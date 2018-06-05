@@ -113,6 +113,7 @@ class BasketBandit extends ListenerAdapter {
     @Override
     public void onGuildJoin(GuildJoinEvent e) {
         new Controller(e, commandList);
+        System.out.println("[INFO] Joined new server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }
 
     /**
