@@ -10,9 +10,9 @@ public class CommandUnexclude extends Command {
         super("unexclude", "basketbandit.core.modules.utility.ModuleUtility", Permission.ADMINISTRATOR);
     }
 
-    public CommandUnexclude(MessageReceivedEvent e) {
+    public CommandUnexclude(MessageReceivedEvent e, String[] command) {
         super("unexclude", "basketbandit.core.modules.utility.ModuleUtility", Permission.ADMINISTRATOR);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -20,8 +20,8 @@ public class CommandUnexclude extends Command {
      * I just pass this command over to the unbind command. Perhaps I should implement aliases?
      * @param e MessageReceivedEvent
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        new CommandUnbind(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        new CommandUnbind(e, command);
     }
 
 }

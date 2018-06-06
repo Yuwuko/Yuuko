@@ -23,9 +23,9 @@ public class CommandLineStatus extends Command {
         super("linestatus", "basketbandit.core.modules.transport.ModuleTransport", null);
     }
 
-    public CommandLineStatus(MessageReceivedEvent e) {
+    public CommandLineStatus(MessageReceivedEvent e, String[] command) {
         super("linestatus", "basketbandit.core.modules.transport.ModuleTransport", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -33,10 +33,8 @@ public class CommandLineStatus extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-
             URL url = new URL("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Configuration.TFL_ID + "&app_key=" + Configuration.TFL_API);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -70,7 +68,7 @@ public class CommandLineStatus extends Command {
                 }
             }
 
-            if(commandArray.length == 1) {
+            if(command.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setColor(Color.RED)
                         .setTitle("Tube Line Status - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))

@@ -71,7 +71,7 @@ class BasketBandit extends ListenerAdapter {
             .buildBlocking();
 
         botUser = bot.getSelfUser();
-        Configuration.GLOBAL_PREFIX = botUser.getAsMention();
+        Configuration.GLOBAL_PREFIX = botUser.getAsMention() + " ";
     }
 
     /**
@@ -140,7 +140,7 @@ class BasketBandit extends ListenerAdapter {
             User user = e.getAuthor();
 
             String prefix = new DatabaseFunctions().getServerPrefix(serverLong);
-            if(prefix == null || prefix.equals("")) {
+            if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
 

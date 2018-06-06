@@ -13,9 +13,9 @@ public class CommandHelp extends Command {
         super("help", "basketbandit.core.modules.core.ModuleCore", null);
     }
 
-    public CommandHelp(MessageReceivedEvent e) {
+    public CommandHelp(MessageReceivedEvent e, String[] command) {
         super("help", "basketbandit.core.modules.core.ModuleCore", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -23,12 +23,12 @@ public class CommandHelp extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         EmbedBuilder commandInfo = new EmbedBuilder()
                 .setColor(Color.RED)
                 .setTitle("Hey " + e.getAuthor().getName() + ",")
                 .setDescription(
-                        "A full list of modules and features is available on my GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit)! \n" +
+                        "A full list of modules and features is available on my GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit-Java)! \n" +
                         "If you would like to suggest new features or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)! \n\n" +
 
                         "P.S, modules used to be listed here but formatting is a pain and nobody has time for that."

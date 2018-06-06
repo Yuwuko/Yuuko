@@ -14,9 +14,9 @@ public class CommandDeleteChannel extends Command {
         super("delchannel", "basketbandit.core.modules.moderation.ModuleModeration", Permission.MANAGE_CHANNEL);
     }
 
-    public CommandDeleteChannel(MessageReceivedEvent e) {
+    public CommandDeleteChannel(MessageReceivedEvent e, String[] command) {
         super("delchannel", "basketbandit.core.modules.moderation.ModuleModeration", Permission.MANAGE_CHANNEL);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -25,19 +25,19 @@ public class CommandDeleteChannel extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
-        String[] command = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
+        String[] commandParameters = command[1].split("\\s+", 2);
         String type = command[1];
-        Long idLong = Long.parseLong(command[2]);
+        Long idLong = Long.parseLong(commandParameters[1]);
         TextChannel textChannel = e.getGuild().getTextChannelById(idLong);
         VoiceChannel voiceChannel = e.getGuild().getVoiceChannelById(idLong);
 
         if(type.equals("text")) {
             if(textChannel == null) throw new NoSuchElementException();
-            e.getGuild().getTextChannelById(command[2]).delete().queue();
-        } else if(type.equals("voice") && command[2].length() == 18 && Long.parseLong(command[2]) > 0) {
+            e.getGuild().getTextChannelById(commandParameters[1]).delete().queue();
+        } else if(type.equals("voice") && commandParameters[1].length() == 18 && Long.parseLong(commandParameters[1]) > 0) {
             if(voiceChannel == null) throw new NoSuchElementException();
-            e.getGuild().getVoiceChannelById(command[2]).delete().queue();
+            e.getGuild().getVoiceChannelById(commandParameters[1]).delete().queue();
         }
     }
 

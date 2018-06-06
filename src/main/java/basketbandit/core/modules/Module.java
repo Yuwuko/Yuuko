@@ -31,5 +31,5 @@ public abstract class Module {
     }
 
     // Abstract method signature to ensure method is implemented.
-    protected abstract void executeCommand(MessageReceivedEvent e, String prefix);
+    protected abstract void executeCommand(MessageReceivedEvent e, String[] command);
 }

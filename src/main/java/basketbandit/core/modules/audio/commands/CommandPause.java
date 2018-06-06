@@ -11,9 +11,9 @@ public class CommandPause extends Command {
         super("pause", "basketbandit.core.modules.audio.ModuleAudio", null);
     }
 
-    public CommandPause(MessageReceivedEvent e) {
+    public CommandPause(MessageReceivedEvent e, String[] command) {
         super("pause", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -21,7 +21,7 @@ public class CommandPause extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.player.setPaused(true);

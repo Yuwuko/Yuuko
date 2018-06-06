@@ -11,22 +11,19 @@ public class ModuleTransport extends Module {
         super("ModuleTransport", "moduleTransport");
     }
 
-    public ModuleTransport(MessageReceivedEvent e, String prefix) {
+    public ModuleTransport(MessageReceivedEvent e, String[] command) {
         super("ModuleTransport", "moduleTransport");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
-
-        if(command.equals(C.LINE_STATUS.getCommandName())) {
-            new CommandLineStatus(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        if(command[0].equals(C.LINE_STATUS.getCommandName())) {
+            new CommandLineStatus(e, command);
             return;
         }
 

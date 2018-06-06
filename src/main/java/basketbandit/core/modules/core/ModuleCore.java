@@ -11,46 +11,43 @@ public class ModuleCore extends Module {
         super("ModuleCore", null);
     }
 
-    public ModuleCore(MessageReceivedEvent e, String prefix) {
+    public ModuleCore(MessageReceivedEvent e, String[] command) {
         super("ModuleCore", null);
 
         // Core module doesn't have database checks because it cannot be toggled
         // since it is a core part of the bot and has useful modules that aren't
         // to do with moderation and are more about the bot itself.
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
-
-        if(command.equals(C.SETUP.getCommandName()) && e.getMember().hasPermission(C.SETUP.getCommandPermission())) {
-            new CommandSetup(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        if(command[0].equals(C.SETUP.getCommandName()) && e.getMember().hasPermission(C.SETUP.getCommandPermission())) {
+            new CommandSetup(e, command);
             return;
         }
 
-        if(command.equals(C.MODULE.getCommandName()) && e.getMember().hasPermission(C.MODULE.getCommandPermission())) {
-            new CommandModule(e);
+        if(command[0].equals(C.MODULE.getCommandName()) && e.getMember().hasPermission(C.MODULE.getCommandPermission())) {
+            new CommandModule(e, command);
             return;
         }
 
-        if(command.equals(C.MODULES.getCommandName())) {
-            new CommandModules(e);
+        if(command[0].equals(C.MODULES.getCommandName())) {
+            new CommandModules(e, command);
             return;
         }
 
-        if(command.equals(C.HELP.getCommandName())) {
-            new CommandHelp(e);
+        if(command[0].equals(C.HELP.getCommandName())) {
+            new CommandHelp(e, command);
             return;
         }
 
-        if(command.equals(C.ABOUT.getCommandName())) {
-            new CommandAbout(e);
+        if(command[0].equals(C.ABOUT.getCommandName())) {
+            new CommandAbout(e, command);
             return;
         }
 
-        if(command.equals(C.SET_PREFIX.getCommandName()) && e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission())) {
-            new CommandSetPrefix(e);
+        if(command[0].equals(C.SET_PREFIX.getCommandName()) && e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission())) {
+            new CommandSetPrefix(e, command);
             return;
         }
 

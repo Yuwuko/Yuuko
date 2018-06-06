@@ -13,9 +13,9 @@ public class CommandStop extends Command {
         super("stop", "basketbandit.core.modules.audio.ModuleAudio", null);
     }
 
-    public CommandStop(MessageReceivedEvent e) {
+    public CommandStop(MessageReceivedEvent e, String[] command) {
         super("stop", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     public CommandStop(GenericGuildVoiceEvent e) {
@@ -27,7 +27,7 @@ public class CommandStop extends Command {
      * Executes command using MessageReceivedEvent e.
      * @param e; MessageReceivedEvent.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();

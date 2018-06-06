@@ -11,9 +11,9 @@ public class CommandToggleRepeat extends Command {
         super("togglerepeat", "basketbandit.core.modules.audio.ModuleAudio", null);
     }
 
-    public CommandToggleRepeat(MessageReceivedEvent e) {
+    public CommandToggleRepeat(MessageReceivedEvent e, String[] command) {
         super("togglerepeat", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -21,7 +21,7 @@ public class CommandToggleRepeat extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());

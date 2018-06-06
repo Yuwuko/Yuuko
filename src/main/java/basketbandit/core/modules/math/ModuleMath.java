@@ -12,27 +12,26 @@ public class ModuleMath extends Module {
         super("ModuleMath", "moduleMath");
     }
 
-    public ModuleMath(MessageReceivedEvent e, String prefix) {
+    public ModuleMath(MessageReceivedEvent e, String[] command) {
         super("ModuleMath", "moduleMath");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
 
-        if(command.equals(C.ROLL.getCommandName())) {
-            new CommandRoll(e);
+
+        if(command[0].equals(C.ROLL.getCommandName())) {
+            new CommandRoll(e, command);
             return;
         }
 
-        if(command.equals(C.SUM.getCommandName())) {
-            new CommandSum(e);
+        if(command[0].equals(C.SUM.getCommandName())) {
+            new CommandSum(e, command);
             return;
         }
 

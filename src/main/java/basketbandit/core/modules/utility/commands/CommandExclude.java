@@ -11,9 +11,9 @@ public class CommandExclude extends Command {
         super("exclude", "basketbandit.core.modules.utility.ModuleUtility", Permission.ADMINISTRATOR);
     }
 
-    public CommandExclude(MessageReceivedEvent e) {
+    public CommandExclude(MessageReceivedEvent e, String[] command) {
         super("exclude", "basketbandit.core.modules.utility.ModuleUtility", Permission.ADMINISTRATOR);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -21,14 +21,15 @@ public class CommandExclude extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 3);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String[] commandParameters = command[1].split("\\s+", 2);
+
         String serverId = e.getGuild().getId();
-        String channelId = e.getGuild().getTextChannelsByName(commandArray[2], true).get(0).getId();
-        String module = commandArray[1];
+        String channelId = e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getId();
+        String module = command[1];
 
         if(new DatabaseFunctions().addExclusion(module,channelId,serverId)) {
-            e.getTextChannel().sendMessage("Successfully excluded " + module + " from " + e.getGuild().getTextChannelsByName(commandArray[2], true).get(0).getName() + ".").queue();
+            e.getTextChannel().sendMessage("Successfully excluded " + module + " from " + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + ".").queue();
         } else {
             e.getTextChannel().sendMessage("Exclude unsuccessful, are you sure this the module isn't already excluded from the channel?").queue();
         }

@@ -15,9 +15,9 @@ public class CommandModule extends Command {
         super("module", "basketbandit.core.modules.core.ModuleCore", Permission.MANAGE_PERMISSIONS);
     }
 
-    public CommandModule(MessageReceivedEvent e) {
+    public CommandModule(MessageReceivedEvent e, String[] command) {
         super("module", "basketbandit.core.modules.core.ModuleCore", Permission.MANAGE_PERMISSIONS);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -26,9 +26,8 @@ public class CommandModule extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException ;
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
-        String value = commandArray[1].toLowerCase();
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String value = command[1].toLowerCase();
         String serverLong = e.getGuild().getId();
 
         if(new DatabaseFunctions().toggleModule("module" + value, serverLong)) {

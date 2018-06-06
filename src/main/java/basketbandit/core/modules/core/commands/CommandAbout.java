@@ -16,16 +16,16 @@ public class CommandAbout extends Command {
         super("about", "basketbandit.core.modules.core.ModuleCore", null);
     }
 
-    public CommandAbout(MessageReceivedEvent e) {
+    public CommandAbout(MessageReceivedEvent e, String[] command) {
         super("about", "basketbandit.core.modules.core.ModuleCore", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
      * Executes command using MessageReceivedEvent e.
      * @param e; MessageReceivedEvent.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
         int users = 0;

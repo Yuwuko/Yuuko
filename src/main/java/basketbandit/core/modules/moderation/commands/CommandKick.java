@@ -13,9 +13,9 @@ public class CommandKick extends Command {
         super("kick", "basketbandit.core.modules.moderation.ModuleModeration", Permission.KICK_MEMBERS);
     }
 
-    public CommandKick(MessageReceivedEvent e) {
+    public CommandKick(MessageReceivedEvent e, String[] command) {
         super("kick", "basketbandit.core.modules.moderation.ModuleModeration", Permission.KICK_MEMBERS);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -24,17 +24,17 @@ public class CommandKick extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
-        Long value = Long.parseLong(commandArray[1]);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
+        String[] commandParameters = command[1].split("\\s+", 3);
+        Long value = Long.parseLong(command[1]);
         Member member = e.getGuild().getMemberById(value);
 
         if(member == null) throw new NoSuchElementException();
 
-        if(commandArray.length < 3) {
-            e.getGuild().getController().kick(commandArray[1]).queue();
+        if(commandParameters.length < 3) {
+            e.getGuild().getController().kick(commandParameters[0]).queue();
         } else {
-            e.getGuild().getController().kick(commandArray[1], commandArray[2]).queue();
+            e.getGuild().getController().kick(commandParameters[0], commandParameters[1]).queue();
         }
     }
 

@@ -19,14 +19,14 @@ public class ModuleUtility extends Module {
      * Module constructor for MessageReceivedEvents
      * @param e MessageReceivedEvent
      */
-    public ModuleUtility(MessageReceivedEvent e, String prefix) {
+    public ModuleUtility(MessageReceivedEvent e, String[] command) {
         super("ModuleUtility", "moduleUtility");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
     /**
@@ -61,37 +61,34 @@ public class ModuleUtility extends Module {
         }
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
-
-        if(command.equals(C.USER.getCommandName())) {
-            new CommandUser(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        if(command[0].equals(C.USER.getCommandName())) {
+            new CommandUser(e, command);
             return;
         }
 
-        if(command.equals(C.SERVER.getCommandName())) {
-            new CommandServer(e);
+        if(command[0].equals(C.SERVER.getCommandName())) {
+            new CommandServer(e, command);
             return;
         }
 
-        if(command.equals(C.BIND.getCommandName())) {
-            new CommandBind(e);
+        if(command[0].equals(C.BIND.getCommandName())) {
+            new CommandBind(e, command);
             return;
         }
 
-        if(command.equals(C.UNBIND.getCommandName())) {
-            new CommandUnbind(e);
+        if(command[0].equals(C.UNBIND.getCommandName())) {
+            new CommandUnbind(e, command);
             return;
         }
 
-        if(command.equals(C.EXCLUDE.getCommandName())) {
-            new CommandExclude(e);
+        if(command[0].equals(C.EXCLUDE.getCommandName())) {
+            new CommandExclude(e, command);
             return;
         }
 
-        if(command.equals(C.INCLUDE.getCommandName())) {
-            new CommandUnexclude(e);
+        if(command[0].equals(C.INCLUDE.getCommandName())) {
+            new CommandUnexclude(e, command);
             return;
         }
 

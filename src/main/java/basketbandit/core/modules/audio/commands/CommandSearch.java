@@ -16,9 +16,9 @@ public class CommandSearch extends Command {
         super("search", "basketbandit.core.modules.audio.ModuleAudio", null);
     }
 
-    public CommandSearch(MessageReceivedEvent e) {
+    public CommandSearch(MessageReceivedEvent e, String[] command) {
         super("search", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -26,9 +26,9 @@ public class CommandSearch extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-        List<SearchResult> results = YouTubeSearchHandler.searchList(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+
+        List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
         StringBuilder resultString = new StringBuilder();
 
         if(results != null) {
@@ -43,7 +43,7 @@ public class CommandSearch extends Command {
         }
 
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setAuthor(e.getAuthor().getName() + ", results for: " + commandArray[1], null, e.getAuthor().getAvatarUrl())
+                    .setAuthor(e.getAuthor().getName() + ", results for: " + command[1], null, e.getAuthor().getAvatarUrl())
                     .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
                     .setFooter("Version: " + Configuration.VERSION, null);
 

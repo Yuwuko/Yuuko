@@ -85,7 +85,8 @@ class Controller {
      * @param e MessageReceivedEvent
      */
     Controller(MessageReceivedEvent e, long startExecutionNano, ArrayList<Command> commandList, String prefix) {
-        String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
+        String[] input = e.getMessage().getContentRaw().substring(prefix.length()).toLowerCase().split("\\s+", 2);
+        String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length()).toLowerCase();
         String serverLong = e.getGuild().getId();
 
         try {
@@ -105,11 +106,11 @@ class Controller {
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
             for(Command c : commandList) {
-                if(input[0].equals(c.getGlobalName()) || input[0].equals(prefix + c.getCommandName())) {
+                if((inputPrefix + input[0]).equals(c.getGlobalName()) || (inputPrefix + input[0]).equals(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
                     moduleDbName = commandModule.substring(commandModule.lastIndexOf(".") + 1).toLowerCase();
                     clazz = Class.forName(commandModule);
-                    constructor = clazz.getConstructor(MessageReceivedEvent.class, String.class);
+                    constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
 
                     // Remove the input message.
                     e.getMessage().delete().queue();
@@ -133,7 +134,7 @@ class Controller {
                 } else {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
                         if(constructor != null) {
-                            constructor.newInstance(e, prefix);
+                            constructor.newInstance(e, input);
                             executed = true;
                             break;
                         }
@@ -154,7 +155,7 @@ class Controller {
             }
 
             if(constructor != null && !executed && !bound) {
-                constructor.newInstance(e, prefix);
+                constructor.newInstance(e, input);
                 executed = true;
             }
 
@@ -165,7 +166,7 @@ class Controller {
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                new ModuleLogging(e, executionTime, "");
+                new ModuleLogging(e, executionTime, null);
             }
 
         } catch (InvocationTargetException ex) {
@@ -203,7 +204,7 @@ class Controller {
             }
 
             if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                new ModuleLogging(e, startExecutionNano, "");
+                new ModuleLogging(e, startExecutionNano, null);
             }
 
         } catch (Exception ex) {

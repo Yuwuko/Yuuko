@@ -11,7 +11,7 @@ public class ModuleDeveloper extends Module {
         super("ModuleDeveloper", null);
     }
 
-    public ModuleDeveloper(MessageReceivedEvent e, String prefix) {
+    public ModuleDeveloper(MessageReceivedEvent e, String[] command) {
         super("ModuleDeveloper", null);
 
         // Just in case.
@@ -19,15 +19,12 @@ public class ModuleDeveloper extends Module {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+",2);
-        String command = commandArray[0].substring(prefix.length());
-
-        if(command.equals(C.SET_STATUS.getCommandName())) {
-            new CommandSetStatus(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        if(command[0].equals(C.SET_STATUS.getCommandName())) {
+            new CommandSetStatus(e, command);
             return;
         }
 

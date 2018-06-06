@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.9.4
+
++ [~] Major /minor/ change to the way commands are handled.
+
 ## 1.9.3
 
 + [+] Added a cleanup function for when the bot is removed from a server.

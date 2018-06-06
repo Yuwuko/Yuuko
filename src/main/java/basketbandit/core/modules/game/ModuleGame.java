@@ -11,22 +11,19 @@ public class ModuleGame extends Module {
         super("ModuleGame", "moduleGame");
     }
 
-    public ModuleGame(MessageReceivedEvent e, String prefix) {
+    public ModuleGame(MessageReceivedEvent e, String[] command) {
         super("ModuleGame", "moduleGame");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
-
-        if(command.equals(C.RUNESCAPE_STATS.getCommandName())) {
-            new CommandRuneScapeStats(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        if(command[0].equals(C.RUNESCAPE_STATS.getCommandName())) {
+            new CommandRuneScapeStats(e, command);
             return;
         }
 

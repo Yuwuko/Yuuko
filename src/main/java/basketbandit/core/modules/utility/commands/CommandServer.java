@@ -15,9 +15,9 @@ public class CommandServer extends Command {
         super("server", "basketbandit.core.modules.utility.ModuleUtility", null);
     }
 
-    public CommandServer(MessageReceivedEvent e) {
+    public CommandServer(MessageReceivedEvent e, String[] command) {
         super("server", "basketbandit.core.modules.utility.ModuleUtility", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -25,7 +25,7 @@ public class CommandServer extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         Guild server = e.getGuild();
 
         EmbedBuilder commandInfo = new EmbedBuilder()

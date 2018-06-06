@@ -12,9 +12,9 @@ public class CommandSetup extends Command {
         super("setup", "basketbandit.core.modules.core.ModuleCore", Permission.ADMINISTRATOR);
     }
 
-    public CommandSetup(MessageReceivedEvent e) {
+    public CommandSetup(MessageReceivedEvent e, String[] command) {
         super("setup", "basketbandit.core.modules.core.ModuleCore", Permission.ADMINISTRATOR);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     public CommandSetup(GuildJoinEvent e) {
@@ -28,7 +28,7 @@ public class CommandSetup extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();
 
         if(!new DatabaseFunctions().addNewServer(serverId)) {

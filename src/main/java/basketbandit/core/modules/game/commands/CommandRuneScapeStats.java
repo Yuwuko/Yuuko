@@ -13,9 +13,9 @@ public class CommandRuneScapeStats extends Command {
         super("rsstats", "basketbandit.core.modules.game.ModuleGame", null);
     }
 
-    public CommandRuneScapeStats(MessageReceivedEvent e) {
+    public CommandRuneScapeStats(MessageReceivedEvent e, String[] command) {
         super("rsstats", "basketbandit.core.modules.game.ModuleGame", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -23,12 +23,10 @@ public class CommandRuneScapeStats extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-        String command = commandArray[0].toLowerCase();
-        String player = commandArray[1].toLowerCase();
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String player = command[1].toLowerCase();
 
-        Boolean osrs = (command.contains("osstats"));
+        Boolean osrs = (command[0].contains("osstats"));
 
         try {
             URL url = (!osrs) ? new URL("http://services.runescape.com/m=hiscore/index_lite.ws?player=" + player) : new URL("http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=" + player);

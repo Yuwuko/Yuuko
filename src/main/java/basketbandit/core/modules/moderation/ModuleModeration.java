@@ -11,42 +11,39 @@ public class ModuleModeration extends Module {
         super("ModuleModeration", "moduleModeration");
     }
 
-    public ModuleModeration(MessageReceivedEvent e, String prefix) {
+    public ModuleModeration(MessageReceivedEvent e, String[] command) {
         super("ModuleModeration", "moduleModeration");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
-
-        if(command.equals(C.NUKE.getCommandName()) && e.getMember().hasPermission(C.NUKE.getCommandPermission())) {
-            new CommandNuke(e);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        if(command[0].equals(C.NUKE.getCommandName()) && e.getMember().hasPermission(C.NUKE.getCommandPermission())) {
+            new CommandNuke(e, command);
             return;
         }
 
-        if(command.equals(C.KICK.getCommandName()) && e.getMember().hasPermission(C.KICK.getCommandPermission())){
-            new CommandKick(e);
+        if(command[0].equals(C.KICK.getCommandName()) && e.getMember().hasPermission(C.KICK.getCommandPermission())){
+            new CommandKick(e, command);
             return;
         }
 
-        if(command.equals(C.BAN.getCommandName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
-            new CommandBan(e);
+        if(command[0].equals(C.BAN.getCommandName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
+            new CommandBan(e, command);
             return;
         }
 
-        if(command.equals(C.CREATE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission())) {
-            new CommandAddChannel(e);
+        if(command[0].equals(C.CREATE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission())) {
+            new CommandAddChannel(e, command);
             return;
         }
 
-        if(command.equals(C.DELETE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission())) {
-            new CommandDeleteChannel(e);
+        if(command[0].equals(C.DELETE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission())) {
+            new CommandDeleteChannel(e, command);
             return;
         }
 

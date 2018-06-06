@@ -13,9 +13,9 @@ public class CommandBan extends Command {
         super("ban", "basketbandit.core.modules.moderation.ModuleModeration", Permission.BAN_MEMBERS);
     }
 
-    public CommandBan(MessageReceivedEvent e) {
+    public CommandBan(MessageReceivedEvent e, String[] command) {
         super("ban", "basketbandit.core.modules.moderation.ModuleModeration", Permission.BAN_MEMBERS);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -24,18 +24,18 @@ public class CommandBan extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
+        String[] commandParameters = command[1].split("\\s+", 3);
         Long value = Long.parseLong(command[1]);
-        int time = Integer.parseInt(command[2]);
+        int time = Integer.parseInt(commandParameters[1]);
         Member member = e.getGuild().getMemberById(value);
 
         if(member == null) throw new NoSuchElementException();
 
-        if(command.length < 4) {
-            e.getGuild().getController().ban(command[1], time).queue();
+        if(commandParameters.length < 3) {
+            e.getGuild().getController().ban(commandParameters[0], time).queue();
         } else {
-            e.getGuild().getController().ban(command[1], time, command[3]).queue();
+            e.getGuild().getController().ban(commandParameters[0], time, commandParameters[2]).queue();
         }
     }
 

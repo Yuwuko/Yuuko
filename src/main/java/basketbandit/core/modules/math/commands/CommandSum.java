@@ -12,9 +12,9 @@ public class CommandSum extends Command {
         super("sum", "basketbandit.core.modules.math.ModuleMath", null);
     }
 
-    public CommandSum(MessageReceivedEvent e) {
+    public CommandSum(MessageReceivedEvent e, String[] command) {
         super("sum", "basketbandit.core.modules.math.ModuleMath", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -23,8 +23,7 @@ public class CommandSum extends Command {
      * @return boolean; if the command executed correctly.
      * @throws IllegalArgumentException;
      */
-    protected void executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 3);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) throws IllegalArgumentException {
         String sumString;
 
         if(command[1].contains("+")) {

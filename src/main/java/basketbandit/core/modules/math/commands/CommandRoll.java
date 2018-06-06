@@ -13,9 +13,9 @@ public class CommandRoll extends Command {
         super("roll", "basketbandit.core.modules.math.ModuleMath", null);
     }
 
-    public CommandRoll(MessageReceivedEvent e) {
+    public CommandRoll(MessageReceivedEvent e, String[] command) {
         super("roll", "basketbandit.core.modules.math.ModuleMath", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -24,20 +24,19 @@ public class CommandRoll extends Command {
      * @return boolean; if the command executed correctly.
      * @throws IllegalArgumentException;
      */
-    protected void executeCommand(MessageReceivedEvent e) throws IllegalArgumentException {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) throws IllegalArgumentException {
         int num;
         int rollNum = 0;
 
         // I assume someone will try to roll something that isn't a number.
-        if(commandArray[1].matches("[0-9]+")) {
-            rollNum = Integer.parseInt(commandArray[1]);
-        } else if(commandArray[1].contains("-")) {
+        if(command[1].matches("[0-9]+")) {
+            rollNum = Integer.parseInt(command[1]);
+        } else if(command[1].contains("-")) {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", you can't roll on a negative number or anything that isn't a number").queue();
             throw new IllegalArgumentException();
         }
 
-        if(commandArray[1].equals("00")) {
+        if(command[1].equals("00")) {
             num = (new Random().nextInt(10) + 1) * 10;
         } else {
             num = new Random().nextInt(rollNum) + 1;

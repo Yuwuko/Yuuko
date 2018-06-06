@@ -12,7 +12,7 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The global invocation/prefix is @BasketBandit (mention), this is used to prefix the below commands so the bot recognises that it is a command. E.g. @BasketBanditabout (without a space) You can also set a custom prefix using the __setprefix__ command below which I recommend to make everything quicker.
+The global invocation/prefix is @BasketBandit (mention), this is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the __setprefix__ command below which I recommend to make everything quicker. E.g. '@BasketBandit setprefix !'.
 
 ### Core
 

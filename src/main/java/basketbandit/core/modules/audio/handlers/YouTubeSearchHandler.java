@@ -55,8 +55,7 @@ public class YouTubeSearchHandler {
      * Searches youtube using command[1] and returns the first 10 result.
      * @return youtube video result list.
      */
-    public static List<SearchResult> searchList(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+",2);
+    public static List<SearchResult> searchList(MessageReceivedEvent e, String[] command) {
 
         try {
             YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
@@ -64,7 +63,7 @@ public class YouTubeSearchHandler {
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
             search.setKey(Configuration.GOOGLE_API);
-            search.setQ(commandArray[1]);
+            search.setQ(command[1]);
             search.setType("video");
             search.setFields("items(id/videoId,snippet/title)");
             search.setMaxResults(10L);

@@ -17,9 +17,9 @@ public class CommandCurrentTrack extends Command {
         super("currenttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
     }
 
-    public CommandCurrentTrack(MessageReceivedEvent e) {
+    public CommandCurrentTrack(MessageReceivedEvent e, String[] command) {
         super("currenttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -27,7 +27,7 @@ public class CommandCurrentTrack extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
         AudioTrack track = manager.player.getPlayingTrack();
         String[] uri = track.getInfo().uri.split("=");

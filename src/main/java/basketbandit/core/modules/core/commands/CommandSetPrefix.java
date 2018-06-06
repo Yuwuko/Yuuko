@@ -11,18 +11,17 @@ public class CommandSetPrefix extends Command {
         super("setprefix", "basketbandit.core.modules.core.ModuleCore", Permission.ADMINISTRATOR);
     }
 
-    public CommandSetPrefix(MessageReceivedEvent e) {
+    public CommandSetPrefix(MessageReceivedEvent e, String[] command) {
         super("setprefix", "basketbandit.core.modules.core.ModuleCore", Permission.ADMINISTRATOR);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
      * Executes command using MessageReceivedEvent e.
      * @param e; MessageReceivedEvent.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
-        String value = commandArray[1].toLowerCase();
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String value = command[1].toLowerCase();
         String serverLong = e.getGuild().getId();
 
         if(!new DatabaseFunctions().setServerPrefix(value, serverLong)) {

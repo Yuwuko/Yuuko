@@ -19,9 +19,9 @@ public class CommandModules extends Command {
         super("modules", "basketbandit.core.modules.core.ModuleCore", null);
     }
 
-    public CommandModules(MessageReceivedEvent e) {
+    public CommandModules(MessageReceivedEvent e, String[] command) {
         super("modules", "basketbandit.core.modules.core.ModuleCore", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -29,7 +29,7 @@ public class CommandModules extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
         ArrayList<String> disabled = new ArrayList<>();
@@ -37,7 +37,6 @@ public class CommandModules extends Command {
         ResultSet resultSet;
 
         try {
-
             resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
             resultSet.next();
 

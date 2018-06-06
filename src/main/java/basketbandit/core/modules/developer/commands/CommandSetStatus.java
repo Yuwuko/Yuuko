@@ -10,9 +10,9 @@ public class CommandSetStatus extends Command {
         super("setstatus", "basketbandit.core.modules.developer.ModuleDeveloper", null);
     }
 
-    public CommandSetStatus(MessageReceivedEvent e) {
+    public CommandSetStatus(MessageReceivedEvent e, String[] command) {
         super("setstatus", "basketbandit.core.modules.developer.ModuleDeveloper", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -20,21 +20,21 @@ public class CommandSetStatus extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 3);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String[] commandParameters = command[1].split("\\s+", 3);
 
-        switch(commandArray[1]) {
+        switch(commandParameters[0]) {
             case "playing":
-                e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, commandArray[2]));
+                e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, commandParameters[1]));
                 break;
             case "listening":
-                e.getJDA().getPresence().setGame(Game.of(Game.GameType.LISTENING, commandArray[2]));
+                e.getJDA().getPresence().setGame(Game.of(Game.GameType.LISTENING, commandParameters[1]));
                 break;
             case "streaming":
-                e.getJDA().getPresence().setGame(Game.of(Game.GameType.STREAMING, commandArray[2]));
+                e.getJDA().getPresence().setGame(Game.of(Game.GameType.STREAMING, commandParameters[1]));
                 break;
             case "watching":
-                e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, commandArray[2]));
+                e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, commandParameters[1]));
                 break;
         }
 

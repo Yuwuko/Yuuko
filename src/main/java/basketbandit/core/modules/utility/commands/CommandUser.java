@@ -18,9 +18,9 @@ public class CommandUser extends Command {
         super("user", "basketbandit.core.modules.utility.ModuleUtility", null);
     }
 
-    public CommandUser(MessageReceivedEvent e) {
+    public CommandUser(MessageReceivedEvent e, String[] command) {
         super("user", "basketbandit.core.modules.utility.ModuleUtility", null);
-        executeCommand(e);
+        executeCommand(e, command);
     }
 
     /**
@@ -29,8 +29,7 @@ public class CommandUser extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected void executeCommand(MessageReceivedEvent e) throws NoSuchElementException {
-        String[] command = e.getMessage().getContentRaw().split("\\s+", 2);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
         Member member = null;
         EmbedBuilder commandInfo;
         String userString = command[1].toLowerCase();

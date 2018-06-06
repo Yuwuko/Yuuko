@@ -17,14 +17,14 @@ public class ModuleAudio extends Module {
         super("ModuleAudio", "moduleAudio");
     }
 
-    public ModuleAudio(MessageReceivedEvent e, String prefix) {
+    public ModuleAudio(MessageReceivedEvent e, String[] command) {
         super("ModuleAudio", "moduleAudio");
 
         if(!checkModuleSettings(e)) {
             return;
         }
 
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
     public ModuleAudio(MessageReceivedEvent e, String url, boolean unused) {
@@ -40,72 +40,69 @@ public class ModuleAudio extends Module {
         }
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
-        String[] commandArray = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String command = commandArray[0].substring(prefix.length());
-
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
             e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:basketbandithehe:443069427832061953>").queue();
             return;
         }
 
-        if(command.equals(C.PLAY.getCommandName())) {
-            new CommandPlay(e);
+        if(command[0].equals(C.PLAY.getCommandName())) {
+            new CommandPlay(e, command);
             return;
         }
 
-        if(command.equals(C.PAUSE.getCommandName())) {
-            new CommandPause(e);
+        if(command[0].equals(C.PAUSE.getCommandName())) {
+            new CommandPause(e, command);
             return;
         }
 
-        if(command.equals(C.STOP.getCommandName())) {
-            new CommandStop(e);
+        if(command[0].equals(C.STOP.getCommandName())) {
+            new CommandStop(e, command);
             return;
         }
 
-        if(command.equals(C.SKIP.getCommandName())) {
-            new CommandSkip(e);
+        if(command[0].equals(C.SKIP.getCommandName())) {
+            new CommandSkip(e, command);
             return;
         }
 
-        if(command.equals(C.SET_BACKGROUND.getCommandName())) {
-            new CommandSetBackground(e);
+        if(command[0].equals(C.SET_BACKGROUND.getCommandName())) {
+            new CommandSetBackground(e, command);
             return;
         }
 
-        if(command.equals(C.UNSET_BACKGROUND.getCommandName())) {
-            new CommandUnsetBackground(e);
+        if(command[0].equals(C.UNSET_BACKGROUND.getCommandName())) {
+            new CommandUnsetBackground(e, command);
             return;
         }
 
-        if(command.equals(C.TRACK.getCommandName())) {
-            new CommandCurrentTrack(e);
+        if(command[0].equals(C.TRACK.getCommandName())) {
+            new CommandCurrentTrack(e, command);
             return;
         }
 
-        if(command.equals(C.SHUFFLE.getCommandName())) {
-            new CommandShuffle(e);
+        if(command[0].equals(C.SHUFFLE.getCommandName())) {
+            new CommandShuffle(e, command);
             return;
         }
 
-        if(command.equals(C.QUEUE.getCommandName())) {
-            new CommandQueue(e);
+        if(command[0].equals(C.QUEUE.getCommandName())) {
+            new CommandQueue(e, command);
             return;
         }
 
-        if(command.equals(C.LAST_TRACK.getCommandName())) {
-            new CommandLastTrack(e);
+        if(command[0].equals(C.LAST_TRACK.getCommandName())) {
+            new CommandLastTrack(e, command);
             return;
         }
 
-        if(command.equals(C.TOGGLE_REPEAT.getCommandName())) {
-            new CommandToggleRepeat(e);
+        if(command[0].equals(C.TOGGLE_REPEAT.getCommandName())) {
+            new CommandToggleRepeat(e, command);
             return;
         }
 
-        if(command.equals(C.SEARCH.getCommandName())) {
-            new CommandSearch(e);
+        if(command[0].equals(C.SEARCH.getCommandName())) {
+            new CommandSearch(e, command);
             return;
         }
 

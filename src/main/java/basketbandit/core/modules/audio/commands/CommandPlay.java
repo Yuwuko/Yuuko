@@ -23,9 +23,9 @@ public class CommandPlay extends Command {
         super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
     }
 
-    public CommandPlay(MessageReceivedEvent e) {
+    public CommandPlay(MessageReceivedEvent e, String[] command) {
         super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
-        executeCommand(e);
+        executeCommand(e, command);
 
 
     }
@@ -40,11 +40,10 @@ public class CommandPlay extends Command {
      * @param e; MessageReceivedEvent.
      * @return boolean; if the command executed correctly.
      */
-    protected void executeCommand(MessageReceivedEvent e) {
-        String[] commandArray = e.getMessage().getContentRaw().split("\\s+", 2);
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        if(commandArray.length == 1) {
+        if(command.length == 1) {
             e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
 
@@ -59,11 +58,11 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(commandArray[1].startsWith("https://") ) {
-                loadAndPlay(manager, e.getChannel(), commandArray[1], e);
+            if(command[1].startsWith("https://") ) {
+                loadAndPlay(manager, e.getChannel(), command[1], e);
 
             } else {
-                String trackUrl = YouTubeSearchHandler.search(commandArray[1]);
+                String trackUrl = YouTubeSearchHandler.search(command[1]);
 
                 if(trackUrl == null || trackUrl.equals("")) {
                     e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
@@ -129,7 +128,7 @@ public class CommandPlay extends Command {
                 channel.sendMessage("Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName()).queue();
                 tracks.forEach(manager.scheduler::queue);
 
-                new CommandCurrentTrack(e);
+                new CommandCurrentTrack(e, null);
             }
 
             @Override

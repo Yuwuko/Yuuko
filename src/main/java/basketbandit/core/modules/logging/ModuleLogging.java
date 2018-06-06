@@ -15,17 +15,17 @@ public class ModuleLogging extends Module {
         super("ModuleLogging", "moduleLogging");
     }
 
-    public ModuleLogging(MessageReceivedEvent e, long executionTimeMs, String prefix) {
+    public ModuleLogging(MessageReceivedEvent e, long executionTimeMs, String[] command) {
         super("ModuleLogging", "moduleLogging");
 
         // We don't check inside the class if the module is active because the module
         // because it would be checked after every message and the Module super class
         // displays a message if it is off.
         this.executionTimeMs = executionTimeMs;
-        executeCommand(e, prefix);
+        executeCommand(e, command);
     }
 
-    protected void executeCommand(MessageReceivedEvent e, String prefix) {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             List<TextChannel> log = e.getGuild().getTextChannelsByName("command-log", true);
             log.get(0).sendMessage("```" + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator() + " used command " + e.getMessage().getContentDisplay() + " in " + e.getMessage().getChannel().getName() + ". (Execution time: "+ executionTimeMs +"ms)```").queue();
