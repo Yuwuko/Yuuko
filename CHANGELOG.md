@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.9.5
+
++ [+] Added a cool looking banner to the console. \:\^\)
++ [~] Fixed oversight which broke YouTube/SoundCloud links.
+
 ## 1.9.4
 
 + [~] Major /minor/ change to the way commands are handled.

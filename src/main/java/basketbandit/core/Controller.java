@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,8 +86,8 @@ class Controller {
      * @param e MessageReceivedEvent
      */
     Controller(MessageReceivedEvent e, long startExecutionNano, ArrayList<Command> commandList, String prefix) {
-        String[] input = e.getMessage().getContentRaw().substring(prefix.length()).toLowerCase().split("\\s+", 2);
-        String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length()).toLowerCase();
+        String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
+        String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length());
         String serverLong = e.getGuild().getId();
 
         try {
@@ -162,7 +163,7 @@ class Controller {
             // Print the command and execution time into the console.
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
@@ -203,7 +204,7 @@ class Controller {
 
             if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                 long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                 new ModuleLogging(e, executionTime, null);
             }
 
