@@ -30,7 +30,7 @@ public class AudioManagerHandler {
         playerManager.registerSourceManager(new VimeoAudioSourceManager());
         playerManager.registerSourceManager(new TwitchStreamAudioSourceManager());
         playerManager.registerSourceManager(new HttpAudioSourceManager());
-        playerManager.setFrameBufferDuration(200);
+        playerManager.setFrameBufferDuration(400);
     }
 
     /**

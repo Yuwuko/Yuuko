@@ -104,12 +104,8 @@ public class CommandPlay extends Command {
 
             @Override
             public void trackLoaded(AudioTrack track) {
-
-                if(!manager.scheduler.queue(track)) {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", unable to queue track.").queue();
-                    return;
-                }
-
+                manager.scheduler.queue(track);
+                
                 String[] uri = track.getInfo().uri.split("=");
                 String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 

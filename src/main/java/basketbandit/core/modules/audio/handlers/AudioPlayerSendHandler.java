@@ -16,10 +16,6 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
         this.audioPlayer = audioPlayer;
     }
 
-    /**
-     * Returns if it can provide the last frame.
-     * @return boolean.
-     */
     @Override
     public boolean canProvide() {
         if(lastFrame == null) {
@@ -29,10 +25,6 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
         return lastFrame != null;
     }
 
-    /**
-     * Provides 20ms of audio.
-     * @return audio data.
-     */
     @Override
     public byte[] provide20MsAudio() {
         if(lastFrame == null) {
@@ -45,13 +37,8 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
         return data;
     }
 
-    /**
-     * Returns if is opus. (always is)
-     * @return true
-     */
     @Override
     public boolean isOpus() {
         return true;
     }
-
 }

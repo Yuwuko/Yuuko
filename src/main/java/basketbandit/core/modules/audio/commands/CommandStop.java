@@ -31,6 +31,7 @@ public class CommandStop extends Command {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();
+        manager.scheduler.setBackground(null);
         manager.player.stopTrack();
         manager.player.setPaused(false);
         e.getGuild().getAudioManager().setSendingHandler(null);
@@ -46,6 +47,7 @@ public class CommandStop extends Command {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();
+        manager.scheduler.setBackground(null);
         manager.player.stopTrack();
         manager.player.setPaused(false);
         e.getGuild().getAudioManager().setSendingHandler(null);
