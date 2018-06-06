@@ -188,8 +188,6 @@ class Controller {
         // Remove the input message.
         e.getMessage().delete().queue();
 
-        System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
-
         try {
             // Search function check if regex matches. Used in conjunction with the search input.
             if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
@@ -204,7 +202,9 @@ class Controller {
             }
 
             if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                new ModuleLogging(e, startExecutionNano, null);
+                long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
+                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                new ModuleLogging(e, executionTime, null);
             }
 
         } catch (Exception ex) {

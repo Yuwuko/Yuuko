@@ -25,7 +25,7 @@ public class CommandDeleteChannel extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
         String type = command[1];
         Long idLong = Long.parseLong(commandParameters[1]);
@@ -33,10 +33,16 @@ public class CommandDeleteChannel extends Command {
         VoiceChannel voiceChannel = e.getGuild().getVoiceChannelById(idLong);
 
         if(type.equals("text")) {
-            if(textChannel == null) throw new NoSuchElementException();
+            if(textChannel == null) {
+                e.getTextChannel().sendMessage("Sorry, that text-channel could not be found.").queue();
+                return;
+            }
             e.getGuild().getTextChannelById(commandParameters[1]).delete().queue();
         } else if(type.equals("voice") && commandParameters[1].length() == 18 && Long.parseLong(commandParameters[1]) > 0) {
-            if(voiceChannel == null) throw new NoSuchElementException();
+            if(voiceChannel == null) {
+                e.getTextChannel().sendMessage("Sorry, that voice-channel could not be found.").queue();
+                return;
+            }
             e.getGuild().getVoiceChannelById(commandParameters[1]).delete().queue();
         }
     }

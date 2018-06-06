@@ -24,12 +24,15 @@ public class CommandKick extends Command {
      * @return boolean; if the command executed correctly.
      * @throws NoSuchElementException;
      */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
         Long value = Long.parseLong(command[1]);
         Member member = e.getGuild().getMemberById(value);
 
-        if(member == null) throw new NoSuchElementException();
+        if(member == null) {
+            e.getTextChannel().sendMessage("Sorry, that user could not be found.").queue();
+            return;
+        }
 
         if(commandParameters.length < 3) {
             e.getGuild().getController().kick(commandParameters[0]).queue();

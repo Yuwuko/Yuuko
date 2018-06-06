@@ -25,9 +25,14 @@ public class CommandNuke extends Command {
      * @return boolean; if the command executed correctly.
      * @throws IllegalArgumentException;
      */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) throws IllegalArgumentException {
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         int value = Integer.parseInt(command[1]);
-        if(value < 1 || value > 100) throw new IllegalArgumentException();
+
+        if(value < 1 || value > 100) {
+            e.getTextChannel().sendMessage("Sorry, you have entered an out of bounds argument for the nuke command.").queue();
+            return;
+        }
+
         List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(value).complete();
 
         if(value < 2) {

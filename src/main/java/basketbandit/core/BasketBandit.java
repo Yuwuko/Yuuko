@@ -14,10 +14,7 @@ import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
@@ -35,9 +32,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 class BasketBandit extends ListenerAdapter {
-
-    private int messageCount = 0;
-    private int commandCount = 0;
 
     public static JDA bot;
     private static User botUser;
@@ -69,6 +63,7 @@ class BasketBandit extends ListenerAdapter {
             .addEventListener(self)
             .setEventManager(new ThreadedEventManager())
             .buildBlocking();
+        bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         botUser = bot.getSelfUser();
         Configuration.GLOBAL_PREFIX = botUser.getAsMention() + " ";
@@ -144,8 +139,6 @@ class BasketBandit extends ListenerAdapter {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
 
-            messageCount++;
-
             if(user.isBot()
                     || msgRawLower.equals(prefix)
                     || msgRawLower.startsWith(prefix + prefix)
@@ -156,11 +149,10 @@ class BasketBandit extends ListenerAdapter {
 
             if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 new Controller(e, startExecutionNano, commandList, prefix);
-                commandCount++;
                 return;
             }
 
-            if(msg.getContentRaw().matches("^[0-9]{1,2}$") || msg.getContentRaw().toLowerCase().equals("cancel")) {
+            if(msgRawLower.matches("^[0-9]{1,2}$") || msg.getContentRaw().toLowerCase().equals("cancel")) {
                 new Controller(e, startExecutionNano);
             }
 

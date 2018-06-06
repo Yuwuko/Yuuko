@@ -5,6 +5,9 @@ Key: [+] added, [-] removed, [~] modified.
 ## 1.9.4
 
 + [~] Major /minor/ change to the way commands are handled.
++ [~] General clean up of unused code from previous versions.
++ [~] Replaced some exception throws with feedback instead to make it more useful.
++ [~] Added some overlooked functions from the execution timer.
 
 ## 1.9.3
 
