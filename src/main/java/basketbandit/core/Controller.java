@@ -14,6 +14,7 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
@@ -69,6 +70,14 @@ class Controller {
     }
 
     /**
+     * Controller constructor for GuildLeaveEvent
+     * @param e GuildLeaveEvent
+     */
+    Controller(GuildLeaveEvent e) {
+        new DatabaseFunctions().cleanup(e.getGuild().getId());
+    }
+
+    /**
      * Controller constructor for MessageReceivedEvents that contain a prefix.
      * @param e MessageReceivedEvent
      */
@@ -97,9 +106,6 @@ class Controller {
                     clazz = Class.forName(commandModule);
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String.class);
 
-                    // Print the command into the console.
-                    System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0]);
-
                     // Remove the input message.
                     e.getMessage().delete().queue();
                     break;
@@ -116,7 +122,7 @@ class Controller {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", this command is excluded from this channel.").queue();
+                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.").queue();
                         break;
                     }
                 } else {
@@ -148,7 +154,11 @@ class Controller {
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                new ModuleLogging(e, startExecutionNano, "");
+                // Print the command into the console.
+                long executionTime = (System.nanoTime() - startExecutionNano)/100000;
+                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+
+                new ModuleLogging(e, executionTime, "");
             }
 
         } catch (InvocationTargetException ex) {

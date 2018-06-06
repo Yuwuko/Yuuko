@@ -165,7 +165,9 @@ public class DatabaseFunctions {
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES ('" + server + "','" + channel + "','" + moduleIn + "', '1', '0')");
                 return stmt2.execute();
             } else {
-                return false;
+                conn = new DatabaseConnection().getConnection();
+                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '1', `excluded` = '0' WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+                return stmt2.execute();
             }
 
         } catch(Exception ex) {
@@ -200,7 +202,9 @@ public class DatabaseFunctions {
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES ('" + server + "','" + channel + "','" + moduleIn + "', '0', '1')");
                 return stmt2.execute();
             } else {
-                return false;
+                conn = new DatabaseConnection().getConnection();
+                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '0', `excluded` = '1' WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+                return stmt2.execute();
             }
 
         } catch(Exception ex) {
@@ -274,6 +278,16 @@ public class DatabaseFunctions {
         } catch(Exception ex) {
             System.out.println("[ERROR] Unable to return bindings/exclusions. (Server: " + server + ")");
             return null;
+        }
+    }
+
+    public void cleanup(String server) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM ServerSettings WHERE serverId = '" + server + "'");
+            stmt.executeQuery();
+
+        } catch(Exception ex) {
+            System.out.println("[ERROR] Unable to remove server from the database. (Server: " + server + ")");
         }
     }
 

@@ -41,19 +41,19 @@ public class CommandModules extends Command {
             resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
             resultSet.next();
 
-            for(int i = 2; i < 10; i++) {
+            for(int i = 2; i < 9; i++) {
                 ResultSetMetaData meta = resultSet.getMetaData();
                 if(resultSet.getBoolean(i)) {
-                    enabled.add(meta.getColumnName(i));
+                    enabled.add(meta.getColumnName(i).substring(6));
                 } else {
-                    disabled.add(meta.getColumnName(i));
+                    disabled.add(meta.getColumnName(i).substring(6));
                 }
             }
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setColor(Color.RED)
                     .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
-                    .setTitle("Below are the list of bot module!")
+                    .setTitle("Below are the list of bot modules!")
                     .setDescription("Each module can be toggled on or off by using the " + Configuration.GLOBAL_PREFIX + "module <name> command.")
                     .addField("Enabled Modules", enabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)

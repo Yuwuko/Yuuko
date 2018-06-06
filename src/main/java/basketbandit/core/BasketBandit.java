@@ -20,6 +20,7 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
@@ -116,6 +117,12 @@ class BasketBandit extends ListenerAdapter {
         System.out.println("[INFO] Joined new server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }
 
+    @Override
+    public void onGuildLeave(GuildLeaveEvent e) {
+        new Controller(e);
+        System.out.println("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
+    }
+
     /**
      * Captures and deals with messages starting with the correct invocation.
      * @param e -> MessageReceivedEvent.
@@ -157,6 +164,8 @@ class BasketBandit extends ListenerAdapter {
                 new Controller(e, startExecutionNano);
             }
 
+        } catch(NullPointerException ex) {
+            // Do nothing, null pointers happen.
         } catch(Exception ex) {
             ex.printStackTrace();
         }

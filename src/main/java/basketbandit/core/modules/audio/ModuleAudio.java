@@ -45,7 +45,7 @@ public class ModuleAudio extends Module {
         String command = commandArray[0].substring(prefix.length());
 
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:hehe:445200711438041090>").queue();
+            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:basketbandithehe:443069427832061953>").queue();
             return;
         }
 
@@ -109,7 +109,7 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
     }
 
     /**

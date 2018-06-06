@@ -2,6 +2,15 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.9.3
+
++ [+] Added a cleanup function for when the bot is removed from a server.
++ [~] Remedied a problem that would only auto-skip a background track once.
++ [~] Changed some of the emotes used as some of them weren't working correctly.
++ [~] Updated dependencies to their latest at time of writing versions.
++ [~] Remedied the [__modules__] command having a couple of minor issues.
++ [~] More code shuffling to get more qualitative data in the console.
+
 ## 1.9.2
 
 + [+] Prints into console when new server is joined (name, server id).

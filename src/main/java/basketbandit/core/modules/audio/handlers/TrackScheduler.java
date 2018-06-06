@@ -33,7 +33,7 @@ public class TrackScheduler extends AudioEventAdapter {
      * @return if the queue was successful.
      */
     public boolean queue(AudioTrack track) {
-        if(player.getPlayingTrack() == background) {
+        if(background != null && player.getPlayingTrack() == background) {
             player.startTrack(track, false);
             return true;
         } else if(!player.startTrack(track, true)) {
@@ -50,7 +50,8 @@ public class TrackScheduler extends AudioEventAdapter {
     public void nextTrack() {
         if(!player.startTrack(queue.poll(), false)) {
             if(background != null) {
-                player.startTrack(background.makeClone(), false);
+                background = background.makeClone();
+                player.startTrack(background, false);
             }
         }
     }
@@ -85,7 +86,9 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
         if(!player.startTrack(queue.poll(), false)) {
-            if(background != null) player.startTrack(background.makeClone(), false);
+            if(background != null) {
+                player.startTrack(background.makeClone(), false);
+            }
         }
     }
 

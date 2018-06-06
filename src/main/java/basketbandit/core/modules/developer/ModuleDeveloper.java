@@ -31,6 +31,6 @@ public class ModuleDeveloper extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command was unable to execute correctly.").queue();
+        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
     }
 }
