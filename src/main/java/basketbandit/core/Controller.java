@@ -18,6 +18,7 @@ import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
+import net.dv8tion.jda.core.exceptions.PermissionException;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
@@ -59,14 +60,16 @@ class Controller {
 
         for(TextChannel c: channels) {
             if(c.getName().toLowerCase().equals("general")) {
-                c.sendMessage(about.build()).queue();
-                break;
+                try {
+                    c.sendMessage(about.build()).queue();
+                    break;
+                } catch(PermissionException ex) {
+                    System.out.println("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
+                }
             }
         }
 
-        new CommandSetup();
-
-        e.getGuild().getOwner().getUser().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(about.build()).queue());
+        new CommandSetup(e);
     }
 
     /**
@@ -86,6 +89,8 @@ class Controller {
         String serverLong = e.getGuild().getId();
 
         try {
+            long executionTime = 0;
+
             Class<?> clazz;
             Constructor<?> constructor = null;
             String moduleDbName = "";
@@ -153,11 +158,13 @@ class Controller {
                 executed = true;
             }
 
-            if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                // Print the command into the console.
-                long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
+            // Print the command and execution time into the console.
+            if(executed) {
+                executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+            }
 
+            if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                 new ModuleLogging(e, executionTime, "");
             }
 

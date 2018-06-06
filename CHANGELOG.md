@@ -7,9 +7,11 @@ Key: [+] added, [-] removed, [~] modified.
 + [+] Added a cleanup function for when the bot is removed from a server.
 + [~] Remedied a problem that would only auto-skip a background track once.
 + [~] Changed some of the emotes used as some of them weren't working correctly.
-+ [~] Updated dependencies to their latest at time of writing versions.
++ [~] Updated dependencies to their latest versions at time of writing.
 + [~] Remedied the [__modules__] command having a couple of minor issues.
 + [~] More code shuffling to get more qualitative data in the console.
++ [~] Modified server join function to deal with if permission isn't given for messages in general.
++ [~] Finished the join SQL function. (Apparently I didn't finish it!)
 
 ## 1.9.2
 

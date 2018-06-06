@@ -25,7 +25,11 @@ public class DatabaseFunctions {
             if(!resultSet.next()) {
                 conn = new DatabaseConnection().getConnection();
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`) VALUES ('" + server + "')");
-                return stmt2.execute();
+                stmt2.execute();
+
+                conn = new DatabaseConnection().getConnection();
+                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES ('" + server + "')");
+                return stmt3.execute();
             } else {
                 return false;
             }
@@ -54,7 +58,7 @@ public class DatabaseFunctions {
             return stmt.execute();
 
         } catch(Exception ex) {
-            System.out.println("[ERROR] Unable to set server prefix. (Server: " + server + ")");
+            System.out.println("[ERROR] Unable to set server prefix. (" + server + ")");
             return false;
         } finally {
             try {
@@ -260,7 +264,7 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             ex.printStackTrace();
-            System.out.println("[ERROR] Unable to return bindings/exclusions. (Server: " + server + ")");
+            System.out.println("[ERROR] Unable to return bindings/exclusions. (" + server + ")");
             return null;
         }
     }
@@ -276,18 +280,29 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            System.out.println("[ERROR] Unable to return bindings/exclusions. (Server: " + server + ")");
+            System.out.println("[ERROR] Unable to return bindings/exclusions. (" + server + ")");
             return null;
         }
     }
 
+    /**
+     * Cleans up any server's that ask the bot to leave.
+     * @param server the server's id.
+     */
     public void cleanup(String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM ServerSettings WHERE serverId = '" + server + "'");
-            stmt.executeQuery();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            stmt.execute();
 
         } catch(Exception ex) {
-            System.out.println("[ERROR] Unable to remove server from the database. (Server: " + server + ")");
+            System.out.println("[ERROR] Unable to remove server from the database. (" + server + ")");
+        } finally {
+            try {
+                conn.close();
+            } catch(Exception ex) {
+                ex.printStackTrace();
+                System.out.println("[ERROR] Unable to close connection to database.");
+            }
         }
     }
 
