@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 30/05/2018 - JDK 10.0.1
+// Version: 06/06/2018 - JDK 10.0.1
 
 package basketbandit.core;
 
@@ -26,6 +26,8 @@ import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -74,6 +76,32 @@ class BasketBandit extends ListenerAdapter {
      * Retrieves a list of modules via reflection.
      */
     private BasketBandit() {
+
+        // Prints a cool program banner :^)
+        try {
+            String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit 1.9.4"};
+            Process p = new ProcessBuilder(args).start();
+            p.waitFor();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = reader.readLine();
+            StringBuffer output = new StringBuffer();
+            while(line != null) {
+                output.append(line).append("\n");
+                line = reader.readLine();
+            }
+
+            int index = output.lastIndexOf("\n");
+            if(index > -1) {
+                output.replace(index, index + 1, "");
+            }
+
+            System.out.println(output);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+
+        }
+
         new TimeKeeper();
         new AudioManagerHandler();
 
