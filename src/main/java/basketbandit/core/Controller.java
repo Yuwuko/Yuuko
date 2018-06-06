@@ -155,7 +155,7 @@ class Controller {
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                 // Print the command into the console.
-                long executionTime = (System.nanoTime() - startExecutionNano)/100000;
+                long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now() + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
 
                 new ModuleLogging(e, executionTime, "");
