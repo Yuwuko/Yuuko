@@ -133,7 +133,7 @@ public class CommandPlay extends Command {
 
             @Override
             public void noMatches() {
-                channel.sendMessage(trackUrl).queue();
+                channel.sendMessage("Sorry, couldn't load track using: " + trackUrl).queue();
             }
 
             @Override

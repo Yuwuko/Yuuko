@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class CommandBan extends Command {
@@ -26,19 +27,25 @@ public class CommandBan extends Command {
      */
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
-        Long value = Long.parseLong(command[1]);
         int time = Integer.parseInt(commandParameters[1]);
-        Member member = e.getGuild().getMemberById(value);
+        List<Member> mentioned = e.getMessage().getMentionedMembers();
+        Member target;
 
-        if(member == null) {
+        if(mentioned.size() > 0) {
+            target = mentioned.get(0);
+        } else {
+            target = e.getGuild().getMemberById(Long.parseLong(command[1]));
+        }
+
+        if(target == null) {
             e.getTextChannel().sendMessage("Sorry, that user could not be found.").queue();
             return;
         }
 
         if(commandParameters.length < 3) {
-            e.getGuild().getController().ban(commandParameters[0], time).queue();
+            e.getGuild().getController().ban(target, time).queue();
         } else {
-            e.getGuild().getController().ban(commandParameters[0], time, commandParameters[2]).queue();
+            e.getGuild().getController().ban(target, time, commandParameters[2]).queue();
         }
     }
 
