@@ -1,6 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
 import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
@@ -14,37 +15,33 @@ import java.awt.*;
 public class CommandCurrentTrack extends Command {
 
     public CommandCurrentTrack() {
-        super("currenttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
+        super("currenttrack", "basketbandit.core.modules.audio.ModuleAudio", new String[]{"-currenttrack"}, null);
     }
 
     public CommandCurrentTrack(MessageReceivedEvent e, String[] command) {
-        super("currenttrack", "basketbandit.core.modules.audio.ModuleAudio", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
         AudioTrack track = manager.player.getPlayingTrack();
         String[] uri = track.getInfo().uri.split("=");
+        String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
         if(manager.player.getPlayingTrack() != null) {
             EmbedBuilder queuedTrack = new EmbedBuilder()
                     .setColor(Color.WHITE)
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
-                    .setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")
+                    .setThumbnail(imageUrl)
                     .addField("Duration", ModuleAudio.getTimestamp(track.getPosition()) + "/" + ModuleAudio.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
                     .setFooter("Version: " + Configuration.VERSION + ", Requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            e.getTextChannel().sendMessage(queuedTrack.build()).queue();
+            Utils.sendMessage(e, queuedTrack.build());
         } else {
-            e.getTextChannel().sendMessage("Nothing is currently playing...").queue();
+            Utils.sendMessage(e, "Nothing is currently playing...");
         }
     }
 

@@ -8,19 +8,18 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
-public class CommandKick extends Command {
+public class CommandUnmute extends Command {
 
-    public CommandKick() {
-        super("kick", "basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-kick @user", "-ban @user [reason]"}, Permission.KICK_MEMBERS);
+    public CommandUnmute() {
+        super("unmute", "basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-unmute @user"}, Permission.VOICE_MUTE_OTHERS);
     }
 
-    public CommandKick(MessageReceivedEvent e, String[] command) {
+    public CommandUnmute(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s+", 3);
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         Member target;
 
@@ -35,11 +34,7 @@ public class CommandKick extends Command {
             return;
         }
 
-        if(commandParameters.length < 3) {
-            e.getGuild().getController().kick(target).queue();
-        } else {
-            e.getGuild().getController().kick(target, commandParameters[1]).queue();
-        }
+        e.getGuild().getController().setMute(target, false).queue();
+        Utils.sendMessage(e,target.getAsMention() + " has been muted.");
     }
-
 }

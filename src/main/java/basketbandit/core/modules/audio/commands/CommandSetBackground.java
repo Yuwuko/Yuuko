@@ -1,6 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
 import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
@@ -19,19 +20,14 @@ import java.awt.*;
 public class CommandSetBackground extends Command {
 
     public CommandSetBackground() {
-        super("setbackground", "basketbandit.core.modules.audio.ModuleAudio", null);
+        super("setbackground", "basketbandit.core.modules.audio.ModuleAudio", new String[]{"-setbackground [url]", "-setbackground [term]"}, null);
     }
 
     public CommandSetBackground(MessageReceivedEvent e, String[] command) {
-        super("setbackground", "basketbandit.core.modules.audio.ModuleAudio", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
@@ -39,14 +35,14 @@ public class CommandSetBackground extends Command {
         e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
         manager.player.setPaused(false);
 
-        if(command[1].startsWith("https://")) {
+        if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
             setAndPlay(manager, e.getChannel(), command[1], e);
 
         } else {
             String trackUrl = YouTubeSearchHandler.search(command[1]);
 
             if(trackUrl == null) {
-                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
+                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
             } else {
                 setAndPlay(manager, e.getChannel(), trackUrl, e);
             }

@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 1.9.5 (07/06/2018) 
+# BasketBandit 1.10.0 (09/06/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -12,89 +12,77 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The global invocation/prefix is @BasketBandit (mention), this is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the __setprefix__ command below which I recommend to make everything quicker. E.g. '@BasketBandit setprefix !'.
+The global invocation/prefix is `@BasketBandit` (mention), this is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the `setprefix` command below which I recommend to make everything quicker. E.g. `@BasketBandit setprefix !`.
 
 ### Core
 
-- __setup__ this command needs to be run before the bot can be used. It will initialise the default settings for the bot. (__single use__)
-
-- __module \<name\>__ will toggle a module on or off based on it's current value.
-
-- __modules__ will list all of the bots modules, noting which are currently enabled and which are disabled. 
-
-- __help__ will private message the user a list of these commands and some other information about BasketBandit.
-
-- __about__ will return some technical information about the bot such as uptime and ping.
-
-- __setprefix__ will set the server's prefix (__admin only__)
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| setup | Execute if the bot didn't initialise correctly, but shouldn't need to be used. | -setup | `-setup` |
+| module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` |
+| modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
+| help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
+| about | Returns some technical information about BasketBandit, such as uptime, ping and server count. | -about | `-about` |
+| setprefix | Sets the server's command prefix. (Global prefix will still work.) | -setprefix [prefix] | `-setprefix !` | Administrator |
 
 ### Moderation
 
-- __kick \<userID (18 digit)\> \<reason\> (optional)__ will kick the given user from the server with optional reason. (relevant permission required)
-
-- __ban \<userID (18 digit)\> \<days\> \<reason\> (optional)__ will ban the given user for the the given amount of time in days with optional reason. (relevant permission required)
-
-- __nuke \<amount\>__ will delete the given number of previous messages, up to 100. (relevant permission required)
-
-- __addchannel \<type\> \<name\> \<nsfw\>__ creates a new channel. (Type is "text" or "voice", NSFW (optional)) (relevant permission required)
-
-- __delchannel \<type\> \<idLong\>__ removes a channel. (Type is "text" or "voice") (relevant permission required)
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @BasketBandit &#124; not very nice.</code> | Kick Members |
+| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @BasketBandit 7 &#124;  not cool, bro.</code> | Ban Members |
+| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason | -mute @user &#124; [reason] | <code>-mute @BasketBandit &#124;  mic spamming.</code> | Mute Members |
+| unmute | Unmutes the provided user. | -unmute @user | `-unmute @BasketBandit` | Mute Members |
+| nuke | Deletes the provided number of messages from a text channel. Min: `1`, Max `100`. | -nuke [value] | `-nuke 25` | Manage Messages |
 
 ### Utility
 
-- __user \<name\>__ will give account information about the user given, such as join date, online status and guild roles. 
-
-- __server__ will give information about the current server, such as region and owner.
-
-- __bind \<module\> \<channel\>__ will bind a module to a text channel, only allowing commands to be executed there. (__admin only__)
-
-- __unbind \<module\> \<channel\>__ will unbind a bound module from a text channel. (__admin only__)
-
-- __exclude \<module\> \<channel\>__ will exclude a module from a text channel, not allowing commands to be executed there. (__admin only__)
-
-- __unexclude \<module\> \<channel\>__ will unexclude an excluded module from a text channel. (__admin only__)
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @BasketBandit` |
+| server | Returns information about the current server. | -server | `-server` |
+| addchannel | Adds a new channel into the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -addchannel [type] [name] &#124; [nsfw] | <code>-addchannel text cool-text-channel &#124; nsfw</code> | Manage Channels |
+| delchannel | Removes an existing channel from the server. | -delchannel &#124; [type] [channel] | <code>-delchannel &#124; text test-channel</code> | Manage Channels |
+| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | Administrator |
+| unbind | Unbinds a bound module from a channel. | -unbind [module] &#124; [channel] | <code>-unbind audio &#124; test-channel</code> | Administrator |
+| exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | Administrator |
+| unexclude | Includes a module back into a channel | -unexclude [module] &#124; [channel] | <code>-unexclude audio &#124; test-channel</code> | Administrator |
 
 ### Transport
 
-- __linestatus \<min\>__ will return full line coverage for London Underground, accurate to command execution. (__min__ is optional!)
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| linestatus | Returns full line coverage for the London Underground which is accurate to command execution, with optional `min` argument to return a minified version. | -linestatus &#124; [min] | <code>-linestatus &#124; min</code> |
 
 ### Math
 
-- __roll \<value\>__ will roll a set die. [\<value\>, 00] 
-
-- __sum \<value\> \<operator\> \<value\>__ will calculate and return a simple 2 variable sum. Supported operations: [+, -, *, /, ^, %]
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| roll | Rolls a die with the given value and returns the result. Rolling `00` will return a multiple of 10 between `0` and `100`. | -roll [value] &#124; [00] | `-roll 42` |
+| sum |  Calculates and returns the result to simple 2 variable sums, accepting the `+`, `-`, `*`, `/`, `^` and `%` operators. | -sum [value] [operator] [value] | `-sum 400 + 20` |
 
 ### RuneScape
 
-- __rsstats \<name\>__ will return the RuneScape 3 stats for the given user.
-
-- __osstats \<name\>__ will return the OldSchool Runescape stats for the given user.
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| rsstats | Returns a list of RuneScape 3 stats for the given player. | -rsstats [game] [player] | `-rsstats os white cat22` |
 
 ### Music
 
-- __play \<track\>__ will automatically make the bot join the voice channel you are in (must be in one) and start playback. If there is currently a track playing, it will instead add it to the queue. If you provide a playlist link, it will add the whole playlist to the queue. (track is optional and issuing this command without one will resume playback if paused)
-
-- __pause__ will pause playback.
-
-- __stop__ will stop playback, remove the queue and ask the bot to leave the channel.
-
-- __skip__ will skip the current track.
-
-- __shuffle__ will shuffle the current queue.
-
-- __currenttrack__ will give information about the current track.
-
-- __lasttrack__ will give information about the previous track.
-
-- __queue__ will display the current queue.
-
-- __setbackground \<track\>__ will set the background track which will play when nothing is in the queue. (Good for music streams!)
-
-- __unsetbackground__ will unset the background track.
-
-- __togglerepeat__ will toggle repeat for the current song.
-
-- __search \<track\>__ will search for and return the first 10 tracks from the given string.
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| play | Starts playback of the given audio track through either URL or search term. Will ask BasketBandit to join the voice channel of the command issuer and if a track is already playing, queue it instead. Using the command without arguments will resume a paused player. | -play &#124; [url] &#124; [term] | <code>-play &#124; https://www.youtube.com/watch?v=DDW4hTWbRYs &#124; something </code> |
+| pause | Pauses playback of the current track. | -pause | `-pause` |
+| stop | Stops playback, clearing the queue and removing the background track. | -stop | `-stop` |
+| skip | Skips the currently playing track, if there is one. | -skip | `-skip` |
+| shuffle | Shuffles the queue. | -shuffle | `-shuffle` |
+| currenttrack | Returns information about the currently playing track such as current time, artist and source. | -currenttrack | `-currenttrack` |
+| lasttrack | Returns information about the last played track such as artist and source. | -lasttrack | `-lasttrack` | 
+| queue | Returns the first 10 tracks in the queue or however many there are if under 10. | -queue | `-queue` |
+| setbackground | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. | -setbackground [url] &#124; [term] | <code>-setbackground https://www.youtube.com/watch?v=va3Dj_sUCJs &#124; cool music</code>  |
+| unsetbackground | Removes the background track. | -unsetbackground | `-unsetbackground` |
+| togglerepeat | Toggles a track to repeat. | -togglerepeat | `-togglerepeat` |
+| search | Searches YouTube and returns the first 10 results, a choice is made by typing the number and the selected track will be queued. | -search [term] | `-search funky beats` |
 
 ## Other features
 

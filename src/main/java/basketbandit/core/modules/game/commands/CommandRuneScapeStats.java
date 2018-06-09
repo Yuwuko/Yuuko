@@ -1,5 +1,6 @@
 package basketbandit.core.modules.game.commands;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -10,23 +11,20 @@ import java.net.URL;
 public class CommandRuneScapeStats extends Command {
 
     public CommandRuneScapeStats() {
-        super("rsstats", "basketbandit.core.modules.game.ModuleGame", null);
+        super("rsstats", "basketbandit.core.modules.game.ModuleGame", new String[]{"-rsstats [game] [player]"}, null);
     }
 
     public CommandRuneScapeStats(MessageReceivedEvent e, String[] command) {
-        super("rsstats", "basketbandit.core.modules.game.ModuleGame", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        String player = command[1].toLowerCase();
 
-        Boolean osrs = (command[0].contains("osstats"));
+
+    @Override
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String[] commandParameters = command[1].split("\\s+", 2);
+        String player = commandParameters[1].toLowerCase();
+        Boolean osrs = (commandParameters[0].equals("os"));
 
         try {
             URL url = (!osrs) ? new URL("http://services.runescape.com/m=hiscore/index_lite.ws?player=" + player) : new URL("http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=" + player);
@@ -66,9 +64,9 @@ public class CommandRuneScapeStats extends Command {
             }
             messageString.append("``````Total Level     :: ").append(skills[1]).append("```");
 
-            e.getTextChannel().sendMessage(messageString).queue();
+            Utils.sendMessage(e, messageString.toString());
         } catch(Exception ex) {
-            e.getTextChannel().sendMessage("Oops, looks like I messed up! (Or that account doesn't exist!) <:ErioTouwa:420413779323650050>").queue();
+            Utils.sendMessage(e, "Oops, looks like I messed up! (Or that account doesn't exist!) <:ErioTouwa:420413779323650050>");
         }
 
     }

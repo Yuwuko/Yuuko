@@ -1,5 +1,6 @@
 package basketbandit.core.modules.transport.tfl;
 
+import basketbandit.core.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -52,11 +53,7 @@ public class LineManager {
                 previous = name;
             }
         }
-
-        int index = reasons.lastIndexOf("\n\n");
-        if(index > -1) {
-            reasons.replace(index, index + 1, "");
-        }
+        reasons = Utils.removeLastOccurance(reasons, "\n\n");
 
         return reasons.toString().replace("e:", "e**:").replace("E:", "E**:");
     }

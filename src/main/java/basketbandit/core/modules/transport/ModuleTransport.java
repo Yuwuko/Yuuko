@@ -1,5 +1,6 @@
 package basketbandit.core.modules.transport;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
 import basketbandit.core.modules.transport.commands.CommandLineStatus;
@@ -27,6 +28,6 @@ public class ModuleTransport extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
+        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 }

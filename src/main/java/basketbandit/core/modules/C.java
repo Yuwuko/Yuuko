@@ -26,8 +26,8 @@ public final class C {
     public static final Command NUKE = new CommandNuke();
     public static final Command KICK = new CommandKick();
     public static final Command BAN = new CommandBan();
-    public static final Command CREATE_CHANNEL = new CommandAddChannel();
-    public static final Command DELETE_CHANNEL = new CommandDeleteChannel();
+    public static final Command MUTE = new CommandMute();
+    public static final Command UNMUTE = new CommandUnmute();
 
     // Math module modules.
     public static final Command ROLL = new CommandRoll();
@@ -36,6 +36,8 @@ public final class C {
     // Utility module modules.
     public static final Command USER = new CommandUser();
     public static final Command SERVER = new CommandServer();
+    public static final Command CREATE_CHANNEL = new CommandAddChannel();
+    public static final Command DELETE_CHANNEL = new CommandDeleteChannel();
     public static final Command BIND = new CommandBind();
     public static final Command UNBIND = new CommandUnbind();
     public static final Command EXCLUDE = new CommandExclude();

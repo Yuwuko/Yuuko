@@ -1,8 +1,13 @@
 package basketbandit.core.modules.moderation;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
-import basketbandit.core.modules.moderation.commands.*;
+import basketbandit.core.modules.moderation.commands.CommandBan;
+import basketbandit.core.modules.moderation.commands.CommandKick;
+import basketbandit.core.modules.moderation.commands.CommandNuke;
+import basketbandit.core.modules.utility.commands.CommandAddChannel;
+import basketbandit.core.modules.utility.commands.CommandDeleteChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ModuleModeration extends Module {
@@ -47,6 +52,6 @@ public class ModuleModeration extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
+        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 }

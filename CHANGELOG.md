@@ -2,12 +2,19 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
-## 1.9.5
+## 1.10.0
 
++ [+] Added [__mute__] command (voice and text) to mute users with an optional reason.
++ [+] Added [__unmute__] command to reverse a mute previous mute.
 + [+] Added a cool looking banner to the console. \:\^\)
++ [+] Added a usage argument for every command, accessed via the [__help__] command.
++ [+] Added a custom Utils module allowing for storage and shorted version of verbose methods.
++ [~] Changed [__bind__], [__exclude__], [__unbind__], [__unexclude__], [__delchannel__] to allow reduced arguments, using the channel the command is executed in as the parameter.
 + [~] Changed [__ban__] and [__kick__] to allow mentions as well as idLong to make it easier to moderate.
++ [~] Changed the [__user__] command to use mentions instead of trying to find them by username.
 + [~] Fixed oversight which broke YouTube/SoundCloud links.
 + [~] Changed the 'no track found' message from just the URL to an actual message.
++ [~] Rewrote README to use tables instead of just listing commands.
 
 ## 1.9.4
 

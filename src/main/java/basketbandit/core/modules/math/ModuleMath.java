@@ -1,5 +1,6 @@
 package basketbandit.core.modules.math;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
 import basketbandit.core.modules.math.commands.CommandRoll;
@@ -35,6 +36,6 @@ public class ModuleMath extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
+        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 }

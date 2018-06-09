@@ -1,6 +1,7 @@
 package basketbandit.core.modules.core.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.database.DatabaseConnection;
 import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
@@ -16,19 +17,16 @@ import java.util.ArrayList;
 public class CommandModules extends Command {
 
     public CommandModules() {
-        super("modules", "basketbandit.core.modules.core.ModuleCore", null);
+        super("modules", "basketbandit.core.modules.core.ModuleCore", new String[]{"-modules"}, null);
     }
 
     public CommandModules(MessageReceivedEvent e, String[] command) {
-        super("modules", "basketbandit.core.modules.core.ModuleCore", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+
+
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
@@ -58,7 +56,7 @@ public class CommandModules extends Command {
                     .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            e.getTextChannel().sendMessage(commandModules.build()).queue();
+            Utils.sendMessage(e, commandModules.build());
         } catch(Exception ex) {
             ex.printStackTrace();
         } finally {

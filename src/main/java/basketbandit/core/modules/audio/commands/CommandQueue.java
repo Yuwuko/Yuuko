@@ -1,6 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
 import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
@@ -14,20 +15,14 @@ import java.awt.*;
 public class CommandQueue extends Command {
 
     public CommandQueue() {
-        super("queue", "basketbandit.core.modules.audio.ModuleAudio", null);
+        super("queue", "basketbandit.core.modules.audio.ModuleAudio", new String[]{"-queue"}, null);
     }
 
     public CommandQueue(MessageReceivedEvent e, String[] command) {
-        super("queue", "basketbandit.core.modules.audio.ModuleAudio", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     *
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
@@ -52,9 +47,9 @@ public class CommandQueue extends Command {
                         .setDescription(queue.toString())
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                e.getTextChannel().sendMessage(nextTracks.build()).queue();
+                Utils.sendMessage(e, nextTracks.build());
             } else {
-                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!").queue();
+                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!");
             }
         }
     }

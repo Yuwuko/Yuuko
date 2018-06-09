@@ -1,5 +1,7 @@
 package basketbandit.core.modules.utility.commands;
 
+import basketbandit.core.Utils;
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -7,21 +9,41 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandUnexclude extends Command {
 
     public CommandUnexclude() {
-        super("unexclude", "basketbandit.core.modules.utility.ModuleUtility", Permission.ADMINISTRATOR);
+        super("unexclude", "basketbandit.core.modules.utility.ModuleUtility", new String[]{"-unexclude [module]", "-unexclude [module] [channel]"}, Permission.ADMINISTRATOR);
     }
 
     public CommandUnexclude(MessageReceivedEvent e, String[] command) {
-        super("unexclude", "basketbandit.core.modules.utility.ModuleUtility", Permission.ADMINISTRATOR);
         executeCommand(e, command);
     }
 
-    /**
-     * A bit cheeky but to keep the commands working correctly and to reduce duplicate code,
-     * I just pass this command over to the unbind command. Perhaps I should implement aliases?
-     * @param e MessageReceivedEvent
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        new CommandUnbind(e, command);
+        String[] commandParameters = command[1].split("\\s+", 2);
+        String serverId;
+        String channelId ;
+        String module ;
+
+        if(commandParameters.length > 1) {
+            serverId = e.getGuild().getId();
+            channelId = e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getId();
+            module = commandParameters[0];
+
+            if(!new DatabaseFunctions().removeBindingExclusion(module, channelId, serverId)) {
+                Utils.sendMessage(e, "Successfully removed exclusion of " + module + " from " + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + ".");
+            } else {
+                Utils.sendMessage(e, "Removal unsuccessful, are you sure this module is excluded from the channel?");
+            }
+        } else {
+            serverId = e.getGuild().getId();
+            channelId = e.getTextChannel().getId();
+            module = commandParameters[0];
+
+            if(!new DatabaseFunctions().removeBindingExclusion(module, channelId, serverId)) {
+                Utils.sendMessage(e, "Successfully removed exclusion of " + module + " from " + e.getTextChannel().getName() + ".");
+            } else {
+                Utils.sendMessage(e, "Removal unsuccessful, are you sure this module is excluded from the channel?");
+            }
+        }
     }
 
 }

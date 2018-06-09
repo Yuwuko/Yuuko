@@ -2,6 +2,7 @@ package basketbandit.core.modules.core.commands;
 
 import basketbandit.core.Configuration;
 import basketbandit.core.TimeKeeper;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -13,18 +14,16 @@ import java.awt.*;
 public class CommandAbout extends Command {
 
     public CommandAbout() {
-        super("about", "basketbandit.core.modules.core.ModuleCore", null);
+        super("about", "basketbandit.core.modules.core.ModuleCore", new String[]{"-about"}, null);
     }
 
     public CommandAbout(MessageReceivedEvent e, String[] command) {
-        super("about", "basketbandit.core.modules.core.ModuleCore", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     */
+
+
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
@@ -46,12 +45,12 @@ public class CommandAbout extends Command {
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", bot.getJDA().getGuilds().size()+"", true)
                 .addField("Users", users+"", true)
-                .addField("Commands", Configuration.COMMAND_COUNT, true)
+                .addField("Commands", Utils.commandCount, true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", TimeKeeper.runtime, true)
                 .addField("Ping", bot.getJDA().getPing()+"", true);
 
-        e.getTextChannel().sendMessage(about.build()).queue();
+        Utils.sendMessage(e, about.build());
     }
 
 }

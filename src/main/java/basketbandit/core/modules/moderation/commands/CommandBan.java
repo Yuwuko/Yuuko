@@ -1,30 +1,24 @@
 package basketbandit.core.modules.moderation.commands;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class CommandBan extends Command {
 
     public CommandBan() {
-        super("ban", "basketbandit.core.modules.moderation.ModuleModeration", Permission.BAN_MEMBERS);
+        super("ban", "basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, Permission.BAN_MEMBERS);
     }
 
     public CommandBan(MessageReceivedEvent e, String[] command) {
-        super("ban", "basketbandit.core.modules.moderation.ModuleModeration", Permission.BAN_MEMBERS);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     * @throws NoSuchElementException;
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
         int time = Integer.parseInt(commandParameters[1]);
@@ -38,7 +32,7 @@ public class CommandBan extends Command {
         }
 
         if(target == null) {
-            e.getTextChannel().sendMessage("Sorry, that user could not be found.").queue();
+            Utils.sendMessage(e, "Sorry, that user could not be found.");
             return;
         }
 

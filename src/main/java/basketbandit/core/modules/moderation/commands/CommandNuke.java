@@ -1,5 +1,6 @@
 package basketbandit.core.modules.moderation.commands;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -11,25 +12,19 @@ import java.util.List;
 public class CommandNuke extends Command {
 
     public CommandNuke() {
-        super("nuke", "basketbandit.core.modules.moderation.ModuleModeration", Permission.MESSAGE_MANAGE);
+        super("nuke", "basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-nuke [value]"}, Permission.MESSAGE_MANAGE);
     }
 
     public CommandNuke(MessageReceivedEvent e, String[] command) {
-        super("nuke", "basketbandit.core.modules.moderation.ModuleModeration", Permission.MESSAGE_MANAGE);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     * @throws IllegalArgumentException;
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         int value = Integer.parseInt(command[1]);
 
         if(value < 1 || value > 100) {
-            e.getTextChannel().sendMessage("Sorry, you have entered an out of bounds argument for the nuke command.").queue();
+            Utils.sendMessage(e, "Sorry, you have entered an out of bounds argument for the nuke command.");
             return;
         }
 

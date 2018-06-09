@@ -1,5 +1,6 @@
 package basketbandit.core.modules.math.commands;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -10,21 +11,17 @@ import java.util.Random;
 public class CommandRoll extends Command {
 
     public CommandRoll() {
-        super("roll", "basketbandit.core.modules.math.ModuleMath", null);
+        super("roll", "basketbandit.core.modules.math.ModuleMath", new String[]{"-roll [number]", "-roll 00"}, null);
     }
 
     public CommandRoll(MessageReceivedEvent e, String[] command) {
-        super("roll", "basketbandit.core.modules.math.ModuleMath", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     * @throws IllegalArgumentException;
-     */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) throws IllegalArgumentException {
+
+
+    @Override
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         int num;
         int rollNum = 0;
 
@@ -32,8 +29,8 @@ public class CommandRoll extends Command {
         if(command[1].matches("[0-9]+")) {
             rollNum = Integer.parseInt(command[1]);
         } else if(command[1].contains("-")) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", you can't roll on a negative number or anything that isn't a number").queue();
-            throw new IllegalArgumentException();
+            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() +", you can't roll on a negative number or anything that isn't a number");
+            return;
         }
 
         if(command[1].equals("00")) {
@@ -47,9 +44,9 @@ public class CommandRoll extends Command {
                 .setAuthor(e.getGuild().getMemberById(e.getAuthor().getIdLong()).getEffectiveName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
 
         if(num != 0) {
-            e.getTextChannel().sendMessage(embed.build()).queue();
+            Utils.sendMessage(e, embed.build());
         } else {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() +", something has gone wrong...").queue();
+            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() +", something has gone wrong...");
         }
 
     }

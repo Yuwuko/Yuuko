@@ -1,12 +1,8 @@
 package basketbandit.core;
 
-/**
- * Configuration class, includes vital information about the bot such as Discord token and command prefix.
- */
 public class Configuration {
-
     // Bot version.
-    public static final String VERSION = "1.9.5";
+    public static final String VERSION = "1.10.0";
 
     // Bot's ID.
     public static String BOT_ID;
@@ -35,13 +31,9 @@ public class Configuration {
     // TFL API Key.
     public static String TFL_API;
 
-    // Command Count
-    public static String COMMAND_COUNT;
-
     // Bot's global command prefix.
     public static String GLOBAL_PREFIX;
 
     // Bot's status, e.g Playing with lottie's tits.
     static String STATUS = "@BasketBandit help";
-
 }

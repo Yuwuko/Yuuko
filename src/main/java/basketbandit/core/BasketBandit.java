@@ -38,9 +38,6 @@ class BasketBandit extends ListenerAdapter {
     public static JDA bot;
     private static User botUser;
 
-    private static ArrayList<Module> moduleList;
-    private static ArrayList<Command> commandList;
-
     /**
      * Initialises the bot and JDA.
      * @param args -> program arguments (currently unused)
@@ -105,7 +102,7 @@ class BasketBandit extends ListenerAdapter {
         new TimeKeeper();
         new AudioManagerHandler();
 
-        moduleList = new ArrayList<>();
+        ArrayList<Module> moduleList = new ArrayList<>();
         try {
             Field[] modules = M.class.getDeclaredFields();
             for(Field module : modules) {
@@ -116,7 +113,7 @@ class BasketBandit extends ListenerAdapter {
             ex.printStackTrace();
         }
 
-        commandList = new ArrayList<>();
+        ArrayList<Command> commandList = new ArrayList<>();
         try {
             Field[] commands = C.class.getDeclaredFields();
             for(Field command : commands) {
@@ -127,7 +124,9 @@ class BasketBandit extends ListenerAdapter {
             ex.printStackTrace();
         }
 
-        Configuration.COMMAND_COUNT = commandList.size() + "";
+        Utils.moduleList = moduleList;
+        Utils.commandList = commandList;
+        Utils.commandCount = commandList.size() + "";
     }
 
     /**
@@ -136,7 +135,7 @@ class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onGuildJoin(GuildJoinEvent e) {
-        new Controller(e, commandList);
+        new Controller(e);
         System.out.println("[INFO] Joined new server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }
 
@@ -176,7 +175,7 @@ class BasketBandit extends ListenerAdapter {
             }
 
             if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
-                new Controller(e, startExecutionNano, commandList, prefix);
+                new Controller(e, startExecutionNano, prefix);
                 return;
             }
 

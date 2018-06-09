@@ -1,5 +1,6 @@
 package basketbandit.core.modules.utility;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
 import basketbandit.core.modules.utility.commands.*;
@@ -61,6 +62,7 @@ public class ModuleUtility extends Module {
         }
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(command[0].equals(C.USER.getCommandName())) {
             new CommandUser(e, command);
@@ -92,6 +94,6 @@ public class ModuleUtility extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
+        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 }

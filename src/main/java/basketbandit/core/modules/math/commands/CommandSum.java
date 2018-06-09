@@ -1,5 +1,6 @@
 package basketbandit.core.modules.math.commands;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -9,21 +10,17 @@ import java.awt.*;
 public class CommandSum extends Command {
 
     public CommandSum() {
-        super("sum", "basketbandit.core.modules.math.ModuleMath", null);
+        super("sum", "basketbandit.core.modules.math.ModuleMath", new String[]{"-sum [variable] [operator] [variable]"}, null);
     }
 
     public CommandSum(MessageReceivedEvent e, String[] command) {
-        super("sum", "basketbandit.core.modules.math.ModuleMath", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     * @throws IllegalArgumentException;
-     */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) throws IllegalArgumentException {
+
+
+    @Override
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String sumString;
 
         if(command[1].contains("+")) {
@@ -61,7 +58,7 @@ public class CommandSum extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);
-        e.getTextChannel().sendMessage(embed.build()).queue();
+        Utils.sendMessage(e, embed.build());
     }
 
     // TODO: Remake the sum class, try to parse full equations using BODMAS.

@@ -1,6 +1,7 @@
 package basketbandit.core.modules.utility.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -12,19 +13,14 @@ import java.time.format.DateTimeFormatter;
 public class CommandServer extends Command {
 
     public CommandServer() {
-        super("server", "basketbandit.core.modules.utility.ModuleUtility", null);
+        super("server", "basketbandit.core.modules.utility.ModuleUtility", new String[]{"-server"}, null);
     }
 
     public CommandServer(MessageReceivedEvent e, String[] command) {
-        super("server", "basketbandit.core.modules.utility.ModuleUtility", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         Guild server = e.getGuild();
 
@@ -44,7 +40,7 @@ public class CommandServer extends Command {
                 )
                 .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-        e.getTextChannel().sendMessage(commandInfo.build()).queue();
+        Utils.sendMessage(e, commandInfo.build());
     }
 
 }

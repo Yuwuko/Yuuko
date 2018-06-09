@@ -1,6 +1,7 @@
 package basketbandit.core.modules.audio.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.audio.ModuleAudio;
 import basketbandit.core.modules.audio.handlers.AudioManagerHandler;
@@ -20,26 +21,18 @@ import java.util.List;
 public class CommandPlay extends Command {
 
     public CommandPlay() {
-        super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
+        super("play", "basketbandit.core.modules.audio.ModuleAudio", new String[]{"-play", "-play [url]", "-play [term]"}, null);
     }
 
     public CommandPlay(MessageReceivedEvent e, String[] command) {
-        super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
         executeCommand(e, command);
-
-
     }
 
     public CommandPlay(MessageReceivedEvent e, String trackUrl) {
-        super("play", "basketbandit.core.modules.audio.ModuleAudio", null);
         executeCommandAux(e, trackUrl);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
@@ -49,7 +42,7 @@ public class CommandPlay extends Command {
 
             if(manager.player.isPaused()) {
                 manager.player.setPaused(false);
-                e.getTextChannel().sendMessage(e.getAuthor().getAsMention() + " resumed playback.").queue();
+                Utils.sendMessage(e,e.getAuthor().getAsMention() + " resumed playback.");
                 new CommandCurrentTrack();
             }
 
@@ -58,16 +51,16 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(command[1].startsWith("https://") ) {
+            if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
                 loadAndPlay(manager, e.getChannel(), command[1], e);
 
             } else {
-                String trackUrl = YouTubeSearchHandler.search(command[1]);
+                String trackId = YouTubeSearchHandler.search(command[1]);
 
-                if(trackUrl == null || trackUrl.equals("")) {
-                    e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.").queue();
+                if(trackId == null || trackId.equals("")) {
+                    Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
                 } else {
-                    loadAndPlay(manager, e.getChannel(), trackUrl, e);
+                    loadAndPlay(manager, e.getChannel(), trackId, e);
                 }
             }
         }
@@ -118,14 +111,14 @@ public class CommandPlay extends Command {
                         .addField("Position in queue", manager.scheduler.queue.size()+"", false)
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                channel.sendMessage(queuedTrack.build()).queue();
+                Utils.sendMessage(channel, queuedTrack.build());
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 List<AudioTrack> tracks = playlist.getTracks();
 
-                channel.sendMessage("Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName()).queue();
+                Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName());
                 tracks.forEach(manager.scheduler::queue);
 
                 new CommandCurrentTrack(e, null);
@@ -133,12 +126,12 @@ public class CommandPlay extends Command {
 
             @Override
             public void noMatches() {
-                channel.sendMessage("Sorry, couldn't load track using: " + trackUrl).queue();
+                Utils.sendMessage(channel,"Sorry, couldn't load track using: " + trackUrl);
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                channel.sendMessage("Could not play: " + exception.getMessage()).queue();
+                Utils.sendMessage(channel,"Could not play: " + exception.getMessage());
             }
         });
     }

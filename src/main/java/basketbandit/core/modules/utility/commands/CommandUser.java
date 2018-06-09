@@ -1,6 +1,7 @@
 package basketbandit.core.modules.utility.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -10,55 +11,36 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class CommandUser extends Command {
 
     public CommandUser() {
-        super("user", "basketbandit.core.modules.utility.ModuleUtility", null);
+        super("user", "basketbandit.core.modules.utility.ModuleUtility", new String[]{"-user @user"}, null);
     }
 
     public CommandUser(MessageReceivedEvent e, String[] command) {
-        super("user", "basketbandit.core.modules.utility.ModuleUtility", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     * @throws NoSuchElementException;
-     */
-    protected void executeCommand(MessageReceivedEvent e, String[] command) throws NoSuchElementException {
-        Member member = null;
-        EmbedBuilder commandInfo;
-        String userString = command[1].toLowerCase();
-        String[] userParts = command[1].split("#", 1);
+    @Override
+    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+        String[] commandParameters = command[1].split("\\s+", 3);
+        List<Member> mentioned = e.getMessage().getMentionedMembers();
+        Member target;
 
-        // Checks to see if the user is imputing a username or a nickname.
-        if(userString.contains("#")) {
-            for(Member user : e.getGuild().getMembers()) {
-                if(user.getUser().getName().toLowerCase().equals(userParts[0]) && user.getUser().getDiscriminator().equals(command[1])) {
-                    member = user;
-                    break;
-                }
-            }
+        if(mentioned.size() > 0) {
+            target = mentioned.get(0);
         } else {
-            for(Member user : e.getGuild().getMembers()) {
-                if(user.getEffectiveName().toLowerCase().equals(command[1].toLowerCase()) || user.getEffectiveName().toLowerCase().contains(command[1].toLowerCase())) {
-                    member = user;
-                    break;
-                }
-            }
+            target = e.getGuild().getMemberById(Long.parseLong(command[1]));
         }
 
-        if(member == null) {
-            e.getTextChannel().sendMessage("Sorry... I couldn't find that user. <:SagiriIzumi:420417275359657986>").queue();
-            throw new NoSuchElementException();
+        if(target == null) {
+            Utils.sendMessage(e, "Sorry, that user could not be found.");
+            return;
         }
 
         // Gets user's roles, replaces the last comma with nothing.
-        List<Role> infoRoles = member.getRoles();
+        List<Role> infoRoles = target.getRoles();
         StringBuilder roleString = new StringBuilder();
 
         for(Role role : infoRoles) {
@@ -70,21 +52,21 @@ public class CommandUser extends Command {
             roleString = new StringBuilder(new StringBuilder(roleString.toString()).replace(index, index + 1, "").toString());
         }
 
-        commandInfo = new EmbedBuilder()
+        EmbedBuilder commandInfo = new EmbedBuilder()
                 .setColor(Color.RED)
-                .setAuthor("User information about " + member.getEffectiveName() + ",", null, member.getUser().getAvatarUrl())
-                .setTitle("User is currently "+member.getOnlineStatus())
-                .setThumbnail(member.getUser().getAvatarUrl())
+                .setAuthor("User information about " + target.getEffectiveName() + ",", null, target.getUser().getAvatarUrl())
+                .setTitle("User is currently "+target.getOnlineStatus())
+                .setThumbnail(target.getUser().getAvatarUrl())
                 .setDescription(
-                        "Username                ::  " + member.getUser().getName() + "#" + member.getUser().getDiscriminator() + "\n" +
-                        "UserID                      ::  " + member.getUser().getIdLong() + "\n" +
-                        "Account Created   \u200a\u200a::  " + member.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
-                        "Joined Server          \u200a\u200a::  " + member.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
-                        "Mutual Servers       ::  " + member.getUser().getMutualGuilds().size() + "\n" +
+                        "Username                ::  " + Utils.getTag(target) + "\n" +
+                        "UserID                      ::  " + target.getUser().getIdLong() + "\n" +
+                        "Account Created   \u200a\u200a::  " + target.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
+                        "Joined Server          \u200a\u200a::  " + target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
+                        "Mutual Servers       ::  " + target.getUser().getMutualGuilds().size() + "\n" +
                         "Roles                         ::  " + roleString + "\n"
                     )
                     .setFooter("Version: " + Configuration.VERSION + ", Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-        e.getTextChannel().sendMessage(commandInfo.build()).queue();
+        Utils.sendMessage(e, commandInfo.build());
     }
 }

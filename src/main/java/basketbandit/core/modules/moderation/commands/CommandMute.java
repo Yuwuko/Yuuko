@@ -8,13 +8,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
-public class CommandKick extends Command {
+public class CommandMute extends Command {
 
-    public CommandKick() {
-        super("kick", "basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-kick @user", "-ban @user [reason]"}, Permission.KICK_MEMBERS);
+    public CommandMute() {
+        super("mute", "basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-mute @user", "-ban @user [reason]"}, Permission.VOICE_MUTE_OTHERS);
     }
 
-    public CommandKick(MessageReceivedEvent e, String[] command) {
+    public CommandMute(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 
@@ -35,10 +35,12 @@ public class CommandKick extends Command {
             return;
         }
 
-        if(commandParameters.length < 3) {
-            e.getGuild().getController().kick(target).queue();
+        e.getGuild().getController().setMute(target, true).queue();
+
+        if(commandParameters.length < 2) {
+            Utils.sendMessage(e, target.getAsMention() + " has been muted.");
         } else {
-            e.getGuild().getController().kick(target, commandParameters[1]).queue();
+            Utils.sendMessage(e, target.getAsMention() + " has been muted for reason: " + commandParameters[1]);
         }
     }
 

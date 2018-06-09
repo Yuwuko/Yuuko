@@ -8,12 +8,21 @@ public abstract class Command {
 
     private final String commandName;
     private final String commandModule;
+    private final String[] commandUsage;
     private final Permission commandPermission;
 
-    public Command(String name, String module, Permission permission) {
-        this.commandName = name;
-        this.commandModule = module;
-        this.commandPermission = permission;
+    public Command(String commandName, String commandModule, String[] commandUsage, Permission commandPermission) {
+        this.commandName = commandName;
+        this.commandModule = commandModule;
+        this.commandUsage = commandUsage;
+        this.commandPermission = commandPermission;
+    }
+
+    public Command() {
+        this.commandName = "";
+        this.commandModule = "";
+        this.commandUsage = null;
+        this.commandPermission = null;
     }
 
     public String getCommandName() {
@@ -26,6 +35,10 @@ public abstract class Command {
 
     public String getCommandModule() {
         return commandModule;
+    }
+
+    public String[] getCommandUsage() {
+        return commandUsage;
     }
 
     public Permission getCommandPermission() {

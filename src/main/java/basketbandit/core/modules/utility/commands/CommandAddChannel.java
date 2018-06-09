@@ -1,4 +1,4 @@
-package basketbandit.core.modules.moderation.commands;
+package basketbandit.core.modules.utility.commands;
 
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.Permission;
@@ -7,19 +7,15 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandAddChannel extends Command {
 
     public CommandAddChannel() {
-        super("addchannel", "basketbandit.core.modules.moderation.ModuleModeration", Permission.MANAGE_CHANNEL);
+        super("addchannel", "basketbandit.core.modules.utility.ModuleUtility", new String[]{"-addchannel [type] [name]", "-addchannel [type] [name] [nsfw]"}, Permission.MANAGE_CHANNEL);
     }
 
     public CommandAddChannel(MessageReceivedEvent e, String[] command) {
-        super("addchannel", "basketbandit.core.modules.moderation.ModuleModeration", Permission.MANAGE_CHANNEL);
         executeCommand(e, command);
+
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
         String type = command[1].toLowerCase();
@@ -30,5 +26,6 @@ public class CommandAddChannel extends Command {
             e.getGuild().getController().createVoiceChannel(commandParameters[1]).queue();
         }
     }
+
 
 }

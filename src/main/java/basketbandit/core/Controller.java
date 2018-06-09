@@ -27,7 +27,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 class Controller {
@@ -36,7 +35,7 @@ class Controller {
      * Controller constructor for GuildJoinEvents
      * @param e GuildJoinEvent
      */
-    Controller(GuildJoinEvent e, ArrayList<Command> commandList) {
+    Controller(GuildJoinEvent e) {
         List<TextChannel> channels = e.getGuild().getTextChannels();
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
@@ -54,7 +53,7 @@ class Controller {
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", bot.getJDA().getGuildCache().size()+"", true)
                 .addField("Users", users+"", true)
-                .addField("Commands", commandList.size()+"", true)
+                .addField("Commands", Utils.commandCount, true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", TimeKeeper.runtime, true)
                 .addField("Ping", bot.getJDA().getPing()+"", true);
@@ -85,7 +84,7 @@ class Controller {
      * Controller constructor for MessageReceivedEvents that contain a prefix.
      * @param e MessageReceivedEvent
      */
-    Controller(MessageReceivedEvent e, long startExecutionNano, ArrayList<Command> commandList, String prefix) {
+    Controller(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
         String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length());
         String serverLong = e.getGuild().getId();
@@ -106,10 +105,10 @@ class Controller {
             // find the module class that beStrings to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
-            for(Command c : commandList) {
+            for(Command c : Utils.commandList) {
                 if((inputPrefix + input[0]).equals(c.getGlobalName()) || (inputPrefix + input[0]).equals(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
-                    moduleDbName = commandModule.substring(commandModule.lastIndexOf(".") + 1).toLowerCase();
+                    moduleDbName = Utils.extractModuleName(commandModule, false);
                     clazz = Class.forName(commandModule);
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
 
@@ -129,7 +128,7 @@ class Controller {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.").queue();
+                        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.");
                         break;
                     }
                 } else {
@@ -152,7 +151,7 @@ class Controller {
                 if(index > -1) {
                     boundChannels.replace(index, index + 1, ".");
                 }
-                e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString()).queue();
+                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString());
             }
 
             if(constructor != null && !executed && !bound) {
@@ -197,7 +196,7 @@ class Controller {
 
                 } else if(input[0].equals("cancel") && ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
                     ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
-                    e.getTextChannel().sendMessage("[" + e.getAuthor().getAsMention() + "] Search cancelled.").queue();
+                    Utils.sendMessage(e, "[" + e.getAuthor().getAsMention() + "] Search cancelled.");
 
                 }
             }

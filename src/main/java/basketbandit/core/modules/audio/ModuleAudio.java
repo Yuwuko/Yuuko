@@ -1,5 +1,6 @@
 package basketbandit.core.modules.audio;
 
+import basketbandit.core.Utils;
 import basketbandit.core.modules.C;
 import basketbandit.core.modules.Module;
 import basketbandit.core.modules.audio.commands.*;
@@ -42,7 +43,7 @@ public class ModuleAudio extends Module {
 
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
-            e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:basketbandithehe:443069427832061953>").queue();
+            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:basketbandithehe:443069427832061953>");
             return;
         }
 
@@ -106,7 +107,7 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        e.getTextChannel().sendMessage("Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.").queue();
+        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 
     /**

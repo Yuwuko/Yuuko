@@ -1,6 +1,7 @@
 package basketbandit.core.modules.transport.commands;
 
 import basketbandit.core.Configuration;
+import basketbandit.core.Utils;
 import basketbandit.core.modules.Command;
 import basketbandit.core.modules.transport.tfl.LineManager;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,19 +21,16 @@ import java.util.List;
 public class CommandLineStatus extends Command {
 
     public CommandLineStatus() {
-        super("linestatus", "basketbandit.core.modules.transport.ModuleTransport", null);
+        super("linestatus", "basketbandit.core.modules.transport.ModuleTransport", new String[]{"-linestatus", "-linestatus [min]"}, null);
     }
 
     public CommandLineStatus(MessageReceivedEvent e, String[] command) {
-        super("linestatus", "basketbandit.core.modules.transport.ModuleTransport", null);
         executeCommand(e, command);
     }
 
-    /**
-     * Executes command using MessageReceivedEvent e.
-     * @param e; MessageReceivedEvent.
-     * @return boolean; if the command executed correctly.
-     */
+
+
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             URL url = new URL("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Configuration.TFL_ID + "&app_key=" + Configuration.TFL_API);
@@ -86,7 +84,7 @@ public class CommandLineStatus extends Command {
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-                e.getTextChannel().sendMessage(embed.build()).queue();
+                Utils.sendMessage(e, embed.build());
 
             } else {
 
@@ -101,7 +99,7 @@ public class CommandLineStatus extends Command {
                         .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-                e.getTextChannel().sendMessage(embed.build()).queue();
+                Utils.sendMessage(e, embed.build());
             }
 
         } catch(Exception ex) {
