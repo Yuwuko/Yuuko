@@ -23,9 +23,8 @@ public class ModuleMath extends Module {
         executeCommand(e, command);
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-
-
         if(command[0].equals(C.ROLL.getCommandName())) {
             new CommandRoll(e, command);
             return;

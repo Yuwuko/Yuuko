@@ -22,6 +22,7 @@ public class ModuleGame extends Module {
         executeCommand(e, command);
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(command[0].equals(C.RUNESCAPE_STATS.getCommandName())) {
             new CommandRuneScapeStats(e, command);

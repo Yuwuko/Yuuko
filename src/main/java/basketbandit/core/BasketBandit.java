@@ -73,7 +73,6 @@ class BasketBandit extends ListenerAdapter {
      * Retrieves a list of modules via reflection.
      */
     private BasketBandit() {
-
         // Prints a cool program banner :^)
         try {
             String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit " + Configuration.VERSION};
@@ -87,13 +86,9 @@ class BasketBandit extends ListenerAdapter {
                 output.append(line).append("\n");
                 line = reader.readLine();
             }
-
-            int index = output.lastIndexOf("\n");
-            if(index > -1) {
-                output.replace(index, index + 1, "");
-            }
-
+            output = Utils.removeLastOccurrence(output, "\n");
             System.out.println(output);
+
         } catch(Exception ex) {
             ex.printStackTrace();
 
@@ -139,6 +134,10 @@ class BasketBandit extends ListenerAdapter {
         System.out.println("[INFO] Joined new server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }
 
+    /**
+     * Deals with what happens when the bot leaves a server.
+     * @param e -> onGuildLeave
+     */
     @Override
     public void onGuildLeave(GuildLeaveEvent e) {
         new Controller(e);

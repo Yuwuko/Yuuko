@@ -15,7 +15,6 @@ public class ModuleDeveloper extends Module {
     public ModuleDeveloper(MessageReceivedEvent e, String[] command) {
         super("ModuleDeveloper", null);
 
-        // Just in case.
         if(e.getAuthor().getIdLong() != 215161101460045834L) {
             return;
         }
@@ -23,6 +22,7 @@ public class ModuleDeveloper extends Module {
         executeCommand(e, command);
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(command[0].equals(C.SET_STATUS.getCommandName())) {
             new CommandSetStatus(e, command);

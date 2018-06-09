@@ -24,18 +24,19 @@ public class ModuleModeration extends Module {
         executeCommand(e, command);
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        if(command[0].equals(C.NUKE.getCommandName()) && e.getMember().hasPermission(C.NUKE.getCommandPermission())) {
+        if(command[0].equals(C.NUKE.getCommandName()) && (e.getMember().hasPermission(C.NUKE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.NUKE.getCommandPermission()))) {
             new CommandNuke(e, command);
             return;
         }
 
-        if(command[0].equals(C.KICK.getCommandName()) && e.getMember().hasPermission(C.KICK.getCommandPermission())){
+        if(command[0].equals(C.KICK.getCommandName()) && (e.getMember().hasPermission(C.KICK.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.KICK.getCommandPermission()))){
             new CommandKick(e, command);
             return;
         }
 
-        if(command[0].equals(C.BAN.getCommandName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
+        if(command[0].equals(C.BAN.getCommandName()) && (e.getMember().hasPermission(C.BAN.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.BAN.getCommandPermission()))) {
             new CommandBan(e, command);
             return;
         }

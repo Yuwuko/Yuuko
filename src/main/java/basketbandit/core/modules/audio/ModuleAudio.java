@@ -41,6 +41,7 @@ public class ModuleAudio extends Module {
         }
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
             Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you need to be in a voice channel to use that command! <:basketbandithehe:443069427832061953>");

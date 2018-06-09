@@ -25,7 +25,6 @@ public class CommandHelp extends Command {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-
         // If command length is smaller than 2, give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
@@ -57,7 +56,7 @@ public class CommandHelp extends Command {
                     for(String usage: cmd.getCommandUsage()) {
                         usages.append(usage).append("\n");
                     }
-                    usages = Utils.removeLastOccurance(usages, "\n");
+                    usages = Utils.removeLastOccurrence(usages, "\n");
 
                     StringBuilder bindList = new StringBuilder();
                     StringBuilder excludeList = new StringBuilder();
@@ -74,8 +73,8 @@ public class CommandHelp extends Command {
                         }
                         connection.close();
 
-                        Utils.removeLastOccurance(bindList, "\n");
-                        Utils.removeLastOccurance(excludeList, "\n");
+                        Utils.removeLastOccurrence(bindList, "\n");
+                        Utils.removeLastOccurrence(excludeList, "\n");
                         if(bindList.length() == 0) {
                             bindList.append("None");
                         }
@@ -106,4 +105,5 @@ public class CommandHelp extends Command {
             }
         }
     }
+
 }

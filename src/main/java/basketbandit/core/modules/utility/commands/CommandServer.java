@@ -30,11 +30,11 @@ public class CommandServer extends Command {
                 .setThumbnail(server.getIconUrl())
                 .setDescription(
                         "Server Owner                 ::  " + server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator() + " (" + server.getOwner().getEffectiveName() + ")" + "\n" +
-                        "Server ID                         ::  " + server.getIdLong() + "\n" +
+                        "Server ID                         ::  " + server.getId() + "\n" +
                         "Server Created               ::  " + server.getCreationTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")) + "\n" +
                         "Server Region                 ::  " + server.getRegion().getName() + "\n" +
-                        "Total Users                     ::  " + server.getMembers().size() + "\n" +
-                        "Total Text Channels     \u200a::  " + server.getTextChannels().size() + "\n" +
+                        "Total Users                     ::  " + server.getMemberCache().size() + "\n" +
+                        "Total Text Channels     \u200a::  " + server.getTextChannelCache().size() + "\n" +
                         "Total Voice Channels   ::  " + server.getVoiceChannels().size() + "\n" +
                         "Total Roles                      ::  " + server.getRoles().size() + "\n"
                 )

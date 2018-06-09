@@ -22,6 +22,7 @@ public class ModuleTransport extends Module {
         executeCommand(e, command);
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         if(command[0].equals(C.LINE_STATUS.getCommandName())) {
             new CommandLineStatus(e, command);

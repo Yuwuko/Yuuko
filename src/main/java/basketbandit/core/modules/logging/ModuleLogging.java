@@ -26,6 +26,7 @@ public class ModuleLogging extends Module {
         executeCommand(e, command);
     }
 
+    @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             List<TextChannel> log = e.getGuild().getTextChannelsByName("command-log", true);

@@ -53,7 +53,7 @@ public class LineManager {
                 previous = name;
             }
         }
-        reasons = Utils.removeLastOccurance(reasons, "\n\n");
+        reasons = Utils.removeLastOccurrence(reasons, "\n\n");
 
         return reasons.toString().replace("e:", "e**:").replace("E:", "E**:");
     }

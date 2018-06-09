@@ -21,13 +21,14 @@ public class ModuleCore extends Module {
 		executeCommand(e, command);
 	}
 
+	@Override
 	protected void executeCommand(MessageReceivedEvent e, String[] command) {
-		if(command[0].equals(C.SETUP.getCommandName()) && e.getMember().hasPermission(C.SETUP.getCommandPermission())) {
+		if(command[0].equals(C.SETUP.getCommandName()) && (e.getMember().hasPermission(C.SETUP.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SETUP.getCommandPermission()))) {
 			new CommandSetup(e, command);
 			return;
 		}
 
-		if(command[0].equals(C.MODULE.getCommandName()) && e.getMember().hasPermission(C.MODULE.getCommandPermission())) {
+		if(command[0].equals(C.MODULE.getCommandName()) && (e.getMember().hasPermission(C.MODULE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.MODULE.getCommandPermission()))) {
 			new CommandModule(e, command);
 			return;
 		}
@@ -47,7 +48,7 @@ public class ModuleCore extends Module {
 			return;
 		}
 
-		if(command[0].equals(C.SET_PREFIX.getCommandName()) && e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission())) {
+		if(command[0].equals(C.SET_PREFIX.getCommandName()) && (e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SET_PREFIX.getCommandPermission()))) {
 			new CommandSetPrefix(e, command);
 			return;
 		}

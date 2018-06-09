@@ -124,7 +124,7 @@ class Controller {
             // While it has next, if excluded is true, if the module name and channel Id match, apologise and break.
             // If excluded is false (implying that bounded is true) and the module name and channel Id do not match,
             // apologise again and break, else execute and set executed to true!
-            // If the loop finishes and it and boolean executed is still false, execute!
+            // If the loop finishes and boolean executed is still false, execute!
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
@@ -143,14 +143,10 @@ class Controller {
                     bound = true;
                 }
             }
-
             connection.close();
 
             if(bound && !executed) {
-                int index = boundChannels.lastIndexOf(", ");
-                if(index > -1) {
-                    boundChannels.replace(index, index + 1, ".");
-                }
+                boundChannels = Utils.removeLastOccurrence(boundChannels, ", ");
                 Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString());
             }
 

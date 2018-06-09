@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 1.10.0 (09/06/2018) 
+# BasketBandit 1.10.1 (10/06/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -65,7 +65,7 @@ The global invocation/prefix is `@BasketBandit` (mention), this is used to prefi
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| rsstats | Returns a list of RuneScape 3 stats for the given player. | -rsstats [game] [player] | `-rsstats os white cat22` |
+| rsstats | Returns a list of RuneScape stats for the given game and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
 
 ### Music
 

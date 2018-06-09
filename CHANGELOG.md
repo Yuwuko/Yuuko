@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 1.10.1
+
++ [~] Added missing permissions that weren't being checked, also added checks for overrides.
+
 ## 1.10.0
 
 + [+] Added [__mute__] command (voice and text) to mute users with an optional reason.
