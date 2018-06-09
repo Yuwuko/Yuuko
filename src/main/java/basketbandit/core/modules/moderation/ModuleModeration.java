@@ -6,8 +6,6 @@ import basketbandit.core.modules.Module;
 import basketbandit.core.modules.moderation.commands.CommandBan;
 import basketbandit.core.modules.moderation.commands.CommandKick;
 import basketbandit.core.modules.moderation.commands.CommandNuke;
-import basketbandit.core.modules.utility.commands.CommandAddChannel;
-import basketbandit.core.modules.utility.commands.CommandDeleteChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ModuleModeration extends Module {
@@ -39,16 +37,6 @@ public class ModuleModeration extends Module {
 
         if(command[0].equals(C.BAN.getCommandName()) && e.getMember().hasPermission(C.BAN.getCommandPermission())) {
             new CommandBan(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.CREATE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission())) {
-            new CommandAddChannel(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.DELETE_CHANNEL.getCommandName()) && e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission())) {
-            new CommandDeleteChannel(e, command);
             return;
         }
 

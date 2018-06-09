@@ -93,9 +93,9 @@ public class Utils {
      */
     public static String extractModuleName(String string, boolean shortened) {
         if(shortened) {
-            return string.substring(string.lastIndexOf(".") + 7).toLowerCase();
+            return string.substring(string.lastIndexOf(".") + 7);
         } else {
-            return string.substring(string.lastIndexOf(".") + 1).toLowerCase();
+            return string.substring(string.lastIndexOf(".") + 1);
         }
     }
 

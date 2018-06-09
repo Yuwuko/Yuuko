@@ -94,6 +94,16 @@ public class ModuleUtility extends Module {
             return;
         }
 
+        if(command[0].equals(C.CREATE_CHANNEL.getCommandName())) {
+            new CommandAddChannel(e, command);
+            return;
+        }
+
+        if(command[0].equals(C.DELETE_CHANNEL.getCommandName())) {
+            new CommandDeleteChannel(e, command);
+            return;
+        }
+
         Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 }

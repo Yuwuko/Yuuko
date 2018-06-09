@@ -12,16 +12,15 @@ public class CommandAddChannel extends Command {
 
     public CommandAddChannel(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
-
     }
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
-        String type = command[1].toLowerCase();
+        String type = commandParameters[0].toLowerCase();
 
         if(type.equals("text")) {
-            e.getGuild().getController().createTextChannel(commandParameters[1]).setNSFW(command.length > 2).queue();
+            e.getGuild().getController().createTextChannel(commandParameters[1]).setNSFW(commandParameters.length > 2).queue();
         } else if(type.equals("voice")) {
             e.getGuild().getController().createVoiceChannel(commandParameters[1]).queue();
         }

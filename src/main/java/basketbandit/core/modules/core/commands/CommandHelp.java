@@ -2,11 +2,16 @@ package basketbandit.core.modules.core.commands;
 
 import basketbandit.core.Configuration;
 import basketbandit.core.Utils;
+import basketbandit.core.database.DatabaseConnection;
+import basketbandit.core.database.DatabaseFunctions;
 import basketbandit.core.modules.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 public class CommandHelp extends Command {
 
@@ -20,6 +25,8 @@ public class CommandHelp extends Command {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
+
+        // If command length is smaller than 2, give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setColor(Color.RED)
@@ -52,17 +59,50 @@ public class CommandHelp extends Command {
                     }
                     usages = Utils.removeLastOccurance(usages, "\n");
 
+                    StringBuilder bindList = new StringBuilder();
+                    StringBuilder excludeList = new StringBuilder();
+
+                    try {
+                        Connection connection = new DatabaseConnection().getConnection();
+                        ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false));
+                        while(rs.next()) {
+                            if(rs.getBoolean(5)) {
+                                excludeList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
+                            } else {
+                                bindList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
+                            }
+                        }
+                        connection.close();
+
+                        Utils.removeLastOccurance(bindList, "\n");
+                        Utils.removeLastOccurance(excludeList, "\n");
+                        if(bindList.length() == 0) {
+                            bindList.append("None");
+                        }
+                        if(excludeList.length() == 0) {
+                            excludeList.append("None");
+                        }
+                    } catch(Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                    User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
+
                     EmbedBuilder commandInfo = new EmbedBuilder()
                             .setColor(Color.RED)
-                            .setTitle(cmd.getCommandName())
+                            .setThumbnail(bot.getAvatarUrl())
+                            .setTitle("Command information for: " + cmd.getCommandName())
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true), true)
                             .addField("Required Permission", commandPermission, true)
-                            .setDescription(usages.toString())
+                            .addField("Binds", bindList.toString(), true)
+                            .addField("Exclusions", excludeList.toString(), true)
+                            .addField("Usage", usages.toString(), false)
                             .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                     Utils.sendMessage(e, commandInfo.build());
-                    break;
+                    return;
                 }
+                Utils.sendMessage(e, "Sorry, I can't find a usage for command '" + command[1] + "'");
             }
         }
     }
