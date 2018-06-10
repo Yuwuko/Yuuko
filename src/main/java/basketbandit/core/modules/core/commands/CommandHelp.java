@@ -101,8 +101,8 @@ public class CommandHelp extends Command {
                     Utils.sendMessage(e, commandInfo.build());
                     return;
                 }
-                Utils.sendMessage(e, "Sorry, I can't find a usage for command '" + command[1] + "'");
             }
+            Utils.sendMessage(e, "Sorry, I can't find a usage for command '" + command[1] + "'");
         }
     }
 
