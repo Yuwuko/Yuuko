@@ -1,6 +1,6 @@
 package com.basketbandit.core.modules.transport.tfl;
 
-import com.basketbandit.core.Utils;
+import com.basketbandit.core.utils.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

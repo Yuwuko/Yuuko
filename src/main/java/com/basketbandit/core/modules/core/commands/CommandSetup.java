@@ -1,8 +1,8 @@
 package com.basketbandit.core.modules.core.commands;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;

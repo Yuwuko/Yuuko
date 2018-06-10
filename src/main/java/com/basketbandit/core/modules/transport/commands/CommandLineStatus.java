@@ -1,9 +1,9 @@
 package com.basketbandit.core.modules.transport.commands;
 
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.transport.tfl.LineManager;
+import com.basketbandit.core.utils.Utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;

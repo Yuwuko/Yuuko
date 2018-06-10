@@ -1,10 +1,10 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
+import com.basketbandit.core.utils.Utils;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;

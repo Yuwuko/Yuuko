@@ -1,11 +1,9 @@
 package com.basketbandit.core.modules.moderation;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.C;
 import com.basketbandit.core.modules.Module;
-import com.basketbandit.core.modules.moderation.commands.CommandBan;
-import com.basketbandit.core.modules.moderation.commands.CommandKick;
-import com.basketbandit.core.modules.moderation.commands.CommandNuke;
+import com.basketbandit.core.modules.moderation.commands.*;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ModuleModeration extends Module {
@@ -38,6 +36,16 @@ public class ModuleModeration extends Module {
 
         if(command[0].equals(C.BAN.getCommandName()) && (e.getMember().hasPermission(C.BAN.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.BAN.getCommandPermission()))) {
             new CommandBan(e, command);
+            return;
+        }
+
+        if(command[0].equals(C.MUTE.getCommandName()) && (e.getMember().hasPermission(C.MUTE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.MUTE.getCommandPermission()))) {
+            new CommandMute(e, command);
+            return;
+        }
+
+        if(command[0].equals(C.UNMUTE.getCommandName()) && (e.getMember().hasPermission(C.UNMUTE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.UNMUTE.getCommandPermission()))) {
+            new CommandUnmute(e, command);
             return;
         }
 

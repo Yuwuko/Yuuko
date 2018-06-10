@@ -1,12 +1,11 @@
-package com.basketbandit.core;
+package com.basketbandit.core.utils;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
+import net.dv8tion.jda.core.managers.GuildController;
 
 import java.util.List;
 
@@ -120,6 +119,50 @@ public class Utils {
         } else {
             return returnString;
         }
+    }
+
+    /**
+     * Creates the muted role to correctly mute people.
+     * @param guild Guild
+     * @return Role
+     */
+    public static Role setupMutedRole(Guild guild) {
+        GuildController controller = guild.getController();
+        List<TextChannel> channels = guild.getTextChannels();
+        List<Role> roleList = guild.getRoles();
+        Role muted = null;
+
+        for(Role role: roleList) {
+            if(role.getName().equals("Muted")) {
+                muted = role;
+                break;
+            }
+        }
+
+        if(muted == null) {
+            muted = controller.createRole().setName("Muted").setPermissions(Permission.MESSAGE_READ, Permission.MESSAGE_HISTORY, Permission.VOICE_CONNECT).complete();
+
+            for(TextChannel channel: channels) {
+                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK).complete();
+            }
+        }
+
+        for(TextChannel channel: channels) {
+            PermissionOverride override = null;
+
+            for(PermissionOverride channelOverride: channel.getRolePermissionOverrides()) {
+                if(channelOverride.getRole().equals(muted)) {
+                    override = channelOverride;
+                    break;
+                }
+            }
+
+            if(override == null) {
+                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK).complete();
+            }
+        }
+
+        return muted;
     }
 
 }

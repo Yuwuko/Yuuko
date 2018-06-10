@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.database.DatabaseFunctions;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class Module {

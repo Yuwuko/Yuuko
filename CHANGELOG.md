@@ -5,7 +5,9 @@ Key: [+] added, [-] removed, [~] modified.
 ## 2.0.0
 
 + [+] Forced into 2.0.0 due to classpath change from e.g. basketbandit.core -\> com.basketbandit.core
++ [+] Added utils package to help break up the various utility classes.
 + [~] Added missing permissions that weren't being checked, also added checks for overrides.
++ [~] Finished and integrated the [__mute__] and [__unmute__] commands.
 
 ## 1.10.0
 

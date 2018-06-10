@@ -1,10 +1,10 @@
 package com.basketbandit.core.modules.core.commands;
 
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

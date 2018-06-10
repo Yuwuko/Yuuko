@@ -1,9 +1,9 @@
 package com.basketbandit.core.modules.core;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.C;
 import com.basketbandit.core.modules.Module;
 import com.basketbandit.core.modules.core.commands.*;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ModuleCore extends Module {

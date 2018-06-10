@@ -1,9 +1,9 @@
 package com.basketbandit.core.modules.audio;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.C;
 import com.basketbandit.core.modules.Module;
 import com.basketbandit.core.modules.audio.commands.*;
+import com.basketbandit.core.utils.Utils;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

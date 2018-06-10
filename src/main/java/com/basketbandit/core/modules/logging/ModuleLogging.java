@@ -1,8 +1,8 @@
 package com.basketbandit.core.modules.logging;
 
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.Module;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

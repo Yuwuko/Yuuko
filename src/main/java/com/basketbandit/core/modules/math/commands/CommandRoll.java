@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.math.commands;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

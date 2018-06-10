@@ -1,9 +1,9 @@
 package com.basketbandit.core.modules.audio.commands;
 
-import com.basketbandit.core.Utils;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CommandPause extends Command {
