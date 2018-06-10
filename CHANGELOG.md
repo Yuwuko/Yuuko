@@ -2,8 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
-## 1.10.1
+## 2.0.0
 
++ [+] Forced into 2.0.0 due to classpath change from e.g. basketbandit.core -\> com.basketbandit.core
 + [~] Added missing permissions that weren't being checked, also added checks for overrides.
 
 ## 1.10.0
