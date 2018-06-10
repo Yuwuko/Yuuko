@@ -26,7 +26,7 @@ public class CommandExclude extends Command {
         if(commandParameters.length > 1) {
             serverId = e.getGuild().getId();
             channelId = e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getId();
-            module = commandParameters[0];
+            module = commandParameters[0].toLowerCase();
 
             if(!new DatabaseFunctions().addExclusion(module, channelId, serverId)) {
                 Utils.sendMessage(e, "Successfully excluded " + module + " from " + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + ".");

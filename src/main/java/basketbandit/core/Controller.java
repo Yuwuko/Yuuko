@@ -108,7 +108,7 @@ class Controller {
             for(Command c : Utils.commandList) {
                 if((inputPrefix + input[0]).equals(c.getGlobalName()) || (inputPrefix + input[0]).equals(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
-                    moduleDbName = Utils.extractModuleName(commandModule, false);
+                    moduleDbName = Utils.extractModuleName(commandModule, false, true);
                     clazz = Class.forName(commandModule);
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
 

@@ -63,7 +63,7 @@ public class CommandHelp extends Command {
 
                     try {
                         Connection connection = new DatabaseConnection().getConnection();
-                        ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false));
+                        ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false, true));
                         while(rs.next()) {
                             if(rs.getBoolean(5)) {
                                 excludeList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
@@ -91,7 +91,7 @@ public class CommandHelp extends Command {
                             .setColor(Color.RED)
                             .setThumbnail(bot.getAvatarUrl())
                             .setTitle("Command information for: " + cmd.getCommandName())
-                            .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true), true)
+                            .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
                             .addField("Required Permission", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)
                             .addField("Exclusions", excludeList.toString(), true)

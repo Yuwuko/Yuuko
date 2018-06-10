@@ -26,7 +26,7 @@ public class CommandUnbind extends Command {
         if(commandParameters.length > 1) {
             serverId = e.getGuild().getId();
             channelId = e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getId();
-            module = commandParameters[0];
+            module = commandParameters[0].toLowerCase();
 
             if(!new DatabaseFunctions().removeBindingExclusion(module, channelId, serverId)) {
                 Utils.sendMessage(e, "Successfully removed binding of " + module + " from " + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + ".");

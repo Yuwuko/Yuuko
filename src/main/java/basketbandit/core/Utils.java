@@ -106,11 +106,19 @@ public class Utils {
      * @param shortened boolean
      * @return String
      */
-    public static String extractModuleName(String string, boolean shortened) {
+    public static String extractModuleName(String string, boolean shortened, boolean lowercase) {
+        String returnString;
+
         if(shortened) {
-            return string.substring(string.lastIndexOf(".") + 7);
+            returnString = string.substring(string.lastIndexOf(".") + 7);
         } else {
-            return string.substring(string.lastIndexOf(".") + 1);
+            returnString = string.substring(string.lastIndexOf(".") + 1);
+        }
+
+        if(lowercase) {
+            return returnString.toLowerCase();
+        } else {
+            return returnString;
         }
     }
 
