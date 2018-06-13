@@ -6,6 +6,7 @@ Key: [+] added, [-] removed, [~] modified.
 
 + [+] Forced into 2.0.0 due to classpath change from e.g. basketbandit.core -\> com.basketbandit.core
 + [+] Added utils package to help break up the various utility classes.
++ [~] Separated the controller class into separate generic event classes to isolate things a bit more.
 + [~] Added missing permissions that weren't being checked, also added checks for overrides.
 + [~] Finished and integrated the [__mute__] and [__unmute__] commands.
 

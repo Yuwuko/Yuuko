@@ -1,91 +1,78 @@
-package com.basketbandit.core;
+package com.basketbandit.core.controllers;
 
+import com.basketbandit.core.Configuration;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.commands.CommandPlay;
-import com.basketbandit.core.modules.core.commands.CommandSetup;
 import com.basketbandit.core.modules.logging.ModuleLogging;
-import com.basketbandit.core.modules.utility.ModuleUtility;
 import com.basketbandit.core.utils.Utils;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
 
-import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-class Controller {
+public class GenericMessageController {
 
-    /**
-     * Controller constructor for GuildJoinEvents
-     * @param e GuildJoinEvent
-     */
-    Controller(GuildJoinEvent e) {
-        List<TextChannel> channels = e.getGuild().getTextChannels();
-        User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
-
-        int users = 0;
-        for(Guild guild : bot.getJDA().getGuilds()) {
-            users += guild.getMemberCache().size();
+    public GenericMessageController(GenericMessageEvent e) {
+        if(e instanceof MessageReceivedEvent) {
+            messageReceivedEvent((MessageReceivedEvent)e);
         }
+    }
 
-        EmbedBuilder about = new EmbedBuilder()
-                .setColor(Color.WHITE)
-                .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
-                .setDescription("Thanks for inviting me to your server! Below is a little bit of information about myself, and you can access a list of my modules [here](https://github.com/BasketBandit/BasketBandit-Java)!")
-                .setThumbnail(bot.getAvatarUrl())
-                .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
-                .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", bot.getJDA().getGuildCache().size()+"", true)
-                .addField("Users", users+"", true)
-                .addField("Commands", Utils.commandCount, true)
-                .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
-                .addField("Uptime", TimeKeeper.runtime, true)
-                .addField("Ping", bot.getJDA().getPing()+"", true);
+    private void messageReceivedEvent(MessageReceivedEvent e) {
+        try {
+            // Used to help calculate execution time of functions.
+            long startExecutionNano = System.nanoTime();
 
-        for(TextChannel c: channels) {
-            if(c.getName().toLowerCase().equals("general")) {
-                try {
-                    c.sendMessage(about.build()).queue();
-                    break;
-                } catch(PermissionException ex) {
-                    System.out.println("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
-                }
+            // Help command (Private Message) throws null pointer for serverLong (Obviously.)
+            String serverLong = e.getGuild().getId();
+            String msgRawLower = e.getMessage().getContentRaw().toLowerCase();
+            User user = e.getAuthor();
+
+            String prefix = new DatabaseFunctions().getServerPrefix(serverLong);
+            if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
+                prefix = Configuration.GLOBAL_PREFIX;
             }
+
+            if(user.isBot()
+                    || msgRawLower.equals(prefix)
+                    || msgRawLower.startsWith(prefix + prefix)
+                    || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
+                    || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
+                return;
+            }
+
+            if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
+                prefixedMessage(e, startExecutionNano, prefix);
+                return;
+            }
+
+            if(msgRawLower.matches("^[0-9]{1,2}$") || msgRawLower.equals("cancel")) {
+                unprefixedMessage(e, startExecutionNano);
+            }
+
+        } catch(NullPointerException ex) {
+            // Do nothing, null pointers happen.
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
-
-        new CommandSetup(e);
     }
 
     /**
-     * Controller constructor for GuildLeaveEvent
-     * @param e GuildLeaveEvent
-     */
-    Controller(GuildLeaveEvent e) {
-        new DatabaseFunctions().cleanup(e.getGuild().getId());
-    }
-
-    /**
-     * Controller constructor for MessageReceivedEvents that contain a prefix.
+     * Deals with commands that start with a prefix.
      * @param e MessageReceivedEvent
+     * @param startExecutionNano long
+     * @param prefix String
      */
-    Controller(MessageReceivedEvent e, long startExecutionNano, String prefix) {
+    private void prefixedMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
         String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length());
         String serverLong = e.getGuild().getId();
@@ -171,14 +158,14 @@ class Controller {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     /**
-     * Controller constructor for MessageReceivedEvents that do not contain a prefix.
+     * Deals with non-prefixed commands that are a number between 1-10.
      * @param e MessageReceivedEvent
+     * @param startExecutionNano long
      */
-    Controller(MessageReceivedEvent e, long startExecutionNano) {
+    private void unprefixedMessage(MessageReceivedEvent e, long startExecutionNano) {
         String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String serverLong = e.getGuild().getId();
 
@@ -210,33 +197,4 @@ class Controller {
 
     }
 
-    /**
-     * Controller constructor for MessageReactionAddEvents
-     * @param e MessageReactionAddEvent
-     */
-    Controller(MessageReactionAddEvent e) {
-        MessageReaction react = e.getReaction();
-        String serverLong = e.getGuild().getId();
-
-        if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            if(new DatabaseFunctions().checkModuleSettings("moduleUtility", serverLong)) {
-                new ModuleUtility(e);
-            }
-        }
-    }
-
-    /**
-     * Controller constructor for MessageReactionRemoveEvents
-     * @param e MessageReactionRemoveEvent
-     */
-    Controller(MessageReactionRemoveEvent e) {
-        MessageReaction react = e.getReaction();
-        String serverLong = e.getGuild().getId();
-
-        if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            if(new DatabaseFunctions().checkModuleSettings("moduleUtility", serverLong)) {
-                new ModuleUtility(e);
-            }
-        }
-    }
 }

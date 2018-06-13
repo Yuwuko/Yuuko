@@ -4,25 +4,26 @@
 
 package com.basketbandit.core;
 
-import com.basketbandit.core.database.DatabaseFunctions;
+import com.basketbandit.core.controllers.GenericGuildController;
+import com.basketbandit.core.controllers.GenericGuildVoiceController;
+import com.basketbandit.core.controllers.GenericMessageController;
+import com.basketbandit.core.controllers.GenericMessageReactionController;
 import com.basketbandit.core.modules.C;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.M;
 import com.basketbandit.core.modules.Module;
-import com.basketbandit.core.modules.audio.commands.CommandStop;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
+import net.dv8tion.jda.core.events.message.GenericMessageEvent;
+import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -59,10 +60,11 @@ class BasketBandit extends ListenerAdapter {
         Configuration.DATABASE_PASSWORD = args[8];
 
         bot = new JDABuilder(AccountType.BOT)
-            .setToken(Configuration.BOT_TOKEN)
-            .addEventListener(self)
-            .setEventManager(new ThreadedEventManager())
-            .buildBlocking();
+                .useSharding(0, 1)
+                .setToken(Configuration.BOT_TOKEN)
+                .addEventListener(self)
+                .setEventManager(new ThreadedEventManager())
+                .buildBlocking();
         bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         botUser = bot.getSelfUser();
@@ -126,109 +128,39 @@ class BasketBandit extends ListenerAdapter {
     }
 
     /**
-     * Deals with what happens when the bot joins a server.
-     * @param e -> GuildJoinEvent
+     * Captures and deals with generic guild events.
+     * @param e GenericGuildEvent
      */
     @Override
-    public void onGuildJoin(GuildJoinEvent e) {
-        new Controller(e);
-        System.out.println("[INFO] Joined new server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
+    public void onGenericGuild(GenericGuildEvent e) {
+        new GenericGuildController(e);
     }
 
     /**
-     * Deals with what happens when the bot leaves a server.
-     * @param e -> onGuildLeave
+     * Captures and deals with generic message events.
+     * @param e -> GenericMessageEvent.
      */
     @Override
-    public void onGuildLeave(GuildLeaveEvent e) {
-        new Controller(e);
-        System.out.println("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
+    public void onGenericMessage(GenericMessageEvent e) {
+        new GenericMessageController(e);
     }
 
     /**
-     * Captures and deals with messages starting with the correct invocation.
-     * @param e -> MessageReceivedEvent.
+     * Captures and deals generic reaction events.
+     * @param e -> GenericMessageReactionEvent.
      */
     @Override
-    public void onMessageReceived(MessageReceivedEvent e) {
-        try {
-            // Used to help calculate execution time of functions.
-            long startExecutionNano = System.nanoTime();
-
-            // Help command (Private Message) throws null pointer for serverLong (Obviously.)
-            String serverLong = e.getGuild().getId();
-            Message msg = e.getMessage();
-            String msgRawLower = msg.getContentRaw().toLowerCase();
-            User user = e.getAuthor();
-
-            String prefix = new DatabaseFunctions().getServerPrefix(serverLong);
-            if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
-                prefix = Configuration.GLOBAL_PREFIX;
-            }
-
-            if(user.isBot()
-                    || msgRawLower.equals(prefix)
-                    || msgRawLower.startsWith(prefix + prefix)
-                    || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
-                    || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
-                return;
-            }
-
-            if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
-                new Controller(e, startExecutionNano, prefix);
-                return;
-            }
-
-            if(msgRawLower.matches("^[0-9]{1,2}$") || msg.getContentRaw().toLowerCase().equals("cancel")) {
-                new Controller(e, startExecutionNano);
-            }
-
-        } catch(NullPointerException ex) {
-            // Do nothing, null pointers happen.
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
+    public void onGenericMessageReaction(GenericMessageReactionEvent e) {
+        new GenericMessageReactionController(e);
     }
 
     /**
-     * Captures and deals with reacts.
-     * @param e -> MessageReactionAddEvent.
-     */
-    @Override
-    public void onMessageReactionAdd(MessageReactionAddEvent e) {
-        MessageReaction react = e.getReaction();
-
-        if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            new Controller(e);
-        }
-    }
-
-    /**
-     * Captures and deals with react removals.
-     * @param e -> MessageReactionRemoveEvent.
-     */
-    @Override
-    public void onMessageReactionRemove(MessageReactionRemoveEvent e) {
-        MessageReaction react = e.getReaction();
-
-        if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
-            new Controller(e);
-        }
-    }
-
-    /**
-     * Captures and deals with generic voide events.
-     * @param e -> GuildVoiceLeaveEvent.
+     * Captures and deals with generic voice events.
+     * @param e -> GenericGuildVoiceEvent.
      */
     @Override
     public void onGenericGuildVoice(GenericGuildVoiceEvent e) {
-        Member self = e.getGuild().getSelfMember();
-
-        if(self.getVoiceState().inVoiceChannel()) {
-            if(self.getVoiceState().getChannel().getMembers().size() == 1) {
-                new CommandStop(e);
-            }
-        }
+        new GenericGuildVoiceController(e);
     }
 
     /**
