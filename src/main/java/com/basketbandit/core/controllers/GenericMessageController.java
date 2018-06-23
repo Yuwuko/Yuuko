@@ -51,12 +51,12 @@ public class GenericMessageController {
             }
 
             if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
-                prefixedMessage(e, startExecutionNano, prefix);
+                processMessage(e, startExecutionNano, prefix);
                 return;
             }
 
             if(msgRawLower.matches("^[0-9]{1,2}$") || msgRawLower.equals("cancel")) {
-                unprefixedMessage(e, startExecutionNano);
+                processMessage(e, startExecutionNano);
             }
 
         } catch(NullPointerException ex) {
@@ -72,7 +72,7 @@ public class GenericMessageController {
      * @param startExecutionNano long
      * @param prefix String
      */
-    private void prefixedMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
+    private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
         String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length());
         String serverLong = e.getGuild().getId();
@@ -165,24 +165,27 @@ public class GenericMessageController {
      * @param e MessageReceivedEvent
      * @param startExecutionNano long
      */
-    private void unprefixedMessage(MessageReceivedEvent e, long startExecutionNano) {
+    private void processMessage(MessageReceivedEvent e, long startExecutionNano) {
         String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
         String serverLong = e.getGuild().getId();
 
-        // Remove the input message.
-        e.getMessage().delete().queue();
-
         try {
-            // Search function check if regex matches. Used in conjunction with the search input.
-            if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                if(!input[0].equals("cancel") && ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
-                    new CommandPlay(e, ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
+            if(ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+                // Search function check if regex matches. Used in conjunction with the search input.
+                if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
+                    if(!input[0].equals("cancel")) {
+                        new CommandPlay(e, ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
+                        ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
 
-                } else if(input[0].equals("cancel") && ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
-                    ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
-                    Utils.sendMessage(e, "[" + e.getAuthor().getAsMention() + "] Search cancelled.");
+                    } else if(input[0].equals("cancel")) {
+                        ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
+                        Utils.sendMessage(e, "[" + e.getAuthor().getAsMention() + "] Search cancelled.");
 
+                    }
                 }
+
+                // Remove the input message, but only if searchUsers contains the key.
+                e.getMessage().delete().queue();
             }
 
             if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
