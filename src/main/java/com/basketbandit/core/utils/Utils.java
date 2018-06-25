@@ -2,18 +2,22 @@ package com.basketbandit.core.utils;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.managers.GuildController;
+import org.discordbots.api.client.DiscordBotListAPI;
 
 import java.util.List;
 
 public class Utils {
 
+    public static User botUser;
     public static List<Command> commandList;
     public static List<Module> moduleList;
     public static String commandCount;
+    public static DiscordBotListAPI botList;
 
     /**
      * Returns a username and discriminator in format username#discriminator.
@@ -163,6 +167,18 @@ public class Utils {
         }
 
         return muted;
+    }
+
+    /**
+     * Updates stats for DiscordBotList
+     */
+    public static void updateDiscordBotList() {
+        try {
+            JDA jda = botUser.getJDA();
+            botList.setStats(botUser.getId(), Math.toIntExact(jda.getGuildCache().size()), jda.getShardInfo().getShardId(), jda.getShardInfo().getShardTotal());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

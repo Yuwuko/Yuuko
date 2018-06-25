@@ -166,38 +166,35 @@ public class GenericMessageController {
      * @param startExecutionNano long
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano) {
-        String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-        String serverLong = e.getGuild().getId();
-
         try {
             if(ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+                String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
+                String serverLong = e.getGuild().getId();
+
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                    if(!input[0].equals("cancel")) {
+                    if(!input[0].matches("^[0-9]{1,2}$")) {
                         new CommandPlay(e, ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
-
                     } else if(input[0].equals("cancel")) {
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
                         Utils.sendMessage(e, "[" + e.getAuthor().getAsMention() + "] Search cancelled.");
-
                     }
                 }
 
                 // Remove the input message, but only if searchUsers contains the key.
                 e.getMessage().delete().queue();
-            }
 
-            if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
-                new ModuleLogging(e, executionTime, null);
+                if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
+                    long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
+                    System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                    new ModuleLogging(e, executionTime, null);
+                }
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
 }

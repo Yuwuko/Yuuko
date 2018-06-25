@@ -18,7 +18,6 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
@@ -26,6 +25,7 @@ import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.discordbots.api.client.DiscordBotListAPI;
 
 import javax.security.auth.login.LoginException;
 import java.io.BufferedReader;
@@ -38,7 +38,6 @@ import java.util.concurrent.Executors;
 class BasketBandit extends ListenerAdapter {
 
     public static JDA bot;
-    private static User botUser;
 
     /**
      * Initialises the bot and JDA.
@@ -67,8 +66,9 @@ class BasketBandit extends ListenerAdapter {
                 .buildBlocking();
         bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
-        botUser = bot.getSelfUser();
-        Configuration.GLOBAL_PREFIX = botUser.getAsMention() + " ";
+        Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
+        Utils.botUser = bot.getSelfUser();
+        Utils.botList = new DiscordBotListAPI.Builder().token(args[9]).build();
     }
 
     /**
