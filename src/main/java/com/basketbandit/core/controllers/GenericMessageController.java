@@ -173,7 +173,7 @@ public class GenericMessageController {
 
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                    if(!input[0].matches("^[0-9]{1,2}$")) {
+                    if(!input[0].equals("cancel")) {
                         new CommandPlay(e, ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
                     } else if(input[0].equals("cancel")) {
