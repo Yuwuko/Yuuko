@@ -18,8 +18,6 @@ public class CommandRuneScapeStats extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);

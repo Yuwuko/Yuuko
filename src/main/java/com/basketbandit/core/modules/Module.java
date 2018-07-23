@@ -31,6 +31,10 @@ public abstract class Module {
         }
     }
 
+    protected boolean checkNSFWFlag(MessageReceivedEvent e) {
+        return e.getTextChannel().isNSFW();
+    }
+
     // Abstract method signature to ensure method is implemented.
     protected abstract void executeCommand(MessageReceivedEvent e, String[] command);
 }

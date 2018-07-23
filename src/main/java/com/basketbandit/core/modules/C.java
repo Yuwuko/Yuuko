@@ -7,14 +7,15 @@ import com.basketbandit.core.modules.game.commands.CommandRuneScapeStats;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
 import com.basketbandit.core.modules.math.commands.CommandSum;
 import com.basketbandit.core.modules.moderation.commands.*;
+import com.basketbandit.core.modules.nsfw.commands.CommandEfukt;
 import com.basketbandit.core.modules.transport.commands.CommandLineStatus;
 import com.basketbandit.core.modules.utility.commands.*;
 
 public final class C {
-    // Dev module modules.
+    // Dev module commands.
     public static final Command SET_STATUS = new CommandSetStatus();
 
-    // Core module modules.
+    // Core module commands.
     public static final Command SETUP = new CommandSetup();
     public static final Command MODULE = new CommandModule();
     public static final Command MODULES = new CommandModules();
@@ -22,18 +23,18 @@ public final class C {
     public static final Command ABOUT = new CommandAbout();
     public static final Command SET_PREFIX = new CommandSetPrefix();
 
-    // Moderation module modules.
+    // Moderation module commands.
     public static final Command NUKE = new CommandNuke();
     public static final Command KICK = new CommandKick();
     public static final Command BAN = new CommandBan();
     public static final Command MUTE = new CommandMute();
     public static final Command UNMUTE = new CommandUnmute();
 
-    // Math module modules.
+    // Math module commands.
     public static final Command ROLL = new CommandRoll();
     public static final Command SUM = new CommandSum();
 
-    // Utility module modules.
+    // Utility module commands.
     public static final Command USER = new CommandUser();
     public static final Command SERVER = new CommandServer();
     public static final Command CREATE_CHANNEL = new CommandAddChannel();
@@ -43,10 +44,10 @@ public final class C {
     public static final Command EXCLUDE = new CommandExclude();
     public static final Command INCLUDE = new CommandUnexclude();
 
-    // RuneScape module modules.
+    // RuneScape module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
 
-    // Music module modules.
+    // Music module commands.
     public static final Command PLAY = new CommandPlay();
     public static final Command STOP = new CommandStop();
     public static final Command SKIP = new CommandSkip();
@@ -60,6 +61,9 @@ public final class C {
     public static final Command TOGGLE_REPEAT = new CommandToggleRepeat();
     public static final Command SEARCH = new CommandSearch();
 
-    // Transport module modules.
+    // Transport module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();
+
+    // NSFW module commands
+    public static final Command EFUKT = new CommandEfukt();
 }

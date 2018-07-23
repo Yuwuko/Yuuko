@@ -84,6 +84,13 @@ The global invocation/prefix is `@BasketBandit` (mention), this is used to prefi
 | togglerepeat | Toggles a track to repeat. | -togglerepeat | `-togglerepeat` |
 | search | Searches YouTube and returns the first 10 results, a choice is made by typing the number and the selected track will be queued. | -search [term] | `-search funky beats` |
 
+### NSFW
+
+| Command | Description | Usage | Example | Permission |
+|---------|-------------|-------|---------|------------|
+| efukt | Returns a random image/gif/video from eFukt. (Requires NSFW flagged channel to work) | -efukt | `-efukt` |
+
+
 ## Other features
 
 As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.

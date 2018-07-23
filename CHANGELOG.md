@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 2.1.0
++ [+] Added NSFW module with an [__efukt__] command, forcing me to adopt Jsoup which is actually pretty good. 
+
 ## 2.0.0
 
 + [+] Forced into 2.0.0 due to classpath change from e.g. basketbandit.core -\> com.basketbandit.core

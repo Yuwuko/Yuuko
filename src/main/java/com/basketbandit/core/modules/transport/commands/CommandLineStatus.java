@@ -28,8 +28,6 @@ public class CommandLineStatus extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {

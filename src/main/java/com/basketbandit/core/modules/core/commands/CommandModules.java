@@ -38,7 +38,7 @@ public class CommandModules extends Command {
             resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
             resultSet.next();
 
-            for(int i = 2; i < 9; i++) {
+            for(int i = 2; i < 10; i++) {
                 ResultSetMetaData meta = resultSet.getMetaData();
                 if(resultSet.getBoolean(i)) {
                     enabled.add(meta.getColumnName(i).substring(6));
