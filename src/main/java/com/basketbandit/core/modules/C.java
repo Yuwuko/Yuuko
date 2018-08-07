@@ -60,6 +60,7 @@ public final class C {
     public static final Command LAST_TRACK = new CommandLastTrack();
     public static final Command TOGGLE_REPEAT = new CommandToggleRepeat();
     public static final Command SEARCH = new CommandSearch();
+    public static final Command CLEAR_QUEUE = new CommandClearQueue();
 
     // Transport module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();

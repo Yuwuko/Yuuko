@@ -108,6 +108,11 @@ public class ModuleAudio extends Module {
             return;
         }
 
+        if(command[0].equals(C.CLEAR_QUEUE.getCommandName())) {
+            new CommandClearQueue(e, command);
+            return;
+        }
+
         Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 

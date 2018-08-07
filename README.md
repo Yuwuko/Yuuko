@@ -79,6 +79,7 @@ The global invocation/prefix is `@BasketBandit` (mention), this is used to prefi
 | currenttrack | Returns information about the currently playing track such as current time, artist and source. | -currenttrack | `-currenttrack` |
 | lasttrack | Returns information about the last played track such as artist and source. | -lasttrack | `-lasttrack` | 
 | queue | Returns the first 10 tracks in the queue or however many there are if under 10. | -queue | `-queue` |
+| clearqueue | Clears the current queue of all of the current tracks. | -clearqueue | `-clearqueue` |
 | setbackground | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. | -setbackground [url] &#124; [term] | <code>-setbackground https://www.youtube.com/watch?v=va3Dj_sUCJs &#124; cool music</code>  |
 | unsetbackground | Removes the background track. | -unsetbackground | `-unsetbackground` |
 | togglerepeat | Toggles a track to repeat. | -togglerepeat | `-togglerepeat` |
