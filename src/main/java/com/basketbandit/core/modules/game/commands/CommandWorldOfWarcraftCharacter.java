@@ -10,8 +10,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommandWorldOfWarcraftCharacter extends Command {
 
@@ -30,8 +28,7 @@ public class CommandWorldOfWarcraftCharacter extends Command {
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
             String json = Utils.bufferJson("https://eu.api.battle.net/wow/character/" + commandParameters[0] + "/" + commandParameters[1] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API);
-            ArrayList<Character> chars = new ObjectMapper().readValue(json, new TypeReference<List<Character>>(){});
-            Character character = chars.get(0);
+            Character character = new ObjectMapper().readValue(json, new TypeReference<Character>(){});
 
             String classString;
             String raceString;

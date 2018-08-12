@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified.
 ## 2.1.0
 + [+] Added NSFW module with an [__efukt__] command, forcing me to adopt Jsoup which is actually pretty good. 
 + [+] Added [__clearqueue__] command to easily clear the queue without having to remove and recall the bot.
++ [+] Added [__wowcharacter__] command to allow character lookup in the format of 'realm -> character'
 + {~] Updated dependencies to their latest respective versions.
 
 ## 2.0.0

@@ -1,5 +1,6 @@
 package com.basketbandit.core.modules.game.wow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -11,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "selected"
 })
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Title {
-
     @JsonProperty("id")
     private Integer id;
 
@@ -36,5 +37,4 @@ public class Title {
     public Boolean getSelected() {
         return selected;
     }
-
 }

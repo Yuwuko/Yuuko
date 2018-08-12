@@ -1,5 +1,6 @@
 package com.basketbandit.core.modules.game.wow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -11,11 +12,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "battlegroup",
         "members",
         "achievementPoints",
-        "emblem"
 })
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Guild {
-
     @JsonProperty("name")
     private String name;
 
@@ -55,5 +55,4 @@ public class Guild {
     public Integer getAchievementPoints() {
         return achievementPoints;
     }
-
 }

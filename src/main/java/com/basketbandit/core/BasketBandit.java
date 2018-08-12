@@ -45,7 +45,7 @@ class BasketBandit extends ListenerAdapter {
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
-    public static void main(String[] args) throws LoginException, IllegalArgumentException {
+    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
         BasketBandit self = new BasketBandit();
 
         Configuration.BOT_ID = args[0];
@@ -64,7 +64,7 @@ class BasketBandit extends ListenerAdapter {
                 .setToken(Configuration.BOT_TOKEN)
                 .addEventListener(self)
                 .setEventManager(new ThreadedEventManager())
-                .build();
+                .buildBlocking();
         bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";

@@ -1,5 +1,6 @@
 package com.basketbandit.core.modules.game.wow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -8,7 +9,6 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "lastModified",
         "name",
         "realm",
         "battlegroup",
@@ -25,11 +25,8 @@ import java.util.List;
         "totalHonorableKills"
 })
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Character {
-
-    @JsonProperty("lastModified")
-    private Integer lastModified;
-
     @JsonProperty("name")
     private String name;
 
@@ -71,11 +68,6 @@ public class Character {
 
     @JsonProperty("totalHonorableKills")
     private Integer totalHonorableKills;
-
-    @JsonProperty("lastModified")
-    public Integer getLastModified() {
-        return lastModified;
-    }
 
     @JsonProperty("name")
     public String getName() {
@@ -146,5 +138,4 @@ public class Character {
     public Integer getTotalHonorableKills() {
         return totalHonorableKills;
     }
-
 }
