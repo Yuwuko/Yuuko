@@ -9,6 +9,9 @@ import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import org.discordbots.api.client.DiscordBotListAPI;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.List;
 
 public class Utils {
@@ -178,6 +181,36 @@ public class Utils {
             botList.setStats(botUser.getId(), Math.toIntExact(jda.getGuildCache().size()), jda.getShardInfo().getShardId(), jda.getShardInfo().getShardTotal());
         } catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Takes an input URL (which hopefully contains a JSON response, buffers the response and returns a string.
+     * This string can be object mapped into something usable in Java.
+     */
+    public static String bufferJson(String inputUrl) {
+        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
+
+            URL url = new URL(inputUrl);
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            if(conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while((length = conn.getInputStream().read(buffer)) != -1) {
+                result.write(buffer, 0, length);
+            }
+
+            return result.toString();
+
+        } catch(Exception ex) {
+            return "";
         }
     }
 

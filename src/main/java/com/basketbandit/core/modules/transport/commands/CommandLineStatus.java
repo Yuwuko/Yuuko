@@ -9,10 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,26 +28,8 @@ public class CommandLineStatus extends Command {
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            URL url = new URL("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Configuration.TFL_ID + "&app_key=" + Configuration.TFL_API);
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-
-            if(conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-            }
-
-            String json;
-            try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = conn.getInputStream().read(buffer)) != -1) {
-                    result.write(buffer, 0, length);
-                }
-
-                json = result.toString();
-            }
-
+            // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
+            String json = Utils.bufferJson("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Configuration.TFL_ID + "&app_key=" + Configuration.TFL_API);
             ArrayList<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<List<LineManager>>(){});
 
             // Build string for reasons why line doesn't have good service.
@@ -101,6 +80,7 @@ public class CommandLineStatus extends Command {
             }
 
         } catch(Exception ex) {
+            Utils.sendMessage(e, "There was an issue processing your request.");
             ex.printStackTrace();
         }
 

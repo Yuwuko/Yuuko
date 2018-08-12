@@ -4,6 +4,7 @@ import com.basketbandit.core.modules.audio.commands.*;
 import com.basketbandit.core.modules.core.commands.*;
 import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
 import com.basketbandit.core.modules.game.commands.CommandRuneScapeStats;
+import com.basketbandit.core.modules.game.commands.CommandWorldOfWarcraftCharacter;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
 import com.basketbandit.core.modules.math.commands.CommandSum;
 import com.basketbandit.core.modules.moderation.commands.*;
@@ -46,6 +47,7 @@ public final class C {
 
     // RuneScape module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
+    public static final Command WORLDOFWARCRAFT_CHARACTER = new CommandWorldOfWarcraftCharacter();
 
     // Music module commands.
     public static final Command PLAY = new CommandPlay();

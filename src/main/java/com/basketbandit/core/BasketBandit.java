@@ -45,7 +45,7 @@ class BasketBandit extends ListenerAdapter {
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
-    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
+    public static void main(String[] args) throws LoginException, IllegalArgumentException {
         BasketBandit self = new BasketBandit();
 
         Configuration.BOT_ID = args[0];
@@ -53,17 +53,18 @@ class BasketBandit extends ListenerAdapter {
         Configuration.GOOGLE_API = args[2];
         Configuration.TFL_ID = args[3];
         Configuration.TFL_API = args[4];
-        Configuration.DATABASE_IP = args[5];
-        Configuration.DATABASE_NAME = args[6];
-        Configuration.DATABASE_USERNAME = args[7];
-        Configuration.DATABASE_PASSWORD = args[8];
+        Configuration.WOW_API = args[5];
+        Configuration.DATABASE_IP = args[6];
+        Configuration.DATABASE_NAME = args[7];
+        Configuration.DATABASE_USERNAME = args[8];
+        Configuration.DATABASE_PASSWORD = args[9];
 
         bot = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
                 .setToken(Configuration.BOT_TOKEN)
                 .addEventListener(self)
                 .setEventManager(new ThreadedEventManager())
-                .buildBlocking();
+                .build();
         bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
@@ -78,7 +79,7 @@ class BasketBandit extends ListenerAdapter {
     private BasketBandit() {
         // Prints a cool program banner :^)
         try {
-            String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit " + Configuration.VERSION};
+            String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit" + Configuration.VERSION};
             Process p = new ProcessBuilder(args).start();
             p.waitFor();
 

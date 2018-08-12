@@ -20,7 +20,6 @@ public class CommandModule extends Command {
         executeCommand(e, command);
     }
 
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String moduleName = command[1].toLowerCase();

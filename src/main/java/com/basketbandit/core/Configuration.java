@@ -34,6 +34,9 @@ public class Configuration {
     // Bot's global command prefix.
     public static String GLOBAL_PREFIX;
 
+    // WOW API key.
+    public static String WOW_API;
+
     // Bot's status, e.g Playing with lottie's tits.
     static String STATUS = "@BasketBandit help";
 }

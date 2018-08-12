@@ -25,7 +25,7 @@ public class CommandHelp extends Command {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        // If command length is smaller than 2, give the regular help DM, else give the command usage embed.
+        // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setColor(Color.RED)
@@ -33,7 +33,6 @@ public class CommandHelp extends Command {
                     .setDescription(
                             "A full list of modules and features is available on my GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit-Java)! \n" +
                                     "If you would like to suggest new features or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)! \n\n" +
-
                                     "P.S, modules used to be listed here but formatting is a pain and nobody has time for that."
                     )
                     .addField("Want me on your server?", "Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite! Also be sure to give me admin privileges if you wish to use the 'nuke' command or any other admin commands.", false)
