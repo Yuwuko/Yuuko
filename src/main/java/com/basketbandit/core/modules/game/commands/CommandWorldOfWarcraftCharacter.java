@@ -14,7 +14,7 @@ import java.awt.*;
 public class CommandWorldOfWarcraftCharacter extends Command {
 
     public CommandWorldOfWarcraftCharacter() {
-        super("wowcharacter", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-wowcharacter [realm] [name]"}, null);
+        super("wowcharacter", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-wowcharacter [character] [realm]"}, null);
     }
 
     public CommandWorldOfWarcraftCharacter(MessageReceivedEvent e, String[] command) {
@@ -27,13 +27,20 @@ public class CommandWorldOfWarcraftCharacter extends Command {
             String[] commandParameters = command[1].split("\\s+", 2);
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = Utils.bufferJson("https://eu.api.battle.net/wow/character/" + commandParameters[0] + "/" + commandParameters[1] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API);
+            String json = Utils.bufferJson("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API);
+
+            if(json.contains("\"status\": \"nok\"")) {
+                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
+                return;
+            }
+
             Character character = new ObjectMapper().readValue(json, new TypeReference<Character>(){});
 
             String classString;
             String raceString;
             String factionString;
             String genderString;
+            String guildString = "None";
 
             switch(character.get_class()) {
                 case 1: classString = "Warrior";
@@ -125,6 +132,10 @@ public class CommandWorldOfWarcraftCharacter extends Command {
                 default: genderString = "Unknown";
             }
 
+            if(character.getGuild() != null) {
+                guildString = character.getGuild().getName();
+            }
+
             EmbedBuilder embed = new EmbedBuilder()
                     .setColor(Color.RED)
                     .setTitle("World of Warcraft - Character information for " + character.getName())
@@ -136,7 +147,7 @@ public class CommandWorldOfWarcraftCharacter extends Command {
                     .addField("Gender", genderString, true)
                     .addField("Faction", factionString, true)
                     .addField("Achievement Points", character.getAchievementPoints()+"", true)
-                    .addField("Guild", character.getGuild().getName(), true)
+                    .addField("Guild", guildString, true)
                     .addField("Battlegroup", character.getBattlegroup(), true)
                     .addField("Honorable Kills", character.getTotalHonorableKills()+"", true)
                     .setFooter("Version: " + Configuration.VERSION + ", Data provided by Blizzard" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());

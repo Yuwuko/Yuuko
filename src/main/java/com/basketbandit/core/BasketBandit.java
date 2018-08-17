@@ -79,7 +79,7 @@ class BasketBandit extends ListenerAdapter {
     private BasketBandit() {
         // Prints a cool program banner :^)
         try {
-            String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit" + Configuration.VERSION};
+            String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit " + Configuration.VERSION};
             Process p = new ProcessBuilder(args).start();
             p.waitFor();
 

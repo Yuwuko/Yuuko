@@ -66,7 +66,7 @@ The global invocation/prefix is `@BasketBandit` (mention), this is used to prefi
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
 | rsstats | Returns a list of RuneScape stats for the given game and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
-| wowcharacter | Returns information about a given World of Warcraft character. | -wowcharacter [realm] [character] | `-wowcharacter silvermoon porcus` |
+| wowcharacter | Returns information about a given World of Warcraft character. | -wowcharacter [character] [realm] | `-wowcharacter porcus silvermoon` |
 ### Music
 
 | Command | Description | Usage | Example | Permission |
