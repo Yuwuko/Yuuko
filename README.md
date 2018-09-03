@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 2.1.0 (07/08/2018) 
+# BasketBandit 2.1.0 (03/09/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -96,10 +96,21 @@ The global invocation/prefix is `@BasketBandit` (mention), this is used to prefi
 
 As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.
 
+## Known issues
+
+P: I still hear audio after I have muted the bot and restarted my client or switched channels. 
+
+S: This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
+
+P: There's no audio playing with using the __-play__ command?
+
+S: There have been issues connecting to some EU discord servers lately, a quick workout for this is to change the server location to US East or elsewhere by 'Clicking server name -> Server settings -> Server Region -> Change'.
+
+
 ## Notes
 
 For the welcome message a basic 'general' text-channel is used. If that does or doesn't exist the bot will also send a PM to the server owner but not attempt to send the message anywhere else.
 
 The logging module requires a text-channel named 'command-log' to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed
 
-Can still hear audio after you have muted the bot and restarted your client or switched channels? This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
+

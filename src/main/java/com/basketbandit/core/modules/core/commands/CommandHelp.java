@@ -31,11 +31,10 @@ public class CommandHelp extends Command {
                     .setColor(Color.RED)
                     .setTitle("Hey " + e.getAuthor().getName() + ",")
                     .setDescription(
-                            "A full list of modules and features is available on my GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit-Java)! \n" +
-                                    "If you would like to suggest new features or have any general comments you can send them to my creator [here](https://discord.gg/QcwghsA)! \n\n" +
-                                    "P.S, modules used to be listed here but formatting is a pain and nobody has time for that."
+                            "A full list of modules and features is available on the GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit-Java)! \n" +
+                            "If you have an issues or suggestions, please join the [support server](https://discord.gg/QcwghsA) and let me know! The only way the bot can improve is if I'm told when things go wrong!"
                     )
-                    .addField("Want me on your server?", "Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite! Also be sure to give me admin privileges if you wish to use the 'nuke' command or any other admin commands.", false)
+                    .addField("Want me on your server?", "Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite! Also be sure to give me admin privileges if you wish to use the 'nuke' or any other admin commands.", false)
                     .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             Utils.sendMessage(e, "Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>");

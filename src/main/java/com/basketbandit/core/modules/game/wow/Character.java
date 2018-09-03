@@ -18,7 +18,6 @@ import java.util.List;
         "level",
         "achievementPoints",
         "thumbnail",
-        "calcClass",
         "faction",
         "guild",
         "titles",
@@ -53,9 +52,6 @@ public class Character {
 
     @JsonProperty("thumbnail")
     private String thumbnail;
-
-    @JsonProperty("calcClass")
-    private String calcClass;
 
     @JsonProperty("faction")
     private Integer faction;
@@ -112,11 +108,6 @@ public class Character {
     @JsonProperty("thumbnail")
     public String getThumbnail() {
         return thumbnail;
-    }
-
-    @JsonProperty("calcClass")
-    public String getCalcClass() {
-        return calcClass;
     }
 
     @JsonProperty("faction")
