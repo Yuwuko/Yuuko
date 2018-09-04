@@ -8,6 +8,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [+] Added [__wowcharacter__] command to allow character lookup in the format of 'realm -> character'
 + [~] Updated dependencies to their latest respective versions.
 + [~] Updated the help command and the join message to encourage users to join the support server if something goes wrong.
++ [~] Updated the [__clearqueue__] command to allow for an optional parameter that clears a single track anywhere in the queue.
 
 ## 2.0.0
 
