@@ -9,6 +9,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Updated dependencies to their latest respective versions.
 + [~] Updated the help command and the join message to encourage users to join the support server if something goes wrong.
 + [~] Updated the [__clearqueue__] command to allow for an optional parameter that clears a single track anywhere in the queue.
++ [~] Updated the [__server__] command to conform with other similar commands.
 
 ## 2.0.0
 

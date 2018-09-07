@@ -28,16 +28,14 @@ public class CommandServer extends Command {
                 .setColor(Color.RED)
                 .setTitle("Server information for: " + server.getName(), null)
                 .setThumbnail(server.getIconUrl())
-                .setDescription(
-                        "Server Owner                 ::  " + server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator() + " (" + server.getOwner().getEffectiveName() + ")" + "\n" +
-                        "Server ID                         ::  " + server.getId() + "\n" +
-                        "Server Created               ::  " + server.getCreationTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")) + "\n" +
-                        "Server Region                 ::  " + server.getRegion().getName() + "\n" +
-                        "Total Users                     ::  " + server.getMemberCache().size() + "\n" +
-                        "Total Text Channels     \u200a::  " + server.getTextChannelCache().size() + "\n" +
-                        "Total Voice Channels   ::  " + server.getVoiceChannels().size() + "\n" +
-                        "Total Roles                      ::  " + server.getRoles().size() + "\n"
-                )
+                .addField("Owner", server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator() + " (" + server.getOwner().getEffectiveName() + ")", true)
+                .addField("ID", server.getId(), true)
+                .addField("Created", server.getCreationTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
+                .addField("Region", server.getRegion().getName(), true)
+                .addField("Users", server.getMemberCache().size()+"", true)
+                .addField("Text Channels", server.getTextChannelCache().size()+"", true)
+                .addField("Voice Channels", server.getVoiceChannels().size()+"", true)
+                .addField("Roles", server.getRoles().size()+"", true)
                 .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
         Utils.sendMessage(e, commandInfo.build());
