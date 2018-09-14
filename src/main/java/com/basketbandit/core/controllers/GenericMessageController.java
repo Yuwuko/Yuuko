@@ -8,6 +8,7 @@ import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.commands.CommandPlay;
 import com.basketbandit.core.modules.logging.ModuleLogging;
 import com.basketbandit.core.utils.Utils;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -47,6 +48,11 @@ public class GenericMessageController {
                     || msgRawLower.startsWith(prefix + prefix)
                     || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
                     || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
+                return;
+            }
+
+            if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
+                Utils.sendMessage(e,"Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
                 return;
             }
 
