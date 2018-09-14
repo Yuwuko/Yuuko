@@ -51,11 +51,6 @@ public class GenericMessageController {
                 return;
             }
 
-            if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                Utils.sendMessage(e,"Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
-                return;
-            }
-
             if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 processMessage(e, startExecutionNano, prefix);
                 return;
@@ -84,6 +79,11 @@ public class GenericMessageController {
         String serverLong = e.getGuild().getId();
 
         try {
+            if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
+                Utils.sendMessage(e,"Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
+                return;
+            }
+
             long executionTime = 0;
 
             Class<?> clazz;
