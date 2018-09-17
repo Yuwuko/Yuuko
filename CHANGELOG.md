@@ -2,6 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 2.1.1
++ [~] Edited a lot of the documentation to make the bot easier to use in the initial setup phase.
++ [~] Changed the default custom prefix from nothing to `-` to aid in the initial setup and ease of use.
++ [~] Enhanced the console prints to give more valuable information about where things are going wrong.
++ [~] Added a check to see and report to the user if the bot has the necessary permissions to work correctly.
++ [~] Updated the [__user__] command to conform with nicer looking style format.
+
 ## 2.1.0
 + [+] Added NSFW module with an [__efukt__] command, forcing me to adopt Jsoup which is actually pretty good. 
 + [+] Added [__clearqueue__] command to easily clear the queue without having to remove and recall the bot.

@@ -24,7 +24,6 @@ public class CommandUser extends Command {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s+", 3);
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         Member target;
 
@@ -57,15 +56,13 @@ public class CommandUser extends Command {
                 .setAuthor("User information about " + target.getEffectiveName() + ",", null, target.getUser().getAvatarUrl())
                 .setTitle("User is currently "+target.getOnlineStatus())
                 .setThumbnail(target.getUser().getAvatarUrl())
-                .setDescription(
-                        "Username                ::  " + Utils.getTag(target) + "\n" +
-                        "UserID                      ::  " + target.getUser().getIdLong() + "\n" +
-                        "Account Created   \u200a\u200a::  " + target.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
-                        "Joined Server          \u200a\u200a::  " + target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")) + "\n" +
-                        "Mutual Servers       ::  " + target.getUser().getMutualGuilds().size() + "\n" +
-                        "Roles                         ::  " + roleString + "\n"
-                    )
-                    .setFooter("Version: " + Configuration.VERSION + ", Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                .addField("Username", Utils.getTag(target), true)
+                .addField("User ID", target.getUser().getIdLong()+"", true)
+                .addField("Account Created", target.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
+                .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
+                .addField("Mutual Servers", target.getUser().getMutualGuilds().size()+"", true)
+                .addField("Roles", roleString.toString(), true)
+                .setFooter("Version: " + Configuration.VERSION + ", Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
         Utils.sendMessage(e, commandInfo.build());
     }

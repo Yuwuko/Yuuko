@@ -79,6 +79,7 @@ public class GenericMessageController {
         String serverLong = e.getGuild().getId();
 
         try {
+            // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
                 Utils.sendMessage(e,"Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
                 return;
@@ -150,9 +151,10 @@ public class GenericMessageController {
             }
 
             // Print the command and execution time into the console.
+            // The main purpose for this is examine where people go wrong when using commands and improve the bot.
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {

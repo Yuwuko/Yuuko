@@ -24,7 +24,7 @@ public class DatabaseFunctions {
 
             if(!resultSet.next()) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`) VALUES ('" + server + "')");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES ('" + server + "', '-')");
                 stmt2.execute();
 
                 conn = new DatabaseConnection().getConnection();

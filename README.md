@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 2.1.0 (03/09/2018) 
+# BasketBandit 2.1.1 (17/09/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -12,13 +12,15 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The global invocation/prefix is `@BasketBandit` (mention), this is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the `setprefix` command below which I recommend to make everything quicker. E.g. `@BasketBandit setprefix !`.
+The global invocation/prefix is `@BasketBandit` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the `setprefix` command below which I recommend to make everything quicker. E.g. `@BasketBandit setprefix !` or `-setprefix !`.
+
+__PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest way to check is by typing the command given above to change the prefix. If you do not wish to do this, ensure that there is only a _single_ space between `@BasketBandit` and the rest of the command.
 
 ### Core
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| setup | Execute if the bot didn't initialise correctly, but shouldn't need to be used. | -setup | `-setup` |
+| setup | Execute if the bot didn't initialise correctly, but shouldn't need to be used. (If it says unsuccessful, the setup was already performed successfully) | -setup | `-setup` |
 | module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` |
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
