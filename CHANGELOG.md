@@ -9,6 +9,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Added a check to see and report to the user if the bot has the necessary permissions to work correctly.
 + [~] Updated the [__user__] command to conform with nicer looking style format.
 + [~] Fixed discordbots.org integration issue so it updates correctly.
++ [~] Added try/catch for message sending so things don't break if no write permission is given.
 
 ## 2.1.0
 + [+] Added NSFW module with an [__efukt__] command, forcing me to adopt Jsoup which is actually pretty good. 

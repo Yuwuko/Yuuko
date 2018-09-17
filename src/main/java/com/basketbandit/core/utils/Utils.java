@@ -46,7 +46,11 @@ public class Utils {
      * @param message String
      */
     public static void sendMessage(GenericMessageEvent event, String message) {
-        event.getTextChannel().sendMessage(message).queue();
+        try {
+            event.getTextChannel().sendMessage(message).queue();
+        } catch(Exception ex) {
+            //
+        }
     }
 
     /**
@@ -55,7 +59,11 @@ public class Utils {
      * @param message MessageEmbed
      */
     public static void sendMessage(GenericMessageEvent event, MessageEmbed message) {
-        event.getTextChannel().sendMessage(message).queue();
+        try {
+            event.getTextChannel().sendMessage(message).queue();
+        } catch(Exception ex) {
+            //
+        }
     }
 
     /**
@@ -64,7 +72,11 @@ public class Utils {
      * @param message String
      */
     public static void sendMessage(MessageChannel channel, String message) {
-        channel.sendMessage(message).queue();
+        try {
+            channel.sendMessage(message).queue();
+        } catch(Exception ex) {
+            //
+        }
     }
 
     /**
@@ -73,7 +85,11 @@ public class Utils {
      * @param message MessageEmbed
      */
     public static void sendMessage(MessageChannel channel, MessageEmbed message) {
-        channel.sendMessage(message).queue();
+        try {
+            channel.sendMessage(message).queue();
+        } catch(Exception ex) {
+            //
+        }
     }
 
     /**
