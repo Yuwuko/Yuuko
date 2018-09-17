@@ -79,12 +79,6 @@ public class GenericMessageController {
         String serverLong = e.getGuild().getId();
 
         try {
-            // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
-            if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                Utils.sendMessage(e,"Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
-                return;
-            }
-
             long executionTime = 0;
 
             Class<?> clazz;
@@ -107,9 +101,15 @@ public class GenericMessageController {
                     clazz = Class.forName(commandModule);
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
 
-                    // Remove the input message.
-                    e.getMessage().delete().queue();
-                    break;
+                    // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
+                    if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
+                        Utils.sendMessage(e,"Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
+                        return;
+                    } else {
+                        // Remove the input message.
+                        e.getMessage().delete().queue();
+                        break;
+                    }
                 }
             }
 

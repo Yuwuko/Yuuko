@@ -166,7 +166,7 @@ public class Utils {
             muted = controller.createRole().setName("Muted").setPermissions(Permission.MESSAGE_READ, Permission.MESSAGE_HISTORY, Permission.VOICE_CONNECT).complete();
 
             for(TextChannel channel: channels) {
-                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK).complete();
+                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK, Permission.VOICE_USE_VAD).complete();
             }
         }
 
@@ -181,7 +181,7 @@ public class Utils {
             }
 
             if(override == null) {
-                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK).complete();
+                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK, Permission.VOICE_USE_VAD).complete();
             }
         }
 
@@ -226,7 +226,7 @@ public class Utils {
             return result.toString();
 
         } catch(Exception ex) {
-            return "";
+            return "ERROR";
         }
     }
 

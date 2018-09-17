@@ -6,7 +6,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Edited a lot of the documentation to make the bot easier to use in the initial setup phase.
 + [~] Changed the default custom prefix from nothing to `-` to aid in the initial setup and ease of use.
 + [~] Enhanced the console prints to give more valuable information about where things are going wrong.
-+ [~] Added a check to see and report to the user if the bot has the necessary permissions to work correctly.
++ [~] Added a check to see and report to the user if the bot has the necessary permissions to work correctly. x2
 + [~] Updated the [__user__] command to conform with nicer looking style format.
 + [~] Fixed discordbots.org integration issue so it updates correctly.
 + [~] Added try/catch for message sending so things don't break if no write permission is given.
