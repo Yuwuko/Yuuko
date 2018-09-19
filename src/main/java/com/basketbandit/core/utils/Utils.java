@@ -226,7 +226,7 @@ public class Utils {
             return result.toString();
 
         } catch(Exception ex) {
-            return "ERROR";
+            return null;
         }
     }
 

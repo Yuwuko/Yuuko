@@ -25,6 +25,7 @@ public class CommandOsuStats extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             String[] commandParameters = command[1].split("\\s+", 2);
+
             String username = commandParameters[0];
             int mode;
 
@@ -48,7 +49,13 @@ public class CommandOsuStats extends Command {
             }
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = Utils.bufferJson("https://osu.ppy.sh/api/get_user&k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode);
+            String json = Utils.bufferJson("https://osu.ppy.sh/api/get_user?k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode);
+
+            if(json.equals("[]")) {
+                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", user " + username + " was not found.");
+                return;
+            }
+
             User user = new ObjectMapper().readValue(json, new TypeReference<User>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
@@ -68,6 +75,7 @@ public class CommandOsuStats extends Command {
             Utils.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
+            ex.printStackTrace();
             Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
