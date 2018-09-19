@@ -63,12 +63,14 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | roll | Rolls a die with the given value and returns the result. Rolling `00` will return a multiple of 10 between `0` and `100`. | -roll [value] &#124; [00] | `-roll 42` |
 | sum |  Calculates and returns the result to simple 2 variable sums, accepting the `+`, `-`, `*`, `/`, `^` and `%` operators. | -sum [value] [operator] [value] | `-sum 400 + 20` |
 
-### RuneScape
+### Game
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
 | rsstats | Returns a list of RuneScape stats for the given game and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
 | wowcharacter | Returns information about a given World of Warcraft character. | -wowcharacter [character] [realm] | `-wowcharacter porcus silvermoon` |
+| osu | Returns information about a given Osu player on the specified mode. | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
+
 ### Music
 
 | Command | Description | Usage | Example | Permission |

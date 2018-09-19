@@ -3,7 +3,6 @@ package com.basketbandit.core.modules.game.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.game.osu.User;
-import com.basketbandit.core.modules.game.wow.Character;
 import com.basketbandit.core.utils.Utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +25,6 @@ public class CommandOsuStats extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             String[] commandParameters = command[1].split("\\s+", 2);
-
             String username = commandParameters[0];
             int mode;
 
@@ -51,16 +49,16 @@ public class CommandOsuStats extends Command {
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
             String json = Utils.bufferJson("https://osu.ppy.sh/api/get_user&k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode);
-            User user = new ObjectMapper().readValue(json, new TypeReference<Character>(){});
+            User user = new ObjectMapper().readValue(json, new TypeReference<User>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setColor(Color.RED)
                     .setTitle(modeString + " stats for " + user.getUsername())
-                    .addField("Accuracy", user.getAccuracy(), true)
+                    .addField("Accuracy", user.getAccuracy() + "%", true)
                     .addField("Time Played (hours)", ((Integer.parseInt(user.getTotalSecondsPlayed())/60)/60)+"", true)
                     .addField("Country", user.getCountry(), true)
                     .addField("Level", user.getLevel(), true)
-                    .addField("Rank", user.getPpRank() + "("+ user.getPpRaw() +"pp)", true)
+                    .addField("Rank", "#"+ user.getPpRank() + "("+ user.getPpRaw() +"pp)", true)
                     .addField("Playcount", user.getPlaycount(), true)
                     .addField("SS+ Ranks", user.getCountRankSsh(), true)
                     .addField("SS Ranks", user.getCountRankSs(), true)
