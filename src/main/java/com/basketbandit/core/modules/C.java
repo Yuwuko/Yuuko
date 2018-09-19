@@ -3,6 +3,7 @@ package com.basketbandit.core.modules;
 import com.basketbandit.core.modules.audio.commands.*;
 import com.basketbandit.core.modules.core.commands.*;
 import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
+import com.basketbandit.core.modules.game.commands.CommandOsuStats;
 import com.basketbandit.core.modules.game.commands.CommandRuneScapeStats;
 import com.basketbandit.core.modules.game.commands.CommandWorldOfWarcraftCharacter;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
@@ -45,9 +46,10 @@ public final class C {
     public static final Command EXCLUDE = new CommandExclude();
     public static final Command INCLUDE = new CommandUnexclude();
 
-    // RuneScape module commands.
+    // Game module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
     public static final Command WORLDOFWARCRAFT_CHARACTER = new CommandWorldOfWarcraftCharacter();
+    public static final Command OSU_STATS = new CommandOsuStats();
 
     // Music module commands.
     public static final Command PLAY = new CommandPlay();

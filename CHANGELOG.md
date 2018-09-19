@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 2.2.0
++ [~] Added [__osu__] command, which allows the user to retrieve stats from either of the 4 modes.
+
 ## 2.1.1
 + [~] Edited a lot of the documentation to make the bot easier to use in the initial setup phase.
 + [~] Changed the default custom prefix from nothing to `-` to aid in the initial setup and ease of use.

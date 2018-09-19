@@ -58,6 +58,7 @@ class BasketBandit extends ListenerAdapter {
         Configuration.DATABASE_NAME = args[7];
         Configuration.DATABASE_USERNAME = args[8];
         Configuration.DATABASE_PASSWORD = args[9];
+        Configuration.OSU_API = args[10];
 
         bot = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
@@ -69,7 +70,7 @@ class BasketBandit extends ListenerAdapter {
 
         Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
         Utils.botUser = bot.getSelfUser();
-        Utils.botList = new DiscordBotListAPI.Builder().token(args[10]).build();
+        Utils.botList = new DiscordBotListAPI.Builder().token(args[11]).build();
         Utils.updateDiscordBotList();
     }
 

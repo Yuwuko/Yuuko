@@ -26,6 +26,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Character {
+
     @JsonProperty("name")
     private String name;
 

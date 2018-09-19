@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.game;
 
 import com.basketbandit.core.modules.C;
 import com.basketbandit.core.modules.Module;
+import com.basketbandit.core.modules.game.commands.CommandOsuStats;
 import com.basketbandit.core.modules.game.commands.CommandRuneScapeStats;
 import com.basketbandit.core.modules.game.commands.CommandWorldOfWarcraftCharacter;
 import com.basketbandit.core.utils.Utils;
@@ -32,6 +33,11 @@ public class ModuleGame extends Module {
 
         if(command[0].equals(C.WORLDOFWARCRAFT_CHARACTER.getCommandName())) {
             new CommandWorldOfWarcraftCharacter(e, command);
+            return;
+        }
+
+        if(command[0].equals(C.OSU_STATS.getCommandName())) {
+            new CommandOsuStats(e, command);
             return;
         }
 
