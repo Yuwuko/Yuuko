@@ -69,7 +69,7 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 |---------|-------------|-------|---------|------------|
 | rsstats | Returns a list of RuneScape stats for the given game and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
 | wowcharacter | Returns information about a given World of Warcraft character. | -wowcharacter [character] [realm] | `-wowcharacter porcus silvermoon` |
-| osu | Returns information about a given Osu player on the specified mode. | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
+| osu | Returns information about a given Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
 
 ### Music
 

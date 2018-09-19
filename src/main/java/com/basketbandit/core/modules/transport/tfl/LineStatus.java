@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "reason",
-        "statusSeverityDescription",
+        "statusSeverityDescription"
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)

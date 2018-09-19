@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "user_id",
@@ -26,7 +28,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "count_rank_a",
         "country",
         "total_seconds_played",
-        "pp_country_rank"
+        "pp_country_rank",
+        "events"
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -91,6 +94,9 @@ public class User {
 
     @JsonProperty("pp_country_rank")
     private String ppCountryRank;
+
+    @JsonProperty("events")
+    private List<Event> events = null;
 
     @JsonProperty("user_id")
     public String getUserId() {
@@ -177,7 +183,6 @@ public class User {
         return countRankA;
     }
 
-
     @JsonProperty("country")
     public String getCountry() {
         return country;
@@ -193,4 +198,8 @@ public class User {
         return ppCountryRank;
     }
 
+    @JsonProperty("events")
+    public List<Event> getEvents() {
+        return events;
+    }
 }

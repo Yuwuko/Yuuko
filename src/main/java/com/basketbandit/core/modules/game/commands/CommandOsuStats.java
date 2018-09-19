@@ -51,7 +51,10 @@ public class CommandOsuStats extends Command {
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
             String json = Utils.bufferJson("https://osu.ppy.sh/api/get_user?k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode);
 
-            if(json.equals("[]")) {
+            // Jackson expects an array when Json objects start with [, so this removes it.
+            json = json.substring(1,json.length()-1);
+
+            if(json.equals("")) {
                 Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", user " + username + " was not found.");
                 return;
             }
@@ -65,12 +68,15 @@ public class CommandOsuStats extends Command {
                     .addField("Time Played (hours)", ((Integer.parseInt(user.getTotalSecondsPlayed())/60)/60)+"", true)
                     .addField("Country", user.getCountry(), true)
                     .addField("Level", user.getLevel(), true)
-                    .addField("Rank", "#"+ user.getPpRank() + "("+ user.getPpRaw() +"pp)", true)
+                    .addField("Rank", "#" + user.getPpRank() + " ("+ user.getPpRaw() +"pp)", true)
+                    .addField("Country Rank", "#" + user.getPpCountryRank(),true)
                     .addField("Playcount", user.getPlaycount(), true)
                     .addField("SS+ Ranks", user.getCountRankSsh(), true)
                     .addField("SS Ranks", user.getCountRankSs(), true)
                     .addField("S+ Ranks", user.getCountRankSh(), true)
-                    .addField("A Ranks", user.getCountRankA()+"", true)
+                    .addField("S Ranks", user.getCountRankS(), true)
+                    .addField("A Ranks", user.getCountRankA(), true)
+
                     .setFooter("Version: " + Configuration.VERSION + ", Data provided by osu.ppy.sh" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             Utils.sendMessage(e, embed.build());
 
