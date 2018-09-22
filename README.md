@@ -67,9 +67,9 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| rsstats | Returns a list of RuneScape stats for the given game and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
-| wowcharacter | Returns information about a given World of Warcraft character. | -wowcharacter [character] [realm] | `-wowcharacter porcus silvermoon` |
-| osu | Returns information about a given Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
+| runescape | Returns a list of RuneScape stats for the given version and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
+| wow | Returns information about a given World of Warcraft character. | -wowcharacter [character] [realm] | `-wowcharacter porcus silvermoon` |
+| osu | Returns a small signature image for an Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
 
 ### Music
 
@@ -80,10 +80,10 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | stop | Stops playback, clearing the queue and removing the background track. | -stop | `-stop` |
 | skip | Skips the currently playing track, if there is one. | -skip | `-skip` |
 | shuffle | Shuffles the queue. | -shuffle | `-shuffle` |
-| currenttrack | Returns information about the currently playing track such as current time, artist and source. | -currenttrack | `-currenttrack` |
-| lasttrack | Returns information about the last played track such as artist and source. | -lasttrack | `-lasttrack` | 
+| current | Returns information about the currently playing track such as current time, artist and source. | -current | `-current` |
+| last | Returns information about the last played track such as artist and source. | -last | `-last` | 
 | queue | Returns the first 10 tracks in the queue or however many there are if under 10. | -queue | `-queue` |
-| clearqueue | Clears the current queue of all of the current tracks, or clears a single track from the given position in the queue. | -clearqueue &#124; [position] | <code>-clearqueue &#124; 4</code> |
+| clear | Clears the current queue of all of the current tracks, or clears a single track from the given position in the queue. | -clear &#124; [position] | <code>-clear &#124; 4</code> |
 | setbackground | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. | -setbackground [url] &#124; [term] | <code>-setbackground https://www.youtube.com/watch?v=va3Dj_sUCJs &#124; cool music</code>  |
 | unsetbackground | Removes the background track. | -unsetbackground | `-unsetbackground` |
 | togglerepeat | Toggles a track to repeat. | -togglerepeat | `-togglerepeat` |

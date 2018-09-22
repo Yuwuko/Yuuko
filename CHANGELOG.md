@@ -4,6 +4,12 @@ Key: [+] added, [-] removed, [~] modified.
 
 ## 2.2.0
 + [~] Added [__osu__] command, which allows the user to retrieve stats from either of the 4 modes.
++ [~] Changed and shortened [__currenttrack__] to [__current__].
++ [~] Changed and shortened [__lasttrack__] to [__last__].
++ [~] Changed and shortened [__clearqueue__] to [__clear__].
++ [~] Changed and shortened [__wowcharacter__] to [__wow__].
++ [~] Changed and /lengthened/ [__rsstats__] to [__runescape__].
++ [~] Refactored World of Warcraft class to reflect changed.
 
 ## 2.1.1
 + [~] Edited a lot of the documentation to make the bot easier to use in the initial setup phase.
