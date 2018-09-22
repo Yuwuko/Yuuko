@@ -21,7 +21,7 @@ public class GenericMessageReactionController {
         MessageReaction react = e.getReaction();
         String serverLong = e.getGuild().getId();
 
-        if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
+        if(react.getReactionEmote().getName().equals("📌")) {
             if(new DatabaseFunctions().checkModuleSettings("moduleUtility", serverLong)) {
                 new ModuleUtility(e);
             }
@@ -32,7 +32,7 @@ public class GenericMessageReactionController {
         MessageReaction react = e.getReaction();
         String serverLong = e.getGuild().getId();
 
-        if(react.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
+        if(react.getReactionEmote().getName().equals("📌")) {
             if(new DatabaseFunctions().checkModuleSettings("moduleUtility", serverLong)) {
                 new ModuleUtility(e);
             }
