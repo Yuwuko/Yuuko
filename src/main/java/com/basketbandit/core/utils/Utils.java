@@ -8,10 +8,16 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import org.discordbots.api.client.DiscordBotListAPI;
+import org.xhtmlrenderer.swing.Java2DRenderer;
 
+import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.List;
 
@@ -258,6 +264,8 @@ public class Utils {
     /**
      * Takes an input URL (which hopefully contains a JSON response, buffers the response and returns a string.
      * This string can be object mapped into something usable in Java.
+     * @param inputUrl String
+     * @return String of buffered Json.
      */
     public static String bufferJson(String inputUrl) {
         try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
@@ -280,6 +288,53 @@ public class Utils {
 
             return result.toString();
 
+        } catch(Exception ex) {
+            return null;
+        }
+    }
+
+    /**
+     * Take a xHTML input, renders and return an image based on it.
+     * @param path String
+     * @param html String
+     * @param temp boolean
+     * @return File rendered by method.
+     */
+    public static File xhtml2image(String path, String html, boolean temp) {
+        try {
+            // Nano time used for unique name.
+            long unique = System.nanoTime();
+
+            // xHTML code dynamically written to a file (since Java2DRenderer doesn't take a string?)
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path + unique + ".xhtml"));
+            writer.write(html);
+            writer.close();
+
+            File xhtml = new File(path + unique + ".xhtml");
+
+            // Reads xHTML code from file, renders, buffers an image and then writes that to a file.
+            // Subclasses 2DRenderer to allow transparent images and such.
+            final java.awt.Color TRANSPARENT = new Color(255, 255, 255, 0);
+            final Java2DRenderer renderer = new Java2DRenderer(xhtml, 425, 200) {
+                @Override
+                protected BufferedImage createBufferedImage(final int width, final int height) {
+                    final BufferedImage image = org.xhtmlrenderer.util.ImageUtil.createCompatibleBufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                    org.xhtmlrenderer.util.ImageUtil.clearImage(image, TRANSPARENT);
+                    return image;
+                }
+            };
+            BufferedImage img = renderer.getImage();
+            ImageIO.write(img, "png", new File(path + unique + ".png"));
+
+            File image = new File(path + unique + ".png");
+
+            if(temp) {
+                // Delete the files to save time later.
+                xhtml.deleteOnExit();
+                image.deleteOnExit();
+            }
+
+            return image;
         } catch(Exception ex) {
             return null;
         }
