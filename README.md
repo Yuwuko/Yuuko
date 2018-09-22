@@ -4,7 +4,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 2.1.1 (17/09/2018) 
+# BasketBandit 2.2.0 (22/09/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -102,13 +102,13 @@ As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will 
 
 ## Known issues
 
-P: I still hear audio after I have muted the bot and restarted my client or switched channels. 
+__P:__ I still hear audio after I have muted the bot and restarted my client or switched channels. 
 
-S: This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
+__S:__ This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
 
-P: There's no audio playing with using the __-play__ command?
+__P:__ There's no audio playing with using the __-play__ command?
 
-S: There have been issues connecting to some EU discord servers lately, a quick workout for this is to change the server location to US East or elsewhere by 'Clicking server name -> Server settings -> Server Region -> Change'.
+__S:__ There have been issues connecting to some EU discord servers lately, a quick workout for this is to change the server location to US East or elsewhere by 'Clicking server name -> Server settings -> Server Region -> Change'.
 
 
 ## Notes

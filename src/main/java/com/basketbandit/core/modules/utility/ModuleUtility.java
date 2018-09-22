@@ -37,7 +37,7 @@ public class ModuleUtility extends Module {
     public ModuleUtility(MessageReactionAddEvent e) {
         super("ModuleUtility", "moduleUtility");
 
-        if(e.getReaction().getReactionEmote().getName().equals("\uD83D\uDCCC")) {
+        if(e.getReaction().getReactionEmote().getName().equals("📌")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
             message.pin().queue();
         }
@@ -52,9 +52,9 @@ public class ModuleUtility extends Module {
 
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
-        if(e.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
+        if(e.getReactionEmote().getName().equals("📌")) {
             for(MessageReaction emote: message.getReactions()) {
-                if(emote.getReactionEmote().getName().equals("\uD83D\uDCCC")) {
+                if(emote.getReactionEmote().getName().equals("📌")) {
                     return;
                 }
             }
