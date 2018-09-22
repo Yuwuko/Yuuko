@@ -3,6 +3,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/basketbandit/basketbandit-java/badge)](https://www.codefactor.io/repository/github/basketbandit/basketbandit-java)
 
 # BasketBandit 2.2.0 (22/09/2018) 
 
