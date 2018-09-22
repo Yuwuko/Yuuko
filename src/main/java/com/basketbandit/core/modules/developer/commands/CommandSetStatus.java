@@ -33,6 +33,7 @@ public class CommandSetStatus extends Command {
             case "watching":
                 e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, commandParameters[1]));
                 break;
+            default: e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, "@BasketBandit help"));
         }
 
     }

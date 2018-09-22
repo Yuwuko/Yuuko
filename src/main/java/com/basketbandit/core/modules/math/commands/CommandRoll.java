@@ -18,8 +18,6 @@ public class CommandRoll extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         int num;

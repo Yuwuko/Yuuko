@@ -17,8 +17,6 @@ public class CommandSum extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String sumString;
@@ -60,6 +58,4 @@ public class CommandSum extends Command {
         EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);
         Utils.sendMessage(e, embed.build());
     }
-
-    // TODO: Remake the sum class, try to parse full equations using BODMAS.
 }
