@@ -297,10 +297,12 @@ public class Utils {
      * Take a xHTML input, renders and return an image based on it.
      * @param path String
      * @param html String
+     * @param width int
+     * @param height int
      * @param temp boolean
      * @return File rendered by method.
      */
-    public static File xhtml2image(String path, String html, boolean temp) {
+    public static File xhtml2image(String path, String html, int width, int height, boolean temp) {
         try {
             // Nano time used for unique name.
             long unique = System.nanoTime();
@@ -315,7 +317,7 @@ public class Utils {
             // Reads xHTML code from file, renders, buffers an image and then writes that to a file.
             // Subclasses 2DRenderer to allow transparent images and such.
             final java.awt.Color TRANSPARENT = new Color(255, 255, 255, 0);
-            final Java2DRenderer renderer = new Java2DRenderer(xhtml, 425, 200) {
+            final Java2DRenderer renderer = new Java2DRenderer(xhtml, width, height) {
                 @Override
                 protected BufferedImage createBufferedImage(final int width, final int height) {
                     final BufferedImage image = org.xhtmlrenderer.util.ImageUtil.createCompatibleBufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
