@@ -10,6 +10,8 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Changed and shortened [__wowcharacter__] to [__wow__].
 + [~] Changed and /lengthened/ [__rsstats__] to [__runescape__].
 + [~] Refactored World of Warcraft class to reflect changed.
++ [~] Changed unicode to pasted emoji for some reason.
++ [~] Added a shiny new badge to README.md (yay)
 
 ## 2.1.1
 + [~] Edited a lot of the documentation to make the bot easier to use in the initial setup phase.
