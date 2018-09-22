@@ -78,7 +78,7 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        if(command[0].equals(C.TRACK.getCommandName())) {
+        if(command[0].equals(C.CURRENT_TRACK.getCommandName())) {
             new CommandCurrentTrack(e, command);
             return;
         }

@@ -68,7 +68,7 @@ public class CommandOsuStats extends Command {
 
             User user = new ObjectMapper().readValue(json, new TypeReference<User>(){});
 
-            String html = "";
+            String html;
 
             try {
                 // We pull the accuracy out to get a quick and easy 2dp string. (including decimal point)

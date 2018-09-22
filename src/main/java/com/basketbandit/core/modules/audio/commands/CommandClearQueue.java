@@ -12,7 +12,7 @@ import java.util.Queue;
 public class CommandClearQueue extends Command {
 
     public CommandClearQueue() {
-        super("clearqueue", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-clearqueue", "-clearqueue 3"}, null);
+        super("clear", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-clear", "-clear 3"}, null);
     }
 
     public CommandClearQueue(MessageReceivedEvent e, String[] command) {

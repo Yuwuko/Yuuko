@@ -11,13 +11,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
-public class CommandWorldOfWarcraftCharacter extends Command {
+public class CommandWorldOfWarcraftStats extends Command {
 
-    public CommandWorldOfWarcraftCharacter() {
-        super("wowcharacter", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-wowcharacter [character] [realm]"}, null);
+    public CommandWorldOfWarcraftStats() {
+        super("wow", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-wow [character] [realm]"}, null);
     }
 
-    public CommandWorldOfWarcraftCharacter(MessageReceivedEvent e, String[] command) {
+    public CommandWorldOfWarcraftStats(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 

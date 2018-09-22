@@ -15,7 +15,7 @@ import java.awt.*;
 public class CommandCurrentTrack extends Command {
 
     public CommandCurrentTrack() {
-        super("currenttrack", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-currenttrack"}, null);
+        super("current", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-current"}, null);
     }
 
     public CommandCurrentTrack(MessageReceivedEvent e, String[] command) {

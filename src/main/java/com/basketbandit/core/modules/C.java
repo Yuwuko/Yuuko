@@ -5,7 +5,7 @@ import com.basketbandit.core.modules.core.commands.*;
 import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
 import com.basketbandit.core.modules.game.commands.CommandOsuStats;
 import com.basketbandit.core.modules.game.commands.CommandRuneScapeStats;
-import com.basketbandit.core.modules.game.commands.CommandWorldOfWarcraftCharacter;
+import com.basketbandit.core.modules.game.commands.CommandWorldOfWarcraftStats;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
 import com.basketbandit.core.modules.math.commands.CommandSum;
 import com.basketbandit.core.modules.moderation.commands.*;
@@ -48,7 +48,7 @@ public final class C {
 
     // Game module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
-    public static final Command WORLDOFWARCRAFT_CHARACTER = new CommandWorldOfWarcraftCharacter();
+    public static final Command WORLDOFWARCRAFT_CHARACTER = new CommandWorldOfWarcraftStats();
     public static final Command OSU_STATS = new CommandOsuStats();
 
     // Music module commands.
@@ -56,7 +56,7 @@ public final class C {
     public static final Command STOP = new CommandStop();
     public static final Command SKIP = new CommandSkip();
     public static final Command PAUSE = new CommandPause();
-    public static final Command TRACK = new CommandCurrentTrack();
+    public static final Command CURRENT_TRACK = new CommandCurrentTrack();
     public static final Command SHUFFLE = new CommandShuffle();
     public static final Command QUEUE = new CommandQueue();
     public static final Command SET_BACKGROUND = new CommandSetBackground();

@@ -11,7 +11,7 @@ import java.net.URL;
 public class CommandRuneScapeStats extends Command {
 
     public CommandRuneScapeStats() {
-        super("rsstats", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-rsstats [game] [player]"}, null);
+        super("runescape", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-runescape [game] [player]"}, null);
     }
 
     public CommandRuneScapeStats(MessageReceivedEvent e, String[] command) {

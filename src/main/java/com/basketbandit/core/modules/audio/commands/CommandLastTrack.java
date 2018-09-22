@@ -15,7 +15,7 @@ import java.awt.*;
 public class CommandLastTrack extends Command {
 
 	public CommandLastTrack() {
-		super("lasttrack", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-lasttrack"}, null);
+		super("last", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-last"}, null);
 	}
 
 	public CommandLastTrack(MessageReceivedEvent e, String[] command) {
@@ -31,7 +31,7 @@ public class CommandLastTrack extends Command {
 		if(manager.player.getPlayingTrack() != null) {
 			EmbedBuilder queuedTrack = new EmbedBuilder()
 					.setColor(Color.WHITE)
-					.setAuthor("Last Track")
+					.setAuthor("Last track:")
 					.setTitle(track.getInfo().title, track.getInfo().uri)
 					.setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")
 					.addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
