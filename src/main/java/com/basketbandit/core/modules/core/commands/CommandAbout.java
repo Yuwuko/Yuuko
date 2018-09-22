@@ -48,7 +48,7 @@ public class CommandAbout extends Command {
                 .addField("Commands", Utils.commandCount, true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", TimeKeeper.runtime, true)
-                .addField("Ping", bot.getJDA().getPing()+"", true);
+                .addField("Heartbeat", bot.getJDA().getPing()+"", true);
 
         Utils.sendMessage(e, about.build());
     }
