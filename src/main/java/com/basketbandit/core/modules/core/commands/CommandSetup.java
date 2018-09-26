@@ -21,9 +21,6 @@ public class CommandSetup extends Command {
         executeCommandAux(e);
     }
 
-
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();

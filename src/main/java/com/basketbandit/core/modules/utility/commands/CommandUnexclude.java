@@ -20,8 +20,8 @@ public class CommandUnexclude extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
         String serverId;
-        String channelId ;
-        String module ;
+        String channelId;
+        String module;
 
         if(commandParameters.length > 1) {
             serverId = e.getGuild().getId();

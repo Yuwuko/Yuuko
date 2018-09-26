@@ -16,8 +16,6 @@ public class CommandSetPrefix extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String value = command[1].toLowerCase();

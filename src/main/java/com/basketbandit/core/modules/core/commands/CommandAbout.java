@@ -21,8 +21,6 @@ public class CommandAbout extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();

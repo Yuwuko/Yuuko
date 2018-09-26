@@ -41,6 +41,8 @@ public class CommandHelp extends Command {
             e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
 
         } else {
+            // Loop through the list of commands until the name of the command matches the help commands parameter given.
+            // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
             for(Command cmd: Utils.commandList) {
                 if(cmd.getCommandName().equals(command[1])) {
                     String commandPermission;
@@ -59,6 +61,9 @@ public class CommandHelp extends Command {
                     StringBuilder bindList = new StringBuilder();
                     StringBuilder excludeList = new StringBuilder();
 
+                    // Connect to the database, grab results about bindings and exclusions for a certain command and return them.
+                    // If the command is excluded add it to the first list, if it is bound add it to the second list.
+                    // In the event that there are no exclusions nor bindings, just return "none".
                     try {
                         Connection connection = new DatabaseConnection().getConnection();
                         ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false, true));

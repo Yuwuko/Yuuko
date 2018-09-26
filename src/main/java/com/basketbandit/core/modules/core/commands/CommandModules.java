@@ -24,8 +24,6 @@ public class CommandModules extends Command {
         executeCommand(e, command);
     }
 
-
-
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();
