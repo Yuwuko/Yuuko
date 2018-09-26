@@ -14,11 +14,11 @@ import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class Utils {
@@ -43,7 +43,7 @@ public class Utils {
      * @param user the user to retrieve
      * @return username#discriminator
      */
-    public static String getTag(User user) {
+    private static String getTag(User user) {
         return user.getName() + "#" + user.getDiscriminator();
     }
 
@@ -325,6 +325,7 @@ public class Utils {
                     return image;
                 }
             };
+
             BufferedImage img = renderer.getImage();
             ImageIO.write(img, "png", new File(path + unique + ".png"));
 
@@ -340,6 +341,17 @@ public class Utils {
         } catch(Exception ex) {
             return null;
         }
+    }
+
+    /**
+     * Takes a path and encoding type and returns a string of the file.
+     * @param path String
+     * @param encoding Charset
+     * @return String retrieved from file.
+     */
+    public static String readFile(String path, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 
 }

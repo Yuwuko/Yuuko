@@ -29,6 +29,8 @@ import org.discordbots.api.client.DiscordBotListAPI;
 
 import javax.security.auth.login.LoginException;
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -45,33 +47,39 @@ class BasketBandit extends ListenerAdapter {
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
-    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
+    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException, IOException {
         BasketBandit self = new BasketBandit();
 
-        Configuration.BOT_ID = args[0];
-        Configuration.BOT_TOKEN = args[1];
-        Configuration.GOOGLE_API = args[2];
-        Configuration.TFL_ID = args[3];
-        Configuration.TFL_API = args[4];
-        Configuration.WOW_API = args[5];
-        Configuration.DATABASE_IP = args[6];
-        Configuration.DATABASE_NAME = args[7];
-        Configuration.DATABASE_USERNAME = args[8];
-        Configuration.DATABASE_PASSWORD = args[9];
-        Configuration.OSU_API = args[10];
+        BufferedReader config = new BufferedReader(new FileReader("config.txt"));
+
+        Configuration.BOT_ID = config.readLine();
+        Configuration.BOT_TOKEN = config.readLine();
+        Configuration.GOOGLE_API = config.readLine();
+        Configuration.TFL_ID = config.readLine();
+        Configuration.TFL_API = config.readLine();
+        Configuration.WOW_API = config.readLine();
+        Configuration.DATABASE_IP = config.readLine();
+        Configuration.DATABASE_NAME = config.readLine();
+        Configuration.DATABASE_USERNAME = config.readLine();
+        Configuration.DATABASE_PASSWORD = config.readLine();
+        Configuration.OSU_API = config.readLine();
 
         bot = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
                 .setToken(Configuration.BOT_TOKEN)
                 .addEventListener(self)
                 .setEventManager(new ThreadedEventManager())
-                .buildBlocking();
+                .build();
+        bot.awaitReady();
+
         bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
         Utils.botUser = bot.getSelfUser();
-        Utils.botList = new DiscordBotListAPI.Builder().token(args[11]).build();
+        Utils.botList = new DiscordBotListAPI.Builder().token(config.readLine()).build();
         Utils.updateDiscordBotList();
+
+        config.close();
     }
 
     /**

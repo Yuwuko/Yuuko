@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 2.2.1
++ [~] Changed/Updated depreciated code to fit in with current versions.
++ [~] Updated dependencies to their latest versions to keep on to of everything.
+
 ## 2.2.0
 + [~] Added [__osu__] command, which allows the user to retrieve stats from either of the 4 modes.
 + [~] Changed and shortened [__currenttrack__] to [__current__].

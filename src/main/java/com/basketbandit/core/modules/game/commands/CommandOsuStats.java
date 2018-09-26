@@ -67,7 +67,6 @@ public class CommandOsuStats extends Command {
             }
 
             User user = new ObjectMapper().readValue(json, new TypeReference<User>(){});
-
             String html;
 
             try {
