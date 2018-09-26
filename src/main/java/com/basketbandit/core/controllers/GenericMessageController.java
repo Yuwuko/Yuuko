@@ -123,7 +123,7 @@ public class GenericMessageController {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.");
+                        Utils.sendMessage(e, String.format("Sorry %s, that command is excluded from this channel.", e.getAuthor().getAsMention()));
                         break;
                     }
                 } else {
@@ -142,7 +142,7 @@ public class GenericMessageController {
 
             if(bound && !executed) {
                 boundChannels = Utils.removeLastOccurrence(boundChannels, ", ");
-                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString());
+                Utils.sendMessage(e, String.format("Sorry %s, the %s command is bound to %s.", e.getAuthor().getAsMention(), input[0], boundChannels.toString()));
             }
 
             if(constructor != null && !executed && !bound) {
@@ -154,7 +154,7 @@ public class GenericMessageController {
             // The main purpose for this is examine where people go wrong when using commands and improve the bot.
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
+                System.out.printf("[%s] %s - %s - %s (%sms) \n", Thread.currentThread().getName(), Instant.now().truncatedTo(ChronoUnit.SECONDS), e.getGuild().getName(), e.getMessage().getContentDisplay(), executionTime);
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
@@ -186,7 +186,7 @@ public class GenericMessageController {
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
                     } else if(input[0].equals("cancel")) {
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
-                        Utils.sendMessage(e, "[" + e.getAuthor().getAsMention() + "] Search cancelled.");
+                        Utils.sendMessage(e, String.format("%s's search cancelled.", e.getAuthor().getAsMention()));
                     }
                 }
 
@@ -195,7 +195,7 @@ public class GenericMessageController {
 
                 if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                    System.out.printf("[%s] %s - %s - %s (%sms) \n", Thread.currentThread().getName(), Instant.now().truncatedTo(ChronoUnit.SECONDS), e.getGuild().getName(), e.getMessage().getContentDisplay(), executionTime);
                     new ModuleLogging(e, executionTime, null);
                 }
             }

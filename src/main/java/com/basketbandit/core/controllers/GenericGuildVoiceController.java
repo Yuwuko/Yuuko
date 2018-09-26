@@ -12,7 +12,6 @@ public class GenericGuildVoiceController {
         if(e instanceof GuildVoiceLeaveEvent || e instanceof GuildVoiceMoveEvent) {
             voiceChannelLonelyCheck(e);
         }
-
     }
 
     private void voiceChannelLonelyCheck(GenericGuildVoiceEvent e) {
