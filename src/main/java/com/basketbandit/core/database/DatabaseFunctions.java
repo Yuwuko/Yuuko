@@ -1,8 +1,13 @@
 package com.basketbandit.core.database;
 
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Iterator;
 
 public class DatabaseFunctions {
 
@@ -41,6 +46,49 @@ public class DatabaseFunctions {
             try {
                 conn.close();
             } catch(Exception ex) {
+                System.out.println("[ERROR] Unable to close connection to database.");
+            }
+        }
+    }
+
+    /**
+     * Adds a new server to the database and initialises it's settings.
+     * @param e MessageReceivedEvent.
+     * @return if the add was successful.
+     */
+    public boolean addServers(MessageReceivedEvent e) {
+        Guild guild;
+
+        try {
+            SnowflakeCacheView servers = e.getJDA().getGuildCache();
+            Iterator it = servers.iterator();
+
+            while(it.hasNext()) {
+                guild = (Guild)it.next();
+
+                PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = '" + guild.getId() + "'");
+                ResultSet resultSet = stmt.executeQuery();
+
+                if(!resultSet.next()) {
+                    conn = new DatabaseConnection().getConnection();
+                    PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES ('" + guild.getId() + "', '-')");
+                    stmt2.execute();
+
+                    conn = new DatabaseConnection().getConnection();
+                    PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES ('" + guild.getId() + "')");
+                    stmt3.execute();
+                }
+            }
+
+            return true;
+
+        } catch (Exception ex) {
+            System.out.println("[ERROR] Unable to add new server to the database.");
+            return false;
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception ex) {
                 System.out.println("[ERROR] Unable to close connection to database.");
             }
         }

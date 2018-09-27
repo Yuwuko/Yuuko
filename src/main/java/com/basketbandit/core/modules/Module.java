@@ -26,7 +26,7 @@ public abstract class Module {
         if(new DatabaseFunctions().checkModuleSettings(dbModuleName, e.getGuild().getId())) {
             return false;
         } else {
-            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", " + moduleName + " is disabled.");
+            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", '" + moduleName.substring(6, moduleName.length()).toLowerCase() + "' is disabled.");
             return true;
         }
     }

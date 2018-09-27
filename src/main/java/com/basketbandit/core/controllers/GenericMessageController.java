@@ -91,7 +91,7 @@ public class GenericMessageController {
             StringBuilder boundChannels = new StringBuilder();
 
             // Iterate through the command list, if the input matches the effective name (includes invocation)
-            // find the module class that beStrings to the command itself and create a new instance of that
+            // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
             for(Command c : Utils.commandList) {

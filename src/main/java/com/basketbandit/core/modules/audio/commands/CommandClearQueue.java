@@ -24,7 +24,6 @@ public class CommandClearQueue extends Command {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length > 1) {
-
             int clearPos;
 
             try {

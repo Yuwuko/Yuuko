@@ -2,12 +2,21 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.0.0
++ [+] Upgraded project to Java 11 since Java 10 has just become obsolete.
++ [+] Added [__addservers__] dev command to quickly re-add all of the servers to the database in the event of a data loss.
++ [~] Moved from a docker container of MySQL to an installation on the OS, which is much quicker.
++ [~] Transitioned from setting all api keys and such as arguments to the .jar to a much easier to ready configuration file.
++ [~] Edited formatting of module disabled message to give the user a better understand of which module it is.
+
 ## 2.2.1
 + [~] Changed/Updated depreciated code to fit in with current versions.
 + [~] Updated dependencies to their latest versions to keep on to of everything.
++ [~] Cleaned up some of the code to make it slightly more readable.
 
 ## 2.2.0
-+ [~] Added [__osu__] command, which allows the user to retrieve stats from either of the 4 modes.
++ [+] Added [__osu__] command, which allows the user to retrieve stats from either of the 4 modes.
++ [+] Added a shiny new badge to README.md (yay)
 + [~] Changed and shortened [__currenttrack__] to [__current__].
 + [~] Changed and shortened [__lasttrack__] to [__last__].
 + [~] Changed and shortened [__clearqueue__] to [__clear__].
@@ -15,16 +24,15 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Changed and /lengthened/ [__rsstats__] to [__runescape__].
 + [~] Refactored World of Warcraft class to reflect changed.
 + [~] Changed unicode to pasted emoji for some reason.
-+ [~] Added a shiny new badge to README.md (yay)
 
 ## 2.1.1
++ [+] Added try/catch for message sending so things don't break if no write permission is given.
 + [~] Edited a lot of the documentation to make the bot easier to use in the initial setup phase.
 + [~] Changed the default custom prefix from nothing to `-` to aid in the initial setup and ease of use.
 + [~] Enhanced the console prints to give more valuable information about where things are going wrong.
 + [~] Added a check to see and report to the user if the bot has the necessary permissions to work correctly. x2
 + [~] Updated the [__user__] command to conform with nicer looking style format.
 + [~] Fixed discordbots.org integration issue so it updates correctly.
-+ [~] Added try/catch for message sending so things don't break if no write permission is given.
 
 ## 2.1.0
 + [+] Added NSFW module with an [__efukt__] command, forcing me to adopt Jsoup which is actually pretty good. 

@@ -50,7 +50,7 @@ class BasketBandit extends ListenerAdapter {
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException, IOException {
         BasketBandit self = new BasketBandit();
 
-        BufferedReader config = new BufferedReader(new FileReader("config.txt"));
+        BufferedReader config = new BufferedReader(new FileReader("configuration.txt"));
 
         Configuration.BOT_ID = config.readLine();
         Configuration.BOT_TOKEN = config.readLine();

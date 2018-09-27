@@ -2,6 +2,7 @@ package com.basketbandit.core.modules;
 
 import com.basketbandit.core.modules.audio.commands.*;
 import com.basketbandit.core.modules.core.commands.*;
+import com.basketbandit.core.modules.developer.commands.CommandAddServers;
 import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
 import com.basketbandit.core.modules.game.commands.CommandOsuStats;
 import com.basketbandit.core.modules.game.commands.CommandRuneScapeStats;
@@ -16,6 +17,7 @@ import com.basketbandit.core.modules.utility.commands.*;
 public final class C {
     // Dev module commands.
     public static final Command SET_STATUS = new CommandSetStatus();
+    public static final Command ADD_SERVERS = new CommandAddServers();
 
     // Core module commands.
     public static final Command SETUP = new CommandSetup();
