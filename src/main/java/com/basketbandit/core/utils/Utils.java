@@ -19,6 +19,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Utils {
@@ -28,6 +29,12 @@ public class Utils {
     public static List<Module> moduleList;
     public static String commandCount;
     public static DiscordBotListAPI botList;
+
+    public static LinkedList<String> lastFive;
+    public static String latestInfo;
+    public static String latestError;
+    private static int messagesProcessed;
+    private static int commandsProcessed;
 
     /**
      * Returns a username and discriminator in format username#discriminator.
@@ -352,6 +359,57 @@ public class Utils {
     public static String readFile(String path, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
+    }
+
+    /**
+     * Console output message method.
+     */
+    public static void consoleOutput(String latest) {
+
+        if(!latest.startsWith("[INFO]")) {
+            if(!latest.startsWith("[ERROR]")) {
+                if(!latest.equals("")) {
+                    lastFive.addFirst(latest);
+                    commandsProcessed++;
+                    if(lastFive.size() > 5) {
+                        lastFive.removeLast();
+                    }
+                }
+            } else {
+                latestError = latest;
+            }
+        } else {
+           latestInfo = latest;
+        }
+
+        messagesProcessed++;
+
+        // Default shell size is 80x24, this output will allow each message to take up the whole screen
+        // thus giving the illusion that the current page is changing rather than just being rewritten under.
+        System.out.println();
+        System.out.println("           ____            _        _   ____                  _ _ _ ");
+        System.out.println("          | __ )  __ _ ___| | _____| |_| __ )  __ _ _ __   __| (_) |_");
+        System.out.println("          |  _ \\ / _` / __| |/ / _ \\ __|  _ \\ / _` | '_ \\ / _` | | __|");
+        System.out.println("          | |_) | (_| \\__ \\   <  __/ |_| |_) | (_| | | | | (_| | | |_");
+        System.out.println("          |____/ \\__,_|___/_|\\_\\___|\\__|____/ \\__,_|_| |_|\\__,_|_|\\__|");
+        System.out.println();
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃                              LAST FIVE COMMANDS                              ┃");
+        System.out.println("┃ " + lastFive.get(0));
+        System.out.println("┃ " + lastFive.get(1));
+        System.out.println("┃ " + lastFive.get(2));
+        System.out.println("┃ " + lastFive.get(3));
+        System.out.println("┃ " + lastFive.get(4));
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃                              MOST RECENT [INFO]                              ┃");
+        System.out.println("┃ " + latestInfo);
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃                                LATEST [ERROR]                                ┃");
+        System.out.println("┃ " + latestError);
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃                                                                              ┃");
+        System.out.println("┃ Messages processed: " + messagesProcessed + ", Commands processed: " + commandsProcessed);
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
 
 }

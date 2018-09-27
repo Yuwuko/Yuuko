@@ -8,6 +8,9 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Moved from a docker container of MySQL to an installation on the OS, which is much quicker.
 + [~] Transitioned from setting all api keys and such as arguments to the .jar to a much easier to ready configuration file.
 + [~] Edited formatting of module disabled message to give the user a better understand of which module it is.
++ [~] Made GenericMessageController more efficient by doing a bot check immediately instead of after a database call.
++ [~] Moved all System.out.println(); calls to a Utils function to make things easier to handle uniformly.
++ [~] Edited the [__efukt__] command to remove an enormous description with every command.
 
 ## 2.2.1
 + [~] Changed/Updated depreciated code to fit in with current versions.

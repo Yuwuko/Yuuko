@@ -27,7 +27,7 @@ public class CommandEfukt extends Command {
             if(doc.getElementsByClass("image_content").isEmpty()) {
                 efuktPost = new EmbedBuilder()
                         .setTitle(doc.getElementsByTag("h1").text())
-                        .setDescription(doc.getElementsByClass("desc").text() + "\n" + doc.getElementsByTag("source").attr("src"))
+                        .setDescription(doc.getElementsByTag("source").attr("src"))
                         .setImage(doc.getElementsByTag("video").attr("poster"))
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
@@ -35,7 +35,7 @@ public class CommandEfukt extends Command {
             } else {
                 efuktPost = new EmbedBuilder()
                         .setTitle(doc.getElementsByTag("h1").text())
-                        .setDescription(doc.getElementsByClass("desc").text() + "\n" + doc.getElementsByClass("image_content").attr("src"))
+                        .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 

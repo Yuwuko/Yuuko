@@ -56,7 +56,7 @@ public class GenericGuildController {
                     c.sendMessage(about.build()).queue();
                     break;
                 } catch(PermissionException ex) {
-                    System.out.println("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
+                    Utils.consoleOutput("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
                 }
             }
         }
@@ -70,6 +70,6 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
         Utils.updateDiscordBotList();
-        System.out.println("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
+        Utils.consoleOutput("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }
 }

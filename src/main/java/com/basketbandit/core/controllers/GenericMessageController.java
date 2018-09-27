@@ -30,21 +30,25 @@ public class GenericMessageController {
 
     private void messageReceivedEvent(MessageReceivedEvent e) {
         try {
+            // Figure out if the user is a bot or not, so we don't waste any time.
+            User user = e.getAuthor();
+            if(user.isBot()) {
+                return;
+            }
+
             // Used to help calculate execution time of functions.
             long startExecutionNano = System.nanoTime();
 
             // Help command (Private Message) throws null pointer for serverLong (Obviously.)
             String serverLong = e.getGuild().getId();
             String msgRawLower = e.getMessage().getContentRaw().toLowerCase();
-            User user = e.getAuthor();
 
             String prefix = new DatabaseFunctions().getServerPrefix(serverLong);
             if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
 
-            if(user.isBot()
-                    || msgRawLower.equals(prefix)
+            if(msgRawLower.equals(prefix)
                     || msgRawLower.startsWith(prefix + prefix)
                     || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
                     || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
@@ -59,6 +63,9 @@ public class GenericMessageController {
             if(msgRawLower.matches("^[0-9]{1,2}$") || msgRawLower.equals("cancel")) {
                 processMessage(e, startExecutionNano);
             }
+
+            // Passes nothing through to the console output so it updates a registered message.
+            Utils.consoleOutput("");
 
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen.
@@ -154,7 +161,7 @@ public class GenericMessageController {
             // The main purpose for this is examine where people go wrong when using commands and improve the bot.
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
+                Utils.consoleOutput( Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
@@ -186,7 +193,7 @@ public class GenericMessageController {
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
                     } else if(input[0].equals("cancel")) {
                         ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
-                        Utils.sendMessage(e, "[" + e.getAuthor().getAsMention() + "] Search cancelled.");
+                        Utils.sendMessage(e, e.getAuthor().getAsMention() + " cancelled their search.");
                     }
                 }
 
@@ -195,7 +202,7 @@ public class GenericMessageController {
 
                 if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    System.out.println("[" + Thread.currentThread().getName() + "] " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                    Utils.consoleOutput(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                     new ModuleLogging(e, executionTime, null);
                 }
             }
