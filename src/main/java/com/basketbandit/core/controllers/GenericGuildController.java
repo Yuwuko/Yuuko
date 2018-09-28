@@ -51,7 +51,7 @@ public class GenericGuildController {
                 .addField("Commands", SystemInformation.getCommandCount(), true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", SystemClock.getRuntime(), true)
-                .addField("Hearbeat", SystemClock.getPing(), true);
+                .addField("Hearbeat", SystemInformation.getPing(), true);
 
         for(TextChannel c: channels) {
             if(c.getName().toLowerCase().equals("general")) {

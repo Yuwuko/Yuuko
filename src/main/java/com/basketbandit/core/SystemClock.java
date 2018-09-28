@@ -4,7 +4,6 @@ public class SystemClock implements Runnable {
 
     private static boolean running;
     private static String runtime;
-    private static Long ping;
 
     SystemClock() {
         running = true;
@@ -14,25 +13,27 @@ public class SystemClock implements Runnable {
     @Override
     public void run() {
         try {
-            // Wait 5 seconds to give the system time to boot.
-            Thread.sleep(5000);
+            // Wait 10 seconds to give the system time to boot.
+            Thread.sleep(10000);
 
             int d = 0, h = 0, m = 0, s = 0;
             String ds, hs, ms, ss;
             int fm = 0, oh = 0;
+
+            SystemInformation.updatePing();
 
             while(running) {
                 Thread.sleep(1000);
 
                 fm++;
                 if(fm == 300) {
+                    SystemInformation.updatePing();
                     fm = 0;
                 }
 
                 oh++;
                 if(oh == 3600) {
                     oh = 0;
-                    ping = BasketBandit.bot.getPing();
                 }
 
                 s++;
@@ -56,6 +57,7 @@ public class SystemClock implements Runnable {
                 ss = (s < 10) ? String.format("%02d", s) : s + "";
 
                 runtime = ds + ":" + hs + ":" + ms + ":" + ss;
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -64,10 +66,6 @@ public class SystemClock implements Runnable {
 
     public static String getRuntime() {
         return runtime;
-    }
-
-    public static String getPing() {
-        return ping.toString();
     }
 
     public static void toggleClock() {

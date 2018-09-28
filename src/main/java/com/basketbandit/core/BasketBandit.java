@@ -81,6 +81,22 @@ class BasketBandit extends ListenerAdapter {
         Utils.botList = new DiscordBotListAPI.Builder().token(config.readLine()).build();
         Utils.updateDiscordBotList();
 
+        int users = 0;
+        for(Guild guild : bot.getGuilds()) {
+            users += guild.getMemberCache().size();
+        }
+
+        SystemInformation.setBot(bot);
+        SystemInformation.setUserCount(users);
+        SystemInformation.setGuildCount(bot.getGuilds().size());
+
+        Utils.lastFive = new LinkedList<>();
+        Utils.latestInfo = "";
+        Utils.latestError = "";
+        for(int i = 0; i < 5; i++) {
+            Utils.lastFive.add("");
+        }
+
         config.close();
     }
 
@@ -138,20 +154,6 @@ class BasketBandit extends ListenerAdapter {
         // Sets some of the util fields ahead of when they're first used.
         SystemInformation.setModuleList(moduleList);
         SystemInformation.setCommandList(commandList);
-
-        int users = 0;
-        for(Guild guild : bot.getGuildCache()) {
-            users += guild.getMemberCache().size();
-        }
-        SystemInformation.setUserCount(users);
-        SystemInformation.setGuildCount((int) bot.getGuildCache().size());
-
-        Utils.lastFive = new LinkedList<>();
-        Utils.latestInfo = "";
-        Utils.latestError = "";
-        for(int i = 0; i < 5; i++) {
-            Utils.lastFive.add("");
-        }
     }
 
     /**
