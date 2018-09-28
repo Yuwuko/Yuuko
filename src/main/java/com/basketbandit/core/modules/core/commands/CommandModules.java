@@ -61,7 +61,7 @@ public class CommandModules extends Command {
             try {
                 connection.close();
             } catch(Exception ex) {
-                System.out.println("[ERROR] Unable to close connection to database.");
+                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
             }
         }
 

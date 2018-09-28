@@ -35,7 +35,7 @@ public class CommandSetup extends Command {
     private void executeCommandAux(GuildJoinEvent e) {
         String serverId = e.getGuild().getId();
         if(new DatabaseFunctions().addNewServer(serverId)) {
-            System.out.println("[ERROR] Server setup was unsuccessful (" + e.getGuild().getId() + ")");
+            Utils.consoleOutput("[ERROR] Server setup was unsuccessful (" + e.getGuild().getId() + ")");
         }
     }
 
