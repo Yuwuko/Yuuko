@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.core.commands;
 
 import com.basketbandit.core.Configuration;
+import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
@@ -43,7 +44,7 @@ public class CommandHelp extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            for(Command cmd: Utils.commandList) {
+            for(Command cmd: SystemInformation.getCommandList()) {
                 if(cmd.getCommandName().equals(command[1])) {
                     String commandPermission;
                     if(cmd.getCommandPermission() == null) {

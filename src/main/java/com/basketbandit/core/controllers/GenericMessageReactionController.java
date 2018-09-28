@@ -2,6 +2,7 @@ package com.basketbandit.core.controllers;
 
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.utility.ModuleUtility;
+import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
@@ -26,6 +27,8 @@ public class GenericMessageReactionController {
                 new ModuleUtility(e);
             }
         }
+
+        Utils.consoleOutput("[REACT]");
     }
 
     private void messageReactionRemoveEvent(MessageReactionRemoveEvent e) {
@@ -37,6 +40,8 @@ public class GenericMessageReactionController {
                 new ModuleUtility(e);
             }
         }
+
+        Utils.consoleOutput("[REACT]");
     }
 
 }

@@ -1,12 +1,14 @@
 package com.basketbandit.core;
 
-public class TimeKeeper implements Runnable {
+public class SystemClock implements Runnable {
 
-    public static String runtime;
+    private static boolean running;
+    private static String runtime;
     private static Long ping;
 
-    TimeKeeper() {
-        new Thread(this,"TimeKeeper").start();
+    SystemClock() {
+        running = true;
+        new Thread(this,"SystemClock").start();
     }
 
     @Override
@@ -19,8 +21,7 @@ public class TimeKeeper implements Runnable {
             String ds, hs, ms, ss;
             int fm = 0, oh = 0;
 
-
-            while(true) {
+            while(running) {
                 Thread.sleep(1000);
 
                 fm++;
@@ -59,5 +60,17 @@ public class TimeKeeper implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getRuntime() {
+        return runtime;
+    }
+
+    public static String getPing() {
+        return ping.toString();
+    }
+
+    public static void toggleClock() {
+        running = !running;
     }
 }

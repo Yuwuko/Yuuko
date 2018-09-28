@@ -1,7 +1,8 @@
 package com.basketbandit.core.controllers;
 
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.TimeKeeper;
+import com.basketbandit.core.SystemClock;
+import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.core.commands.CommandSetup;
 import com.basketbandit.core.utils.Utils;
@@ -35,6 +36,8 @@ public class GenericGuildController {
         for(Guild guild : bot.getJDA().getGuilds()) {
             users += guild.getMemberCache().size();
         }
+        SystemInformation.setUserCount(users);
+        SystemInformation.incrementGuildCount(1);
 
         EmbedBuilder about = new EmbedBuilder()
                 .setColor(Color.WHITE)
@@ -43,12 +46,12 @@ public class GenericGuildController {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", bot.getJDA().getGuildCache().size()+"", true)
-                .addField("Users", users+"", true)
-                .addField("Commands", Utils.commandCount, true)
+                .addField("Servers", SystemInformation.getGuildCount(), true)
+                .addField("Users", SystemInformation.getUserCount(), true)
+                .addField("Commands", SystemInformation.getCommandCount(), true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
-                .addField("Uptime", TimeKeeper.runtime, true)
-                .addField("Ping", bot.getJDA().getPing()+"", true);
+                .addField("Uptime", SystemClock.getRuntime(), true)
+                .addField("Hearbeat", SystemClock.getPing(), true);
 
         for(TextChannel c: channels) {
             if(c.getName().toLowerCase().equals("general")) {
@@ -64,11 +67,21 @@ public class GenericGuildController {
         Utils.updateDiscordBotList();
 
         new CommandSetup(e);
-        System.out.println("[INFO] Joined new server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
+        Utils.consoleOutput("[INFO] Joined new server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
+        User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
+
         new DatabaseFunctions().cleanup(e.getGuild().getId());
+
+        int users = 0;
+        for(Guild guild : bot.getJDA().getGuilds()) {
+            users += guild.getMemberCache().size();
+        }
+        SystemInformation.setUserCount(users);
+        SystemInformation.incrementGuildCount(-1);
+
         Utils.updateDiscordBotList();
         Utils.consoleOutput("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }

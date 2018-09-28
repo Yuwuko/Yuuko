@@ -1,11 +1,11 @@
 package com.basketbandit.core.modules.core.commands;
 
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.TimeKeeper;
+import com.basketbandit.core.SystemClock;
+import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -25,11 +25,6 @@ public class CommandAbout extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
-        int users = 0;
-        for(Guild guild : bot.getJDA().getGuilds()) {
-            users += guild.getMemberCache().size();
-        }
-
         EmbedBuilder about = new EmbedBuilder()
                 .setColor(Color.WHITE)
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
@@ -41,12 +36,12 @@ public class CommandAbout extends Command {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", bot.getJDA().getGuilds().size()+"", true)
-                .addField("Users", users+"", true)
-                .addField("Commands", Utils.commandCount, true)
+                .addField("Servers", SystemInformation.getGuildCount(), true)
+                .addField("Users", SystemInformation.getUserCount(), true)
+                .addField("Commands", SystemInformation.getCommandCount(), true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
-                .addField("Uptime", TimeKeeper.runtime, true)
-                .addField("Heartbeat", bot.getJDA().getPing()+"", true);
+                .addField("Uptime", SystemClock.getRuntime(), true)
+                .addField("Heartbeat", SystemClock.getPing(), true);
 
         Utils.sendMessage(e, about.build());
     }

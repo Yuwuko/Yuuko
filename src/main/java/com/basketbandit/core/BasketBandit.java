@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 13/06/2018 - JDK 10.0.1
+// Version: 28/09/2018 - JDK 11.0.0
 
 package com.basketbandit.core;
 
@@ -18,6 +18,7 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
@@ -109,7 +110,7 @@ class BasketBandit extends ListenerAdapter {
 
         }
 
-        new TimeKeeper();
+        new SystemClock();
         new AudioManagerHandler();
 
         ArrayList<Module> moduleList = new ArrayList<>();
@@ -135,9 +136,16 @@ class BasketBandit extends ListenerAdapter {
         }
 
         // Sets some of the util fields ahead of when they're first used.
-        Utils.moduleList = moduleList;
-        Utils.commandList = commandList;
-        Utils.commandCount = commandList.size() + "";
+        SystemInformation.setModuleList(moduleList);
+        SystemInformation.setCommandList(commandList);
+
+        int users = 0;
+        for(Guild guild : bot.getGuildCache()) {
+            users += guild.getMemberCache().size();
+        }
+        SystemInformation.setUserCount(users);
+        SystemInformation.setGuildCount((int) bot.getGuildCache().size());
+
         Utils.lastFive = new LinkedList<>();
         Utils.latestInfo = "";
         Utils.latestError = "";

@@ -1,6 +1,7 @@
 package com.basketbandit.core.controllers;
 
 import com.basketbandit.core.Configuration;
+import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
@@ -65,7 +66,7 @@ public class GenericMessageController {
             }
 
             // Passes nothing through to the console output so it updates a registered message.
-            Utils.consoleOutput("");
+            Utils.consoleOutput("[MESSAGE]");
 
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen.
@@ -101,7 +102,7 @@ public class GenericMessageController {
             // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
-            for(Command c : Utils.commandList) {
+            for(Command c : SystemInformation.getCommandList()) {
                 if((inputPrefix + input[0]).equals(c.getGlobalName()) || (inputPrefix + input[0]).equals(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
                     moduleDbName = Utils.extractModuleName(commandModule, false, true);

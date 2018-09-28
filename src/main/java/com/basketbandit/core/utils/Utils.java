@@ -1,7 +1,7 @@
 package com.basketbandit.core.utils;
 
-import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.Module;
+import com.basketbandit.core.SystemClock;
+import com.basketbandit.core.SystemInformation;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
@@ -11,11 +11,12 @@ import org.discordbots.api.client.DiscordBotListAPI;
 import org.xhtmlrenderer.swing.Java2DRenderer;
 
 import javax.imageio.ImageIO;
-import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URL;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,16 +26,13 @@ import java.util.List;
 public class Utils {
 
     public static User botUser;
-    public static List<Command> commandList;
-    public static List<Module> moduleList;
-    public static String commandCount;
     public static DiscordBotListAPI botList;
-
     public static LinkedList<String> lastFive;
     public static String latestInfo;
     public static String latestError;
     private static int messagesProcessed;
     private static int commandsProcessed;
+    private static int reactsProcessed;
 
     /**
      * Returns a username and discriminator in format username#discriminator.
@@ -269,38 +267,6 @@ public class Utils {
     }
 
     /**
-     * Takes an input URL (which hopefully contains a JSON response, buffers the response and returns a string.
-     * This string can be object mapped into something usable in Java.
-     * @param inputUrl String
-     * @return String of buffered Json.
-     */
-    public static String bufferJson(String inputUrl) {
-        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-
-            URL url = new URL(inputUrl);
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-
-            if(conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-            }
-
-            byte[] buffer = new byte[1024];
-            int length;
-
-            while((length = conn.getInputStream().read(buffer)) != -1) {
-                result.write(buffer, 0, length);
-            }
-
-            return result.toString();
-
-        } catch(Exception ex) {
-            return null;
-        }
-    }
-
-    /**
      * Take a xHTML input, renders and return an image based on it.
      * @param path String
      * @param html String
@@ -366,23 +332,25 @@ public class Utils {
      */
     public static void consoleOutput(String latest) {
 
-        if(!latest.startsWith("[INFO]")) {
-            if(!latest.startsWith("[ERROR]")) {
-                if(!latest.equals("")) {
-                    lastFive.addFirst(latest);
-                    commandsProcessed++;
-                    if(lastFive.size() > 5) {
-                        lastFive.removeLast();
-                    }
-                }
-            } else {
-                latestError = latest;
-            }
-        } else {
-           latestInfo = latest;
-        }
+        if(latest.equals("[MESSAGE]")) {
+            messagesProcessed++;
+        } else if(latest.startsWith("[INFO]")) {
+            latestInfo = latest;
 
-        messagesProcessed++;
+        } else if(latest.startsWith("[ERROR]")) {
+            latestError = latest;
+
+        } else if(latest.equals("[REACT]")) {
+            reactsProcessed++;
+
+        } else {
+            lastFive.addFirst(latest);
+            if(lastFive.size() > 5) {
+                lastFive.removeLast();
+            }
+            messagesProcessed++;
+            commandsProcessed++;
+        }
 
         // Default shell size is 80x24, this output will allow each message to take up the whole screen
         // thus giving the illusion that the current page is changing rather than just being rewritten under.
@@ -407,8 +375,8 @@ public class Utils {
         System.out.println("┃                                   [ERRORS]                                   ┃");
         System.out.println("┃ " + latestError);
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃                                                                              ┃");
-        System.out.println("┃ Messages processed: " + messagesProcessed + ", Commands processed: " + commandsProcessed);
+        System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + SystemClock.getPing() + ", Guilds: " + SystemInformation.getGuildCount());
+        System.out.println("┃ Messages processed: " + messagesProcessed + ", Reacts processed: " + reactsProcessed + ", Commands processed: " + commandsProcessed);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
 

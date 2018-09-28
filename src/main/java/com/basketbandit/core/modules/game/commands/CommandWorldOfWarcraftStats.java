@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.game.wow.Character;
 import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -27,7 +28,7 @@ public class CommandWorldOfWarcraftStats extends Command {
             String[] commandParameters = command[1].split("\\s+", 2);
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = Utils.bufferJson("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API);
+            String json = new JsonBuffer().getString("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API);
 
             if(json.contains("\"status\": \"nok\"")) {
                 Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
