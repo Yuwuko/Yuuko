@@ -5,7 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 3.0.0 (28/09/2018) 
+# BasketBandit 3.0.0 (29/09/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -62,13 +62,14 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | roll | Rolls a die with the given value and returns the result. Rolling `00` will return a multiple of 10 between `0` and `100`. | -roll [value] &#124; [00] | `-roll 42` |
 | sum |  Calculates and returns the result to simple 2 variable sums, accepting the `+`, `-`, `*`, `/`, `^` and `%` operators. | -sum [value] [operator] [value] | `-sum 400 + 20` |
 
-### Game
+### Media
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
 | runescape | Returns a list of RuneScape stats for the given version and player. | -runescape [game] [player] | `-runescape os white cat22` |
 | wow | Returns information about a given World of Warcraft character. | -wow [character] [realm] | `-wow porcus silvermoon` |
 | osu | Returns a small signature image for an Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
+| kitsu | Returns information about the given anime. (Character information to come soon!) | -kitsu [type] [name] | `-kitsu show naruto` |
 
 ### Music
 

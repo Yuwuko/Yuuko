@@ -91,11 +91,11 @@ class BasketBandit extends ListenerAdapter {
         SystemInformation.setUserCount(users);
         SystemInformation.setGuildCount(bot.getGuilds().size());
 
-        Utils.lastFive = new LinkedList<>();
+        Utils.lastTen = new LinkedList<>();
         Utils.latestInfo = "";
         Utils.latestError = "";
         for(int i = 0; i < 5; i++) {
-            Utils.lastFive.add("");
+            Utils.lastTen.add("");
         }
 
         config.close();

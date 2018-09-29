@@ -6,6 +6,7 @@ import com.basketbandit.core.modules.developer.commands.CommandAddServers;
 import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
 import com.basketbandit.core.modules.math.commands.CommandSum;
+import com.basketbandit.core.modules.media.commands.CommandKitsu;
 import com.basketbandit.core.modules.media.commands.CommandOsuStats;
 import com.basketbandit.core.modules.media.commands.CommandRuneScapeStats;
 import com.basketbandit.core.modules.media.commands.CommandWorldOfWarcraftStats;
@@ -46,10 +47,11 @@ public final class C {
     public static final Command EXCLUDE = new CommandExclude();
     public static final Command WEATHER = new CommandWeather();
 
-    // Game module commands.
+    // Media module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
     public static final Command WORLDOFWARCRAFT_CHARACTER = new CommandWorldOfWarcraftStats();
     public static final Command OSU_STATS = new CommandOsuStats();
+    public static final Command KITSU = new CommandKitsu();
 
     // Music module commands.
     public static final Command PLAY = new CommandPlay();

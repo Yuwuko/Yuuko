@@ -7,6 +7,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [+] Added [__addservers__] dev command to quickly re-add all of the servers to the database in the event of a data loss.
 + [+] Added SystemInformation class to store things such as ping, guild count, user count, message processed to prevent unnecessary REST calls.
 + [+] Added [__weather__] command which allows users to return information about the weather in the given locale.
++ [+] Added [__kitsu__] command which currently allows users to search up and return information about different animes.
 + [~] Moved from a docker container of MySQL to an installation on the OS, which is much quicker.
 + [~] Transitioned from setting all api keys and such as arguments to the .jar to a much easier to ready configuration file.
 + [~] Edited formatting of module disabled message to give the user a better understand of which module it is.
@@ -15,6 +16,9 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Edited the [__efukt__] command to remove an enormous description with every command.
 + [~] Moved JsonBuffer from Utils to it's own class and package for related things.
 + [~] Renamed TimeKeeper to SystemClock and removed some of the stuff unrelated to system uptime such as ping.
++ [~] Refactored the game module into what is now a media module to allow for the new anime command and others in the future.
++ [~] Increased the number of try/catches to help with further debugging.
++ [~] Changed error messages from being sent in the console to being sent into the discord support server.
 + [-] Removed [__unbind__] command and merged it into the bind command to reduce code duplication.
 + [-] Removed [__unexclude__] command and merged it into the exclude command to reduce code duplication. (haha)
 + [-] Removed [__delchannel__] command and merged it into the addchannel command to reduce code duplication. (sigh)
