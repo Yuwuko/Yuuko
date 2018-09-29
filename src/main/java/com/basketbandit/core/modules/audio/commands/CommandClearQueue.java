@@ -51,8 +51,8 @@ public class CommandClearQueue extends Command {
                 manager.scheduler.queue.addAll(temp);
 
             } else {
-                manager.scheduler.queue.clear();
                 Utils.sendMessage(e, e.getAuthor().getAsMention() + " cleared the queue.");
+                manager.scheduler.queue.clear();
             }
         } catch(Exception ex) {
             Utils.sendException(ex, command[0] + command[1]);
