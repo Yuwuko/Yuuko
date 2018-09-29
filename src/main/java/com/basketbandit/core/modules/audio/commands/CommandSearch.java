@@ -23,7 +23,6 @@ public class CommandSearch extends Command {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-
         try {
             List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
             StringBuilder resultString = new StringBuilder();
@@ -48,7 +47,7 @@ public class CommandSearch extends Command {
             Utils.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex);
+            Utils.sendException(ex, command[0] + command[1]);
         }
     }
 

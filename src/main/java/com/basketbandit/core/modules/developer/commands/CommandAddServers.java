@@ -22,7 +22,7 @@ public class CommandAddServers extends Command {
                 Utils.sendMessage(e, "Servers added successfully.");
             }
         } catch(Exception ex) {
-            Utils.sendException(ex);
+            Utils.sendException(ex, command[0]);
         }
     }
 

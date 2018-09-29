@@ -24,7 +24,7 @@ public class CommandSkip extends Command {
             manager.scheduler.nextTrack();
             Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
         } catch(Exception ex) {
-            Utils.sendException(ex);
+            Utils.sendException(ex, command[0]);
         }
     }
 

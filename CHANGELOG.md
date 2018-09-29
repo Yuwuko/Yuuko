@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.0.1
++ [~] Further added to the exception message to get concise and valuable data.
+
 ## 3.0.0
 + [+] Upgraded project to Java 11 since Java 10 has just become obsolete.
 + [+] Added [__addservers__] dev command to quickly re-add all of the servers to the database in the event of a data loss.
