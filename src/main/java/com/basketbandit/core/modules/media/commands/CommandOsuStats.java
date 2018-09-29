@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-
 public class CommandOsuStats extends Command {
 
     public CommandOsuStats() {
@@ -55,7 +54,7 @@ public class CommandOsuStats extends Command {
             }
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer().getString("https://osu.ppy.sh/api/get_user?k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode);
+            String json = new JsonBuffer().getString("https://osu.ppy.sh/api/get_user?k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode, "default", "default");
 
             // Jackson expects an array when Json objects start with [, so this removes it.
             if(json != null && json.length() > 0) {

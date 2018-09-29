@@ -20,8 +20,13 @@ public class CommandPause extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        manager.player.setPaused(true);
-        Utils.sendMessage(e, e.getAuthor().getAsMention() + " paused playback.");
+        try {
+            manager.player.setPaused(true);
+            Utils.sendMessage(e, e.getAuthor().getAsMention() + " paused playback.");
+        } catch(Exception ex) {
+            Utils.sendException(ex.getMessage());
+        }
+
     }
 
 }

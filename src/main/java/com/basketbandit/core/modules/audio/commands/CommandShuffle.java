@@ -20,8 +20,12 @@ public class CommandShuffle extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        Utils.sendMessage(e, e.getAuthor().getAsMention() + " shuffled the queue.");
-        manager.scheduler.shuffle();
+        try {
+            manager.scheduler.shuffle();
+            Utils.sendMessage(e, e.getAuthor().getAsMention() + " shuffled the queue.");
+        } catch(Exception ex) {
+            Utils.sendException(ex.getMessage());
+        }
     }
 
 }

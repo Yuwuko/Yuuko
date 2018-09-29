@@ -19,16 +19,12 @@ public class Guild {
 
     @JsonProperty("name")
     private String name;
-
     @JsonProperty("realm")
     private String realm;
-
     @JsonProperty("battlegroup")
     private String battlegroup;
-
     @JsonProperty("members")
     private Integer members;
-
     @JsonProperty("achievementPoints")
     private Integer achievementPoints;
 

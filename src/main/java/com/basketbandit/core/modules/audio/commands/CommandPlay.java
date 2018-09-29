@@ -96,32 +96,41 @@ public class CommandPlay extends Command {
 
             @Override
             public void trackLoaded(AudioTrack track) {
-                manager.scheduler.queue(track);
-                
-                String[] uri = track.getInfo().uri.split("=");
-                String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
+                try {
+                    manager.scheduler.queue(track);
 
-                EmbedBuilder queuedTrack = new EmbedBuilder()
-                        .setColor(Color.RED)
-                        .setAuthor(e.getMember().getEffectiveName() + " added to the queue!",null, e.getAuthor().getAvatarUrl())
-                        .setTitle(track.getInfo().title, trackUrl)
-                        .setThumbnail(imageUrl)
-                        .addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
-                        .addField("Channel", track.getInfo().author, true)
-                        .addField("Position in queue", manager.scheduler.queue.size()+"", false)
-                        .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    String[] uri = track.getInfo().uri.split("=");
+                    String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
-                Utils.sendMessage(channel, queuedTrack.build());
+                    EmbedBuilder queuedTrack = new EmbedBuilder()
+                            .setColor(Color.RED)
+                            .setAuthor(e.getMember().getEffectiveName() + " added to the queue!", null, e.getAuthor().getAvatarUrl())
+                            .setTitle(track.getInfo().title, trackUrl)
+                            .setThumbnail(imageUrl)
+                            .addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
+                            .addField("Channel", track.getInfo().author, true)
+                            .addField("Position in queue", manager.scheduler.queue.size() + "", false)
+                            .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+
+                    Utils.sendMessage(channel, queuedTrack.build());
+                } catch(Exception ex) {
+                    Utils.sendException(ex.getMessage());
+                }
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                List<AudioTrack> tracks = playlist.getTracks();
+                try {
+                    List<AudioTrack> tracks = playlist.getTracks();
 
-                Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName());
-                tracks.forEach(manager.scheduler::queue);
+                    Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName());
+                    tracks.forEach(manager.scheduler::queue);
 
-                new CommandCurrentTrack(e, null);
+                    new CommandCurrentTrack(e, null);
+
+                } catch(Exception ex) {
+                    Utils.sendException(ex.getMessage());
+                }
             }
 
             @Override

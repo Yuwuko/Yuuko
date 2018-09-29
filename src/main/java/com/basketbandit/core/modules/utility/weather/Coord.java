@@ -16,7 +16,6 @@ public class Coord {
 
     @JsonProperty("lon")
     private Double lon;
-
     @JsonProperty("lat")
     private Double lat;
 

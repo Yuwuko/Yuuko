@@ -31,7 +31,7 @@ public class CommandWeather extends Command {
             String[] commandParameters = command[1].split("\\s+", 2);
             commandParameters[0] = command[1].replace(" ", "+");
 
-            String json = new JsonBuffer().getString("https://api.openweathermap.org/data/2.5/weather?q=" +commandParameters[0] + "&units=metric&APPID=" + Configuration.OPEN_WEATHER_MAP_API);
+            String json = new JsonBuffer().getString("https://api.openweathermap.org/data/2.5/weather?q=" +commandParameters[0] + "&units=metric&APPID=" + Configuration.OPEN_WEATHER_MAP_API, "default", "default");
 
             if(json != null && json.equals("")) {
                 Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", unable to retrieve weather information from " + command[1] + ".");

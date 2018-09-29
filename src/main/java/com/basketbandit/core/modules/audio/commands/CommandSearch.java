@@ -24,27 +24,32 @@ public class CommandSearch extends Command {
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
 
-        List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
-        StringBuilder resultString = new StringBuilder();
+        try {
+            List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
+            StringBuilder resultString = new StringBuilder();
 
-        if(results != null) {
-            int i = 1;
-            for(SearchResult result : results) {
-                resultString.append("`").append(i).append(":` ").append(result.getSnippet().getTitle()).append("\n\n");
-                i++;
+            if(results != null) {
+                int i = 1;
+                for(SearchResult result : results) {
+                    resultString.append("`").append(i).append(":` ").append(result.getSnippet().getTitle()).append("\n\n");
+                    i++;
+                }
+            } else {
+                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.");
+                return;
             }
-        } else {
-            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.");
-            return;
+
+            EmbedBuilder presentResults = new EmbedBuilder()
+                    .setAuthor(e.getAuthor().getName() + ", results for: " + command[1], null, e.getAuthor().getAvatarUrl())
+                    .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
+                    .setFooter("Version: " + Configuration.VERSION, null);
+
+            ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
+            Utils.sendMessage(e, presentResults.build());
+
+        } catch(Exception ex) {
+            Utils.sendException(ex.getMessage());
         }
-
-        EmbedBuilder presentResults = new EmbedBuilder()
-                .setAuthor(e.getAuthor().getName() + ", results for: " + command[1], null, e.getAuthor().getAvatarUrl())
-                .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
-                .setFooter("Version: " + Configuration.VERSION, null);
-
-        ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
-        Utils.sendMessage(e, presentResults.build());
     }
 
 }

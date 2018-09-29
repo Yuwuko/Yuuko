@@ -19,16 +19,12 @@ public class Event {
 
     @JsonProperty("display_html")
     private String displayHtml;
-
     @JsonProperty("beatmap_id")
     private Object beatmapId;
-
     @JsonProperty("beatmapset_id")
     private Object beatmapsetId;
-
     @JsonProperty("date")
     private String date;
-
     @JsonProperty("epicfactor")
     private String epicfactor;
 

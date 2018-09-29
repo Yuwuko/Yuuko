@@ -27,7 +27,7 @@ public class Utils {
 
     public static User botUser;
     public static DiscordBotListAPI botList;
-    public static LinkedList<String> lastFive;
+    public static LinkedList<String> lastTen;
     public static String latestInfo;
     public static String latestError;
     private static int messagesProcessed;
@@ -345,17 +345,12 @@ public class Utils {
             messagesProcessed++;
         } else if(latest.startsWith("[INFO]")) {
             latestInfo = latest;
-
-        } else if(latest.startsWith("[ERROR]")) {
-            latestError = latest;
-
         } else if(latest.equals("[REACT]")) {
             reactsProcessed++;
-
         } else {
-            lastFive.addFirst(latest);
-            if(lastFive.size() > 5) {
-                lastFive.removeLast();
+            lastTen.addFirst(latest);
+            if(lastTen.size() > 10) {
+                lastTen.removeLast();
             }
             messagesProcessed++;
             commandsProcessed++;
@@ -370,23 +365,25 @@ public class Utils {
         System.out.println("          | |_) | (_| \\__ \\   <  __/ |_| |_) | (_| | | | | (_| | | |_");
         System.out.println("          |____/ \\__,_|___/_|\\_\\___|\\__|____/ \\__,_|_| |_|\\__,_|_|\\__|");
         System.out.println();
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃                                  [COMMANDS]                                  ┃");
-        System.out.println("┃ " + lastFive.get(0));
-        System.out.println("┃ " + lastFive.get(1));
-        System.out.println("┃ " + lastFive.get(2));
-        System.out.println("┃ " + lastFive.get(3));
-        System.out.println("┃ " + lastFive.get(4));
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃                                    [INFO]                                    ┃");
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃ " + lastTen.get(0));
+        System.out.println("┃ " + lastTen.get(1));
+        System.out.println("┃ " + lastTen.get(2));
+        System.out.println("┃ " + lastTen.get(3));
+        System.out.println("┃ " + lastTen.get(4));
+        System.out.println("┃ " + lastTen.get(5));
+        System.out.println("┃ " + lastTen.get(6));
+        System.out.println("┃ " + lastTen.get(7));
+        System.out.println("┃ " + lastTen.get(8));
+        System.out.println("┃ " + lastTen.get(9));
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + latestInfo);
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃                                   [ERRORS]                                   ┃");
-        System.out.println("┃ " + latestError);
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + SystemInformation.getPing() + ", Guilds: " + SystemInformation.getGuildCount() + ", Modules: " + SystemInformation.getModuleCount() + ", Commands: " + SystemInformation.getCommandCount());
         System.out.println("┃ Messages processed: " + messagesProcessed + ", Reacts processed: " + reactsProcessed + ", Commands processed: " + commandsProcessed);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        System.out.println();
+
     }
 
 }

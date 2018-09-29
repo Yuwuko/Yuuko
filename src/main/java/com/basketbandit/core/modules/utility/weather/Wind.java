@@ -16,7 +16,6 @@ public class Wind {
 
     @JsonProperty("speed")
     private Double speed;
-
     @JsonProperty("deg")
     private Integer deg;
 

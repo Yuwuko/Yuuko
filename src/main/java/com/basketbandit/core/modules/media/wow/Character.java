@@ -29,40 +29,28 @@ public class Character {
 
     @JsonProperty("name")
     private String name;
-
     @JsonProperty("realm")
     private String realm;
-
     @JsonProperty("battlegroup")
     private String battlegroup;
-
     @JsonProperty("class")
     private Integer _class;
-
     @JsonProperty("race")
     private Integer race;
-
     @JsonProperty("gender")
     private Integer gender;
-
     @JsonProperty("level")
     private Integer level;
-
     @JsonProperty("achievementPoints")
     private Integer achievementPoints;
-
     @JsonProperty("thumbnail")
     private String thumbnail;
-
     @JsonProperty("faction")
     private Integer faction;
-
     @JsonProperty("guild")
     private Guild guild;
-
     @JsonProperty("titles")
     private List<Title> titles = null;
-
     @JsonProperty("totalHonorableKills")
     private Integer totalHonorableKills;
 

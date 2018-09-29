@@ -20,7 +20,6 @@ public class LineManager {
 
     @JsonProperty("name")
     private String name;
-
     @JsonProperty("lineStatuses")
     private List<LineStatus> lineStatuses = new ArrayList<>();
 

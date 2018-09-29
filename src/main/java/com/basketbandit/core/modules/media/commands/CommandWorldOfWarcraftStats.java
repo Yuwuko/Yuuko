@@ -28,7 +28,7 @@ public class CommandWorldOfWarcraftStats extends Command {
             String[] commandParameters = command[1].split("\\s+", 2);
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer().getString("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API);
+            String json = new JsonBuffer().getString("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API, "default", "default");
 
             if(json.contains("\"status\": \"nok\"")) {
                 Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
@@ -151,7 +151,7 @@ public class CommandWorldOfWarcraftStats extends Command {
                     .addField("Guild", guildString, true)
                     .addField("Battlegroup", character.getBattlegroup(), true)
                     .addField("Honorable Kills", character.getTotalHonorableKills()+"", true)
-                    .setFooter("Version: " + Configuration.VERSION + ", Data provided by Blizzard" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter("Version: " + Configuration.VERSION + ", data provided by Blizzard" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             Utils.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

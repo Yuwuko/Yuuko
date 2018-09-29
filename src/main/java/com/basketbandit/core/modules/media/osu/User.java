@@ -37,64 +37,44 @@ public class User {
 
     @JsonProperty("user_id")
     private String userId;
-
     @JsonProperty("username")
     private String username;
-
     @JsonProperty("count300")
     private String count300;
-
     @JsonProperty("count100")
     private String count100;
-
     @JsonProperty("count50")
     private String count50;
-
     @JsonProperty("playcount")
     private String playcount;
-
     @JsonProperty("ranked_score")
     private String rankedScore;
-
     @JsonProperty("total_score")
     private String totalScore;
-
     @JsonProperty("pp_rank")
     private String ppRank;
-
     @JsonProperty("level")
     private String level;
-
     @JsonProperty("pp_raw")
     private String ppRaw;
-
     @JsonProperty("accuracy")
     private String accuracy;
-
     @JsonProperty("count_rank_ss")
     private String countRankSs;
-
     @JsonProperty("count_rank_ssh")
     private String countRankSsh;
-
     @JsonProperty("count_rank_s")
     private String countRankS;
-
     @JsonProperty("count_rank_sh")
     private String countRankSh;
-
     @JsonProperty("count_rank_a")
     private String countRankA;
-
     @JsonProperty("country")
     private String country;
-
     @JsonProperty("total_seconds_played")
     private String totalSecondsPlayed;
-
     @JsonProperty("pp_country_rank")
     private String ppCountryRank;
-
     @JsonProperty("events")
     private List<Event> events = null;
 

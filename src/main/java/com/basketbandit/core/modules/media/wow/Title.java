@@ -17,10 +17,8 @@ public class Title {
 
     @JsonProperty("id")
     private Integer id;
-
     @JsonProperty("name")
     private String name;
-
     @JsonProperty("selected")
     private Boolean selected;
 

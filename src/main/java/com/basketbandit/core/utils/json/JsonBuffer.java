@@ -13,11 +13,16 @@ public class JsonBuffer {
      * @param inputUrl String
      * @return result.toString();
      */
-    public String getString(String inputUrl) {
+    public String getString(String inputUrl, String acceptHeader, String contentTypeHeader) {
         try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
+
+            String accept = (acceptHeader.equals("default")) ? "application/json" : acceptHeader;
+            String contentType = (contentTypeHeader.equals("default")) ? "application/json" : contentTypeHeader;
+
             HttpsURLConnection conn = (HttpsURLConnection) new URL(inputUrl).openConnection();
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("Accept", accept);
+            conn.setRequestProperty("Content-Type", contentType);
 
             if(conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed: HTTP error code: " + conn.getResponseCode());

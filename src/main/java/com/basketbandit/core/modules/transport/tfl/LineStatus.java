@@ -16,7 +16,6 @@ class LineStatus {
 
     @JsonProperty("reason")
     private String reason;
-
     @JsonProperty("statusSeverityDescription")
     private String statusSeverityDescription;
 
@@ -27,6 +26,4 @@ class LineStatus {
     String getStatusSeverityDescription() {
         return statusSeverityDescription;
     }
-
-
 }
