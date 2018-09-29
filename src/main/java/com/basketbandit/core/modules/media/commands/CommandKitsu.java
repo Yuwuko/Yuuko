@@ -27,6 +27,7 @@ public class CommandKitsu extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             String[] commandParameters = command[1].split("\\s+", 2);
+            commandParameters[1] = commandParameters[1].replace(" ", "%20");
             String json = "";
 
             if(commandParameters[0].toLowerCase().equals("show")) {
@@ -34,10 +35,12 @@ public class CommandKitsu extends Command {
             } else if(commandParameters[0].toLowerCase().equals("character")) {
                 Utils.sendMessage(e, "Sorry, this command isn't ready yet! (Waiting for the Kitsu.io API to be constructed to support this!)");
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
+            } else {
+                json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             }
 
             if(json != null && json.equals("")) {
-                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", the anime you are looking for wasn't found.");
+                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", the anime you were looking for wasn't found.");
                 return;
             }
 
@@ -49,9 +52,17 @@ public class CommandKitsu extends Command {
                     .setTitle(anime.getCanonicalTitle() + " | " + anime.getTitles().getJaJp())
                     .setImage(anime.getPosterImage().getMedium())
                     .setDescription(anime.getSynopsis())
+                    .addField("Age Rating", anime.getAgeRating() + ": " + anime.getAgeRatingGuide(), true)
+                    .addField("Episodes", anime.getEpisodeCount() + "", true)
+                    .addField("Episode Length", anime.getEpisodeLength() + "m", true)
+                    .addField("Type", anime.getSubtype(), true)
+                    .addField("NSFW", anime.getNsfw() + "", true)
+                    .addField("Kitsu Approval Rating", anime.getAverageRating() + "%", true)
+                    .addField("Status", anime.getStatus(), true)
+                    .addField("Start Date", anime.getStartDate(), true)
+                    .addField("End Date", anime.getEndDate(), true)
                     .setFooter("Version: " + Configuration.VERSION + ", data provided by kitsu.io" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             Utils.sendMessage(e, embed.build());
-
 
         } catch(Exception ex) {
             Utils.sendException(ex);

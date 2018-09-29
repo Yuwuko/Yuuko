@@ -161,7 +161,7 @@ public class Utils {
     public static void sendException(Exception ex) {
         try {
             MessageChannel channel = botUser.getJDA().getTextChannelById(495602825355591700L);
-            channel.sendMessage("`" + ex.toString() + "`").queue();
+            channel.sendMessage("`" + ex + "`").queue();
         } catch(Exception exc) {
             //
         }
