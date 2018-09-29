@@ -30,7 +30,7 @@ public class CommandKitsu extends Command {
             String json = "";
 
             if(commandParameters[0].toLowerCase().equals("show")) {
-                json = new JsonBuffer().getString("https://kitsu.io/api/edge?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
+                json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             } else if(commandParameters[0].toLowerCase().equals("character")) {
                 Utils.sendMessage(e, "Sorry, this command isn't ready yet! (Waiting for the Kitsu.io API to be constructed to support this!)");
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
