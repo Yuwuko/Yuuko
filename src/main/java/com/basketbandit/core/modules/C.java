@@ -44,6 +44,7 @@ public final class C {
     public static final Command CHANNEL = new CommandChannel();
     public static final Command BIND = new CommandBind();
     public static final Command EXCLUDE = new CommandExclude();
+    public static final Command WEATHER = new CommandWeather();
 
     // Game module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();

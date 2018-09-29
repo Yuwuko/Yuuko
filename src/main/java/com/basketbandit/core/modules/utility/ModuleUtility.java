@@ -89,6 +89,11 @@ public class ModuleUtility extends Module {
             return;
         }
 
+        if(command[0].equals(C.WEATHER.getCommandName())) {
+            new CommandWeather(e, command);
+            return;
+        }
+
         Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", you lack the required permissions to use that command.");
     }
 }
