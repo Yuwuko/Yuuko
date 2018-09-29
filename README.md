@@ -44,12 +44,9 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 |---------|-------------|-------|---------|------------|
 | user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @BasketBandit` |
 | server | Returns information about the current server. | -server | `-server` |
-| addchannel | Adds a new channel into the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -addchannel [type] [name] &#124; [nsfw] | <code>-addchannel text cool-text-channel &#124; nsfw</code> | Manage Channels |
-| delchannel | Removes an existing channel from the server. | -delchannel &#124; [type] [channel] | <code>-delchannel &#124; text test-channel</code> | Manage Channels |
-| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | Administrator |
-| unbind | Unbinds a bound module from a channel. | -unbind [module] &#124; [channel] | <code>-unbind audio &#124; test-channel</code> | Administrator |
-| exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | Administrator |
-| unexclude | Includes a module back into a channel | -unexclude [module] &#124; [channel] | <code>-unexclude audio &#124; test-channel</code> | Administrator |
+| channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | Manage Channels |
+| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | Administrator |
+| exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. Modules can be included by retyping the command. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | Administrator |
 
 ### Transport
 
@@ -68,8 +65,8 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| runescape | Returns a list of RuneScape stats for the given version and player. | -rsstats [game] [player] | `-rsstats os white cat22` |
-| wow | Returns information about a given World of Warcraft character. | -wowcharacter [character] [realm] | `-wowcharacter porcus silvermoon` |
+| runescape | Returns a list of RuneScape stats for the given version and player. | -runescape [game] [player] | `-runescape os white cat22` |
+| wow | Returns information about a given World of Warcraft character. | -wow [character] [realm] | `-wow porcus silvermoon` |
 | osu | Returns a small signature image for an Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
 
 ### Music

@@ -65,6 +65,7 @@ class BasketBandit extends ListenerAdapter {
         Configuration.DATABASE_USERNAME = config.readLine();
         Configuration.DATABASE_PASSWORD = config.readLine();
         Configuration.OSU_API = config.readLine();
+        Configuration.OPEN_WEATHER_MAP_API = config.readLine();
 
         bot = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)

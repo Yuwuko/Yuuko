@@ -79,28 +79,13 @@ public class ModuleUtility extends Module {
             return;
         }
 
-        if(command[0].equals(C.UNBIND.getCommandName()) && (e.getMember().hasPermission(C.UNBIND.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.UNBIND.getCommandPermission()))) {
-            new CommandUnbind(e, command);
-            return;
-        }
-
         if(command[0].equals(C.EXCLUDE.getCommandName()) && (e.getMember().hasPermission(C.EXCLUDE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.EXCLUDE.getCommandPermission()))) {
             new CommandExclude(e, command);
             return;
         }
 
-        if(command[0].equals(C.INCLUDE.getCommandName()) && (e.getMember().hasPermission(C.INCLUDE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.INCLUDE.getCommandPermission()))) {
-            new CommandUnexclude(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.CREATE_CHANNEL.getCommandName()) && (e.getMember().hasPermission(C.CREATE_CHANNEL.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.CREATE_CHANNEL.getCommandPermission()))) {
-            new CommandAddChannel(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.DELETE_CHANNEL.getCommandName()) && (e.getMember().hasPermission(C.DELETE_CHANNEL.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.DELETE_CHANNEL.getCommandPermission()))) {
-            new CommandDeleteChannel(e, command);
+        if(command[0].equals(C.CHANNEL.getCommandName()) && (e.getMember().hasPermission(C.CHANNEL.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.CHANNEL.getCommandPermission())) && (e.getMember().hasPermission(C.CHANNEL.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.CHANNEL.getCommandPermission()))) {
+            new CommandChannel(e, command);
             return;
         }
 

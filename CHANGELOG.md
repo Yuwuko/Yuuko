@@ -6,6 +6,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [+] Upgraded project to Java 11 since Java 10 has just become obsolete.
 + [+] Added [__addservers__] dev command to quickly re-add all of the servers to the database in the event of a data loss.
 + [+] Added SystemInformation class to store things such as ping, guild count, user count, message processed to prevent unnecessary REST calls.
++ [+] Added [__weather__] command which allows users to return information about the weather in the given locale.
 + [~] Moved from a docker container of MySQL to an installation on the OS, which is much quicker.
 + [~] Transitioned from setting all api keys and such as arguments to the .jar to a much easier to ready configuration file.
 + [~] Edited formatting of module disabled message to give the user a better understand of which module it is.
@@ -14,6 +15,9 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Edited the [__efukt__] command to remove an enormous description with every command.
 + [~] Moved JsonBuffer from Utils to it's own class and package for related things.
 + [~] Renamed TimeKeeper to SystemClock and removed some of the stuff unrelated to system uptime such as ping.
++ [-] Removed [__unbind__] command and merged it into the bind command to reduce code duplication.
++ [-] Removed [__unexclude__] command and merged it into the exclude command to reduce code duplication. (haha)
++ [-] Removed [__delchannel__] command and merged it into the addchannel command to reduce code duplication. (sigh)
 
 ## 2.2.1
 + [~] Changed/Updated depreciated code to fit in with current versions.

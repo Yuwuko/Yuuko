@@ -41,12 +41,9 @@ public final class C {
     // Utility module commands.
     public static final Command USER = new CommandUser();
     public static final Command SERVER = new CommandServer();
-    public static final Command CREATE_CHANNEL = new CommandAddChannel();
-    public static final Command DELETE_CHANNEL = new CommandDeleteChannel();
+    public static final Command CHANNEL = new CommandChannel();
     public static final Command BIND = new CommandBind();
-    public static final Command UNBIND = new CommandUnbind();
     public static final Command EXCLUDE = new CommandExclude();
-    public static final Command INCLUDE = new CommandUnexclude();
 
     // Game module commands.
     public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();

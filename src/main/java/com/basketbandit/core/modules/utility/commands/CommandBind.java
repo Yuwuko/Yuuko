@@ -28,22 +28,27 @@ public class CommandBind extends Command {
             channelId = e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getId();
             module = commandParameters[0].toLowerCase();
 
-            if(new DatabaseFunctions().addBinding(module, channelId, serverId)) {
+            int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
+
+            if(res == 0) {
                 Utils.sendMessage(e, "Successfully bound " + module + " to " + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + ".");
-            } else {
-                Utils.sendMessage(e, "Bind unsuccessful, are you sure this the module isn't already bound to the channel?");
+            } else if(res == 1) {
+                Utils.sendMessage(e, "Successfully removed binding of " + module + " from " + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + ".");
             }
         } else {
             serverId = e.getGuild().getId();
             channelId = e.getTextChannel().getId();
             module = commandParameters[0];
 
-            if(new DatabaseFunctions().addBinding(module, channelId, serverId)) {
+            int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
+
+            if(res == 0) {
                 Utils.sendMessage(e, "Successfully bound " + module + " to " + e.getTextChannel().getName() + ".");
-            } else {
-                Utils.sendMessage(e, "Bind unsuccessful, are you sure this the module isn't already bound to the channel?");
+            } else if(res == 1) {
+                Utils.sendMessage(e, "Successfully removed binding of " + module + " from " + e.getTextChannel().getName() + ".");
             }
         }
+
     }
 
 }
