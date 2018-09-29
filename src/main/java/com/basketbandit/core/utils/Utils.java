@@ -158,6 +158,15 @@ public class Utils {
         }
     }
 
+    public static void sendException(String exception) {
+        try {
+            MessageChannel channel = botUser.getJDA().getTextChannelById(495602825355591700L);
+            channel.sendMessage(exception).queue();
+        } catch(Exception ex) {
+            //
+        }
+    }
+
     /**
      * Replaces the last occurrence of a pattern with nothing.
      * @param stringBuilder StringBuilder

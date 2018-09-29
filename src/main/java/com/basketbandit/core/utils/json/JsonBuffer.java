@@ -1,5 +1,7 @@
 package com.basketbandit.core.utils.json;
 
+import com.basketbandit.core.utils.Utils;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
@@ -31,7 +33,7 @@ public class JsonBuffer {
             return result.toString();
 
         } catch(Exception ex) {
-            ex.printStackTrace();
+            Utils.sendException(ex.getMessage());
             return null;
         }
     }

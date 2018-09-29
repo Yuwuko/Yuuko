@@ -43,7 +43,7 @@ public class CommandEfukt extends Command {
             }
 
         } catch(Exception ex) {
-            //
+            Utils.sendException(ex.getMessage());
         }
     }
 }

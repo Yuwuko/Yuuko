@@ -155,6 +155,7 @@ public class CommandWorldOfWarcraftStats extends Command {
             Utils.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
+            Utils.sendException(ex.getMessage());
             Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
 

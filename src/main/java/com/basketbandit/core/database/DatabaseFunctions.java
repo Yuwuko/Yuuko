@@ -354,7 +354,6 @@ public class DatabaseFunctions {
             try {
                 conn.close();
             } catch(Exception ex) {
-                ex.printStackTrace();
                 Utils.consoleOutput("[ERROR] Unable to close connection to database.");
             }
         }

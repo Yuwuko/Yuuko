@@ -56,7 +56,7 @@ public class CommandModules extends Command {
 
             Utils.sendMessage(e, commandModules.build());
         } catch(Exception ex) {
-            ex.printStackTrace();
+            Utils.sendException(ex.getMessage());
         } finally {
             try {
                 connection.close();

@@ -1,5 +1,7 @@
 package com.basketbandit.core;
 
+import com.basketbandit.core.utils.Utils;
+
 public class SystemClock implements Runnable {
 
     private static boolean running;
@@ -59,8 +61,8 @@ public class SystemClock implements Runnable {
                 runtime = ds + ":" + hs + ":" + ms + ":" + ss;
 
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            Utils.sendException(ex.getMessage());
         }
     }
 

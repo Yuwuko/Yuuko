@@ -11,8 +11,9 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 public class CommandWeather extends Command {
 
@@ -40,15 +41,15 @@ public class CommandWeather extends Command {
             Weather weather = new ObjectMapper().readValue(json, new TypeReference<Weather>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setColor(Color.CYAN)
+                    .setColor(Color.WHITE)
                     .setTitle("Weather information for: " + weather.getName() + ", " + weather.getSys().getCountry())
                     .setThumbnail("https://openweathermap.org/img/w/" + weather.getWeather().get(0).getIcon() + ".png")
                     .addField("ID", weather.getId() + "", true)
                     .addField("Visibility", weather.getVisibility() + "m", true)
                     .addField("Latitude", weather.getCoord().getLat() + "", true)
                     .addField("Longitude", weather.getCoord().getLon() + "", true)
-                    .addField("Sunrise", Date.from(Instant.ofEpochSecond(weather.getSys().getSunrise())) + "", true)
-                    .addField("Sunset", Date.from(Instant.ofEpochSecond(weather.getSys().getSunset())) + "", true)
+                    .addField("Sunrise", LocalDateTime.ofEpochSecond(weather.getSys().getSunrise(), 0, ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("hh:mma")), true)
+                    .addField("Sunset", LocalDateTime.ofEpochSecond(weather.getSys().getSunset(), 0, ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("hh:mma")), true)
                     .addField("Humidity", weather.getMain().getHumidity() + "%", true)
                     .addField("Temperature", weather.getMain().getTemp() + "c", true)
                     .addField("Max Temperature", weather.getMain().getTempMax() + "c", true)
@@ -59,7 +60,7 @@ public class CommandWeather extends Command {
             Utils.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
-            ex.printStackTrace();
+            Utils.sendException(ex.getMessage());
             Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
