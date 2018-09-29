@@ -50,8 +50,6 @@ class BasketBandit extends ListenerAdapter {
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException, IOException {
-        BasketBandit self = new BasketBandit();
-
         BufferedReader config = new BufferedReader(new FileReader("configuration.txt"));
 
         Configuration.BOT_ID = config.readLine();
@@ -70,7 +68,7 @@ class BasketBandit extends ListenerAdapter {
         bot = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
                 .setToken(Configuration.BOT_TOKEN)
-                .addEventListener(self)
+                .addEventListener(new BasketBandit())
                 .setEventManager(new ThreadedEventManager())
                 .build();
         bot.awaitReady();
