@@ -40,7 +40,7 @@ public class Configuration {
     // Osu API Key
     public static String OSU_API;
 
-    // Open Weather Map API key
+    // Open WeatherContainer Map API key
     public static String OPEN_WEATHER_MAP_API;
 
     // Bot's status, e.g Playing with lottie's tits.

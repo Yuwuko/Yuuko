@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.game.commands;
+package com.basketbandit.core.modules.media.commands;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.Utils;
@@ -11,7 +11,7 @@ import java.net.URL;
 public class CommandRuneScapeStats extends Command {
 
     public CommandRuneScapeStats() {
-        super("runescape", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-runescape [game] [player]"}, null);
+        super("runescape", "com.basketbandit.core.modules.media.ModuleMedia", new String[]{"-runescape [media] [player]"}, null);
     }
 
     public CommandRuneScapeStats(MessageReceivedEvent e, String[] command) {

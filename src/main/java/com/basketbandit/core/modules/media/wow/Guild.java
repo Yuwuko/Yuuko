@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.game.wow;
+package com.basketbandit.core.modules.media.wow;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

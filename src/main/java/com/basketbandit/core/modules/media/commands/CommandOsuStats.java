@@ -1,8 +1,8 @@
-package com.basketbandit.core.modules.game.commands;
+package com.basketbandit.core.modules.media.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.game.osu.User;
+import com.basketbandit.core.modules.media.osu.User;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandOsuStats extends Command {
 
     public CommandOsuStats() {
-        super("osu", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-osu [user]", "-osu [user] [game]"}, null);
+        super("osu", "com.basketbandit.core.modules.media.ModuleMedia", new String[]{"-osu [user]", "-osu [user] [media]"}, null);
     }
 
     public CommandOsuStats(MessageReceivedEvent e, String[] command) {

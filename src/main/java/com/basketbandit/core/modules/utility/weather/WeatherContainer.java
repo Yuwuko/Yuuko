@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.utility.commands.weather;
+package com.basketbandit.core.modules.utility.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -24,13 +24,13 @@ import java.util.List;
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather {
+public class WeatherContainer {
 
     @JsonProperty("coord")
     private Coord coord;
 
     @JsonProperty("weather")
-    private List<Weather_> weather = null;
+    private List<Weather> weather = null;
 
     @JsonProperty("base")
     private String base;
@@ -68,7 +68,7 @@ public class Weather {
     }
 
     @JsonProperty("weather")
-    public List<Weather_> getWeather() {
+    public List<Weather> getWeather() {
         return weather;
     }
 

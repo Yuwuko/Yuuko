@@ -2,7 +2,7 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.utility.commands.weather.Weather;
+import com.basketbandit.core.modules.utility.weather.WeatherContainer;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -38,11 +38,11 @@ public class CommandWeather extends Command {
                 return;
             }
 
-            Weather weather = new ObjectMapper().readValue(json, new TypeReference<Weather>(){});
+            WeatherContainer weather = new ObjectMapper().readValue(json, new TypeReference<WeatherContainer>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setColor(Color.WHITE)
-                    .setTitle("Weather information for: " + weather.getName() + ", " + weather.getSys().getCountry())
+                    .setTitle("WeatherContainer information for: " + weather.getName() + ", " + weather.getSys().getCountry())
                     .setImage("https://openweathermap.org/img/w/" + weather.getWeather().get(0).getIcon() + ".png")
                     .setDescription("Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server.")
                     .addField("ID", weather.getId() + "", true)

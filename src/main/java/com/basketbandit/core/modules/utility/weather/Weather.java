@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.utility.commands.weather;
+package com.basketbandit.core.modules.utility.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather_ {
+public class Weather {
 
     @JsonProperty("id")
     private Integer id;

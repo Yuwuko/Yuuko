@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.game.osu;
+package com.basketbandit.core.modules.media.osu;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

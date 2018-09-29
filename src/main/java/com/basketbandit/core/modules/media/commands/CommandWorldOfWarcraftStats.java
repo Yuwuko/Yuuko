@@ -1,8 +1,8 @@
-package com.basketbandit.core.modules.game.commands;
+package com.basketbandit.core.modules.media.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.game.wow.Character;
+import com.basketbandit.core.modules.media.wow.Character;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,7 +15,7 @@ import java.awt.*;
 public class CommandWorldOfWarcraftStats extends Command {
 
     public CommandWorldOfWarcraftStats() {
-        super("wow", "com.basketbandit.core.modules.game.ModuleGame", new String[]{"-wow [character] [realm]"}, null);
+        super("wow", "com.basketbandit.core.modules.media.ModuleMedia", new String[]{"-wow [character] [realm]"}, null);
     }
 
     public CommandWorldOfWarcraftStats(MessageReceivedEvent e, String[] command) {
