@@ -378,7 +378,7 @@ public class Utils {
         System.out.println("┃ " + lastTen.get(9));
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + latestInfo);
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + SystemInformation.getPing() + ", Guilds: " + SystemInformation.getGuildCount() + ", Modules: " + SystemInformation.getModuleCount() + ", Commands: " + SystemInformation.getCommandCount());
         System.out.println("┃ Messages processed: " + messagesProcessed + ", Reacts processed: " + reactsProcessed + ", Commands processed: " + commandsProcessed);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
