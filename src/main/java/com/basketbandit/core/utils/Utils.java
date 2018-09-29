@@ -269,7 +269,7 @@ public class Utils {
     public static void updateDiscordBotList() {
         try {
             JDA jda = botUser.getJDA();
-            botList.setStats(botUser.getId(), Math.toIntExact(jda.getGuildCache().size()), jda.getShardInfo().getShardId(), jda.getShardInfo().getShardTotal());
+            botList.setStats(jda.getShardInfo().getShardId(), jda.getShardInfo().getShardTotal(), Math.toIntExact(jda.getGuildCache().size()));
         } catch(Exception e) {
             e.printStackTrace();
         }

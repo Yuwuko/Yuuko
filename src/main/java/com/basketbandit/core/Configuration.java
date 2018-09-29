@@ -2,7 +2,7 @@ package com.basketbandit.core;
 
 public class Configuration {
     // Bot version.
-    public static final String VERSION = "3.0.0";
+    public static final String VERSION = "3.0.1";
 
     // Bot's ID.
     public static String BOT_ID;

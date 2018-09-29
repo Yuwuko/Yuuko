@@ -79,7 +79,7 @@ class BasketBandit extends ListenerAdapter {
 
         Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
         Utils.botUser = bot.getSelfUser();
-        Utils.botList = new DiscordBotListAPI.Builder().token(config.readLine()).build();
+        Utils.botList = new DiscordBotListAPI.Builder().botId(Utils.botUser.getId()).token(config.readLine()).build();
         Utils.updateDiscordBotList();
 
         int users = 0;
@@ -163,7 +163,11 @@ class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onGenericGuild(GenericGuildEvent e) {
-        new GenericGuildController(e);
+        try {
+            new GenericGuildController(e);
+        } catch(Exception ex) {
+            Utils.sendException(ex, "public void onGenericGuild(GenericGuildEvent e)");
+        }
     }
 
     /**
@@ -172,7 +176,11 @@ class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onGenericMessage(GenericMessageEvent e) {
-        new GenericMessageController(e);
+        try {
+            new GenericMessageController(e);
+        } catch(Exception ex) {
+            Utils.sendException(ex, "public void onGenericMessage(GenericMessageEvent e)");
+        }
     }
 
     /**
@@ -181,7 +189,11 @@ class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onGenericMessageReaction(GenericMessageReactionEvent e) {
-        new GenericMessageReactionController(e);
+        try {
+            new GenericMessageReactionController(e);
+        } catch(Exception ex) {
+            Utils.sendException(ex, "public void onGenericMessageReaction(GenericMessageReactionEvent e)");
+        }
     }
 
     /**
@@ -190,7 +202,11 @@ class BasketBandit extends ListenerAdapter {
      */
     @Override
     public void onGenericGuildVoice(GenericGuildVoiceEvent e) {
-        new GenericGuildVoiceController(e);
+        try {
+            new GenericGuildVoiceController(e);
+        } catch(Exception ex) {
+            Utils.sendException(ex, "public void onGenericGuildVoice(GenericGuildVoiceEvent e)");
+        }
     }
 
     /**
