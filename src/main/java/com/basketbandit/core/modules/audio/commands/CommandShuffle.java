@@ -24,7 +24,7 @@ public class CommandShuffle extends Command {
             manager.scheduler.shuffle();
             Utils.sendMessage(e, e.getAuthor().getAsMention() + " shuffled the queue.");
         } catch(Exception ex) {
-            Utils.sendException(ex.getMessage());
+            Utils.sendException(ex);
         }
     }
 

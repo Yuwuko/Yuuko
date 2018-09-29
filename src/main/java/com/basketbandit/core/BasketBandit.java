@@ -94,7 +94,7 @@ class BasketBandit extends ListenerAdapter {
         Utils.lastTen = new LinkedList<>();
         Utils.latestInfo = "";
         Utils.latestError = "";
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 10; i++) {
             Utils.lastTen.add("");
         }
 

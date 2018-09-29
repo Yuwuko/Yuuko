@@ -38,7 +38,7 @@ public class JsonBuffer {
             return result.toString();
 
         } catch(Exception ex) {
-            Utils.sendException(ex.getMessage());
+            Utils.sendException(ex);
             return null;
         }
     }

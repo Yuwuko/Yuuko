@@ -55,7 +55,7 @@ public class CommandClearQueue extends Command {
                 Utils.sendMessage(e, e.getAuthor().getAsMention() + " cleared the queue.");
             }
         } catch(Exception ex) {
-            Utils.sendException(ex.getMessage());
+            Utils.sendException(ex);
         }
     }
 

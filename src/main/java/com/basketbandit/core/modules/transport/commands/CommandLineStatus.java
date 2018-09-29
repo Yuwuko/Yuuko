@@ -81,7 +81,7 @@ public class CommandLineStatus extends Command {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex.getMessage());
+            Utils.sendException(ex);
             Utils.sendMessage(e, "There was an issue processing your request.");
         }
 

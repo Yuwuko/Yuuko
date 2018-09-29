@@ -158,11 +158,11 @@ public class Utils {
         }
     }
 
-    public static void sendException(String exception) {
+    public static void sendException(Exception ex) {
         try {
             MessageChannel channel = botUser.getJDA().getTextChannelById(495602825355591700L);
-            channel.sendMessage(exception).queue();
-        } catch(Exception ex) {
+            channel.sendMessage("`" + ex.toString() + "`").queue();
+        } catch(Exception exc) {
             //
         }
     }
@@ -365,7 +365,7 @@ public class Utils {
         System.out.println("          | |_) | (_| \\__ \\   <  __/ |_| |_) | (_| | | | | (_| | | |_");
         System.out.println("          |____/ \\__,_|___/_|\\_\\___|\\__|____/ \\__,_|_| |_|\\__,_|_|\\__|");
         System.out.println();
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ " + lastTen.get(0));
         System.out.println("┃ " + lastTen.get(1));
         System.out.println("┃ " + lastTen.get(2));
@@ -376,13 +376,12 @@ public class Utils {
         System.out.println("┃ " + lastTen.get(7));
         System.out.println("┃ " + lastTen.get(8));
         System.out.println("┃ " + lastTen.get(9));
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + latestInfo);
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + SystemInformation.getPing() + ", Guilds: " + SystemInformation.getGuildCount() + ", Modules: " + SystemInformation.getModuleCount() + ", Commands: " + SystemInformation.getCommandCount());
         System.out.println("┃ Messages processed: " + messagesProcessed + ", Reacts processed: " + reactsProcessed + ", Commands processed: " + commandsProcessed);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        System.out.println();
 
     }
 

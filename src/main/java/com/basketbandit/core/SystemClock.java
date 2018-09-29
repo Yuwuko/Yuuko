@@ -62,7 +62,7 @@ public class SystemClock implements Runnable {
 
             }
         } catch (InterruptedException ex) {
-            Utils.sendException(ex.getMessage());
+            Utils.sendException(ex);
         }
     }
 

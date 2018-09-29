@@ -61,7 +61,7 @@ public class CommandWeather extends Command {
             Utils.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex.getMessage());
+            Utils.sendException(ex);
             Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
