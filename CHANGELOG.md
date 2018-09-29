@@ -4,6 +4,9 @@ Key: [+] added, [-] removed, [~] modified.
 
 ## 3.0.1
 + [~] Further added to the exception message to get concise and valuable data.
++ [~] Added more checks to stop bot actions wasting CPU cycles.
++ [~] Minor streamlining in the main class, very very slightly reducing size.
++ [~] Updated dependencies, removing some of the obsolete packages that were still being packaged with the bot, reducing overall size by roughly 400kb.
 
 ## 3.0.0
 + [+] Upgraded project to Java 11 since Java 10 has just become obsolete.
