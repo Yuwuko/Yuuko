@@ -49,7 +49,7 @@ public class CommandKitsu extends Command {
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setColor(Color.RED)
-                    .setTitle(anime.getCanonicalTitle() + " | " + anime.getTitles().getJaJp())
+                    .setTitle(anime.getCanonicalTitle() + " | " + anime.getTitles().getJaJp(), "https://www.youtube.com/watch?v=" + anime.getYoutubeVideoId())
                     .setImage(anime.getPosterImage().getMedium())
                     .setDescription(anime.getSynopsis())
                     .addField("Age Rating", anime.getAgeRating() + ": " + anime.getAgeRatingGuide(), true)
