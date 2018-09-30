@@ -23,13 +23,29 @@ public class ModuleCore extends Module {
 
 	@Override
 	protected void executeCommand(MessageReceivedEvent e, String[] command) {
-		if(command[0].equals(C.SETUP.getCommandName()) && (e.getMember().hasPermission(C.SETUP.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SETUP.getCommandPermission()))) {
-			new CommandSetup(e, command);
+
+		if(command[0].equals(C.SETTINGS.getCommandName()) && (e.getMember().hasPermission(C.SETTINGS.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SETTINGS.getCommandPermission()))) {
+			new CommandSettings(e, command);
 			return;
 		}
 
 		if(command[0].equals(C.MODULE.getCommandName()) && (e.getMember().hasPermission(C.MODULE.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.MODULE.getCommandPermission()))) {
 			new CommandModule(e, command);
+			return;
+		}
+
+		if(command[0].equals(C.SET_PREFIX.getCommandName()) && (e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SET_PREFIX.getCommandPermission()))) {
+			new CommandSetPrefix(e, command);
+			return;
+		}
+
+		if(command[0].equals(C.ABOUT.getCommandName())) {
+			new CommandAbout(e, command);
+			return;
+		}
+
+		if(command[0].equals(C.SETUP.getCommandName()) && (e.getMember().hasPermission(C.SETUP.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SETUP.getCommandPermission()))) {
+			new CommandSetup(e, command);
 			return;
 		}
 
@@ -40,16 +56,6 @@ public class ModuleCore extends Module {
 
 		if(command[0].equals(C.HELP.getCommandName())) {
 			new CommandHelp(e, command);
-			return;
-		}
-
-		if(command[0].equals(C.ABOUT.getCommandName())) {
-			new CommandAbout(e, command);
-			return;
-		}
-
-		if(command[0].equals(C.SET_PREFIX.getCommandName()) && (e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SET_PREFIX.getCommandPermission()))) {
-			new CommandSetPrefix(e, command);
 			return;
 		}
 

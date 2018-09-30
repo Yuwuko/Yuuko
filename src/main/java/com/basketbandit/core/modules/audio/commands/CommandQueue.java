@@ -54,7 +54,7 @@ public class CommandQueue extends Command {
                 }
             }
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0]);
+            Utils.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

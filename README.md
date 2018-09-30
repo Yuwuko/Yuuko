@@ -21,22 +21,23 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| setup | Execute if the bot didn't initialise correctly, but shouldn't need to be used. (If it says unsuccessful, the setup was already performed successfully) | -setup | `-setup` |
-| module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` |
+| setup | Execute if the bot didn't initialise correctly, but shouldn't need to be used. (If it says unsuccessful, the setup was already performed successfully) | -setup | `-setup` | ADMINISTRATOR |
+| module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` | MANAGE_SERVER|
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
 | about | Returns some technical information about BasketBandit, such as uptime, ping and server count. | -about | `-about` |
-| setprefix | Sets the server's command prefix. (Global prefix will still work.) | -setprefix [prefix] | `-setprefix !` | Administrator |
+| setprefix | Sets the server's command prefix. (Global prefix will still work.) | -setprefix [prefix] | `-setprefix !` | MANAGE_SERVER |
+| settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | <code>-settings &#124; deleteExecuted true</code> | MANAGE_SERVER |
 
 ### Moderation
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @BasketBandit &#124; not very nice.</code> | Kick Members |
-| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @BasketBandit 7 &#124;  not cool, bro.</code> | Ban Members |
-| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason | -mute @user &#124; [reason] | <code>-mute @BasketBandit &#124;  mic spamming.</code> | Mute Members |
-| unmute | Unmutes the provided user. | -unmute @user | `-unmute @BasketBandit` | Mute Members |
-| nuke | Deletes the provided number of messages from a text channel. Min: `1`, Max `100`. | -nuke [value] | `-nuke 25` | Manage Messages |
+| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @BasketBandit &#124; not very nice.</code> | KICK_MEMBERS |
+| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @BasketBandit 7 &#124;  not cool, bro.</code> | BAN_MEMBERS |
+| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason | -mute @user &#124; [reason] | <code>-mute @BasketBandit &#124;  mic spamming.</code> | MUTE_MEMBERS |
+| unmute | Unmutes the provided user. | -unmute @user | `-unmute @BasketBandit` | MUTE_MEMBERS |
+| nuke | Deletes the provided number of messages from a text channel. Min: `1`, Max `100`. | -nuke [value] | `-nuke 25` | MANAGE_MESSAGES |
 
 ### Utility
 
@@ -44,9 +45,9 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 |---------|-------------|-------|---------|------------|
 | user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @BasketBandit` |
 | server | Returns information about the current server. | -server | `-server` |
-| channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | Manage Channels |
-| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | Administrator |
-| exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. Modules can be included by retyping the command. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | Administrator |
+| channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | MANAGE_CHANNELS |
+| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | ADMINISTRATOR  |
+| exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. Modules can be included by retyping the command. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | ADMINISTRATOR  |
 | weather | Allows you to look up the weather in the given city *Note: Currently limited to a city name, without country code.* | -weather [city] | `-weather London` |
 
 ### Transport

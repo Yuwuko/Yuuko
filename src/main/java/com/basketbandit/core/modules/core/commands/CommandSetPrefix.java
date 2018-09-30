@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandSetPrefix extends Command {
 
     public CommandSetPrefix() {
-        super("setprefix", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-setprefix [prefix]"}, Permission.ADMINISTRATOR);
+        super("setprefix", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-setprefix [prefix]"}, Permission.MANAGE_SERVER);
     }
 
     public CommandSetPrefix(MessageReceivedEvent e, String[] command) {

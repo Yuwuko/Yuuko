@@ -24,7 +24,7 @@ public class CommandPause extends Command {
             Utils.sendMessage(e, e.getAuthor().getAsMention() + " paused playback.");
             manager.player.setPaused(true);
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0]);
+            Utils.sendException(ex, e.getMessage().getContentRaw());
         }
 
     }

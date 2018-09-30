@@ -55,7 +55,7 @@ public class CommandClear extends Command {
                 manager.scheduler.queue.clear();
             }
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0] + command[1]);
+            Utils.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

@@ -15,12 +15,12 @@ public class ModuleNSFW extends Module {
     public ModuleNSFW(MessageReceivedEvent e, String[] command) {
         super("ModuleNSFW", "moduleNSFW");
 
-        if(!checkNSFWFlag(e)) {
-            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", this command can only be used in NSFW flagged channels.");
+        if(checkModuleSettings(e)) {
             return;
         }
 
-        if(checkModuleSettings(e)) {
+        if(!checkNSFWFlag(e)) {
+            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", this command can only be used in NSFW flagged channels.");
             return;
         }
 

@@ -27,6 +27,7 @@ public final class C {
     public static final Command HELP = new CommandHelp();
     public static final Command ABOUT = new CommandAbout();
     public static final Command SET_PREFIX = new CommandSetPrefix();
+    public static final Command SETTINGS = new CommandSettings();
 
     // Moderation module commands.
     public static final Command NUKE = new CommandNuke();

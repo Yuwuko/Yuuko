@@ -47,7 +47,7 @@ public class CommandSearch extends Command {
             Utils.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0] + command[1]);
+            Utils.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

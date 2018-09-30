@@ -64,7 +64,7 @@ public class CommandRuneScapeStats extends Command {
 
             Utils.sendMessage(e, messageString.toString());
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0] + command[1]);
+            Utils.sendException(ex, e.getMessage().getContentRaw());
             Utils.sendMessage(e, "Oops, looks like I messed up! (Or that account doesn't exist!) <:ErioTouwa:420413779323650050>");
         }
 

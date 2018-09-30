@@ -143,6 +143,7 @@ public class DatabaseFunctions {
 
     /**
      * Retrieves all of the server settings for a server.
+     * ** Doesn't close connection or resultset is lost **
      * @param server the server id.
      * @return the results of the query.
      */
@@ -189,6 +190,67 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             Utils.consoleOutput("[ERROR] Unable to toggle module setting. (Module: " + modName + ", Server: " + server + ")");
+            return false;
+        } finally {
+            try {
+                conn.close();
+            } catch(Exception ex) {
+                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+            }
+        }
+    }
+
+    /**
+     * Returns all of the server settings for the given server.
+     * ** Doesn't close connection or resultset is lost **
+     * @param connection the database connection used.
+     * @param server the server to get the settings for.
+     * @return ResultSet
+     */
+    public ResultSet getServerSettings(Connection connection, String server) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            return stmt.executeQuery();
+
+        } catch(Exception ex) {
+            Utils.consoleOutput("[ERROR] Unable to get server settings. (ID: " + server + ")");
+            return null;
+        }
+    }
+
+    public boolean getServerSetting(String setting, String server) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT " + setting + " FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            ResultSet resultSet = stmt.executeQuery();
+            resultSet.next();
+            return resultSet.getBoolean(1);
+
+        } catch(Exception ex) {
+            Utils.consoleOutput("[ERROR] Unable to get server setting. (ID: " + server + ")");
+            return false;
+        } finally {
+            try {
+                conn.close();
+            } catch(Exception ex) {
+                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+            }
+        }
+    }
+
+    /**
+     * Changes a setting value for the given server setting. (Very dangerous without the correct checking...)
+     * @param setting the setting to be changed.
+     * @param value the value of the setting being changed.
+     * @param server the server where the setting will be changed.
+     * @return if the set was successful.
+     */
+    public boolean setServerSettings(String setting, boolean value, String server) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET " + setting + " = " + value + " WHERE `serverId` = '" + server + "'");
+            return !stmt.execute();
+
+        } catch(Exception ex) {
+            Utils.consoleOutput("[ERROR] Unable to set server setting '"+ setting +"'. (" + server + ")");
             return false;
         } finally {
             try {
@@ -307,6 +369,7 @@ public class DatabaseFunctions {
 
     /**
      * Gets the bindings/exclusions for a particular channel.
+     * ** Doesn't close connection or resultset is lost **
      * @param server the idLong of the server.
      * @return ResultSet
      */
@@ -325,6 +388,7 @@ public class DatabaseFunctions {
 
     /**
      * Gets the bindings/exclusions for a particular server.
+     * ** Doesn't close connection or resultset is lost **
      * @param server the idLong of the server.
      * @return ResultSet
      */

@@ -53,6 +53,11 @@ public class ModuleAudio extends Module {
             return;
         }
 
+        if(command[0].equals(C.SEARCH.getCommandName())) {
+            new CommandSearch(e, command);
+            return;
+        }
+
         if(command[0].equals(C.PAUSE.getCommandName())) {
             new CommandPause(e, command);
             return;
@@ -65,6 +70,11 @@ public class ModuleAudio extends Module {
 
         if(command[0].equals(C.SKIP.getCommandName())) {
             new CommandSkip(e, command);
+            return;
+        }
+
+        if(command[0].equals(C.CLEAR.getCommandName())) {
+            new CommandClear(e, command);
             return;
         }
 
@@ -95,16 +105,6 @@ public class ModuleAudio extends Module {
 
         if(command[0].equals(C.REPEAT.getCommandName())) {
             new CommandRepeat(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.SEARCH.getCommandName())) {
-            new CommandSearch(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.CLEAR.getCommandName())) {
-            new CommandClear(e, command);
             return;
         }
 

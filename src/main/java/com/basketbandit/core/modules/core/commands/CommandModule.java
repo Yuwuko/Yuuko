@@ -14,7 +14,7 @@ import java.awt.*;
 public class CommandModule extends Command {
 
     public CommandModule() {
-        super("module", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-module [module]"}, Permission.MANAGE_PERMISSIONS);
+        super("module", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-module [module]"}, Permission.MANAGE_SERVER);
     }
 
     public CommandModule(MessageReceivedEvent e, String[] command) {
