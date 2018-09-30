@@ -17,35 +17,42 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
-public class CommandSetBackground extends Command {
+public class CommandBackground extends Command {
 
-    public CommandSetBackground() {
-        super("setbackground", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-setbackground [url]", "-setbackground [term]"}, null);
+    public CommandBackground() {
+        super("background", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-background", "-background [url]", "-background [term]"}, null);
     }
 
-    public CommandSetBackground(MessageReceivedEvent e, String[] command) {
+    public CommandBackground(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
+
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
-        e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
-        manager.player.setPaused(false);
+        if(command.length > 1) {
+            e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
+            e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
+            manager.player.setPaused(false);
 
-        if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
-            setAndPlay(manager, e.getChannel(), command[1], e);
+            if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
+                setAndPlay(manager, e.getChannel(), command[1], e);
 
-        } else {
-            String trackUrl = YouTubeSearchHandler.search(command[1]);
-
-            if(trackUrl == null) {
-                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
             } else {
-                setAndPlay(manager, e.getChannel(), trackUrl, e);
+                String trackUrl = YouTubeSearchHandler.search(command[1]);
+
+                if(trackUrl == null) {
+                    Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
+                } else {
+                    setAndPlay(manager, e.getChannel(), trackUrl, e);
+                }
             }
+        } else {
+            // If no parameters are given, unset the background track.
+            Utils.sendMessage(e, "Background track removed.");
+            manager.scheduler.setBackground(null);
         }
     }
 

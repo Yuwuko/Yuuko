@@ -48,9 +48,9 @@ public final class C {
     public static final Command WEATHER = new CommandWeather();
 
     // Media module commands.
-    public static final Command RUNESCAPE_STATS = new CommandRuneScapeStats();
-    public static final Command WORLDOFWARCRAFT_CHARACTER = new CommandWorldOfWarcraftStats();
-    public static final Command OSU_STATS = new CommandOsuStats();
+    public static final Command RUNESCAPE = new CommandRuneScapeStats();
+    public static final Command WOW = new CommandWorldOfWarcraftStats();
+    public static final Command OSU = new CommandOsuStats();
     public static final Command KITSU = new CommandKitsu();
 
     // Music module commands.
@@ -58,15 +58,14 @@ public final class C {
     public static final Command STOP = new CommandStop();
     public static final Command SKIP = new CommandSkip();
     public static final Command PAUSE = new CommandPause();
-    public static final Command CURRENT_TRACK = new CommandCurrentTrack();
+    public static final Command CURRENT = new CommandCurrent();
     public static final Command SHUFFLE = new CommandShuffle();
     public static final Command QUEUE = new CommandQueue();
-    public static final Command SET_BACKGROUND = new CommandSetBackground();
-    public static final Command UNSET_BACKGROUND = new CommandUnsetBackground();
-    public static final Command LAST_TRACK = new CommandLastTrack();
-    public static final Command TOGGLE_REPEAT = new CommandToggleRepeat();
+    public static final Command BACKGROUND = new CommandBackground();
+    public static final Command LAST = new CommandLast();
+    public static final Command REPEAT = new CommandRepeat();
     public static final Command SEARCH = new CommandSearch();
-    public static final Command CLEAR_QUEUE = new CommandClearQueue();
+    public static final Command CLEAR = new CommandClear();
 
     // Transport module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();

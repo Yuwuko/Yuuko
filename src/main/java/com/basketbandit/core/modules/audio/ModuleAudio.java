@@ -68,18 +68,13 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        if(command[0].equals(C.SET_BACKGROUND.getCommandName())) {
-            new CommandSetBackground(e, command);
+        if(command[0].equals(C.BACKGROUND.getCommandName())) {
+            new CommandBackground(e, command);
             return;
         }
 
-        if(command[0].equals(C.UNSET_BACKGROUND.getCommandName())) {
-            new CommandUnsetBackground(e, command);
-            return;
-        }
-
-        if(command[0].equals(C.CURRENT_TRACK.getCommandName())) {
-            new CommandCurrentTrack(e, command);
+        if(command[0].equals(C.CURRENT.getCommandName())) {
+            new CommandCurrent(e, command);
             return;
         }
 
@@ -93,13 +88,13 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        if(command[0].equals(C.LAST_TRACK.getCommandName())) {
-            new CommandLastTrack(e, command);
+        if(command[0].equals(C.LAST.getCommandName())) {
+            new CommandLast(e, command);
             return;
         }
 
-        if(command[0].equals(C.TOGGLE_REPEAT.getCommandName())) {
-            new CommandToggleRepeat(e, command);
+        if(command[0].equals(C.REPEAT.getCommandName())) {
+            new CommandRepeat(e, command);
             return;
         }
 
@@ -108,8 +103,8 @@ public class ModuleAudio extends Module {
             return;
         }
 
-        if(command[0].equals(C.CLEAR_QUEUE.getCommandName())) {
-            new CommandClearQueue(e, command);
+        if(command[0].equals(C.CLEAR.getCommandName())) {
+            new CommandClear(e, command);
             return;
         }
 

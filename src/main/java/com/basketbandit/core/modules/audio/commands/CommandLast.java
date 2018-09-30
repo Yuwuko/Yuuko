@@ -12,13 +12,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
-public class CommandLastTrack extends Command {
+public class CommandLast extends Command {
 
-	public CommandLastTrack() {
+	public CommandLast() {
 		super("last", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-last"}, null);
 	}
 
-	public CommandLastTrack(MessageReceivedEvent e, String[] command) {
+	public CommandLast(MessageReceivedEvent e, String[] command) {
 		executeCommand(e, command);
 	}
 

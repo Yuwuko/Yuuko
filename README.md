@@ -5,7 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
 
-# BasketBandit 3.0.1 (30/09/2018) 
+# BasketBandit 3.1.0 (30/09/2018) 
 
 BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -84,9 +84,8 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | last | Returns information about the last played track such as artist and source. | -last | `-last` | 
 | queue | Returns the first 10 tracks in the queue or however many there are if under 10. | -queue | `-queue` |
 | clear | Clears the current queue of all of the current tracks, or clears a single track from the given position in the queue. | -clear &#124; [position] | <code>-clear &#124; 4</code> |
-| setbackground | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. | -setbackground [url] &#124; [term] | <code>-setbackground https://www.youtube.com/watch?v=va3Dj_sUCJs &#124; cool music</code>  |
-| unsetbackground | Removes the background track. | -unsetbackground | `-unsetbackground` |
-| togglerepeat | Toggles a track to repeat. | -togglerepeat | `-togglerepeat` |
+| background | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. Use the command with no parameters to unset a set background. | -background [url] &#124; [term] | <code>-background https://www.youtube.com/watch?v=va3Dj_sUCJs &#124; cool music</code>  |
+| repeat | Toggles a track to repeat. | -repeat | `-repeat` |
 | search | Searches YouTube and returns the first 10 results, a choice is made by typing the number and the selected track will be queued. | -search [term] | `-search funky beats` |
 
 ### NSFW

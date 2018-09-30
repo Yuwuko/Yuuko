@@ -27,17 +27,17 @@ public class ModuleMedia extends Module {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        if(command[0].equals(C.RUNESCAPE_STATS.getCommandName())) {
+        if(command[0].equals(C.RUNESCAPE.getCommandName())) {
             new CommandRuneScapeStats(e, command);
             return;
         }
 
-        if(command[0].equals(C.WORLDOFWARCRAFT_CHARACTER.getCommandName())) {
+        if(command[0].equals(C.WOW.getCommandName())) {
             new CommandWorldOfWarcraftStats(e, command);
             return;
         }
 
-        if(command[0].equals(C.OSU_STATS.getCommandName())) {
+        if(command[0].equals(C.OSU.getCommandName())) {
             new CommandOsuStats(e, command);
             return;
         }

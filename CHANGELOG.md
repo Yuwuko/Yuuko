@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.1.0
++ [~] Refactor [__togglerepeat__] to [__repeat__] because it is shorter, easier to type and simply a better alias for the command.
++ [~] Refactor [__setbackground__] to simply [__background__] which is shorter and easier to remember with the former being unnecessarily long.
++ [~] Changed class names for the commands changed in `2.2.0` to reflect their new command
++ [-] Removed [__unsetbackground__] and merged it into setbackground so it acts as a toggle instead of having 2 commands.
+
 ## 3.0.1
 + [~] Further added to the exception message to get concise and valuable data.
 + [~] Added more checks to stop bot actions wasting CPU cycles.
@@ -37,11 +43,11 @@ Key: [+] added, [-] removed, [~] modified.
 ## 2.2.0
 + [+] Added [__osu__] command, which allows the user to retrieve stats from either of the 4 modes.
 + [+] Added a shiny new badge to README.md (yay)
-+ [~] Changed and shortened [__currenttrack__] to [__current__].
-+ [~] Changed and shortened [__lasttrack__] to [__last__].
-+ [~] Changed and shortened [__clearqueue__] to [__clear__].
-+ [~] Changed and shortened [__wowcharacter__] to [__wow__].
-+ [~] Changed and /lengthened/ [__rsstats__] to [__runescape__].
++ [~] Refactored [__currenttrack__] to [__current__] for ease of use.
++ [~] Refactored [__lasttrack__] to [__last__] for ease of use.
++ [~] Refactored [__clearqueue__] to [__clear__] for ease of use.
++ [~] Refactored [__wowcharacter__] to [__wow__] for ease of use.
++ [~] Refactored [__rsstats__] to [__runescape__] for ease of use.
 + [~] Refactored World of Warcraft class to reflect changed.
 + [~] Changed unicode to pasted emoji for some reason.
 

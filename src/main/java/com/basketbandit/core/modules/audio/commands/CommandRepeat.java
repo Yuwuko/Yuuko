@@ -6,13 +6,13 @@ import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class CommandUnsetBackground extends Command {
+public class CommandRepeat extends Command {
 
-    public CommandUnsetBackground() {
-        super("unsetbackground", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-unsetbackground"}, null);
+    public CommandRepeat() {
+        super("repeat", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-repeat"}, null);
     }
 
-    public CommandUnsetBackground(MessageReceivedEvent e, String[] command) {
+    public CommandRepeat(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 
@@ -20,8 +20,8 @@ public class CommandUnsetBackground extends Command {
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
-        manager.scheduler.setBackground(null);
-        Utils.sendMessage(e, "Background track removed.");
+        manager.scheduler.setRepeating(!manager.scheduler.isRepeating());
+        Utils.sendMessage(e, e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating());
     }
 
 }

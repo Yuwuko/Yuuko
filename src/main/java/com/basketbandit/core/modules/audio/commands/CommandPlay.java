@@ -43,7 +43,7 @@ public class CommandPlay extends Command {
             if(manager.player.isPaused()) {
                 manager.player.setPaused(false);
                 Utils.sendMessage(e,e.getAuthor().getAsMention() + " resumed playback.");
-                new CommandCurrentTrack();
+                new CommandCurrent();
             }
 
         } else {
@@ -126,7 +126,7 @@ public class CommandPlay extends Command {
                     Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName());
                     tracks.forEach(manager.scheduler::queue);
 
-                    new CommandCurrentTrack(e, null);
+                    new CommandCurrent(e, null);
 
                 } catch(Exception ex) {
                     Utils.sendException(ex, "public void playlistLoaded(AudioPlaylist playlist) [CommandPlay]");

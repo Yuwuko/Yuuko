@@ -9,13 +9,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class CommandClearQueue extends Command {
+public class CommandClear extends Command {
 
-    public CommandClearQueue() {
+    public CommandClear() {
         super("clear", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-clear", "-clear 3"}, null);
     }
 
-    public CommandClearQueue(MessageReceivedEvent e, String[] command) {
+    public CommandClear(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 

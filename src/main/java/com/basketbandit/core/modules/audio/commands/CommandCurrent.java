@@ -12,13 +12,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
-public class CommandCurrentTrack extends Command {
+public class CommandCurrent extends Command {
 
-    public CommandCurrentTrack() {
+    public CommandCurrent() {
         super("current", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-current"}, null);
     }
 
-    public CommandCurrentTrack(MessageReceivedEvent e, String[] command) {
+    public CommandCurrent(MessageReceivedEvent e, String[] command) {
         executeCommand(e, command);
     }
 
