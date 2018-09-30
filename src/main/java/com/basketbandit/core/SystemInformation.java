@@ -40,7 +40,7 @@ public class SystemInformation {
     }
 
     public static void incrementGuildCount(int guildCount) {
-        SystemInformation.guildCount =+ guildCount;
+        SystemInformation.guildCount += guildCount;
     }
 
     static void setGuildCount(int guildCount) {
