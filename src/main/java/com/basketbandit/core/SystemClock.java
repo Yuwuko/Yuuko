@@ -20,12 +20,18 @@ public class SystemClock implements Runnable {
 
             int d = 0, h = 0, m = 0, s = 0;
             String ds, hs, ms, ss;
-            int fm = 0, oh = 0;
+            int fm = 0, oh = 0, fs =0;
 
             SystemInformation.updatePing();
 
             while(running) {
                 Thread.sleep(1000);
+
+                fs++;
+                if(fs == 5) {
+                    Utils.consoleOutput();
+                    fs = 0;
+                }
 
                 fm++;
                 if(fm == 300) {
@@ -59,8 +65,6 @@ public class SystemClock implements Runnable {
                 ss = (s < 10) ? String.format("%02d", s) : s + "";
 
                 runtime = ds + ":" + hs + ":" + ms + ":" + ss;
-
-                Utils.consoleOutput();
 
             }
         } catch (InterruptedException ex) {

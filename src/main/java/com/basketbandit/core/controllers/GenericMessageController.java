@@ -164,7 +164,8 @@ public class GenericMessageController {
             // The main purpose for this is examine where people go wrong when using commands and improve the bot.
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                Utils.lastTen.add(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
+                Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
+                Utils.incrementEvent(2);
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {

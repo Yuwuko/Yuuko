@@ -388,6 +388,8 @@ public class Utils {
             messagesProcessed++;
         } else if(type == 1) {
             reactsProcessed++;
+        } else if(type == 2) {
+            commandsProcessed++;
         }
     }
 

@@ -7,6 +7,8 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Refactor [__togglerepeat__] to [__repeat__] because it is shorter, easier to type and simply a better alias for the command.
 + [~] Refactor [__setbackground__] to simply [__background__] which is shorter and easier to remember with the former being unnecessarily long.
 + [~] Changed class names for the commands changed in `2.2.0` to reflect their new command
++ [~] Finished the remaining exceptions so that they're all uniform and will send information to the correct place.
++ [~] Altered the output of the console to happen once every 5 seconds instead of when message/react events are intercepted.
 + [-] Removed [__unsetbackground__] and merged it into setbackground so it acts as a toggle instead of having 2 commands.
 
 ## 3.0.1
