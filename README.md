@@ -69,7 +69,7 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | runescape | Returns a list of RuneScape stats for the given version and player. | -runescape [game] [player] | `-runescape os white cat22` |
 | wow | Returns information about a given World of Warcraft character. | -wow [character] [realm] | `-wow porcus silvermoon` |
 | osu | Returns a small signature image for an Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
-| kitsu | Returns information about the given anime. (Character information to come soon!) | -kitsu [type] [name] | `-kitsu show naruto` |
+| kitsu | Returns information about the given anime. (Types: show) (Character information to come soon!) | -kitsu [type] [name] | `-kitsu show naruto` |
 
 ### Music
 
