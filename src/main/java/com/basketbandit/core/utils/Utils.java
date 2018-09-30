@@ -29,10 +29,11 @@ public class Utils {
     public static DiscordBotListAPI botList;
     public static LinkedList<String> lastTen;
     public static String latestInfo;
-    public static String latestError;
+    public static String[] standardStrings;
     private static int messagesProcessed;
     private static int commandsProcessed;
     private static int reactsProcessed;
+
 
     /**
      * Returns a username and discriminator in format username#discriminator.
@@ -339,22 +340,7 @@ public class Utils {
     /**
      * Console output message method.
      */
-    public static void consoleOutput(String latest) {
-
-        if(latest.equals("[MESSAGE]")) {
-            messagesProcessed++;
-        } else if(latest.startsWith("[INFO]")) {
-            latestInfo = latest;
-        } else if(latest.equals("[REACT]")) {
-            reactsProcessed++;
-        } else {
-            lastTen.addFirst(latest);
-            if(lastTen.size() > 10) {
-                lastTen.removeLast();
-            }
-            messagesProcessed++;
-            commandsProcessed++;
-        }
+    public static void consoleOutput() {
 
         // Default shell size is 80x24, this output will allow each message to take up the whole screen
         // thus giving the illusion that the current page is changing rather than just being rewritten under.
@@ -382,7 +368,42 @@ public class Utils {
         System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + SystemInformation.getPing() + ", Guilds: " + SystemInformation.getGuildCount() + ", Modules: " + SystemInformation.getModuleCount() + ", Commands: " + SystemInformation.getCommandCount());
         System.out.println("┃ Messages processed: " + messagesProcessed + ", Reacts processed: " + reactsProcessed + ", Commands processed: " + commandsProcessed);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+    }
 
+    /**
+     * Returns one of the array of standard strings (saves having to change loads of message in embeds!)
+     * @param string int
+     * @return the chosen string.
+     */
+    public static String getStandardString(int string) {
+        return standardStrings[string];
+    }
+
+    /**
+     * Increments processed integer.
+     * @param type int
+     */
+    public static void incrementEvent(int type) {
+        if(type == 0) {
+            messagesProcessed++;
+        } else if(type == 1) {
+            reactsProcessed++;
+        }
+    }
+
+    /**
+     * Updates the latest [INFO] message or the latest command message.
+     * @param latest String
+     */
+    public static void updateLatest(String latest) {
+        if(latest.startsWith("[INFO]")) {
+            latestInfo = latest;
+        } else {
+            lastTen.addFirst(latest);
+            if(lastTen.size() > 10) {
+                lastTen.removeLast();
+            }
+        }
     }
 
 }

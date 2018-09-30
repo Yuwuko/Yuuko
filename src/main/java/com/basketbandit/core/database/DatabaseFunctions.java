@@ -41,13 +41,13 @@ public class DatabaseFunctions {
             }
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to add new server to the database. (ID: " + server + ")");
+            Utils.sendException(ex, "Unable to add new server to the database. (ID: " + server + ")");
             return false;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -84,13 +84,13 @@ public class DatabaseFunctions {
             return true;
 
         } catch (Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to add new server to the database.");
+            Utils.sendException(ex, "Unable to add new server to the database.");
             return false;
         } finally {
             try {
                 conn.close();
             } catch (Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -107,13 +107,13 @@ public class DatabaseFunctions {
             return stmt.execute();
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to set server prefix. (" + server + ")");
+            Utils.sendException(ex, "Unable to set server prefix. (" + server + ")");
             return false;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -136,7 +136,7 @@ public class DatabaseFunctions {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -153,7 +153,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to get module settings. (ID: " + server + ")");
+            Utils.sendException(ex, "Unable to get module settings. (ID: " + server + ")");
             return null;
         }
     }
@@ -171,7 +171,7 @@ public class DatabaseFunctions {
             return resultSet.getBoolean(1);
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to get individual module setting. (Module: " + moduleName + ", Server: " + server + ")");
+            Utils.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + server + ")");
             return false;
         }
     }
@@ -189,13 +189,13 @@ public class DatabaseFunctions {
             return checkModuleSettings(modName, server);
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to toggle module setting. (Module: " + modName + ", Server: " + server + ")");
+            Utils.sendException(ex, "Unable to toggle module setting. (Module: " + modName + ", Server: " + server + ")");
             return false;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -213,7 +213,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to get server settings. (ID: " + server + ")");
+            Utils.sendException(ex, "Unable to get server settings. (ID: " + server + ")");
             return null;
         }
     }
@@ -226,13 +226,13 @@ public class DatabaseFunctions {
             return resultSet.getBoolean(1);
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to get server setting. (ID: " + server + ")");
+            Utils.sendException(ex, "Unable to get server setting. (ID: " + server + ")");
             return false;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -250,13 +250,13 @@ public class DatabaseFunctions {
             return !stmt.execute();
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to set server setting '"+ setting +"'. (" + server + ")");
+            Utils.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");
             return false;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -303,13 +303,13 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             ex.printStackTrace();
-            Utils.consoleOutput("[ERROR] Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
+            Utils.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
             return -1;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -356,13 +356,13 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             ex.printStackTrace();
-            Utils.consoleOutput("[ERROR] Unable to exclude module from channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
+            Utils.sendException(ex, "Unable to exclude module from channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
             return -1;
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }
@@ -381,7 +381,7 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             ex.printStackTrace();
-            Utils.consoleOutput("[ERROR] Unable to return bindings/exclusions. (" + server + ")");
+            Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
             return null;
         }
     }
@@ -398,7 +398,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to return bindings/exclusions. (" + server + ")");
+            Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
             return null;
         }
     }
@@ -413,12 +413,12 @@ public class DatabaseFunctions {
             stmt.execute();
 
         } catch(Exception ex) {
-            Utils.consoleOutput("[ERROR] Unable to remove server from the database. (" + server + ")");
+            Utils.sendException(ex, "Unable to remove server from the database. (" + server + ")");
         } finally {
             try {
                 conn.close();
             } catch(Exception ex) {
-                Utils.consoleOutput("[ERROR] Unable to close connection to database.");
+                Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
     }

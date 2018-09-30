@@ -59,7 +59,7 @@ public class GenericGuildController {
                     c.sendMessage(about.build()).queue();
                     break;
                 } catch(PermissionException ex) {
-                    Utils.consoleOutput("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
+                    Utils.updateLatest("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
                 }
             }
         }
@@ -67,7 +67,7 @@ public class GenericGuildController {
         Utils.updateDiscordBotList();
 
         new CommandSetup(e);
-        Utils.consoleOutput("[INFO] Joined new server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
+        Utils.updateLatest("[INFO] Joined new server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
@@ -83,6 +83,6 @@ public class GenericGuildController {
         SystemInformation.incrementGuildCount(-1);
 
         Utils.updateDiscordBotList();
-        Utils.consoleOutput("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
+        Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
     }
 }

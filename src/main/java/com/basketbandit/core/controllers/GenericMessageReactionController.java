@@ -31,7 +31,7 @@ public class GenericMessageReactionController {
             }
         }
 
-        Utils.consoleOutput("[REACT]");
+        Utils.incrementEvent(1);
     }
 
 }

@@ -60,6 +60,8 @@ public class SystemClock implements Runnable {
 
                 runtime = ds + ":" + hs + ":" + ms + ":" + ss;
 
+                Utils.consoleOutput();
+
             }
         } catch (InterruptedException ex) {
             Utils.sendException(ex, "public void run() [SystemClock]");

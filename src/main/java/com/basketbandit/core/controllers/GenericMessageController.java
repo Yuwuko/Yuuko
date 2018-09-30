@@ -15,7 +15,6 @@ import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
@@ -63,15 +62,16 @@ public class GenericMessageController {
 
             if(msgRawLower.matches("^[0-9]{1,2}$") || msgRawLower.equals("cancel")) {
                 processMessage(e, startExecutionNano);
+                return;
             }
 
             // Passes nothing through to the console output so it updates a registered message.
-            Utils.consoleOutput("[MESSAGE]");
+            Utils.incrementEvent(0);
 
         } catch(NullPointerException ex) {
-            // Do nothing, null pointers happen.
-        } catch(Exception ex) {
-            ex.printStackTrace();
+            // Do nothing, null pointers happen. (Should they though...)
+        } catch (Exception ex) {
+            Utils.sendException(ex, "private void messageReceivedEvent(MessageReceivedEvent e)");
         }
     }
 
@@ -116,7 +116,6 @@ public class GenericMessageController {
                             Utils.sendMessage(e, "Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
                             return;
                         } else {
-                            // Remove the input message.
                             e.getMessage().delete().queue();
                             break;
                         }
@@ -165,17 +164,15 @@ public class GenericMessageController {
             // The main purpose for this is examine where people go wrong when using commands and improve the bot.
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                Utils.consoleOutput( Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
+                Utils.lastTen.add(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay() + " (" + executionTime + "ms)");
             }
 
             if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                 new ModuleLogging(e, executionTime, null);
             }
 
-        } catch (InvocationTargetException ex) {
-            ex.getCause();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.sendException(ex, "GenericMessageController (Main)");
         }
     }
 
@@ -201,18 +198,19 @@ public class GenericMessageController {
                     }
                 }
 
-                // Remove the input message, but only if searchUsers contains the key.
-                e.getMessage().delete().queue();
+                if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId())) {
+                    e.getMessage().delete().queue();
+                }
 
                 if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    Utils.consoleOutput(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                    Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                     new ModuleLogging(e, executionTime, null);
                 }
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.sendException(ex, "GenericMessageController (Aux)");
         }
     }
 

@@ -89,9 +89,8 @@ class BasketBandit extends ListenerAdapter {
         SystemInformation.setUserCount(users);
         SystemInformation.setGuildCount(bot.getGuilds().size());
 
-        Utils.lastTen = new LinkedList<>();
         Utils.latestInfo = "";
-        Utils.latestError = "";
+        Utils.lastTen = new LinkedList<>();
         for(int i = 0; i < 10; i++) {
             Utils.lastTen.add("");
         }
@@ -149,6 +148,9 @@ class BasketBandit extends ListenerAdapter {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+
+        Utils.standardStrings = new String[1];
+        Utils.standardStrings[0] = Configuration.VERSION;
 
         // Sets some of the util fields ahead of when they're first used.
         SystemInformation.setModuleList(moduleList);
