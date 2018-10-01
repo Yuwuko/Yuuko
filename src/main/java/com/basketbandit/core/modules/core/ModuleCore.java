@@ -34,11 +34,6 @@ public class ModuleCore extends Module {
 			return;
 		}
 
-		if(command[0].equals(C.SET_PREFIX.getCommandName()) && (e.getMember().hasPermission(C.SET_PREFIX.getCommandPermission()) || e.getMember().hasPermission(e.getTextChannel(), C.SET_PREFIX.getCommandPermission()))) {
-			new CommandSetPrefix(e, command);
-			return;
-		}
-
 		if(command[0].equals(C.ABOUT.getCommandName())) {
 			new CommandAbout(e, command);
 			return;

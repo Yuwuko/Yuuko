@@ -25,16 +25,19 @@ public class DatabaseFunctions {
      */
     public boolean addNewServer(String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES ('" + server + "', '-')");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
+                stmt2.setString(1, server);
                 stmt2.execute();
 
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES ('" + server + "')");
+                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES (?)");
+                stmt3.setString(1, server);
                 return stmt3.execute();
             } else {
                 return false;
@@ -67,16 +70,19 @@ public class DatabaseFunctions {
             while(it.hasNext()) {
                 guild = (Guild)it.next();
 
-                PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = '" + guild.getId() + "'");
+                PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = ?");
+                stmt.setString(1, guild.getId());
                 ResultSet resultSet = stmt.executeQuery();
 
                 if(!resultSet.next()) {
                     conn = new DatabaseConnection().getConnection();
-                    PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES ('" + guild.getId() + "', '-')");
+                    PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
+                    stmt2.setString(1, guild.getId());
                     stmt2.execute();
 
                     conn = new DatabaseConnection().getConnection();
-                    PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES ('" + guild.getId() + "')");
+                    PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES (?)");
+                    stmt3.setString(1, guild.getId());
                     stmt3.execute();
                 }
             }
@@ -96,52 +102,6 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Sets a server's command prefix.
-     * @param prefix the command prefix.
-     * @param server the target server.
-     * @return boolean
-     */
-    public boolean setServerPrefix(String prefix, String server) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `commandPrefix` = '" + prefix + "' WHERE `serverId` = '" + server + "'");
-            return stmt.execute();
-
-        } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to set server prefix. (" + server + ")");
-            return false;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
-        }
-    }
-
-    /**
-     * Returns the given server's command prefix.
-     * @param server the target server.
-     * @return String
-     */
-    public String getServerPrefix(String server) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT `commandPrefix` FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
-            ResultSet resultSet = stmt.executeQuery();
-            resultSet.next();
-            return resultSet.getString(1);
-
-        } catch(Exception ex) {
-            return null;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
-        }
-    }
-
-    /**
      * Retrieves all of the server settings for a server.
      * ** Doesn't close connection or resultset is lost **
      * @param server the server id.
@@ -149,7 +109,8 @@ public class DatabaseFunctions {
      */
     public ResultSet getModuleSettings(Connection connection, String server) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
             return stmt.executeQuery();
 
         } catch(Exception ex) {
@@ -165,7 +126,8 @@ public class DatabaseFunctions {
      */
     public boolean checkModuleSettings(String moduleName, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT " + moduleName + " FROM `ModuleSettings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("SELECT " + moduleName + " FROM `ModuleSettings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
             return resultSet.getBoolean(1);
@@ -184,7 +146,10 @@ public class DatabaseFunctions {
      */
     public boolean toggleModule(String modName, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET " + modName + " = NOT " + modName + " WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET ? = NOT ? WHERE `serverId` = ?");
+            stmt.setString(1, modName);
+            stmt.setString(2, modName);
+            stmt.setString(3, server);
             stmt.execute();
             return checkModuleSettings(modName, server);
 
@@ -209,7 +174,8 @@ public class DatabaseFunctions {
      */
     public ResultSet getServerSettings(Connection connection, String server) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ServerSettings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
             return stmt.executeQuery();
 
         } catch(Exception ex) {
@@ -218,16 +184,18 @@ public class DatabaseFunctions {
         }
     }
 
-    public boolean getServerSetting(String setting, String server) {
+    public String getServerSetting(String setting, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT " + setting + " FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("SELECT ? FROM `ServerSettings` WHERE `serverId` = ?");
+            stmt.setString(1, setting);
+            stmt.setString(2, server);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
-            return resultSet.getBoolean(1);
+            return resultSet.getString(1);
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to get server setting. (ID: " + server + ")");
-            return false;
+            return null;
         } finally {
             try {
                 conn.close();
@@ -244,9 +212,12 @@ public class DatabaseFunctions {
      * @param server the server where the setting will be changed.
      * @return if the set was successful.
      */
-    public boolean setServerSettings(String setting, boolean value, String server) {
+    public boolean setServerSettings(String setting, String value, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET " + setting + " = " + value + " WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET ? = ? WHERE `serverId` = ?");
+            stmt.setString(1, setting);
+            stmt.setString(2, value);
+            stmt.setString(3, server);
             return !stmt.execute();
 
         } catch(Exception ex) {
@@ -272,12 +243,18 @@ public class DatabaseFunctions {
         String moduleIn = "module" + modName;
 
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            stmt.setString(1, server);
+            stmt.setString(2, channel);
+            stmt.setString(3, moduleIn);
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES ('" + server + "','" + channel + "','" + moduleIn + "', '1', '0')");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?, '1', '0')");
+                stmt2.setString(1, server);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     return 0;
                 }
@@ -285,7 +262,10 @@ public class DatabaseFunctions {
 
             if(!resultSet.getBoolean("bound") && resultSet.getBoolean("excluded")) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '1', `excluded` = '0' WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '1', `excluded` = '0' WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+                stmt2.setString(1, server);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     return 0;
                 }
@@ -293,7 +273,10 @@ public class DatabaseFunctions {
 
             if(resultSet.getBoolean("bound")) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+                stmt2.setString(1, server);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     return 1;
                 }
@@ -325,12 +308,18 @@ public class DatabaseFunctions {
         String moduleIn = "module" + modName;
 
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            stmt.setString(1, server);
+            stmt.setString(2, channel);
+            stmt.setString(3, moduleIn);
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES ('" + server + "','" + channel + "','" + moduleIn + "', '0', '1')");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?, '0', '1')");
+                stmt2.setString(1, server);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     return 0;
                 }
@@ -338,7 +327,10 @@ public class DatabaseFunctions {
 
             if(resultSet.getBoolean("bound") && !resultSet.getBoolean("excluded")) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '0', `excluded` = '1' WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '0', `excluded` = '1' WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+                stmt2.setString(1, server);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     return 0;
                 }
@@ -346,11 +338,14 @@ public class DatabaseFunctions {
 
             if(resultSet.getBoolean("excluded")) {
                 conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = '" + server + "' AND `channelId` = '" + channel + "' AND `moduleName` = '" + moduleIn + "'");
+                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+                stmt2.setString(1, server);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     return 1;
                 }
-            }
+             }
 
             return -1;
 
@@ -373,10 +368,11 @@ public class DatabaseFunctions {
      * @param server the idLong of the server.
      * @return ResultSet
      */
-    public ResultSet getBindingsExclusionsChannel(Connection connection, String server, String modName) {
+    public ResultSet getBindingsExclusionsChannel(Connection connection, String server, String moduleIn) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = '" + server + "' AND `moduleName` = '" + modName + "'");
-            //Utils.consoleOutput("SELECT * FROM `ModuleBindings` WHERE `serverId` = '" + server + "' AND `moduleName` = '" + modName + "'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `moduleName` = ?");
+            stmt.setString(1, server);
+            stmt.setString(2, moduleIn);
             return stmt.executeQuery();
 
         } catch(Exception ex) {
@@ -394,7 +390,8 @@ public class DatabaseFunctions {
      */
     public ResultSet getBindingsExclusionsServer(Connection connection, String server) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
             return stmt.executeQuery();
 
         } catch(Exception ex) {
@@ -409,7 +406,8 @@ public class DatabaseFunctions {
      */
     public void cleanup(String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ServerSettings` WHERE `serverId` = '" + server + "'");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ServerSettings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
             stmt.execute();
 
         } catch(Exception ex) {

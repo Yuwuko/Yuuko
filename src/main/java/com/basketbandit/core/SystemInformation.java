@@ -12,8 +12,9 @@ public class SystemInformation {
     private static long ping;
     private static int guildCount;
     private static int userCount;
-    private static List<Command> commandList;
-    private static List<Module> moduleList;
+    private static List<Command> commands;
+    private static List<Module> modules;
+    private static List<String> settings;
 
     public static String getGuildCount() {
         return guildCount + "";
@@ -24,19 +25,23 @@ public class SystemInformation {
     }
 
     public static String getCommandCount() {
-        return commandList.size() + "";
+        return commands.size() + "";
     }
 
     public static String getModuleCount() {
-        return moduleList.size() + "";
+        return modules.size() + "";
     }
 
     public static List<Command> getCommandList() {
-        return commandList;
+        return commands;
     }
 
     public static List<Module> getModuleList() {
-        return moduleList;
+        return modules;
+    }
+
+    public static List<String> getSettingsList() {
+        return settings;
     }
 
     public static void incrementGuildCount(int guildCount) {
@@ -52,11 +57,15 @@ public class SystemInformation {
     }
 
     static void setCommandList(List<Command> commandList) {
-        SystemInformation.commandList = commandList;
+        SystemInformation.commands = commandList;
     }
 
     static void setModuleList(List<Module> moduleList) {
-        SystemInformation.moduleList = moduleList;
+        SystemInformation.modules = moduleList;
+    }
+
+    static void setSettingsList(List<String> settingsList) {
+        SystemInformation.settings = settingsList;
     }
 
     static void updatePing() {

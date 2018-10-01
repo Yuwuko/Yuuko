@@ -16,9 +16,9 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The global invocation/prefix is `@BasketBandit` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. You can also set a custom prefix using the `setprefix` command below which I recommend to make everything quicker. E.g. `@BasketBandit setprefix !` or `-setprefix !`.
+The global invocation/prefix is `@BasketBandit` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. To set a custom prefix, you can use the `settings` command below.
 
-__PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest way to check is by typing the command given above to change the prefix. If you do not wish to do this, ensure that there is only a _single_ space between `@BasketBandit` and the rest of the command.
+__PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy way of checking to use the `-about` command. If the bot has not set itself up correctly, try using the `-setup` command.
 
 ### Core
 
@@ -29,7 +29,6 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
 | about | Returns some technical information about BasketBandit, such as uptime, ping and server count. | -about | `-about` |
-| setprefix | Sets the server's command prefix. (Global prefix will still work.) | -setprefix [prefix] | `-setprefix !` | MANAGE_SERVER |
 | settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | <code>-settings &#124; deleteExecuted true</code> | MANAGE_SERVER |
 
 ### Moderation
@@ -97,6 +96,14 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly. The easiest wa
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
 | efukt | Returns a random image/gif/video from eFukt. (Requires NSFW flagged channel to work) | -efukt | `-efukt` |
+
+
+## Settings
+
+| Setting | Description | Values | Usage |
+|---------|-------------|-------|---------|
+| commandPrefix | Changes the custom prefix for the server. | String | `-settings commandPrefix !` |
+| deleteExecuted | Deletes the command message after it has been executed. | TRUE, FALSE | `-settings deleteExecuted true` |
 
 
 ## Other features

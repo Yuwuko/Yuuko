@@ -1,9 +1,12 @@
 package com.basketbandit.core.modules.core.commands;
 
 import com.basketbandit.core.Configuration;
+import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.modules.core.settings.SettingCommandPrefix;
+import com.basketbandit.core.modules.core.settings.SettingDeleteExecuted;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -28,35 +31,27 @@ public class CommandSettings extends Command {
         try {
             if(command.length > 1) {
                 String[] commandParameters = command[1].split("\\s+", 2);
-                boolean value;
 
-                // Check to see if the input value is actually a boolean.
-                try {
-                    value = Boolean.parseBoolean(commandParameters[1]);
-                } catch(Exception ex) {
-                    Utils.sendMessage(e, "Sorry, '" + commandParameters[1] + "' is not a valid boolean value.");
-                    return;
-                }
-
-                // Check to stop people trying to set arbitrary column values.
-                if(!commandParameters[0].toLowerCase().equals("deleteexecuted")) {
+                // Check to make sure the command is a valid command.
+                if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
                     Utils.sendMessage(e, "Sorry, '" + commandParameters[0] + "' is not a setting.");
                     return;
                 }
 
-                if(new DatabaseFunctions().setServerSettings(commandParameters[0], value, e.getGuild().getId())) {
-                    if(value) {
-                        EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'" + commandParameters[0] + "' set to TRUE.");
-                        Utils.sendMessage(e, embed.build());
-                    } else {
-                        EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("'" + commandParameters[0] + "' set to FALSE.");
-                        Utils.sendMessage(e, embed.build());
+                if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {
+                    if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
+                        Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE)");
+                        return;
                     }
-                } else {
-                    Utils.sendMessage(e, "Sorry, unable to change server setting.");
+                    new SettingDeleteExecuted(e, commandParameters[1]);
+                }
+
+                if(commandParameters[0].equalsIgnoreCase("commandPrefix")) {
+                    new SettingCommandPrefix(e, commandParameters[1]);
                 }
 
             } else {
+
                 Connection connection = new DatabaseConnection().getConnection();
                 try {
                     ResultSet resultSet = new DatabaseFunctions().getServerSettings(connection, e.getGuild().getId());
@@ -65,7 +60,7 @@ public class CommandSettings extends Command {
                     EmbedBuilder commandModules = new EmbedBuilder()
                         .setColor(Color.DARK_GRAY)
                         .setTitle(e.getGuild().getName() + " settings")
-                        .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid boolean value.")
+                        .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
                         .addField("deleteExecuted", "[**" + resultSet.getBoolean("deleteExecuted") + "**] - Deletes the users command string when it is executed.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
@@ -80,6 +75,7 @@ public class CommandSettings extends Command {
                     }
                 }
             }
+
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
         }

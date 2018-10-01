@@ -1,6 +1,6 @@
 // Program: BasketBandit (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 28/09/2018 - JDK 11.0.0
+// Version: 01/10/2018 - JDK 11.0.0
 
 package com.basketbandit.core;
 
@@ -121,10 +121,8 @@ class BasketBandit extends ListenerAdapter {
 
         } catch(Exception ex) {
             ex.printStackTrace();
-
         }
 
-        new SystemClock();
         new AudioManagerHandler();
 
         ArrayList<Module> moduleList = new ArrayList<>();
@@ -149,12 +147,19 @@ class BasketBandit extends ListenerAdapter {
             ex.printStackTrace();
         }
 
+        ArrayList<String> settingsList = new ArrayList<>();
+        settingsList.add("commandPrefix");
+        settingsList.add("deleteExecuted");
+
         Utils.standardStrings = new String[1];
         Utils.standardStrings[0] = Configuration.VERSION;
 
         // Sets some of the util fields ahead of when they're first used.
         SystemInformation.setModuleList(moduleList);
         SystemInformation.setCommandList(commandList);
+        SystemInformation.setSettingsList(settingsList);
+
+        new SystemClock();
     }
 
     /**

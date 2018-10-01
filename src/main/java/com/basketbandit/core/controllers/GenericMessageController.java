@@ -40,10 +40,10 @@ public class GenericMessageController {
             long startExecutionNano = System.nanoTime();
 
             // Help command (Private Message) throws null pointer for serverLong (Obviously.)
-            String serverLong = e.getGuild().getId();
+            String server = e.getGuild().getId();
             String msgRawLower = e.getMessage().getContentRaw().toLowerCase();
 
-            String prefix = new DatabaseFunctions().getServerPrefix(serverLong);
+            String prefix = new DatabaseFunctions().getServerSetting("commandPrefix", server);
             if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
@@ -110,7 +110,7 @@ public class GenericMessageController {
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
 
                     // Check settings to see if command strings are to be deleted
-                    if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId())) {
+                    if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("true")) {
                         // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
                         if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
                             Utils.sendMessage(e, "Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
@@ -199,7 +199,7 @@ public class GenericMessageController {
                     }
                 }
 
-                if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId())) {
+                if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("true")) {
                     e.getMessage().delete().queue();
                 }
 
