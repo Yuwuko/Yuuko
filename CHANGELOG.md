@@ -10,7 +10,9 @@ Key: [+] added, [-] removed, [~] modified.
 + [~] Changed class names for the commands changed in `2.2.0` to reflect their new command
 + [~] Finished the remaining exceptions so that they're all uniform and will send information to the correct place.
 + [~] Altered the output of the console to happen once every 5 seconds instead of when message/react events are intercepted.
++ [~] Fully altered the database to prevent SQL injections, since I wasn't happy with the previous solution.
 + [-] Removed [__unsetbackground__] and merged it into setbackground so it acts as a toggle instead of having 2 commands.
++ [-] Removed [__setprefix__] and merged it into the settings command, also removing associated database functions.
 
 ## 3.0.1
 + [~] Further added to the exception message to get concise and valuable data.

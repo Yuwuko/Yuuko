@@ -59,9 +59,10 @@ public class CommandSettings extends Command {
 
                     EmbedBuilder commandModules = new EmbedBuilder()
                         .setColor(Color.DARK_GRAY)
-                        .setTitle(e.getGuild().getName() + " settings")
+                        .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
-                        .addField("deleteExecuted", "[**" + resultSet.getBoolean("deleteExecuted") + "**] - Deletes the users command string when it is executed.", false)
+                            .addField("commandPrefix", "[**" + resultSet.getString("commandPrefix") + "**] - The message prefix used to symbolise a command.", false)
+                            .addField("deleteExecuted", "[**" + resultSet.getBoolean("deleteExecuted") + "**] - Deletes the users command string when it is executed.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                     Utils.sendMessage(e, commandModules.build());
