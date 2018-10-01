@@ -140,21 +140,19 @@ public class DatabaseFunctions {
 
     /**
      * Toggles a module for a server, returns the new value.
-     * @param modName the module to toggle.
+     * @param moduleIn the module to toggle.
      * @param server the server in which the module is to be toggled.
      * @return boolean.
      */
-    public boolean toggleModule(String modName, String server) {
+    public boolean toggleModule(String moduleIn, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET ? = NOT ? WHERE `serverId` = ?");
-            stmt.setString(1, modName);
-            stmt.setString(2, modName);
-            stmt.setString(3, server);
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET " + moduleIn + " = NOT " + moduleIn + " WHERE `serverId` = ?");
+            stmt.setString(1, server);
             stmt.execute();
-            return checkModuleSettings(modName, server);
+            return checkModuleSettings(moduleIn, server);
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to toggle module setting. (Module: " + modName + ", Server: " + server + ")");
+            Utils.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", Server: " + server + ")");
             return false;
         } finally {
             try {
@@ -186,9 +184,9 @@ public class DatabaseFunctions {
 
     public String getServerSetting(String setting, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT ? FROM `ServerSettings` WHERE `serverId` = ?");
-            stmt.setString(1, setting);
-            stmt.setString(2, server);
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `ServerSettings` WHERE `serverId` = ?");
+
+            stmt.setString(1, server);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
             return resultSet.getString(1);
@@ -214,10 +212,9 @@ public class DatabaseFunctions {
      */
     public boolean setServerSettings(String setting, String value, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET ? = ? WHERE `serverId` = ?");
-            stmt.setString(1, setting);
-            stmt.setString(2, value);
-            stmt.setString(3, server);
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET " + setting + " = ? WHERE `serverId` = ?");
+            stmt.setString(1, value);
+            stmt.setString(2, server);
             return !stmt.execute();
 
         } catch(Exception ex) {

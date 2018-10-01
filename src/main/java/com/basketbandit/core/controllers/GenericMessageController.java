@@ -48,7 +48,8 @@ public class GenericMessageController {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
 
-            if(msgRawLower.equals(prefix)
+            // Ignores case of prefix (could be a setting!)
+            if(msgRawLower.equalsIgnoreCase(prefix)
                     || msgRawLower.startsWith(prefix + prefix)
                     || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
                     || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
