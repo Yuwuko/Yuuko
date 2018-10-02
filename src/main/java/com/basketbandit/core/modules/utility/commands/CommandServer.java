@@ -22,9 +22,13 @@ public class CommandServer extends Command {
         Guild server = e.getGuild();
         String emotes = "";
 
-        if(!server.getEmotes().isEmpty()) {
-            for(Emote emote : server.getEmotes()) {
-                emotes += emote.getAsMention() + " ";
+        if(!server.getEmoteCache().isEmpty()) {
+            int characterCount = 0;
+            for(Emote emote : server.getEmoteCache()) {
+                if(characterCount + emote.getAsMention().length() + 1 < 1024) {
+                    emotes += emote.getAsMention() + " ";
+                    characterCount += emote.getAsMention().length() + 1;
+                }
             }
         } else {
             emotes = "None Available";

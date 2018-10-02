@@ -12,6 +12,7 @@ import com.basketbandit.core.modules.media.commands.CommandRuneScape;
 import com.basketbandit.core.modules.media.commands.CommandWorldOfWarcraft;
 import com.basketbandit.core.modules.moderation.commands.*;
 import com.basketbandit.core.modules.nsfw.commands.CommandEfukt;
+import com.basketbandit.core.modules.nsfw.commands.CommandNeko;
 import com.basketbandit.core.modules.transport.commands.CommandLineStatus;
 import com.basketbandit.core.modules.utility.commands.*;
 
@@ -72,4 +73,5 @@ public final class C {
 
     // NSFW module commands
     public static final Command EFUKT = new CommandEfukt();
+    public static final Command NEKOS = new CommandNeko();
 }

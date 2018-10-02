@@ -25,16 +25,16 @@ public class CommandEfukt extends Command {
             if(doc.getElementsByClass("image_content").isEmpty()) {
                 efuktPost = new EmbedBuilder()
                         .setColor(Color.DARK_GRAY)
-                        .setTitle(doc.getElementsByTag("h1").text())
+                        .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByTag("source").attr("src"))
                         .setImage(doc.getElementsByTag("video").attr("poster"))
-                        .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 Utils.sendMessage(e.getTextChannel(), efuktPost.build());
             } else {
                 efuktPost = new EmbedBuilder()
                         .setColor(Color.DARK_GRAY)
-                        .setTitle(doc.getElementsByTag("h1").text())
+                        .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
@@ -43,7 +43,7 @@ public class CommandEfukt extends Command {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0]);
+            Utils.sendException(ex, "CommandEfukt");
         }
     }
 

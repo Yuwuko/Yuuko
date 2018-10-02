@@ -21,8 +21,13 @@ public class CommandSkip extends Command {
                 // Send the message before skipping the track or the track metadata becomes unavailable, causing a null pointer.
                 Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
                 manager.scheduler.nextTrack();
+
+            } else if(manager.player.getPlayingTrack() != null) {
+                manager.player.stopTrack();
+
             } else {
                 Utils.sendMessage(e, "The queue is empty, there is no track to skip!");
+
             }
 
         } catch(Exception ex) {

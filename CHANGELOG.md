@@ -6,6 +6,7 @@ Key: [+] added, [-] removed, [~] modified.
 + [+] Created CommandExecutor class to be the one stop shot for all command executions so they're guaranteed to be the same.
 + [+] Created SystemVariables class to store certain command variables such as users who have started a search. (soon to be cache)
 + [~] Completely overhauled the command/module system, shrinking the current line count by 6%. (400~ lines)
++ [~] Updated server command to include the server emotes.
 + [-] Removed the logging module and merged it into the settings command.
 
 ## 3.1.0
