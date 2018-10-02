@@ -147,9 +147,10 @@ class BasketBandit extends ListenerAdapter {
             ex.printStackTrace();
         }
 
+        // Add them in lowercase so they're easier to compare later.
         ArrayList<String> settingsList = new ArrayList<>();
-        settingsList.add("commandPrefix");
-        settingsList.add("deleteExecuted");
+        settingsList.add("commandprefix");
+        settingsList.add("deleteexecuted");
 
         Utils.standardStrings = new String[1];
         Utils.standardStrings[0] = Configuration.VERSION;

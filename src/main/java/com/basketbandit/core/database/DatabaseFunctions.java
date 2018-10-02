@@ -126,7 +126,7 @@ public class DatabaseFunctions {
      */
     public boolean checkModuleSettings(String moduleName, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT " + moduleName + " FROM `ModuleSettings` WHERE `serverId` = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `serverId` = ?");
             stmt.setString(1, server);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
@@ -146,7 +146,7 @@ public class DatabaseFunctions {
      */
     public boolean toggleModule(String moduleIn, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET " + moduleIn + " = NOT " + moduleIn + " WHERE `serverId` = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `serverId` = ?");
             stmt.setString(1, server);
             stmt.execute();
             return checkModuleSettings(moduleIn, server);
@@ -212,10 +212,10 @@ public class DatabaseFunctions {
      */
     public boolean setServerSettings(String setting, String value, String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET " + setting + " = ? WHERE `serverId` = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `" + setting + "` = ? WHERE `serverId` = ?");
             stmt.setString(1, value);
             stmt.setString(2, server);
-            return !stmt.execute();
+            return stmt.execute();
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");

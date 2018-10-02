@@ -14,9 +14,10 @@ public class SettingDeleteExecuted {
     }
 
     public boolean executeCommand(MessageReceivedEvent e, String value) {
+        value = (value.equalsIgnoreCase("true")) ? "1" : "0";
 
         if(new DatabaseFunctions().setServerSettings("deleteExecuted", value, e.getGuild().getId())) {
-            if(Boolean.parseBoolean(value)) {
+            if(Integer.parseInt(value) == 1) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'deleteExecuted' set to TRUE.");
                 Utils.sendMessage(e, embed.build());
             } else {
