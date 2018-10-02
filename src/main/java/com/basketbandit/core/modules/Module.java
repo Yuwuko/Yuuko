@@ -8,18 +8,20 @@ public abstract class Module {
 
     private final String moduleName;
     private final String dbModuleName;
+    private final Command[] moduleCommands;
 
-    public Module(String moduleName, String dbModuleName) {
+    public Module(String moduleName, String dbModuleName, Command[] moduleCommands) {
         this.moduleName = moduleName;
         this.dbModuleName = dbModuleName;
+        this.moduleCommands = moduleCommands;
     }
 
     public String getModuleName() {
         return moduleName;
     }
 
-    public String getDbModuleName() {
-        return dbModuleName;
+    public Command[] getModuleCommands() {
+        return moduleCommands;
     }
 
     protected boolean checkModuleSettings(MessageReceivedEvent e) {
@@ -31,10 +33,7 @@ public abstract class Module {
         }
     }
 
-    protected boolean checkNSFWFlag(MessageReceivedEvent e) {
+    protected boolean isNSFW(MessageReceivedEvent e) {
         return e.getTextChannel().isNSFW();
     }
-
-    // Abstract method signature to ensure method is implemented.
-    protected abstract void executeCommand(MessageReceivedEvent e, String[] command);
 }

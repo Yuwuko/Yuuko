@@ -3,29 +3,20 @@ package com.basketbandit.core.modules.media.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.osu.User;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class CommandOsuStats extends Command {
+public class CommandOsu extends Command {
 
-    public CommandOsuStats() {
-        super("osu", "com.basketbandit.core.modules.media.ModuleMedia", new String[]{"-osu [user]", "-osu [user] [media]"}, null);
-    }
-
-    public CommandOsuStats(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+    public CommandOsu() {
+        super("osu", "com.basketbandit.core.modules.media.ModuleMedia", 1, new String[]{"-osu [user]", "-osu [user] [media]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             String[] commandParameters = command[1].split("\\s+", 2);
 

@@ -13,15 +13,11 @@ import java.time.format.DateTimeFormatter;
 public class CommandServer extends Command {
 
     public CommandServer() {
-        super("server", "com.basketbandit.core.modules.utility.ModuleUtility", new String[]{"-server"}, null);
-    }
-
-    public CommandServer(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("server", "com.basketbandit.core.modules.utility.ModuleUtility", 0, new String[]{"-server"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         Guild server = e.getGuild();
 
         EmbedBuilder commandInfo = new EmbedBuilder()

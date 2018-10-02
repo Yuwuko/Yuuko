@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.2.0
++ [~] Completely overhauled the command/module system, shrinking the current line count by 6%. (400~ lines)
++ [-] Removed the logging module and merged it into the settings command.
+
 ## 3.1.0
 + [+] Added [__settings__] command... yep, there are finally server settings that you can toggle on/off, with the first being if the command message is deleted.
 + [+] Added more shiny badges to the README.md part of the documentation.

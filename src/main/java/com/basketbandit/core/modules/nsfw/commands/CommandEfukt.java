@@ -13,15 +13,11 @@ import java.awt.*;
 public class CommandEfukt extends Command {
 
     public CommandEfukt() {
-        super("efukt", "com.basketbandit.core.modules.nsfw.ModuleNSFW", new String[]{"-efukt"}, null);
-    }
-
-    public CommandEfukt(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("efukt", "com.basketbandit.core.modules.nsfw.ModuleNSFW", 0, new String[]{"-efukt"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             Document doc = Jsoup.connect("https://efukt.com/random.php").get();
             EmbedBuilder efuktPost;
@@ -41,7 +37,7 @@ public class CommandEfukt extends Command {
                         .setTitle(doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))
-                        .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 Utils.sendMessage(e.getTextChannel(), efuktPost.build());
             }
@@ -50,4 +46,5 @@ public class CommandEfukt extends Command {
             Utils.sendException(ex, command[0]);
         }
     }
+
 }

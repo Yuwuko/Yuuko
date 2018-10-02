@@ -4,7 +4,6 @@ import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -15,19 +14,11 @@ import java.awt.*;
 public class CommandModule extends Command {
 
     public CommandModule() {
-        super("module", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-module [module]"}, Permission.MANAGE_SERVER);
-    }
-
-    public CommandModule(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("module", "com.basketbandit.core.modules.core.ModuleCore", 1, new String[]{"-module [module]"}, Permission.MANAGE_SERVER);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String moduleName = command[1].toLowerCase();
         String serverLong = e.getGuild().getId();
 

@@ -14,15 +14,11 @@ import java.awt.*;
 public class CommandAbout extends Command {
 
     public CommandAbout() {
-        super("about", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-about"}, null);
-    }
-
-    public CommandAbout(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("about", "com.basketbandit.core.modules.core.ModuleCore", 0, new String[]{"-about"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
         EmbedBuilder about = new EmbedBuilder()

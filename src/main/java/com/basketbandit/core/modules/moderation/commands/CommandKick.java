@@ -1,7 +1,6 @@
 package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
@@ -12,19 +11,11 @@ import java.util.List;
 public class CommandKick extends Command {
 
     public CommandKick() {
-        super("kick", "com.basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-kick @user", "-ban @user [reason]"}, Permission.KICK_MEMBERS);
-    }
-
-    public CommandKick(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("kick", "com.basketbandit.core.modules.moderation.ModuleModeration",1, new String[]{"-kick @user", "-ban @user [reason]"}, Permission.KICK_MEMBERS);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         Member target;

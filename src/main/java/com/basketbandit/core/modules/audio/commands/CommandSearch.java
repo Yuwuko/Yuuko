@@ -1,10 +1,9 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
+import com.basketbandit.core.SystemVariables;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -16,19 +15,11 @@ import java.util.List;
 public class CommandSearch extends Command {
 
     public CommandSearch() {
-        super("search", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-search [term]"}, null);
-    }
-
-    public CommandSearch(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("search", "com.basketbandit.core.modules.audio.ModuleAudio", 1, new String[]{"-search [term]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
             StringBuilder resultString = new StringBuilder();
@@ -50,12 +41,17 @@ public class CommandSearch extends Command {
                     .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.VERSION, null);
 
-            ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
+            SystemVariables.searchUsers.put(e.getAuthor().getIdLong(), results);
             Utils.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
         }
     }
+
+    //       if(url != null) {
+    //            new CommandPlay(e, url);
+    //            searchUsers.remove(e.getAuthor().getIdLong());
+    //       }
 
 }

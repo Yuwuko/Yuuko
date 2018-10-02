@@ -17,15 +17,11 @@ import java.sql.ResultSet;
 public class CommandHelp extends Command {
 
     public CommandHelp() {
-        super("help", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-help", "-help [command]"}, null);
-    }
-
-    public CommandHelp(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("help", "com.basketbandit.core.modules.core.ModuleCore", 0, new String[]{"-help", "-help [command]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()

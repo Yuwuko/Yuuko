@@ -11,6 +11,10 @@ public class Sanitise {
      * @return boolean
      */
     public static boolean checkParameters(MessageReceivedEvent e, String[] command, int expectedParameters) {
+        if(expectedParameters == 0) {
+            return true;
+        }
+
         if(command.length < 2) {
             Utils.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided 0.");
             return false;

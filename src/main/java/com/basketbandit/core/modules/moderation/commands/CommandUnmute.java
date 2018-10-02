@@ -1,7 +1,6 @@
 package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
@@ -12,19 +11,11 @@ import java.util.List;
 public class CommandUnmute extends Command {
 
     public CommandUnmute() {
-        super("unmute", "com.basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-unmute @user"}, Permission.VOICE_MUTE_OTHERS);
-    }
-
-    public CommandUnmute(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("unmute", "com.basketbandit.core.modules.moderation.ModuleModeration", 1, new String[]{"-unmute @user"}, Permission.VOICE_MUTE_OTHERS);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         Member target;
 
@@ -42,4 +33,5 @@ public class CommandUnmute extends Command {
         e.getGuild().getController().removeSingleRoleFromMember(target, Utils.setupMutedRole(e.getGuild())).queue();
         Utils.sendMessage(e,target.getAsMention() + " has been unmuted.");
     }
+
 }

@@ -8,15 +8,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandAddServers extends Command {
 
     public CommandAddServers() {
-        super("addservers", "com.basketbandit.core.modules.developer.ModuleDeveloper", new String[]{"-addservers"}, null);
-    }
-
-    public CommandAddServers(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("addservers", "com.basketbandit.core.modules.developer.ModuleDeveloper", 0, new String[]{"-addservers"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             if(new DatabaseFunctions().addServers(e)) {
                 Utils.sendMessage(e, "Servers added successfully.");

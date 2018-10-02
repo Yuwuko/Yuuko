@@ -4,7 +4,6 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.kitsu.Attributes;
 import com.basketbandit.core.modules.media.kitsu.KitsuContainer;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,19 +16,11 @@ import java.awt.*;
 public class CommandKitsu extends Command {
 
     public CommandKitsu() {
-        super("kitsu", "com.basketbandit.core.modules.media.ModuleMedia", new String[]{"-kitsu [type] [name]"}, null);
-    }
-
-    public CommandKitsu(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 2)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("kitsu", "com.basketbandit.core.modules.media.ModuleMedia", 2, new String[]{"-kitsu [type] [name]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             String[] commandParameters = command[1].split("\\s+", 2);
             commandParameters[1] = commandParameters[1].replace(" ", "%20");

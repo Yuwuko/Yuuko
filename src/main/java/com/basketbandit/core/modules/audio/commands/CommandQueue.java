@@ -2,7 +2,6 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.Utils;
@@ -15,15 +14,11 @@ import java.awt.*;
 public class CommandQueue extends Command {
 
     public CommandQueue() {
-        super("queue", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-queue"}, null);
-    }
-
-    public CommandQueue(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("queue", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-queue"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         try {
@@ -32,7 +27,7 @@ public class CommandQueue extends Command {
                 int i = 1;
 
                 for(AudioTrack track : manager.scheduler.queue) {
-                    queue.append(i).append(": ").append(track.getInfo().title).append(", (").append(ModuleAudio.getTimestamp(track.getInfo().length)).append(") \n");
+                    queue.append(i).append(": ").append(track.getInfo().title).append(", (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
                     i++;
                     if(i > 10) {
                         break;

@@ -5,6 +5,7 @@ import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
 import com.basketbandit.core.modules.core.settings.SettingCommandPrefix;
 import com.basketbandit.core.modules.core.settings.SettingDeleteExecuted;
 import com.basketbandit.core.utils.Sanitise;
@@ -20,15 +21,11 @@ import java.sql.ResultSet;
 public class CommandSettings extends Command {
 
     public CommandSettings() {
-        super("settings", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-settings", "-settings [setting] [value]"}, Permission.MANAGE_SERVER);
-    }
-
-    public CommandSettings(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("settings", "com.basketbandit.core.modules.core.ModuleCore", 0, new String[]{"-settings", "-settings [setting] [value]"}, Permission.MANAGE_SERVER);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             if(command.length > 1) {
                 String[] commandParameters = command[1].split("\\s+", 2);
@@ -48,13 +45,21 @@ public class CommandSettings extends Command {
                         Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE)");
                         return;
                     }
-
                     new SettingDeleteExecuted(e, commandParameters[1]);
                     return;
                 }
 
                 if(commandParameters[0].equalsIgnoreCase("commandPrefix")) {
                     new SettingCommandPrefix(e, commandParameters[1]);
+                    return;
+                }
+
+                if(commandParameters[0].equalsIgnoreCase("commandLogging")) {
+                    if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
+                        Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE)");
+                        return;
+                    }
+                    new SettingCommandLogging(e, commandParameters[1]);
                 }
 
             } else {
@@ -70,6 +75,7 @@ public class CommandSettings extends Command {
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
                             .addField("commandPrefix", "[**" + resultSet.getString("commandPrefix") + "**] - The message prefix used to symbolise a command.", false)
                             .addField("deleteExecuted", "[**" + resultSet.getBoolean("deleteExecuted") + "**] - Deletes the users command string when it is executed.", false)
+                            .addField("commandLogging", "[**" + resultSet.getBoolean("commandLogging") + "**] - Sends executed commands to a predefined logging channel.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                     Utils.sendMessage(e, commandModules.build());

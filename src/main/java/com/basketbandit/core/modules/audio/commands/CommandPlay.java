@@ -2,7 +2,6 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
@@ -21,19 +20,11 @@ import java.util.List;
 public class CommandPlay extends Command {
 
     public CommandPlay() {
-        super("play", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-play", "-play [url]", "-play [term]"}, null);
-    }
-
-    public CommandPlay(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
-    }
-
-    public CommandPlay(MessageReceivedEvent e, String trackUrl) {
-        executeCommandAux(e, trackUrl);
+        super("play", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-play", "-play [url]", "-play [term]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length == 1) {
@@ -67,7 +58,7 @@ public class CommandPlay extends Command {
 
     }
 
-    private void executeCommandAux(MessageReceivedEvent e, String trackId) {
+    public void executeCommandAux(MessageReceivedEvent e, String trackId) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
@@ -107,7 +98,7 @@ public class CommandPlay extends Command {
                             .setAuthor(e.getMember().getEffectiveName() + " added to the queue!", null, e.getAuthor().getAvatarUrl())
                             .setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(imageUrl)
-                            .addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
+                            .addField("Duration", Utils.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
                             .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
@@ -126,7 +117,7 @@ public class CommandPlay extends Command {
                     Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName());
                     tracks.forEach(manager.scheduler::queue);
 
-                    new CommandCurrent(e, null);
+                    new CommandCurrent().executeCommand(e, null);
 
                 } catch(Exception ex) {
                     Utils.sendException(ex, "public void playlistLoaded(AudioPlaylist playlist) [CommandPlay]");

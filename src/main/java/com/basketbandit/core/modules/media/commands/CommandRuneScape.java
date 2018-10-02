@@ -1,7 +1,6 @@
 package com.basketbandit.core.modules.media.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -9,22 +8,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public class CommandRuneScapeStats extends Command {
+public class CommandRuneScape extends Command {
 
-    public CommandRuneScapeStats() {
-        super("runescape", "com.basketbandit.core.modules.media.ModuleMedia", new String[]{"-runescape [media] [player]"}, null);
-    }
-
-    public CommandRuneScapeStats(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 2)) {
-            return;
-        }
-
-        executeCommand(e, command);
+    public CommandRuneScape() {
+        super("runescape", "com.basketbandit.core.modules.media.ModuleMedia", 2, new String[]{"-runescape [media] [player]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
         String player = commandParameters[1].toLowerCase();
         Boolean osrs = (commandParameters[0].equals("os"));

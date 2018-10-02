@@ -2,7 +2,6 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -16,19 +15,11 @@ import java.util.List;
 public class CommandUser extends Command {
 
     public CommandUser() {
-        super("user", "com.basketbandit.core.modules.utility.ModuleUtility", new String[]{"-user @user"}, null);
-    }
-
-    public CommandUser(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("user", "com.basketbandit.core.modules.utility.ModuleUtility", 1, new String[]{"-user @user"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             List<Member> mentioned = e.getMessage().getMentionedMembers();
             Member target;

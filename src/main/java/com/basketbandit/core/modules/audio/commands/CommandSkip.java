@@ -9,15 +9,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandSkip extends Command {
 
     public CommandSkip() {
-        super("skip", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-skip"}, null);
-    }
-
-    public CommandSkip(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("skip", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-skip"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         try {

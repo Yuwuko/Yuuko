@@ -19,15 +19,11 @@ import java.util.List;
 public class CommandLineStatus extends Command {
 
     public CommandLineStatus() {
-        super("linestatus", "com.basketbandit.core.modules.transport.ModuleTransport", new String[]{"-linestatus", "-linestatus [min]"}, null);
-    }
-
-    public CommandLineStatus(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("linestatus", "com.basketbandit.core.modules.transport.ModuleTransport", 0, new String[]{"-linestatus", "-linestatus [min]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
             String json = new JsonBuffer().getString("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Configuration.TFL_ID + "&app_key=" + Configuration.TFL_API, "default", "default");

@@ -1,7 +1,6 @@
 package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -9,19 +8,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandChannel extends Command {
 
     public CommandChannel() {
-        super("channel", "com.basketbandit.core.modules.utility.ModuleUtility", new String[]{"-channel [action] [type] [name]", "-channel [action] [type] [name] [nsfw]"}, Permission.MANAGE_CHANNEL);
-    }
-
-    public CommandChannel(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 3)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("channel", "com.basketbandit.core.modules.utility.ModuleUtility", 3, new String[]{"-channel [action] [type] [name]", "-channel [action] [type] [name] [nsfw]"}, Permission.MANAGE_CHANNEL);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
         String type = commandParameters[1].toLowerCase();
 

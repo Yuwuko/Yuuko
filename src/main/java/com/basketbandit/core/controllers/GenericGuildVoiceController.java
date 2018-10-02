@@ -19,7 +19,7 @@ public class GenericGuildVoiceController {
 
         if(self.getVoiceState().inVoiceChannel()) {
             if(self.getVoiceState().getChannel().getMembers().size() == 1) {
-                new CommandStop(e);
+                new CommandStop().executeCommandAux(e);
             }
         }
     }

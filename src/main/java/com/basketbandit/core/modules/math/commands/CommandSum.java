@@ -1,7 +1,6 @@
 package com.basketbandit.core.modules.math.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -11,19 +10,11 @@ import java.awt.*;
 public class CommandSum extends Command {
 
     public CommandSum() {
-        super("sum", "com.basketbandit.core.modules.math.ModuleMath", new String[]{"-sum [variable] [operator] [variable]"}, null);
-    }
-
-    public CommandSum(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("sum", "com.basketbandit.core.modules.math.ModuleMath", 1, new String[]{"-sum [variable] [operator] [variable]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String sumString = "";
 
         if(command[1].contains("+")) {

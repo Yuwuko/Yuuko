@@ -2,12 +2,12 @@ package com.basketbandit.core.controllers;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.SystemInformation;
+import com.basketbandit.core.SystemVariables;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.commands.CommandPlay;
-import com.basketbandit.core.modules.logging.ModuleLogging;
+import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.User;
@@ -48,7 +48,7 @@ public class GenericMessageController {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
 
-            // Ignores case of prefix (could be a setting!)
+            // Ignores messages that consist of just the prefix or starts with the prefix twice.
             if(msgRawLower.equalsIgnoreCase(prefix)
                     || msgRawLower.startsWith(prefix + prefix)
                     || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
@@ -169,8 +169,8 @@ public class GenericMessageController {
                 Utils.incrementEvent(2);
             }
 
-            if(executed && new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
-                new ModuleLogging(e, executionTime, null);
+            if(executed && new DatabaseFunctions().getServerSetting("commandLogging", serverLong).equalsIgnoreCase("1")) {
+                new SettingCommandLogging(null, null).executeSetting(e, executionTime);
             }
 
         } catch (Exception ex) {
@@ -185,18 +185,18 @@ public class GenericMessageController {
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano) {
         try {
-            if(ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+            if(SystemVariables.searchUsers.containsKey(e.getAuthor().getIdLong())) {
                 String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
                 String serverLong = e.getGuild().getId();
 
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
                     if(!input[0].equals("cancel")) {
-                        new CommandPlay(e, ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
-                        ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
+                        new CommandPlay().executeCommandAux(e, SystemVariables.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
+                        SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
                     } else if(input[0].equals("cancel")) {
-                        ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
                         Utils.sendMessage(e, e.getAuthor().getAsMention() + " cancelled their search.");
+                        SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
                     }
                 }
 
@@ -204,11 +204,12 @@ public class GenericMessageController {
                     e.getMessage().delete().queue();
                 }
 
-                if(new DatabaseFunctions().checkModuleSettings("moduleLogging", serverLong)) {
+                if(new DatabaseFunctions().getServerSetting("commandLogging", serverLong).equalsIgnoreCase("1")) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                     Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
-                    new ModuleLogging(e, executionTime, null);
+                    new SettingCommandLogging(null, null).executeSetting(e, executionTime);
                 }
+
             }
 
         } catch (Exception ex) {

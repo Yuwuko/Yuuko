@@ -10,19 +10,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandSetup extends Command {
 
     public CommandSetup() {
-        super("setup", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-setup"}, Permission.ADMINISTRATOR);
-    }
-
-    public CommandSetup(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
-    }
-
-    public CommandSetup(GuildJoinEvent e) {
-        executeCommandAux(e);
+        super("setup", "com.basketbandit.core.modules.core.ModuleCore", 0, new String[]{"-setup"}, Permission.ADMINISTRATOR);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();
 
         if(!new DatabaseFunctions().addNewServer(serverId)) {
@@ -32,7 +24,7 @@ public class CommandSetup extends Command {
         }
     }
 
-    private void executeCommandAux(GuildJoinEvent e) {
+    public void executeAutomated(GuildJoinEvent e) {
         String serverId = e.getGuild().getId();
         try {
             new DatabaseFunctions().addNewServer(serverId);

@@ -2,7 +2,6 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -10,19 +9,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandExclude extends Command {
 
     public CommandExclude() {
-        super("exclude", "com.basketbandit.core.modules.utility.ModuleUtility", new String[]{"-exclude [module]", "-exclude [module] [channel]"}, Permission.ADMINISTRATOR);
-    }
-
-    public CommandExclude(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("exclude", "com.basketbandit.core.modules.utility.ModuleUtility", 1, new String[]{"-exclude [module]", "-exclude [module] [channel]"}, Permission.ADMINISTRATOR);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
         String serverId;
         String channelId;

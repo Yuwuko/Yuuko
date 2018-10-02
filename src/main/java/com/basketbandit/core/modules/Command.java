@@ -8,21 +8,16 @@ public abstract class Command {
 
     private final String commandName;
     private final String commandModule;
+    private final int expectedParameters;
     private final String[] commandUsage;
     private final Permission commandPermission;
 
-    public Command(String commandName, String commandModule, String[] commandUsage, Permission commandPermission) {
+    public Command(String commandName, String commandModule, int expectedParameters, String[] commandUsage, Permission commandPermission) {
         this.commandName = commandName;
         this.commandModule = commandModule;
+        this.expectedParameters = expectedParameters;
         this.commandUsage = commandUsage;
         this.commandPermission = commandPermission;
-    }
-
-    public Command() {
-        this.commandName = "";
-        this.commandModule = "";
-        this.commandUsage = null;
-        this.commandPermission = null;
     }
 
     public String getCommandName() {
@@ -37,6 +32,10 @@ public abstract class Command {
         return commandModule;
     }
 
+    public int getExpectedParameters() {
+        return expectedParameters;
+    }
+
     public String[] getCommandUsage() {
         return commandUsage;
     }
@@ -46,5 +45,5 @@ public abstract class Command {
     }
 
     // Abstract method signature to ensure method is implemented.
-    protected abstract void executeCommand(MessageReceivedEvent e, String[] command);
+    public abstract void executeCommand(MessageReceivedEvent e, String[] command);
 }

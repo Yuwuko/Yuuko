@@ -1,26 +1,17 @@
 package com.basketbandit.core.modules.developer.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CommandSetStatus extends Command {
 
     public CommandSetStatus() {
-        super("setstatus", "com.basketbandit.core.modules.developer.ModuleDeveloper", new String[]{"-setstatus [type] [status]"}, null);
-    }
-
-    public CommandSetStatus(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("setstatus", "com.basketbandit.core.modules.developer.ModuleDeveloper", 1, new String[]{"-setstatus [type] [status]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
 
         switch(commandParameters[0]) {

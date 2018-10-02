@@ -12,15 +12,11 @@ import java.util.Queue;
 public class CommandClear extends Command {
 
     public CommandClear() {
-        super("clear", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-clear", "-clear 3"}, null);
-    }
-
-    public CommandClear(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("clear", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-clear", "-clear 3"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         try {

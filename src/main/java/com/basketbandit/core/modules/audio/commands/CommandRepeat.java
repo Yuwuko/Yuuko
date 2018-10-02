@@ -9,15 +9,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandRepeat extends Command {
 
     public CommandRepeat() {
-        super("repeat", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-repeat"}, null);
-    }
-
-    public CommandRepeat(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("repeat", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-repeat"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());

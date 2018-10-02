@@ -7,9 +7,9 @@ import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
 import com.basketbandit.core.modules.math.commands.CommandSum;
 import com.basketbandit.core.modules.media.commands.CommandKitsu;
-import com.basketbandit.core.modules.media.commands.CommandOsuStats;
-import com.basketbandit.core.modules.media.commands.CommandRuneScapeStats;
-import com.basketbandit.core.modules.media.commands.CommandWorldOfWarcraftStats;
+import com.basketbandit.core.modules.media.commands.CommandOsu;
+import com.basketbandit.core.modules.media.commands.CommandRuneScape;
+import com.basketbandit.core.modules.media.commands.CommandWorldOfWarcraft;
 import com.basketbandit.core.modules.moderation.commands.*;
 import com.basketbandit.core.modules.nsfw.commands.CommandEfukt;
 import com.basketbandit.core.modules.transport.commands.CommandLineStatus;
@@ -48,9 +48,9 @@ public final class C {
     public static final Command WEATHER = new CommandWeather();
 
     // Media module commands.
-    public static final Command RUNESCAPE = new CommandRuneScapeStats();
-    public static final Command WOW = new CommandWorldOfWarcraftStats();
-    public static final Command OSU = new CommandOsuStats();
+    public static final Command RUNESCAPE = new CommandRuneScape();
+    public static final Command WOW = new CommandWorldOfWarcraft();
+    public static final Command OSU = new CommandOsu();
     public static final Command KITSU = new CommandKitsu();
 
     // Music module commands.

@@ -5,25 +5,16 @@ import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
-import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CommandStop extends Command {
 
     public CommandStop() {
-        super("stop", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-stop"}, null);
-    }
-
-    public CommandStop(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
-    }
-
-    public CommandStop(GenericGuildVoiceEvent e) {
-        executeCommandEdge(e);
+        super("stop", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-stop"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();
@@ -39,7 +30,7 @@ public class CommandStop extends Command {
      * Executes command when everyone leaves the channel the bot is in.
      * @param e; GenericGuildEvent
      */
-    private void executeCommandEdge(GenericGuildEvent e) {
+    public void executeCommandAux(GenericGuildEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();

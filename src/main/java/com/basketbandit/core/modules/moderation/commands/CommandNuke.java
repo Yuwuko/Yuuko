@@ -1,7 +1,6 @@
 package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -13,19 +12,11 @@ import java.util.List;
 public class CommandNuke extends Command {
 
     public CommandNuke() {
-        super("nuke", "com.basketbandit.core.modules.moderation.ModuleModeration", new String[]{"-nuke [value]"}, Permission.MESSAGE_MANAGE);
-    }
-
-    public CommandNuke(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 1)) {
-            return;
-        }
-
-        executeCommand(e, command);
+        super("nuke", "com.basketbandit.core.modules.moderation.ModuleModeration", 1, new String[]{"-nuke [value]"}, Permission.MESSAGE_MANAGE);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         int value = Integer.parseInt(command[1]);
 
         if(value < 1 || value > 100) {
@@ -47,4 +38,5 @@ public class CommandNuke extends Command {
             e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).complete();
         }
     }
+
 }

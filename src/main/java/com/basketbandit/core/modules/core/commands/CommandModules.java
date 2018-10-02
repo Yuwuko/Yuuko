@@ -17,15 +17,11 @@ import java.util.ArrayList;
 public class CommandModules extends Command {
 
     public CommandModules() {
-        super("modules", "com.basketbandit.core.modules.core.ModuleCore", new String[]{"-modules"}, null);
-    }
-
-    public CommandModules(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("modules", "com.basketbandit.core.modules.core.ModuleCore", 0, new String[]{"-modules"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
         ArrayList<String> disabled = new ArrayList<>();

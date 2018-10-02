@@ -66,7 +66,7 @@ public class GenericGuildController {
 
         Utils.updateDiscordBotList();
 
-        new CommandSetup(e);
+        new CommandSetup().executeAutomated(e);
         Utils.updateLatest("[INFO] Joined new server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 

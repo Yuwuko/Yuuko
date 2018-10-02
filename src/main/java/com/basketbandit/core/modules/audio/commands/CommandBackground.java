@@ -2,7 +2,6 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
@@ -20,15 +19,11 @@ import java.awt.*;
 public class CommandBackground extends Command {
 
     public CommandBackground() {
-        super("background", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-background", "-background [url]", "-background [term]"}, null);
-    }
-
-    public CommandBackground(MessageReceivedEvent e, String[] command) {
-        executeCommand(e, command);
+        super("background", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-background", "-background [url]", "-background [term]"}, null);
     }
 
     @Override
-    protected void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length > 1) {
@@ -84,7 +79,7 @@ public class CommandBackground extends Command {
                         .setColor(Color.DARK_GRAY)
                         .setAuthor(e.getMember().getEffectiveName() + " set the background music!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .setDescription("Channel: " + track.getInfo().author + ", Duration: " + ModuleAudio.getTimestamp(track.getDuration()))
+                        .setDescription("Channel: " + track.getInfo().author + ", Duration: " + Utils.getTimestamp(track.getDuration()))
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 channel.sendMessage(queuedTrack.build()).queue();

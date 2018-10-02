@@ -2,7 +2,6 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.Utils;
@@ -15,15 +14,11 @@ import java.awt.*;
 public class CommandLast extends Command {
 
 	public CommandLast() {
-		super("last", "com.basketbandit.core.modules.audio.ModuleAudio", new String[]{"-last"}, null);
-	}
-
-	public CommandLast(MessageReceivedEvent e, String[] command) {
-		executeCommand(e, command);
+		super("last", "com.basketbandit.core.modules.audio.ModuleAudio", 0, new String[]{"-last"}, null);
 	}
 
 	@Override
-	protected void executeCommand(MessageReceivedEvent e, String[] command) {
+	public void executeCommand(MessageReceivedEvent e, String[] command) {
 		GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 		AudioTrack track = manager.scheduler.getLastTrack();
 		String[] uri = track.getInfo().uri.split("=");
@@ -35,7 +30,7 @@ public class CommandLast extends Command {
 					.setAuthor("Last track:")
 					.setTitle(track.getInfo().title, track.getInfo().uri)
 					.setThumbnail(imageUrl)
-					.addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
+					.addField("Duration", Utils.getTimestamp(track.getDuration()), true)
 					.addField("Channel", track.getInfo().author, true)
 					.setFooter(Configuration.VERSION + ", requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
