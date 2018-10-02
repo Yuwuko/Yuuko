@@ -104,7 +104,7 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 |---------|-------------|-------|---------|
 | commandPrefix | Changes the custom prefix for the server. | String | `-settings commandPrefix !` |
 | deleteExecuted | Deletes the command message after it has been executed. | TRUE, FALSE | `-settings deleteExecuted true` |
-
+| commandLogging | Logs any executed command into a logging channel. | TRUE, FALSE | `-settings commandLogging true` |
 
 ## Other features
 
@@ -125,6 +125,6 @@ __S:__ There have been issues connecting to some EU discord servers lately, a qu
 
 For the welcome message a basic 'general' text-channel is used. If that does or doesn't exist the bot will also send a PM to the server owner but not attempt to send the message anywhere else.
 
-The logging module requires a text-channel named 'command-log' to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed
+The logging setting currently requires a text-channel named 'command-log' to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed. (this will be changed in the future)
 
 
