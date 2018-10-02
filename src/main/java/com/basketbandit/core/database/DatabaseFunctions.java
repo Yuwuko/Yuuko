@@ -269,14 +269,7 @@ public class DatabaseFunctions {
             }
 
             if(resultSet.getBoolean("bound")) {
-                conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-                stmt2.setString(1, server);
-                stmt2.setString(2, channel);
-                stmt2.setString(3, moduleIn);
-                if(!stmt2.execute()) {
-                    return 1;
-                }
+                return deleteBindingsRecord(server, channel, moduleIn);
             }
 
             return -1;
@@ -334,15 +327,8 @@ public class DatabaseFunctions {
             }
 
             if(resultSet.getBoolean("excluded")) {
-                conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-                stmt2.setString(1, server);
-                stmt2.setString(2, channel);
-                stmt2.setString(3, moduleIn);
-                if(!stmt2.execute()) {
-                    return 1;
-                }
-             }
+                return deleteBindingsRecord(server, channel, moduleIn);
+            }
 
             return -1;
 
@@ -357,6 +343,33 @@ public class DatabaseFunctions {
                 Utils.sendException(ex, "Unable to close connection to database.");
             }
         }
+    }
+
+    /**
+     * Removes a binding record from the database.
+     * @param server String
+     * @param channel String
+     * @param moduleIn String
+     * @return int
+     */
+    private int deleteBindingsRecord(String server, String channel, String moduleIn) {
+        try {
+            conn = new DatabaseConnection().getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            stmt.setString(1, server);
+            stmt.setString(2, channel);
+            stmt.setString(3, moduleIn);
+            if(!stmt.execute()) {
+                return 1;
+            }
+            return -1;
+
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
+            return -1;
+        }
+
     }
 
     /**

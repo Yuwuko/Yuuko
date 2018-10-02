@@ -5,7 +5,7 @@ Key: [+] added, [-] removed, [~] modified.
 ## 3.1.0
 + [+] Added [__settings__] command... yep, there are finally server settings that you can toggle on/off, with the first being if the command message is deleted.
 + [+] Added more shiny badges to the README.md part of the documentation.
-+ [+] Added a sanitiser utility class to check parameters of commands to ensure they meet the minimum number to correctly execute.
++ [+] Added a sanitiser utility class to check parameters of commands to ensure they meet the minimum number to correctly execute. (stops a lot of exceptions...)
 + [~] Refactor [__togglerepeat__] to [__repeat__] because it is shorter, easier to type and simply a better alias for the command.
 + [~] Refactor [__setbackground__] to simply [__background__] which is shorter and easier to remember with the former being unnecessarily long.
 + [~] Changed class names for the commands changed in `2.2.0` to reflect their new command
