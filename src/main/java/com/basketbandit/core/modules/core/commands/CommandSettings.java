@@ -24,10 +24,6 @@ public class CommandSettings extends Command {
     }
 
     public CommandSettings(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 2)) {
-            return;
-        }
-
         executeCommand(e, command);
     }
 
@@ -40,6 +36,10 @@ public class CommandSettings extends Command {
                 // Check to make sure the command is a valid command.
                 if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
                     Utils.sendMessage(e, "Sorry, '" + commandParameters[0] + "' is not a setting.");
+                    return;
+                }
+
+                if(!Sanitise.checkParameters(e, command, 2)) {
                     return;
                 }
 
