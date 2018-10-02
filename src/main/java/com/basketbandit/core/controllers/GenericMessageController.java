@@ -111,7 +111,7 @@ public class GenericMessageController {
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
 
                     // Check settings to see if command strings are to be deleted
-                    if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("true")) {
+                    if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) {
                         // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
                         if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
                             Utils.sendMessage(e, "Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");

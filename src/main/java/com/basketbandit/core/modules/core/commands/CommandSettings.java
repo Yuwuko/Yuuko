@@ -38,13 +38,19 @@ public class CommandSettings extends Command {
                     return;
                 }
 
+                // Check to make sure all parameters are present.
+                if(commandParameters.length < 2) {
+                    Utils.sendMessage(e, "Sorry, that command is missing a parameter. Ensure the command is structured like the following: '<prefix>settings [setting] [value]'");
+                }
+
                 if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE, 1, 0)");
+                        Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE)");
                         return;
                     }
 
                     new SettingDeleteExecuted(e, commandParameters[1]);
+                    return;
                 }
 
                 if(commandParameters[0].equalsIgnoreCase("commandPrefix")) {

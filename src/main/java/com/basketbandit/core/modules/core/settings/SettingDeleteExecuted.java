@@ -14,19 +14,25 @@ public class SettingDeleteExecuted {
     }
 
     public boolean executeCommand(MessageReceivedEvent e, String value) {
-        value = (value.equalsIgnoreCase("true")) ? "1" : "0";
+        try {
+            String intvalue = (value.equalsIgnoreCase("true")) ? "1" : "0";
 
-        if(new DatabaseFunctions().setServerSettings("deleteExecuted", value, e.getGuild().getId())) {
-            if(Integer.parseInt(value) == 1) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'deleteExecuted' set to TRUE.");
-                Utils.sendMessage(e, embed.build());
+            if(new DatabaseFunctions().setServerSettings("deleteExecuted", intvalue, e.getGuild().getId())) {
+                if(Boolean.parseBoolean(value.toUpperCase())) {
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'deleteExecuted' set to TRUE.");
+                    Utils.sendMessage(e, embed.build());
+                } else {
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("'deleteExecuted' set to FALSE.");
+                    Utils.sendMessage(e, embed.build());
+                }
+                return true;
+
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("'deleteExecuted' set to FALSE.");
-                Utils.sendMessage(e, embed.build());
+                return false;
             }
-            return true;
 
-        } else {
+        } catch(Exception ex) {
+            Utils.sendException(ex, "SettingDeleteExecuted [" + value + "]");
             return false;
         }
     }

@@ -215,7 +215,7 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `" + setting + "` = ? WHERE `serverId` = ?");
             stmt.setString(1, value);
             stmt.setString(2, server);
-            return stmt.execute();
+            return !stmt.execute();
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");
