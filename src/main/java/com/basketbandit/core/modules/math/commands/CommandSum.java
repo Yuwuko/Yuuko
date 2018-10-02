@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.math.commands;
 
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,12 +15,16 @@ public class CommandSum extends Command {
     }
 
     public CommandSum(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-        String sumString;
+        String sumString = "";
 
         if(command[1].contains("+")) {
             String[] a = command[1].replace("+"," ").split("\\s+");
@@ -52,7 +57,7 @@ public class CommandSum extends Command {
             sumString = a[0] + "% of " + a[1] + " = " + sum;
 
         } else {
-            throw new IllegalArgumentException();
+            Utils.sendMessage(e, "The parameters given are not valid.");
         }
 
         EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);

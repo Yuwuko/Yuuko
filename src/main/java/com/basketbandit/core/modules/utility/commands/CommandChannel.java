@@ -13,7 +13,7 @@ public class CommandChannel extends Command {
     }
 
     public CommandChannel(MessageReceivedEvent e, String[] command) {
-        if(!Sanitise.checkParameters(e, command, 2)) {
+        if(!Sanitise.checkParameters(e, command, 3)) {
             return;
         }
 
