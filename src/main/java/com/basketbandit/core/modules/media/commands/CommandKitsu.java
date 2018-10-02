@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.kitsu.Attributes;
 import com.basketbandit.core.modules.media.kitsu.KitsuContainer;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,6 +21,10 @@ public class CommandKitsu extends Command {
     }
 
     public CommandKitsu(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 2)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 

@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -19,16 +20,16 @@ public class CommandUser extends Command {
     }
 
     public CommandUser(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            if(command.length < 2) {
-
-            }
-
             List<Member> mentioned = e.getMessage().getMentionedMembers();
             Member target;
 

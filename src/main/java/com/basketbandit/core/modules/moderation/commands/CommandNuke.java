@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -16,6 +17,10 @@ public class CommandNuke extends Command {
     }
 
     public CommandNuke(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 

@@ -4,6 +4,7 @@ import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -18,6 +19,10 @@ public class CommandModule extends Command {
     }
 
     public CommandModule(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 

@@ -7,6 +7,7 @@ import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.core.settings.SettingCommandPrefix;
 import com.basketbandit.core.modules.core.settings.SettingDeleteExecuted;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -23,6 +24,10 @@ public class CommandSettings extends Command {
     }
 
     public CommandSettings(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 2)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 
@@ -35,12 +40,6 @@ public class CommandSettings extends Command {
                 // Check to make sure the command is a valid command.
                 if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
                     Utils.sendMessage(e, "Sorry, '" + commandParameters[0] + "' is not a setting.");
-                    return;
-                }
-
-                // Check to make sure all parameters are present.
-                if(commandParameters.length < 2) {
-                    Utils.sendMessage(e, "Sorry, that command is missing a parameter. Ensure the command is structured like the following: '<prefix>settings [setting] [value]'");
                     return;
                 }
 

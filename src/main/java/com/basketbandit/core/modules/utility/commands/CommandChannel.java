@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -12,6 +13,10 @@ public class CommandChannel extends Command {
     }
 
     public CommandChannel(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 2)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 

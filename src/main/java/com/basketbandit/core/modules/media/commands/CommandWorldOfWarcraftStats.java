@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.media.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.wow.Character;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,6 +20,10 @@ public class CommandWorldOfWarcraftStats extends Command {
     }
 
     public CommandWorldOfWarcraftStats(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 2)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 

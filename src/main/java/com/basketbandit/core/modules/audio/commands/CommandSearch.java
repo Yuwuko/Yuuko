@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -19,18 +20,16 @@ public class CommandSearch extends Command {
     }
 
     public CommandSearch(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            // Check to see if the command has the correct number of parameters.
-            if(command.length < 2) {
-                Utils.sendMessage(e, "Sorry, that command was missing a parameter. Execute '<prefix>help search' to get this commands usage.");
-                return;
-            }
-
             List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
             StringBuilder resultString = new StringBuilder();
 

@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.media.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.osu.User;
+import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,6 +17,10 @@ public class CommandOsuStats extends Command {
     }
 
     public CommandOsuStats(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 
@@ -26,7 +31,6 @@ public class CommandOsuStats extends Command {
 
             String username = commandParameters[0];
             int mode;
-            Long unique = System.nanoTime();
 
             if(commandParameters.length > 1) {
                 // Exception flow is bad practice, but I'm lazy... and this is my project. (if you're reading this, find another method of have people shout at you in the street)

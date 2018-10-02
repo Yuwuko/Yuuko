@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.developer.commands;
 
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.Sanitise;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -11,6 +12,10 @@ public class CommandSetStatus extends Command {
     }
 
     public CommandSetStatus(MessageReceivedEvent e, String[] command) {
+        if(!Sanitise.checkParameters(e, command, 1)) {
+            return;
+        }
+
         executeCommand(e, command);
     }
 
