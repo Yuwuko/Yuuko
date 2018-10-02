@@ -3,6 +3,8 @@
 Key: [+] added, [-] removed, [~] modified.
 
 ## 3.2.0
++ [+] Created CommandExecutor class to be the one stop shot for all command executions so they're guaranteed to be the same.
++ [+] Created SystemVariables class to store certain command variables such as users who have started a search. (soon to be cache)
 + [~] Completely overhauled the command/module system, shrinking the current line count by 6%. (400~ lines)
 + [-] Removed the logging module and merged it into the settings command.
 

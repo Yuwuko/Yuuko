@@ -29,6 +29,7 @@ public class ModuleAudio extends Module {
                 new CommandExecutor(e, command, this);
             }
         }
+
     }
 
 }
