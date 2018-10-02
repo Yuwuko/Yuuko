@@ -29,7 +29,6 @@ public class CommandBackground extends Command {
 
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
-
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length > 1) {
@@ -86,7 +85,7 @@ public class CommandBackground extends Command {
                         .setAuthor(e.getMember().getEffectiveName() + " set the background music!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
                         .setDescription("Channel: " + track.getInfo().author + ", Duration: " + ModuleAudio.getTimestamp(track.getDuration()))
-                        .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 channel.sendMessage(queuedTrack.build()).queue();
             }

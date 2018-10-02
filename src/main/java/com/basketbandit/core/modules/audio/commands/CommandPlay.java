@@ -110,7 +110,7 @@ public class CommandPlay extends Command {
                             .addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
-                            .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                            .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                     Utils.sendMessage(channel, queuedTrack.build());
                 } catch(Exception ex) {

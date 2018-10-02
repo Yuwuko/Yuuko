@@ -46,7 +46,7 @@ public class CommandQueue extends Command {
                             .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
                             .setTitle("Here are the next " + i + " tracks in the queue:")
                             .setDescription(queue.toString())
-                            .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                            .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                     Utils.sendMessage(e, nextTracks.build());
                 } else {

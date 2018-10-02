@@ -13,10 +13,10 @@ import java.util.Queue;
 public class TrackScheduler extends AudioEventAdapter {
 
     private AudioTrack background = null;
+    private AudioTrack lastTrack = null;
     private boolean repeating = false;
     private final AudioPlayer player;
     public final Queue<AudioTrack> queue;
-    private AudioTrack lastTrack;
 
     TrackScheduler(AudioPlayer player) {
         this.player = player;

@@ -27,20 +27,21 @@ public class CommandLast extends Command {
 		GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 		AudioTrack track = manager.scheduler.getLastTrack();
 		String[] uri = track.getInfo().uri.split("=");
+		String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
-		if(manager.player.getPlayingTrack() != null) {
+		if(manager.scheduler.getLastTrack() != null) {
 			EmbedBuilder queuedTrack = new EmbedBuilder()
 					.setColor(Color.DARK_GRAY)
 					.setAuthor("Last track:")
 					.setTitle(track.getInfo().title, track.getInfo().uri)
-					.setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")
+					.setThumbnail(imageUrl)
 					.addField("Duration", ModuleAudio.getTimestamp(track.getDuration()), true)
 					.addField("Channel", track.getInfo().author, true)
-					.setFooter("Version: " + Configuration.VERSION + ", Requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+					.setFooter(Configuration.VERSION + ", requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
 			Utils.sendMessage(e, queuedTrack.build());
 		} else {
-			Utils.sendMessage(e, "There is no last track...");
+			Utils.sendMessage(e, "Sorry, there is no 'last track' available...");
 		}
 
 	}

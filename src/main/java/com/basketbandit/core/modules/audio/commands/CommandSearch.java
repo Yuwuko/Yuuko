@@ -25,6 +25,12 @@ public class CommandSearch extends Command {
     @Override
     protected void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
+            // Check to see if the command has the correct number of parameters.
+            if(command.length < 2) {
+                Utils.sendMessage(e, "Sorry, that command was missing a parameter. Execute '<prefix>help search' to get this commands usage.");
+                return;
+            }
+
             List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
             StringBuilder resultString = new StringBuilder();
 
@@ -43,7 +49,7 @@ public class CommandSearch extends Command {
                     .setColor(Color.DARK_GRAY)
                     .setAuthor(e.getAuthor().getName() + ", results for: " + command[1], null, e.getAuthor().getAvatarUrl())
                     .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
-                    .setFooter("Version: " + Configuration.VERSION, null);
+                    .setFooter(Configuration.VERSION, null);
 
             ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
             Utils.sendMessage(e, presentResults.build());
