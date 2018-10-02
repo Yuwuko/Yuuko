@@ -46,7 +46,7 @@ public class CommandLineStatus extends Command {
 
             if(command.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setColor(Color.RED)
+                        .setColor(Color.DARK_GRAY)
                         .setTitle("Tube Line Status - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField(lineManager.get(0).getName(), lineManager.get(0).getLineStatusString(), true)
                         .addField(lineManager.get(1).getName(), lineManager.get(1).getLineStatusString(), true)

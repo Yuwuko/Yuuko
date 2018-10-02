@@ -40,7 +40,7 @@ public class GenericGuildController {
         SystemInformation.incrementGuildCount(1);
 
         EmbedBuilder about = new EmbedBuilder()
-                .setColor(Color.WHITE)
+                .setColor(Color.DARK_GRAY)
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
                 .setDescription("Thanks for inviting me to your server! Below is a little bit of information about myself, and you can access a list of my modules [here](https://github.com/BasketBandit/BasketBandit-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
                 .setThumbnail(bot.getAvatarUrl())

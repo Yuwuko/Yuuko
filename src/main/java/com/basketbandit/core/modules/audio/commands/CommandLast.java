@@ -30,7 +30,7 @@ public class CommandLast extends Command {
 
 		if(manager.player.getPlayingTrack() != null) {
 			EmbedBuilder queuedTrack = new EmbedBuilder()
-					.setColor(Color.WHITE)
+					.setColor(Color.DARK_GRAY)
 					.setAuthor("Last track:")
 					.setTitle(track.getInfo().title, track.getInfo().uri)
 					.setThumbnail("https://img.youtube.com/vi/" + uri[1] + "/1.jpg")

@@ -92,7 +92,7 @@ public class CommandHelp extends Command {
                     User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
                     EmbedBuilder commandInfo = new EmbedBuilder()
-                            .setColor(Color.RED)
+                            .setColor(Color.DARK_GRAY)
                             .setThumbnail(bot.getAvatarUrl())
                             .setTitle("Command information for: " + cmd.getCommandName())
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)

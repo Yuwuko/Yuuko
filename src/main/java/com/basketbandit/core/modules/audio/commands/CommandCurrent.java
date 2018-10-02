@@ -31,7 +31,7 @@ public class CommandCurrent extends Command {
 
         if(manager.player.getPlayingTrack() != null) {
             EmbedBuilder queuedTrack = new EmbedBuilder()
-                    .setColor(Color.WHITE)
+                    .setColor(Color.DARK_GRAY)
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
                     .setThumbnail(imageUrl)

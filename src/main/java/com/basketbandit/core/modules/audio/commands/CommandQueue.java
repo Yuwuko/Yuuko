@@ -42,7 +42,7 @@ public class CommandQueue extends Command {
 
                 if(i > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
-                            .setColor(Color.RED)
+                            .setColor(Color.DARK_GRAY)
                             .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
                             .setTitle("Here are the next " + i + " tracks in the queue:")
                             .setDescription(queue.toString())

@@ -82,7 +82,7 @@ public class CommandBackground extends Command {
                 manager.scheduler.setBackground(track);
 
                 EmbedBuilder queuedTrack = new EmbedBuilder()
-                        .setColor(Color.RED)
+                        .setColor(Color.DARK_GRAY)
                         .setAuthor(e.getMember().getEffectiveName() + " set the background music!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
                         .setDescription("Channel: " + track.getInfo().author + ", Duration: " + ModuleAudio.getTimestamp(track.getDuration()))
