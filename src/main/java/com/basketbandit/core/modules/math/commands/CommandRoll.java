@@ -38,7 +38,7 @@ public class CommandRoll extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setColor(Color.RED)
+                .setColor(Color.DARK_GRAY)
                 .setAuthor(e.getGuild().getMemberById(e.getAuthor().getIdLong()).getEffectiveName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
 
         if(num != 0) {

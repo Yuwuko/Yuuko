@@ -29,7 +29,7 @@ public class CommandHelp extends Command {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
-                    .setColor(Color.RED)
+                    .setColor(Color.DARK_GRAY)
                     .setTitle("Hey " + e.getAuthor().getName() + ",")
                     .setDescription(
                             "A full list of modules and features is available on the GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit-Java)! \n" +

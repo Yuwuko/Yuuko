@@ -52,7 +52,7 @@ public class CommandUser extends Command {
         }
 
         EmbedBuilder commandInfo = new EmbedBuilder()
-                .setColor(Color.RED)
+                .setColor(Color.DARK_GRAY)
                 .setAuthor("User information about " + target.getEffectiveName() + ",", null, target.getUser().getAvatarUrl())
                 .setTitle("User is currently "+target.getOnlineStatus())
                 .setThumbnail(target.getUser().getAvatarUrl())

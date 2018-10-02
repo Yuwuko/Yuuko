@@ -28,7 +28,7 @@ public class CommandSetup extends Command {
         if(!new DatabaseFunctions().addNewServer(serverId)) {
             Utils.sendMessage(e, "Server setup successful.");
         } else {
-            Utils.sendMessage(e, "Server setup was unsuccessful.");
+            Utils.sendMessage(e, "Server setup was unsuccessful. (It is likely already setup... try the -about command!)");
         }
     }
 

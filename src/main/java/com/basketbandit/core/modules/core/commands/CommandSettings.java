@@ -41,6 +41,7 @@ public class CommandSettings extends Command {
                 // Check to make sure all parameters are present.
                 if(commandParameters.length < 2) {
                     Utils.sendMessage(e, "Sorry, that command is missing a parameter. Ensure the command is structured like the following: '<prefix>settings [setting] [value]'");
+                    return;
                 }
 
                 if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {

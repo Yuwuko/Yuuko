@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.awt.*;
+
 public class CommandEfukt extends Command {
 
     public CommandEfukt() {
@@ -26,6 +28,7 @@ public class CommandEfukt extends Command {
 
             if(doc.getElementsByClass("image_content").isEmpty()) {
                 efuktPost = new EmbedBuilder()
+                        .setColor(Color.DARK_GRAY)
                         .setTitle(doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByTag("source").attr("src"))
                         .setImage(doc.getElementsByTag("video").attr("poster"))
@@ -34,6 +37,7 @@ public class CommandEfukt extends Command {
                 Utils.sendMessage(e.getTextChannel(), efuktPost.build());
             } else {
                 efuktPost = new EmbedBuilder()
+                        .setColor(Color.DARK_GRAY)
                         .setTitle(doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))

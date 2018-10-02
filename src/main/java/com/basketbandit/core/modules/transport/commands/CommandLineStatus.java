@@ -73,7 +73,7 @@ public class CommandLineStatus extends Command {
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setColor(Color.RED)
+                        .setColor(Color.DARK_GRAY)
                         .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());

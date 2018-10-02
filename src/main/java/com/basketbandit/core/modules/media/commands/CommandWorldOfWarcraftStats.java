@@ -138,7 +138,7 @@ public class CommandWorldOfWarcraftStats extends Command {
             }
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setColor(Color.RED)
+                    .setColor(Color.DARK_GRAY)
                     .setTitle("World of Warcraft - Character information for " + character.getName())
                     .setThumbnail("https://render-eu.worldofwarcraft.com/character/" + character.getThumbnail())
                     .addField("Realm", character.getRealm(), true)

@@ -41,7 +41,7 @@ public class CommandWeather extends Command {
             WeatherContainer weather = new ObjectMapper().readValue(json, new TypeReference<WeatherContainer>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setColor(Color.WHITE)
+                    .setColor(Color.DARK_GRAY)
                     .setTitle("WeatherContainer information for: " + weather.getName() + ", " + weather.getSys().getCountry())
                     .setImage("https://openweathermap.org/img/w/" + weather.getWeather().get(0).getIcon() + ".png")
                     .setDescription("Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server.")

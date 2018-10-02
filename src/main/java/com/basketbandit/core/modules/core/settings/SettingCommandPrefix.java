@@ -17,7 +17,7 @@ public class SettingCommandPrefix {
 
         if(new DatabaseFunctions().setServerSettings("commandPrefix", value, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.DARK_GRAY).setAuthor("'commandPrefix' set to " + value);
-            Utils.sendMessage(e, "Server prefix set to: " + value);
+            Utils.sendMessage(e, embed.build());
             return true;
         }
 

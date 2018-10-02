@@ -20,6 +20,7 @@ public class CommandChannel extends Command {
         String[] commandParameters = command[1].split("\\s+", 3);
         String type = commandParameters[1].toLowerCase();
 
+        // Checks the parameters of the command, if the first param is 'add' follow that flow, else if it's 'del' following that flow instead.
         if(commandParameters[0].equals("add")) {
             if(type.equals("text")) {
                 e.getGuild().getController().createTextChannel(commandParameters[1]).setNSFW(commandParameters.length > 2).queue();

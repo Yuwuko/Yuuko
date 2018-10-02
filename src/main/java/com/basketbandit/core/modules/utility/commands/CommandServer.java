@@ -25,7 +25,7 @@ public class CommandServer extends Command {
         Guild server = e.getGuild();
 
         EmbedBuilder commandInfo = new EmbedBuilder()
-                .setColor(Color.RED)
+                .setColor(Color.DARK_GRAY)
                 .setTitle("Server information for: " + server.getName(), null)
                 .setThumbnail(server.getIconUrl())
                 .addField("Owner", server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator() + " (" + server.getOwner().getEffectiveName() + ")", true)

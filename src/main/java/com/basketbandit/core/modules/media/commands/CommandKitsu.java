@@ -48,7 +48,7 @@ public class CommandKitsu extends Command {
             Attributes anime = kitsu.getData().get(0).getAttributes();
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setColor(Color.RED)
+                    .setColor(Color.DARK_GRAY)
                     .setTitle(anime.getCanonicalTitle() + " | " + anime.getTitles().getJaJp(), "https://www.youtube.com/watch?v=" + anime.getYoutubeVideoId())
                     .setImage(anime.getPosterImage().getMedium())
                     .setDescription(anime.getSynopsis())
