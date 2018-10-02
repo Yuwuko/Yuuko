@@ -18,12 +18,17 @@ public class TrackScheduler extends AudioEventAdapter {
     public final Queue<AudioTrack> queue;
     private AudioTrack lastTrack;
 
-    /**
-     * @param player The handlers player this scheduler uses
-     */
     TrackScheduler(AudioPlayer player) {
         this.player = player;
         this.queue = new LinkedList<>();
+    }
+
+    /**
+     * Quick check to see if there is a next track or not.
+     * @return boolean
+     */
+    public boolean hasNextTrack() {
+        return (queue.peek() != null);
     }
 
     /**

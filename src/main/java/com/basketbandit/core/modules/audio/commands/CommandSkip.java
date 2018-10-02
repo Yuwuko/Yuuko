@@ -21,9 +21,14 @@ public class CommandSkip extends Command {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         try {
-            // Send the message before skipping the track or the track metadata becomes unavailable, causing a null pointer.
-            Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
-            manager.scheduler.nextTrack();
+            if(manager.scheduler.hasNextTrack()) {
+                // Send the message before skipping the track or the track metadata becomes unavailable, causing a null pointer.
+                Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
+                manager.scheduler.nextTrack();
+            } else {
+                Utils.sendMessage(e, "The queue is empty, there is no track to skip!");
+            }
+
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
         }
