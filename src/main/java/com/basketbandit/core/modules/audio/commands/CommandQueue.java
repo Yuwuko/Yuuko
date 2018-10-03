@@ -27,7 +27,7 @@ public class CommandQueue extends Command {
                 int i = 1;
 
                 for(AudioTrack track : manager.scheduler.queue) {
-                    queue.append(i).append(": ").append(track.getInfo().title).append(", (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
+                    queue.append("`" + i).append(":` ").append(track.getInfo().title).append(" · (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
                     i++;
                     if(i > 10) {
                         break;
@@ -39,7 +39,7 @@ public class CommandQueue extends Command {
                     EmbedBuilder nextTracks = new EmbedBuilder()
                             .setColor(Color.DARK_GRAY)
                             .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
-                            .setTitle("Here are the next " + i + " tracks in the queue:")
+                            .setTitle("Here are the next **" + i + "** tracks in the queue:")
                             .setDescription(queue.toString())
                             .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 

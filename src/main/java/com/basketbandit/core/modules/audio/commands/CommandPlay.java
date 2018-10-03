@@ -103,8 +103,7 @@ public class CommandPlay extends Command {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     List<AudioTrack> tracks = playlist.getTracks();
-
-                    Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: " + playlist.getName());
+                    Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: **" + playlist.getName() + "**");
                     tracks.forEach(manager.scheduler::queue);
 
                     new CommandCurrent().executeCommand(e, null);
