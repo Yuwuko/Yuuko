@@ -95,7 +95,8 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| efukt | Returns a random image/gif/video from eFukt. (Requires NSFW flagged channel to work) | -efukt | `-efukt` |
+| efukt | Returns a random image/gif/video from eFukt. | -efukt | `-efukt` |
+| neko | Returns a random lewd neko image by default or another type with a given parameter | -neko &#124; [type] | <code>-neko &#124; boobs</code> |
 
 
 ## Settings

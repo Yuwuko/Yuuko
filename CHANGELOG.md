@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified.
 
 ## 3.2.0
++ [+] Added NSFW neko command from neko.life, because that's just what some people like I guess.
 + [+] Created CommandExecutor class to be the one stop shot for all command executions so they're guaranteed to be the same.
 + [+] Created SystemVariables class to store certain command variables such as users who have started a search. (soon to be cache)
 + [~] Completely overhauled the command/module system, shrinking the current line count by 6%. (400~ lines)

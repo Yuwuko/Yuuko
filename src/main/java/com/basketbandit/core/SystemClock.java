@@ -15,7 +15,7 @@ public class SystemClock implements Runnable {
     @Override
     public void run() {
         try {
-            // Wait 10 seconds to give the system time to boot.
+            // Wait 5 seconds to give the system time to boot.
             Thread.sleep(10000);
 
             int d = 0, h = 0, m = 0, s = 0;

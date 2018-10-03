@@ -23,6 +23,7 @@ public class CommandSkip extends Command {
                 manager.scheduler.nextTrack();
 
             } else if(manager.player.getPlayingTrack() != null) {
+                Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
                 manager.player.stopTrack();
 
             } else {
