@@ -58,16 +58,6 @@ public class CommandPlay extends Command {
 
     }
 
-    public void executeCommandAux(MessageReceivedEvent e, String trackId) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
-
-        e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
-        e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
-        manager.player.setPaused(false);
-
-        loadAndPlay(manager, e.getChannel(), "https://www.youtube.com/watch?v=" + trackId, e);
-    }
-
     /**
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
      * @param manager ; GuildAudioManager.

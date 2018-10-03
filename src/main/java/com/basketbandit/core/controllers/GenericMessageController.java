@@ -192,7 +192,8 @@ public class GenericMessageController {
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
                     if(!input[0].equals("cancel")) {
-                        new CommandPlay().executeCommandAux(e, SystemVariables.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId());
+                        String videoId = SystemVariables.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId();
+                        new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
                         SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
                     } else if(input[0].equals("cancel")) {
                         Utils.sendMessage(e, e.getAuthor().getAsMention() + " cancelled their search.");

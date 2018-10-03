@@ -31,6 +31,8 @@ public class AudioManagerHandler {
         playerManager.registerSourceManager(new TwitchStreamAudioSourceManager());
         playerManager.registerSourceManager(new HttpAudioSourceManager());
         playerManager.setFrameBufferDuration(400);
+        playerManager.setTrackStuckThreshold(10000);
+
     }
 
     /**
@@ -43,7 +45,6 @@ public class AudioManagerHandler {
         if(managers.get(id) == null) {
             synchronized(AudioManagerHandler.getGuildAudioManagers()) {
                 manager = new GuildAudioManager(playerManager);
-                manager.player.setVolume(50);
                 managers.put(id, manager);
             }
         } else {

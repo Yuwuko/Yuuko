@@ -39,14 +39,13 @@ public class TrackScheduler extends AudioEventAdapter {
      */
     public boolean queue(AudioTrack track) {
         if(background != null && player.getPlayingTrack() == background) {
-            player.startTrack(track, false);
-            return true;
+            return player.startTrack(track, false);
+
         } else if(!player.startTrack(track, true)) {
-            queue.offer(track);
-            return true;
-        } else {
-            return false;
+            return queue.offer(track);
+
         }
+        return false;
     }
 
     /**
