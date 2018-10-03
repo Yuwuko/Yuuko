@@ -59,7 +59,7 @@ public class CommandUser extends Command {
                     .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                     .addField("Bot?", target.getUser().isBot() + "", true)
                     .addField("Roles", roleString.toString(), true)
-                    .setFooter(Configuration.VERSION + ", Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Configuration.VERSION + " · Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             Utils.sendMessage(e, commandInfo.build());
         } catch(Exception ex) {

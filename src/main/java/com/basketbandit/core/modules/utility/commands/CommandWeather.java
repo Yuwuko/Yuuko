@@ -51,7 +51,7 @@ public class CommandWeather extends Command {
                     .addField("Sunset", LocalDateTime.ofEpochSecond(weather.getSys().getSunset(), 0, ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("hh:mma")), true)
                     .addField("Longitude", weather.getCoord().getLon() + "", true)
                     .addField("Wind Angle", weather.getWind().getDeg() + "°", true)
-                    .setFooter(Configuration.VERSION + ", Data provided by openweathermap.org" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Configuration.VERSION + " · Data provided by openweathermap.org" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             Utils.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

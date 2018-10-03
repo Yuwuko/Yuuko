@@ -79,7 +79,8 @@ public class CommandBackground extends Command {
                         .setColor(Color.DARK_GRAY)
                         .setAuthor(e.getMember().getEffectiveName() + " set the background music!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .setDescription("Channel: " + track.getInfo().author + ", Duration: " + Utils.getTimestamp(track.getDuration()))
+                        .addField("Duration", Utils.getTimestamp(track.getDuration()), true)
+                        .addField("Channel", track.getInfo().author, true)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
                 channel.sendMessage(queuedTrack.build()).queue();

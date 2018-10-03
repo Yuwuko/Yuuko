@@ -49,9 +49,4 @@ public class CommandSearch extends Command {
         }
     }
 
-    //       if(url != null) {
-    //            new CommandPlay(e, url);
-    //            searchUsers.remove(e.getAuthor().getIdLong());
-    //       }
-
 }

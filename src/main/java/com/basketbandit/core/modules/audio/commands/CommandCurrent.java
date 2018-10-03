@@ -33,7 +33,7 @@ public class CommandCurrent extends Command {
                     .setThumbnail(imageUrl)
                     .addField("Duration", Utils.getTimestamp(track.getPosition()) + "/" + Utils.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
-                    .setFooter(Configuration.VERSION + ", requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Configuration.VERSION + " · Requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             Utils.sendMessage(e, queuedTrack.build());
         } else {
