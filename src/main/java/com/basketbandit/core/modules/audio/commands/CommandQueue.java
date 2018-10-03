@@ -27,7 +27,7 @@ public class CommandQueue extends Command {
                 int i = 1;
 
                 for(AudioTrack track : manager.scheduler.queue) {
-                    queue.append("`" + i).append(":` ").append(track.getInfo().title).append(" · (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
+                    queue.append("`").append(i).append(":` ").append(track.getInfo().title).append(" · (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
                     i++;
                     if(i > 10) {
                         break;

@@ -29,6 +29,8 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
+        new CommandSetup().executeAutomated(e);
+
         List<TextChannel> channels = e.getGuild().getTextChannels();
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
@@ -42,7 +44,7 @@ public class GenericGuildController {
         EmbedBuilder about = new EmbedBuilder()
                 .setColor(Color.DARK_GRAY)
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
-                .setDescription("Thanks for inviting me to your server! Below is a little bit of information about myself, and you can access a list of my modules [here](https://github.com/BasketBandit/BasketBandit-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
+                .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/BasketBandit-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
@@ -56,7 +58,7 @@ public class GenericGuildController {
         for(TextChannel c: channels) {
             if(c.getName().toLowerCase().equals("general")) {
                 try {
-                    c.sendMessage(about.build()).queue();
+                    Utils.sendMessage(c, about.build());
                     break;
                 } catch(PermissionException ex) {
                     Utils.updateLatest("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
@@ -65,8 +67,6 @@ public class GenericGuildController {
         }
 
         Utils.updateDiscordBotList();
-
-        new CommandSetup().executeAutomated(e);
         Utils.updateLatest("[INFO] Joined new server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 
