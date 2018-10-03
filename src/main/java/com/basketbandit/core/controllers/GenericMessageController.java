@@ -104,7 +104,7 @@ public class GenericMessageController {
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
             for(Command c : SystemInformation.getCommandList()) {
-                if((inputPrefix + input[0]).equals(c.getGlobalName()) || (inputPrefix + input[0]).equals(prefix + c.getCommandName())) {
+                if((inputPrefix + input[0]).equalsIgnoreCase(c.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
                     moduleDbName = Utils.extractModuleName(commandModule, false, true);
                     clazz = Class.forName(commandModule);
@@ -192,9 +192,14 @@ public class GenericMessageController {
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
                     if(!input[0].equals("cancel")) {
-                        String videoId = SystemVariables.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId();
-                        new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
-                        SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
+                        if(Integer.parseInt(input[0]) < 11 && Integer.parseInt(input[0]) > 0) {
+                            String videoId = SystemVariables.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input[0]) - 1).getId().getVideoId();
+                            new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                            SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
+                        } else {
+                            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", search input must be a number between 1 and 10, or 'cancel'.");
+                            return;
+                        }
                     } else if(input[0].equals("cancel")) {
                         Utils.sendMessage(e, e.getAuthor().getAsMention() + " cancelled their search.");
                         SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
