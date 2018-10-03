@@ -21,10 +21,11 @@ public class CommandCurrent extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
         AudioTrack track = manager.player.getPlayingTrack();
-        String[] uri = track.getInfo().uri.split("=");
-        String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
-        if(manager.player.getPlayingTrack() != null) {
+        if(track != null) {
+            String[] uri = track.getInfo().uri.split("=");
+            String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
+
             EmbedBuilder queuedTrack = new EmbedBuilder()
                     .setColor(Color.DARK_GRAY)
                     .setAuthor("Now Playing")

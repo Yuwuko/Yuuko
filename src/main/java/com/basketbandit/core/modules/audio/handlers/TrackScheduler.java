@@ -90,11 +90,7 @@ public class TrackScheduler extends AudioEventAdapter {
      */
     @Override
     public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
-        if(!player.startTrack(queue.poll(), false)) {
-            if(background != null) {
-                player.startTrack(background.makeClone(), false);
-            }
-        }
+        nextTrack();
     }
 
     /**

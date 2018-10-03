@@ -21,13 +21,14 @@ public class CommandLast extends Command {
 	public void executeCommand(MessageReceivedEvent e, String[] command) {
 		GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 		AudioTrack track = manager.scheduler.getLastTrack();
-		String[] uri = track.getInfo().uri.split("=");
-		String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
-		if(manager.scheduler.getLastTrack() != null) {
+		if(track != null) {
+			String[] uri = track.getInfo().uri.split("=");
+			String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
+
 			EmbedBuilder queuedTrack = new EmbedBuilder()
 					.setColor(Color.DARK_GRAY)
-					.setAuthor("Last track:")
+					.setAuthor("Last track")
 					.setTitle(track.getInfo().title, track.getInfo().uri)
 					.setThumbnail(imageUrl)
 					.addField("Duration", Utils.getTimestamp(track.getDuration()), true)
