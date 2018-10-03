@@ -42,7 +42,7 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE)");
+                        Utils.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
                         return;
                     }
                     new SettingDeleteExecuted(e, commandParameters[1]);
@@ -56,7 +56,7 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("commandLogging")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        Utils.sendMessage(e, "Sorry, '" + commandParameters[1].toUpperCase() + "' is not a valid value. (Valid: TRUE, FALSE)");
+                        Utils.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
                         return;
                     }
                     new SettingCommandLogging(e, commandParameters[1]);

@@ -3,11 +3,14 @@
 Key: [+] added, [-] removed, [~] modified.
 
 ## 3.2.0
-+ [+] Added NSFW neko command from neko.life, because that's just what some people like I guess.
++ [+] Added NSFW [__neko__] command from neko.life, because that's just what some people like I guess.
 + [+] Created CommandExecutor class to be the one stop shot for all command executions so they're guaranteed to be the same.
 + [+] Created SystemVariables class to store certain command variables such as users who have started a search. (soon to be cache)
 + [~] Completely overhauled the command/module system, shrinking the current line count by 6%. (400~ lines)
-+ [~] Updated server command to include the server emotes.
++ [~] Updated server command to include the server emotes (up to 1024 chars).
++ [~] Changed formatting for a lot of the commands to make them look somewhat nicer.
++ [~] Altered the way commands are checked, prefixes and commands can be capitalised however possible now and it'll still work fine.
++ [~] Shrunk the play command down to make it more consistent for regular plays or through searching. (possible due to overhaul)
 + [-] Removed the logging module and merged it into the settings command.
 
 ## 3.1.0

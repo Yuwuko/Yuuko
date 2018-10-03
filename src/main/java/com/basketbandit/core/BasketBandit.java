@@ -151,7 +151,7 @@ class BasketBandit extends ListenerAdapter {
         ArrayList<String> settingsList = new ArrayList<>();
         settingsList.add("commandprefix");
         settingsList.add("deleteexecuted");
-        settingsList.add("commandLogging");
+        settingsList.add("commandlogging");
 
         Utils.standardStrings = new String[1];
         Utils.standardStrings[0] = Configuration.VERSION;

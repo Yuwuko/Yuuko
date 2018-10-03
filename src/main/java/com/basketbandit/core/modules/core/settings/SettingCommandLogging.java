@@ -19,14 +19,21 @@ public class SettingCommandLogging {
     }
 
     public boolean executeCommand(MessageReceivedEvent e, String value) {
+        try {
+            String intvalue = (value.equalsIgnoreCase("true")) ? "1" : "0";
 
-        if(new DatabaseFunctions().setServerSettings("commandLogging", value, e.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setColor(Color.DARK_GRAY).setAuthor("'commandLogging' set to " + value);
-            Utils.sendMessage(e, embed.build());
-            return true;
+            if(new DatabaseFunctions().setServerSettings("commandLogging", intvalue, e.getGuild().getId())) {
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.DARK_GRAY).setAuthor("'commandLogging' set to " + value);
+                Utils.sendMessage(e, embed.build());
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch(Exception ex) {
+            Utils.sendException(ex, "SettingCommandLogging [" + value + "]");
+            return false;
         }
-
-        return false;
     }
 
     public void executeSetting(MessageReceivedEvent e, long executionTimeMs) {

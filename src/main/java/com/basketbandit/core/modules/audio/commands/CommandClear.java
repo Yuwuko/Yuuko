@@ -36,7 +36,7 @@ public class CommandClear extends Command {
                 int i = 1;
                 for(int x = 0; x < manager.scheduler.queue.size(); x++) {
                     if(i == clearPos) {
-                        Utils.sendMessage(e, e.getAuthor().getAsMention() + " has removed '" + clone.remove().getInfo().title + "' from the queue.");
+                        Utils.sendMessage(e, e.getAuthor().getAsMention() + " has removed **" + clone.remove().getInfo().title + "** from the queue.");
                         i++;
                     } else {
                         ((LinkedList<com.sedmelluq.discord.lavaplayer.track.AudioTrack>) temp).addLast(clone.remove());

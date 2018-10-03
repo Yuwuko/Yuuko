@@ -19,11 +19,11 @@ public class CommandSkip extends Command {
         try {
             if(manager.scheduler.hasNextTrack()) {
                 // Send the message before skipping the track or the track metadata becomes unavailable, causing a null pointer.
-                Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
+                Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped **" + manager.player.getPlayingTrack().getInfo().title + "**");
                 manager.scheduler.nextTrack();
 
             } else if(manager.player.getPlayingTrack() != null) {
-                Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped track: " + manager.player.getPlayingTrack().getInfo().title);
+                Utils.sendMessage(e, e.getAuthor().getAsMention() + " skipped **" + manager.player.getPlayingTrack().getInfo().title + "**");
                 manager.player.stopTrack();
 
             } else {

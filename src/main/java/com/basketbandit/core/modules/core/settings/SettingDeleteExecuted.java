@@ -26,7 +26,6 @@ public class SettingDeleteExecuted {
                     Utils.sendMessage(e, embed.build());
                 }
                 return true;
-
             } else {
                 return false;
             }
