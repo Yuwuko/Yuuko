@@ -18,8 +18,7 @@ public class ModuleUtility extends Module {
                 new CommandServer(),
                 new CommandBind(),
                 new CommandExclude(),
-                new CommandChannel(),
-                new CommandWeather()
+                new CommandChannel()
         });
 
         if(e != null && command != null) {

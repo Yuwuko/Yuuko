@@ -1,8 +1,8 @@
-package com.basketbandit.core.modules.utility.commands;
+package com.basketbandit.core.modules.world.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.utility.weather.WeatherContainer;
+import com.basketbandit.core.modules.world.weather.WeatherContainer;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class CommandWeather extends Command {
 
     public CommandWeather() {
-        super("weather", "com.basketbandit.core.modules.utility.ModuleUtility", 1, new String[]{"-weather [city]", "-weather [city] [country]"}, null);
+        super("weather", "com.basketbandit.core.modules.world.ModuleWorld", 1, new String[]{"-weather [city]", "-weather [city] [country]"}, null);
     }
 
     @Override

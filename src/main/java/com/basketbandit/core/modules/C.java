@@ -13,8 +13,9 @@ import com.basketbandit.core.modules.media.commands.CommandWorldOfWarcraft;
 import com.basketbandit.core.modules.moderation.commands.*;
 import com.basketbandit.core.modules.nsfw.commands.CommandEfukt;
 import com.basketbandit.core.modules.nsfw.commands.CommandNeko;
-import com.basketbandit.core.modules.transport.commands.CommandLineStatus;
 import com.basketbandit.core.modules.utility.commands.*;
+import com.basketbandit.core.modules.world.commands.CommandLineStatus;
+import com.basketbandit.core.modules.world.commands.CommandWeather;
 
 public final class C {
     // Dev module commands.

@@ -1,8 +1,8 @@
-package com.basketbandit.core.modules.transport.commands;
+package com.basketbandit.core.modules.world.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.transport.tfl.LineManager;
+import com.basketbandit.core.modules.world.tfl.LineManager;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CommandLineStatus extends Command {
 
     public CommandLineStatus() {
-        super("linestatus", "com.basketbandit.core.modules.transport.ModuleTransport", 0, new String[]{"-linestatus", "-linestatus [min]"}, null);
+        super("linestatus", "com.basketbandit.core.modules.world.ModuleWorld", 0, new String[]{"-linestatus", "-linestatus [min]"}, null);
     }
 
     @Override

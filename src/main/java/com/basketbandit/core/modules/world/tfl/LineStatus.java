@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.transport.tfl;
+package com.basketbandit.core.modules.world.tfl;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

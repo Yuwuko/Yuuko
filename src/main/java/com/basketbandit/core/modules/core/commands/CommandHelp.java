@@ -26,12 +26,17 @@ public class CommandHelp extends Command {
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setColor(Color.DARK_GRAY)
-                    .setTitle("Hey " + e.getAuthor().getName() + ",")
-                    .setDescription(
-                            "A full list of modules and features is available on the GitHub, which is located [here](https://github.com/BasketBandit/BasketBandit-Java)! \n" +
-                            "If you have an issues or suggestions, please join the [support server](https://discord.gg/QcwghsA) and let me know! The only way the bot can improve is if I'm told when things go wrong!"
-                    )
-                    .addField("Want me on your server?", "Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite! Also be sure to give me admin privileges if you wish to use the 'nuke' or any other admin commands.", false)
+                    .setTitle("Hey " + e.getAuthor().getName())
+                    .setDescription("**Have an issue, suggestion or just want me on your server?** \n Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server!")
+                    .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
+                    .addField("Core Commands", "`about` `help` `module` `modules` `settings` `setup`", false)
+                    .addField("Audio Commands", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
+                    .addField("Math Commands", "`roll` `sum`", false)
+                    .addField("Media Commands", "`kitsu` `osu` `runescape` `wow`", false)
+                    .addField("Moderation Commands", "`ban` `kick` `mute` `unmute` `nuke`", false)
+                    .addField("World Commands", "`linestatus` `weather`", false)
+                    .addField("Utility Commands", "`bind` `exclude` `channel` `server` `users`", false)
+                    .addField("NSFW Commands", "`efukt` `neko`", false)
                     .setFooter(Utils.getStandardString(0), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             Utils.sendMessage(e, "Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>");
@@ -90,7 +95,7 @@ public class CommandHelp extends Command {
                     EmbedBuilder commandInfo = new EmbedBuilder()
                             .setColor(Color.DARK_GRAY)
                             .setThumbnail(bot.getAvatarUrl())
-                            .setTitle("Command information for: " + cmd.getCommandName())
+                            .setTitle("Command help for **" + cmd.getCommandName() + "**")
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
                             .addField("Required Permission", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)

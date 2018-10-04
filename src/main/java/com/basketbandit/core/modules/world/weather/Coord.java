@@ -1,4 +1,4 @@
-package com.basketbandit.core.modules.utility.weather;
+package com.basketbandit.core.modules.world.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
