@@ -77,8 +77,12 @@ class BasketBandit extends ListenerAdapter {
 
         Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
         Utils.botUser = bot.getSelfUser();
-        Utils.botList = new DiscordBotListAPI.Builder().botId(Utils.botUser.getId()).token(config.readLine()).build();
-        Utils.updateDiscordBotList();
+
+        String dblToken = config.readLine();
+        if(!dblToken.equals("null")) {
+            Utils.botList = new DiscordBotListAPI.Builder().botId(Utils.botUser.getId()).token(dblToken).build();
+            Utils.updateDiscordBotList();
+        }
 
         int users = 0;
         for(Guild guild : bot.getGuilds()) {
