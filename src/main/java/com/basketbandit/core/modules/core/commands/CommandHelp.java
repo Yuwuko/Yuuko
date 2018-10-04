@@ -26,17 +26,17 @@ public class CommandHelp extends Command {
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setColor(Color.DARK_GRAY)
-                    .setTitle("Hey " + e.getAuthor().getName())
-                    .setDescription("**Have an issue, suggestion or just want me on your server?** \n Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server!")
+                    .setTitle("**Have an issue, suggestion or just want me on your server?**")
+                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://github.com/BasketBandit/BasketBandit-Java/blob/master/README.md)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
-                    .addField("Core Commands", "`about` `help` `module` `modules` `settings` `setup`", false)
-                    .addField("Audio Commands", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
-                    .addField("Math Commands", "`roll` `sum`", false)
-                    .addField("Media Commands", "`kitsu` `osu` `runescape` `wow`", false)
-                    .addField("Moderation Commands", "`ban` `kick` `mute` `unmute` `nuke`", false)
-                    .addField("World Commands", "`linestatus` `weather`", false)
-                    .addField("Utility Commands", "`bind` `exclude` `channel` `server` `users`", false)
-                    .addField("NSFW Commands", "`efukt` `neko`", false)
+                    .addField("Core", "`about` `help` `module` `modules` `settings` `setup`", false)
+                    .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
+                    .addField("Math", "`roll` `sum`", false)
+                    .addField("Media", "`kitsu` `osu` `runescape` `wow`", false)
+                    .addField("Moderation", "`ban` `kick` `mute` `unmute` `nuke`", false)
+                    .addField("World", "`linestatus` `weather`", false)
+                    .addField("Utility", "`bind` `exclude` `channel` `server` `users`", false)
+                    .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Utils.getStandardString(0), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             Utils.sendMessage(e, "Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>");

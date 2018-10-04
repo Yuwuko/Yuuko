@@ -50,13 +50,13 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 | channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | MANAGE_CHANNELS |
 | bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | ADMINISTRATOR  |
 | exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. Modules can be included by retyping the command. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | ADMINISTRATOR  |
-| weather | Allows you to look up the weather in the given city *Note: Currently limited to a city name, without country code.* | -weather [city] | `-weather London` |
 
-### Transport
+### World
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
 | linestatus | Returns full line coverage for the London Underground which is accurate to command execution, with optional `min` argument to return a minified version. | -linestatus &#124; [min] | <code>-linestatus &#124; min</code> |
+| weather | Allows you to look up the weather in the given city *Note: Currently limited to a city name, without country code.* | -weather [city] | `-weather London` |
 
 ### Math
 
@@ -97,7 +97,6 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 |---------|-------------|-------|---------|------------|
 | efukt | Returns a random image/gif/video from eFukt. | -efukt | `-efukt` |
 | neko | Returns a random lewd neko image by default or another type with a given parameter | -neko &#124; [type] | <code>-neko &#124; boobs</code> |
-
 
 ## Settings
 
