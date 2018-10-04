@@ -27,7 +27,7 @@ public class ModuleAudio extends Module {
 
         if(e != null && command != null) {
             if(!checkModuleSettings(e)) {
-                if(e.getMember().getVoiceState().inVoiceChannel()) {
+                if(!e.getMember().getVoiceState().inVoiceChannel()) {
                     Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", this command can only be used while you are in a voice channel.");
                     return;
                 }

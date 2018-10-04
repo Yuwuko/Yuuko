@@ -30,7 +30,7 @@ public class CommandStop extends Command {
      * Executes command when everyone leaves the channel the bot is in.
      * @param e; GenericGuildEvent
      */
-    public void executeCommandAux(GenericGuildEvent e) {
+    public void executeCommand(GenericGuildEvent e) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.queue.clear();
