@@ -33,7 +33,7 @@ public class CommandRoll extends Command {
             num = new Random().nextInt(rollNum) + 1;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
+        EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName() + " rolled a " + num + ".", e.getAuthor().getAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
 
     }
