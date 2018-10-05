@@ -32,15 +32,16 @@ public class CommandModule extends Command {
         }
 
         if(!hit) {
-            MessageHandler.sendMessage(e, moduleName + " is not a valid module.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + moduleName + "_ is not a valid module.");
+            MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
         if(new DatabaseFunctions().toggleModule("module" + moduleName, serverLong)) {
-            EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor(moduleName + " was enabled on this server!");
+            EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("_" + moduleName + "_ was enabled on this server!");
             MessageHandler.sendMessage(e, embed.build());
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(moduleName + " was disabled on this server!");
+            EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("_" + moduleName + "_ was disabled on this server!");
             MessageHandler.sendMessage(e, embed.build());
         }
 

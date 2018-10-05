@@ -25,7 +25,6 @@ public class CommandHelp extends Command {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
-
                     .setTitle("**Have an issue, suggestion or just want me on your server?**")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://github.com/BasketBandit/BasketBandit-Java/blob/master/README.md)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
@@ -39,7 +38,8 @@ public class CommandHelp extends Command {
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Utils.getStandardString(0), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            MessageHandler.sendMessage(e, "Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Information has been sent to your direct messages.");
+            MessageHandler.sendMessage(e, embed.build());
 
             e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
 
@@ -93,8 +93,7 @@ public class CommandHelp extends Command {
 
                     User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
-                    EmbedBuilder commandInfo = new EmbedBuilder()
-
+                    EmbedBuilder embed = new EmbedBuilder()
                             .setThumbnail(bot.getAvatarUrl())
                             .setTitle("Command help for **" + cmd.getCommandName() + "**")
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
@@ -103,12 +102,13 @@ public class CommandHelp extends Command {
                             .addField("Exclusions", excludeList.toString(), true)
                             .addField("Usage", usages.toString(), false)
                             .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
-                    MessageHandler.sendMessage(e, commandInfo.build());
+                    MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
             }
-            MessageHandler.sendMessage(e, "Sorry, I can't find a usage for command '" + command[1] + "'");
+
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Usage not found for command '" + command[1] + "'.");
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 

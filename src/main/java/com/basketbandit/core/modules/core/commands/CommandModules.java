@@ -42,8 +42,6 @@ public class CommandModules extends Command {
             }
 
             EmbedBuilder commandModules = new EmbedBuilder()
-
-                    .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
                     .setTitle("Below are the list of bot modules!")
                     .setDescription("Each module can be toggled on or off by using the " + Configuration.GLOBAL_PREFIX + "module <name> command.")
                     .addField("Enabled Modules", enabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)

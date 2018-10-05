@@ -32,7 +32,8 @@ public class CommandSettings extends Command {
 
                 // Check to make sure the command is a valid command.
                 if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
-                    MessageHandler.sendMessage(e, "Sorry, '" + commandParameters[0] + "' is not a setting.");
+                    EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + commandParameters[1].toUpperCase() + "_ is not a valid setting.");
+                    MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
@@ -42,7 +43,8 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        MessageHandler.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
+                        EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
+                        MessageHandler.sendMessage(e, embed.build());
                         return;
                     }
                     new SettingDeleteExecuted(e, commandParameters[1]);
@@ -56,7 +58,8 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("commandLogging")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        MessageHandler.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
+                        EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
+                        MessageHandler.sendMessage(e, embed.build());
                         return;
                     }
                     new SettingCommandLogging(e, commandParameters[1]);
@@ -70,7 +73,6 @@ public class CommandSettings extends Command {
                     resultSet.next();
 
                     EmbedBuilder commandModules = new EmbedBuilder()
-
                         .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
                             .addField("commandPrefix", "[**" + resultSet.getString("commandPrefix") + "**] - The message prefix used to symbolise a command.", false)

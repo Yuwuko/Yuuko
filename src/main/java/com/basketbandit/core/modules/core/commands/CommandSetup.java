@@ -4,6 +4,7 @@ import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -19,9 +20,11 @@ public class CommandSetup extends Command {
         String serverId = e.getGuild().getId();
 
         if(!new DatabaseFunctions().addNewServer(serverId)) {
-            MessageHandler.sendMessage(e, "Server setup successful.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("Setup").setDescription("Server setup was successful.");
+            MessageHandler.sendMessage(e, embed.build());
         } else {
-            MessageHandler.sendMessage(e, "Server setup was unsuccessful. (It is likely already setup... try the -about command!)");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("Setup").setDescription("Server setup was unsuccessful.");
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 
