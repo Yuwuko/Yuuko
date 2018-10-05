@@ -16,6 +16,7 @@ public class CommandRepeat extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
+
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());
         MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating());
     }

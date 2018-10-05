@@ -36,15 +36,14 @@ public class CommandQueue extends Command {
 
                 if(i > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
-
-                            .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
                             .setTitle("Here are the next **" + i + "** tracks in the queue:")
                             .setDescription(queue.toString())
-                            .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
+                            .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
+
                 } else {
-                    MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("The queue is currently empty.");
+                    MessageHandler.sendMessage(e, embed.build());
                 }
             }
         } catch(Exception ex) {

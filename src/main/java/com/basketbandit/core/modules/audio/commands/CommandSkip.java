@@ -20,7 +20,7 @@ public class CommandSkip extends Command {
             GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
             if(manager.player.getPlayingTrack() != null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Skip").setDescription("**" + manager.player.getPlayingTrack().getInfo().title + "**");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription("**" + manager.player.getPlayingTrack().getInfo().title + "**");
                 MessageHandler.sendMessage(e, embed.build());
 
                 if(manager.scheduler.hasNextTrack()) {
@@ -28,10 +28,9 @@ public class CommandSkip extends Command {
                 } else {
                     manager.player.stopTrack();
                 }
-
             } else {
-                MessageHandler.sendMessage(e, "The queue is empty, there is no track to skip!");
-
+                EmbedBuilder embed = new EmbedBuilder().setTitle("There is no current track to skip.");
+                MessageHandler.sendMessage(e, embed.build());
             }
 
         } catch(Exception ex) {

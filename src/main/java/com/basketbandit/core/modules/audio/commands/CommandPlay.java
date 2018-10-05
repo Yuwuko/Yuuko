@@ -32,8 +32,9 @@ public class CommandPlay extends Command {
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
 
             if(manager.player.isPaused()) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("**The player has been resumed.**");
+                MessageHandler.sendMessage(e, embed.build());
                 manager.player.setPaused(false);
-                MessageHandler.sendMessage(e,e.getAuthor().getAsMention() + " resumed playback.");
                 new CommandCurrent();
             }
 
@@ -49,7 +50,8 @@ public class CommandPlay extends Command {
                 String trackId = YouTubeSearchHandler.search(command[1]);
 
                 if(trackId == null || trackId.equals("")) {
-                    MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
+                    MessageHandler.sendMessage(e, embed.build());
                 } else {
                     loadAndPlay(manager, e.getChannel(), trackId, e);
                 }
@@ -79,12 +81,10 @@ public class CommandPlay extends Command {
             public void trackLoaded(AudioTrack track) {
                 try {
                     manager.scheduler.queue(track);
-
                     String[] uri = track.getInfo().uri.split("=");
                     String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
-                    EmbedBuilder queuedTrack = new EmbedBuilder()
-
+                    EmbedBuilder embed = new EmbedBuilder()
                             .setAuthor(e.getMember().getEffectiveName() + " added to the queue!", null, e.getAuthor().getAvatarUrl())
                             .setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(imageUrl)
@@ -93,7 +93,7 @@ public class CommandPlay extends Command {
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
                             .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                    MessageHandler.sendMessage(channel, queuedTrack.build());
+                    MessageHandler.sendMessage(channel, embed.build());
                 } catch(Exception ex) {
                     Utils.sendException(ex, "public void trackLoaded(AudioTrack track) [CommandPlay]");
                 }
@@ -103,9 +103,9 @@ public class CommandPlay extends Command {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     List<AudioTrack> tracks = playlist.getTracks();
-                    MessageHandler.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: **" + playlist.getName() + "**");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding **" + playlist.getTracks().size() + "** tracks to queue from playlist: **" + playlist.getName() + "**");
+                    MessageHandler.sendMessage(channel, embed.build());
                     tracks.forEach(manager.scheduler::queue);
-
                     new CommandCurrent().executeCommand(e, null);
 
                 } catch(Exception ex) {
@@ -115,12 +115,14 @@ public class CommandPlay extends Command {
 
             @Override
             public void noMatches() {
-                MessageHandler.sendMessage(channel,"Sorry, couldn't load track using: " + trackUrl);
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No matches found using that parameter.");
+                MessageHandler.sendMessage(channel, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                MessageHandler.sendMessage(channel,"Could not play: " + exception.getMessage());
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + exception.getMessage());
+                MessageHandler.sendMessage(channel, embed.build());
             }
         });
     }

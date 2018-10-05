@@ -37,14 +37,16 @@ public class CommandBackground extends Command {
                 String trackUrl = YouTubeSearchHandler.search(command[1]);
 
                 if(trackUrl == null) {
-                    MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
+                    MessageHandler.sendMessage(e, embed.build());
                 } else {
                     setAndPlay(manager, e.getChannel(), trackUrl, e);
                 }
             }
         } else {
             // If no parameters are given, unset the background track.
-            MessageHandler.sendMessage(e, "Background track removed.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Removing").setDescription("The background track has been removed.");
+            MessageHandler.sendMessage(e, embed.build());
             manager.scheduler.setBackground(null);
         }
     }
@@ -74,31 +76,32 @@ public class CommandBackground extends Command {
 
                 manager.scheduler.setBackground(track);
 
-                EmbedBuilder queuedTrack = new EmbedBuilder()
-
-                        .setAuthor(e.getMember().getEffectiveName() + " set the background music!",null, e.getAuthor().getAvatarUrl())
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setAuthor(e.getMember().getEffectiveName() + " set the background track!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
                         .addField("Duration", Utils.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
-                channel.sendMessage(queuedTrack.build()).queue();
+                channel.sendMessage(embed.build()).queue();
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 // Playlist as background not currently supported but method needed implementation.
-                channel.sendMessage("Sorry, adding playlists to the background is currently unsupported but it will be soon!").queue();
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Adding playlists to the background is currently unsupported.");
+                MessageHandler.sendMessage(channel, embed.build());
             }
 
             @Override
             public void noMatches() {
-                channel.sendMessage(trackUrl).queue();
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No matches found using that parameter.");
+                MessageHandler.sendMessage(channel, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                channel.sendMessage("Could not add track to the background: " + exception.getMessage()).queue();
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + exception.getMessage());
+                MessageHandler.sendMessage(channel, embed.build());
             }
         });
     }

@@ -31,21 +31,38 @@ public class CommandSearch extends Command {
                     i++;
                 }
             } else {
-                MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("There was an issue processing your request.");
+                MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
             EmbedBuilder presentResults = new EmbedBuilder()
-
-                    .setAuthor(e.getAuthor().getName() + ", results for: " + command[1], null, e.getAuthor().getAvatarUrl())
-                    .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
-                    .setFooter(Configuration.VERSION, null);
+                    .setAuthor("Search results for " + command[1], null)
+                    .setDescription("Input the number of the track you would like to play, or 'cancel' to stop me waiting for a response. \n\n" + resultString)
+                    .setFooter(Configuration.VERSION + " · Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             SystemVariables.searchUsers.put(e.getAuthor().getIdLong(), results);
             MessageHandler.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
+        }
+    }
+
+    public void executeCommand(MessageReceivedEvent e, String input) {
+        if(!input.equals("cancel")) {
+            if(Integer.parseInt(input) < 11 && Integer.parseInt(input) > 0) {
+                String videoId = SystemVariables.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();
+                new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
+            } else {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
+                MessageHandler.sendMessage(e, embed.build());
+            }
+        } else if(input.equals("cancel")) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
+            MessageHandler.sendMessage(e, embed.build());
+            SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
         }
     }
 

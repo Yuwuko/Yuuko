@@ -5,6 +5,7 @@ import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.LinkedList;
@@ -18,9 +19,9 @@ public class CommandClear extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
-
         try {
+            GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+
             if(command.length > 1) {
                 int clearPos;
 
@@ -37,7 +38,8 @@ public class CommandClear extends Command {
                 int i = 1;
                 for(int x = 0; x < manager.scheduler.queue.size(); x++) {
                     if(i == clearPos) {
-                        MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " has removed **" + clone.remove().getInfo().title + "** from the queue.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("**_" + clone.remove().getInfo().title + "_ has been cleared from the queue.**");
+                        MessageHandler.sendMessage(e, embed.build());
                         i++;
                     } else {
                         ((LinkedList<com.sedmelluq.discord.lavaplayer.track.AudioTrack>) temp).addLast(clone.remove());
@@ -48,7 +50,8 @@ public class CommandClear extends Command {
                 manager.scheduler.queue.addAll(temp);
 
             } else {
-                MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " cleared the queue.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("**The queue has been cleared.**");
+                MessageHandler.sendMessage(e, embed.build());
                 manager.scheduler.queue.clear();
             }
         } catch(Exception ex) {

@@ -5,7 +5,10 @@ import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
 import com.basketbandit.core.modules.audio.commands.*;
 import com.basketbandit.core.utils.MessageHandler;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 
 public class ModuleAudio extends Module {
 
@@ -28,7 +31,13 @@ public class ModuleAudio extends Module {
         if(e != null && command != null) {
             if(!checkModuleSettings(e)) {
                 if(!e.getMember().getVoiceState().inVoiceChannel()) {
-                    MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", this command can only be used while you are in a voice channel.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
+                    MessageHandler.sendMessage(e, embed.build());
+                    return;
+                }
+                if(e.getGuild().getAudioManager().getConnectionStatus() == NOT_CONNECTED && !command[0].equals("play") && !command[0].equals("search") && !command[0].equals("background")) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
+                    MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
                 new CommandExecutor(e, command, this);

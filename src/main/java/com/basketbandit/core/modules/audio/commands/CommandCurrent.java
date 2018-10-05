@@ -26,7 +26,6 @@ public class CommandCurrent extends Command {
             String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
             EmbedBuilder queuedTrack = new EmbedBuilder()
-
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
                     .setThumbnail(imageUrl)
@@ -36,7 +35,8 @@ public class CommandCurrent extends Command {
 
             MessageHandler.sendMessage(e, queuedTrack.build());
         } else {
-            MessageHandler.sendMessage(e, "Nothing is currently playing...");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a track currently playing.");
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 
