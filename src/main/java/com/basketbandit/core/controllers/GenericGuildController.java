@@ -42,7 +42,6 @@ public class GenericGuildController {
         SystemInformation.incrementGuildCount(1);
 
         EmbedBuilder about = new EmbedBuilder()
-
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
                 .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/BasketBandit-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
                 .setThumbnail(bot.getAvatarUrl())

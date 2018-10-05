@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.2.1
++ [~] Modified all output and converted them into embeds since they look much 'richer'.
++ [~] Refactored text related methods from the Utils class and moved them to their own MessageHandler class.
++ [~] Updated the checking involved with the audio module, not allowing commands while not connected or allowing commands such as queue unless the bot is connected too.
+
+
 ## 3.2.0
 + [+] Added NSFW [__neko__] command from neko.life, because that's just what some people like I guess.
 + [+] Created CommandExecutor class to be the one stop shot for all command executions so they're guaranteed to be the same.
