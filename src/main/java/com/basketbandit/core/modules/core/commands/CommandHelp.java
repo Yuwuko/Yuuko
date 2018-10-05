@@ -5,6 +5,7 @@ import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
@@ -39,7 +40,8 @@ public class CommandHelp extends Command {
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Utils.getStandardString(0), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            Utils.sendMessage(e, "Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>");
+            MessageHandler.sendMessage(e, "Check your private messages, " + e.getAuthor().getAsMention() + "! <:ShinobuOshino:420423622663077889>");
+
             e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
 
         } else {
@@ -103,11 +105,11 @@ public class CommandHelp extends Command {
                             .addField("Usage", usages.toString(), false)
                             .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                    Utils.sendMessage(e, commandInfo.build());
+                    MessageHandler.sendMessage(e, commandInfo.build());
                     return;
                 }
             }
-            Utils.sendMessage(e, "Sorry, I can't find a usage for command '" + command[1] + "'");
+            MessageHandler.sendMessage(e, "Sorry, I can't find a usage for command '" + command[1] + "'");
         }
     }
 

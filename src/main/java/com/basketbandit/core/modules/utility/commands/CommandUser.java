@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -31,7 +32,7 @@ public class CommandUser extends Command {
             }
 
             if(target == null) {
-                Utils.sendMessage(e, "Sorry, that user could not be found.");
+                MessageHandler.sendMessage(e, "Sorry, that user could not be found.");
                 return;
             }
 
@@ -61,7 +62,7 @@ public class CommandUser extends Command {
                     .addField("Roles", roleString.toString(), true)
                     .setFooter(Configuration.VERSION + " · Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            Utils.sendMessage(e, commandInfo.build());
+            MessageHandler.sendMessage(e, commandInfo.build());
         } catch(Exception ex) {
             Utils.sendException(ex, "CommandUser - " + e.getMessage().getContentRaw());
         }

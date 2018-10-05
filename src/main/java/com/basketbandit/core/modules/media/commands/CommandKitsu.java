@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.kitsu.Attributes;
 import com.basketbandit.core.modules.media.kitsu.KitsuContainer;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,14 +30,14 @@ public class CommandKitsu extends Command {
             if(commandParameters[0].toLowerCase().equals("show")) {
                 json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             } else if(commandParameters[0].toLowerCase().equals("character")) {
-                Utils.sendMessage(e, "Sorry, this command isn't ready yet! (Waiting for the Kitsu.io API to be constructed to support this!)");
+                MessageHandler.sendMessage(e, "Sorry, this command isn't ready yet! (Waiting for the Kitsu.io API to be constructed to support this!)");
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
             } else {
                 json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             }
 
             if(json != null && json.equals("")) {
-                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", the anime you were looking for wasn't found.");
+                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", the anime you were looking for wasn't found.");
                 return;
             }
 
@@ -58,11 +59,11 @@ public class CommandKitsu extends Command {
                     .addField("Start Date", anime.getStartDate(), true)
                     .addField("End Date", anime.getEndDate(), true)
                     .setFooter("Version: " + Configuration.VERSION + ", data provided by kitsu.io" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-            Utils.sendMessage(e, embed.build());
+            MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-            Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
+            MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
 

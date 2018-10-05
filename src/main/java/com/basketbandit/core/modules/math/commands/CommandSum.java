@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.math.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -48,10 +48,10 @@ public class CommandSum extends Command {
             sumString = a[0] + "% of " + a[1] + " = " + sum;
 
         } else {
-            Utils.sendMessage(e, "The parameters given are not valid.");
+            MessageHandler.sendMessage(e, "The parameters given are not valid.");
         }
 
         EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);
-        Utils.sendMessage(e, embed.build());
+        MessageHandler.sendMessage(e, embed.build());
     }
 }

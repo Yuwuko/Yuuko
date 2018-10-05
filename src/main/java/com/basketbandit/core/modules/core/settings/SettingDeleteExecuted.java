@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.core.settings;
 
 import com.basketbandit.core.database.DatabaseFunctions;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -20,10 +21,10 @@ public class SettingDeleteExecuted {
             if(new DatabaseFunctions().setServerSettings("deleteExecuted", intvalue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'deleteExecuted' set to TRUE.");
-                    Utils.sendMessage(e, embed.build());
+                    MessageHandler.sendMessage(e, embed.build());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("'deleteExecuted' set to FALSE.");
-                    Utils.sendMessage(e, embed.build());
+                    MessageHandler.sendMessage(e, embed.build());
                 }
                 return true;
             } else {

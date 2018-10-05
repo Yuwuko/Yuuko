@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.audio.commands;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -17,7 +18,7 @@ public class CommandPause extends Command {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         try {
-            Utils.sendMessage(e, e.getAuthor().getAsMention() + " paused playback.");
+            MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " paused playback.");
             manager.player.setPaused(true);
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());

@@ -3,7 +3,7 @@ package com.basketbandit.core.modules.audio.commands;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CommandRepeat extends Command {
@@ -17,7 +17,7 @@ public class CommandRepeat extends Command {
         GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());
-        Utils.sendMessage(e, e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating());
+        MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating());
     }
 
 }

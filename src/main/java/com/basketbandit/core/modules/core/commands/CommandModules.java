@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -50,7 +51,7 @@ public class CommandModules extends Command {
                     .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            Utils.sendMessage(e, commandModules.build());
+            MessageHandler.sendMessage(e, commandModules.build());
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
         } finally {

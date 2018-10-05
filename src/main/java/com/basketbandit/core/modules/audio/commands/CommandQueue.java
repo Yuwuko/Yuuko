@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -43,9 +44,9 @@ public class CommandQueue extends Command {
                             .setDescription(queue.toString())
                             .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                    Utils.sendMessage(e, nextTracks.build());
+                    MessageHandler.sendMessage(e, nextTracks.build());
                 } else {
-                    Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!");
+                    MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the queue is empty!");
                 }
             }
         } catch(Exception ex) {

@@ -4,7 +4,7 @@ import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -32,16 +32,16 @@ public class CommandModule extends Command {
         }
 
         if(!hit) {
-            Utils.sendMessage(e, moduleName + " is not a valid module.");
+            MessageHandler.sendMessage(e, moduleName + " is not a valid module.");
             return;
         }
 
         if(new DatabaseFunctions().toggleModule("module" + moduleName, serverLong)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor(moduleName + " was enabled on this server!");
-            Utils.sendMessage(e, embed.build());
+            MessageHandler.sendMessage(e, embed.build());
         } else {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(moduleName + " was disabled on this server!");
-            Utils.sendMessage(e, embed.build());
+            MessageHandler.sendMessage(e, embed.build());
         }
 
     }

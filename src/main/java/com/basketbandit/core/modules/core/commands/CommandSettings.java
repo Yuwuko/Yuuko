@@ -8,6 +8,7 @@ import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
 import com.basketbandit.core.modules.core.settings.SettingCommandPrefix;
 import com.basketbandit.core.modules.core.settings.SettingDeleteExecuted;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Sanitise;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -32,7 +33,7 @@ public class CommandSettings extends Command {
 
                 // Check to make sure the command is a valid command.
                 if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
-                    Utils.sendMessage(e, "Sorry, '" + commandParameters[0] + "' is not a setting.");
+                    MessageHandler.sendMessage(e, "Sorry, '" + commandParameters[0] + "' is not a setting.");
                     return;
                 }
 
@@ -42,7 +43,7 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        Utils.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
+                        MessageHandler.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
                         return;
                     }
                     new SettingDeleteExecuted(e, commandParameters[1]);
@@ -56,7 +57,7 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("commandLogging")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        Utils.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
+                        MessageHandler.sendMessage(e, "Sorry, **" + commandParameters[1].toUpperCase() + "** is not a valid value. (Valid: TRUE, FALSE)");
                         return;
                     }
                     new SettingCommandLogging(e, commandParameters[1]);
@@ -78,7 +79,7 @@ public class CommandSettings extends Command {
                             .addField("commandLogging", "[**" + resultSet.getBoolean("commandLogging") + "**] - Sends executed commands to a predefined logging channel.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                    Utils.sendMessage(e, commandModules.build());
+                    MessageHandler.sendMessage(e, commandModules.build());
                 } catch(Exception ex) {
                     Utils.sendException(ex, e.getMessage().getContentRaw());
                 } finally {

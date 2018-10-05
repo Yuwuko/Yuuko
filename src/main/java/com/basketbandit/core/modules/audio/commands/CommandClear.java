@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.audio.commands;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -36,7 +37,7 @@ public class CommandClear extends Command {
                 int i = 1;
                 for(int x = 0; x < manager.scheduler.queue.size(); x++) {
                     if(i == clearPos) {
-                        Utils.sendMessage(e, e.getAuthor().getAsMention() + " has removed **" + clone.remove().getInfo().title + "** from the queue.");
+                        MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " has removed **" + clone.remove().getInfo().title + "** from the queue.");
                         i++;
                     } else {
                         ((LinkedList<com.sedmelluq.discord.lavaplayer.track.AudioTrack>) temp).addLast(clone.remove());
@@ -47,7 +48,7 @@ public class CommandClear extends Command {
                 manager.scheduler.queue.addAll(temp);
 
             } else {
-                Utils.sendMessage(e, e.getAuthor().getAsMention() + " cleared the queue.");
+                MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " cleared the queue.");
                 manager.scheduler.queue.clear();
             }
         } catch(Exception ex) {

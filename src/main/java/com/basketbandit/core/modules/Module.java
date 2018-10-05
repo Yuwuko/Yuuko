@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules;
 
 import com.basketbandit.core.database.DatabaseFunctions;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class Module {
@@ -28,7 +28,7 @@ public abstract class Module {
         if(new DatabaseFunctions().checkModuleSettings(dbModuleName, e.getGuild().getId())) {
             return false;
         } else {
-            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", '" + moduleName.substring(6, moduleName.length()).toLowerCase() + "' is disabled.");
+            MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", '" + moduleName.substring(6, moduleName.length()).toLowerCase() + "' is disabled.");
             return true;
         }
     }

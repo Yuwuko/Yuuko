@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -35,9 +36,9 @@ public class CommandLast extends Command {
 					.addField("Channel", track.getInfo().author, true)
 					.setFooter(Configuration.VERSION + " · Requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-			Utils.sendMessage(e, queuedTrack.build());
+			MessageHandler.sendMessage(e, queuedTrack.build());
 		} else {
-			Utils.sendMessage(e, "Sorry, there is no 'last track' available...");
+			MessageHandler.sendMessage(e, "Sorry, there is no 'last track' available...");
 		}
 
 	}

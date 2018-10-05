@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -28,7 +28,7 @@ public class CommandBan extends Command {
         }
 
         if(target == null) {
-            Utils.sendMessage(e, "Sorry, that user could not be found.");
+            MessageHandler.sendMessage(e, "Sorry, that user could not be found.");
             return;
         }
 

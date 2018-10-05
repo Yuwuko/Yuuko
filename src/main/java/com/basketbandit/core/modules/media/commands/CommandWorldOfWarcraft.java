@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.media.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.media.wow.Character;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -27,7 +28,7 @@ public class CommandWorldOfWarcraft extends Command {
             String json = new JsonBuffer().getString("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API, "default", "default");
 
             if(json.contains("\"status\": \"nok\"")) {
-                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
+                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
                 return;
             }
 
@@ -148,11 +149,11 @@ public class CommandWorldOfWarcraft extends Command {
                     .addField("Battlegroup", character.getBattlegroup(), true)
                     .addField("Honorable Kills", character.getTotalHonorableKills()+"", true)
                     .setFooter("Version: " + Configuration.VERSION + ", data provided by Blizzard" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-            Utils.sendMessage(e, embed.build());
+            MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-            Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
+            MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
 
     }

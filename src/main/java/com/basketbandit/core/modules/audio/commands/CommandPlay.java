@@ -5,6 +5,7 @@ import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
@@ -33,7 +34,7 @@ public class CommandPlay extends Command {
 
             if(manager.player.isPaused()) {
                 manager.player.setPaused(false);
-                Utils.sendMessage(e,e.getAuthor().getAsMention() + " resumed playback.");
+                MessageHandler.sendMessage(e,e.getAuthor().getAsMention() + " resumed playback.");
                 new CommandCurrent();
             }
 
@@ -49,7 +50,7 @@ public class CommandPlay extends Command {
                 String trackId = YouTubeSearchHandler.search(command[1]);
 
                 if(trackId == null || trackId.equals("")) {
-                    Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
+                    MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
                 } else {
                     loadAndPlay(manager, e.getChannel(), trackId, e);
                 }
@@ -93,7 +94,7 @@ public class CommandPlay extends Command {
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
                             .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-                    Utils.sendMessage(channel, queuedTrack.build());
+                    MessageHandler.sendMessage(channel, queuedTrack.build());
                 } catch(Exception ex) {
                     Utils.sendException(ex, "public void trackLoaded(AudioTrack track) [CommandPlay]");
                 }
@@ -103,7 +104,7 @@ public class CommandPlay extends Command {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     List<AudioTrack> tracks = playlist.getTracks();
-                    Utils.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: **" + playlist.getName() + "**");
+                    MessageHandler.sendMessage(channel, "Adding **" + playlist.getTracks().size() +"** tracks to queue from playlist: **" + playlist.getName() + "**");
                     tracks.forEach(manager.scheduler::queue);
 
                     new CommandCurrent().executeCommand(e, null);
@@ -115,12 +116,12 @@ public class CommandPlay extends Command {
 
             @Override
             public void noMatches() {
-                Utils.sendMessage(channel,"Sorry, couldn't load track using: " + trackUrl);
+                MessageHandler.sendMessage(channel,"Sorry, couldn't load track using: " + trackUrl);
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                Utils.sendMessage(channel,"Could not play: " + exception.getMessage());
+                MessageHandler.sendMessage(channel,"Could not play: " + exception.getMessage());
             }
         });
     }

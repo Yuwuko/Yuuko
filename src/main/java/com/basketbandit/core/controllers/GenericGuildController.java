@@ -5,6 +5,7 @@ import com.basketbandit.core.SystemClock;
 import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.core.commands.CommandSetup;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -58,7 +59,7 @@ public class GenericGuildController {
         for(TextChannel c: channels) {
             if(c.getName().toLowerCase().equals("general")) {
                 try {
-                    Utils.sendMessage(c, about.build());
+                    MessageHandler.sendMessage(c, about.build());
                     break;
                 } catch(PermissionException ex) {
                     Utils.updateLatest("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");

@@ -47,7 +47,6 @@ public final class C {
     public static final Command CHANNEL = new CommandChannel();
     public static final Command BIND = new CommandBind();
     public static final Command EXCLUDE = new CommandExclude();
-    public static final Command WEATHER = new CommandWeather();
 
     // Media module commands.
     public static final Command RUNESCAPE = new CommandRuneScape();
@@ -69,8 +68,9 @@ public final class C {
     public static final Command SEARCH = new CommandSearch();
     public static final Command CLEAR = new CommandClear();
 
-    // Transport module commands.
+    // World module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();
+    public static final Command WEATHER = new CommandWeather();
 
     // NSFW module commands
     public static final Command EFUKT = new CommandEfukt();

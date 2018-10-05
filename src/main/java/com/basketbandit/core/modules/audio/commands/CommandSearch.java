@@ -4,6 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.SystemVariables;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -31,7 +32,7 @@ public class CommandSearch extends Command {
                     i++;
                 }
             } else {
-                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.");
+                MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", there was a problem processing your request.");
                 return;
             }
 
@@ -42,7 +43,7 @@ public class CommandSearch extends Command {
                     .setFooter(Configuration.VERSION, null);
 
             SystemVariables.searchUsers.put(e.getAuthor().getIdLong(), results);
-            Utils.sendMessage(e, presentResults.build());
+            MessageHandler.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());

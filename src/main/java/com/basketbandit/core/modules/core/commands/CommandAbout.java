@@ -4,7 +4,7 @@ import com.basketbandit.core.Configuration;
 import com.basketbandit.core.SystemClock;
 import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -39,7 +39,7 @@ public class CommandAbout extends Command {
                 .addField("Uptime", SystemClock.getRuntime(), true)
                 .addField("Heartbeat", SystemInformation.getPing(), true);
 
-        Utils.sendMessage(e, about.build());
+        MessageHandler.sendMessage(e, about.build());
     }
 
 }

@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.world.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.world.tfl.LineManager;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -58,7 +59,7 @@ public class CommandLineStatus extends Command {
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-                Utils.sendMessage(e, embed.build());
+                MessageHandler.sendMessage(e, embed.build());
 
             } else {
 
@@ -73,12 +74,12 @@ public class CommandLineStatus extends Command {
                         .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-                Utils.sendMessage(e, embed.build());
+                MessageHandler.sendMessage(e, embed.build());
             }
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-            Utils.sendMessage(e, "There was an issue processing your request.");
+            MessageHandler.sendMessage(e, "There was an issue processing your request.");
         }
 
     }

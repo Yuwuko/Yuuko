@@ -3,7 +3,7 @@ package com.basketbandit.core.modules.audio.commands;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -23,7 +23,7 @@ public class CommandStop extends Command {
         manager.player.setPaused(false);
         e.getGuild().getAudioManager().setSendingHandler(null);
         e.getGuild().getAudioManager().closeAudioConnection();
-        Utils.sendMessage(e, e.getAuthor().getAsMention() + " stopped playback.");
+        MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " stopped playback.");
     }
 
     /**

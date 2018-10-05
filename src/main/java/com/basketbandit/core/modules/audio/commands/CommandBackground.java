@@ -5,6 +5,7 @@ import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
@@ -38,14 +39,14 @@ public class CommandBackground extends Command {
                 String trackUrl = YouTubeSearchHandler.search(command[1]);
 
                 if(trackUrl == null) {
-                    Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
+                    MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", those search parameters failed to return a result, please check them and try again.");
                 } else {
                     setAndPlay(manager, e.getChannel(), trackUrl, e);
                 }
             }
         } else {
             // If no parameters are given, unset the background track.
-            Utils.sendMessage(e, "Background track removed.");
+            MessageHandler.sendMessage(e, "Background track removed.");
             manager.scheduler.setBackground(null);
         }
     }

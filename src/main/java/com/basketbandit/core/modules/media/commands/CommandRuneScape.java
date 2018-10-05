@@ -1,6 +1,7 @@
 package com.basketbandit.core.modules.media.commands;
 
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -58,10 +59,10 @@ public class CommandRuneScape extends Command {
             }
             messageString.append("``````Total Level     :: ").append(skills[1]).append("```");
 
-            Utils.sendMessage(e, messageString.toString());
+            MessageHandler.sendMessage(e, messageString.toString());
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-            Utils.sendMessage(e, "Oops, looks like I messed up! (Or that account doesn't exist!) <:ErioTouwa:420413779323650050>");
+            MessageHandler.sendMessage(e, "Oops, looks like I messed up! (Or that account doesn't exist!) <:ErioTouwa:420413779323650050>");
         }
 
     }

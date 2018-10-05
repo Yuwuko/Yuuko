@@ -2,7 +2,7 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.utils.Utils;
+import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
@@ -49,7 +49,7 @@ public class CommandServer extends Command {
                 .addField("Emotes", emotes, false)
                 .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-        Utils.sendMessage(e, commandInfo.build());
+        MessageHandler.sendMessage(e, commandInfo.build());
     }
 
 }

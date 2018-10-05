@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.world.commands;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.world.weather.WeatherContainer;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,7 +29,7 @@ public class CommandWeather extends Command {
             String json = new JsonBuffer().getString("https://api.openweathermap.org/data/2.5/weather?q=" +command[1] + "&units=metric&APPID=" + Configuration.OPEN_WEATHER_MAP_API, "default", "default");
 
             if(json != null && json.equals("")) {
-                Utils.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", unable to retrieve weather information from " + command[1] + ".");
+                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", unable to retrieve weather information from " + command[1] + ".");
                 return;
             }
 
@@ -52,11 +53,11 @@ public class CommandWeather extends Command {
                     .addField("Longitude", weather.getCoord().getLon() + "", true)
                     .addField("Wind Angle", weather.getWind().getDeg() + "°", true)
                     .setFooter(Configuration.VERSION + " · Data provided by openweathermap.org" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-            Utils.sendMessage(e, embed.build());
+            MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, command[0] + command[1]);
-            Utils.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
+            MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
 

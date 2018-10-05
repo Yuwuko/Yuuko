@@ -16,14 +16,14 @@ public class Sanitise {
         }
 
         if(command.length < 2) {
-            Utils.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided 0.");
+            MessageHandler.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided 0.");
             return false;
         }
 
         if(expectedParameters > 1) {
             String[] commandParameters = command[1].split("\\s+", expectedParameters);
             if(commandParameters.length < expectedParameters) {
-                Utils.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided " + commandParameters.length + ".");
+                MessageHandler.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided " + commandParameters.length + ".");
                 return false;
             }
         }

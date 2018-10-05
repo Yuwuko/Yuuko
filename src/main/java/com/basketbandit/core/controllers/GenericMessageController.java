@@ -8,6 +8,7 @@ import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.commands.CommandPlay;
 import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.User;
@@ -39,7 +40,7 @@ public class GenericMessageController {
             // Used to help calculate execution time of functions.
             long startExecutionNano = System.nanoTime();
 
-            // Help command (Private Message) throws null pointer for serverLong (Obviously.)
+            // Help command (Private MessageHandler) throws null pointer for serverLong (Obviously.)
             String server = e.getGuild().getId();
             String msgRawLower = e.getMessage().getContentRaw().toLowerCase();
 
@@ -114,7 +115,7 @@ public class GenericMessageController {
                     if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) {
                         // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
                         if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                            Utils.sendMessage(e, "Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
+                            MessageHandler.sendMessage(e, "Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
                             return;
                         } else {
                             e.getMessage().delete().queue();
@@ -134,7 +135,7 @@ public class GenericMessageController {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.");
+                        MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.");
                         break;
                     }
                 } else {
@@ -153,7 +154,7 @@ public class GenericMessageController {
 
             if(bound && !executed) {
                 boundChannels = Utils.removeLastOccurrence(boundChannels, ", ");
-                Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString());
+                MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString());
             }
 
             if(constructor != null && !executed && !bound) {
@@ -197,11 +198,11 @@ public class GenericMessageController {
                             new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
                             SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
                         } else {
-                            Utils.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", search input must be a number between 1 and 10, or 'cancel'.");
+                            MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", search input must be a number between 1 and 10, or 'cancel'.");
                             return;
                         }
                     } else if(input[0].equals("cancel")) {
-                        Utils.sendMessage(e, e.getAuthor().getAsMention() + " cancelled their search.");
+                        MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " cancelled their search.");
                         SystemVariables.searchUsers.remove(e.getAuthor().getIdLong());
                     }
                 }

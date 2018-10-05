@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.nsfw.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import com.basketbandit.core.utils.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -25,7 +26,7 @@ public class CommandNeko extends Command {
             if(!json.contains("404")) {
                 url = json.substring(12, json.lastIndexOf("\""));
             } else {
-                Utils.sendMessage(e, "Sorry, no image was found with that parameter! (Go to https://nekos.life/api/v2/endpoints for a list of valid parameters)");
+                MessageHandler.sendMessage(e, "Sorry, no image was found with that parameter! (Go to https://nekos.life/api/v2/endpoints for a list of valid parameters)");
                 return;
             }
 
@@ -34,7 +35,7 @@ public class CommandNeko extends Command {
                     .setTitle("Neko: " + url)
                     .setImage(url)
                     .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-            Utils.sendMessage(e, lewdNeko.build());
+            MessageHandler.sendMessage(e, lewdNeko.build());
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
