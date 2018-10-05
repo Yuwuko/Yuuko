@@ -116,7 +116,7 @@ public class GenericMessageController {
                     if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) {
                         // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
                         if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                            EmbedBuilder embed = new EmbedBuilder().setAuthor("Missing Permission").setDescription("**MESSAGE_MANAGE**");
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("**MESSAGE_MANAGE**");
                             MessageHandler.sendMessage(e, embed.build());
                             return;
                         } else {
@@ -137,7 +137,7 @@ public class GenericMessageController {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        EmbedBuilder embed = new EmbedBuilder().setAuthor("The _" + input[0] + "_ command is excluded from this channel.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("The _" + input[0] + "_ command is excluded from this channel.");
                         MessageHandler.sendMessage(e, embed.build());
                         break;
                     }
@@ -157,7 +157,7 @@ public class GenericMessageController {
 
             if(bound && !executed) {
                 boundChannels = Utils.removeLastOccurrence(boundChannels, ", ");
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("The _" + input[0] + "_ command is bound to " + boundChannels.toString() + ".");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("The _" + input[0] + "_ command is bound to " + boundChannels.toString() + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }
 

@@ -24,7 +24,7 @@ public class CommandNeko extends Command {
             if(!json.contains("404")) {
                 url = json.substring(12, json.lastIndexOf("\""));
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("No image was found with that parameter! (Go to https://nekos.life/api/v2/endpoints for a list of valid parameters)");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No image was found with that parameter! (Go to https://nekos.life/api/v2/endpoints for a list of valid parameters)");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

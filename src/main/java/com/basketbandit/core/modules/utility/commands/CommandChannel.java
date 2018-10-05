@@ -28,14 +28,14 @@ public class CommandChannel extends Command {
         } else if(commandParameters[0].equals("del")) {
             if(type.equals("text")) {
                 if(e.getGuild().getTextChannelsByName(commandParameters[2], true).size() == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setAuthor("That text-channel could not be found.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("That text-channel could not be found.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
                 e.getGuild().getTextChannelsByName(commandParameters[2], true).get(0).delete().queue();
             } else if(type.equals("voice") && commandParameters[2].length() == 18 && Long.parseLong(commandParameters[2]) > 0) {
                 if(e.getGuild().getVoiceChannelsByName(commandParameters[2], true).size() == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setAuthor("That voice-channel could not be found.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("That voice-channel could not be found.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
@@ -45,7 +45,7 @@ public class CommandChannel extends Command {
             }
 
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("Something went wrong while trying to do that.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Something went wrong while trying to do that.");
             MessageHandler.sendMessage(e, embed.build());
         }
     }

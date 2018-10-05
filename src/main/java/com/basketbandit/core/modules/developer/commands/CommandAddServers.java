@@ -17,7 +17,7 @@ public class CommandAddServers extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             if(new DatabaseFunctions().addServers(e)) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Servers added successfully.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Servers added successfully.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } catch(Exception ex) {

@@ -25,10 +25,10 @@ public class SettingCommandLogging {
 
             if(new DatabaseFunctions().setServerSettings("commandLogging", intvalue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'commandLogging' set to TRUE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("'commandLogging' set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("'commandLogging' set to FALSE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("'commandLogging' set to FALSE.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
                 return true;

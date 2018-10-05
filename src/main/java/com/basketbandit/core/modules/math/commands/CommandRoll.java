@@ -22,7 +22,7 @@ public class CommandRoll extends Command {
         if(command[1].matches("[0-9]+")) {
             rollNum = Integer.parseInt(command[1]);
         } else if(command[1].contains("-")) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("Invalid Input.").setDescription("Input must be a non-negative numeric value.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input.").setDescription("Input must be a non-negative numeric value.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
@@ -33,7 +33,7 @@ public class CommandRoll extends Command {
             num = new Random().nextInt(rollNum) + 1;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setAuthor(e.getAuthor().getName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
+        EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
 
     }

@@ -28,10 +28,10 @@ public class CommandExclude extends Command {
             int res = new DatabaseFunctions().toggleExclusion(module, channelId, serverId);
 
             if(res == 0) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully excluded _" + module + "_ from _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully excluded _" + module + "_ from _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             } else if(res == 1) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully included _" + module + "_ into _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully included _" + module + "_ into _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             }
 
@@ -42,10 +42,10 @@ public class CommandExclude extends Command {
             int res = new DatabaseFunctions().toggleExclusion(module, channelId, serverId);
 
             if(res == 0) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully excluded _" + module + "_ from _" + e.getTextChannel().getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully excluded _" + module + "_ from _" + e.getTextChannel().getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             } else if(res == 1) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully included _" + module + "_ into _" + e.getTextChannel().getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully included _" + module + "_ into _" + e.getTextChannel().getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         }

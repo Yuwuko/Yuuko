@@ -20,10 +20,10 @@ public class SettingDeleteExecuted {
 
             if(new DatabaseFunctions().setServerSettings("deleteExecuted", intvalue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setAuthor("'deleteExecuted' set to TRUE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("'deleteExecuted' set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor("'deleteExecuted' set to FALSE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("'deleteExecuted' set to FALSE.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
                 return true;

@@ -26,7 +26,7 @@ public class CommandWorldOfWarcraft extends Command {
             String json = new JsonBuffer().getString("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API, "default", "default");
 
             if(json.contains("\"status\": \"nok\"")) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Character " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Character " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

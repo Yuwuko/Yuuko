@@ -21,7 +21,7 @@ public class CommandNuke extends Command {
         int value = Integer.parseInt(command[1]);
 
         if(value < 1 || value > 100) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("Invalid Input").setDescription("Input must be a positive value between 1 and 100.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive value between 1 and 100.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

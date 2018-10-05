@@ -32,7 +32,7 @@ public class CommandSettings extends Command {
 
                 // Check to make sure the command is a valid command.
                 if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + commandParameters[1].toUpperCase() + "_ is not a valid setting.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(commandParameters[1].toUpperCase() + "_ is not a valid setting.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
@@ -43,7 +43,7 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("deleteExecuted")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
                         MessageHandler.sendMessage(e, embed.build());
                         return;
                     }
@@ -58,7 +58,7 @@ public class CommandSettings extends Command {
 
                 if(commandParameters[0].equalsIgnoreCase("commandLogging")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                        EmbedBuilder embed = new EmbedBuilder().setAuthor("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
                         MessageHandler.sendMessage(e, embed.build());
                         return;
                     }

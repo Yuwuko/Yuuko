@@ -35,7 +35,7 @@ public class CommandSetStatus extends Command {
                     e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, "@BasketBandit help"));
             }
 
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("Status changed successfully.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");
             MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());

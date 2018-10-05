@@ -28,10 +28,10 @@ public class CommandBind extends Command {
             int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
 
             if(res == 0) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully bound _" + module + "_ to _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound _" + module + "_ to _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             } else if(res == 1) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully removed binding of _" + module + "_ from _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of _" + module + "_ from _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
@@ -42,10 +42,10 @@ public class CommandBind extends Command {
             int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
 
             if(res == 0) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully bound _" + module + "_ to _" + e.getTextChannel().getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound _" + module + "_ to _" + e.getTextChannel().getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             } else if(res == 1) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("Successfully removed binding of _" + module + "_ from _" + e.getTextChannel().getName() + "_.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of _" + module + "_ from _" + e.getTextChannel().getName() + "_.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         }

@@ -29,7 +29,7 @@ public class CommandMute extends Command {
         }
 
         if(target == null) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("That user could not found.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("That user could not found.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
@@ -37,10 +37,10 @@ public class CommandMute extends Command {
         e.getGuild().getController().addSingleRoleToMember(target, Utils.setupMutedRole(e.getGuild())).queue();
 
         if(commandParameters.length < 2) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor(target.getAsMention() + " has been muted.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(target.getAsMention() + " has been muted.");
             MessageHandler.sendMessage(e, embed.build());
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor(target.getAsMention() + " has been muted for reason: " + commandParameters[1]);
+            EmbedBuilder embed = new EmbedBuilder().setTitle(target.getAsMention() + " has been muted for reason: " + commandParameters[1]);
             MessageHandler.sendMessage(e, embed.build());
         }
     }

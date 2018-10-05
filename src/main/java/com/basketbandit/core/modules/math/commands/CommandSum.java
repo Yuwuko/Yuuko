@@ -49,7 +49,7 @@ public class CommandSum extends Command {
             MessageHandler.sendMessage(e, "The parameters given are not valid.");
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setAuthor(sumString);
+        EmbedBuilder embed = new EmbedBuilder().setTitle(sumString);
         MessageHandler.sendMessage(e, embed.build());
     }
 }

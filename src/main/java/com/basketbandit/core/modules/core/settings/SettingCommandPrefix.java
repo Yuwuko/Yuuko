@@ -14,7 +14,7 @@ public class SettingCommandPrefix {
     public boolean executeCommand(MessageReceivedEvent e, String value) {
 
         if(new DatabaseFunctions().setServerSettings("commandPrefix", value, e.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("'commandPrefix' set to " + value);
+            EmbedBuilder embed = new EmbedBuilder().setTitle("'commandPrefix' set to " + value);
             MessageHandler.sendMessage(e, embed.build());
             return true;
         }

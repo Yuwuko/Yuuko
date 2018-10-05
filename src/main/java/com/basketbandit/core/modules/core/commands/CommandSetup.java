@@ -20,10 +20,10 @@ public class CommandSetup extends Command {
         String serverId = e.getGuild().getId();
 
         if(!new DatabaseFunctions().addNewServer(serverId)) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("Setup").setDescription("Server setup was successful.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Setup").setDescription("Server setup was successful.");
             MessageHandler.sendMessage(e, embed.build());
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("Setup").setDescription("Server setup was unsuccessful.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Setup").setDescription("Server setup was unsuccessful.");
             MessageHandler.sendMessage(e, embed.build());
         }
     }

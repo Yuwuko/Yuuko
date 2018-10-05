@@ -29,7 +29,7 @@ public class CommandBan extends Command {
         }
 
         if(target == null) {
-            EmbedBuilder embed = new EmbedBuilder().setAuthor("That user could not found.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("That user could not found.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

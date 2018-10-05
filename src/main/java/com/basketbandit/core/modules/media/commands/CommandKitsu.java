@@ -28,7 +28,7 @@ public class CommandKitsu extends Command {
             if(commandParameters[0].toLowerCase().equals("show")) {
                 json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             } else if(commandParameters[0].toLowerCase().equals("character")) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
                 MessageHandler.sendMessage(e, embed.build());
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
             } else {
@@ -36,7 +36,7 @@ public class CommandKitsu extends Command {
             }
 
             if(json != null && json.equals("")) {
-                EmbedBuilder embed = new EmbedBuilder().setAuthor("That search parameter didn't return any results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("That search parameter didn't return any results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
