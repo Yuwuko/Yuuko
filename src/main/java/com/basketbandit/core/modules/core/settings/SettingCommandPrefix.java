@@ -5,8 +5,6 @@ import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class SettingCommandPrefix {
 
     public SettingCommandPrefix(MessageReceivedEvent e, String value) {
@@ -16,7 +14,7 @@ public class SettingCommandPrefix {
     public boolean executeCommand(MessageReceivedEvent e, String value) {
 
         if(new DatabaseFunctions().setServerSettings("commandPrefix", value, e.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setColor(Color.DARK_GRAY).setAuthor("'commandPrefix' set to " + value);
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("'commandPrefix' set to " + value);
             MessageHandler.sendMessage(e, embed.build());
             return true;
         }

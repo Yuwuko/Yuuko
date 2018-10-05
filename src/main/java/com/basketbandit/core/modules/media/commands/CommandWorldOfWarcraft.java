@@ -11,8 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandWorldOfWarcraft extends Command {
 
     public CommandWorldOfWarcraft() {
@@ -135,7 +133,7 @@ public class CommandWorldOfWarcraft extends Command {
             }
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setTitle("World of Warcraft - Character information for " + character.getName())
                     .setThumbnail("https://render-eu.worldofwarcraft.com/character/" + character.getThumbnail())
                     .addField("Realm", character.getRealm(), true)

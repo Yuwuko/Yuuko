@@ -8,7 +8,6 @@ import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.time.format.DateTimeFormatter;
 
 public class CommandServer extends Command {
@@ -35,7 +34,7 @@ public class CommandServer extends Command {
         }
 
         EmbedBuilder commandInfo = new EmbedBuilder()
-                .setColor(Color.DARK_GRAY)
+
                 .setTitle("Server information for: " + server.getName(), null)
                 .setThumbnail(server.getIconUrl())
                 .addField("Owner", server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator(), true)

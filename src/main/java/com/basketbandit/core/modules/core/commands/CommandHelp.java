@@ -11,7 +11,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -26,7 +25,7 @@ public class CommandHelp extends Command {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setTitle("**Have an issue, suggestion or just want me on your server?**")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://github.com/BasketBandit/BasketBandit-Java/blob/master/README.md)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
@@ -95,7 +94,7 @@ public class CommandHelp extends Command {
                     User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
                     EmbedBuilder commandInfo = new EmbedBuilder()
-                            .setColor(Color.DARK_GRAY)
+
                             .setThumbnail(bot.getAvatarUrl())
                             .setTitle("Command help for **" + cmd.getCommandName() + "**")
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)

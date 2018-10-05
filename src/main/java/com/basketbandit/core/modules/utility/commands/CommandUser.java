@@ -9,7 +9,6 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class CommandUser extends Command {
             }
 
             EmbedBuilder commandInfo = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setAuthor("User information about " + target.getEffectiveName(), null, target.getUser().getAvatarUrl())
                     .setTitle("User is currently " + target.getOnlineStatus())
                     .setThumbnail(target.getUser().getAvatarUrl())

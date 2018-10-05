@@ -15,8 +15,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandBackground extends Command {
 
     public CommandBackground() {
@@ -77,7 +75,7 @@ public class CommandBackground extends Command {
                 manager.scheduler.setBackground(track);
 
                 EmbedBuilder queuedTrack = new EmbedBuilder()
-                        .setColor(Color.DARK_GRAY)
+
                         .setAuthor(e.getMember().getEffectiveName() + " set the background music!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
                         .addField("Duration", Utils.getTimestamp(track.getDuration()), true)

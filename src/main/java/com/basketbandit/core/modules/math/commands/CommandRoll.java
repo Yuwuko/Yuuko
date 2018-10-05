@@ -5,7 +5,6 @@ import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.util.Random;
 
 public class CommandRoll extends Command {
@@ -34,7 +33,7 @@ public class CommandRoll extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setColor(Color.DARK_GRAY)
+
                 .setAuthor(e.getGuild().getMemberById(e.getAuthor().getIdLong()).getEffectiveName() + " rolled a " + num + ".", null, e.getAuthor().getAvatarUrl());
 
         if(num != 0) {

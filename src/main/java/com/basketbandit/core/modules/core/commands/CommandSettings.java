@@ -15,7 +15,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -71,7 +70,7 @@ public class CommandSettings extends Command {
                     resultSet.next();
 
                     EmbedBuilder commandModules = new EmbedBuilder()
-                        .setColor(Color.DARK_GRAY)
+
                         .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
                             .addField("commandPrefix", "[**" + resultSet.getString("commandPrefix") + "**] - The message prefix used to symbolise a command.", false)

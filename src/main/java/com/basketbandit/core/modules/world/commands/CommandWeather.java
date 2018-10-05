@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -36,7 +35,7 @@ public class CommandWeather extends Command {
             WeatherContainer weather = new ObjectMapper().readValue(json, new TypeReference<WeatherContainer>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setTitle("WeatherContainer information for: " + weather.getName() + ", " + weather.getSys().getCountry())
                     .setImage("https://openweathermap.org/img/w/" + weather.getWeather().get(0).getIcon() + ".png")
                     .setDescription("Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server.")

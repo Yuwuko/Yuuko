@@ -10,7 +10,6 @@ import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.util.List;
 
 public class CommandSearch extends Command {
@@ -37,7 +36,7 @@ public class CommandSearch extends Command {
             }
 
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setAuthor(e.getAuthor().getName() + ", results for: " + command[1], null, e.getAuthor().getAvatarUrl())
                     .setDescription("Type in the number of the track you would like to play or type cancel to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.VERSION, null);

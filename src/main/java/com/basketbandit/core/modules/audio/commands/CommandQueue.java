@@ -10,8 +10,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandQueue extends Command {
 
     public CommandQueue() {
@@ -38,7 +36,7 @@ public class CommandQueue extends Command {
 
                 if(i > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
-                            .setColor(Color.DARK_GRAY)
+
                             .setAuthor("Hey " + e.getMember().getEffectiveName() + ",", null, e.getAuthor().getAvatarUrl())
                             .setTitle("Here are the next **" + i + "** tracks in the queue:")
                             .setDescription(queue.toString())

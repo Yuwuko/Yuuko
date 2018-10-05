@@ -10,8 +10,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandCurrent extends Command {
 
     public CommandCurrent() {
@@ -28,7 +26,7 @@ public class CommandCurrent extends Command {
             String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
             EmbedBuilder queuedTrack = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
                     .setThumbnail(imageUrl)

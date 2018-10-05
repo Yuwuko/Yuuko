@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class CommandLineStatus extends Command {
 
             if(command.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setColor(Color.DARK_GRAY)
+
                         .setTitle("Tube Line Status - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField(lineManager.get(0).getName(), lineManager.get(0).getLineStatusString(), true)
                         .addField(lineManager.get(1).getName(), lineManager.get(1).getLineStatusString(), true)
@@ -70,7 +69,7 @@ public class CommandLineStatus extends Command {
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setColor(Color.DARK_GRAY)
+
                         .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());

@@ -9,7 +9,6 @@ import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -43,7 +42,7 @@ public class CommandModules extends Command {
             }
 
             EmbedBuilder commandModules = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setAuthor("Hey " + e.getAuthor().getName() + ",",null,e.getAuthor().getAvatarUrl())
                     .setTitle("Below are the list of bot modules!")
                     .setDescription("Each module can be toggled on or off by using the " + Configuration.GLOBAL_PREFIX + "module <name> command.")

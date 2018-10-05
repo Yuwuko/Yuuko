@@ -8,8 +8,6 @@ import com.basketbandit.core.utils.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandNeko extends Command {
 
     public CommandNeko() {
@@ -31,7 +29,7 @@ public class CommandNeko extends Command {
             }
 
             EmbedBuilder lewdNeko = new EmbedBuilder()
-                    .setColor(Color.DARK_GRAY)
+
                     .setTitle("Neko: " + url)
                     .setImage(url)
                     .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());

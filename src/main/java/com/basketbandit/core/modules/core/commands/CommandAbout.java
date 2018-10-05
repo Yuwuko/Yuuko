@@ -9,8 +9,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandAbout extends Command {
 
     public CommandAbout() {
@@ -22,7 +20,7 @@ public class CommandAbout extends Command {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
         EmbedBuilder about = new EmbedBuilder()
-                .setColor(Color.DARK_GRAY)
+
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
                 .setDescription(bot.getName() + " is a multi-purpose bot for Discord programmed in " +
                         "[Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) " +
