@@ -36,7 +36,6 @@ public class CommandAbout extends Command {
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", SystemClock.getRuntime(), true)
                 .addField("Heartbeat", SystemInformation.getPing(), true);
-
         MessageHandler.sendMessage(e, about.build());
     }
 

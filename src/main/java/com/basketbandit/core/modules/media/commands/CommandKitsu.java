@@ -28,14 +28,16 @@ public class CommandKitsu extends Command {
             if(commandParameters[0].toLowerCase().equals("show")) {
                 json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             } else if(commandParameters[0].toLowerCase().equals("character")) {
-                MessageHandler.sendMessage(e, "Sorry, this command isn't ready yet! (Waiting for the Kitsu.io API to be constructed to support this!)");
+                EmbedBuilder embed = new EmbedBuilder().setAuthor("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
+                MessageHandler.sendMessage(e, embed.build());
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
             } else {
                 json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             }
 
             if(json != null && json.equals("")) {
-                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", the anime you were looking for wasn't found.");
+                EmbedBuilder embed = new EmbedBuilder().setAuthor("That search parameter didn't return any results.");
+                MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
@@ -43,7 +45,6 @@ public class CommandKitsu extends Command {
             Attributes anime = kitsu.getData().get(0).getAttributes();
 
             EmbedBuilder embed = new EmbedBuilder()
-
                     .setTitle(anime.getCanonicalTitle() + " | " + anime.getTitles().getJaJp(), "https://www.youtube.com/watch?v=" + anime.getYoutubeVideoId())
                     .setImage(anime.getPosterImage().getMedium())
                     .setDescription(anime.getSynopsis())

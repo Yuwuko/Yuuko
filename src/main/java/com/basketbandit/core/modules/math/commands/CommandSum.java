@@ -5,8 +5,6 @@ import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.awt.*;
-
 public class CommandSum extends Command {
 
     public CommandSum() {
@@ -51,7 +49,7 @@ public class CommandSum extends Command {
             MessageHandler.sendMessage(e, "The parameters given are not valid.");
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setAuthor(sumString);
+        EmbedBuilder embed = new EmbedBuilder().setAuthor(sumString);
         MessageHandler.sendMessage(e, embed.build());
     }
 }

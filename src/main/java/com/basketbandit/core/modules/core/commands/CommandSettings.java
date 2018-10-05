@@ -79,7 +79,6 @@ public class CommandSettings extends Command {
                             .addField("deleteExecuted", "[**" + resultSet.getBoolean("deleteExecuted") + "**] - Deletes the users command string when it is executed.", false)
                             .addField("commandLogging", "[**" + resultSet.getBoolean("commandLogging") + "**] - Sends executed commands to a predefined logging channel.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
                     MessageHandler.sendMessage(e, commandModules.build());
                 } catch(Exception ex) {
                     Utils.sendException(ex, e.getMessage().getContentRaw());

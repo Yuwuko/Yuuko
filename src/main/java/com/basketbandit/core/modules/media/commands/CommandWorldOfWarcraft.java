@@ -26,7 +26,8 @@ public class CommandWorldOfWarcraft extends Command {
             String json = new JsonBuffer().getString("https://eu.api.battle.net/wow/character/" + commandParameters[1] + "/" + commandParameters[0] + "?fields=titles%2C+guild&locale=en_GB&apikey=" + Configuration.WOW_API, "default", "default");
 
             if(json.contains("\"status\": \"nok\"")) {
-                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
+                EmbedBuilder embed = new EmbedBuilder().setAuthor("Character " + commandParameters[1] + " was not found on " + commandParameters[0] + ".");
+                MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
@@ -133,7 +134,6 @@ public class CommandWorldOfWarcraft extends Command {
             }
 
             EmbedBuilder embed = new EmbedBuilder()
-
                     .setTitle("World of Warcraft - Character information for " + character.getName())
                     .setThumbnail("https://render-eu.worldofwarcraft.com/character/" + character.getThumbnail())
                     .addField("Realm", character.getRealm(), true)
@@ -151,7 +151,6 @@ public class CommandWorldOfWarcraft extends Command {
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-            MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
 
     }
