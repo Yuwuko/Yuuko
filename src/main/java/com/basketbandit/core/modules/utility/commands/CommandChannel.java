@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.utility.commands;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -27,13 +28,15 @@ public class CommandChannel extends Command {
         } else if(commandParameters[0].equals("del")) {
             if(type.equals("text")) {
                 if(e.getGuild().getTextChannelsByName(commandParameters[2], true).size() == 0) {
-                    MessageHandler.sendMessage(e, "Sorry, that text-channel could not be found.");
+                    EmbedBuilder embed = new EmbedBuilder().setAuthor("That text-channel could not be found.");
+                    MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
                 e.getGuild().getTextChannelsByName(commandParameters[2], true).get(0).delete().queue();
             } else if(type.equals("voice") && commandParameters[2].length() == 18 && Long.parseLong(commandParameters[2]) > 0) {
                 if(e.getGuild().getVoiceChannelsByName(commandParameters[2], true).size() == 0) {
-                    MessageHandler.sendMessage(e, "Sorry, that voice-channel could not be found.");
+                    EmbedBuilder embed = new EmbedBuilder().setAuthor("That voice-channel could not be found.");
+                    MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
                 e.getGuild().getVoiceChannelsByName(commandParameters[1], true).get(0).delete().queue();
@@ -42,7 +45,8 @@ public class CommandChannel extends Command {
             }
 
         } else {
-            MessageHandler.sendMessage(e, "Sorry, something went wrong when trying to perform that action.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("Something went wrong while trying to do that.");
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 }

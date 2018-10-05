@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.moderation.commands;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -28,16 +29,19 @@ public class CommandMute extends Command {
         }
 
         if(target == null) {
-            MessageHandler.sendMessage(e, "Sorry, that user could not be found.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("That user could not found.");
+            MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
         e.getGuild().getController().addSingleRoleToMember(target, Utils.setupMutedRole(e.getGuild())).queue();
 
         if(commandParameters.length < 2) {
-            MessageHandler.sendMessage(e, target.getAsMention() + " has been muted.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor(target.getAsMention() + " has been muted.");
+            MessageHandler.sendMessage(e, embed.build());
         } else {
-            MessageHandler.sendMessage(e, target.getAsMention() + " has been muted for reason: " + commandParameters[1]);
+            EmbedBuilder embed = new EmbedBuilder().setAuthor(target.getAsMention() + " has been muted for reason: " + commandParameters[1]);
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 

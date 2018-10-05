@@ -23,21 +23,17 @@ public class CommandEfukt extends Command {
 
             if(doc.getElementsByClass("image_content").isEmpty()) {
                 efuktPost = new EmbedBuilder()
-
                         .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByTag("source").attr("src"))
                         .setImage(doc.getElementsByTag("video").attr("poster"))
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
                 MessageHandler.sendMessage(e.getTextChannel(), efuktPost.build());
             } else {
                 efuktPost = new EmbedBuilder()
-
                         .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))
-                        .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
+                        .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e.getTextChannel(), efuktPost.build());
             }
 

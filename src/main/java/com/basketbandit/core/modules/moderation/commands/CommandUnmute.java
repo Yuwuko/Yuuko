@@ -3,6 +3,7 @@ package com.basketbandit.core.modules.moderation.commands;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -27,12 +28,14 @@ public class CommandUnmute extends Command {
         }
 
         if(target == null) {
-            MessageHandler.sendMessage(e, "Sorry, that user could not be found.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("That user could not found.");
+            MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
+        EmbedBuilder embed = new EmbedBuilder().setAuthor(target.getAsMention() + " has been unmuted.");
+        MessageHandler.sendMessage(e, embed.build());
         e.getGuild().getController().removeSingleRoleFromMember(target, Utils.setupMutedRole(e.getGuild())).queue();
-        MessageHandler.sendMessage(e,target.getAsMention() + " has been unmuted.");
     }
 
 }

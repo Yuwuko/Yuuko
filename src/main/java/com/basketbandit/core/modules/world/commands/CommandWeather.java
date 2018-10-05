@@ -35,7 +35,6 @@ public class CommandWeather extends Command {
             WeatherContainer weather = new ObjectMapper().readValue(json, new TypeReference<WeatherContainer>(){});
 
             EmbedBuilder embed = new EmbedBuilder()
-
                     .setTitle("WeatherContainer information for: " + weather.getName() + ", " + weather.getSys().getCountry())
                     .setImage("https://openweathermap.org/img/w/" + weather.getWeather().get(0).getIcon() + ".png")
                     .setDescription("Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server.")
@@ -53,10 +52,8 @@ public class CommandWeather extends Command {
                     .addField("Wind Angle", weather.getWind().getDeg() + "°", true)
                     .setFooter(Configuration.VERSION + " · Data provided by openweathermap.org" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
-
         } catch(Exception ex) {
             Utils.sendException(ex, command[0] + command[1]);
-            MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
 

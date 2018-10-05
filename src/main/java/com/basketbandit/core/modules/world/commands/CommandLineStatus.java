@@ -69,7 +69,6 @@ public class CommandLineStatus extends Command {
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-
                         .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField("", reasons.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
@@ -78,7 +77,6 @@ public class CommandLineStatus extends Command {
 
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-            MessageHandler.sendMessage(e, "There was an issue processing your request.");
         }
 
     }

@@ -19,22 +19,22 @@ public class CommandServer extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         Guild server = e.getGuild();
-        String emotes = "";
+        StringBuilder emoteString = new StringBuilder();
 
         if(!server.getEmoteCache().isEmpty()) {
             int characterCount = 0;
+
             for(Emote emote : server.getEmoteCache()) {
                 if(characterCount + emote.getAsMention().length() + 1 < 1024) {
-                    emotes += emote.getAsMention() + " ";
+                    emoteString.append(emote.getAsMention()).append(" ");
                     characterCount += emote.getAsMention().length() + 1;
                 }
             }
         } else {
-            emotes = "None Available";
+            emoteString.append("None Available");
         }
 
         EmbedBuilder commandInfo = new EmbedBuilder()
-
                 .setTitle("Server information for: " + server.getName(), null)
                 .setThumbnail(server.getIconUrl())
                 .addField("Owner", server.getOwner().getUser().getName() + "#" + server.getOwner().getUser().getDiscriminator(), true)
@@ -45,9 +45,8 @@ public class CommandServer extends Command {
                 .addField("Text Channels", server.getTextChannelCache().size()+"", true)
                 .addField("Voice Channels", server.getVoiceChannels().size()+"", true)
                 .addField("Roles", server.getRoles().size()+"", true)
-                .addField("Emotes", emotes, false)
+                .addField("Emotes", emoteString.toString(), false)
                 .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
         MessageHandler.sendMessage(e, commandInfo.build());
     }
 

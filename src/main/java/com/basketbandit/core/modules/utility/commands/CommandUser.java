@@ -31,7 +31,8 @@ public class CommandUser extends Command {
             }
 
             if(target == null) {
-                MessageHandler.sendMessage(e, "Sorry, that user could not be found.");
+                EmbedBuilder embed = new EmbedBuilder().setAuthor("That user could not found.");
+                MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
@@ -49,7 +50,6 @@ public class CommandUser extends Command {
             }
 
             EmbedBuilder commandInfo = new EmbedBuilder()
-
                     .setAuthor("User information about " + target.getEffectiveName(), null, target.getUser().getAvatarUrl())
                     .setTitle("User is currently " + target.getOnlineStatus())
                     .setThumbnail(target.getUser().getAvatarUrl())
@@ -60,8 +60,8 @@ public class CommandUser extends Command {
                     .addField("Bot?", target.getUser().isBot() + "", true)
                     .addField("Roles", roleString.toString(), true)
                     .setFooter(Configuration.VERSION + " · Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
             MessageHandler.sendMessage(e, commandInfo.build());
+
         } catch(Exception ex) {
             Utils.sendException(ex, "CommandUser - " + e.getMessage().getContentRaw());
         }

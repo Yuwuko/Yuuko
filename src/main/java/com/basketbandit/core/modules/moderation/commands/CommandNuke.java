@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -20,7 +21,8 @@ public class CommandNuke extends Command {
         int value = Integer.parseInt(command[1]);
 
         if(value < 1 || value > 100) {
-            MessageHandler.sendMessage(e, "Sorry, you have entered an out of bounds argument for the nuke command.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("Invalid Input").setDescription("Input must be a positive value between 1 and 100.");
+            MessageHandler.sendMessage(e, embed.build());
             return;
         }
 

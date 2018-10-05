@@ -2,6 +2,7 @@ package com.basketbandit.core.modules.moderation.commands;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -27,7 +28,8 @@ public class CommandKick extends Command {
         }
 
         if(target == null) {
-            MessageHandler.sendMessage(e, "Sorry, that user could not be found.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("That user could not found.");
+            MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
