@@ -1,5 +1,6 @@
 package com.basketbandit.core.utils;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Sanitise {
@@ -16,14 +17,16 @@ public class Sanitise {
         }
 
         if(command.length < 2) {
-            MessageHandler.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided 0.");
+            EmbedBuilder embed = new EmbedBuilder().setAuthor("Missing Parameters").setDescription("**Command expected " + expectedParameters + " or more parameters and you provided 0.**");
+            MessageHandler.sendMessage(e, embed.build());
             return false;
         }
 
         if(expectedParameters > 1) {
             String[] commandParameters = command[1].split("\\s+", expectedParameters);
             if(commandParameters.length < expectedParameters) {
-                MessageHandler.sendMessage(e, "Command expected " + expectedParameters + " or more parameters and you provided " + commandParameters.length + ".");
+                EmbedBuilder embed = new EmbedBuilder().setAuthor("Missing Parameters").setDescription("**Command expected " + expectedParameters + " or more parameters and you provided " + commandParameters.length + ".**");
+                MessageHandler.sendMessage(e, embed.build());
                 return false;
             }
         }

@@ -10,6 +10,7 @@ import com.basketbandit.core.modules.audio.commands.CommandSearch;
 import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
@@ -115,7 +116,8 @@ public class GenericMessageController {
                     if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) {
                         // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
                         if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                            MessageHandler.sendMessage(e, "Sorry, cannot perform action due to a lack of permission. Missing permission: 'MESSAGE_MANAGE'");
+                            EmbedBuilder embed = new EmbedBuilder().setAuthor("Missing Permission").setDescription("**MESSAGE_MANAGE**");
+                            MessageHandler.sendMessage(e, embed.build());
                             return;
                         } else {
                             e.getMessage().delete().queue();
@@ -135,7 +137,8 @@ public class GenericMessageController {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", that command is excluded from this channel.");
+                        EmbedBuilder embed = new EmbedBuilder().setAuthor("The _" + input[0] + "_ command is excluded from this channel.");
+                        MessageHandler.sendMessage(e, embed.build());
                         break;
                     }
                 } else {
@@ -154,7 +157,8 @@ public class GenericMessageController {
 
             if(bound && !executed) {
                 boundChannels = Utils.removeLastOccurrence(boundChannels, ", ");
-                MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", the " + input[0] + " command is bound to " + boundChannels.toString());
+                EmbedBuilder embed = new EmbedBuilder().setAuthor("The _" + input[0] + "_ command is bound to " + boundChannels.toString() + ".");
+                MessageHandler.sendMessage(e, embed.build());
             }
 
             if(constructor != null && !executed && !bound) {
