@@ -31,7 +31,7 @@ public class GenericMessageReactionController {
             }
         }
 
-        Utils.incrementEvent(1);
+        Utils.incrementEventsProcessed(1);
     }
 
 }

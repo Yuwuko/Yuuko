@@ -1,8 +1,8 @@
 package com.basketbandit.core.modules.core.commands;
 
+import com.basketbandit.core.Cache;
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.SystemClock;
-import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -30,12 +30,12 @@ public class CommandAbout extends Command {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", SystemInformation.getGuildCount(), true)
-                .addField("Users", SystemInformation.getUserCount(), true)
-                .addField("Commands", SystemInformation.getCommandCount(), true)
+                .addField("Servers", Cache.GUILD_COUNT + "", true)
+                .addField("Users", Cache.USER_COUNT + "", true)
+                .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", SystemClock.getRuntime(), true)
-                .addField("Heartbeat", SystemInformation.getPing(), true);
+                .addField("Heartbeat", Cache.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }
 

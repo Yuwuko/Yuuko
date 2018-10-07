@@ -12,10 +12,9 @@ import com.basketbandit.core.modules.C;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.M;
 import com.basketbandit.core.modules.Module;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Guild;
@@ -30,18 +29,13 @@ import org.discordbots.api.client.DiscordBotListAPI;
 
 import javax.security.auth.login.LoginException;
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 class BasketBandit extends ListenerAdapter {
-
-    public static JDA bot;
 
     /**
      * Initialises the bot and JDA.
@@ -49,57 +43,32 @@ class BasketBandit extends ListenerAdapter {
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
-    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException, IOException {
-        BufferedReader config = new BufferedReader(new FileReader("configuration.txt"));
+    public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
+        Configuration.load();
 
-        Configuration.BOT_ID = config.readLine();
-        Configuration.BOT_TOKEN = config.readLine();
-        Configuration.GOOGLE_API = config.readLine();
-        Configuration.TFL_ID = config.readLine();
-        Configuration.TFL_API = config.readLine();
-        Configuration.WOW_API = config.readLine();
-        Configuration.DATABASE_IP = config.readLine();
-        Configuration.DATABASE_NAME = config.readLine();
-        Configuration.DATABASE_USERNAME = config.readLine();
-        Configuration.DATABASE_PASSWORD = config.readLine();
-        Configuration.OSU_API = config.readLine();
-        Configuration.OPEN_WEATHER_MAP_API = config.readLine();
-
-        bot = new JDABuilder(AccountType.BOT)
+        Configuration.BOT = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
                 .setToken(Configuration.BOT_TOKEN)
                 .addEventListener(new BasketBandit())
-                .setEventManager(new ThreadedEventManager())
+                .setEventManager(new BasketBandit.ThreadedEventManager())
                 .build();
-        bot.awaitReady();
+        Configuration.BOT.awaitReady();
 
-        bot.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
+        Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
+        Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
-        Configuration.GLOBAL_PREFIX = bot.getSelfUser().getAsMention() + " ";
-        Utils.botUser = bot.getSelfUser();
-
-        String dblToken = config.readLine();
-        if(!dblToken.equals("null")) {
-            Utils.botList = new DiscordBotListAPI.Builder().botId(Utils.botUser.getId()).token(dblToken).build();
+        if(!Configuration.DISCORD_BOTS_API.equals("null")) {
+            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
             Utils.updateDiscordBotList();
         }
 
         int users = 0;
-        for(Guild guild : bot.getGuilds()) {
+        for(Guild guild : Configuration.BOT.getGuilds()) {
             users += guild.getMemberCache().size();
         }
 
-        SystemInformation.setBot(bot);
-        SystemInformation.setUserCount(users);
-        SystemInformation.setGuildCount(bot.getGuilds().size());
-
-        Utils.latestInfo = "";
-        Utils.lastTen = new LinkedList<>();
-        for(int i = 0; i < 10; i++) {
-            Utils.lastTen.add("");
-        }
-
-        config.close();
+        Cache.USER_COUNT = users;
+        Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
     }
 
     /**
@@ -107,7 +76,7 @@ class BasketBandit extends ListenerAdapter {
      * Retrieves a list of modules via reflection.
      */
     private BasketBandit() {
-        // Prints a cool program banner :^)
+        // Prints a cool banner :^)
         try {
             String[] args = new String[] {"/bin/bash", "-c", "figlet -c BasketBandit " + Configuration.VERSION};
             Process p = new ProcessBuilder(args).start();
@@ -127,7 +96,7 @@ class BasketBandit extends ListenerAdapter {
             ex.printStackTrace();
         }
 
-        new AudioManagerHandler();
+        new AudioManagerManager();
 
         ArrayList<Module> moduleList = new ArrayList<>();
         try {
@@ -157,13 +126,11 @@ class BasketBandit extends ListenerAdapter {
         settingsList.add("deleteexecuted");
         settingsList.add("commandlogging");
 
-        Utils.standardStrings = new String[1];
-        Utils.standardStrings[0] = Configuration.VERSION;
-
-        // Sets some of the util fields ahead of when they're first used.
-        SystemInformation.setModuleList(moduleList);
-        SystemInformation.setCommandList(commandList);
-        SystemInformation.setSettingsList(settingsList);
+        Cache.STANDARD_STRINGS = new String[1];
+        Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
+        Cache.MODULES = moduleList;
+        Cache.COMMANDS = commandList;
+        Cache.SETTINGS = settingsList;
 
         new SystemClock();
     }

@@ -2,7 +2,7 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.basketbandit.core.utils.MessageHandler;
@@ -17,6 +17,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
+import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.CONNECTED;
+
 public class CommandPlay extends Command {
 
     public CommandPlay() {
@@ -25,22 +27,21 @@ public class CommandPlay extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
+
+        if(e.getGuild().getAudioManager().getConnectionStatus() != CONNECTED) {
+            e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
+        }
 
         if(command.length == 1) {
-            e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
-            e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
-
             if(manager.player.isPaused()) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("**The player has been resumed.**");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
                 MessageHandler.sendMessage(e, embed.build());
                 manager.player.setPaused(false);
                 new CommandCurrent();
             }
 
         } else {
-            e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
-            e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
             if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
@@ -75,7 +76,7 @@ public class CommandPlay extends Command {
             trackUrl = url;
         }
 
-        AudioManagerHandler.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
+        AudioManagerManager.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
 
             @Override
             public void trackLoaded(AudioTrack track) {
@@ -103,7 +104,7 @@ public class CommandPlay extends Command {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     List<AudioTrack> tracks = playlist.getTracks();
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding **" + playlist.getTracks().size() + "** tracks to queue from playlist: **" + playlist.getName() + "**");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding  + playlist.getTracks().size() +  tracks to queue from playlist:  + playlist.getName() + ");
                     MessageHandler.sendMessage(channel, embed.build());
                     tracks.forEach(manager.scheduler::queue);
                     new CommandCurrent().executeCommand(e, null);

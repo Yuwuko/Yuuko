@@ -5,12 +5,20 @@ import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
 import com.basketbandit.core.modules.audio.commands.*;
 import com.basketbandit.core.utils.MessageHandler;
+import com.basketbandit.core.utils.Utils;
+import com.google.api.services.youtube.model.SearchResult;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.HashMap;
+import java.util.List;
+
+import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.CONNECTED;
 import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 
 public class ModuleAudio extends Module {
+
+    public static HashMap<Long, List<SearchResult>> searchUsers = new HashMap<>();
 
     public ModuleAudio(MessageReceivedEvent e, String[] command) {
         super("ModuleAudio", "moduleAudio", new Command[]{
@@ -40,6 +48,11 @@ public class ModuleAudio extends Module {
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
+                // Temp debugging check, remove once solution found.
+                if(e.getGuild().getAudioManager().getConnectionStatus() != CONNECTED) {
+                    Utils.sendException(null, e.getGuild().getAudioManager().getConnectionStatus() + " - " + e.getMessage().getContentRaw());
+                }
+
                 new CommandExecutor(e, command, this);
             }
         }

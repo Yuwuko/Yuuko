@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
@@ -20,7 +20,7 @@ public class CommandClear extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             if(command.length > 1) {
                 int clearPos;
@@ -38,7 +38,7 @@ public class CommandClear extends Command {
                 int i = 1;
                 for(int x = 0; x < manager.scheduler.queue.size(); x++) {
                     if(i == clearPos) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("**_" + clone.remove().getInfo().title + "_ has been cleared from the queue.**");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription(clone.remove().getInfo().title + "_ has been cleared from the queue.");
                         MessageHandler.sendMessage(e, embed.build());
                         i++;
                     } else {
@@ -50,7 +50,7 @@ public class CommandClear extends Command {
                 manager.scheduler.queue.addAll(temp);
 
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("**The queue has been cleared.**");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("The queue has been cleared.");
                 MessageHandler.sendMessage(e, embed.build());
                 manager.scheduler.queue.clear();
             }

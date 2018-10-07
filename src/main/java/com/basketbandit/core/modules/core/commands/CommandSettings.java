@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.core.commands;
 
+import com.basketbandit.core.Cache;
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
@@ -31,7 +31,7 @@ public class CommandSettings extends Command {
                 String[] commandParameters = command[1].split("\\s+", 2);
 
                 // Check to make sure the command is a valid command.
-                if(!SystemInformation.getSettingsList().contains(commandParameters[0].toLowerCase())) {
+                if(!Cache.SETTINGS.contains(commandParameters[0].toLowerCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle(commandParameters[1].toUpperCase() + "_ is not a valid setting.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
@@ -73,11 +73,11 @@ public class CommandSettings extends Command {
                     resultSet.next();
 
                     EmbedBuilder commandModules = new EmbedBuilder()
-                        .setTitle("Settings for **" + e.getGuild().getName() + "**")
+                        .setTitle("Settings for  + e.getGuild().getName() + ")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
-                            .addField("commandPrefix", "[**" + resultSet.getString("commandPrefix") + "**] - The message prefix used to symbolise a command.", false)
-                            .addField("deleteExecuted", "[**" + resultSet.getBoolean("deleteExecuted") + "**] - Deletes the users command string when it is executed.", false)
-                            .addField("commandLogging", "[**" + resultSet.getBoolean("commandLogging") + "**] - Sends executed commands to a predefined logging channel.", false)
+                            .addField("commandPrefix", "[" + resultSet.getString("commandPrefix") + "] - The message prefix used to symbolise a command.", false)
+                            .addField("deleteExecuted", "[" + resultSet.getBoolean("deleteExecuted") + "] - Deletes the users command string when it is executed.", false)
+                            .addField("commandLogging", "[" + resultSet.getBoolean("commandLogging") + "] - Sends executed commands to a predefined logging channel.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, commandModules.build());
                 } catch(Exception ex) {

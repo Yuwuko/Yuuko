@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
@@ -17,10 +17,10 @@ public class CommandShuffle extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             if(manager.scheduler.queue.size() > 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Shuffling").setDescription("**The queue has been shuffled.**");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Shuffling").setDescription("The queue has been shuffled.");
                 MessageHandler.sendMessage(e, embed.build());
                 manager.scheduler.shuffle();
             } else {

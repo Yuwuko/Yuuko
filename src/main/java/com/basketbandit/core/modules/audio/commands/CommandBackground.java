@@ -2,7 +2,7 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.basketbandit.core.utils.MessageHandler;
@@ -23,10 +23,10 @@ public class CommandBackground extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length > 1) {
-            e.getGuild().getAudioManager().setSendingHandler(manager.sendHandler);
+            e.getGuild().getAudioManager().setSendingHandler(manager.getSendHandler());
             e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
@@ -66,7 +66,7 @@ public class CommandBackground extends Command {
             trackUrl = url;
         }
 
-        AudioManagerHandler.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
+        AudioManagerManager.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
 
             @Override
             public void trackLoaded(AudioTrack track) {

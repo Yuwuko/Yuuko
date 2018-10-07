@@ -22,7 +22,7 @@ public class SystemClock implements Runnable {
             String ds, hs, ms, ss;
             int fm = 0, oh = 0, fs =0;
 
-            SystemInformation.updatePing();
+            Cache.updatePing();
 
             while(running) {
                 Thread.sleep(1000);
@@ -35,7 +35,7 @@ public class SystemClock implements Runnable {
 
                 fm++;
                 if(fm == 300) {
-                    SystemInformation.updatePing();
+                    Cache.updatePing();
                     fm = 0;
                 }
 

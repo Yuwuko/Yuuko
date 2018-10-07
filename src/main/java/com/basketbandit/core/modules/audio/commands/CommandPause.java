@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
@@ -16,10 +16,10 @@ public class CommandPause extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         try {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("**The player has been paused.**");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("The player has been paused.");
             MessageHandler.sendMessage(e, embed.build());
             manager.player.setPaused(true);
         } catch(Exception ex) {

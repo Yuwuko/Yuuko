@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
@@ -17,10 +17,10 @@ public class CommandSkip extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             if(manager.player.getPlayingTrack() != null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription("**" + manager.player.getPlayingTrack().getInfo().title + "**");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(" + manager.player.getPlayingTrack().getInfo().title + ");
                 MessageHandler.sendMessage(e, embed.build());
 
                 if(manager.scheduler.hasNextTrack()) {

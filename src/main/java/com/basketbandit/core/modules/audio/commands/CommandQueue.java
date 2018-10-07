@@ -2,7 +2,7 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
@@ -18,7 +18,7 @@ public class CommandQueue extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         try {
             synchronized(manager.scheduler.queue) {
@@ -36,7 +36,7 @@ public class CommandQueue extends Command {
 
                 if(i > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
-                            .setTitle("Here are the next **" + i + "** tracks in the queue:")
+                            .setTitle("Here are the next  + i +  tracks in the queue:")
                             .setDescription(queue.toString())
                             .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());

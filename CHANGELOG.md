@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.2.2
++ [~] Added missing information from some of the commands.
++ [~] Fixed problem where embed author doesn't allow markdown. (changed to title)
+
 ## 3.2.1
 + [~] Modified all output and converted them into embeds since they look much 'richer'.
 + [~] Refactored text related methods from the Utils class and moved them to their own MessageHandler class.

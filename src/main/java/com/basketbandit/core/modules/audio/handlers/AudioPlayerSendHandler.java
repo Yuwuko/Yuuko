@@ -5,13 +5,9 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 
 public class AudioPlayerSendHandler implements AudioSendHandler {
-
     private final AudioPlayer audioPlayer;
     private AudioFrame lastFrame;
 
-    /**
-     * @param audioPlayer Audio player to wrap.
-     */
     AudioPlayerSendHandler(AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
     }

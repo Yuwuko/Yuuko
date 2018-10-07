@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 
 import java.io.File;
 
-public class MessageHandler {
+public final class MessageHandler {
 
     /**
      * Sends a message, saving those precious bytes.

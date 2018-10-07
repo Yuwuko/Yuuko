@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -19,7 +19,7 @@ public class CommandStop extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         if(e.getGuild().getAudioManager().getConnectionStatus() != NOT_CONNECTED) {
-            GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             manager.scheduler.queue.clear();
             manager.scheduler.setBackground(null);
@@ -28,7 +28,7 @@ public class CommandStop extends Command {
             e.getGuild().getAudioManager().setSendingHandler(null);
             e.getGuild().getAudioManager().closeAudioConnection();
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("**Audio connection closed.**");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
             MessageHandler.sendMessage(e, embed.build());
         }
     }
@@ -39,7 +39,7 @@ public class CommandStop extends Command {
      */
     public void executeCommand(GenericGuildEvent e) {
         if(e.getGuild().getAudioManager().getConnectionStatus() != NOT_CONNECTED) {
-            GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             manager.scheduler.queue.clear();
             manager.scheduler.setBackground(null);

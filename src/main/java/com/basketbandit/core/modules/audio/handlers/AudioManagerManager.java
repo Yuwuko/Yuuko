@@ -1,5 +1,6 @@
 package com.basketbandit.core.modules.audio.handlers;
 
+import com.basketbandit.core.Configuration;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManager;
@@ -11,7 +12,7 @@ import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 
 import java.util.HashMap;
 
-public class AudioManagerHandler {
+public class AudioManagerManager {
 
     private static HashMap<String, GuildAudioManager> managers;
     private static AudioPlayerManager playerManager;
@@ -20,7 +21,7 @@ public class AudioManagerHandler {
      * Handles full application runtime handlers
      * managers instead of leaving it to the main class.
      */
-    public AudioManagerHandler() {
+    public AudioManagerManager() {
         managers = new HashMap<>();
         playerManager = new DefaultAudioPlayerManager();
 
@@ -31,8 +32,7 @@ public class AudioManagerHandler {
         playerManager.registerSourceManager(new TwitchStreamAudioSourceManager());
         playerManager.registerSourceManager(new HttpAudioSourceManager());
         playerManager.setFrameBufferDuration(400);
-        playerManager.setTrackStuckThreshold(10000);
-
+        playerManager.setTrackStuckThreshold(5000);
     }
 
     /**
@@ -40,16 +40,17 @@ public class AudioManagerHandler {
      * @return GuildAudioManager.
      */
     public static GuildAudioManager getGuildAudioManager(String id) {
-        GuildAudioManager manager;
+        GuildAudioManager manager = managers.get(id);
 
-        if(managers.get(id) == null) {
-            synchronized(AudioManagerHandler.getGuildAudioManagers()) {
+        if(manager == null) {
+            synchronized(AudioManagerManager.getGuildAudioManagers()) {
                 manager = new GuildAudioManager(playerManager);
                 managers.put(id, manager);
             }
-        } else {
-            manager = managers.get(id);
         }
+
+        Configuration.BOT.getGuildById(id).getAudioManager().setSendingHandler(manager.getSendHandler());
+
         return manager;
     }
 

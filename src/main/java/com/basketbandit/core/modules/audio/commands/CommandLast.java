@@ -2,7 +2,7 @@ package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.Configuration;
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
@@ -19,7 +19,7 @@ public class CommandLast extends Command {
 	@Override
 	public void executeCommand(MessageReceivedEvent e, String[] command) {
 		try {
-			GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
+			GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 			AudioTrack track = manager.scheduler.getLastTrack();
 
 			if(track != null) {

@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.core.commands;
 
+import com.basketbandit.core.Cache;
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.SystemInformation;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
@@ -25,7 +25,7 @@ public class CommandHelp extends Command {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
-                    .setTitle("**Have an issue, suggestion or just want me on your server?**")
+                    .setTitle("Have an issue, suggestion or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://github.com/BasketBandit/BasketBandit-Java/blob/master/README.md)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
                     .addField("Core", "`about` `help` `module` `modules` `settings` `setup`", false)
@@ -36,7 +36,7 @@ public class CommandHelp extends Command {
                     .addField("World", "`linestatus` `weather`", false)
                     .addField("Utility", "`bind` `exclude` `channel` `server` `users`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
-                    .setFooter(Utils.getStandardString(0), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[0], e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
             EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Information has been sent to your direct messages.");
             MessageHandler.sendMessage(e, embed.build());
@@ -46,7 +46,7 @@ public class CommandHelp extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            for(Command cmd: SystemInformation.getCommandList()) {
+            for(Command cmd: Cache.COMMANDS) {
                 if(cmd.getCommandName().equals(command[1])) {
                     String commandPermission;
                     if(cmd.getCommandPermission() == null) {
@@ -95,7 +95,7 @@ public class CommandHelp extends Command {
 
                     EmbedBuilder embed = new EmbedBuilder()
                             .setThumbnail(bot.getAvatarUrl())
-                            .setTitle("Command help for **" + cmd.getCommandName() + "**")
+                            .setTitle("Command help for  + cmd.getCommandName() + ")
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
                             .addField("Required Permission", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)

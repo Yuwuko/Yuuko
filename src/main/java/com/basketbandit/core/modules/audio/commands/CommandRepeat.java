@@ -1,7 +1,7 @@
 package com.basketbandit.core.modules.audio.commands;
 
 import com.basketbandit.core.modules.Command;
-import com.basketbandit.core.modules.audio.handlers.AudioManagerHandler;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import com.basketbandit.core.modules.audio.handlers.GuildAudioManager;
 import com.basketbandit.core.utils.MessageHandler;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,8 +14,7 @@ public class CommandRepeat extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        GuildAudioManager manager = AudioManagerHandler.getGuildAudioManager(e.getGuild().getId());
-
+        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setRepeating(!manager.scheduler.isRepeating());
         MessageHandler.sendMessage(e, e.getAuthor().getAsMention() + " toggled repeat to: " + manager.scheduler.isRepeating());

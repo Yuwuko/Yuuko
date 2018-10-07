@@ -1,12 +1,11 @@
 package com.basketbandit.core.utils;
 
+import com.basketbandit.core.Cache;
+import com.basketbandit.core.Configuration;
 import com.basketbandit.core.SystemClock;
-import com.basketbandit.core.SystemInformation;
-import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.GuildController;
-import org.discordbots.api.client.DiscordBotListAPI;
 import org.xhtmlrenderer.swing.Java2DRenderer;
 
 import javax.imageio.ImageIO;
@@ -19,20 +18,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 
-public class Utils {
-
-    public static User botUser;
-    public static DiscordBotListAPI botList;
-    public static LinkedList<String> lastTen;
-    public static String latestInfo;
-    public static String[] standardStrings;
-    private static int messagesProcessed;
-    private static int commandsProcessed;
-    private static int reactsProcessed;
-
+public final class Utils {
 
     /**
      * Returns a username and discriminator in format username#discriminator.
@@ -52,9 +40,14 @@ public class Utils {
         return user.getName() + "#" + user.getDiscriminator();
     }
 
+    /**
+     * Sends an exception to the support server's exception channel.
+     * @param ex Exception
+     * @param command String
+     */
     public static void sendException(Exception ex, String command) {
         try {
-            MessageChannel channel = botUser.getJDA().getTextChannelById(495602825355591700L);
+            MessageChannel channel = Configuration.BOT.getSelfUser().getJDA().getTextChannelById(495602825355591700L);
             channel.sendMessage(command + "\n`" + ex + "`").queue();
         } catch(Exception exc) {
             //
@@ -162,8 +155,7 @@ public class Utils {
      */
     public static void updateDiscordBotList() {
         try {
-            JDA jda = botUser.getJDA();
-            botList.setStats(jda.getShardInfo().getShardId(), jda.getShardInfo().getShardTotal(), Math.toIntExact(jda.getGuildCache().size()));
+            Cache.BOT_LIST.setStats(Configuration.BOT.getShardInfo().getShardId(), Configuration.BOT.getShardInfo().getShardTotal(), Math.toIntExact(Configuration.BOT.getGuildCache().size()));
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -245,44 +237,35 @@ public class Utils {
         System.out.println("          |____/ \\__,_|___/_|\\_\\___|\\__|____/ \\__,_|_| |_|\\__,_|_|\\__|");
         System.out.println();
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃ " + lastTen.get(0));
-        System.out.println("┃ " + lastTen.get(1));
-        System.out.println("┃ " + lastTen.get(2));
-        System.out.println("┃ " + lastTen.get(3));
-        System.out.println("┃ " + lastTen.get(4));
-        System.out.println("┃ " + lastTen.get(5));
-        System.out.println("┃ " + lastTen.get(6));
-        System.out.println("┃ " + lastTen.get(7));
-        System.out.println("┃ " + lastTen.get(8));
-        System.out.println("┃ " + lastTen.get(9));
+        System.out.println("┃ " + Cache.LAST_TEN.get(0));
+        System.out.println("┃ " + Cache.LAST_TEN.get(1));
+        System.out.println("┃ " + Cache.LAST_TEN.get(2));
+        System.out.println("┃ " + Cache.LAST_TEN.get(3));
+        System.out.println("┃ " + Cache.LAST_TEN.get(4));
+        System.out.println("┃ " + Cache.LAST_TEN.get(5));
+        System.out.println("┃ " + Cache.LAST_TEN.get(6));
+        System.out.println("┃ " + Cache.LAST_TEN.get(7));
+        System.out.println("┃ " + Cache.LAST_TEN.get(8));
+        System.out.println("┃ " + Cache.LAST_TEN.get(9));
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ " + latestInfo);
+        System.out.println("┃ " + Cache.LATEST_INFO );
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + SystemInformation.getPing() + ", Guilds: " + SystemInformation.getGuildCount() + ", Modules: " + SystemInformation.getModuleCount() + ", Commands: " + SystemInformation.getCommandCount());
-        System.out.println("┃ Messages processed: " + messagesProcessed + ", Reacts processed: " + reactsProcessed + ", Commands processed: " + commandsProcessed);
+        System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + Cache.PING + ", Guilds: " + Cache.GUILD_COUNT + ", Modules: " + Cache.MODULES.size() + ", Commands: " + Cache.COMMANDS.size());
+        System.out.println("┃ Messages processed: " + Cache.MESSAGES_PROCESSED + ", Reacts processed: " + Cache.REACTS_PROCESSED + ", Commands processed: " + Cache.COMMANDS_PROCESSED);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    }
-
-    /**
-     * Returns one of the array of standard strings (saves having to change loads of message in embeds!)
-     * @param string int
-     * @return the chosen string.
-     */
-    public static String getStandardString(int string) {
-        return standardStrings[string];
     }
 
     /**
      * Increments processed integer.
      * @param type int
      */
-    public static void incrementEvent(int type) {
+    public static void incrementEventsProcessed(int type) {
         if(type == 0) {
-            messagesProcessed++;
+            Cache.MESSAGES_PROCESSED = (Cache.MESSAGES_PROCESSED + 1);
         } else if(type == 1) {
-            reactsProcessed++;
+            Cache.REACTS_PROCESSED = (Cache.REACTS_PROCESSED + 1);
         } else if(type == 2) {
-            commandsProcessed++;
+            Cache.COMMANDS_PROCESSED = (Cache.COMMANDS_PROCESSED + 1);
         }
     }
 
@@ -292,11 +275,11 @@ public class Utils {
      */
     public static void updateLatest(String latest) {
         if(latest.startsWith("[INFO]")) {
-            latestInfo = latest;
+            Cache.LATEST_INFO = latest;
         } else {
-            lastTen.addFirst(latest);
-            if(lastTen.size() > 10) {
-                lastTen.removeLast();
+            Cache.LAST_TEN.addFirst(latest);
+            if(Cache.LAST_TEN.size() > 10) {
+                Cache.LAST_TEN.removeLast();
             }
         }
     }

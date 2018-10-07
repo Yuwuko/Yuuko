@@ -1,6 +1,6 @@
 package com.basketbandit.core.modules.core.commands;
 
-import com.basketbandit.core.SystemInformation;
+import com.basketbandit.core.Cache;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
@@ -24,7 +24,7 @@ public class CommandModule extends Command {
 
         // Check if the module even exists.
         boolean hit = false;
-        for(Module module: SystemInformation.getModuleList()) {
+        for(Module module: Cache.MODULES) {
             if(module.getModuleName().substring(6).toLowerCase().equals(command[1])) {
                 hit = true;
                 break;

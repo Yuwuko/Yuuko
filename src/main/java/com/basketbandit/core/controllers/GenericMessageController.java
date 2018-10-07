@@ -1,11 +1,11 @@
 package com.basketbandit.core.controllers;
 
+import com.basketbandit.core.Cache;
 import com.basketbandit.core.Configuration;
-import com.basketbandit.core.SystemInformation;
-import com.basketbandit.core.SystemVariables;
 import com.basketbandit.core.database.DatabaseConnection;
 import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
+import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.commands.CommandSearch;
 import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
 import com.basketbandit.core.utils.MessageHandler;
@@ -69,7 +69,7 @@ public class GenericMessageController {
             }
 
             // Passes nothing through to the console output so it updates a registered message.
-            Utils.incrementEvent(0);
+            Utils.incrementEventsProcessed(0);
 
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen. (Should they though...)
@@ -105,7 +105,7 @@ public class GenericMessageController {
             // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
-            for(Command c : SystemInformation.getCommandList()) {
+            for(Command c : Cache.COMMANDS) {
                 if((inputPrefix + input[0]).equalsIgnoreCase(c.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
                     moduleDbName = Utils.extractModuleName(commandModule, false, true);
@@ -116,7 +116,7 @@ public class GenericMessageController {
                     if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) {
                         // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
                         if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("**MESSAGE_MANAGE**");
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("MESSAGE_MANAGE");
                             MessageHandler.sendMessage(e, embed.build());
                             return;
                         } else {
@@ -171,7 +171,7 @@ public class GenericMessageController {
             if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
-                Utils.incrementEvent(2);
+                Utils.incrementEventsProcessed(2);
             }
 
             if(executed && new DatabaseFunctions().getServerSetting("commandLogging", serverLong).equalsIgnoreCase("1")) {
@@ -190,7 +190,7 @@ public class GenericMessageController {
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano) {
         try {
-            if(SystemVariables.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+            if(ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
                 String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
                 String serverLong = e.getGuild().getId();
 
