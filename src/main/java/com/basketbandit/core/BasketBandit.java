@@ -55,6 +55,7 @@ class BasketBandit extends ListenerAdapter {
                 .build();
         Configuration.BOT.awaitReady();
         Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
+        Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
     }
 
     /**
@@ -81,8 +82,6 @@ class BasketBandit extends ListenerAdapter {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-
-        Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
 
         Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
 
