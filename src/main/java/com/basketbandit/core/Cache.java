@@ -2,6 +2,7 @@ package com.basketbandit.core;
 
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.Module;
+import com.basketbandit.core.modules.audio.handlers.AudioManagerManager;
 import org.discordbots.api.client.DiscordBotListAPI;
 
 import java.util.LinkedList;
@@ -21,6 +22,7 @@ public class Cache {
     public static int MESSAGES_PROCESSED;
     public static int COMMANDS_PROCESSED;
     public static int REACTS_PROCESSED;
+    public static AudioManagerManager AUDIO_MANAGER_MANAGER;
 
     static void updatePing() {
         PING = Configuration.BOT.getPing();
