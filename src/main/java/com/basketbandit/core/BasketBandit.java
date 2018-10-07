@@ -56,6 +56,13 @@ class BasketBandit extends ListenerAdapter {
         Configuration.BOT.awaitReady();
         Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
         Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
+
+        int users = 0;
+        for(Guild guild : Configuration.BOT.getGuilds()) {
+            users += guild.getMemberCache().size();
+        }
+        Cache.USER_COUNT = users;
+        Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
     }
 
     /**
@@ -129,14 +136,6 @@ class BasketBandit extends ListenerAdapter {
             Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
             Utils.updateDiscordBotList();
         }
-
-        int users = 0;
-        for(Guild guild : Configuration.BOT.getGuilds()) {
-            users += guild.getMemberCache().size();
-        }
-
-        Cache.USER_COUNT = users;
-        Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
 
         // Start the system clock last to ensure everything else has started.
         new SystemClock();
