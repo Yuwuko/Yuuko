@@ -3,8 +3,11 @@
 Key: [+] added, [-] removed, [~] modified.
 
 ## 3.2.2
++ [+] Added cache to store miscellaneous pieces of data, starting to refactor the main class to decrease the complexity.
 + [~] Added missing information from some of the commands.
 + [~] Fixed problem where embed author doesn't allow markdown. (changed to title)
++ [~] Removed bold text from majority of output, leaving it in only for distinguishing values.
++ [~] Altered audio handlers to hopefully fix a long term issue without things breaking.
 
 ## 3.2.1
 + [~] Modified all output and converted them into embeds since they look much 'richer'.
