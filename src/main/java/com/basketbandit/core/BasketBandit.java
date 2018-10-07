@@ -53,16 +53,6 @@ class BasketBandit extends ListenerAdapter {
                 .addEventListener(new BasketBandit())
                 .setEventManager(new BasketBandit.ThreadedEventManager())
                 .build();
-        Configuration.BOT.awaitReady();
-        Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
-        Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
-
-        int users = 0;
-        for(Guild guild : Configuration.BOT.getGuilds()) {
-            users += guild.getMemberCache().size();
-        }
-        Cache.USER_COUNT = users;
-        Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
     }
 
     /**
@@ -90,55 +80,72 @@ class BasketBandit extends ListenerAdapter {
             ex.printStackTrace();
         }
 
-        Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
-
-        ArrayList<Module> moduleList = new ArrayList<>();
         try {
-            Field[] modules = M.class.getDeclaredFields();
-            for(Field module : modules) {
-                moduleList.add((Module)module.get(Module.class));
+            Configuration.BOT.awaitReady();
+
+            Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
+            Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
+
+            int users = 0;
+            for(Guild guild : Configuration.BOT.getGuilds()) {
+                users += guild.getMemberCache().size();
             }
-            System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
+            Cache.USER_COUNT = users;
+            Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
 
-        ArrayList<Command> commandList = new ArrayList<>();
-        try {
-            Field[] commands = C.class.getDeclaredFields();
-            for(Field command : commands) {
-                commandList.add((Command)command.get(Command.class));
+            Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
+
+            ArrayList<Module> moduleList = new ArrayList<>();
+            try {
+                Field[] modules = M.class.getDeclaredFields();
+                for(Field module : modules) {
+                    moduleList.add((Module) module.get(Module.class));
+                }
+                System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
+
+            ArrayList<Command> commandList = new ArrayList<>();
+            try {
+                Field[] commands = C.class.getDeclaredFields();
+                for(Field command : commands) {
+                    commandList.add((Command) command.get(Command.class));
+                }
+                System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            // Add them in lowercase so they're easier to compare later.
+            ArrayList<String> settingsList = new ArrayList<>();
+            settingsList.add("commandprefix");
+            settingsList.add("deleteexecuted");
+            settingsList.add("commandlogging");
+
+            Cache.STANDARD_STRINGS = new String[1];
+            Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
+            Cache.MODULES = moduleList;
+            Cache.COMMANDS = commandList;
+            Cache.SETTINGS = settingsList;
+
+            Cache.LATEST_INFO = "";
+            Cache.LAST_TEN = new LinkedList<>();
+            for(int i = 0; i < 10; i++) {
+                Cache.LAST_TEN.add("");
+            }
+
+            if(!Configuration.DISCORD_BOTS_API.equals("null")) {
+                Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
+                Utils.updateDiscordBotList();
+            }
+
+            // Start the system clock last to ensure everything else has started.
+            new SystemClock();
+
         } catch(Exception ex) {
-            ex.printStackTrace();
+            Utils.sendException(ex, "new BasketBandit()");
         }
-
-        // Add them in lowercase so they're easier to compare later.
-        ArrayList<String> settingsList = new ArrayList<>();
-        settingsList.add("commandprefix");
-        settingsList.add("deleteexecuted");
-        settingsList.add("commandlogging");
-
-        Cache.STANDARD_STRINGS = new String[1];
-        Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
-        Cache.MODULES = moduleList;
-        Cache.COMMANDS = commandList;
-        Cache.SETTINGS = settingsList;
-
-        Cache.LATEST_INFO = "";
-        Cache.LAST_TEN = new LinkedList<>();
-        for(int i = 0; i < 10; i++) {
-            Cache.LAST_TEN.add("");
-        }
-
-        if(!Configuration.DISCORD_BOTS_API.equals("null")) {
-            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
-            Utils.updateDiscordBotList();
-        }
-
-        // Start the system clock last to ensure everything else has started.
-        new SystemClock();
     }
 
     /**
