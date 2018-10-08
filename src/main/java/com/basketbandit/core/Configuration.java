@@ -10,7 +10,7 @@ public class Configuration {
     // Bot object.
     public static JDA BOT;
     // Bot version.
-    public static final String VERSION = "3.2.2";
+    public static final String VERSION = "3.3.0";
     // Bot's ID.
     public static String BOT_ID;
     // Bot's Token.

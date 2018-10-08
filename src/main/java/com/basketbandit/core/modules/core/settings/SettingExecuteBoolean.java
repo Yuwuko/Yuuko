@@ -25,10 +25,10 @@ public class SettingExecuteBoolean {
 
             if(new DatabaseFunctions().setServerSettings(setting, intvalue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("'" + setting + "' set to TRUE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(setting.toUpperCase() + " set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("'" + setting + "' set to FALSE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(setting.toUpperCase() + " set to FALSE.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
                 return true;
