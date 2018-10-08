@@ -7,7 +7,7 @@ import com.basketbandit.core.database.DatabaseFunctions;
 import com.basketbandit.core.modules.Command;
 import com.basketbandit.core.modules.audio.ModuleAudio;
 import com.basketbandit.core.modules.audio.commands.CommandSearch;
-import com.basketbandit.core.modules.core.settings.SettingCommandLogging;
+import com.basketbandit.core.modules.core.settings.SettingExecuteBoolean;
 import com.basketbandit.core.utils.MessageHandler;
 import com.basketbandit.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -87,7 +87,7 @@ public class GenericMessageController {
     private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
         String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length());
-        String serverLong = e.getGuild().getId();
+        String server = e.getGuild().getId();
 
         try {
             long executionTime = 0;
@@ -128,7 +128,7 @@ public class GenericMessageController {
             }
 
             Connection connection = new DatabaseConnection().getConnection();
-            ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, serverLong, moduleDbName);
+            ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, server, moduleDbName);
 
             // While it has next, if excluded is true, if the module name and channel Id match, apologise and break.
             // If excluded is false (implying that bounded is true) and the module name and channel Id do not match,
@@ -174,8 +174,8 @@ public class GenericMessageController {
                 Utils.incrementEventsProcessed(2);
             }
 
-            if(executed && new DatabaseFunctions().getServerSetting("commandLogging", serverLong).equalsIgnoreCase("1")) {
-                new SettingCommandLogging(null, null).executeSetting(e, executionTime);
+            if(executed && new DatabaseFunctions().getServerSetting("commandLogging", server).equalsIgnoreCase("1")) {
+                new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
             }
 
         } catch (Exception ex) {
@@ -192,21 +192,21 @@ public class GenericMessageController {
         try {
             if(ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
                 String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-                String serverLong = e.getGuild().getId();
+                String server = e.getGuild().getId();
 
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
                     new CommandSearch().executeCommand(e, input[0]);
                 }
 
-                if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("true")) {
+                if(new DatabaseFunctions().getServerSetting("deleteExecuted", server).equalsIgnoreCase("1")) {
                     e.getMessage().delete().queue();
                 }
 
-                if(new DatabaseFunctions().getServerSetting("commandLogging", serverLong).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getServerSetting("commandLogging", server).equalsIgnoreCase("1")) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                     Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
-                    new SettingCommandLogging(null, null).executeSetting(e, executionTime);
+                    new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
 
             }

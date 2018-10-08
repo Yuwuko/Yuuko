@@ -11,24 +11,24 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.awt.*;
 import java.util.List;
 
-public class SettingCommandLogging {
+public class SettingExecuteBoolean {
 
-    public SettingCommandLogging(MessageReceivedEvent e, String value) {
-        if(e != null && value != null) {
-            executeCommand(e, value);
+    public SettingExecuteBoolean(MessageReceivedEvent e, String setting, String value) {
+        if(e != null && setting != null && value != null) {
+            executeCommand(e, setting, value);
         }
     }
 
-    public boolean executeCommand(MessageReceivedEvent e, String value) {
+    public boolean executeCommand(MessageReceivedEvent e, String setting, String value) {
         try {
             String intvalue = (value.equalsIgnoreCase("true")) ? "1" : "0";
 
-            if(new DatabaseFunctions().setServerSettings("commandLogging", intvalue, e.getGuild().getId())) {
+            if(new DatabaseFunctions().setServerSettings(setting, intvalue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("'commandLogging' set to TRUE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("'" + setting + "' set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("'commandLogging' set to FALSE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("'" + setting + "' set to FALSE.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
                 return true;
@@ -37,12 +37,17 @@ public class SettingCommandLogging {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "SettingCommandLogging [" + value + "]");
+            Utils.sendException(ex, setting + "[" + value + "]");
             return false;
         }
     }
 
-    public void executeSetting(MessageReceivedEvent e, long executionTimeMs) {
+    /**
+     * Executes the logging feature of the bot.
+     * @param e MessageReceivedEvent
+     * @param executionTimeMs long
+     */
+    public void executeLogging(MessageReceivedEvent e, long executionTimeMs) {
         try {
             List<TextChannel> log = e.getGuild().getTextChannelsByName("command-log", true);
             log.get(0).sendMessage("```" + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator() + " used command " + e.getMessage().getContentDisplay() + " in " + e.getMessage().getChannel().getName() + ". (Execution time: "+ executionTimeMs +"ms)```").queue();
@@ -50,4 +55,5 @@ public class SettingCommandLogging {
             MessageHandler.sendMessage(e, "This server has logging enabled but has no 'command-log' text channel, please add that channel or disable the module by typing the '" + Configuration.GLOBAL_PREFIX + "module logging' command to stop this message.");
         }
     }
+
 }

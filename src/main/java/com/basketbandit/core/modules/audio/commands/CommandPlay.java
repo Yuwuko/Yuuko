@@ -82,6 +82,8 @@ public class CommandPlay extends Command {
             public void trackLoaded(AudioTrack track) {
                 try {
                     manager.scheduler.queue(track);
+                    track.setUserData(e);
+
                     String[] uri = track.getInfo().uri.split("=");
                     String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
@@ -103,10 +105,15 @@ public class CommandPlay extends Command {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
-                    List<AudioTrack> tracks = playlist.getTracks();
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Adding **" + playlist.getTracks().size() + "** tracks to queue from playlist: **" + playlist.getName() + "**");
                     MessageHandler.sendMessage(channel, embed.build());
-                    tracks.forEach(manager.scheduler::queue);
+
+                    List<AudioTrack> tracks = playlist.getTracks();
+                    for(AudioTrack track: tracks) {
+                        track.setUserData(e);
+                        manager.scheduler.queue(track);
+                    }
+
                     new CommandCurrent().executeCommand(e, null);
 
                 } catch(Exception ex) {

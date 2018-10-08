@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.3.0
++ [+] Added announceNowPlaying setting which allows users to set whether or not the next track is announced.
++ [~] Refactored all boolean based settings into a single class using parameters instead.
+
 ## 3.2.2
 + [+] Added cache to store miscellaneous pieces of data, starting to refactor the main class to decrease the complexity.
 + [~] Added missing information from some of the commands.

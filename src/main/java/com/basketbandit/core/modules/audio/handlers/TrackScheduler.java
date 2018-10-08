@@ -1,9 +1,12 @@
 package com.basketbandit.core.modules.audio.handlers;
 
+import com.basketbandit.core.database.DatabaseFunctions;
+import com.basketbandit.core.modules.audio.commands.CommandCurrent;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -56,6 +59,11 @@ public class TrackScheduler extends AudioEventAdapter {
             if(background != null) {
                 background = background.makeClone();
                 player.startTrack(background, false);
+            }
+        } else {
+            MessageReceivedEvent e = (MessageReceivedEvent)player.getPlayingTrack().getUserData();
+            if(new DatabaseFunctions().getServerSetting("showNowPlaying", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                new CommandCurrent().executeCommand((MessageReceivedEvent) player.getPlayingTrack().getUserData(), null);
             }
         }
     }
