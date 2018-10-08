@@ -36,7 +36,7 @@ public class CommandQueue extends Command {
 
                 if(i > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
-                            .setTitle("Here are the next  + i +  tracks in the queue:")
+                            .setTitle("Here are the next " + i + " tracks in the queue:")
                             .setDescription(queue.toString())
                             .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());

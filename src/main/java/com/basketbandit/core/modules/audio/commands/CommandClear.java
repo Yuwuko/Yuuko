@@ -38,7 +38,7 @@ public class CommandClear extends Command {
                 int i = 1;
                 for(int x = 0; x < manager.scheduler.queue.size(); x++) {
                     if(i == clearPos) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription(clone.remove().getInfo().title + "_ has been cleared from the queue.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("**" + clone.remove().getInfo().title + "** has been cleared from the queue.");
                         MessageHandler.sendMessage(e, embed.build());
                         i++;
                     } else {

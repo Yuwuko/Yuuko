@@ -20,7 +20,7 @@ public class CommandSkip extends Command {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             if(manager.player.getPlayingTrack() != null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(" + manager.player.getPlayingTrack().getInfo().title + ");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.player.getPlayingTrack().getInfo().title);
                 MessageHandler.sendMessage(e, embed.build());
 
                 if(manager.scheduler.hasNextTrack()) {
