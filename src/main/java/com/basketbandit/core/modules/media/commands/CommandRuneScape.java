@@ -19,10 +19,10 @@ public class CommandRuneScape extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
         String player = commandParameters[1].toLowerCase();
-        Boolean osrs = (commandParameters[0].equals("os"));
+        Boolean osrs = (commandParameters[0].equals("os") || commandParameters[0].equals("osrs") || commandParameters[0].equals("07") || commandParameters[0].equals("07scape"));
 
         try {
-            URL url = (!osrs) ? new URL("http://services.runescape.com/m=hiscore/index_lite.ws?player=" + player) : new URL("http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=" + player);
+            URL url = (!osrs) ? new URL("http://services.runescape.com/m=hiscore/index_lite.ws?player=" + player.replace(" ", "%20")) : new URL("http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=" + player.replace(" ", "%20"));
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
             String gameVersion = (osrs) ? "[OSRS]" : "[RS3]";
             StringBuilder statString = new StringBuilder();

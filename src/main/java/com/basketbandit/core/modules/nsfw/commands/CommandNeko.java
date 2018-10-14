@@ -22,7 +22,7 @@ public class CommandNeko extends Command {
             String url;
 
             if(!json.contains("404")) {
-                url = json.substring(12, json.lastIndexOf("\""));
+                url = json.substring(json.indexOf("h"), json.lastIndexOf("\""));
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No image was found with that parameter! (Go to https://nekos.life/api/v2/endpoints for a list of valid parameters)");
                 MessageHandler.sendMessage(e, embed.build());

@@ -20,7 +20,6 @@ public class CommandAbout extends Command {
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
         EmbedBuilder about = new EmbedBuilder()
-
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
                 .setDescription(bot.getName() + " is a multi-purpose bot for Discord programmed in " +
                         "[Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) " +

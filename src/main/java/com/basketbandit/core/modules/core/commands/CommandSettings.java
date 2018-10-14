@@ -63,7 +63,7 @@ public class CommandSettings extends Command {
 
                     // Embed displaying all of the current settings for the server, giving information about each setting.
                     EmbedBuilder commandModules = new EmbedBuilder()
-                        .setTitle("Settings for  + e.getGuild().getName() + ")
+                        .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
                             .addField("commandPrefix", "[" + resultSet.getString("commandPrefix") + "] - The message prefix used to symbolise a command.", false)
                             .addField("deleteExecuted", "[" + resultSet.getBoolean("deleteExecuted") + "] - Deletes the users command string when it is executed.", false)
