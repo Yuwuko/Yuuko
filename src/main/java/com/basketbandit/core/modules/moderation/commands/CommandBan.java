@@ -12,7 +12,7 @@ import java.util.List;
 public class CommandBan extends Command {
 
     public CommandBan() {
-        super("ban", "com.basketbandit.core.modules.moderation.ModuleModeration", 1, new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, Permission.BAN_MEMBERS);
+        super("ban", "com.basketbandit.core.modules.moderation.ModuleModeration",1, new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, Permission.BAN_MEMBERS);
     }
 
     @Override

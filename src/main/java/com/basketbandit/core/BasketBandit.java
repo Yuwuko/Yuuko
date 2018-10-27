@@ -128,6 +128,7 @@ class BasketBandit extends ListenerAdapter {
             settingsList.add("deleteexecuted");
             settingsList.add("commandlogging");
             settingsList.add("announcenowplaying");
+            settingsList.add("djmode");
 
             Cache.STANDARD_STRINGS = new String[1];
             Cache.STANDARD_STRINGS[0] = Configuration.VERSION;

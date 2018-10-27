@@ -13,7 +13,7 @@ import java.util.List;
 public class CommandUnmute extends Command {
 
     public CommandUnmute() {
-        super("unmute", "com.basketbandit.core.modules.moderation.ModuleModeration", 1, new String[]{"-unmute @user"}, Permission.VOICE_MUTE_OTHERS);
+        super("unmute", "com.basketbandit.core.modules.moderation.ModuleModeration",1, new String[]{"-unmute @user"}, Permission.VOICE_MUTE_OTHERS);
     }
 
     @Override

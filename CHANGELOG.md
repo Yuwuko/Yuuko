@@ -2,12 +2,15 @@
 
 Key: [+] added, [-] removed, [~] modified.
 
+## 3.4.0
++ [+] Added [__djMode__] setting which allows servers to lock down key audio commands to those with the DJ role.
+
 ## 3.3.1
 + [~] Fixed some minor bugs in track scheduler and settings classes.
 + [~] Updated NSFW neko command api after it was recently changed and caused the command to stop working. Fix should be much more robust.
 
 ## 3.3.0
-+ [+] Added announceNowPlaying setting which allows users to set whether or not the next track is announced.
++ [+] Added [__announceNowPlaying__] setting which allows users to set whether or not the next track is announced.
 + [~] Refactored all boolean based settings into a single class using parameters instead.
 + [~] Altered how database values are represented on the output, changed from camel case to uppercase.
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class CommandNuke extends Command {
 
     public CommandNuke() {
-        super("nuke", "com.basketbandit.core.modules.moderation.ModuleModeration", 1, new String[]{"-nuke [value]"}, Permission.MESSAGE_MANAGE);
+        super("nuke", "com.basketbandit.core.modules.moderation.ModuleModeration",1, new String[]{"-nuke [value]"}, Permission.MESSAGE_MANAGE);
     }
 
     @Override

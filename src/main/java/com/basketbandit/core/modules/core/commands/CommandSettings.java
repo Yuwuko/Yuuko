@@ -40,7 +40,7 @@ public class CommandSettings extends Command {
                     return;
                 }
 
-                if(commandParameters[0].equalsIgnoreCase("commandLogging") || commandParameters[0].equalsIgnoreCase("deleteExecuted") || commandParameters[0].equalsIgnoreCase("announceNowPlaying")) {
+                if(commandParameters[0].equalsIgnoreCase("commandLogging") || commandParameters[0].equalsIgnoreCase("deleteExecuted") || commandParameters[0].equalsIgnoreCase("announceNowPlaying") || commandParameters[0].equalsIgnoreCase("djmode")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
                         MessageHandler.sendMessage(e, embed.build());
@@ -69,6 +69,7 @@ public class CommandSettings extends Command {
                             .addField("deleteExecuted", "[" + resultSet.getBoolean("deleteExecuted") + "] - Deletes the users command string when it is executed.", false)
                             .addField("commandLogging", "[" + resultSet.getBoolean("commandLogging") + "] - Sends executed commands to a predefined logging channel.", false)
                             .addField("announceNowPlaying", "[" + resultSet.getBoolean("announceNowPlaying") + "] - Sends information of the current track when it changes.", false)
+                            .addField("djMode", "[" + resultSet.getBoolean("djMode") + "] - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, commandModules.build());
                 } catch(Exception ex) {

@@ -106,6 +106,7 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 | deleteExecuted | Deletes the command message after it has been executed. | TRUE, FALSE | `-settings deleteExecuted true` |
 | commandLogging | Logs any executed command into a logging channel. | TRUE, FALSE | `-settings commandLogging true` |
 | announceNowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings announceNowPlaying true` |
+| djMode | Toggles whether or not the role of `DJ` is required to use key audio module commands. | TRUE, FALSE | `-settings djMode true` |
 
 ## Other features
 
