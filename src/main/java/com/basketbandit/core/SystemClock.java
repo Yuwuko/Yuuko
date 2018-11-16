@@ -28,18 +28,21 @@ public class SystemClock implements Runnable {
                 Thread.sleep(1000);
 
                 fs++;
+                // Every 5 seconds
                 if(fs == 5) {
                     Utils.consoleOutput();
                     fs = 0;
                 }
 
                 fm++;
+                // Every 5 minutes
                 if(fm == 300) {
                     Cache.updatePing();
                     fm = 0;
                 }
 
                 oh++;
+                // Every 1 hour
                 if(oh == 3600) {
                     oh = 0;
                 }

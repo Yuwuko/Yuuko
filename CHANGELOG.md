@@ -4,6 +4,9 @@ Key: [+] added, [-] removed, [~] modified.
 
 ## 3.4.0
 + [+] Added [__djMode__] setting which allows servers to lock down key audio commands to those with the DJ role.
++ [-] Removed [__runescape__] command since it isn't used and hasn't actually worked correctly for a while and just degrades the quality of the bot.
++ [-] Removed [__sum__] command since it was just as poor as the runescape command and wasn't used anyway, who doesn't have a calculator?
++ [-] Removed [__wow__] command for the same reason as the other two and it was a huge undertaking just to have it work correctly.
 
 ## 3.3.1
 + [~] Fixed some minor bugs in track scheduler and settings classes.

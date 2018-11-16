@@ -5,11 +5,8 @@ import com.basketbandit.core.modules.core.commands.*;
 import com.basketbandit.core.modules.developer.commands.CommandAddServers;
 import com.basketbandit.core.modules.developer.commands.CommandSetStatus;
 import com.basketbandit.core.modules.math.commands.CommandRoll;
-import com.basketbandit.core.modules.math.commands.CommandSum;
 import com.basketbandit.core.modules.media.commands.CommandKitsu;
 import com.basketbandit.core.modules.media.commands.CommandOsu;
-import com.basketbandit.core.modules.media.commands.CommandRuneScape;
-import com.basketbandit.core.modules.media.commands.CommandWorldOfWarcraft;
 import com.basketbandit.core.modules.moderation.commands.*;
 import com.basketbandit.core.modules.nsfw.commands.CommandEfukt;
 import com.basketbandit.core.modules.nsfw.commands.CommandNeko;
@@ -39,7 +36,6 @@ public final class C {
 
     // Math module commands.
     public static final Command ROLL = new CommandRoll();
-    public static final Command SUM = new CommandSum();
 
     // Utility module commands.
     public static final Command USER = new CommandUser();
@@ -49,8 +45,6 @@ public final class C {
     public static final Command EXCLUDE = new CommandExclude();
 
     // Media module commands.
-    public static final Command RUNESCAPE = new CommandRuneScape();
-    public static final Command WOW = new CommandWorldOfWarcraft();
     public static final Command OSU = new CommandOsu();
     public static final Command KITSU = new CommandKitsu();
 
