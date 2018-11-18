@@ -7,6 +7,7 @@ import com.basketbandit.core.modules.math.ModuleMath;
 import com.basketbandit.core.modules.media.ModuleMedia;
 import com.basketbandit.core.modules.moderation.ModuleModeration;
 import com.basketbandit.core.modules.nsfw.ModuleNSFW;
+import com.basketbandit.core.modules.profile.ModuleProfile;
 import com.basketbandit.core.modules.utility.ModuleUtility;
 import com.basketbandit.core.modules.world.ModuleWorld;
 
@@ -20,4 +21,5 @@ public final class M {
     public static final Module WORLD = new ModuleWorld(null, null);
     public static final Module UTILITY = new ModuleUtility(null, null);
     public static final Module NSFW = new ModuleNSFW(null, null);
+    public static final Module PROFILE = new ModuleProfile(null, null);
 }

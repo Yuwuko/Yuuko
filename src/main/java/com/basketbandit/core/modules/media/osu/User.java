@@ -18,7 +18,7 @@ import java.util.List;
         "ranked_score",
         "total_score",
         "pp_rank",
-        "level",
+        "profile",
         "pp_raw",
         "accuracy",
         "count_rank_ss",
@@ -53,7 +53,7 @@ public class User {
     private String totalScore;
     @JsonProperty("pp_rank")
     private String ppRank;
-    @JsonProperty("level")
+    @JsonProperty("profile")
     private String level;
     @JsonProperty("pp_raw")
     private String ppRaw;
@@ -123,7 +123,7 @@ public class User {
         return ppRank;
     }
 
-    @JsonProperty("level")
+    @JsonProperty("profile")
     public String getLevel() {
         return level;
     }

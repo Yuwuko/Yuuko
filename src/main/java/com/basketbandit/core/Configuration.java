@@ -35,8 +35,6 @@ public class Configuration {
     public static String TFL_API;
     // Discord Bot List API.
     static String DISCORD_BOTS_API;
-    // WoW API key.
-    public static String WOW_API;
     // Osu API Key
     public static String OSU_API;
     // Open WeatherContainer Map API key
@@ -50,7 +48,6 @@ public class Configuration {
             GOOGLE_API = c.readLine();
             TFL_ID = c.readLine();
             TFL_API = c.readLine();
-            WOW_API = c.readLine();
             DATABASE_IP = c.readLine();
             DATABASE_NAME = c.readLine();
             DATABASE_USERNAME = c.readLine();

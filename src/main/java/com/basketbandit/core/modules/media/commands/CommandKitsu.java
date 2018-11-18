@@ -25,14 +25,12 @@ public class CommandKitsu extends Command {
             commandParameters[1] = commandParameters[1].replace(" ", "%20");
             String json = "";
 
-            if(commandParameters[0].toLowerCase().equals("show")) {
-                json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
-            } else if(commandParameters[0].toLowerCase().equals("character")) {
+            if(commandParameters[0].toLowerCase().equals("character")) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
                 MessageHandler.sendMessage(e, embed.build());
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
             } else {
-                json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
+                json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[0] + "%20" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
             }
 
             if(json != null && json.equals("")) {
