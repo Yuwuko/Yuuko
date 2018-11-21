@@ -3,7 +3,9 @@
 Key: [+] added, [-] removed, [~] modified.
 
 ## 3.4.0
++ [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands.
 + [+] Added [__djMode__] setting which allows servers to lock down key audio commands to those with the DJ role.
++ [~] Edited the [__kitsu__] command so that the default functionality is show so users no longer need to type "show" as a parameter.
 + [-] Removed [__runescape__] command since it isn't used and hasn't actually worked correctly for a while and just degrades the quality of the bot.
 + [-] Removed [__sum__] command since it was just as poor as the runescape command and wasn't used anyway, who doesn't have a calculator?
 + [-] Removed [__wow__] command for the same reason as the other two and it was a huge undertaking just to have it work correctly.

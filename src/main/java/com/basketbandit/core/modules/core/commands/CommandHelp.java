@@ -95,7 +95,7 @@ public class CommandHelp extends Command {
 
                     EmbedBuilder embed = new EmbedBuilder()
                             .setThumbnail(bot.getAvatarUrl())
-                            .setTitle("Command help for  + cmd.getCommandName() + ")
+                            .setTitle("Command help for " + cmd.getCommandName())
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
                             .addField("Required Permission", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)
