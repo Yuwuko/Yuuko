@@ -33,7 +33,7 @@ public class CommandAbout extends Command {
                 .addField("Users", Cache.USER_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
-                .addField("Uptime", SystemClock.getRuntime(), true)
+                .addField("Uptime", SystemClock.getRuntimeString(), true)
                 .addField("Heartbeat", Cache.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }

@@ -1,5 +1,7 @@
 package com.yuuko.core.database;
 
+import com.yuuko.core.Cache;
+import com.yuuko.core.SystemClock;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -407,6 +409,25 @@ public class DatabaseFunctions {
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
             return null;
+        }
+    }
+
+    public void updateServerStatus() {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerStatus` SET `uptime` = ?, `ping` = ?, `guilds` = ?, `modules` = ?, `commands` = ?, `messagesProcessed` = ?, `reactsProcessed` = ?, `commandsProcessed` = ?, `latestInfo` = ?");
+            stmt.setInt(1, SystemClock.getRuntime());
+            stmt.setDouble(2, Cache.PING);
+            stmt.setInt(3, Cache.GUILD_COUNT);
+            stmt.setInt(4, Cache.MODULES.size());
+            stmt.setInt(5, Cache.COMMANDS.size());
+            stmt.setInt(6, Cache.MESSAGES_PROCESSED);
+            stmt.setInt(7, Cache.REACTS_PROCESSED);
+            stmt.setInt(8, Cache.COMMANDS_PROCESSED);
+            stmt.setString(9, Cache.LATEST_INFO);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            Utils.sendException(ex, "Unable to update server status.");
         }
     }
 
