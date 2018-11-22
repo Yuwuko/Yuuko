@@ -21,9 +21,9 @@ public class SettingExecuteBoolean {
 
     public boolean executeCommand(MessageReceivedEvent e, String setting, String value) {
         try {
-            String intvalue = (value.equalsIgnoreCase("true")) ? "1" : "0";
+            String intValue = (value.equalsIgnoreCase("true")) ? "1" : "0";
 
-            if(new DatabaseFunctions().setServerSettings(setting, intvalue, e.getGuild().getId())) {
+            if(new DatabaseFunctions().setServerSettings(setting, intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(setting.toUpperCase() + " set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());

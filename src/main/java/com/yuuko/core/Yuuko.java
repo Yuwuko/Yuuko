@@ -53,11 +53,8 @@ class Yuuko extends ListenerAdapter {
                 .addEventListener(new Yuuko())
                 .setEventManager(new Yuuko.ThreadedEventManager())
                 .build();
-
         Configuration.BOT.awaitReady();
-
         Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
-        Configuration.GLOBAL_PREFIX = Configuration.BOT.getSelfUser().getAsMention() + " ";
 
         if(!Configuration.DISCORD_BOTS_API.equals("null")) {
             Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
@@ -127,7 +124,7 @@ class Yuuko extends ListenerAdapter {
             settingsList.add("commandprefix");
             settingsList.add("deleteexecuted");
             settingsList.add("commandlogging");
-            settingsList.add("announcenowplaying");
+            settingsList.add("nowplaying");
             settingsList.add("djmode");
 
             Cache.STANDARD_STRINGS = new String[1];

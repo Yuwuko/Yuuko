@@ -22,7 +22,7 @@ public class Cache {
     public static int MESSAGES_PROCESSED;
     public static int COMMANDS_PROCESSED;
     public static int REACTS_PROCESSED;
-    public static AudioManagerManager AUDIO_MANAGER_MANAGER;
+    static AudioManagerManager AUDIO_MANAGER_MANAGER;
 
     static void updatePing() {
         PING = Configuration.BOT.getPing();

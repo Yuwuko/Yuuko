@@ -9,6 +9,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [+] Put in place measures to allow for a web console to edit settings and also see status updates.
 + [~] Updated the system clock to keep time in a more meaningful way that can be used and isn't pre-formatted.
 + [~] Updated exception util to print the full stack trace so that debugging can be done more efficiently.
++ [~] Shrunk the [__announceNowPlaying__] setting to simply [__nowPlaying__] because it's easier.
 + [~] Fixed a number of old bugs the haunted the previous versions.
 
 ## 3.4.0

@@ -16,7 +16,7 @@ public class Configuration {
     // Bot's Token.
     static String BOT_TOKEN;
     // Bot's global command prefix.
-    public static String GLOBAL_PREFIX;
+    public static final String GLOBAL_PREFIX = "@Yuuko#2525";
     // Bot's status, e.g Playing with lottie's tits.
     static String STATUS = "@Yuuko help";
     // Database IP:PORT

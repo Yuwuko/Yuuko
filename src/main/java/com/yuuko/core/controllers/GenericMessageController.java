@@ -179,7 +179,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-            Utils.sendException(ex, "GenericMessageController (Main)");
+            Utils.sendException(ex, "GenericMessageController (Main) - " + e.getMessage().getContentRaw());
         }
     }
 
@@ -212,7 +212,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-            Utils.sendException(ex, "GenericMessageController (Aux)");
+            Utils.sendException(ex, "GenericMessageController (Aux) - " + e.getMessage().getContentRaw());
         }
     }
 

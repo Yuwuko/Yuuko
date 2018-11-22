@@ -48,8 +48,10 @@ public class CommandModules extends Command {
                     .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
                     .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
+
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
+
         } finally {
             try {
                 connection.close();
