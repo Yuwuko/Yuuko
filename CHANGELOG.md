@@ -1,6 +1,12 @@
 # Changelog
 
-Key: [+] added, [-] removed, [~] modified.
+Key: [+] added, [-] removed, [~] modified, [!] important.
+
+
+## Y-1.0.0
+
++ [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
++ [~] Fixed a number of old bugs the haunted the previous versions.
 
 ## 3.4.0
 + [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands.
@@ -121,7 +127,7 @@ Key: [+] added, [-] removed, [~] modified.
 
 ## 2.0.0
 
-+ [+] Forced into 2.0.0 due to classpath change from e.g. basketbandit.core -\> com.basketbandit.core
++ [+] Forced into 2.0.0 due to classpath change from e.g. yuuko.core -\> com.yuuko.core
 + [+] Added utils package to help break up the various utility classes.
 + [~] Separated the controller class into separate generic event classes to isolate things a bit more.
 + [~] Added missing permissions that weren't being checked, also added checks for overrides.

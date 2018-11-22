@@ -2,21 +2,21 @@
 ![Servers](https://discordbots.org/api/widget/servers/420682957007880223.svg)
 ![Servers](https://discordbots.org/api/widget/upvotes/420682957007880223.svg)
 ![Library](https://discordbots.org/api/widget/lib/420682957007880223.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/basketbandit/basketbandit-java/badge)](https://www.codefactor.io/repository/github/basketbandit/basketbandit-java)
-[![GitHub release](https://img.shields.io/github/release/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java)
-[![GitHub stars](https://img.shields.io/github/stars/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/issues)
-[![GitHub license](https://img.shields.io/github/license/BasketBandit/BasketBandit-Java.svg)](https://github.com/BasketBandit/BasketBandit-Java/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/yuuko/yuuko-java/badge)](https://www.codefactor.io/repository/github/yuuko/yuuko-java)
+[![GitHub release](https://img.shields.io/github/release/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java)
+[![GitHub stars](https://img.shields.io/github/stars/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java/issues)
+[![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java/blob/master/LICENSE)
 
-# BasketBandit 3.4.0 (15/11/2018) 
+# Yuuko 1.0.0 (22/11/2018) 
 
-BasketBandit is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
+Yuuko is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
 If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any feature requests, feel free to post them in my Discord server [here](https://discord.gg/QcwghsA).
 
 ## Commands
 
-The global invocation/prefix is `@BasketBandit` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. To set a custom prefix, you can use the `settings` command below.
+The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. To set a custom prefix, you can use the `settings` command below.
 
 __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy way of checking to use the `-about` command. If the bot has not set itself up correctly, try using the `-setup` command.
 
@@ -28,24 +28,24 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 | module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` | MANAGE_SERVER|
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
-| about | Returns some technical information about BasketBandit, such as uptime, ping and server count. | -about | `-about` |
+| about | Returns some technical information about Yuuko, such as uptime, ping and server count. | -about | `-about` |
 | settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | <code>-settings &#124; deleteExecuted true</code> | MANAGE_SERVER |
 
 ### Moderation
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @BasketBandit &#124; not very nice.</code> | KICK_MEMBERS |
-| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @BasketBandit 7 &#124;  not cool, bro.</code> | BAN_MEMBERS |
-| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason | -mute @user &#124; [reason] | <code>-mute @BasketBandit &#124;  mic spamming.</code> | MUTE_MEMBERS |
-| unmute | Unmutes the provided user. | -unmute @user | `-unmute @BasketBandit` | MUTE_MEMBERS |
+| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @Yuuko &#124; not very nice.</code> | KICK_MEMBERS |
+| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @Yuuko 7 &#124;  not cool, bro.</code> | BAN_MEMBERS |
+| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason | -mute @user &#124; [reason] | <code>-mute @Yuuko &#124;  mic spamming.</code> | MUTE_MEMBERS |
+| unmute | Unmutes the provided user. | -unmute @user | `-unmute @Yuuko` | MUTE_MEMBERS |
 | nuke | Deletes the provided number of messages from a text channel. Min: `1`, Max `100`. | -nuke [value] | `-nuke 25` | MANAGE_MESSAGES |
 
 ### Utility
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @BasketBandit` |
+| user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @Yuuko` |
 | server | Returns information about the current server. | -server | `-server` |
 | channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | MANAGE_CHANNELS |
 | bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | ADMINISTRATOR  |
@@ -75,7 +75,7 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| play | Starts playback of the given audio track through either URL or search term. Will ask BasketBandit to join the voice channel of the command issuer and if a track is already playing, queue it instead. Using the command without arguments will resume a paused player. | -play &#124; [url] &#124; [term] | <code>-play &#124; https://www.youtube.com/watch?v=DDW4hTWbRYs &#124; something </code> |
+| play | Starts playback of the given audio track through either URL or search term. Will ask Yuuko to join the voice channel of the command issuer and if a track is already playing, queue it instead. Using the command without arguments will resume a paused player. | -play &#124; [url] &#124; [term] | <code>-play &#124; https://www.youtube.com/watch?v=DDW4hTWbRYs &#124; something </code> |
 | pause | Pauses playback of the current track. | -pause | `-pause` |
 | stop | Stops playback, clearing the queue and removing the background track. | -stop | `-stop` |
 | skip | Skips the currently playing track, if there is one. | -skip | `-skip` |
