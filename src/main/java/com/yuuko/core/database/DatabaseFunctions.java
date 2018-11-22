@@ -428,6 +428,12 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to update server status.");
+        } finally {
+            try {
+                conn.close();
+            } catch(Exception ex) {
+                Utils.sendException(ex, "Unable to close connection to database.");
+            }
         }
     }
 

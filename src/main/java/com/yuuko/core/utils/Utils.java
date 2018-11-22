@@ -48,7 +48,14 @@ public final class Utils {
     public static void sendException(Exception ex, String command) {
         try {
             MessageChannel channel = Configuration.BOT.getSelfUser().getJDA().getTextChannelById(495602825355591700L);
-            channel.sendMessage(command + "\n`" + ex + "`").queue();
+
+            StringBuilder traceString = new StringBuilder();
+            for(StackTraceElement trace: ex.getStackTrace()) {
+                traceString.append(trace.toString());
+                traceString.append("\n");
+            }
+
+            channel.sendMessage(command + "\n`" + traceString.toString() + "`").queue();
         } catch(Exception exc) {
             //
         }
@@ -230,12 +237,12 @@ public final class Utils {
         // Default shell size is 80x24, this output will allow each message to take up the whole screen
         // thus giving the illusion that the current page is changing rather than just being rewritten under.
         System.out.println();
-        System.out.println("           ____            _        _   ____                  _ _ _ ");
-        System.out.println("          | __ )  __ _ ___| | _____| |_| __ )  __ _ _ __   __| (_) |_");
-        System.out.println("          |  _ \\ / _` / __| |/ / _ \\ __|  _ \\ / _` | '_ \\ / _` | | __|");
-        System.out.println("          | |_) | (_| \\__ \\   <  __/ |_| |_) | (_| | | | | (_| | | |_");
-        System.out.println("          |____/ \\__,_|___/_|\\_\\___|\\__|____/ \\__,_|_| |_|\\__,_|_|\\__|");
-        System.out.println();
+        System.out.println("          db    db db    db db    db db   dD  .d88b.  ");
+        System.out.println("          `8b  d8' 88    88 88    88 88 ,8P' .8P  Y8. ");
+        System.out.println("           `8bd8'  88    88 88    88 88,8P   88    88 ");
+        System.out.println("             88    88    88 88    88 88`8b   88    88 ");
+        System.out.println("             88    88b  d88 88b  d88 88 `88. `8b  d8' ");
+        System.out.println("             YP    ~Y8888P' ~Y8888P' YP   YD  `Y88P'  ");
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ " + Cache.LAST_TEN.get(0));
         System.out.println("┃ " + Cache.LAST_TEN.get(1));
