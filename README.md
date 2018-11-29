@@ -2,13 +2,13 @@
 ![Servers](https://discordbots.org/api/widget/servers/420682957007880223.svg)
 ![Servers](https://discordbots.org/api/widget/upvotes/420682957007880223.svg)
 ![Library](https://discordbots.org/api/widget/lib/420682957007880223.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/yuuko/yuuko-java/badge)](https://www.codefactor.io/repository/github/yuuko/yuuko-java)
-[![GitHub release](https://img.shields.io/github/release/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java)
-[![GitHub stars](https://img.shields.io/github/stars/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java/issues)
-[![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko-Java.svg)](https://github.com/BasketBandit/Yuuko-Java/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/BasketBandit/yuuko/badge)](https://www.codefactor.io/repository/github/BasketBandit/yuuko)
+[![GitHub release](https://img.shields.io/github/release/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko)
+[![GitHub stars](https://img.shields.io/github/stars/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
+[![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (22/11/2018) 
+# Yuuko 1.0.0 (29/11/2018) 
 
 Yuuko is a multi-purpose bot for Discord programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -102,7 +102,7 @@ __PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy wa
 | commandPrefix | Changes the custom prefix for the server. | String | `-settings commandPrefix !` |
 | deleteExecuted | Deletes the command message after it has been executed. | TRUE, FALSE | `-settings deleteExecuted true` |
 | commandLogging | Logs any executed command into a logging channel. | TRUE, FALSE | `-settings commandLogging true` |
-| announceNowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings announceNowPlaying true` |
+| nowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings announceNowPlaying true` |
 | djMode | Toggles whether or not the role of `DJ` is required to use key audio module commands. | TRUE, FALSE | `-settings djMode true` |
 
 ## Other features
