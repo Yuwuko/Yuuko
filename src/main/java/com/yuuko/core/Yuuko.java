@@ -8,6 +8,7 @@ import com.yuuko.core.controllers.GenericGuildController;
 import com.yuuko.core.controllers.GenericGuildVoiceController;
 import com.yuuko.core.controllers.GenericMessageController;
 import com.yuuko.core.controllers.GenericMessageReactionController;
+import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.modules.C;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.M;
@@ -95,6 +96,8 @@ class Yuuko extends ListenerAdapter {
         }
 
         try {
+            new DatabaseConnection();
+
             Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
 
             ArrayList<Module> moduleList = new ArrayList<>();

@@ -25,11 +25,11 @@ public class CommandModules extends Command {
         String serverId = e.getGuild().getId();
         ArrayList<String> enabled = new ArrayList<>();
         ArrayList<String> disabled = new ArrayList<>();
-        Connection connection = new DatabaseConnection().getConnection();
-        ResultSet resultSet;
 
         try {
-            resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
+            Connection connection = DatabaseConnection.getConnection();
+
+            ResultSet resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
             resultSet.next();
 
             for(int i = 2; i < 10; i++) {
@@ -49,15 +49,11 @@ public class CommandModules extends Command {
                     .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
 
+            resultSet.close();
+            connection.close();
+
         } catch(Exception ex) {
             Utils.sendException(ex, e.getMessage().getContentRaw());
-
-        } finally {
-            try {
-                connection.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database. [CommandModules]");
-            }
         }
 
     }

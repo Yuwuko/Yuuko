@@ -2,7 +2,6 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
@@ -13,6 +12,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+
+import static com.yuuko.core.database.DatabaseConnection.getConnection;
 
 public class CommandHelp extends Command {
 
@@ -68,7 +69,7 @@ public class CommandHelp extends Command {
                     // If the command is excluded add it to the first list, if it is bound add it to the second list.
                     // In the event that there are no exclusions nor bindings, just return "none".
                     try {
-                        Connection connection = new DatabaseConnection().getConnection();
+                        Connection connection = getConnection();
                         ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false, true));
                         while(rs.next()) {
                             if(rs.getBoolean(5)) {

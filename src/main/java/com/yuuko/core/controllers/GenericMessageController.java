@@ -2,7 +2,6 @@ package com.yuuko.core.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.ModuleAudio;
@@ -21,6 +20,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+
+import static com.yuuko.core.database.DatabaseConnection.getConnection;
 
 public class GenericMessageController {
 
@@ -127,7 +128,7 @@ public class GenericMessageController {
                 }
             }
 
-            Connection connection = new DatabaseConnection().getConnection();
+            Connection connection = getConnection();
             ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, server, moduleDbName);
 
             // While it has next, if excluded is true, if the module name and channel Id match, apologise and break.

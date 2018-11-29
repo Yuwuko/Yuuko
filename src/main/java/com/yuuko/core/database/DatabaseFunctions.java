@@ -14,10 +14,32 @@ import java.util.Iterator;
 
 public class DatabaseFunctions {
 
-    private Connection conn;
-
     public DatabaseFunctions() {
-        conn = new DatabaseConnection().getConnection();
+    }
+
+    /**
+     * Small method that checks if a server exists on the database.
+     * @param server the server to check.
+     * @return boolean
+     */
+    private boolean exists(String server) {
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = ?");
+            stmt.setString(1, server);
+            ResultSet resultSet = stmt.executeQuery();
+
+            final boolean existence = resultSet.next();
+
+            stmt.close();
+            conn.close();
+
+            return existence;
+
+        } catch(Exception ex) {
+            Utils.sendException(ex, "Existence");
+        }
+        return true;
     }
 
     /**
@@ -27,33 +49,22 @@ public class DatabaseFunctions {
      */
     public boolean addNewServer(String server) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
-            ResultSet resultSet = stmt.executeQuery();
+            if(!exists(server)) {
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
+                stmt.setString(1, server);
+                stmt.execute();
 
-            if(!resultSet.next()) {
-                conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
-                stmt2.setString(1, server);
-                stmt2.execute();
+                stmt.close();
+                conn.close();
 
-                conn = new DatabaseConnection().getConnection();
-                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES (?)");
-                stmt3.setString(1, server);
-                return stmt3.execute();
+                return true;
             } else {
                 return false;
             }
-
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to add new server to the database. (ID: " + server + ")");
             return false;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -71,21 +82,14 @@ public class DatabaseFunctions {
 
             while(it.hasNext()) {
                 guild = (Guild)it.next();
+                if(!exists(guild.getId())) {
+                    Connection conn = DatabaseConnection.getConnection();
+                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
+                    stmt.setString(1, guild.getId());
+                    stmt.execute();
 
-                PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = ?");
-                stmt.setString(1, guild.getId());
-                ResultSet resultSet = stmt.executeQuery();
-
-                if(!resultSet.next()) {
-                    conn = new DatabaseConnection().getConnection();
-                    PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
-                    stmt2.setString(1, guild.getId());
-                    stmt2.execute();
-
-                    conn = new DatabaseConnection().getConnection();
-                    PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`serverId`) VALUES (?)");
-                    stmt3.setString(1, guild.getId());
-                    stmt3.execute();
+                    stmt.close();
+                    conn.close();
                 }
             }
 
@@ -94,12 +98,6 @@ public class DatabaseFunctions {
         } catch (Exception ex) {
             Utils.sendException(ex, "Unable to add new server to the database.");
             return false;
-        } finally {
-            try {
-                conn.close();
-            } catch (Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -114,7 +112,6 @@ public class DatabaseFunctions {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `serverId` = ?");
             stmt.setString(1, server);
             return stmt.executeQuery();
-
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to get module settings. (ID: " + server + ")");
             return null;
@@ -128,11 +125,18 @@ public class DatabaseFunctions {
      */
     public boolean checkModuleSettings(String moduleName, String server) {
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `serverId` = ?");
             stmt.setString(1, server);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
-            return resultSet.getBoolean(1);
+
+            final boolean result = resultSet.getBoolean(1);
+
+            stmt.close();
+            conn.close();
+
+            return result;
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + server + ")");
@@ -148,20 +152,21 @@ public class DatabaseFunctions {
      */
     public boolean toggleModule(String moduleIn, String server) {
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `serverId` = ?");
             stmt.setString(1, server);
             stmt.execute();
-            return checkModuleSettings(moduleIn, server);
+
+            final boolean result = checkModuleSettings(moduleIn, server);
+
+            stmt.close();
+            conn.close();
+
+            return result;
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", Server: " + server + ")");
             return false;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -186,22 +191,22 @@ public class DatabaseFunctions {
 
     public String getServerSetting(String setting, String server) {
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `ServerSettings` WHERE `serverId` = ?");
-
             stmt.setString(1, server);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
-            return resultSet.getString(1);
+
+            final String result = resultSet.getString(1);
+
+            stmt.close();
+            conn.close();
+
+            return result;
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to get server setting. (ID: " + server + ")");
             return null;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -214,20 +219,21 @@ public class DatabaseFunctions {
      */
     public boolean setServerSettings(String setting, String value, String server) {
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `" + setting + "` = ? WHERE `serverId` = ?");
             stmt.setString(1, value);
             stmt.setString(2, server);
-            return !stmt.execute();
+
+            final boolean result = !stmt.execute();
+
+            stmt.close();
+            conn.close();
+
+            return result;
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");
             return false;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -242,6 +248,7 @@ public class DatabaseFunctions {
         String moduleIn = "module" + modName;
 
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
             stmt.setString(1, server);
             stmt.setString(2, channel);
@@ -249,23 +256,23 @@ public class DatabaseFunctions {
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
-                conn = new DatabaseConnection().getConnection();
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?, '1', '0')");
                 stmt2.setString(1, server);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
+                    stmt2.close();
                     return 0;
                 }
             }
 
             if(!resultSet.getBoolean("bound") && resultSet.getBoolean("excluded")) {
-                conn = new DatabaseConnection().getConnection();
                 PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '1', `excluded` = '0' WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
                 stmt2.setString(1, server);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
+                    stmt2.close();
                     return 0;
                 }
             }
@@ -274,18 +281,14 @@ public class DatabaseFunctions {
                 return deleteBindingsRecord(server, channel, moduleIn);
             }
 
+            stmt.close();
+            conn.close();
+
             return -1;
 
         } catch(Exception ex) {
-            ex.printStackTrace();
             Utils.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
             return -1;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -300,6 +303,7 @@ public class DatabaseFunctions {
         String moduleIn = "module" + modName;
 
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
             stmt.setString(1, server);
             stmt.setString(2, channel);
@@ -307,23 +311,23 @@ public class DatabaseFunctions {
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
-                conn = new DatabaseConnection().getConnection();
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?, '0', '1')");
                 stmt2.setString(1, server);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
+                    stmt2.close();
                     return 0;
                 }
             }
 
             if(resultSet.getBoolean("bound") && !resultSet.getBoolean("excluded")) {
-                conn = new DatabaseConnection().getConnection();
                 PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '0', `excluded` = '1' WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
                 stmt2.setString(1, server);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
+                    stmt2.close();
                     return 0;
                 }
             }
@@ -332,18 +336,14 @@ public class DatabaseFunctions {
                 return deleteBindingsRecord(server, channel, moduleIn);
             }
 
+            stmt.close();
+            conn.close();
+
             return -1;
 
         } catch(Exception ex) {
-            ex.printStackTrace();
             Utils.sendException(ex, "Unable to exclude module from channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
             return -1;
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -356,22 +356,26 @@ public class DatabaseFunctions {
      */
     private int deleteBindingsRecord(String server, String channel, String moduleIn) {
         try {
-            conn = new DatabaseConnection().getConnection();
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
             stmt.setString(1, server);
             stmt.setString(2, channel);
             stmt.setString(3, moduleIn);
             if(!stmt.execute()) {
+                stmt.close();
+                conn.close();
+
                 return 1;
             }
+
+            stmt.close();
+            conn.close();
             return -1;
 
         } catch(Exception ex) {
-            ex.printStackTrace();
             Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
             return -1;
         }
-
     }
 
     /**
@@ -388,25 +392,6 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            ex.printStackTrace();
-            Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
-            return null;
-        }
-    }
-
-    /**
-     * Gets the bindings/exclusions for a particular server.
-     * ** Doesn't close connection or resultset is lost **
-     * @param server the idLong of the server.
-     * @return ResultSet
-     */
-    public ResultSet getBindingsExclusionsServer(Connection connection, String server) {
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
-            return stmt.executeQuery();
-
-        } catch(Exception ex) {
             Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
             return null;
         }
@@ -414,6 +399,7 @@ public class DatabaseFunctions {
 
     public void updateServerStatus() {
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerStatus` SET `uptime` = ?, `ping` = ?, `guilds` = ?, `modules` = ?, `commands` = ?, `messagesProcessed` = ?, `reactsProcessed` = ?, `commandsProcessed` = ?, `latestInfo` = ?");
             stmt.setInt(1, SystemClock.getRuntime());
             stmt.setDouble(2, Cache.PING);
@@ -426,14 +412,11 @@ public class DatabaseFunctions {
             stmt.setString(9, Cache.LATEST_INFO);
             stmt.execute();
 
+            stmt.close();
+            conn.close();
+
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to update server status.");
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 
@@ -443,18 +426,16 @@ public class DatabaseFunctions {
      */
     public void cleanup(String server) {
         try {
+            Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ServerSettings` WHERE `serverId` = ?");
             stmt.setString(1, server);
             stmt.execute();
 
+            stmt.close();
+            conn.close();
+
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to remove server from the database. (" + server + ")");
-        } finally {
-            try {
-                conn.close();
-            } catch(Exception ex) {
-                Utils.sendException(ex, "Unable to close connection to database.");
-            }
         }
     }
 

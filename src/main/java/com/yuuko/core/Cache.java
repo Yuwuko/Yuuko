@@ -24,6 +24,8 @@ public class Cache {
     public static int REACTS_PROCESSED;
     static AudioManagerManager AUDIO_MANAGER_MANAGER;
 
+
+
     static void updatePing() {
         PING = Configuration.BOT.getPing();
     }
