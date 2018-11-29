@@ -1,5 +1,6 @@
 package com.yuuko.core;
 
+import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utils.Utils;
 
@@ -41,6 +42,7 @@ public class SystemClock implements Runnable {
         fs++;
         // Every 5 seconds
         if(fs == 5) {
+            DatabaseConnection.queryConnections();
             Utils.consoleOutput();
             new DatabaseFunctions().updateServerStatus();
             fs = 0;

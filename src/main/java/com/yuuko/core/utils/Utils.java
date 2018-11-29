@@ -243,7 +243,7 @@ public final class Utils {
         System.out.println("             88    88    88 88    88 88`8b   88    88 ");
         System.out.println("             88    88b  d88 88b  d88 88 `88. `8b  d8' ");
         System.out.println("             YP    ~Y8888P' ~Y8888P' YP   YD  `Y88P'  ");
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS " + Cache.MODULES.size() + "/" + Cache.COMMANDS.size() + "]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ " + Cache.LAST_TEN.get(0));
         System.out.println("┃ " + Cache.LAST_TEN.get(1));
         System.out.println("┃ " + Cache.LAST_TEN.get(2));
@@ -257,7 +257,7 @@ public final class Utils {
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + Cache.LATEST_INFO );
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + Cache.PING + ", Guilds: " + Cache.GUILD_COUNT + ", Modules: " + Cache.MODULES.size() + ", Commands: " + Cache.COMMANDS.size());
+        System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + Cache.PING + ", Guilds: " + Cache.GUILD_COUNT + ", DB Idle: " + Cache.DB_POOL_IDLE + ", DB Active: " + Cache.DB_POOL_ACTIVE);
         System.out.println("┃ Messages processed: " + Cache.MESSAGES_PROCESSED + ", Reacts processed: " + Cache.REACTS_PROCESSED + ", Commands processed: " + Cache.COMMANDS_PROCESSED);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }

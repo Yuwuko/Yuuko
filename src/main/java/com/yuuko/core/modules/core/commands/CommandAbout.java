@@ -34,7 +34,7 @@ public class CommandAbout extends Command {
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", SystemClock.getRuntimeString(), true)
-                .addField("Heartbeat", Cache.PING + "", true);
+                .addField("Ping", Cache.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }
 
