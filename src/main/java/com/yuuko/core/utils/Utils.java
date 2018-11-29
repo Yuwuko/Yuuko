@@ -229,17 +229,16 @@ public final class Utils {
      * Console output message method.
      */
     public static void consoleOutput() {
-
         // Default shell size is 80x24, this output will allow each message to take up the whole screen
         // thus giving the illusion that the current page is changing rather than just being rewritten under.
         System.out.println();
-        System.out.println("          db    db db    db db    db db   dD  .d88b.  ");
-        System.out.println("          `8b  d8' 88    88 88    88 88 ,8P' .8P  Y8. ");
-        System.out.println("           `8bd8'  88    88 88    88 88,8P   88    88 ");
-        System.out.println("             88    88    88 88    88 88`8b   88    88 ");
-        System.out.println("             88    88b  d88 88b  d88 88 `88. `8b  d8' ");
-        System.out.println("             YP    ~Y8888P' ~Y8888P' YP   YD  `Y88P'  ");
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS " + Cache.MODULES.size() + "/" + Cache.COMMANDS.size() + "]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("            __   __           _          __   __    _   ___   ___");
+        System.out.println("            \\ \\ / /   _ _   _| | _____   \\ \\ / /   / | / _ \\ / _ \\ ");
+        System.out.println("             \\ V / | | | | | | |/ / _ \\   \\ V /____| || | | | | | | ");
+        System.out.println("              | || |_| | |_| |   < (_) |   | |_____| || |_| | |_| | ");
+        System.out.println("              |_| \\__,_|\\__,_|_|\\_\\___/    |_|     |_(_)___(_)___/ ");
+        System.out.println();
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS " + Cache.MODULES.size() + "/" + Cache.COMMANDS.size() + "]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ " + Cache.LAST_TEN.get(0));
         System.out.println("┃ " + Cache.LAST_TEN.get(1));
         System.out.println("┃ " + Cache.LAST_TEN.get(2));

@@ -13,6 +13,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Shrunk the [__announceNowPlaying__] setting to simply [__nowPlaying__] because it's easier.
 + [~] Fixed a number of old bugs the haunted the previous versions.
 + [~] Cleaned up a LOT of the code, making it more readable and less redundant.
++ [~] Updated the about section since everyone already knows it's a discord bot...
 
 ## 3.4.0
 + [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands.
