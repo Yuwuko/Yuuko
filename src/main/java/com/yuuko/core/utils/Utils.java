@@ -253,7 +253,7 @@ public final class Utils {
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + Cache.LATEST_INFO );
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + SystemClock.getRuntime() + ", Ping: " + Cache.PING + ", Guilds: " + Cache.GUILD_COUNT + ", DB Idle: " + Cache.DB_POOL_IDLE + ", DB Active: " + Cache.DB_POOL_ACTIVE);
+        System.out.println("┃ Uptime: " + SystemClock.getRuntimeString() + ", Ping: " + Cache.PING + ", Guilds: " + Cache.GUILD_COUNT + ", DB Idle: " + Cache.DB_POOL_IDLE + ", DB Active: " + Cache.DB_POOL_ACTIVE);
         System.out.println("┃ Messages processed: " + Cache.MESSAGES_PROCESSED + ", Reacts processed: " + Cache.REACTS_PROCESSED + ", Commands processed: " + Cache.COMMANDS_PROCESSED);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
