@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.audio.commands;
 
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
@@ -31,9 +32,8 @@ public class CommandClear extends Command {
                     return;
                 }
 
-                Queue<com.sedmelluq.discord.lavaplayer.track.AudioTrack> temp = new LinkedList<>();
-                Queue<com.sedmelluq.discord.lavaplayer.track.AudioTrack> clone = new LinkedList<>();
-                clone.addAll(manager.scheduler.queue);
+                LinkedList<AudioTrack> temp = new LinkedList<>();
+                Queue<AudioTrack> clone = new LinkedList<>(manager.scheduler.queue);
 
                 int i = 1;
                 for(int x = 0; x < manager.scheduler.queue.size(); x++) {
@@ -42,7 +42,7 @@ public class CommandClear extends Command {
                         MessageHandler.sendMessage(e, embed.build());
                         i++;
                     } else {
-                        ((LinkedList<com.sedmelluq.discord.lavaplayer.track.AudioTrack>) temp).addLast(clone.remove());
+                        temp.addLast(clone.remove());
                         i++;
                     }
                 }

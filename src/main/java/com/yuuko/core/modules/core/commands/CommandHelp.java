@@ -60,7 +60,7 @@ public class CommandHelp extends Command {
                     for(String usage: cmd.getCommandUsage()) {
                         usages.append(usage).append("\n");
                     }
-                    usages = Utils.removeLastOccurrence(usages, "\n");
+                    Utils.removeLastOccurrence(usages, "\n");
 
                     StringBuilder bindList = new StringBuilder();
                     StringBuilder excludeList = new StringBuilder();

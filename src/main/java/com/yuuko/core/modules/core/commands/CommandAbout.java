@@ -30,7 +30,6 @@ public class CommandAbout extends Command {
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", Cache.GUILD_COUNT + "", true)
-                .addField("Users", Cache.USER_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", SystemClock.getRuntimeString(), true)

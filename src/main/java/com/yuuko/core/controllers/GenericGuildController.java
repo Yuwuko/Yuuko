@@ -8,7 +8,6 @@ import com.yuuko.core.modules.core.commands.CommandSetup;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
@@ -34,11 +33,6 @@ public class GenericGuildController {
         List<TextChannel> channels = e.getGuild().getTextChannels();
         User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
 
-        int users = 0;
-        for(Guild guild : bot.getJDA().getGuilds()) {
-            users += guild.getMemberCache().size();
-        }
-        Cache.USER_COUNT = users;
         Cache.GUILD_COUNT += 1;
 
         EmbedBuilder about = new EmbedBuilder()
@@ -48,11 +42,10 @@ public class GenericGuildController {
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", Cache.GUILD_COUNT + "", true)
-                .addField("Users", Cache.USER_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
                 .addField("Uptime", SystemClock.getRuntimeString(), true)
-                .addField("Heartbeat", Cache.PING + "", true);
+                .addField("Ping", Cache.PING + "", true);
 
         for(TextChannel c: channels) {
             if(c.getName().toLowerCase().equals("general")) {
@@ -72,11 +65,6 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
 
-        int users = 0;
-        for(Guild guild : Configuration.BOT.getGuilds()) {
-            users += guild.getMemberCache().size();
-        }
-        Cache.USER_COUNT = users;
         Cache.GUILD_COUNT += -1;
 
         Utils.updateDiscordBotList();

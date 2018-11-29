@@ -11,7 +11,6 @@ import java.util.List;
 public class Cache {
     public static long PING;
     public static int GUILD_COUNT;
-    public static int USER_COUNT;
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
     public static List<String> SETTINGS;

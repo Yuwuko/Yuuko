@@ -18,7 +18,6 @@ import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
@@ -61,12 +60,6 @@ class Yuuko extends ListenerAdapter {
             Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
             Utils.updateDiscordBotList();
         }
-
-        int users = 0;
-        for(Guild guild : Configuration.BOT.getGuilds()) {
-            users += guild.getMemberCache().size();
-        }
-        Cache.USER_COUNT = users;
         Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
     }
 
@@ -88,7 +81,7 @@ class Yuuko extends ListenerAdapter {
                 output.append(line).append("\n");
                 line = reader.readLine();
             }
-            output = Utils.removeLastOccurrence(output, "\n");
+            Utils.removeLastOccurrence(output, "\n");
             System.out.println(output);
 
         } catch(Exception ex) {

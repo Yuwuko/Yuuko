@@ -157,7 +157,7 @@ public class GenericMessageController {
             connection.close();
 
             if(bound && !executed) {
-                boundChannels = Utils.removeLastOccurrence(boundChannels, ", ");
+                Utils.removeLastOccurrence(boundChannels, ", ");
                 EmbedBuilder embed = new EmbedBuilder().setTitle("The _" + input[0] + "_ command is bound to " + boundChannels.toString() + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }

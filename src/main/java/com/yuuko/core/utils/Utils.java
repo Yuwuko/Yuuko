@@ -67,13 +67,11 @@ public final class Utils {
      * @param pattern String
      * @return StringBuilder
      */
-    public static StringBuilder removeLastOccurrence(StringBuilder stringBuilder, String pattern) {
+    public static void removeLastOccurrence(StringBuilder stringBuilder, String pattern) {
         int index = stringBuilder.lastIndexOf(pattern);
         if(index > -1) {
             stringBuilder.replace(index, index + 1, "");
         }
-
-        return stringBuilder;
     }
 
     /**
@@ -82,13 +80,11 @@ public final class Utils {
      * @param pattern String
      * @return StringBuilder
      */
-    public static StringBuffer removeLastOccurrence(StringBuffer stringBuffer, String pattern) {
+    public static void removeLastOccurrence(StringBuffer stringBuffer, String pattern) {
         int index = stringBuffer.lastIndexOf(pattern);
         if(index > -1) {
             stringBuffer.replace(index, index + 1, "");
         }
-
-        return stringBuffer;
     }
 
     /**

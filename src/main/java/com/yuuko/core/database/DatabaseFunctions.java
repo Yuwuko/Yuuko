@@ -10,8 +10,8 @@ import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Iterator;
 
+@SuppressWarnings("ALL")
 public class DatabaseFunctions {
 
     public DatabaseFunctions() {
@@ -78,10 +78,9 @@ public class DatabaseFunctions {
 
         try {
             SnowflakeCacheView servers = e.getJDA().getGuildCache();
-            Iterator it = servers.iterator();
 
-            while(it.hasNext()) {
-                guild = (Guild)it.next();
+            for(Object server : servers) {
+                guild = (Guild) server;
                 if(!exists(guild.getId())) {
                     Connection conn = DatabaseConnection.getConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
