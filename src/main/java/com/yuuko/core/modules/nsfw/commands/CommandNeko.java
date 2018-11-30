@@ -18,10 +18,10 @@ public class CommandNeko extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             String inputString = (command.length > 1) ? command[1] : "lewd";
-            String json = new JsonBuffer().getString("https://nekos.life/api/v2/img/" + inputString, "default", "default");
             String url;
+            String json = new JsonBuffer().getString("https://nekos.life/api/v2/img/" + inputString, "default", "default");
 
-            if(!json.contains("404")) {
+            if(!json.contains("404") || !json.contains("Not Found")) {
                 url = json.substring(json.indexOf("h"), json.lastIndexOf("\""));
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No image was found with that parameter! (Go to https://nekos.life/api/v2/endpoints for a list of valid parameters)");

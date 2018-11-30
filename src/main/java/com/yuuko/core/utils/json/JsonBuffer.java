@@ -18,7 +18,6 @@ public class JsonBuffer {
 
             String accept = (acceptHeader.equals("default")) ? "application/json" : acceptHeader;
             String contentType = (contentTypeHeader.equals("default")) ? "application/json" : contentTypeHeader;
-
             HttpsURLConnection conn = (HttpsURLConnection) new URL(inputUrl).openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", accept);

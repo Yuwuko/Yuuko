@@ -8,6 +8,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
 + [+] Put in place measures to allow for a web console to edit settings and also see status updates.
 + [+] Heavily modified the database logic, tidied it up a bunch and now use pooled connections to increase database speeds. (12-20ms to 2-8ms @ about)
++ [~] Bumped JDK version to 12 (early release) because why wouldn't you live life dangerously in production. (also, jdk 11 ssl is broken)
 + [~] Updated the system clock to keep time in a more meaningful way that can be used and isn't pre-formatted.
 + [~] Updated exception util to print the full stack trace so that debugging can be done more efficiently.
 + [~] Shrunk the [__announceNowPlaying__] setting to simply [__nowPlaying__] because it's easier.

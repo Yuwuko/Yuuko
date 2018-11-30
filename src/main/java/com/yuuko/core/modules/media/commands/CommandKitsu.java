@@ -15,7 +15,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandKitsu extends Command {
 
     public CommandKitsu() {
-        super("kitsu", "com.yuuko.core.modules.media.ModuleMedia", 2, new String[]{"-kitsu [type] [name]"}, null);
+        super("kitsu", "com.yuuko.core.modules.media.ModuleMedia", 1, new String[]{"-kitsu [type] [name]"}, null);
     }
 
     @Override
