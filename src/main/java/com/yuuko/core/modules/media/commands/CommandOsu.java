@@ -26,7 +26,7 @@ public class CommandOsu extends Command {
             int mode;
 
             if(commandParameters.length > 1) {
-                // Exception flow is bad practice, but I'm lazy... and this is my project. (if you're reading this, find another method of have people shout at you in the street)
+                // Exception flow is bad practice, but I'm lazy... and this is my project. (if you're reading this, find another method or have people shout at you in the street)
                 try {
                     int tmp = Integer.parseInt(commandParameters[1]);
                     mode = (tmp < 4 && tmp > -1) ? tmp : 0;

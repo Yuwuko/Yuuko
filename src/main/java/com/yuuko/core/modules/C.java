@@ -68,5 +68,5 @@ public final class C {
 
     // NSFW module commands
     public static final Command EFUKT = new CommandEfukt();
-    public static final Command NEKOS = new CommandNeko();
+    public static final Command NEKO = new CommandNeko();
 }

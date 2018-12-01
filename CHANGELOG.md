@@ -12,9 +12,9 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated the system clock to keep time in a more meaningful way that can be used and isn't pre-formatted.
 + [~] Updated exception util to print the full stack trace so that debugging can be done more efficiently.
 + [~] Shrunk the [__announceNowPlaying__] setting to simply [__nowPlaying__] because it's easier.
-+ [~] Fixed a number of old bugs the haunted the previous versions.
++ [~] Fixed a number of old bugs the haunted the previous versions, obviously leaving a few behind.
 + [~] Cleaned up a LOT of the code, making it more readable and less redundant.
-+ [~] Updated the about section since everyone already knows it's a discord bot...
++ [~] Updated the about section since everyone already knows the context of a discord bot...
 
 ## 3.4.0
 + [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands.

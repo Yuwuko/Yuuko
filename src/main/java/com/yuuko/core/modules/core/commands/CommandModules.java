@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.core.commands;
 
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
@@ -32,7 +33,7 @@ public class CommandModules extends Command {
             ResultSet resultSet = new DatabaseFunctions().getModuleSettings(connection, serverId);
             resultSet.next();
 
-            for(int i = 2; i < 10; i++) {
+            for(int i = 2; i < Cache.MODULES.size(); i++) {
                 ResultSetMetaData meta = resultSet.getMetaData();
                 if(resultSet.getBoolean(i)) {
                     enabled.add(meta.getColumnName(i).substring(6));

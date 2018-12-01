@@ -11,9 +11,6 @@ public class DatabaseConnection {
 
     private static BasicDataSource connectionPool = new BasicDataSource();
 
-    /**
-     * Database constructor.
-     */
     public DatabaseConnection() {
         connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
         connectionPool.setUsername(Configuration.DATABASE_USERNAME);
