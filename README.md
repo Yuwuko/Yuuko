@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (01/12/2018) 
+# Yuuko 1.0.0 (02/12/2018) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -18,13 +18,10 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. To set a custom prefix, you can use the `settings` command below.
 
-__PLEASE READ:__ In most cases, the bot sets itself up correctly with an easy way of checking to use the `-about` command. If the bot has not set itself up correctly, try using the `-setup` command.
-
 ### Core
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| setup | Execute if the bot didn't initialise correctly, but shouldn't need to be used. (If it says unsuccessful, the setup was already performed successfully) | -setup | `-setup` | ADMINISTRATOR |
 | module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` | MANAGE_SERVER|
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |

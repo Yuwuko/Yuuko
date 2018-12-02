@@ -2,6 +2,7 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.core.settings.SettingCommandPrefix;
@@ -15,8 +16,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-
-import static com.yuuko.core.database.DatabaseConnection.getConnection;
 
 public class CommandSettings extends Command {
 
@@ -41,7 +40,7 @@ public class CommandSettings extends Command {
                     return;
                 }
 
-                if(commandParameters[0].equalsIgnoreCase("commandLogging") || commandParameters[0].equalsIgnoreCase("deleteExecuted") || commandParameters[0].equalsIgnoreCase("announceNowPlaying") || commandParameters[0].equalsIgnoreCase("djmode")) {
+                if(commandParameters[0].equalsIgnoreCase("commandLogging") || commandParameters[0].equalsIgnoreCase("deleteExecuted") || commandParameters[0].equalsIgnoreCase("nowPlaying") || commandParameters[0].equalsIgnoreCase("djmode")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
                         MessageHandler.sendMessage(e, embed.build());
@@ -57,7 +56,7 @@ public class CommandSettings extends Command {
 
             } else {
 
-                Connection connection = getConnection();
+                Connection connection = DatabaseConnection.getConnection();
                 try {
                     ResultSet resultSet = new DatabaseFunctions().getServerSettings(connection, e.getGuild().getId());
                     resultSet.next();
@@ -69,7 +68,7 @@ public class CommandSettings extends Command {
                             .addField("commandPrefix", "[" + resultSet.getString("commandPrefix") + "] - The message prefix used to symbolise a command.", false)
                             .addField("deleteExecuted", "[" + resultSet.getBoolean("deleteExecuted") + "] - Deletes the users command string when it is executed.", false)
                             .addField("commandLogging", "[" + resultSet.getBoolean("commandLogging") + "] - Sends executed commands to a predefined logging channel.", false)
-                            .addField("announceNowPlaying", "[" + resultSet.getBoolean("announceNowPlaying") + "] - Sends information of the current track when it changes.", false)
+                            .addField("nowPlaying", "[" + resultSet.getBoolean("nowPlaying") + "] - Sends information of the current track when it changes.", false)
                             .addField("djMode", "[" + resultSet.getBoolean("djMode") + "] - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, commandModules.build());

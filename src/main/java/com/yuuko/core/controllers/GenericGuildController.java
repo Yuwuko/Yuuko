@@ -9,7 +9,6 @@ import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
@@ -30,15 +29,12 @@ public class GenericGuildController {
     private void guildJoinEvent(GuildJoinEvent e) {
         new CommandSetup().executeAutomated(e);
 
-        List<TextChannel> channels = e.getGuild().getTextChannels();
-        User bot = e.getGuild().getMemberById(420682957007880223L).getUser();
-
-        Cache.GUILD_COUNT += 1;
+        Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         EmbedBuilder about = new EmbedBuilder()
-                .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
+                .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
                 .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/Yuuko-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
-                .setThumbnail(bot.getAvatarUrl())
+                .setThumbnail(Cache.BOT.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", Cache.GUILD_COUNT + "", true)
@@ -47,8 +43,10 @@ public class GenericGuildController {
                 .addField("Uptime", SystemClock.getRuntimeString(), true)
                 .addField("Ping", Cache.PING + "", true);
 
+        List<TextChannel> channels = e.getGuild().getTextChannels();
+
         for(TextChannel c: channels) {
-            if(c.getName().toLowerCase().equals("general")) {
+            if(c.getName().toLowerCase().contains("general") || c.getName().toLowerCase().contains("primary")) {
                 try {
                     MessageHandler.sendMessage(c, about.build());
                     break;
@@ -65,7 +63,7 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
 
-        Cache.GUILD_COUNT += -1;
+        Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         Utils.updateDiscordBotList();
         Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");

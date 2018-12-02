@@ -46,21 +46,23 @@ class Yuuko extends ListenerAdapter {
      */
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
         Configuration.load();
+        new DatabaseConnection();
 
-        Configuration.BOT = new JDABuilder(AccountType.BOT)
+        Cache.JDA = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
                 .setToken(Configuration.BOT_TOKEN)
                 .addEventListener(new Yuuko())
                 .setEventManager(new Yuuko.ThreadedEventManager())
                 .build();
-        Configuration.BOT.awaitReady();
-        Configuration.BOT.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
+        Cache.JDA.awaitReady();
+        Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         if(!Configuration.DISCORD_BOTS_API.equals("null")) {
-            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
+            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.JDA.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
             Utils.updateDiscordBotList();
         }
-        Cache.GUILD_COUNT = Configuration.BOT.getGuilds().size();
+        Cache.BOT = Cache.JDA.getSelfUser();
+        Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
     }
 
     /**
@@ -89,8 +91,6 @@ class Yuuko extends ListenerAdapter {
         }
 
         try {
-            new DatabaseConnection();
-
             Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
 
             ArrayList<Module> moduleList = new ArrayList<>();

@@ -1,14 +1,11 @@
 package com.yuuko.core;
 
 import com.yuuko.core.utils.Utils;
-import net.dv8tion.jda.core.JDA;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class Configuration {
-    // Bot object.
-    public static JDA BOT;
     // Bot version.
     public static final String VERSION = "Y-1.0.0";
     // Bot's ID.

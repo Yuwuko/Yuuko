@@ -1,7 +1,6 @@
 package com.yuuko.core.utils;
 
 import com.yuuko.core.Cache;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.SystemClock;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
@@ -47,7 +46,7 @@ public final class Utils {
      */
     public static void sendException(Exception ex, String command) {
         try {
-            MessageChannel channel = Configuration.BOT.getSelfUser().getJDA().getTextChannelById(495602825355591700L);
+            MessageChannel channel = Cache.JDA.getTextChannelById(495602825355591700L);
 
             StringBuilder traceString = new StringBuilder();
             for(StackTraceElement trace: ex.getStackTrace()) {
@@ -158,7 +157,7 @@ public final class Utils {
      */
     public static void updateDiscordBotList() {
         try {
-            Cache.BOT_LIST.setStats(Configuration.BOT.getShardInfo().getShardId(), Configuration.BOT.getShardInfo().getShardTotal(), Math.toIntExact(Configuration.BOT.getGuildCache().size()));
+            Cache.BOT_LIST.setStats(Cache.JDA.getShardInfo().getShardId(), Cache.JDA.getShardInfo().getShardTotal(), Math.toIntExact(Cache.JDA.getGuildCache().size()));
         } catch(Exception e) {
             e.printStackTrace();
         }

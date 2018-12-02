@@ -8,7 +8,7 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Cache;
 
 import java.util.HashMap;
 
@@ -49,7 +49,7 @@ public class AudioManagerManager {
             }
         }
 
-        Configuration.BOT.getGuildById(id).getAudioManager().setSendingHandler(manager.getSendHandler());
+        Cache.JDA.getGuildById(id).getAudioManager().setSendingHandler(manager.getSendHandler());
 
         return manager;
     }
