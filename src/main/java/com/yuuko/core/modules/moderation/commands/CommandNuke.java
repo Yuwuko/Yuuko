@@ -24,9 +24,14 @@ public class CommandNuke extends Command {
             // A way to nuke whole channels is to duplicate them and delete the old one.
             List<TextChannel> channels = e.getMessage().getMentionedChannels();
             if(channels.size() > 0) {
+                int i = 0;
                 for(TextChannel channel: channels) {
+                    if(i > 4) {
+                        return;
+                    }
                     channel.createCopy().queue();
                     channel.delete().queue();
+                    i++;
                 }
                 return;
             }
