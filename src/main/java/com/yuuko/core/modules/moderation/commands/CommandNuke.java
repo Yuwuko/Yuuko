@@ -6,6 +6,7 @@ import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.OffsetDateTime;
@@ -14,12 +15,22 @@ import java.util.List;
 public class CommandNuke extends Command {
 
     public CommandNuke() {
-        super("nuke", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-nuke [value]"}, Permission.MESSAGE_MANAGE);
+        super("nuke", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-nuke [value]", "-nuke #channel"}, Permission.MESSAGE_MANAGE);
     }
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
+            // A way to nuke whole channels is to duplicate them and delete the old one.
+            List<TextChannel> channels = e.getMessage().getMentionedChannels();
+            if(channels.size() > 0) {
+                for(TextChannel channel: channels) {
+                    channel.createCopy().queue();
+                    channel.delete().queue();
+                }
+                return;
+            }
+
             int value = Integer.parseInt(command[1]);
 
             if(value < 1 || value > 100) {
