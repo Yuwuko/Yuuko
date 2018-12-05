@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.utility.commands;
 
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
@@ -46,7 +47,7 @@ public class CommandServer extends Command {
                 .addField("Voice Channels", server.getVoiceChannels().size()+"", true)
                 .addField("Roles", server.getRoles().size()+"", true)
                 .addField("Emotes", emoteString.toString(), false)
-                .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
         MessageHandler.sendMessage(e, commandInfo.build());
     }
 

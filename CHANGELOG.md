@@ -16,6 +16,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Fixed a number of old bugs the haunted the previous versions, obviously leaving a few behind.
 + [~] Cleaned up a LOT of the code, making it more readable and less redundant.
 + [~] Updated the about section since everyone already knows the context of a discord bot...
++ [~] Changed most of the embeds to include information about who used the command and bot version.
 + [-] Removed documentation about the [__setup__] command since people keep using it despite the bot already being setup and kicking it when it fails.
 
 ## 3.4.0

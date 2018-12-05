@@ -2,6 +2,7 @@ package com.yuuko.core.modules.media.commands;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.media.kitsu.Attributes;
@@ -55,7 +56,7 @@ public class CommandKitsu extends Command {
                     .addField("Status", anime.getStatus(), true)
                     .addField("Start Date", anime.getStartDate(), true)
                     .addField("End Date", anime.getEndDate(), true)
-                    .setFooter("Version: " + Configuration.VERSION + ", data provided by kitsu.io" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

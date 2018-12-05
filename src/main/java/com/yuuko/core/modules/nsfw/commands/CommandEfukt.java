@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.nsfw.commands;
 
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
@@ -26,14 +27,14 @@ public class CommandEfukt extends Command {
                         .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByTag("source").attr("src"))
                         .setImage(doc.getElementsByTag("video").attr("poster"))
-                        .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[2] + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e.getTextChannel(), efuktPost.build());
             } else {
                 efuktPost = new EmbedBuilder()
                         .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))
-                        .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[2] + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e.getTextChannel(), efuktPost.build());
             }
 

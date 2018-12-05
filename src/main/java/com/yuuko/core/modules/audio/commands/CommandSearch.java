@@ -1,6 +1,7 @@
 package com.yuuko.core.modules.audio.commands;
 
 import com.google.api.services.youtube.model.SearchResult;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.ModuleAudio;
@@ -41,7 +42,7 @@ public class CommandSearch extends Command {
             EmbedBuilder presentResults = new EmbedBuilder()
                     .setAuthor("Search results for " + command[1], null)
                     .setDescription("Input the number of the track you would like to play, or 'cancel' to stop me waiting for a response. \n\n" + resultString)
-                    .setFooter(Configuration.VERSION + " · Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[2] + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {

@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.utility.commands;
 
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
@@ -59,7 +60,7 @@ public class CommandUser extends Command {
                     .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                     .addField("Bot?", target.getUser().isBot() + "", true)
                     .addField("Roles", roleString.toString(), true)
-                    .setFooter(Configuration.VERSION + " · Information requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, commandInfo.build());
 
         } catch(Exception ex) {

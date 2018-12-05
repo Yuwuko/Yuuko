@@ -1,6 +1,7 @@
 package com.yuuko.core.modules.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
@@ -38,7 +39,7 @@ public class CommandQueue extends Command {
                     EmbedBuilder nextTracks = new EmbedBuilder()
                             .setTitle("Here are the next " + i + " tracks in the queue:")
                             .setDescription(queue.toString())
-                            .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                            .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
 
                 } else {

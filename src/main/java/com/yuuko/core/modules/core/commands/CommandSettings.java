@@ -70,7 +70,7 @@ public class CommandSettings extends Command {
                             .addField("commandLogging", "[" + resultSet.getBoolean("commandLogging") + "] - Sends executed commands to a predefined logging channel.", false)
                             .addField("nowPlaying", "[" + resultSet.getBoolean("nowPlaying") + "] - Sends information of the current track when it changes.", false)
                             .addField("djMode", "[" + resultSet.getBoolean("djMode") + "] - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
-                        .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, commandModules.build());
                 } catch(Exception ex) {
                     Utils.sendException(ex, e.getMessage().getContentRaw());

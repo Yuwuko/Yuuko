@@ -2,6 +2,7 @@ package com.yuuko.core.modules.world.commands;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.world.tfl.LineManager;
@@ -56,7 +57,7 @@ public class CommandLineStatus extends Command {
                         .addField(lineManager.get(10).getName(), lineManager.get(10).getLineStatusString(), true)
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
-                        .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
 
             } else {
@@ -70,7 +71,7 @@ public class CommandLineStatus extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
                         .addField("", reasons.toString(), false)
-                        .setFooter("Version: " + Configuration.VERSION + ", Data provided by tfl.gov.uk", e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             }
 

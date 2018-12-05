@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.nsfw.commands;
 
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
@@ -11,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandNeko extends Command {
 
     public CommandNeko() {
-        super("neko", "com.yuuko.core.modules.nsfw.ModuleNSFW", 0, new String[]{"-neko [type]"}, null);
+        super("neko", "com.yuuko.core.modules.nsfw.ModuleNSFW", 0, new String[]{"-neko", "-neko [type]"}, null);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class CommandNeko extends Command {
             EmbedBuilder lewdNeko = new EmbedBuilder()
                     .setTitle("Neko: " + url)
                     .setImage(url)
-                    .setFooter(Configuration.VERSION + " ·  Requested by " + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[2] + e.getAuthor().getName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, lewdNeko.build());
 
         } catch(Exception ex) {

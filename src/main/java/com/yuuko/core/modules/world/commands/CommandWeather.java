@@ -2,6 +2,7 @@ package com.yuuko.core.modules.world.commands;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.world.weather.WeatherContainer;
@@ -50,7 +51,7 @@ public class CommandWeather extends Command {
                     .addField("Sunset", LocalDateTime.ofEpochSecond(weather.getSys().getSunset(), 0, ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("hh:mma")), true)
                     .addField("Longitude", weather.getCoord().getLon() + "", true)
                     .addField("Wind Angle", weather.getWind().getDeg() + "°", true)
-                    .setFooter(Configuration.VERSION + " · Data provided by openweathermap.org" , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
             Utils.sendException(ex, command[0] + command[1]);
