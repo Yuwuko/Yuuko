@@ -45,7 +45,7 @@ public class AudioManagerManager {
         if(manager == null) {
             synchronized(AudioManagerManager.getGuildAudioManagers()) {
                 manager = new GuildAudioManager(playerManager);
-                managers.put(id, manager);
+                addGuildMusicManager(id, manager);
             }
         }
 
@@ -65,7 +65,7 @@ public class AudioManagerManager {
     /**
      * Adds to the GuildAudioManager HashMap.
      */
-    public static void addGuildMusicManager(String guild, GuildAudioManager manager) {
+    private static void addGuildMusicManager(String guild, GuildAudioManager manager) {
         managers.put(guild, manager);
     }
 

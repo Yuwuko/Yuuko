@@ -57,7 +57,7 @@ public class Configuration {
                     API_KEYS.put(key.getName(), new ApplicationProgrammingInterface(key.getName(), c.readLine(), c.readLine()));
                     c.close();
                 }
-                System.out.println("Loaded " + keyFiles.length + " API keys.");
+                System.out.println("[INFO] " + keyFiles.length + " API keys successfully loaded.");
             }
 
         } catch(Exception ex) {

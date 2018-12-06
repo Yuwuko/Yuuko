@@ -28,7 +28,6 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         new CommandSetup().executeAutomated(e);
-
         Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         EmbedBuilder about = new EmbedBuilder()
@@ -39,7 +38,7 @@ public class GenericGuildController {
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", Cache.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
-                .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
+                .addField("Invocation", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId())  + "`", true)
                 .addField("Uptime", SystemClock.getRuntimeString(), true)
                 .addField("Ping", Cache.PING + "", true);
 

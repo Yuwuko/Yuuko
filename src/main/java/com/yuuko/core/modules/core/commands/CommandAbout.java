@@ -5,6 +5,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.SystemClock;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -31,7 +32,7 @@ public class CommandAbout extends Command {
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Servers", Cache.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
-                .addField("Invocation", Configuration.GLOBAL_PREFIX, true)
+                .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
                 .addField("Uptime", SystemClock.getRuntimeString(), true)
                 .addField("Ping", Cache.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
