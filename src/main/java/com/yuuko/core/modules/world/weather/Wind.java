@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "speed",
         "deg"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Wind {
 

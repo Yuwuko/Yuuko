@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "reason",
         "statusSeverityDescription"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 class LineStatus {
 

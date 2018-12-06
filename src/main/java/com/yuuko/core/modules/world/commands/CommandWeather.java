@@ -26,10 +26,11 @@ public class CommandWeather extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
             command[1] = command[1].replace(" ", "+");
-            String json = new JsonBuffer().getString("https://api.openweathermap.org/data/2.5/weather?q=" +command[1] + "&units=metric&APPID=" + Utils.getApiKey("openweathermap"), "default", "default");
+            String json = new JsonBuffer().getString("https://api.openweathermap.org/data/2.5/weather?q=" +command[1] + "&units=metric&APPID=" + Utils.getApiKey("openweathermap"), "default", "default", null, null);
 
             if(json != null && json.equals("")) {
-                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", unable to retrieve weather information from " + command[1] + ".");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Sorry, **_" + command[1] + "_** returned no results.");
+                MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 

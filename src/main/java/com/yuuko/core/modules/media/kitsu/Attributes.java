@@ -40,7 +40,6 @@ import java.util.List;
         "showType",
         "nsfw"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Attributes {
 

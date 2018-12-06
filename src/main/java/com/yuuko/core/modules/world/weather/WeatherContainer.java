@@ -22,7 +22,6 @@ import java.util.List;
         "name",
         "cod"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherContainer {
 

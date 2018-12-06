@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "en_us",
         "ja_jp"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Titles {
 

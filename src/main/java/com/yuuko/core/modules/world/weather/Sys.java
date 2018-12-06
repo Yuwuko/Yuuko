@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "sunrise",
         "sunset"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Sys {
 

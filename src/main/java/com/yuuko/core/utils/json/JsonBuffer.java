@@ -13,8 +13,8 @@ public class JsonBuffer {
      * @param inputUrl String
      * @return result.toString();
      */
-    public String getString(String inputUrl, String acceptHeader, String contentTypeHeader) {
-        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
+    public String getString(String inputUrl, String acceptHeader, String contentTypeHeader, String extraProperty, String extraHeader) {
+        try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
 
             String accept = (acceptHeader.equals("default")) ? "application/json" : acceptHeader;
             String contentType = (contentTypeHeader.equals("default")) ? "application/json" : contentTypeHeader;
@@ -22,6 +22,10 @@ public class JsonBuffer {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", accept);
             conn.setRequestProperty("Content-Type", contentType);
+
+            if(extraProperty != null && extraHeader != null) {
+                conn.setRequestProperty(extraProperty, extraHeader);
+            }
 
             if(conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed: HTTP error code: " + conn.getResponseCode());

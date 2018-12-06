@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "temp_min",
         "temp_max"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Main {
 

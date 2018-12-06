@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "description",
         "icon"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Weather {
 

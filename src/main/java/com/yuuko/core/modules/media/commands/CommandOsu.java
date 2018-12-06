@@ -50,7 +50,7 @@ public class CommandOsu extends Command {
             }
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer().getString("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + username + "&m=" + mode, "default", "default");
+            String json = new JsonBuffer().getString("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + username + "&m=" + mode, "default", "default", null, null);
 
             // Jackson expects an array when Json objects start with [, so this removes it.
             if(json != null && json.length() > 0) {

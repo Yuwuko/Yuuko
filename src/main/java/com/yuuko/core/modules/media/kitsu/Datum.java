@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "type",
         "attributes"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Datum {
 

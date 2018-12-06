@@ -13,6 +13,7 @@ import com.yuuko.core.modules.nsfw.commands.CommandEfukt;
 import com.yuuko.core.modules.nsfw.commands.CommandNeko;
 import com.yuuko.core.modules.utility.commands.*;
 import com.yuuko.core.modules.world.commands.CommandLineStatus;
+import com.yuuko.core.modules.world.commands.CommandTesco;
 import com.yuuko.core.modules.world.commands.CommandWeather;
 
 public final class C {
@@ -67,6 +68,7 @@ public final class C {
     // World module commands.
     public static final Command LINE_STATUS = new CommandLineStatus();
     public static final Command WEATHER = new CommandWeather();
+    public static final Command TESCO = new CommandTesco();
 
     // NSFW module commands
     public static final Command EFUKT = new CommandEfukt();

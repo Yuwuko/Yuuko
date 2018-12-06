@@ -29,7 +29,7 @@ public class Configuration {
     // API key list (Yes, a HashMap is better, but I forgot and put effort into home-brew!)
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
 
-    public static void load() {
+    static void load() {
         try {
             BufferedReader c = new BufferedReader(new FileReader("configuration.txt"));
             BOT_ID = c.readLine();
@@ -54,7 +54,7 @@ public class Configuration {
                 API_KEYS = new HashMap<>();
                 for(File key : keyFiles) {
                     BufferedReader c = new BufferedReader(new FileReader(key));
-                    API_KEYS.put(key.getName().replace(".txt", ""), new ApplicationProgrammingInterface(key.getName().replace(".txt", ""), c.readLine(), c.readLine()));
+                    API_KEYS.put(key.getName(), new ApplicationProgrammingInterface(key.getName(), c.readLine(), c.readLine()));
                     c.close();
                 }
                 System.out.println("Loaded " + keyFiles.length + " API keys.");

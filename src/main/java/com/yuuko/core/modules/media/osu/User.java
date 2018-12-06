@@ -31,7 +31,6 @@ import java.util.List;
         "pp_country_rank",
         "events"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 

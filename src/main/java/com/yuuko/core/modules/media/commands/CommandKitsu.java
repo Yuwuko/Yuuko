@@ -6,7 +6,7 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.media.kitsu.Attributes;
-import com.yuuko.core.modules.media.kitsu.KitsuContainer;
+import com.yuuko.core.modules.media.kitsu.KitsuObject;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import com.yuuko.core.utils.json.JsonBuffer;
@@ -22,17 +22,17 @@ public class CommandKitsu extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            String[] commandParameters = command[1].split("\\s+", 2);
-            commandParameters[1] = commandParameters[1].replace(" ", "%20");
-            String json = "";
+            //String[] commandParameters = command[1].split("\\s+", 2);
+            //[1] = commandParameters[1].replace(" ", "%20");
+            String json;
 
-            if(commandParameters[0].toLowerCase().equals("character")) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
-                MessageHandler.sendMessage(e, embed.build());
+            //if(commandParameters[0].toLowerCase().equals("character")) {
+            //    EmbedBuilder embed = new EmbedBuilder().setTitle("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
+            //    MessageHandler.sendMessage(e, embed.build());
                 // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
-            } else {
-                json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + commandParameters[0] + "%20" + commandParameters[1] + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json");
-            }
+            //} else {
+            json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json", null, null);
+            //}
 
             if(json != null && json.equals("")) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("That search parameter didn't return any results.");
@@ -40,7 +40,7 @@ public class CommandKitsu extends Command {
                 return;
             }
 
-            KitsuContainer kitsu = new ObjectMapper().readValue(json, new TypeReference<KitsuContainer>(){});
+            KitsuObject kitsu = new ObjectMapper().readValue(json, new TypeReference<KitsuObject>(){});
             Attributes anime = kitsu.getData().get(0).getAttributes();
 
             EmbedBuilder embed = new EmbedBuilder()

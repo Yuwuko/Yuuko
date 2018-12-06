@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "large",
         "original"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CoverImage {
 

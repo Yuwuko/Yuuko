@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "19",
         "20"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RatingFrequencies {
 

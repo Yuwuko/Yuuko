@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "lon",
         "lat"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Coord {
 

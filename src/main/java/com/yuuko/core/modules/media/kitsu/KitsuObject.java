@@ -12,9 +12,8 @@ import java.util.List;
 @JsonPropertyOrder({
         "data"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class KitsuContainer {
+public class KitsuObject {
 
     @JsonProperty("data")
     private List<Datum> data = null;

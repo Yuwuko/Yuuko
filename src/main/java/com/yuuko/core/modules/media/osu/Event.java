@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "date",
         "epicfactor"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
 

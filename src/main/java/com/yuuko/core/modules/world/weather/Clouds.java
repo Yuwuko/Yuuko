@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
         "all"
 })
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Clouds {
 
