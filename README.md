@@ -54,6 +54,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 |---------|-------------|-------|---------|------------|
 | linestatus | Returns full line coverage for the London Underground which is accurate to command execution, with optional `min` argument to return a minified version. | -linestatus &#124; [min] | <code>-linestatus &#124; min</code> |
 | weather | Allows you to look up the weather in the given city *Note: Currently limited to a city name, without country code.* | -weather [city] | `-weather London` |
+| tesco | Returns product information about any item sold by Tesco PLC | -tesco [product] | `-tesco mount gay` |
 
 ### Math
 
