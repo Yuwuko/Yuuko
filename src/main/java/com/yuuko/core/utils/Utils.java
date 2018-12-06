@@ -1,6 +1,7 @@
 package com.yuuko.core.utils;
 
 import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.SystemClock;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
@@ -46,7 +47,7 @@ public final class Utils {
      */
     public static void sendException(Exception ex, String command) {
         try {
-            MessageChannel channel = Cache.JDA.getTextChannelById(495602825355591700L);
+            MessageChannel channel = Cache.JDA.getTextChannelById(520158641484201994L);
 
             StringBuilder traceString = new StringBuilder();
             for(StackTraceElement trace: ex.getStackTrace()) {
@@ -300,6 +301,24 @@ public final class Utils {
         } else {
             return String.format("%02d:%02d", minutes, seconds);
         }
+    }
+
+    /**
+     * Returns an API AppplicationId.
+     * @param name name of the api
+     * @return String
+     */
+    public static String getApiApplicationId(String name) {
+        return Configuration.API_KEYS.get(name).getApplicationId();
+    }
+
+    /**
+     * Returns an API key.
+     * @param name name of the api
+     * @return String
+     */
+    public static String getApiKey(String name) {
+        return Configuration.API_KEYS.get(name).getKey();
     }
 
 }

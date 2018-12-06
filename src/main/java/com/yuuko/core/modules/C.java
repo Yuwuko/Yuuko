@@ -3,6 +3,7 @@ package com.yuuko.core.modules;
 import com.yuuko.core.modules.audio.commands.*;
 import com.yuuko.core.modules.core.commands.*;
 import com.yuuko.core.modules.developer.commands.CommandAddServers;
+import com.yuuko.core.modules.developer.commands.CommandReloadApi;
 import com.yuuko.core.modules.developer.commands.CommandSetStatus;
 import com.yuuko.core.modules.math.commands.CommandRoll;
 import com.yuuko.core.modules.media.commands.CommandKitsu;
@@ -18,6 +19,7 @@ public final class C {
     // Dev module commands.
     public static final Command SET_STATUS = new CommandSetStatus();
     public static final Command ADD_SERVERS = new CommandAddServers();
+    public static final Command RELOAD_API = new CommandReloadApi();
 
     // Core module commands.
     public static final Command SETUP = new CommandSetup();

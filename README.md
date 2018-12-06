@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (02/12/2018) 
+# Yuuko 1.0.0 (06/12/2018) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -36,7 +36,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @Yuuko 7 &#124;  not cool, bro.</code> | BAN_MEMBERS |
 | mute | Mutes the provided user from both voice and text chat on the server, with an optional reason | -mute @user &#124; [reason] | <code>-mute @Yuuko &#124;  mic spamming.</code> | MUTE_MEMBERS |
 | unmute | Unmutes the provided user. | -unmute @user | `-unmute @Yuuko` | MUTE_MEMBERS |
-| nuke | Deletes the provided number of messages from a text channel or if tagged, the whole channel(s). Max Channels `5`, Max messages `100`. | -nuke [value] &#124; #channel | <code>-nuke 25 &#124; nsfw</code> | MANAGE_MESSAGES |
+| nuke | Deletes the provided number of messages from a text channel or if tagged, the whole channel(s). Max Channels `5`, Max messages `100`. | -nuke [value] &#124; #channel | <code>-nuke 25 &#124; #nsfw</code> | MANAGE_MESSAGES |
 
 ### Utility
 

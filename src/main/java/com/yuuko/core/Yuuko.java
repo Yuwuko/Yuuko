@@ -46,6 +46,7 @@ class Yuuko extends ListenerAdapter {
      */
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
         Configuration.load();
+        Configuration.loadApi();
         new DatabaseConnection();
 
         Cache.JDA = new JDABuilder(AccountType.BOT)
@@ -57,8 +58,8 @@ class Yuuko extends ListenerAdapter {
         Cache.JDA.awaitReady();
         Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
-        if(!Configuration.DISCORD_BOTS_API.equals("null")) {
-            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.JDA.getSelfUser().getId()).token(Configuration.DISCORD_BOTS_API).build();
+        if(!Configuration.API_KEYS.containsKey("discordbotlist")) {
+            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.JDA.getSelfUser().getId()).token(Utils.getApiKey("discordbotlist")).build();
             Utils.updateDiscordBotList();
         }
         Cache.BOT = Cache.JDA.getSelfUser();
@@ -125,8 +126,8 @@ class Yuuko extends ListenerAdapter {
 
             Cache.STANDARD_STRINGS = new String[3];
             Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
-            Cache.STANDARD_STRINGS[1] = Configuration.VERSION + " · Information requested by ";
-            Cache.STANDARD_STRINGS[2] = Configuration.VERSION + " · Requested by ";
+            Cache.STANDARD_STRINGS[1] = Cache.STANDARD_STRINGS[0] + " · Information requested by ";
+            Cache.STANDARD_STRINGS[2] = Cache.STANDARD_STRINGS[0] + " · Requested by ";
             Cache.MODULES = moduleList;
             Cache.COMMANDS = commandList;
             Cache.SETTINGS = settingsList;

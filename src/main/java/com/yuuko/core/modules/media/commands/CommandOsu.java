@@ -2,7 +2,6 @@ package com.yuuko.core.modules.media.commands;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.media.osu.User;
 import com.yuuko.core.utils.MessageHandler;
@@ -51,7 +50,7 @@ public class CommandOsu extends Command {
             }
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer().getString("https://osu.ppy.sh/api/get_user?k=" + Configuration.OSU_API + "&u=" + username + "&m=" + mode, "default", "default");
+            String json = new JsonBuffer().getString("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + username + "&m=" + mode, "default", "default");
 
             // Jackson expects an array when Json objects start with [, so this removes it.
             if(json != null && json.length() > 0) {

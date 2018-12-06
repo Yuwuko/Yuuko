@@ -37,7 +37,7 @@ public class JsonBuffer {
             return result.toString();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "public String getString(String inputUrl, String acceptHeader, String contentTypeHeader) [JsonBuffer]");
+            Utils.sendException(ex, "public String getString() [JsonBuffer]");
             return null;
         }
     }

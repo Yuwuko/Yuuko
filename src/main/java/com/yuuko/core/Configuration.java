@@ -3,7 +3,9 @@ package com.yuuko.core;
 import com.yuuko.core.utils.Utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
 
 public class Configuration {
     // Bot version.
@@ -24,38 +26,42 @@ public class Configuration {
     public static String DATABASE_USERNAME;
     // Database Password
     public static String DATABASE_PASSWORD;
-    // Google API key.
-    public static String GOOGLE_API;
-    // TFL App ID.
-    public static String TFL_ID;
-    // TFL API Key.
-    public static String TFL_API;
-    // Discord Bot List API.
-    static String DISCORD_BOTS_API;
-    // Osu API Key
-    public static String OSU_API;
-    // Open WeatherContainer Map API key
-    public static String OPEN_WEATHER_MAP_API;
+    // API key list (Yes, a HashMap is better, but I forgot and put effort into home-brew!)
+    public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
 
-    static void load() {
+    public static void load() {
         try {
             BufferedReader c = new BufferedReader(new FileReader("configuration.txt"));
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
-            GOOGLE_API = c.readLine();
-            TFL_ID = c.readLine();
-            TFL_API = c.readLine();
             DATABASE_IP = c.readLine();
             DATABASE_NAME = c.readLine();
             DATABASE_USERNAME = c.readLine();
             DATABASE_PASSWORD = c.readLine();
-            OSU_API = c.readLine();
-            OPEN_WEATHER_MAP_API = c.readLine();
-            DISCORD_BOTS_API = c.readLine();
             c.close();
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Configuration.load()");
+        }
+    }
+
+    public static void loadApi() {
+        try {
+            File folder = new File("./api/");
+            File[] keyFiles = folder.listFiles();
+
+            if(keyFiles != null) {
+                API_KEYS = new HashMap<>();
+                for(File key : keyFiles) {
+                    BufferedReader c = new BufferedReader(new FileReader(key));
+                    API_KEYS.put(key.getName().replace(".txt", ""), new ApplicationProgrammingInterface(key.getName().replace(".txt", ""), c.readLine(), c.readLine()));
+                    c.close();
+                }
+                System.out.println("Loaded " + keyFiles.length + " API keys.");
+            }
+
+        } catch(Exception ex) {
+            Utils.sendException(ex, "loadAPI");
         }
     }
 
