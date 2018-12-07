@@ -30,7 +30,8 @@ public class CommandNuke extends Command {
                     if(i > 4) {
                         return;
                     }
-                    new DatabaseFunctions().updateBindings(channel.getId(), channel.createCopy().complete().getId());
+                    new DatabaseFunctions().cleanupBindings(channel.getId());
+                    channel.createCopy().queue();
                     channel.delete().queue();
                     i++;
                 }

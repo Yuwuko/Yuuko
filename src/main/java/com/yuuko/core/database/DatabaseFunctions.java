@@ -448,19 +448,18 @@ public class DatabaseFunctions {
      * Removes binding from channels that are deleted.
      * @param channel the channel to clean up.
      */
-    public void updateBindings(String oldChannel, String newChannel) {
+    public void cleanupBindings(String channel) {
         try {
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleBindings` SET `channelId` = ? WHERE `channelId` = ?");
-            stmt.setString(1, oldChannel);
-            stmt.setString(1, newChannel);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `channelId` = ?");
+            stmt.setString(1, channel);
             stmt.execute();
 
             stmt.close();
             conn.close();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to update bindings in the database. (Old:" + oldChannel + ", New: " + newChannel + ")");
+            Utils.sendException(ex, "Unable to update bindings in the database. (Channel:" + channel + ")");
         }
     }
 
