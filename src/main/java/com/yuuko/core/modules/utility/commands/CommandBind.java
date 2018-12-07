@@ -25,7 +25,7 @@ public class CommandBind extends Command {
             channelId = e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getId();
             module = commandParameters[0].toLowerCase();
 
-            int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
+            final int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
 
             if(res == 0) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound _" + module + "_ to _" + e.getGuild().getTextChannelsByName(commandParameters[1], true).get(0).getName() + "_.");
@@ -39,7 +39,7 @@ public class CommandBind extends Command {
             channelId = e.getTextChannel().getId();
             module = commandParameters[0];
 
-            int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
+            final int res = new DatabaseFunctions().toggleBinding(module, channelId, serverId);
 
             if(res == 0) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound _" + module + "_ to _" + e.getTextChannel().getName() + "_.");

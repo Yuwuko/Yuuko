@@ -267,6 +267,7 @@ public class DatabaseFunctions {
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     stmt2.close();
+                    conn.close();
                     return 0;
                 }
             }
@@ -278,11 +279,14 @@ public class DatabaseFunctions {
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     stmt2.close();
+                    conn.close();
                     return 0;
                 }
             }
 
             if(resultSet.getBoolean("bound")) {
+                stmt.close();
+                conn.close();
                 return deleteBindingsRecord(server, channel, moduleIn);
             }
 
@@ -322,6 +326,7 @@ public class DatabaseFunctions {
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     stmt2.close();
+                    conn.close();
                     return 0;
                 }
             }
@@ -333,11 +338,14 @@ public class DatabaseFunctions {
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     stmt2.close();
+                    conn.close();
                     return 0;
                 }
             }
 
             if(resultSet.getBoolean("excluded")) {
+                stmt.close();
+                conn.close();
                 return deleteBindingsRecord(server, channel, moduleIn);
             }
 
@@ -369,7 +377,6 @@ public class DatabaseFunctions {
             if(!stmt.execute()) {
                 stmt.close();
                 conn.close();
-
                 return 1;
             }
 
