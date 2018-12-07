@@ -4,8 +4,10 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.SystemClock;
 import com.yuuko.core.database.DatabaseFunctions;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import org.xhtmlrenderer.swing.Java2DRenderer;
 
@@ -322,7 +324,38 @@ public final class Utils {
         return Configuration.API_KEYS.get(name).getKey();
     }
 
+    /**
+     * Returns the server custom prefix.
+     * @param server the server to retrieve the prefix from
+     * @return String
+     */
     public static String getServerPrefix(String server) {
         return new DatabaseFunctions().getServerSetting("commandPrefix", server);
     }
+
+    /**
+     * Returns the first mentioned user from a given message.
+     * @param e MessageReceivedEvent
+     * @param userId String
+     * @return Member
+     */
+    public static Member getMentionedUser(MessageReceivedEvent e, String userId) {
+        List<Member> mentioned = e.getMessage().getMentionedMembers();
+        Member user;
+
+        if(mentioned.size() > 0) {
+            user = mentioned.get(0);
+        } else {
+            user = e.getGuild().getMemberById(userId);
+        }
+
+        if(user == null) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("That user could not found.");
+            MessageHandler.sendMessage(e, embed.build());
+            return null;
+        } else {
+            return user;
+        }
+    }
+
 }

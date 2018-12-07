@@ -8,7 +8,10 @@ import com.yuuko.core.modules.developer.commands.CommandSetStatus;
 import com.yuuko.core.modules.math.commands.CommandRoll;
 import com.yuuko.core.modules.media.commands.CommandKitsu;
 import com.yuuko.core.modules.media.commands.CommandOsu;
-import com.yuuko.core.modules.moderation.commands.*;
+import com.yuuko.core.modules.moderation.commands.CommandBan;
+import com.yuuko.core.modules.moderation.commands.CommandKick;
+import com.yuuko.core.modules.moderation.commands.CommandMute;
+import com.yuuko.core.modules.moderation.commands.CommandNuke;
 import com.yuuko.core.modules.nsfw.commands.CommandEfukt;
 import com.yuuko.core.modules.nsfw.commands.CommandNeko;
 import com.yuuko.core.modules.utility.commands.*;
@@ -35,7 +38,6 @@ public final class C {
     public static final Command KICK = new CommandKick();
     public static final Command BAN = new CommandBan();
     public static final Command MUTE = new CommandMute();
-    public static final Command UNMUTE = new CommandUnmute();
 
     // Math module commands.
     public static final Command ROLL = new CommandRoll();

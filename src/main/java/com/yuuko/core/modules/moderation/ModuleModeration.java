@@ -3,7 +3,10 @@ package com.yuuko.core.modules.moderation;
 import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.Module;
-import com.yuuko.core.modules.moderation.commands.*;
+import com.yuuko.core.modules.moderation.commands.CommandBan;
+import com.yuuko.core.modules.moderation.commands.CommandKick;
+import com.yuuko.core.modules.moderation.commands.CommandMute;
+import com.yuuko.core.modules.moderation.commands.CommandNuke;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ModuleModeration extends Module {
@@ -12,7 +15,6 @@ public class ModuleModeration extends Module {
         super("ModuleModeration", "moduleModeration", new Command[]{
                 new CommandNuke(),
                 new CommandMute(),
-                new CommandUnmute(),
                 new CommandBan(),
                 new CommandKick()
         });

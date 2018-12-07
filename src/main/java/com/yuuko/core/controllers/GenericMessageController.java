@@ -98,10 +98,6 @@ public class GenericMessageController {
             String moduleDbName = "";
             String channelId = e.getTextChannel().getId();
 
-            boolean executed = false;
-            boolean bound = false;
-            StringBuilder boundChannels = new StringBuilder();
-
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
@@ -131,6 +127,10 @@ public class GenericMessageController {
             Connection connection = getConnection();
             ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, server, moduleDbName);
 
+            StringBuilder boundChannels = new StringBuilder();
+            boolean executed = false;
+            boolean bound = false;
+
             // While it has next, if excluded is true, if the module name and channel Id match, apologise and break.
             // If excluded is false (implying that bounded is true) and the module name and channel Id do not match,
             // apologise again and break, else execute and set executed to true!
@@ -138,7 +138,7 @@ public class GenericMessageController {
             while(rs.next()) {
                 if(rs.getBoolean(5)) {
                     if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("The _" + input[0] + "_ command is excluded from this channel.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + input[0] + "_** command is excluded from this channel.");
                         MessageHandler.sendMessage(e, embed.build());
                         break;
                     }
@@ -158,7 +158,7 @@ public class GenericMessageController {
 
             if(bound && !executed) {
                 Utils.removeLastOccurrence(boundChannels, ", ");
-                EmbedBuilder embed = new EmbedBuilder().setTitle("The _" + input[0] + "_ command is bound to " + boundChannels.toString() + ".");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + input[0] + "_** command is bound to " + boundChannels.toString() + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }
 

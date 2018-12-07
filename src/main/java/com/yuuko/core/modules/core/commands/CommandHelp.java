@@ -33,9 +33,9 @@ public class CommandHelp extends Command {
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
                     .addField("Math", "`roll`", false)
                     .addField("Media", "`kitsu` `osu`", false)
-                    .addField("Moderation", "`ban` `kick` `mute` `unmute` `nuke`", false)
+                    .addField("Moderation", "`ban` `kick` `mute` `nuke`", false)
                     .addField("World", "`linestatus` `weather` `tesco`", false)
-                    .addField("Utility", "`bind` `exclude` `channel` `server` `users`", false)
+                    .addField("Utility", "`bind` `exclude` `channel` `server` `user`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Cache.STANDARD_STRINGS[0], e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 

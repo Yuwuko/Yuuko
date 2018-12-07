@@ -1,5 +1,6 @@
 package com.yuuko.core.modules.moderation.commands;
 
+import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
@@ -29,7 +30,7 @@ public class CommandNuke extends Command {
                     if(i > 4) {
                         return;
                     }
-                    channel.createCopy().queue();
+                    new DatabaseFunctions().updateBindings(channel.getId(), channel.createCopy().complete().getId());
                     channel.delete().queue();
                     i++;
                 }

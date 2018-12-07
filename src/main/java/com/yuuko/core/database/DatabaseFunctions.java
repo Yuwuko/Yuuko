@@ -188,6 +188,12 @@ public class DatabaseFunctions {
         }
     }
 
+    /**
+     * Returns the value of a single server settings.
+     * @param setting the setting to be checked
+     * @param server the server to check the setting for
+     * @return String
+     */
     public String getServerSetting(String setting, String server) {
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -420,7 +426,7 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Cleans up any server's that ask the bot to leave.
+     * Cleans up any server's that ask the bot to leave. (Uses CASCADE)
      * @param server the server's id.
      */
     public void cleanup(String server) {
@@ -437,5 +443,27 @@ public class DatabaseFunctions {
             Utils.sendException(ex, "Unable to remove server from the database. (" + server + ")");
         }
     }
+
+    /**
+     * Removes binding from channels that are deleted.
+     * @param channel the channel to clean up.
+     */
+    public void updateBindings(String oldChannel, String newChannel) {
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleBindings` SET `channelId` = ? WHERE `channelId` = ?");
+            stmt.setString(1, oldChannel);
+            stmt.setString(1, newChannel);
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+
+        } catch(Exception ex) {
+            Utils.sendException(ex, "Unable to update bindings in the database. (Old:" + oldChannel + ", New: " + newChannel + ")");
+        }
+    }
+
+
 
 }
