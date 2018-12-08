@@ -61,7 +61,7 @@ class Yuuko extends ListenerAdapter {
         Cache.BOT = Cache.JDA.getSelfUser();
         Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
-        if(!Configuration.API_KEYS.containsKey("discordbots")) {
+        if(Configuration.API_KEYS.containsKey("discordbots")) {
             Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
             Utils.updateDiscordBotList();
         }

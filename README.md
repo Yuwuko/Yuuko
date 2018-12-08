@@ -35,7 +35,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @Yuuko &#124; not very nice.</code> | KICK_MEMBERS |
 | ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @Yuuko 7 &#124;  not cool, bro.</code> | BAN_MEMBERS |
 | mute | Mutes the provided user from both voice and text chat on the server, with an optional reason (Toggle) | -mute @user &#124; [reason] | <code>-mute @Yuuko &#124;  mic spamming.</code> | MUTE_MEMBERS |
-| nuke | Deletes the provided number of messages from a text channel or if tagged, the whole channel(s). Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break an bindings you have created!) | -nuke [value] &#124; #channel | <code>-nuke 25 &#124; #nsfw</code> | MANAGE_MESSAGES |
+| nuke | Deletes the provided number of messages from a text channel **OR** if tagged, the whole channel. Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break any bindings you have created!) | -nuke [value] &#124; #channel | <code>-nuke 25 &#124; #nsfw</code> | MANAGE_MESSAGES |
 
 ### Utility
 
