@@ -6,7 +6,7 @@ public class ApplicationProgrammingInterface {
     private final String applicationId;
     private final String key;
 
-    public ApplicationProgrammingInterface(String name, String applicationId, String key) {
+    ApplicationProgrammingInterface(String name, String applicationId, String key) {
         this.name = name;
         this.applicationId = applicationId;
         this.key = key;

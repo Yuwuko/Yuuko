@@ -10,7 +10,6 @@ public class SystemClock implements Runnable {
     private static int runtime;
     private static String runtimeString;
     private static int d = 0, h = 0, m = 0, s = 0;
-
     private static int fm = 0, oh = 0, fs =0;
 
     SystemClock() {

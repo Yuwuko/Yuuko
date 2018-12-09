@@ -11,7 +11,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [+] Added new [__tesco__] command that allows you to lookup and price check items from the store (kind of a meme)
 + [~] Heavily modified the database logic, tidied it up a bunch and now use pooled connections to increase database speeds. (12-20ms to 2-8ms @ about)
 + [~] Heavily modified the API system, now allowing API keys to be reloaded and added on the fly.
-+ [~] Modified the [__nuke__] command. You can now tag channels instead of a value and those channels will be duplicated and the old versions deleted.
++ [~] Modified the [__nuke__] command. You can now tag channels instead of a value and those channels will be duplicated and the old versions deleted. (Also added guards for exceptions)
 + [~] Bumped JDK version to 12 (early release) because why wouldn't you live life dangerously in production. (also, jdk 11 ssl is broken)
 + [~] Updated the system clock to keep time in a more meaningful way that can be used and isn't pre-formatted.
 + [~] Updated exception util to print the full stack trace so that debugging can be done more efficiently.
