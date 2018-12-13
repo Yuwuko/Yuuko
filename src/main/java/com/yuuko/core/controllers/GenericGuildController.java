@@ -31,9 +31,7 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         new CommandSetup().executeAutomated(e);
-
         Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
-
 
         try {
             List<TextChannel> channels = e.getGuild().getTextChannels();
@@ -42,7 +40,7 @@ public class GenericGuildController {
                 if(c.getName().toLowerCase().contains("general") || c.getName().toLowerCase().contains("primary")) {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
-                            .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/Yuuko-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
+                            .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/Yuuko)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
                             .setThumbnail(Cache.BOT.getAvatarUrl())
                             .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                             .addField("Version", Configuration.VERSION, true)

@@ -6,7 +6,6 @@ import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 
 public class SystemClock implements Runnable {
-
     private static boolean running;
     private static int runtime;
     private static String runtimeString;
@@ -39,24 +38,24 @@ public class SystemClock implements Runnable {
     }
 
     private void update() {
-        fs++;
-        // Every 5 seconds
-        if(fs == 5) {
+        runtimeString = ((d < 10) ? String.format("%02d", d) : d + "") + ":" + ((h < 10) ? String.format("%02d", h) : h + "") + ":" + ((m < 10) ? String.format("%02d", m) : m + "") + ":" + ((s < 10) ? String.format("%02d", s) : s + "");
+
+        // 5 seconds
+        if(++fs == 5) {
             DatabaseConnection.queryConnections();
             Utils.consoleOutput();
             new DatabaseFunctions().updateServerStatus();
             fs = 0;
         }
 
-        fm++;
-        // Every 5 minutes
-        if(fm == 300) {
+        // 5 minutes
+        if(++fm == 300) {
             Cache.updatePing();
             fm = 0;
         }
 
-        s++;
-        if(s == 60) {
+        // 1 hour
+        if(++s == 60) {
             m++;
             s = 0;
             if(m == 60) {
@@ -68,14 +67,6 @@ public class SystemClock implements Runnable {
                 }
             }
         }
-
-        // Add leading zeros.
-        String ds = (d < 10) ? String.format("%02d", d) : d + "";
-        String hs = (h < 10) ? String.format("%02d", h) : h + "";
-        String ms = (m < 10) ? String.format("%02d", m) : m + "";
-        String ss = (s < 10) ? String.format("%02d", s) : s + "";
-
-        runtimeString = ds + ":" + hs + ":" + ms + ":" + ss;
     }
 
     public static String getRuntimeString() {

@@ -6,7 +6,6 @@ import com.yuuko.core.Statistics;
 import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.audio.ModuleAudio;
 import com.yuuko.core.modules.audio.commands.CommandSearch;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utils.MessageHandler;
@@ -132,7 +131,7 @@ public class GenericMessageController {
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano) {
         try {
-            if(ModuleAudio.searchUsers.containsKey(e.getAuthor().getIdLong())) {
+            if(Cache.audioSearchResults.containsKey(e.getAuthor().getIdLong())) {
                 String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
                 String server = e.getGuild().getId();
 

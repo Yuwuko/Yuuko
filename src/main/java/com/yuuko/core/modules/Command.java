@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class Command {
-
     private final String commandName;
     private final String commandModule;
     private final int expectedParameters;

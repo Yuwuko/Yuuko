@@ -4,7 +4,6 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.audio.ModuleAudio;
 import com.yuuko.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -36,7 +35,7 @@ public class CommandSearch extends Command {
                 return;
             }
 
-            ModuleAudio.searchUsers.put(e.getAuthor().getIdLong(), results);
+            Cache.audioSearchResults.put(e.getAuthor().getIdLong(), results);
 
             EmbedBuilder presentResults = new EmbedBuilder()
                     .setAuthor("Search results for " + command[1], null)
@@ -52,15 +51,15 @@ public class CommandSearch extends Command {
     public void executeCommand(MessageReceivedEvent e, String input) {
         if(!input.equalsIgnoreCase("cancel")) {
             if(Integer.parseInt(input) < 11 && Integer.parseInt(input) > 0) {
-                String videoId = ModuleAudio.searchUsers.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();
+                String videoId = Cache.audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();
                 new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
-                ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
+                Cache.audioSearchResults.remove(e.getAuthor().getIdLong());
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            ModuleAudio.searchUsers.remove(e.getAuthor().getIdLong());
+            Cache.audioSearchResults.remove(e.getAuthor().getIdLong());
 
             EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
             MessageHandler.sendMessage(e, embed.build());

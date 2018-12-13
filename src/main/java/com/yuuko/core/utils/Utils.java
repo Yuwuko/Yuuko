@@ -77,19 +77,8 @@ public final class Utils {
      * @return String
      */
     public static String extractModuleName(String string, boolean shortened, boolean lowercase) {
-        String returnString;
-
-        if(shortened) {
-            returnString = string.substring(string.lastIndexOf(".") + 7);
-        } else {
-            returnString = string.substring(string.lastIndexOf(".") + 1);
-        }
-
-        if(lowercase) {
-            return returnString.toLowerCase();
-        } else {
-            return returnString;
-        }
+        String returnString = (shortened) ? string.substring(string.lastIndexOf(".") + 7) : string.substring(string.lastIndexOf(".") + 1);
+        return (lowercase) ? returnString.toLowerCase() : returnString;
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.yuuko.core;
 
 public class ApplicationProgrammingInterface {
-
     private final String name;
     private final String applicationId;
     private final String key;

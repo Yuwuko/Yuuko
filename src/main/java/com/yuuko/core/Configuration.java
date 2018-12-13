@@ -8,25 +8,15 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    // Bot version.
     public static final String VERSION = "Y-1.0.0";
-    // Bot's ID.
     public static String BOT_ID;
-    // Bot's Token.
     static String BOT_TOKEN;
-    // Bot's global command prefix.
     public static final String GLOBAL_PREFIX = "@Yuuko#2525";
-    // Bot's status, e.g Playing with lottie's tits.
     static String STATUS = "@Yuuko help";
-    // Database IP:PORT
     public static String DATABASE_IP;
-    // Database Name
     public static String DATABASE_NAME;
-    // Database Username
     public static String DATABASE_USERNAME;
-    // Database Password
     public static String DATABASE_PASSWORD;
-    // API key list (Yes, a HashMap is better, but I forgot and put effort into home-brew!)
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
 
     static void load() {

@@ -5,7 +5,6 @@ import com.yuuko.core.utils.MessageHandler;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class Module {
-
     private final String moduleName;
     private final String dbModuleName;
     private final boolean isNSFW;
