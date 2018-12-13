@@ -128,6 +128,7 @@ class Yuuko extends ListenerAdapter {
             settingsList.add("commandlogging");
             settingsList.add("nowplaying");
             settingsList.add("djmode");
+            settingsList.add("welcomeMembers");
 
             Cache.STANDARD_STRINGS = new String[3];
             Cache.STANDARD_STRINGS[0] = Configuration.VERSION;

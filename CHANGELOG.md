@@ -9,6 +9,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [+] Put in place measures to allow for a web console to edit settings and also see status updates.
 + [+] Added developer [__reloadapi__] command to be able to switch out API keys when needed.
 + [+] Added new [__tesco__] command that allows you to lookup and price check items from the store (kind of a meme)
++ [+] Added new [__welcomeMembers__] setting that currently sends a message when a new member joins and greets them.
 + [~] Heavily modified the database logic, tidied it up a bunch and now use pooled connections to increase database speeds. (12-20ms to 2-8ms @ about)
 + [~] Heavily modified the API system, now allowing API keys to be reloaded and added on the fly.
 + [~] Modified the [__nuke__] command. You can now tag channels instead of a value and those channels will be duplicated and the old versions deleted. (Also added guards for exceptions)

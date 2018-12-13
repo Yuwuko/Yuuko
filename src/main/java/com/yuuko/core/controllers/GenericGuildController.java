@@ -35,7 +35,6 @@ public class GenericGuildController {
 
         try {
             List<TextChannel> channels = e.getGuild().getTextChannels();
-
             for(TextChannel c: channels) {
                 if(c.getName().toLowerCase().contains("general") || c.getName().toLowerCase().contains("primary")) {
                     EmbedBuilder about = new EmbedBuilder()
@@ -72,5 +71,19 @@ public class GenericGuildController {
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
         Statistics.MEMBERS_JOINED.getAndIncrement();
+
+        try {
+            if(new DatabaseFunctions().getServerSetting("welcomeMembers", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                List<TextChannel> channels = e.getGuild().getTextChannels();
+                for(TextChannel c : channels) {
+                    if(c.getName().toLowerCase().contains("general") || c.getName().toLowerCase().contains("primary")) {
+                        EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription("Welcome to " + e.getGuild().getName() + ", " + e.getMember().getAsMention() + "!");
+                        MessageHandler.sendMessage(c, member.build());
+                    }
+                }
+            }
+        } catch(Exception ex) {
+            MessageHandler.sendException(ex, "guildMemberJoinEvent");
+        }
     }
 }

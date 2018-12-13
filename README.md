@@ -100,6 +100,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | commandLogging | Logs any executed command into a logging channel. | TRUE, FALSE | `-settings commandLogging true` |
 | nowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings nowPlaying true` |
 | djMode | Toggles whether or not the role of `DJ` is required to use key audio module commands. | TRUE, FALSE | `-settings djMode true` |
+| welcomeMembers | Whether or not to welcome members with a predefined message in the first channel that contains the name 'general' or 'primary'. (customisation soon) | TRUE, FALSE | `-settings welcomeMembers true` | 
 
 ## Other features
 
