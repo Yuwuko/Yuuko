@@ -8,12 +8,14 @@ public abstract class Module {
 
     private final String moduleName;
     private final String dbModuleName;
+    private final boolean isNSFW;
     private final Command[] moduleCommands;
 
-    public Module(String moduleName, String dbModuleName, Command[] moduleCommands) {
+    public Module(String moduleName, String dbModuleName, boolean isNSFW, Command[] moduleCommands) {
         this.moduleName = moduleName;
         this.dbModuleName = dbModuleName;
         this.moduleCommands = moduleCommands;
+        this.isNSFW = isNSFW;
     }
 
     public String getModuleName() {
@@ -24,16 +26,25 @@ public abstract class Module {
         return moduleCommands;
     }
 
-    protected boolean checkModuleSettings(MessageReceivedEvent e) {
+    public boolean checkModuleSettings(MessageReceivedEvent e) {
+        // Executor still checks core, in this case simply return true.
+        if(moduleName.equals("Core") || moduleName.equals("Developer")) {
+            return true;
+        }
+
         if(new DatabaseFunctions().checkModuleSettings(dbModuleName, e.getGuild().getId())) {
-            return false;
+            return true;
         } else {
             MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", '" + moduleName.substring(6).toLowerCase() + "' is disabled.");
-            return true;
+            return false;
         }
     }
 
-    protected boolean isNSFW(MessageReceivedEvent e) {
+    public boolean isModuleNSFW() {
+        return isNSFW;
+    }
+
+    public boolean isChannelNSFW(MessageReceivedEvent e) {
         return e.getTextChannel().isNSFW();
     }
 }

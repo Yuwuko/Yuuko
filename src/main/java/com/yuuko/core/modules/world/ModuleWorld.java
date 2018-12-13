@@ -11,17 +11,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleWorld extends Module {
 
     public ModuleWorld(MessageReceivedEvent e, String[] command) {
-        super("ModuleWorld", "moduleWorld", new Command[]{
+        super("World", "moduleWorld", false, new Command[]{
                 new CommandLineStatus(),
                 new CommandWeather(),
                 new CommandTesco()
         });
 
-        if(e != null && command != null) {
-            if(!checkModuleSettings(e)) {
-                new CommandExecutor(e, command, this);
-            }
-        }
+        new CommandExecutor(e, command, this);
     }
 
 }

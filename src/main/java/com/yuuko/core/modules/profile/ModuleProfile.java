@@ -8,15 +8,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleProfile extends Module {
 
     public ModuleProfile(MessageReceivedEvent e, String[] command) {
-        super("ModuleProfile", "moduleProfile", new Command[]{
+        super("Profile", "moduleProfile", false, new Command[]{
                 // Commands here
         });
 
-        if(e != null && command != null) {
-            if(!checkModuleSettings(e)) {
-                new CommandExecutor(e, command, this);
-            }
-        }
+        new CommandExecutor(e, command, this);
     }
 
 }

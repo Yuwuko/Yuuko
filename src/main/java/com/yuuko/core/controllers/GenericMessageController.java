@@ -2,6 +2,7 @@ package com.yuuko.core.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.ModuleAudio;
@@ -10,7 +11,6 @@ import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -20,8 +20,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-
-import static com.yuuko.core.database.DatabaseConnection.getConnection;
 
 public class GenericMessageController {
 
@@ -33,6 +31,9 @@ public class GenericMessageController {
 
     private void messageReceivedEvent(MessageReceivedEvent e) {
         try {
+            // Increment message counter. Bot or not, the message was processed.
+            Utils.incrementEventsProcessed(0);
+
             // Figure out if the user is a bot or not, so we don't waste any time.
             User user = e.getAuthor();
             if(user.isBot()) {
@@ -42,11 +43,9 @@ public class GenericMessageController {
             // Used to help calculate execution time of functions.
             long startExecutionNano = System.nanoTime();
 
-            // Help command (Private MessageHandler) throws null pointer for serverLong (Obviously.)
-            String server = e.getGuild().getId();
             String msgRawLower = e.getMessage().getContentRaw().toLowerCase();
 
-            String prefix = new DatabaseFunctions().getServerSetting("commandPrefix", server);
+            String prefix = Utils.getServerPrefix(e.getGuild().getId());
             if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
@@ -66,11 +65,7 @@ public class GenericMessageController {
 
             if(msgRawLower.matches("^[0-9]{1,2}$") || msgRawLower.equals("cancel")) {
                 processMessage(e, startExecutionNano);
-                return;
             }
-
-            // Passes nothing through to the console output so it updates a registered message.
-            Utils.incrementEventsProcessed(0);
 
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen. (Should they though...)
@@ -87,16 +82,15 @@ public class GenericMessageController {
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
-        String inputPrefix = e.getMessage().getContentRaw().substring(0,prefix.length());
-        String server = e.getGuild().getId();
+        String inputPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
+        String serverId = e.getGuild().getId();
 
         try {
-            long executionTime = 0;
+            long executionTime;
 
             Class<?> clazz;
             Constructor<?> constructor = null;
             String moduleDbName = "";
-            String channelId = e.getTextChannel().getId();
 
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // find the module class that belongs to the command itself and create a new instance of that
@@ -108,75 +102,21 @@ public class GenericMessageController {
                     moduleDbName = Utils.extractModuleName(commandModule, false, true);
                     clazz = Class.forName(commandModule);
                     constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
-
-                    // Check settings to see if command strings are to be deleted
-                    if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) {
-                        // Apparently some people aren't giving the bot the permissions they should. This check will let them know.
-                        if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("MESSAGE_MANAGE");
-                            MessageHandler.sendMessage(e, embed.build());
-                            return;
-                        } else {
-                            e.getMessage().delete().queue();
-                            break;
-                        }
-                    }
                 }
             }
 
-            Connection connection = getConnection();
-            ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, server, moduleDbName);
+            boolean isAllowed = checkBindings(e, moduleDbName, input[0]);
 
-            StringBuilder boundChannels = new StringBuilder();
-            boolean executed = false;
-            boolean bound = false;
-
-            // While it has next, if excluded is true, if the module name and channel Id match, apologise and break.
-            // If excluded is false (implying that bounded is true) and the module name and channel Id do not match,
-            // apologise again and break, else execute and set executed to true!
-            // If the loop finishes and boolean executed is still false, execute!
-            while(rs.next()) {
-                if(rs.getBoolean(5)) {
-                    if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + input[0] + "_** command is excluded from this channel.");
-                        MessageHandler.sendMessage(e, embed.build());
-                        break;
-                    }
-                } else {
-                    if(rs.getString(3).toLowerCase().equals(moduleDbName) && rs.getString(2).equals(channelId)) {
-                        if(constructor != null) {
-                            constructor.newInstance(e, input);
-                            executed = true;
-                            break;
-                        }
-                    }
-                    boundChannels.append(e.getGuild().getTextChannelById(rs.getString(2)).getName()).append(", ");
-                    bound = true;
-                }
-            }
-            connection.close();
-
-            if(bound && !executed) {
-                Utils.removeLastOccurrence(boundChannels, ", ");
-                EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + input[0] + "_** command is bound to " + boundChannels.toString() + ".");
-                MessageHandler.sendMessage(e, embed.build());
-            }
-
-            if(constructor != null && !executed && !bound) {
+            if(constructor != null && isAllowed) {
                 constructor.newInstance(e, input);
-                executed = true;
-            }
 
-            // Print the command and execution time into the console.
-            // The main purpose for this is examine where people go wrong when using commands and improve the bot.
-            if(executed) {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
                 Utils.incrementEventsProcessed(2);
-            }
 
-            if(executed && new DatabaseFunctions().getServerSetting("commandLogging", server).equalsIgnoreCase("1")) {
-                new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
+                if(new DatabaseFunctions().getServerSetting("commandLogging", serverId).equalsIgnoreCase("1")) {
+                    new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
+                }
             }
 
         } catch (Exception ex) {
@@ -215,6 +155,45 @@ public class GenericMessageController {
         } catch (Exception ex) {
             Utils.sendException(ex, "GenericMessageController (Aux) - " + e.getMessage().getContentRaw());
         }
+    }
+
+    /**
+     * Checks channel bindings to see if commands are allowed to be executed there.
+     * @param e MessageReceivedEvent
+     * @param moduleDbName String
+     * @return boolean
+     */
+    private boolean checkBindings(MessageReceivedEvent e, String moduleDbName, String command) {
+        try {
+            StringBuilder boundChannels = new StringBuilder();
+
+            Connection connection = DatabaseConnection.getConnection();
+            ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), moduleDbName);
+
+            while(rs.next()) {
+                if(rs.getString(2).equals(e.getTextChannel().getId()) && rs.getString(3).toLowerCase().equals(moduleDbName)) {
+                    connection.close();
+                    return true;
+                }
+                boundChannels.append(e.getGuild().getTextChannelById(rs.getString(2)).getName()).append(", ");
+            }
+            connection.close();
+
+            if(boundChannels.toString().equals("")) {
+                return true;
+            } else {
+                Utils.removeLastOccurrence(boundChannels, ", ");
+
+                EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + command + "_** command is bound to " + boundChannels.toString() + ".");
+                MessageHandler.sendMessage(e, embed.build());
+                return false;
+            }
+
+        } catch(Exception ex) {
+            Utils.sendException(ex, "Bindings");
+            return true;
+        }
+
     }
 
 }

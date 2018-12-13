@@ -22,4 +22,7 @@ public final class M {
     public static final Module UTILITY = new ModuleUtility(null, null);
     public static final Module NSFW = new ModuleNSFW(null, null);
     public static final Module PROFILE = new ModuleProfile(null, null);
+
+    public M() {
+    }
 }

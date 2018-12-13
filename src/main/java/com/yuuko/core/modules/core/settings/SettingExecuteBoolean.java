@@ -21,7 +21,7 @@ public class SettingExecuteBoolean {
 
     public boolean executeCommand(MessageReceivedEvent e, String setting, String value) {
         try {
-            String intValue = (value.equalsIgnoreCase("true")) ? "1" : "0";
+            String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 
             if(new DatabaseFunctions().setServerSettings(setting, intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {

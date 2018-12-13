@@ -63,30 +63,21 @@ public class CommandHelp extends Command {
                     Utils.removeLastOccurrence(usages, "\n");
 
                     StringBuilder bindList = new StringBuilder();
-                    StringBuilder excludeList = new StringBuilder();
 
                     // Connect to the database, grab results about bindings and exclusions for a certain command and return them.
                     // If the command is excluded add it to the first list, if it is bound add it to the second list.
                     // In the event that there are no exclusions nor bindings, just return "none".
                     try {
                         Connection connection = getConnection();
-                        ResultSet rs = new DatabaseFunctions().getBindingsExclusionsChannel(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false, true));
+                        ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), Utils.extractModuleName(cmd.getCommandModule(), false, true));
                         while(rs.next()) {
-                            if(rs.getBoolean(5)) {
-                                excludeList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
-                            } else {
-                                bindList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
-                            }
+                            bindList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
                         }
                         connection.close();
 
                         Utils.removeLastOccurrence(bindList, "\n");
-                        Utils.removeLastOccurrence(excludeList, "\n");
                         if(bindList.length() == 0) {
                             bindList.append("None");
-                        }
-                        if(excludeList.length() == 0) {
-                            excludeList.append("None");
                         }
                     } catch(Exception ex) {
                         ex.printStackTrace();
@@ -100,7 +91,6 @@ public class CommandHelp extends Command {
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
                             .addField("Required Permission", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)
-                            .addField("Exclusions", excludeList.toString(), true)
                             .addField("Usage", usages.toString(), false)
                             .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, embed.build());

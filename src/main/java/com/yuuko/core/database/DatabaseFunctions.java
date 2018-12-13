@@ -261,7 +261,7 @@ public class DatabaseFunctions {
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?, '1', '0')");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?)");
                 stmt2.setString(1, server);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, moduleIn);
@@ -270,92 +270,14 @@ public class DatabaseFunctions {
                     conn.close();
                     return 0;
                 }
-            }
-
-            if(!resultSet.getBoolean("bound") && resultSet.getBoolean("excluded")) {
-                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '1', `excluded` = '0' WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-                stmt2.setString(1, server);
-                stmt2.setString(2, channel);
-                stmt2.setString(3, moduleIn);
-                if(!stmt2.execute()) {
-                    stmt2.close();
-                    conn.close();
-                    return 0;
-                }
-            }
-
-            if(resultSet.getBoolean("bound")) {
-                stmt.close();
-                conn.close();
-                return deleteBindingsRecord(server, channel, moduleIn);
             }
 
             stmt.close();
             conn.close();
-
-            return -1;
+            return deleteBindingsRecord(server, channel, moduleIn);
 
         } catch(Exception ex) {
             Utils.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
-            return -1;
-        }
-    }
-
-    /**
-     * Excludes a particular module from a particular channel.
-     * @param modName the name of the module.
-     * @param channel the idLong of the channel.
-     * @param server the idLong of the server.
-     * @return boolean
-     */
-    public int toggleExclusion(String modName, String channel, String server) {
-        String moduleIn = "module" + modName;
-
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-            stmt.setString(1, server);
-            stmt.setString(2, channel);
-            stmt.setString(3, moduleIn);
-            ResultSet resultSet = stmt.executeQuery();
-
-            if(!resultSet.next()) {
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?, '0', '1')");
-                stmt2.setString(1, server);
-                stmt2.setString(2, channel);
-                stmt2.setString(3, moduleIn);
-                if(!stmt2.execute()) {
-                    stmt2.close();
-                    conn.close();
-                    return 0;
-                }
-            }
-
-            if(resultSet.getBoolean("bound") && !resultSet.getBoolean("excluded")) {
-                PreparedStatement stmt2 = conn.prepareStatement("UPDATE `ModuleBindings` SET `bound` = '0', `excluded` = '1' WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-                stmt2.setString(1, server);
-                stmt2.setString(2, channel);
-                stmt2.setString(3, moduleIn);
-                if(!stmt2.execute()) {
-                    stmt2.close();
-                    conn.close();
-                    return 0;
-                }
-            }
-
-            if(resultSet.getBoolean("excluded")) {
-                stmt.close();
-                conn.close();
-                return deleteBindingsRecord(server, channel, moduleIn);
-            }
-
-            stmt.close();
-            conn.close();
-
-            return -1;
-
-        } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to exclude module from channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
             return -1;
         }
     }
@@ -396,7 +318,7 @@ public class DatabaseFunctions {
      * @param server the idLong of the server.
      * @return ResultSet
      */
-    public ResultSet getBindingsExclusionsChannel(Connection connection, String server, String moduleIn) {
+    public ResultSet getBindingsByModule(Connection connection, String server, String moduleIn) {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `moduleName` = ?");
             stmt.setString(1, server);
@@ -404,7 +326,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
+            Utils.sendException(ex, "Unable to return bindings. (" + server + ")");
             return null;
         }
     }

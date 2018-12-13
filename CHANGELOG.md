@@ -22,8 +22,11 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Moved duplicate code from the Moderation module into it's own method in the Utils class.
 + [~] Updated the about section since everyone already knows the context of a discord bot...
 + [~] Changed most of the embeds to include information about who used the command and bot version.
++ [~] Increased complexity of the CommandExecutor class to take burden from other classes such as GenericMessageController and remove duplicate code.
++ [~] Ensured that the M and C classes are reflection safe to stop exceptions & complaints at runtime.
 + [-] Removed documentation about the [__setup__] command since people keep using it despite the bot already being setup and kicking it when it fails.
 + [-] Finally removed the [__unmute__] command, combining it with the [__mute__] command as a toggle.
++ [-] Removed [__exclusion__] command because it isn't used compared to the superior bind.
 
 ## 3.4.0
 + [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands.

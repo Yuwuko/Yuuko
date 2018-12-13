@@ -14,7 +14,10 @@ import com.yuuko.core.modules.moderation.commands.CommandMute;
 import com.yuuko.core.modules.moderation.commands.CommandNuke;
 import com.yuuko.core.modules.nsfw.commands.CommandEfukt;
 import com.yuuko.core.modules.nsfw.commands.CommandNeko;
-import com.yuuko.core.modules.utility.commands.*;
+import com.yuuko.core.modules.utility.commands.CommandBind;
+import com.yuuko.core.modules.utility.commands.CommandChannel;
+import com.yuuko.core.modules.utility.commands.CommandServer;
+import com.yuuko.core.modules.utility.commands.CommandUser;
 import com.yuuko.core.modules.world.commands.CommandLineStatus;
 import com.yuuko.core.modules.world.commands.CommandTesco;
 import com.yuuko.core.modules.world.commands.CommandWeather;
@@ -47,7 +50,6 @@ public final class C {
     public static final Command SERVER = new CommandServer();
     public static final Command CHANNEL = new CommandChannel();
     public static final Command BIND = new CommandBind();
-    public static final Command EXCLUDE = new CommandExclude();
 
     // Media module commands.
     public static final Command OSU = new CommandOsu();
@@ -75,4 +77,8 @@ public final class C {
     // NSFW module commands
     public static final Command EFUKT = new CommandEfukt();
     public static final Command NEKO = new CommandNeko();
+
+    public C() {
+    }
+
 }

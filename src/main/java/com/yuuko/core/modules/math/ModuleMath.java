@@ -9,15 +9,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleMath extends Module {
 
     public ModuleMath(MessageReceivedEvent e, String[] command) {
-        super("ModuleMath", "moduleMath", new Command[]{
+        super("Math", "moduleMath", false, new Command[]{
                 new CommandRoll()
         });
 
-        if(e != null && command != null) {
-            if(!checkModuleSettings(e)) {
-                new CommandExecutor(e, command, this);
-            }
-        }
+        new CommandExecutor(e, command, this);
     }
 
 }

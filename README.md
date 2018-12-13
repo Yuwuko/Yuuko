@@ -45,7 +45,6 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | server | Returns information about the current server. | -server | `-server` |
 | channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | MANAGE_CHANNELS |
 | bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | ADMINISTRATOR  |
-| exclude | Excludes a module from a text channel, preventing commands from being executed inside that channel. Modules can be excluded from multiple channels. Modules can be included by retyping the command. | -exclude [module] &#124; [channel] | <code>-exclude audio &#124; test-channel</code> | ADMINISTRATOR  |
 
 ### World
 

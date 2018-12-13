@@ -98,7 +98,8 @@ class Yuuko extends ListenerAdapter {
 
             ArrayList<Module> moduleList = new ArrayList<>();
             try {
-                Field[] modules = M.class.getDeclaredFields();
+                M m = new M();
+                Field[] modules = m.getClass().getDeclaredFields();
                 for(Field module : modules) {
                     moduleList.add((Module) module.get(Module.class));
                 }
@@ -109,7 +110,8 @@ class Yuuko extends ListenerAdapter {
 
             ArrayList<Command> commandList = new ArrayList<>();
             try {
-                Field[] commands = C.class.getDeclaredFields();
+                C c = new C();
+                Field[] commands = c.getClass().getDeclaredFields();
                 for(Field command : commands) {
                     commandList.add((Command) command.get(Command.class));
                 }

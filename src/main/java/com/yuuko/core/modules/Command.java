@@ -8,7 +8,6 @@ public abstract class Command {
 
     private final String commandName;
     private final String commandModule;
-    private final String commandDescription = "";
     private final int expectedParameters;
     private final String[] commandUsage;
     private final Permission commandPermission;

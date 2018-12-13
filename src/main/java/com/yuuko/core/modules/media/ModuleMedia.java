@@ -10,16 +10,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ModuleMedia extends Module {
 
     public ModuleMedia(MessageReceivedEvent e, String[] command) {
-        super("ModuleMedia", "moduleMedia", new Command[]{
+        super("Media", "moduleMedia", false, new Command[]{
                 new CommandKitsu(),
                 new CommandOsu()
         });
 
-        if(e != null && command != null) {
-            if(!checkModuleSettings(e)) {
-                new CommandExecutor(e, command, this);
-            }
-        }
+        new CommandExecutor(e, command, this);
     }
 
 }
