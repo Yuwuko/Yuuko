@@ -39,7 +39,11 @@ public class CommandSettings extends Command {
                     return;
                 }
 
-                if(commandParameters[0].equalsIgnoreCase("commandLogging") || commandParameters[0].equalsIgnoreCase("deleteExecuted") || commandParameters[0].equalsIgnoreCase("nowPlaying") || commandParameters[0].equalsIgnoreCase("djmode")) {
+                if(commandParameters[0].equalsIgnoreCase("commandLogging")
+                        || commandParameters[0].equalsIgnoreCase("deleteExecuted")
+                        || commandParameters[0].equalsIgnoreCase("nowPlaying")
+                        || commandParameters[0].equalsIgnoreCase("djmode")
+                        || commandParameters[0].equalsIgnoreCase("welcomeMembers")) {
                     if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
                         MessageHandler.sendMessage(e, embed.build());
