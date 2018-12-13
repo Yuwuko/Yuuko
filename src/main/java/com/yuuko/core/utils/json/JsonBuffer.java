@@ -1,6 +1,6 @@
 package com.yuuko.core.utils.json;
 
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utils.MessageHandler;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;
@@ -41,7 +41,7 @@ public class JsonBuffer {
             return result.toString();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "public String getString() [JsonBuffer]");
+            MessageHandler.sendException(ex, "public String getString() [JsonBuffer]");
             return null;
         }
     }

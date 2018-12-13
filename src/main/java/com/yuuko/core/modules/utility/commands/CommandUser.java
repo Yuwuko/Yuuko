@@ -64,7 +64,7 @@ public class CommandUser extends Command {
             MessageHandler.sendMessage(e, commandInfo.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "CommandUser - " + e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, "CommandUser - " + e.getMessage().getContentRaw());
         }
     }
 }

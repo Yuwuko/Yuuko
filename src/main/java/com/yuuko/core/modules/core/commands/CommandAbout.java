@@ -2,6 +2,7 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.Statistics;
 import com.yuuko.core.SystemClock;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
@@ -30,7 +31,7 @@ public class CommandAbout extends Command {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", Cache.GUILD_COUNT + "", true)
+                .addField("Servers", Statistics.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
                 .addField("Uptime", SystemClock.getRuntimeString(), true)

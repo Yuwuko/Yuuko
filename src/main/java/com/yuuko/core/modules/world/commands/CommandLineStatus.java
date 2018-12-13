@@ -76,7 +76,7 @@ public class CommandLineStatus extends Command {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
 
     }

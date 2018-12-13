@@ -2,6 +2,7 @@ package com.yuuko.core.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.Statistics;
 import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
@@ -31,8 +32,8 @@ public class GenericMessageController {
 
     private void messageReceivedEvent(MessageReceivedEvent e) {
         try {
-            // Increment message counter. Bot or not, the message was processed.
-            Utils.incrementEventsProcessed(0);
+            // Increment message counter, regardless of it's author.
+            Statistics.MESSAGES_PROCESSED.getAndIncrement();
 
             // Figure out if the user is a bot or not, so we don't waste any time.
             User user = e.getAuthor();
@@ -70,7 +71,7 @@ public class GenericMessageController {
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen. (Should they though...)
         } catch (Exception ex) {
-            Utils.sendException(ex, "private void messageReceivedEvent(MessageReceivedEvent e)");
+            MessageHandler.sendException(ex, "private void messageReceivedEvent(MessageReceivedEvent e)");
         }
     }
 
@@ -112,7 +113,7 @@ public class GenericMessageController {
 
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
-                Utils.incrementEventsProcessed(2);
+                Statistics.COMMANDS_PROCESSED.getAndIncrement();
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", serverId).equalsIgnoreCase("1")) {
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
@@ -120,7 +121,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-            Utils.sendException(ex, "GenericMessageController (Main) - " + e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, "GenericMessageController (Main) - " + e.getMessage().getContentRaw());
         }
     }
 
@@ -153,7 +154,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-            Utils.sendException(ex, "GenericMessageController (Aux) - " + e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, "GenericMessageController (Aux) - " + e.getMessage().getContentRaw());
         }
     }
 
@@ -190,7 +191,7 @@ public class GenericMessageController {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Bindings");
+            MessageHandler.sendException(ex, "Bindings");
             return true;
         }
     }

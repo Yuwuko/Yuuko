@@ -4,7 +4,6 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
 import com.yuuko.core.utils.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -37,7 +36,7 @@ public class CommandNeko extends Command {
             MessageHandler.sendMessage(e, lewdNeko.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

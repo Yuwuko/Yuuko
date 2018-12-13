@@ -2,6 +2,7 @@ package com.yuuko.core;
 
 import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 
 public class SystemClock implements Runnable {
@@ -33,7 +34,7 @@ public class SystemClock implements Runnable {
                 update();
             }
         } catch (InterruptedException ex) {
-            Utils.sendException(ex, "public void run() [SystemClock]");
+            MessageHandler.sendException(ex, "public void run() [SystemClock]");
         }
     }
 

@@ -1,6 +1,6 @@
 package com.yuuko.core;
 
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utils.MessageHandler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +41,7 @@ public class Configuration {
             c.close();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Configuration.load()");
+            MessageHandler.sendException(ex, "Configuration.load()");
         }
     }
 
@@ -61,7 +61,7 @@ public class Configuration {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "loadAPI");
+            MessageHandler.sendException(ex, "loadAPI");
         }
     }
 

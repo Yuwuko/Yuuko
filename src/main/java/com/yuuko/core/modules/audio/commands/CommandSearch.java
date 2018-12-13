@@ -7,7 +7,6 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.ModuleAudio;
 import com.yuuko.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -46,7 +45,7 @@ public class CommandSearch extends Command {
             MessageHandler.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

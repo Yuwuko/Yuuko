@@ -15,7 +15,6 @@ public class Cache {
     public static User BOT;
 
     public static long PING;
-    public static int GUILD_COUNT;
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
     public static List<String> SETTINGS;
@@ -23,12 +22,8 @@ public class Cache {
     public static LinkedList<String> LAST_TEN;
     public static String LATEST_INFO;
     public static String[] STANDARD_STRINGS;
-    public static int MESSAGES_PROCESSED;
-    public static int COMMANDS_PROCESSED;
-    public static int REACTS_PROCESSED;
     static AudioManagerManager AUDIO_MANAGER_MANAGER;
-    public static int DB_POOL_ACTIVE;
-    public static int DB_POOL_IDLE;
+
 
     static void updatePing() {
         PING = JDA.getPing();

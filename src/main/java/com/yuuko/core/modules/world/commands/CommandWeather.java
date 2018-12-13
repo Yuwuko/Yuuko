@@ -55,7 +55,7 @@ public class CommandWeather extends Command {
                     .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0] + command[1]);
+            MessageHandler.sendException(ex, command[0] + command[1]);
         }
     }
 

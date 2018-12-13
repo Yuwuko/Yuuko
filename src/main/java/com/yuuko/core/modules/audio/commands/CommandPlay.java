@@ -98,7 +98,7 @@ public class CommandPlay extends Command {
 
                     MessageHandler.sendMessage(channel, embed.build());
                 } catch(Exception ex) {
-                    Utils.sendException(ex, "public void trackLoaded(AudioTrack track) [CommandPlay]");
+                    MessageHandler.sendException(ex, "public void trackLoaded(AudioTrack track) [CommandPlay]");
                 }
             }
 
@@ -117,7 +117,7 @@ public class CommandPlay extends Command {
                     new CommandCurrent().executeCommand(e, null);
 
                 } catch(Exception ex) {
-                    Utils.sendException(ex, "public void playlistLoaded(AudioPlaylist playlist) [CommandPlay]");
+                    MessageHandler.sendException(ex, "public void playlistLoaded(AudioPlaylist playlist) [CommandPlay]");
                 }
             }
 

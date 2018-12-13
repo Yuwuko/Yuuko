@@ -50,7 +50,7 @@ public class CommandTesco extends Command {
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

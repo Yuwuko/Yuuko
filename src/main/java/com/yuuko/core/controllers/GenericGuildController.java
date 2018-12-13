@@ -2,6 +2,7 @@ package com.yuuko.core.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.Statistics;
 import com.yuuko.core.SystemClock;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.core.commands.CommandSetup;
@@ -12,7 +13,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
+import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 
 import java.util.List;
 
@@ -23,37 +24,39 @@ public class GenericGuildController {
             guildJoinEvent((GuildJoinEvent)e);
         } else if(e instanceof GuildLeaveEvent) {
             guildLeaveEvent((GuildLeaveEvent)e);
+        } else if(e instanceof GuildMemberJoinEvent) {
+            guildMemberJoinEvent((GuildMemberJoinEvent)e);
         }
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
         new CommandSetup().executeAutomated(e);
 
-        Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
+        Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
-        List<TextChannel> channels = e.getGuild().getTextChannels();
 
-        for(TextChannel c: channels) {
-            if(c.getName().toLowerCase().contains("general") || c.getName().toLowerCase().contains("primary")) {
-                try {
+        try {
+            List<TextChannel> channels = e.getGuild().getTextChannels();
+
+            for(TextChannel c: channels) {
+                if(c.getName().toLowerCase().contains("general") || c.getName().toLowerCase().contains("primary")) {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
                             .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/Yuuko-Java)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
                             .setThumbnail(Cache.BOT.getAvatarUrl())
                             .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                             .addField("Version", Configuration.VERSION, true)
-                            .addField("Servers", Cache.GUILD_COUNT + "", true)
+                            .addField("Servers", Statistics.GUILD_COUNT + "", true)
                             .addField("Commands", Cache.COMMANDS.size() + "", true)
                             .addField("Invocation", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId())  + "`", true)
                             .addField("Uptime", SystemClock.getRuntimeString(), true)
                             .addField("Ping", Cache.PING + "", true);
                     MessageHandler.sendMessage(c, about.build());
-
                     break;
-                } catch(PermissionException ex) {
-                    Utils.updateLatest("[INFO] Server disallowed message to be sent to general - " + e.getGuild().getName() + " (" + e.getGuild().getId() + ")");
                 }
             }
+        } catch(Exception ex) {
+            MessageHandler.sendException(ex, "GuildJoinEvent -> Initial Message");
         }
 
         Utils.updateDiscordBotList();
@@ -63,9 +66,13 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
 
-        Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
+        Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         Utils.updateDiscordBotList();
         Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (" + e.getGuild().getIdLong() + ")");
+    }
+
+    private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
+        Statistics.MEMBERS_JOINED.getAndIncrement();
     }
 }

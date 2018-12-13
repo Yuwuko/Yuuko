@@ -14,6 +14,7 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.M;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
+import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -59,7 +60,7 @@ class Yuuko extends ListenerAdapter {
         Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         Cache.BOT = Cache.JDA.getSelfUser();
-        Cache.GUILD_COUNT = Cache.JDA.getGuilds().size();
+        Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         if(Configuration.API_KEYS.containsKey("discordbots")) {
             Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
@@ -146,7 +147,7 @@ class Yuuko extends ListenerAdapter {
             new SystemClock();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "new Yuuko()");
+            MessageHandler.sendException(ex, "new Yuuko()");
         }
     }
 
@@ -159,7 +160,7 @@ class Yuuko extends ListenerAdapter {
         try {
             new GenericGuildController(e);
         } catch(Exception ex) {
-            Utils.sendException(ex, "public void onGenericGuild(GenericGuildEvent e)");
+            MessageHandler.sendException(ex, "public void onGenericGuild(GenericGuildEvent e)");
         }
     }
 
@@ -172,7 +173,7 @@ class Yuuko extends ListenerAdapter {
         try {
             new GenericMessageController(e);
         } catch(Exception ex) {
-            Utils.sendException(ex, "public void onGenericMessage(GenericMessageEvent e)");
+            MessageHandler.sendException(ex, "public void onGenericMessage(GenericMessageEvent e)");
         }
     }
 
@@ -185,7 +186,7 @@ class Yuuko extends ListenerAdapter {
         try {
             new GenericMessageReactionController(e);
         } catch(Exception ex) {
-            Utils.sendException(ex, "public void onGenericMessageReaction(GenericMessageReactionEvent e)");
+            MessageHandler.sendException(ex, "public void onGenericMessageReaction(GenericMessageReactionEvent e)");
         }
     }
 
@@ -198,7 +199,7 @@ class Yuuko extends ListenerAdapter {
         try {
             new GenericGuildVoiceController(e);
         } catch(Exception ex) {
-            Utils.sendException(ex, "public void onGenericGuildVoice(GenericGuildVoiceEvent e)");
+            MessageHandler.sendException(ex, "public void onGenericGuildVoice(GenericGuildVoiceEvent e)");
         }
     }
 

@@ -1,8 +1,9 @@
 package com.yuuko.core.database;
 
 import com.yuuko.core.Cache;
+import com.yuuko.core.Statistics;
 import com.yuuko.core.SystemClock;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utils.MessageHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
@@ -37,7 +38,7 @@ public class DatabaseFunctions {
             return existence;
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Existence");
+            MessageHandler.sendException(ex, "Existence");
         }
         return true;
     }
@@ -63,7 +64,7 @@ public class DatabaseFunctions {
                 return false;
             }
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to add new server to the database. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to add new server to the database. (ID: " + server + ")");
             return false;
         }
     }
@@ -95,7 +96,7 @@ public class DatabaseFunctions {
             return true;
 
         } catch (Exception ex) {
-            Utils.sendException(ex, "Unable to add new server to the database.");
+            MessageHandler.sendException(ex, "Unable to add new server to the database.");
             return false;
         }
     }
@@ -112,7 +113,7 @@ public class DatabaseFunctions {
             stmt.setString(1, server);
             return stmt.executeQuery();
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to get module settings. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get module settings. (ID: " + server + ")");
             return null;
         }
     }
@@ -138,7 +139,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + server + ")");
             return false;
         }
     }
@@ -164,7 +165,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", Server: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", Server: " + server + ")");
             return false;
         }
     }
@@ -183,7 +184,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to get server settings. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get server settings. (ID: " + server + ")");
             return null;
         }
     }
@@ -210,7 +211,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to get server setting. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get server setting. (ID: " + server + ")");
             return null;
         }
     }
@@ -237,7 +238,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");
             return false;
         }
     }
@@ -277,7 +278,7 @@ public class DatabaseFunctions {
             return deleteBindingsRecord(server, channel, moduleIn);
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
+            MessageHandler.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
             return -1;
         }
     }
@@ -307,7 +308,7 @@ public class DatabaseFunctions {
             return -1;
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
             return -1;
         }
     }
@@ -326,7 +327,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to return bindings. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to return bindings. (" + server + ")");
             return null;
         }
     }
@@ -337,12 +338,12 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerStatus` SET `uptime` = ?, `ping` = ?, `guilds` = ?, `modules` = ?, `commands` = ?, `messagesProcessed` = ?, `reactsProcessed` = ?, `commandsProcessed` = ?, `latestInfo` = ?");
             stmt.setInt(1, SystemClock.getRuntime());
             stmt.setDouble(2, Cache.PING);
-            stmt.setInt(3, Cache.GUILD_COUNT);
+            stmt.setInt(3, Statistics.GUILD_COUNT);
             stmt.setInt(4, Cache.MODULES.size());
             stmt.setInt(5, Cache.COMMANDS.size());
-            stmt.setInt(6, Cache.MESSAGES_PROCESSED);
-            stmt.setInt(7, Cache.REACTS_PROCESSED);
-            stmt.setInt(8, Cache.COMMANDS_PROCESSED);
+            stmt.setInt(6, Statistics.MESSAGES_PROCESSED.get());
+            stmt.setInt(7, Statistics.REACTS_PROCESSED.get());
+            stmt.setInt(8, Statistics.COMMANDS_PROCESSED.get());
             stmt.setString(9, Cache.LATEST_INFO);
             stmt.execute();
 
@@ -350,7 +351,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to update server status.");
+            MessageHandler.sendException(ex, "Unable to update server status.");
         }
     }
 
@@ -369,7 +370,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to remove server from the database. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to remove server from the database. (" + server + ")");
         }
     }
 
@@ -388,7 +389,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            Utils.sendException(ex, "Unable to update bindings in the database. (Channel:" + channel + ")");
+            MessageHandler.sendException(ex, "Unable to update bindings in the database. (Channel:" + channel + ")");
         }
     }
 

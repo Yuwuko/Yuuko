@@ -82,7 +82,7 @@ public class CommandOsu extends Command {
             MessageHandler.sendMessage(e, Utils.xhtml2image("htmlresources/osu/imagecache/", html, 425, 200, true));
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 }

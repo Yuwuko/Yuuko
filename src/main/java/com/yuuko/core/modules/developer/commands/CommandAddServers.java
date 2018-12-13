@@ -3,7 +3,6 @@ package com.yuuko.core.modules.developer.commands;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -21,7 +20,7 @@ public class CommandAddServers extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             }
         } catch(Exception ex) {
-            Utils.sendException(ex, command[0]);
+            MessageHandler.sendException(ex, command[0]);
         }
     }
 

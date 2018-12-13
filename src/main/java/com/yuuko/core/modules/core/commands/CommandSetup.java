@@ -3,7 +3,6 @@ package com.yuuko.core.modules.core.commands;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
@@ -30,7 +29,7 @@ public class CommandSetup extends Command {
         try {
             new DatabaseFunctions().addNewServer(e.getGuild().getId());
         } catch(Exception ex) {
-            Utils.sendException(ex, "Server setup was unsuccessful (" + e.getGuild().getId() + ") [CommandSetup] (Automated)");
+            MessageHandler.sendException(ex, "Server setup was unsuccessful (" + e.getGuild().getId() + ") [CommandSetup] (Automated)");
         }
     }
 

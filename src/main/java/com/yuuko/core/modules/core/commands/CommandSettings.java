@@ -9,7 +9,6 @@ import com.yuuko.core.modules.core.settings.SettingCommandPrefix;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Sanitise;
-import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -73,18 +72,18 @@ public class CommandSettings extends Command {
                         .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, commandModules.build());
                 } catch(Exception ex) {
-                    Utils.sendException(ex, e.getMessage().getContentRaw());
+                    MessageHandler.sendException(ex, e.getMessage().getContentRaw());
                 } finally {
                     try {
                         connection.close();
                     } catch(Exception ex) {
-                        Utils.sendException(ex, "Unable to close connection to database. [CommandSettings]");
+                        MessageHandler.sendException(ex, "Unable to close connection to database. [CommandSettings]");
                     }
                 }
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
 
     }

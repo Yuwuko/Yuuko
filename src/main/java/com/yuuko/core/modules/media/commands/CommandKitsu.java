@@ -8,7 +8,6 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.media.kitsu.Attributes;
 import com.yuuko.core.modules.media.kitsu.KitsuObject;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
 import com.yuuko.core.utils.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -60,7 +59,7 @@ public class CommandKitsu extends Command {
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {
-            Utils.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
             MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }

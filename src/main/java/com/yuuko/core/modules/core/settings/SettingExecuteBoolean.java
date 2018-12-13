@@ -3,7 +3,6 @@ package com.yuuko.core.modules.core.settings;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -37,7 +36,7 @@ public class SettingExecuteBoolean {
             }
 
         } catch(Exception ex) {
-            Utils.sendException(ex, setting + "[" + value + "]");
+            MessageHandler.sendException(ex, setting + "[" + value + "]");
             return false;
         }
     }

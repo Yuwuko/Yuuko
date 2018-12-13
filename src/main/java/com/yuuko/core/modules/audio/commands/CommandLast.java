@@ -41,7 +41,7 @@ public class CommandLast extends Command {
 			}
 
 		} catch(Exception ex) {
-			Utils.sendException(ex, "public void executeCommand(MessageReceivedEvent e, String[] command)");
+			MessageHandler.sendException(ex, "public void executeCommand(MessageReceivedEvent e, String[] command)");
 		}
 	}
 

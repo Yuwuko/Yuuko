@@ -2,6 +2,7 @@ package com.yuuko.core.utils;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.Statistics;
 import com.yuuko.core.SystemClock;
 import com.yuuko.core.database.DatabaseFunctions;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -41,27 +42,6 @@ public final class Utils {
      */
     private static String getTag(User user) {
         return user.getName() + "#" + user.getDiscriminator();
-    }
-
-    /**
-     * Sends an exception to the support server's exception channel.
-     * @param ex Exception
-     * @param command String
-     */
-    public static void sendException(Exception ex, String command) {
-        try {
-            MessageChannel channel = Cache.JDA.getTextChannelById(520158641484201994L);
-
-            StringBuilder traceString = new StringBuilder();
-            for(StackTraceElement trace: ex.getStackTrace()) {
-                traceString.append(trace.toString());
-                traceString.append("\n");
-            }
-
-            channel.sendMessage(command + "\n`" + traceString.toString() + "`").queue();
-        } catch(Exception exc) {
-            //
-        }
     }
 
     /**
@@ -255,23 +235,9 @@ public final class Utils {
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + Cache.LATEST_INFO );
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + SystemClock.getRuntimeString() + ", Ping: " + Cache.PING + ", Guilds: " + Cache.GUILD_COUNT + ", DB Idle: " + Cache.DB_POOL_IDLE + ", DB Active: " + Cache.DB_POOL_ACTIVE);
-        System.out.println("┃ Messages processed: " + Cache.MESSAGES_PROCESSED + ", Reacts processed: " + Cache.REACTS_PROCESSED + ", Commands processed: " + Cache.COMMANDS_PROCESSED);
+        System.out.println("┃ Uptime: " + SystemClock.getRuntimeString() + ", Ping: " + Cache.PING + ", Guilds: " + Statistics.GUILD_COUNT + ", DB Idle: " + Statistics.DB_POOL_IDLE + ", DB Active: " + Statistics.DB_POOL_ACTIVE);
+        System.out.println("┃ Messages processed: " + Statistics.MESSAGES_PROCESSED + ", Reacts processed: " + Statistics.REACTS_PROCESSED + ", Commands processed: " + Statistics.COMMANDS_PROCESSED);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    }
-
-    /**
-     * Increments processed integer.
-     * @param type int
-     */
-    public static void incrementEventsProcessed(int type) {
-        if(type == 0) {
-            Cache.MESSAGES_PROCESSED = (Cache.MESSAGES_PROCESSED + 1);
-        } else if(type == 1) {
-            Cache.REACTS_PROCESSED = (Cache.REACTS_PROCESSED + 1);
-        } else if(type == 2) {
-            Cache.COMMANDS_PROCESSED = (Cache.COMMANDS_PROCESSED + 1);
-        }
     }
 
     /**
