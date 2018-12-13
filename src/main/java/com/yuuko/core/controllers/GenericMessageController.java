@@ -193,7 +193,6 @@ public class GenericMessageController {
             Utils.sendException(ex, "Bindings");
             return true;
         }
-
     }
 
 }

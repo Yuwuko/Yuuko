@@ -15,11 +15,11 @@ public class CommandExecutor {
 
     public CommandExecutor(MessageReceivedEvent e, String[] command, Module module) {
         if(e != null && command != null) { // Is the command or event null? (This case is used by the M class to initialise a list of modules!)
-            if(module.getModuleName().equals("Developer") && !(e.getAuthor().getIdLong() == 215161101460045834L)) {
+            if(module.getModuleName().equals("Developer") && !(e.getAuthor().getIdLong() == 215161101460045834L)) { // Is the module named "Developer"? If so, is the author of the message me?
                 return;
             } else {
                 if(module.checkModuleSettings(e)) { // Is the module enabled?
-                    if(module.getModuleName().equals("Audio") && !audioChecks(e, command)) { // Is the command module Audio? If so, does the user fail any of the checks?
+                    if(module.getModuleName().equals("Audio") && !audioChecks(e, command)) { // Is module named Audio? If so, does the user fail any of the checks?
                         return;
                     }
                     if(!module.isChannelNSFW(e) && module.isModuleNSFW()) { // Is the channel NSFW? If not, is the module NSFW?
