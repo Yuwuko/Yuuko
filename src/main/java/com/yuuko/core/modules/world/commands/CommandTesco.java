@@ -1,12 +1,9 @@
 package com.yuuko.core.modules.world.commands;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.world.tesco.Result;
-import com.yuuko.core.modules.world.tesco.TescoObject;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import com.yuuko.core.utils.json.JsonBuffer;
@@ -25,27 +22,25 @@ public class CommandTesco extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            String json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + command[1].replace(" ", "%20") + "&offset=0&limit=1", "default", "default", "Ocp-Apim-Subscription-Key", Utils.getApiKey("tesco")).getAsString();
-            TescoObject tesco = new ObjectMapper().readValue(json, new TypeReference<TescoObject>(){});
+            JsonObject json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + command[1].replace(" ", "%20") + "&offset=0&limit=1", "default", "default", "Ocp-Apim-Subscription-Key", Utils.getApiKey("tesco")).getAsJsonObject();
+            JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
-            if(tesco.getUk().getGhs().getProducts().getResults().size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Sorry, **_" + command[1] + "_** returned no results.");
+            if(preData.get("results").getAsJsonArray().size() < 1) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            Result product = tesco.getUk().getGhs().getProducts().getResults().get(0);
-
-            String description = (product.getDescription() != null) ? product.getDescription().get(0) : "No description available.";
+            JsonObject data = preData.get("results").getAsJsonArray().get(0).getAsJsonObject();
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(product.getName())
-                    .setThumbnail(product.getImage())
-                    .setDescription(description)
-                    .addField("Price", "£" + new BigDecimal(product.getPrice()).setScale(2, RoundingMode.HALF_UP) + " (£" + new BigDecimal(product.getUnitprice()).setScale(2, RoundingMode.HALF_UP) + "/" + product.getUnitQuantity() + ")", true)
-                    .addField("Weight", new BigDecimal(product.getContentsQuantity()).setScale(2, RoundingMode.HALF_UP) + product.getContentsMeasureType(), true)
-                    .addField("Quantity", product.getUnitOfSale() + "", true)
-                    .addField("Department", product.getSuperDepartment() + " (" + product.getDepartment() + ")", true)
+                    .setTitle(data.get("name").getAsString())
+                    .setThumbnail(data.get("image").getAsString())
+                    .setDescription(((data.get("description").getAsJsonArray().size() > 0) ? data.get("description").getAsJsonArray().get(0).toString() : "No description available."))
+                    .addField("Price", "£" + new BigDecimal(data.get("price").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + " (£" + new BigDecimal(data.get("unitprice").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + "/" + data.get("UnitQuantity").getAsString() + ")", true)
+                    .addField("Weight", new BigDecimal(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
+                    .addField("Quantity", data.get("UnitOfSale").getAsString() + "", true)
+                    .addField("Department", data.get("superDepartment").getAsString() + " (" + data.get("department").getAsString() + ")", true)
                     .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
