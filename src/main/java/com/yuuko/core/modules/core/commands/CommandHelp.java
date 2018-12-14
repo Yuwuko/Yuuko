@@ -29,13 +29,13 @@ public class CommandHelp extends Command {
                     .setTitle("Have an issue, suggestion or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://github.com/BasketBandit/Yuuko-Java/blob/master/README.md)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
-                    .addField("Core", "`about` `help` `module` `modules` `settings` `setup`", false)
+                    .addField("Core", "`about` `help` `module` `modules` `settings`", false)
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
                     .addField("Math", "`roll`", false)
                     .addField("Media", "`kitsu` `osu`", false)
                     .addField("Moderation", "`ban` `kick` `mute` `nuke`", false)
                     .addField("World", "`linestatus` `weather` `tesco`", false)
-                    .addField("Utility", "`bind` `exclude` `channel` `server` `user`", false)
+                    .addField("Utility", "`bind` `channel` `server` `user`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Cache.STANDARD_STRINGS[0], e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
@@ -87,7 +87,7 @@ public class CommandHelp extends Command {
 
                     EmbedBuilder embed = new EmbedBuilder()
                             .setThumbnail(bot.getAvatarUrl())
-                            .setTitle("Command help for " + cmd.getCommandName())
+                            .setTitle("Command help for **_" + cmd.getCommandName() + "_**")
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
                             .addField("Required Permission", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)

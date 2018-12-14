@@ -37,7 +37,6 @@ public class CommandKitsu extends Command {
                     .addField("Episode Length", data.get("episodeLength").getAsString() + " minutes", true)
                     .addField("Total Length", data.get("totalLength").getAsInt()/60 + " hours", true)
                     .addField("Type", data.get("showType").getAsString(), true)
-                    .addField("NSFW", data.get("nsfw").getAsString().toUpperCase(), true)
                     .addField("Kitsu Approval Rating", data.get("averageRating").getAsString() + "%", true)
                     .addField("Status", data.get("status").getAsString(), true)
                     .addField("Start Date", data.get("startDate").getAsString(), true)
