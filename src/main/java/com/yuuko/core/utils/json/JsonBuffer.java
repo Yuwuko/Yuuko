@@ -1,5 +1,7 @@
 package com.yuuko.core.utils.json;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.yuuko.core.utils.MessageHandler;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -8,14 +10,10 @@ import java.net.URL;
 
 public class JsonBuffer {
 
-    /**
-     * Takes an input URL, fetches any Json content from it and returns that as a string.
-     * @param inputUrl String
-     * @return result.toString();
-     */
-    public String getString(String inputUrl, String acceptHeader, String contentTypeHeader, String extraProperty, String extraHeader) {
-        try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
+    private String jsonOutput;
 
+    public JsonBuffer(String inputUrl, String acceptHeader, String contentTypeHeader, String extraProperty, String extraHeader) {
+        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             String accept = (acceptHeader.equals("default")) ? "application/json" : acceptHeader;
             String contentType = (contentTypeHeader.equals("default")) ? "application/json" : contentTypeHeader;
             HttpsURLConnection conn = (HttpsURLConnection) new URL(inputUrl).openConnection();
@@ -28,7 +26,7 @@ public class JsonBuffer {
             }
 
             if(conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed: HTTP error code: " + conn.getResponseCode());
+                return;
             }
 
             byte[] buffer = new byte[1024];
@@ -38,10 +36,22 @@ public class JsonBuffer {
                 result.write(buffer, 0, length);
             }
 
-            return result.toString();
+            jsonOutput = result.toString();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public String getString() [JsonBuffer]");
+            MessageHandler.sendException(ex, "public String getAsString() [JsonBuffer]");
+        }
+    }
+
+    public String getAsString() {
+        return jsonOutput;
+    }
+
+    public JsonObject getAsJsonObject() {
+        try {
+            return new JsonParser().parse(jsonOutput).getAsJsonObject();
+        } catch(Exception ex) {
+            MessageHandler.sendException(ex, "getAsJsonObject()");
             return null;
         }
     }

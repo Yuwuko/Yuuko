@@ -1,12 +1,9 @@
 package com.yuuko.core.modules.media.commands;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.media.kitsu.Attributes;
-import com.yuuko.core.modules.media.kitsu.KitsuObject;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -21,40 +18,30 @@ public class CommandKitsu extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            //String[] commandParameters = command[1].split("\\s+", 2);
-            //[1] = commandParameters[1].replace(" ", "%20");
-            String json;
+            JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json", null, null).getAsJsonObject();
 
-            //if(commandParameters[0].toLowerCase().equals("character")) {
-            //    EmbedBuilder embed = new EmbedBuilder().setTitle("That parameter isn't ready yet. (waiting for the kitsu.io API to be constructed)");
-            //    MessageHandler.sendMessage(e, embed.build());
-                // json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime-characters?filter[text]=" + commandParameters[1] + "&page[limit]=1");
-            //} else {
-            json = new JsonBuffer().getString("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json", null, null);
-            //}
-
-            if(json != null && json.equals("")) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("That search parameter didn't return any results.");
+            if(json.getAsJsonArray("data").size() < 1) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            KitsuObject kitsu = new ObjectMapper().readValue(json, new TypeReference<KitsuObject>(){});
-            Attributes anime = kitsu.getData().get(0).getAttributes();
+            JsonObject data = json.getAsJsonArray("data").get(0).getAsJsonObject().get("attributes").getAsJsonObject(); // It's important to find the item in the array where the data is stored.
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(anime.getCanonicalTitle() + " | " + anime.getTitles().getJaJp(), "https://www.youtube.com/watch?v=" + anime.getYoutubeVideoId())
-                    .setImage(anime.getPosterImage().getMedium())
-                    .setDescription(anime.getSynopsis())
-                    .addField("Age Rating", anime.getAgeRating() + ": " + anime.getAgeRatingGuide(), true)
-                    .addField("Episodes", anime.getEpisodeCount() + "", true)
-                    .addField("Episode Length", anime.getEpisodeLength() + "m", true)
-                    .addField("Type", anime.getSubtype(), true)
-                    .addField("NSFW", anime.getNsfw() + "", true)
-                    .addField("Kitsu Approval Rating", anime.getAverageRating() + "%", true)
-                    .addField("Status", anime.getStatus(), true)
-                    .addField("Start Date", anime.getStartDate(), true)
-                    .addField("End Date", anime.getEndDate(), true)
+                    .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").getAsString())
+                    .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
+                    .setDescription(data.get("synopsis").getAsString())
+                    .addField("Age Rating", data.get("ageRating").getAsString() + ": " + data.get("ageRatingGuide").getAsString(), true)
+                    .addField("Episodes", data.get("episodeCount").getAsString(), true)
+                    .addField("Episode Length", data.get("episodeLength").getAsString() + " minutes", true)
+                    .addField("Total Length", data.get("totalLength").getAsInt()/60 + " hours", true)
+                    .addField("Type", data.get("showType").getAsString(), true)
+                    .addField("NSFW", data.get("nsfw").getAsString(), true)
+                    .addField("Kitsu Approval Rating", data.get("averageRating").getAsString() + "%", true)
+                    .addField("Status", data.get("status").getAsString(), true)
+                    .addField("Start Date", data.get("startDate").getAsString(), true)
+                    .addField("End Date", data.get("endDate").getAsString(), true)
                     .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 

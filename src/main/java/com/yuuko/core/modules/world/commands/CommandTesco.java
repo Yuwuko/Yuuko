@@ -25,7 +25,7 @@ public class CommandTesco extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            String json = new JsonBuffer().getString("https://dev.tescolabs.com/grocery/products/?query=" + command[1].replace(" ", "%20") + "&offset=0&limit=1", "default", "default", "Ocp-Apim-Subscription-Key", Utils.getApiKey("tesco"));
+            String json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + command[1].replace(" ", "%20") + "&offset=0&limit=1", "default", "default", "Ocp-Apim-Subscription-Key", Utils.getApiKey("tesco")).getAsString();
             TescoObject tesco = new ObjectMapper().readValue(json, new TypeReference<TescoObject>(){});
 
             if(tesco.getUk().getGhs().getProducts().getResults().size() < 1) {
