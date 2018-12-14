@@ -29,7 +29,7 @@ public class CommandKitsu extends Command {
             JsonObject data = json.getAsJsonArray("data").get(0).getAsJsonObject().get("attributes").getAsJsonObject(); // It's important to find the item in the array where the data is stored.
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").getAsString())
+                    .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), (data.get("youtubeVideoId").isJsonNull()) ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").toString())
                     .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
                     .setDescription(data.get("synopsis").getAsString())
                     .addField("Age Rating", data.get("ageRating").getAsString() + ": " + data.get("ageRatingGuide").getAsString(), true)
