@@ -49,7 +49,7 @@ public class JsonBuffer {
 
     public JsonObject getAsJsonObject() {
         try {
-            return new JsonParser().parse(jsonOutput).getAsJsonObject();
+            return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonObject();
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "getAsJsonObject()");
             return null;

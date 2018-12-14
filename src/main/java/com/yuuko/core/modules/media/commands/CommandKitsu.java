@@ -20,7 +20,7 @@ public class CommandKitsu extends Command {
         try {
             JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json", null, null).getAsJsonObject();
 
-            if(json.getAsJsonArray("data").size() < 1) {
+            if(json == null || json.getAsJsonArray("data").size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
