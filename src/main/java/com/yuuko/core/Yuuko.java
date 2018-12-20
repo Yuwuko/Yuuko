@@ -43,8 +43,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 class Yuuko extends ListenerAdapter {
 
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
     /**
      * Initialises the bot and JDA.
      * @param args -> program arguments (currently unused)
@@ -150,13 +148,14 @@ class Yuuko extends ListenerAdapter {
                 Cache.LAST_TEN.add("");
             }
 
+            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
             scheduler.scheduleAtFixedRate(() -> {
                 Statistics.RUNTIME.getAndIncrement();
                 new DatabaseFunctions().updateServerStatus();
-                Utils.consoleOutput();
+                //Utils.consoleOutput();
             }, 0, 1 , SECONDS);
-
+            scheduler.scheduleAtFixedRate(DatabaseConnection::queryConnections, 0, 5, SECONDS);
             scheduler.scheduleAtFixedRate(() -> Statistics.PING.set(Cache.JDA.getPing()), 10, 300, SECONDS);
 
         } catch(Exception ex) {
