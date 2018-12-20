@@ -9,6 +9,7 @@ import com.yuuko.core.controllers.GenericGuildVoiceController;
 import com.yuuko.core.controllers.GenericMessageController;
 import com.yuuko.core.controllers.GenericMessageReactionController;
 import com.yuuko.core.database.DatabaseConnection;
+import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.C;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.M;
@@ -36,8 +37,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 class Yuuko extends ListenerAdapter {
+
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     /**
      * Initialises the bot and JDA.
@@ -144,8 +150,14 @@ class Yuuko extends ListenerAdapter {
                 Cache.LAST_TEN.add("");
             }
 
-            // Start the system clock last to ensure everything else has started.
-            new SystemClock();
+
+            scheduler.scheduleAtFixedRate(() -> {
+                Statistics.RUNTIME.getAndIncrement();
+                new DatabaseFunctions().updateServerStatus();
+                Utils.consoleOutput();
+            }, 0, 1 , SECONDS);
+
+            scheduler.scheduleAtFixedRate(() -> Statistics.PING.set(Cache.JDA.getPing()), 10, 300, SECONDS);
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "new Yuuko()");

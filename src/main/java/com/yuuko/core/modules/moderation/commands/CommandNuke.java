@@ -41,7 +41,7 @@ public class CommandNuke extends Command {
                 final int value = Integer.parseInt(command[1]);
 
                 if(value < 1 || value > 100) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive value between **1** and **100** or a channel, e.g. #general.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a channel, e.g. #general.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
@@ -61,12 +61,12 @@ public class CommandNuke extends Command {
                 }
 
             } catch(NumberFormatException ex) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive value between **1** and **100** or a tagged channel, e.g. #general.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. #general.");
                 MessageHandler.sendMessage(e, embed.build());
             }
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "CommandNuke");
+            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
     }
 

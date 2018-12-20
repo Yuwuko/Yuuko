@@ -3,7 +3,6 @@ package com.yuuko.core.controllers;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.Statistics;
-import com.yuuko.core.SystemClock;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.core.commands.CommandSetup;
 import com.yuuko.core.utils.MessageHandler;
@@ -46,8 +45,8 @@ public class GenericGuildController {
                             .addField("Servers", Statistics.GUILD_COUNT + "", true)
                             .addField("Commands", Cache.COMMANDS.size() + "", true)
                             .addField("Invocation", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId())  + "`", true)
-                            .addField("Uptime", SystemClock.getRuntimeString(), true)
-                            .addField("Ping", Cache.PING + "", true);
+                            .addField("Uptime", Statistics.RUNTIME.toString(), true)
+                            .addField("Ping", Statistics.PING + "", true);
                     MessageHandler.sendMessage(c, about.build());
                     break;
                 }

@@ -2,7 +2,6 @@ package com.yuuko.core.database;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Statistics;
-import com.yuuko.core.SystemClock;
 import com.yuuko.core.utils.MessageHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -339,8 +338,8 @@ public class DatabaseFunctions {
         try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerStatus` SET `uptime` = ?, `ping` = ?, `latestInfo` = ?, `guilds` = ?, `modules` = ?, `commands` = ?, `messagesProcessed` = ?, `reactsProcessed` = ?, `commandsProcessed` = ?, `membersJoined` = ?");
-            stmt.setInt(1, SystemClock.getRuntime());
-            stmt.setDouble(2, Cache.PING);
+            stmt.setInt(1, Statistics.RUNTIME.get());
+            stmt.setDouble(2, Statistics.PING.get());
             stmt.setString(3, Cache.LATEST_INFO);
             stmt.setInt(4, Statistics.GUILD_COUNT);
             stmt.setInt(5, Cache.MODULES.size());

@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (14/12/2018) 
+# Yuuko 1.0.0 (20/12/2018) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -16,7 +16,7 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is automatically set to `-` but can be changed. This is used to prefix the below commands so the bot recognises that it is a command. To set a custom prefix, you can use the `settings` command below.
+The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is automatically set to `-`, but can be changed. Using `-settings commandPrefix !` will change the prefix and `-help [command]` will show you usage for the given command. 
 
 ### Core
 
@@ -26,16 +26,16 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
 | about | Returns some technical information about Yuuko, such as uptime, ping and server count. | -about | `-about` |
-| settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | <code>-settings &#124; deleteExecuted true</code> | MANAGE_SERVER |
+| settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | `settings`, `-settings deleteExecuted true` | MANAGE_SERVER |
 
 ### Moderation
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
 | kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @Yuuko &#124; not very nice.</code> | KICK_MEMBERS |
-| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | <code>-ban @Yuuko 7 &#124;  not cool, bro.</code> | BAN_MEMBERS |
-| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason (Toggle) | -mute @user &#124; [reason] | <code>-mute @Yuuko &#124;  mic spamming.</code> | MUTE_MEMBERS |
-| nuke | Deletes the provided number of messages from a text channel **OR** if tagged, the whole channel. Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break any bindings you have created!) | -nuke [value] &#124; #channel | <code>-nuke 25 &#124; #nsfw</code> | MANAGE_MESSAGES |
+| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | `-ban @Yuuko 7 test reason` | BAN_MEMBERS |
+| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason (Toggle) | -mute @user &#124; [reason] | `-mute @Yuuko test reason` | MUTE_MEMBERS |
+| nuke | Deletes the provided number of messages from a text channel **OR** if tagged, the whole channel. Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break any bindings you have created!) | -nuke [value] &#124; #channel | `-nuke 50`, `-nuke #nsfw` | MANAGE_MESSAGES |
 
 ### Utility
 

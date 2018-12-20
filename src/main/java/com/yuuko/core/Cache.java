@@ -15,7 +15,6 @@ import java.util.List;
 public class Cache {
     public static JDA JDA;
     public static User BOT;
-    public static long PING;
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
     public static List<String> SETTINGS;
@@ -25,8 +24,4 @@ public class Cache {
     public static String[] STANDARD_STRINGS;
     public static HashMap<Long, List<SearchResult>> audioSearchResults = new HashMap<>();
     static AudioManagerManager AUDIO_MANAGER_MANAGER;
-
-    static void updatePing() {
-        PING = JDA.getPing();
-    }
 }

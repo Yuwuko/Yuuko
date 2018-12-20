@@ -3,7 +3,6 @@ package com.yuuko.core.utils;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.Statistics;
-import com.yuuko.core.SystemClock;
 import com.yuuko.core.database.DatabaseFunctions;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -224,7 +223,7 @@ public final class Utils {
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃ " + Cache.LATEST_INFO );
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + SystemClock.getRuntimeString() + ", Ping: " + Cache.PING + ", Guilds: " + Statistics.GUILD_COUNT + ", DB Idle: " + Statistics.DB_POOL_IDLE + ", DB Active: " + Statistics.DB_POOL_ACTIVE);
+        System.out.println("┃ Uptime: " + Statistics.RUNTIME + ", Ping: " + Statistics.PING + ", Guilds: " + Statistics.GUILD_COUNT + ", DB Idle: " + Statistics.DB_POOL_IDLE + ", DB Active: " + Statistics.DB_POOL_ACTIVE);
         System.out.println("┃ Messages processed: " + Statistics.MESSAGES_PROCESSED + ", Reacts processed: " + Statistics.REACTS_PROCESSED + ", Commands processed: " + Statistics.COMMANDS_PROCESSED);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
