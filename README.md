@@ -8,11 +8,11 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (20/12/2018) 
+# Yuuko 1.0.0 (21/12/2018) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
-If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any feature requests, feel free to post them in my Discord server [here](https://discord.gg/QcwghsA).
+If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any feature requests, feel free to post them in my Discord server [here](https://discord.gg/VsM25fN).
 
 ## Commands
 
