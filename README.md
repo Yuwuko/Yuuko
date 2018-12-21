@@ -24,7 +24,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 |---------|-------------|-------|---------|------------|
 | module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` | MANAGE_SERVER|
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
-| help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | <code>-help &#124; [command]</code> |
+| help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | `-help`, `-help play` |
 | about | Returns some technical information about Yuuko, such as uptime, ping and server count. | -about | `-about` |
 | settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | `settings`, `-settings deleteExecuted true` | MANAGE_SERVER |
 
@@ -32,9 +32,9 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| <code>-kick @Yuuko &#124; not very nice.</code> | KICK_MEMBERS |
-| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | `-ban @Yuuko 7 test reason` | BAN_MEMBERS |
-| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason (Toggle) | -mute @user &#124; [reason] | `-mute @Yuuko test reason` | MUTE_MEMBERS |
+| kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| `-kick @Yuuko`, `-kick @Yuuko not very nice.` | KICK_MEMBERS |
+| ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | `-ban @Yuuko`, `-ban @Yuuko 7 test reason` | BAN_MEMBERS |
+| mute | Mutes the provided user from both voice and text chat on the server, with an optional reason (Toggle) | -mute @user &#124; [reason] | `-mute @Yuuko`, `-mute @Yuuko test reason` | MUTE_MEMBERS |
 | nuke | Deletes the provided number of messages from a text channel **OR** if tagged, the whole channel. Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break any bindings you have created!) | -nuke [value] &#124; #channel | `-nuke 50`, `-nuke #nsfw` | MANAGE_MESSAGES |
 
 ### Utility
@@ -43,14 +43,14 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 |---------|-------------|-------|---------|------------|
 | user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @Yuuko` |
 | server | Returns information about the current server. | -server | `-server` |
-| channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | <code>-channel add text cool-text-channel &#124; nsfw</code> | MANAGE_CHANNELS |
-| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | <code>-bind audio &#124; test-channel</code> | ADMINISTRATOR  |
+| channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | `-channel add text cool-text-channel nsfw` | MANAGE_CHANNELS |
+| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | `-bind audio`, `-bind audio test-channel` | ADMINISTRATOR  |
 
 ### World
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| linestatus | Returns full line coverage for the London Underground which is accurate to command execution, with optional `min` argument to return a minified version. | -linestatus &#124; [min] | <code>-linestatus &#124; min</code> |
+| linestatus | Returns full line coverage for the London Underground which is accurate to command execution, with optional `min` argument to return a minified version. | -linestatus &#124; [min] | `-linestatus`, `-linestatus min` |
 | weather | Allows you to look up the weather in the given city *Note: Currently limited to a city name, without country code.* | -weather [city] | `-weather London` |
 | tesco | Returns product information about any item sold by Tesco PLC | -tesco [product] | `-tesco mount gay` |
 
@@ -71,7 +71,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| play | Starts playback of the given audio track through either URL or search term. Will ask Yuuko to join the voice channel of the command issuer and if a track is already playing, queue it instead. Using the command without arguments will resume a paused player. | -play &#124; [url] &#124; [term] | <code>-play &#124; https://www.youtube.com/watch?v=DDW4hTWbRYs &#124; something </code> |
+| play | Starts playback of the given audio track through either URL or search term. Will ask Yuuko to join the voice channel of the command issuer and if a track is already playing, queue it instead. Using the command without arguments will resume a paused player. | -play &#124; [url] &#124; [term] | `-play https://www.youtube.com/watch?v=DDW4hTWbRYs`, `-play something` |
 | pause | Pauses playback of the current track. | -pause | `-pause` |
 | stop | Stops playback, clearing the queue and removing the background track. | -stop | `-stop` |
 | skip | Skips the currently playing track, if there is one. | -skip | `-skip` |
@@ -79,8 +79,8 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | current | Returns information about the currently playing track such as current time, artist and source. | -current | `-current` |
 | last | Returns information about the last played track such as artist and source. | -last | `-last` | 
 | queue | Returns the first 10 tracks in the queue or however many there are if under 10. | -queue | `-queue` |
-| clear | Clears the current queue of all of the current tracks, or clears a single track from the given position in the queue. | -clear &#124; [position] | <code>-clear &#124; 4</code> |
-| background | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. Use the command with no parameters to unset a set background. | -background [url] &#124; [term] | <code>-background https://www.youtube.com/watch?v=va3Dj_sUCJs &#124; cool music</code>  |
+| clear | Clears the current queue of all of the current tracks, or clears a single track from the given position in the queue. | -clear &#124; [position] | `-clear`, `-clear 4` |
+| background | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. Use the command with no parameters to unset a set background. | -background [url] &#124; [term] | `-background https://www.youtube.com/watch?v=va3Dj_sUCJs`, `-background cool music`  |
 | repeat | Toggles a track to repeat. | -repeat | `-repeat` |
 | search | Searches YouTube and returns the first 10 results, a choice is made by typing the number and the selected track will be queued. | -search [term] | `-search funky beats` |
 
@@ -122,5 +122,3 @@ __S:__ There have been issues connecting to some EU discord servers lately, a qu
 For the welcome message a basic 'general' text-channel is used. If that does or doesn't exist the bot will also send a PM to the server owner but not attempt to send the message anywhere else.
 
 The logging setting currently requires a text-channel named 'command-log' to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed. (this will be changed in the future)
-
-
