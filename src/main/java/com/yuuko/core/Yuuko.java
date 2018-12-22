@@ -144,7 +144,7 @@ class Yuuko extends ListenerAdapter {
 
             Cache.LATEST_INFO = "";
             Cache.LAST_THIRTEEN = new LinkedList<>();
-            for(int i = 0; i < 12; i++) {
+            for(int i = 0; i < 13; i++) {
                 Cache.LAST_THIRTEEN.add("");
             }
 
@@ -158,7 +158,7 @@ class Yuuko extends ListenerAdapter {
             scheduler.scheduleAtFixedRate(() -> {
                 DatabaseConnection.queryConnections();
                 Utils.consoleOutput();
-            }, 0, 10, SECONDS);
+            }, 10, 10, SECONDS);
             scheduler.scheduleAtFixedRate(() -> Statistics.PING.set(Cache.JDA.getPing()), 10, 300, SECONDS);
 
         } catch(Exception ex) {
