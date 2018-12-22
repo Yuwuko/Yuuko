@@ -111,7 +111,7 @@ public class GenericMessageController {
                 constructor.newInstance(e, input);
 
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
+                Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)", e.getGuild().getId(), e.getAuthor().getId());
                 Statistics.COMMANDS_PROCESSED.getAndIncrement();
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", serverId).equalsIgnoreCase("1")) {
@@ -146,7 +146,7 @@ public class GenericMessageController {
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", server).equalsIgnoreCase("1")) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
+                    Utils.updateLatest(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString().replace("T", " ").replace("Z", "").substring(5) + " - " + e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)", e.getGuild().getId(), e.getAuthor().getId());
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
 

@@ -2,13 +2,14 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## Y-1.0.0 (Release: 01/01/2019)
+## Y-1.0.0 (Release Scheduled: 01/01/2019)
 + [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
 + [!] Bumped JDK version to 12 (early release) because why wouldn't you live life dangerously in production. (also, jdk 11 ssl is broken)
 + [+] Put in place measures to allow for a web console to edit settings and also see status updates.
 + [+] Added developer [__reloadapi__] command to be able to switch out API keys when needed.
 + [+] Added new [__tesco__] command that allows you to lookup and price check items from the store (kind of a meme)
 + [+] Added new [__welcomeMembers__] setting that currently sends a message when a new member joins and greets them.
++ [+] New database stuff including join date, command logs (for debugging), lastUpdated (for debugging) and a few other minor things.
 + [~] Modified the JsonBuffer class to use Gson and return JsonObject objects, allowing for cleaner code, also removing any previous POJO objects.
 + [~] Heavily modified the database logic, tidied it up a bunch and now use pooled connections to increase database speeds. (12-20ms to 2-8ms @ about)
 + [~] Heavily modified the API system, now allowing API keys to be reloaded and added on the fly.
@@ -18,7 +19,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated JsonBuffer class to allow for extra additional headers.
 + [~] Shrunk the [__announceNowPlaying__] setting to simply [__nowPlaying__] because it's easier to type and remember.
 + [~] Fixed a number of old bugs the haunted the previous versions, obviously leaving a few behind.
-+ [~] Cleaned up a LOT of the code, making it more readable and less redundant, moved Ping into Statistics from Cache.
++ [~] Cleaned up a LOT of the code, making it more readable and less redundant, moved Ping into Statistics from Cache, changed consoleOutput function to show more commands but less other information.
 + [~] Moved duplicate code from the Moderation module into it's own method in the Utils class.
 + [~] Updated the about section since everyone already knows the context of a discord bot...
 + [~] Changed most of the embeds to include information about who used the command and bot version.

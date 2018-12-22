@@ -210,21 +210,21 @@ public final class Utils {
         System.out.println("              |_| \\__,_|\\__,_|_|\\_\\___/    |_|     |_(_)___(_)___/ ");
         System.out.println();
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS " + Cache.MODULES.size() + "/" + Cache.COMMANDS.size() + "]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃ " + Cache.LAST_TEN.get(0));
-        System.out.println("┃ " + Cache.LAST_TEN.get(1));
-        System.out.println("┃ " + Cache.LAST_TEN.get(2));
-        System.out.println("┃ " + Cache.LAST_TEN.get(3));
-        System.out.println("┃ " + Cache.LAST_TEN.get(4));
-        System.out.println("┃ " + Cache.LAST_TEN.get(5));
-        System.out.println("┃ " + Cache.LAST_TEN.get(6));
-        System.out.println("┃ " + Cache.LAST_TEN.get(7));
-        System.out.println("┃ " + Cache.LAST_TEN.get(8));
-        System.out.println("┃ " + Cache.LAST_TEN.get(9));
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[INFO]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ " + Cache.LATEST_INFO );
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(0));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(1));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(2));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(3));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(4));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(5));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(6));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(7));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(8));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(9));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(10));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(11));
+        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(12));
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + Statistics.RUNTIME + ", Ping: " + Statistics.PING + ", Guilds: " + Statistics.GUILD_COUNT + ", DB Idle: " + Statistics.DB_POOL_IDLE + ", DB Active: " + Statistics.DB_POOL_ACTIVE);
-        System.out.println("┃ Messages processed: " + Statistics.MESSAGES_PROCESSED + ", Reacts processed: " + Statistics.REACTS_PROCESSED + ", Commands processed: " + Statistics.COMMANDS_PROCESSED);
+        System.out.println("┃ Uptime: " + Statistics.RUNTIME + ", Ping: " + Statistics.PING + ", DB Idle: " + Statistics.DB_POOL_IDLE + ", DB Active: " + Statistics.DB_POOL_ACTIVE);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
 
@@ -232,13 +232,14 @@ public final class Utils {
      * Updates the latest [INFO] message or the latest command message.
      * @param latest String
      */
-    public static void updateLatest(String latest) {
+    public static void updateLatest(String latest, String server, String user) {
         if(latest.startsWith("[INFO]")) {
             Cache.LATEST_INFO = latest;
         } else {
-            Cache.LAST_TEN.addFirst(latest);
-            if(Cache.LAST_TEN.size() > 10) {
-                Cache.LAST_TEN.removeLast();
+            Cache.LAST_THIRTEEN.addFirst(latest);
+            new DatabaseFunctions().logCommand(latest, server, user);
+            if(Cache.LAST_THIRTEEN.size() > 12) {
+                Cache.LAST_THIRTEEN.removeLast();
             }
         }
     }

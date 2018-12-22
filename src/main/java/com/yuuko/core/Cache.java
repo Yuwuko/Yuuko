@@ -19,7 +19,7 @@ public class Cache {
     public static List<Module> MODULES;
     public static List<String> SETTINGS;
     public static DiscordBotListAPI BOT_LIST;
-    public static LinkedList<String> LAST_TEN;
+    public static LinkedList<String> LAST_THIRTEEN;
     public static String LATEST_INFO;
     public static String[] STANDARD_STRINGS;
     public static HashMap<Long, List<SearchResult>> audioSearchResults = new HashMap<>();

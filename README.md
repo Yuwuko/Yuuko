@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (21/12/2018) 
+# Yuuko 1.0.0 (22/12/2018) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -67,7 +67,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | osu | Returns a small signature image for an Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
 | kitsu | Returns information about the given anime. (Types: show) (Character information to come soon!) | -kitsu [name] | `-kitsu naruto` |
 
-### Music
+### Audio
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
