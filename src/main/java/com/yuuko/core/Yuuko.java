@@ -158,7 +158,7 @@ class Yuuko extends ListenerAdapter {
             scheduler.scheduleAtFixedRate(() -> {
                 DatabaseConnection.queryConnections();
                 Utils.consoleOutput();
-            }, 10, 10, SECONDS);
+            }, 3, 10, SECONDS);
             scheduler.scheduleAtFixedRate(() -> Statistics.PING.set(Cache.JDA.getPing()), 10, 300, SECONDS);
 
         } catch(Exception ex) {

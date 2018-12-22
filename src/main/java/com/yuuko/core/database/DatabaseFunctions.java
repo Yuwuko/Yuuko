@@ -334,10 +334,11 @@ public class DatabaseFunctions {
     public void logCommand(String command, String server, String user) {
         try {
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandLog` VALUES(?,?,?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandLog`('serverId', 'userId', 'command') VALUES(?,?,?)");
             stmt.setString(1, server);
             stmt.setString(2, user);
-            stmt.setString(2, command);
+            stmt.setString(3, command);
+
             if(!stmt.execute()) {
                 stmt.close();
                 conn.close();
