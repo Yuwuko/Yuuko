@@ -36,7 +36,7 @@ public class CommandTesco extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(data.get("name").getAsString())
                     .setThumbnail(data.get("image").getAsString())
-                    .setDescription(((data.get("description").getAsJsonArray().size() > 0) ? data.get("description").getAsJsonArray().get(0).toString() : "No description available."))
+                    .setDescription(((data.has("description") && data.get("description").getAsJsonArray().size() > 0) ? data.get("description").getAsJsonArray().get(0).toString() : "No description available."))
                     .addField("Price", "£" + new BigDecimal(data.get("price").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + " (£" + new BigDecimal(data.get("unitprice").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + "/" + data.get("UnitQuantity").getAsString() + ")", true)
                     .addField("Weight", new BigDecimal(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
                     .addField("Quantity", data.get("UnitOfSale").getAsString() + "", true)

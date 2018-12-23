@@ -19,13 +19,13 @@ public class CommandModule extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        String moduleName = command[1].toLowerCase();
-        String serverLong = e.getGuild().getId();
+        String moduleName = command[1].split("\\s+",2)[0].toLowerCase();
+        String server = e.getGuild().getId();
 
         // Check if the module even exists.
         boolean hit = false;
         for(Module module: Cache.MODULES) {
-            if(module.getModuleName().substring(6).toLowerCase().equals(command[1])) {
+            if(module.getModuleName().equalsIgnoreCase(moduleName)) {
                 hit = true;
                 break;
             }
@@ -37,7 +37,7 @@ public class CommandModule extends Command {
             return;
         }
 
-        if(new DatabaseFunctions().toggleModule("module" + moduleName, serverLong)) {
+        if(new DatabaseFunctions().toggleModule("module" + moduleName, server)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + moduleName + "_ was enabled on this server!");
             MessageHandler.sendMessage(e, embed.build());
         } else {

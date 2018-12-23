@@ -56,14 +56,14 @@ public class GenericGuildController {
         }
 
         Utils.updateDiscordBotList();
-        Utils.updateLatest("[INFO] Joined server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")", null, null);
+        Utils.updateLatest("[INFO] Joined server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
         Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
         Utils.updateDiscordBotList();
-        Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")", null, null);
+        Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {

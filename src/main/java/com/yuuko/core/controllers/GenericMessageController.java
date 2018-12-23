@@ -109,7 +109,8 @@ public class GenericMessageController {
                 constructor.newInstance(e, input);
 
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                Utils.updateLatest(e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)", e.getGuild().getId(), e.getAuthor().getId());
+                Utils.updateLatest(e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
+                MessageHandler.sendCommand(e, executionTime);
                 Statistics.COMMANDS_PROCESSED.getAndIncrement();
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", serverId).equalsIgnoreCase("1")) {
@@ -144,7 +145,7 @@ public class GenericMessageController {
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", server).equalsIgnoreCase("1")) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    Utils.updateLatest(e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)", e.getGuild().getId(), e.getAuthor().getId());
+                    Utils.updateLatest(e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
 

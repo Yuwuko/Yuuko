@@ -232,12 +232,11 @@ public final class Utils {
      * Updates the latest [INFO] message or the latest command message.
      * @param latest String
      */
-    public static void updateLatest(String latest, String server, String user) {
+    public static void updateLatest(String latest) {
         if(latest.startsWith("[INFO]")) {
             Cache.LATEST_INFO = latest;
         } else {
             Cache.LAST_THIRTEEN.addFirst(latest);
-            new DatabaseFunctions().logCommand(latest, server, user);
             if(Cache.LAST_THIRTEEN.size() > 12) {
                 Cache.LAST_THIRTEEN.removeLast();
             }

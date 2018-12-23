@@ -331,27 +331,6 @@ public class DatabaseFunctions {
         }
     }
 
-    public void logCommand(String command, String server, String user) {
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandLog`('serverId', 'userId', 'command') VALUES(?,?,?)");
-            stmt.setString(1, server);
-            stmt.setString(2, user);
-            stmt.setString(3, command);
-
-            if(!stmt.execute()) {
-                stmt.close();
-                conn.close();
-            }
-
-            stmt.close();
-            conn.close();
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to log command. (" + command + " >> " + server + ")");
-        }
-    }
-
     /**
      * Updates the database with the latest statistics.
      */

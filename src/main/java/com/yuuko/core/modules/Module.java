@@ -2,6 +2,7 @@ package com.yuuko.core.modules;
 
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utils.MessageHandler;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class Module {
@@ -34,7 +35,8 @@ public abstract class Module {
         if(new DatabaseFunctions().checkModuleSettings(dbModuleName, e.getGuild().getId())) {
             return true;
         } else {
-            MessageHandler.sendMessage(e, "Sorry " + e.getAuthor().getAsMention() + ", '" + moduleName.substring(6).toLowerCase() + "' is disabled.");
+            EmbedBuilder member = new EmbedBuilder().setTitle("Module Disabled").setDescription("The **_" + moduleName + "_** module is disabled.");
+            MessageHandler.sendMessage(e, member.build());
             return false;
         }
     }
