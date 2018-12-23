@@ -18,7 +18,7 @@ public class SettingExecuteBoolean {
         }
     }
 
-    public boolean executeCommand(MessageReceivedEvent e, String setting, String value) {
+    public void executeCommand(MessageReceivedEvent e, String setting, String value) {
         try {
             String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 
@@ -30,14 +30,9 @@ public class SettingExecuteBoolean {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(setting.toUpperCase() + " set to FALSE.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
-                return true;
-            } else {
-                return false;
             }
-
         } catch(Exception ex) {
             MessageHandler.sendException(ex, setting + "[" + value + "]");
-            return false;
         }
     }
 

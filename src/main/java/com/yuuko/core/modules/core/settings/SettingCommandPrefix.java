@@ -11,14 +11,17 @@ public class SettingCommandPrefix {
         executeCommand(e, value);
     }
 
-    public boolean executeCommand(MessageReceivedEvent e, String value) {
+    public void executeCommand(MessageReceivedEvent e, String value) {
+        if(value.length() > 5) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Prefixes have a minimum length of **1** and a maximum length of **5** characters.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
+
         if(new DatabaseFunctions().setServerSettings("commandPrefix", value, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("COMMANDPREFIX set to " + value);
             MessageHandler.sendMessage(e, embed.build());
-            return true;
         }
-
-        return false;
     }
 
 }

@@ -95,7 +95,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 
 | Setting | Description | Values | Usage |
 |---------|-------------|-------|---------|
-| commandPrefix | Changes the custom prefix for the server. | String | `-settings commandPrefix !` |
+| commandPrefix | Changes the custom prefix for the server. (Characters: Min `1`, Max `5`) | String | `-settings commandPrefix !` |
 | deleteExecuted | Deletes the command message after it has been executed. | TRUE, FALSE | `-settings deleteExecuted true` |
 | commandLogging | Logs any executed command into a logging channel. | TRUE, FALSE | `-settings commandLogging true` |
 | nowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings nowPlaying true` |

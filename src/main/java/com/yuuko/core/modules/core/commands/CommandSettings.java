@@ -58,8 +58,8 @@ public class CommandSettings extends Command {
                 }
 
             } else {
-
                 Connection connection = DatabaseConnection.getConnection();
+
                 try {
                     ResultSet resultSet = new DatabaseFunctions().getServerSettings(connection, e.getGuild().getId());
                     resultSet.next();
