@@ -27,7 +27,7 @@ public class CommandMute extends Command {
             boolean isMuted = false;
             List<Role> roles =  target.getRoles();
             for(Role role: roles) {
-                if(role.getName().equals("muted")) {
+                if(role.getName().equalsIgnoreCase("muted")) {
                     isMuted = true;
                     break;
                 }
