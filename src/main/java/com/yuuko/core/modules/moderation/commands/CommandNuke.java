@@ -55,6 +55,7 @@ public class CommandNuke extends Command {
                     for(Message message : nukeList) {
                         if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
                             message.delete().queue();
+                            nukeList.remove(message);
                         }
                     }
                     e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
