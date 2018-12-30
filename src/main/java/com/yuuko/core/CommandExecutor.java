@@ -5,6 +5,7 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Sanitise;
+import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -28,14 +29,20 @@ public class CommandExecutor {
                     } else {
                         for(Command cmd : module.getModuleCommands()) {
                             if(cmd.getCommandName().equalsIgnoreCase(command[0])) { // Is the command name the same as the command given? (Ignoring case!)
-                                if(cmd.getCommandPermission() != null && !e.getMember().hasPermission(cmd.getCommandPermission()) && !e.getMember().hasPermission(e.getTextChannel(), cmd.getCommandPermission())) { // Is the command permission NULL? If so does the user have the permission?
-                                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("The '" + cmd.getCommandPermission().getName() + "' permission is required to use that command.");
+                                if(cmd.getCommandPermissions() != null && !e.getGuild().getMemberById(420682957007880223L).hasPermission(cmd.getCommandPermissions())) { // Is the command permission NULL? If so, does the bot have the permission?
+                                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(cmd.getCommandPermissions()) + "**' permissions to use that command.");
                                     MessageHandler.sendMessage(e, embed.build());
                                     break;
                                 } else {
-                                    if(Sanitise.checkParameters(e, command, cmd.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
-                                        cmd.executeCommand(e, command);
+                                    if(cmd.getCommandPermissions() != null && !e.getMember().hasPermission(cmd.getCommandPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), cmd.getCommandPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
+                                        EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(cmd.getCommandPermissions()) + "**' permissions to use that command.");
+                                        MessageHandler.sendMessage(e, embed.build());
                                         break;
+                                    } else {
+                                        if(Sanitise.checkParameters(e, command, cmd.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
+                                            cmd.executeCommand(e, command);
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -50,7 +57,7 @@ public class CommandExecutor {
     private void messageCleanup(MessageReceivedEvent e) {
         if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the 'MESSAGE_MANAGE' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
                 e.getMessage().delete().queue();

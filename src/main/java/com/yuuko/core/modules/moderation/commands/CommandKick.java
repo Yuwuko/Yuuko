@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandKick extends Command {
 
     public CommandKick() {
-        super("kick", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-kick @user", "-ban @user [reason]"}, Permission.KICK_MEMBERS);
+        super("kick", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-kick @user", "-ban @user [reason]"}, new Permission[]{Permission.KICK_MEMBERS});
     }
 
     @Override

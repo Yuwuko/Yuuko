@@ -4,14 +4,13 @@ import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CommandSetup extends Command {
 
     public CommandSetup() {
-        super("setup", "com.yuuko.core.modules.core.ModuleCore", 0, new String[]{"-setup"}, Permission.ADMINISTRATOR);
+        super("setup", "com.yuuko.core.modules.core.ModuleCore", 0, new String[]{"-setup"}, null);
     }
 
     @Override

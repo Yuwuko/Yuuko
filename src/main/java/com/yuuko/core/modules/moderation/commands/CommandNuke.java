@@ -15,7 +15,7 @@ import java.util.List;
 public class CommandNuke extends Command {
 
     public CommandNuke() {
-        super("nuke", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-nuke [value]", "-nuke #channel"}, Permission.MESSAGE_MANAGE);
+        super("nuke", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-nuke [value]", "-nuke #channel"}, new Permission[]{Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL});
     }
 
     @Override
@@ -25,7 +25,7 @@ public class CommandNuke extends Command {
             List<TextChannel> channels = e.getMessage().getMentionedChannels();
             if(channels.size() > 0) {
                 int i = 0;
-                for(TextChannel channel: channels) {
+                for(TextChannel channel : channels) {
                     if(i > 4) {
                         return;
                     }

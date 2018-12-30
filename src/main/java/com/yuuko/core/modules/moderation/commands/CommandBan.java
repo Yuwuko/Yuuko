@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandBan extends Command {
 
     public CommandBan() {
-        super("ban", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, Permission.BAN_MEMBERS);
+        super("ban", "com.yuuko.core.modules.moderation.ModuleModeration",1, new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, new Permission[]{Permission.BAN_MEMBERS});
     }
 
     @Override

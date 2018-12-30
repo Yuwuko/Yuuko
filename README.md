@@ -8,11 +8,13 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (23/12/2018) 
+# Yuuko 1.0.0 (30/12/2018) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
 If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any feature requests, feel free to post them in my Discord server [here](https://discord.gg/VsM25fN).
+
+Online Dashboard: You can visit https://www.yuuko.info to see this full list of commands and gain access to an online dashboard for your server.
 
 ## Commands
 
@@ -35,7 +37,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | kick | Kicks the provided user from, with an optional reason. | -kick @user &#124; [reason]| `-kick @Yuuko`, `-kick @Yuuko not very nice.` | KICK_MEMBERS |
 | ban | Bans the provided user for the given amount of time in days, with an optional reason. | -ban @user [days] &#124; [reason] | `-ban @Yuuko`, `-ban @Yuuko 7 test reason` | BAN_MEMBERS |
 | mute | Mutes the provided user from both voice and text chat on the server, with an optional reason (Toggle) | -mute @user &#124; [reason] | `-mute @Yuuko`, `-mute @Yuuko test reason` | MUTE_MEMBERS |
-| nuke | Deletes the provided number of messages from a text channel **OR** if tagged, the whole channel. Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break any bindings you have created!) | -nuke [value] &#124; #channel | `-nuke 50`, `-nuke #nsfw` | MANAGE_MESSAGES |
+| nuke | Deletes the provided number of messages from a text channel **OR** if tagged, the whole channel. Max Channels `5`, Max messages `100`. (Warning: Nuking via #channel will break any bindings you have created!) | -nuke [value] &#124; #channel | `-nuke 50`, `-nuke #nsfw` | MESSAGE_MANAGE, MANAGE_CHANNEL |
 
 ### Utility
 

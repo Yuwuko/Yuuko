@@ -14,7 +14,7 @@ import java.util.List;
 public class CommandMute extends Command {
 
     public CommandMute() {
-        super("mute", "com.yuuko.core.modules.moderation.ModuleModeration", 1, new String[]{"-mute @user", "-ban @user [reason]"}, Permission.VOICE_MUTE_OTHERS);
+        super("mute", "com.yuuko.core.modules.moderation.ModuleModeration", 1, new String[]{"-mute @user", "-ban @user [reason]"}, new Permission[]{Permission.VOICE_MUTE_OTHERS});
     }
 
     @Override

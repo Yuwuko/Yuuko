@@ -86,7 +86,6 @@ public class GenericMessageController {
         try {
             long executionTime;
 
-            Class<?> clazz;
             Constructor<?> constructor = null;
             String moduleDbName = "";
 
@@ -98,8 +97,7 @@ public class GenericMessageController {
                 if((inputPrefix + input[0]).equalsIgnoreCase(c.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + c.getCommandName())) {
                     String commandModule = c.getCommandModule();
                     moduleDbName = Utils.extractModuleName(commandModule, false, true);
-                    clazz = Class.forName(commandModule);
-                    constructor = clazz.getConstructor(MessageReceivedEvent.class, String[].class);
+                    constructor = Class.forName(commandModule).getConstructor(MessageReceivedEvent.class, String[].class);
                 }
             }
 

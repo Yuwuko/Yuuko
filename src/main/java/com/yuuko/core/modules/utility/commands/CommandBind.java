@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandBind extends Command {
 
     public CommandBind() {
-        super("bind", "com.yuuko.core.modules.utility.ModuleUtility", 1, new String[]{"-bind [module]", "-bind [module] [channel]"}, Permission.ADMINISTRATOR);
+        super("bind", "com.yuuko.core.modules.utility.ModuleUtility", 1, new String[]{"-bind [module]", "-bind [module] [channel]"}, new Permission[]{Permission.ADMINISTRATOR});
     }
 
     @Override

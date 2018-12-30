@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CommandChannel extends Command {
 
     public CommandChannel() {
-        super("channel", "com.yuuko.core.modules.utility.ModuleUtility", 3, new String[]{"-channel [action] [type] [name]", "-channel [action] [type] [name] [nsfw]"}, Permission.MANAGE_CHANNEL);
+        super("channel", "com.yuuko.core.modules.utility.ModuleUtility", 3, new String[]{"-channel [action] [type] [name]", "-channel [action] [type] [name] [nsfw]"}, new Permission[]{Permission.MANAGE_CHANNEL});
     }
 
     @Override

@@ -11,6 +11,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [+] Added new [__welcomeMembers__] setting that currently sends a message when a new member joins and greets them.
 + [+] New database stuff including join date, command logs (for debugging), lastUpdated (for debugging) and a few other minor things.
 + [~] Modified the JsonBuffer class to use Gson and return JsonObject objects, allowing for cleaner code, also removing any previous POJO objects.
++ [~] Modified Permission field in the Command class to be an array, allowing multiple permissions per command, modified related classes to accommodate for the change.
 + [~] Heavily modified the database logic, tidied it up a bunch and now use pooled connections to increase database speeds. (12-20ms to 2-8ms @ about)
 + [~] Heavily modified the API system, now allowing API keys to be reloaded and added on the fly.
 + [~] Modified the [__nuke__] command. You can now tag channels instead of a value and those channels will be duplicated and the old versions deleted. (Also added guards for exceptions)
@@ -18,7 +19,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated exception util to print the full stack trace so that debugging can be done more efficiently.
 + [~] Updated JsonBuffer class to allow for extra additional headers.
 + [~] Shrunk the [__announceNowPlaying__] setting to simply [__nowPlaying__] because it's easier to type and remember.
-+ [~] Fixed a number of old bugs the haunted the previous versions, obviously leaving a few behind.
++ [~] Fixed a number of old bugs the haunted the previous versions, obviously leaving a few behind (x3).
 + [~] Cleaned up a LOT of the code, making it more readable and less redundant, moved Ping into Statistics from Cache, changed consoleOutput function to show more commands but less other information.
 + [~] Moved duplicate code from the Moderation module into it's own method in the Utils class.
 + [~] Updated the about section since everyone already knows the context of a discord bot...

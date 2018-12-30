@@ -14,7 +14,7 @@ import java.awt.*;
 public class CommandModule extends Command {
 
     public CommandModule() {
-        super("module", "com.yuuko.core.modules.core.ModuleCore", 1, new String[]{"-module [module]"}, Permission.MANAGE_SERVER);
+        super("module", "com.yuuko.core.modules.core.ModuleCore", 1, new String[]{"-module [module]"}, new Permission[]{Permission.MANAGE_SERVER});
     }
 
     @Override

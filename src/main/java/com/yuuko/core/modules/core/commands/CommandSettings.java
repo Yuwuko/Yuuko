@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 public class CommandSettings extends Command {
 
     public CommandSettings() {
-        super("settings", "com.yuuko.core.modules.core.ModuleCore", 0, new String[]{"-settings", "-settings [setting] [value]"}, Permission.MANAGE_SERVER);
+        super("settings", "com.yuuko.core.modules.core.ModuleCore", 0, new String[]{"-settings", "-settings [setting] [value]"}, new Permission[]{Permission.MANAGE_SERVER});
     }
 
     @Override

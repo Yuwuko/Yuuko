@@ -27,7 +27,7 @@ public class CommandHelp extends Command {
         if(command.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setTitle("Have an issue, suggestion or just want me on your server?")
-                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://github.com/BasketBandit/Yuuko-Java/blob/master/README.md)!")
+                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
                     .addField("Core", "`about` `help` `module` `modules` `settings`", false)
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
@@ -50,10 +50,10 @@ public class CommandHelp extends Command {
             for(Command cmd: Cache.COMMANDS) {
                 if(cmd.getCommandName().equals(command[1])) {
                     String commandPermission;
-                    if(cmd.getCommandPermission() == null) {
+                    if(cmd.getCommandPermissions() == null) {
                         commandPermission = "None";
                     } else {
-                        commandPermission = cmd.getCommandPermission().getName();
+                        commandPermission = Utils.getCommandPermissions(cmd.getCommandPermissions());
                     }
 
                     StringBuilder usages = new StringBuilder();
@@ -89,7 +89,7 @@ public class CommandHelp extends Command {
                             .setThumbnail(bot.getAvatarUrl())
                             .setTitle("Command help for **_" + cmd.getCommandName() + "_**")
                             .addField("Module", Utils.extractModuleName(cmd.getCommandModule(), true, false), true)
-                            .addField("Required Permission", commandPermission, true)
+                            .addField("Required Permissions", commandPermission, true)
                             .addField("Binds", bindList.toString(), true)
                             .addField("Usage", usages.toString(), false)
                             .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
