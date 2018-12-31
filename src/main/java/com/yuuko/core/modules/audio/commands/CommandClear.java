@@ -5,6 +5,7 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
 import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -23,11 +24,11 @@ public class CommandClear extends Command {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             if(command.length > 1) {
-                int clearPos;
+                final int clearPos;
 
-                try {
+                if(Utils.isNumber(command[1])) {
                     clearPos = Integer.parseInt(command[1]);
-                } catch (Exception ex) {
+                } else {
                     return;
                 }
 

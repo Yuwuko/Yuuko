@@ -3,6 +3,7 @@ package com.yuuko.core.modules.moderation.commands;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -37,7 +38,7 @@ public class CommandNuke extends Command {
                 return;
             }
 
-            try {
+            if(Utils.isNumber(command[1])) {
                 final int value = Integer.parseInt(command[1]);
 
                 if(value < 1 || value > 100) {
@@ -60,14 +61,13 @@ public class CommandNuke extends Command {
                     }
                     e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
                 }
-
-            } catch(NumberFormatException ex) {
+            } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. #general.");
                 MessageHandler.sendMessage(e, embed.build());
             }
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, "CommandNuke.Class ~ " + e.getMessage().getContentRaw());
         }
     }
 

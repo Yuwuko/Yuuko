@@ -12,11 +12,11 @@ import net.dv8tion.jda.core.managers.GuildController;
 import org.xhtmlrenderer.swing.Java2DRenderer;
 
 import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -145,29 +145,18 @@ public final class Utils {
 
     /**
      * Take a xHTML input, renders and return an image based on it.
-     * @param path String
      * @param html String
      * @param width int
      * @param height int
-     * @param temp boolean
      * @return File rendered by method.
      */
-    public static File xhtml2image(String path, String html, int width, int height, boolean temp) {
+    public static byte[] xhtml2image(String html, int width, int height) {
         try {
-            // Nano time used for unique name.
-            long unique = System.nanoTime();
+            final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-            // xHTML code dynamically written to a file (since Java2DRenderer doesn't take a string?)
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path + unique + ".xhtml"));
-            writer.write(html);
-            writer.close();
-
-            File xhtml = new File(path + unique + ".xhtml");
-
-            // Reads xHTML code from file, renders, buffers an image and then writes that to a file.
             // Subclasses 2DRenderer to allow transparent images and such.
             final java.awt.Color TRANSPARENT = new Color(255, 255, 255, 0);
-            final Java2DRenderer renderer = new Java2DRenderer(xhtml, width, height) {
+            final Java2DRenderer renderer = new Java2DRenderer(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(html.getBytes())), width, height) {
                 @Override
                 protected BufferedImage createBufferedImage(final int width, final int height) {
                     final BufferedImage image = org.xhtmlrenderer.util.ImageUtil.createCompatibleBufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -176,18 +165,9 @@ public final class Utils {
                 }
             };
 
-            BufferedImage img = renderer.getImage();
-            ImageIO.write(img, "png", new File(path + unique + ".png"));
+            ImageIO.write(renderer.getImage(), "png", output);
+            return output.toByteArray();
 
-            File image = new File(path + unique + ".png");
-
-            if(temp) {
-                // Delete the files to save time later.
-                xhtml.deleteOnExit();
-                image.deleteOnExit();
-            }
-
-            return image;
         } catch(Exception ex) {
             return null;
         }
@@ -305,14 +285,20 @@ public final class Utils {
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         Member user;
 
-        if(mentioned.size() > 0) {
-            user = mentioned.get(0);
+        if(!e.getMessage().mentionsEveryone()) {
+            if(mentioned.size() > 0) {
+                user = mentioned.get(0);
+            } else {
+                user = e.getGuild().getMemberById(userId);
+            }
         } else {
-            user = e.getGuild().getMemberById(userId);
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("You cannot do _that_ to everyone.");
+            MessageHandler.sendMessage(e, embed.build());
+            return null;
         }
 
         if(user == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("That user could not found.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("User '**" + userId + "**' was not found.");
             MessageHandler.sendMessage(e, embed.build());
             return null;
         } else {
@@ -320,8 +306,28 @@ public final class Utils {
         }
     }
 
+    /**
+     * Returns a pretty version of a command's permission array by removing the brackets surrounding them.
+     * @param permissions Permission[]
+     * @return String
+     */
     public static String getCommandPermissions(Permission[] permissions) {
         return Arrays.toString(permissions).replace("[", "").replace("]", "");
+    }
+
+    /**
+     * Checks to see if a string is a number or not without the whole Integer.parseInt() exception thang.
+     * @param string String
+     * @return boolean
+     */
+    public static boolean isNumber(String string) {
+        String[] characters = string.split("");
+        for(String character : characters){
+            if(!Character.isDigit(character.charAt(0))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

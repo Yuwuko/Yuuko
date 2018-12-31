@@ -21,15 +21,12 @@ public class CommandOsu extends Command {
         try {
             String[] commandParameters = command[1].split("\\s+", 2);
 
-            String username = commandParameters[0];
-            int mode;
-
+            final int mode;
             if(commandParameters.length > 1) {
-                // Exception flow is bad practice, but I'm lazy... and this is my project. (if you're reading this, find another method or have people shout at you in the street)
-                try {
-                    int tmp = Integer.parseInt(commandParameters[1]);
+                if(Utils.isNumber(commandParameters[1])) {
+                    final int tmp = Integer.parseInt(commandParameters[1]);
                     mode = (tmp < 4 && tmp > -1) ? tmp : 0;
-                } catch(Exception ex) {
+                } else {
                     mode = 0;
                 }
             } else {
@@ -50,7 +47,7 @@ public class CommandOsu extends Command {
             }
 
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + username + "&m=" + mode, "default", "default", null, null).getAsString();
+            String json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default", null, null).getAsString();
 
             // Jackson expects an array when Json objects start with [, so this removes it.
             if(json != null && json.length() > 0) {
@@ -58,7 +55,7 @@ public class CommandOsu extends Command {
             }
 
             if(json != null && json.equals("")) {
-                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", user '" + username + "' was not found.");
+                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", user '" + commandParameters[0] + "' was not found.");
                 return;
             }
 
@@ -78,8 +75,7 @@ public class CommandOsu extends Command {
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Displaying stats for " + user.getUsername() + " on " + modeString);
             MessageHandler.sendMessage(e, embed.build());
-
-            MessageHandler.sendMessage(e, Utils.xhtml2image("htmlresources/osu/imagecache/", html, 425, 200, true));
+            MessageHandler.sendMessage(e, Utils.xhtml2image(html, 425, 200), user.getUsername() + "-" + modeString + ".png");
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, e.getMessage().getContentRaw());

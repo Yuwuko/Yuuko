@@ -23,7 +23,6 @@ public class CommandMute extends Command {
         Member target = Utils.getMentionedUser(e, commandParameters[0]);
 
         if(target != null) {
-
             boolean isMuted = false;
             List<Role> roles =  target.getRoles();
             for(Role role: roles) {

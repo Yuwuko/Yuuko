@@ -6,6 +6,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -50,10 +51,16 @@ public class CommandSearch extends Command {
 
     public void executeCommand(MessageReceivedEvent e, String input) {
         if(!input.equalsIgnoreCase("cancel")) {
-            if(Integer.parseInt(input) < 11 && Integer.parseInt(input) > 0) {
-                String videoId = Cache.audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();
-                new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
-                Cache.audioSearchResults.remove(e.getAuthor().getIdLong());
+            if(Utils.isNumber(input)) {
+                final int value = Integer.parseInt(input);
+                if(value < 11 && value > 0) {
+                    String videoId = Cache.audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();
+                    new CommandPlay().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                    Cache.audioSearchResults.remove(e.getAuthor().getIdLong());
+                } else {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
+                    MessageHandler.sendMessage(e, embed.build());
+                }
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
                 MessageHandler.sendMessage(e, embed.build());
