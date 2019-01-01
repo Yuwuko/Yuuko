@@ -8,7 +8,7 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.core.settings.SettingCommandPrefix;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Sanitise;
+import com.yuuko.core.utils.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -35,7 +35,7 @@ public class CommandSettings extends Command {
                     return;
                 }
 
-                if(!Sanitise.checkParameters(e, command, 2)) {
+                if(!Sanitiser.checkParameters(e, command, 2)) {
                     return;
                 }
 

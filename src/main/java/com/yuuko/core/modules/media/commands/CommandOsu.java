@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.media.osu.User;
 import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utils.Sanitiser;
 import com.yuuko.core.utils.Utils;
 import com.yuuko.core.utils.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -23,7 +24,7 @@ public class CommandOsu extends Command {
 
             final int mode;
             if(commandParameters.length > 1) {
-                if(Utils.isNumber(commandParameters[1])) {
+                if(Sanitiser.isNumber(commandParameters[1])) {
                     final int tmp = Integer.parseInt(commandParameters[1]);
                     mode = (tmp < 4 && tmp > -1) ? tmp : 0;
                 } else {

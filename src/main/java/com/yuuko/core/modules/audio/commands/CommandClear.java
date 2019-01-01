@@ -5,7 +5,7 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utils.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -26,7 +26,7 @@ public class CommandClear extends Command {
             if(command.length > 1) {
                 final int clearPos;
 
-                if(Utils.isNumber(command[1])) {
+                if(Sanitiser.isNumber(command[1])) {
                     clearPos = Integer.parseInt(command[1]);
                 } else {
                     return;

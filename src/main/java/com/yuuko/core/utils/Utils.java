@@ -315,19 +315,4 @@ public final class Utils {
         return Arrays.toString(permissions).replace("[", "").replace("]", "");
     }
 
-    /**
-     * Checks to see if a string is a number or not without the whole Integer.parseInt() exception thang.
-     * @param string String
-     * @return boolean
-     */
-    public static boolean isNumber(String string) {
-        String[] characters = string.split("");
-        for(String character : characters){
-            if(!Character.isDigit(character.charAt(0))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

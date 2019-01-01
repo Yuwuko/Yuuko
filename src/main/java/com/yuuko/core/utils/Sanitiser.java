@@ -3,7 +3,7 @@ package com.yuuko.core.utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public final class Sanitise {
+public final class Sanitiser {
 
     /**
      * Checks a command to ensure all parameters are present.
@@ -34,4 +34,18 @@ public final class Sanitise {
         return true;
     }
 
+    /**
+     * Checks to see if a string is a number or not without the whole Integer.parseInt() exception thang.
+     * @param string String
+     * @return boolean
+     */
+    public static boolean isNumber(String string) {
+        String[] characters = string.split("");
+        for(String character : characters){
+            if(!Character.isDigit(character.charAt(0))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

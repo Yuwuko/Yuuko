@@ -2,6 +2,7 @@ package com.yuuko.core.modules.moderation.commands;
 
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utils.Sanitiser;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -20,7 +21,7 @@ public class CommandBan extends Command {
         Member target = Utils.getMentionedUser(e, commandParameters[0]);
 
         final int time;
-        if(Utils.isNumber(commandParameters[1])) {
+        if(Sanitiser.isNumber(commandParameters[1])) {
             time = Integer.parseInt(commandParameters[1]);
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Time parameter '**" + commandParameters[1] + "**' is invalid, ban defaulted to 1 day.");

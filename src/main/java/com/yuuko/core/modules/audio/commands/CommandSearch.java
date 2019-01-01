@@ -6,7 +6,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utils.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -51,7 +51,7 @@ public class CommandSearch extends Command {
 
     public void executeCommand(MessageReceivedEvent e, String input) {
         if(!input.equalsIgnoreCase("cancel")) {
-            if(Utils.isNumber(input)) {
+            if(Sanitiser.isNumber(input)) {
                 final int value = Integer.parseInt(input);
                 if(value < 11 && value > 0) {
                     String videoId = Cache.audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();

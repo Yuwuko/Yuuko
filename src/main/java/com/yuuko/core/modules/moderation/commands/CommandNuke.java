@@ -3,7 +3,7 @@ package com.yuuko.core.modules.moderation.commands;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utils.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -38,7 +38,7 @@ public class CommandNuke extends Command {
                 return;
             }
 
-            if(Utils.isNumber(command[1])) {
+            if(Sanitiser.isNumber(command[1])) {
                 final int value = Integer.parseInt(command[1]);
 
                 if(value < 1 || value > 100) {

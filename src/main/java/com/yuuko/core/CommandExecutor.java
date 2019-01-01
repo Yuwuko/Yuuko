@@ -4,7 +4,7 @@ import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Sanitise;
+import com.yuuko.core.utils.Sanitiser;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -39,7 +39,7 @@ public class CommandExecutor {
                                         MessageHandler.sendMessage(e, embed.build());
                                         break;
                                     } else {
-                                        if(Sanitise.checkParameters(e, command, cmd.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
+                                        if(Sanitiser.checkParameters(e, command, cmd.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
                                             cmd.executeCommand(e, command);
                                             break;
                                         }

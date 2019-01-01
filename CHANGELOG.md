@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## Y-1.0.1
++ [~] Refactored Sanitise to Sanitiser for peace of mind.
++ [~] Refactored isNumber() from Utils to Sanitiser.
+
 ## Y-1.0.0
 + [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
 + [!] Bumped JDK version to 12 (early release) because why wouldn't you live life dangerously in production. (also, jdk 11 ssl is broken)
