@@ -2,7 +2,7 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## Y-1.0.0 (Release Scheduled: 01/01/2019)
+## Y-1.0.0
 + [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
 + [!] Bumped JDK version to 12 (early release) because why wouldn't you live life dangerously in production. (also, jdk 11 ssl is broken)
 + [+] Put in place measures to allow for a web console to edit settings and also see status updates.
