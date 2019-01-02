@@ -1,5 +1,6 @@
 package com.yuuko.core.utils.json;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.yuuko.core.utils.MessageHandler;
@@ -47,11 +48,20 @@ public class JsonBuffer {
         return jsonOutput;
     }
 
-    public JsonObject getAsJsonObject() {
+    public JsonObject getAsJsonObject() throws IllegalStateException {
         try {
             return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonObject();
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "getAsJsonObject()");
+            return null;
+        }
+    }
+
+    public JsonArray getAsJsonArray() throws IllegalStateException {
+        try {
+            return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonArray();
+        } catch(Exception ex) {
+            MessageHandler.sendException(ex, "getAsJsonArray()");
             return null;
         }
     }

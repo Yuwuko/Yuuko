@@ -1,9 +1,10 @@
 package com.yuuko.core.modules.media.commands;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.media.osu.User;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Sanitiser;
 import com.yuuko.core.utils.Utils;
@@ -40,43 +41,43 @@ public class CommandOsu extends Command {
                     break;
                 case 1: modeString = "taiko";
                     break;
-                case 2: modeString = "catch the neat";
+                case 2: modeString = "catch the beat";
                     break;
                 case 3: modeString = "osu!mania";
                     break;
                 default: modeString = "unknown";
             }
 
-            // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default", null, null).getAsString();
+            JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default", null, null).getAsJsonArray();
 
-            // Jackson expects an array when Json objects start with [, so this removes it.
-            if(json != null && json.length() > 0) {
-                json = json.substring(1, json.length() - 1);
-            }
-
-            if(json != null && json.equals("")) {
-                MessageHandler.sendMessage(e,"Sorry " + e.getAuthor().getAsMention() + ", user '" + commandParameters[0] + "' was not found.");
-                return;
-            }
-
-            User user = new ObjectMapper().readValue(json, new TypeReference<User>(){});
-            String html;
-
-            try {
-                // We pull the accuracy out to get a quick and easy 2dp string. (including decimal point)
-                String accuracy = Double.parseDouble(user.getAccuracy())+"";
-                accuracy = accuracy.substring(0,5);
-                html = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'><html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en'><head> <title>osu</title> <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/> <style type='text/css'> html, body{width: 425px; height: 200px; font-family: Helvetica Neue,Helvetica,Arial,sans-serif; position: relative; padding: 0px; border: 0px; margin: 0px;}#backgroundContainer{width: 425px; height: 200px; background-image: url(/root/htmlresources/osu/page-dark@2x.png); border-radius: 10px; z-index: 0;}#container{width: 425px; height: 200px; background-color: rgba(20,20,20,0.7); color: white; border-radius: 10px; z-index: 10;}#name{font-size: 3em; padding-left: 15px; padding-top: 5px;}#rank{position: absolute; top: 70px; left: 320px; font-size: 13px;}#rank2{position: absolute; top: 90px; left: 320px; font-size: 13px;}#profile{position: absolute; top: 70px; left: 20px;}#playcount{position: absolute; width: 100px; top: 65px; left: 60px; line-height: 20px; text-align: center; font-size: 12px;}#accuracy{position: absolute; width: 100px; top: 65px; left: 145px; line-height: 20px; text-align: center; font-size: 12px;}#playtime{position: absolute; width: 100px; top: 65px; left: 225px; line-height: 20px; text-align: center; font-size: 12px;}.stat{font-size: 20px;}.countryFlag{height: 13px; border-radius: 2px;}#levelBadge{position: absolute; width: 40px; left: 20px; top: 68px;}#levelText{position: absolute; width: 100px; text-align: center; left: -10px; top: 73px; font-size: 14px;}#scoreRank img, #scoreRank div{position: absolute; width: 60px; text-align: center;}#ssp{top: 110px; left: 20px;}#ss{top: 110px; left: 102px;}#sp{top: 110px; left: 184px;}#s{top: 110px; left: 266px;}#a{top: 110px; left: 348px;}#sspt{top: 160px; left: 20px;}#sst{top: 160px; left: 102px;}#spt{top: 160px; left: 187px;}#st{top: 160px; left: 266px;}#at{top: 160px; left: 348px;}</style></head><body> <div id='backgroundContainer'> <div id='container'> <div id='name'>" + user.getUsername() + "</div><div id='rank'><img class='countryFlag' src='/root/htmlresources/osu/flags/ALL.png' alt=''/> #" + user.getPpRank() + "</div><div id='rank2'><img class='countryFlag' src='/root/htmlresources/osu/flags/" + user.getCountry() + ".png' alt=''/> #" + user.getPpCountryRank() + "</div><img id='levelBadge' src='/root/htmlresources/osu/levelbadge@2x.png' alt=''/> <div id='levelText'>" + (int) Double.parseDouble(user.getLevel()) + "</div><div id='playcount'>PLAYCOUNT<br/><span class='stat'>" + user.getPlaycount() + "</span></div><div id='accuracy'>ACCURACY<br/><span class='stat'>" + accuracy + "%</span></div><div id='playtime'>PLAYTIME<br/><span class='stat'>" + ((Integer.parseInt(user.getTotalSecondsPlayed()) / 60) / 60) + "H</span></div><div id='scoreRank'> <img id='ssp' src='/root/htmlresources/osu/Score-SSPlus-Small-60@2x.png' alt=''/> <img id='ss' src='/root/htmlresources/osu/Score-SS-Small-60@2x.png' alt=''/> <img id='sp' src='/root/htmlresources/osu/Score-SPlus-Small-60@2x.png' alt=''/> <img id='s' src='/root/htmlresources/osu/Score-S-Small-60@2x.png' alt=''/> <img id='a' src='/root/htmlresources/osu/Score-A-Small-60@2x.png' alt=''/> <div id='sspt'>" + user.getCountRankSsh() + "</div><div id='sst'>" + user.getCountRankSs() + "</div><div id='spt'>" + user.getCountRankSh() + "</div><div id='st'>" + user.getCountRankS() + "</div><div id='at'>" + user.getCountRankA() + "</div></div></div></div></body></html>";
-            } catch(Exception ex) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Although the user exists, they haven't played and thus have no statistics to show.");
+            if(json == null || json.size() < 1) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Displaying stats for " + user.getUsername() + " on " + modeString);
+            JsonObject data = json.get(0).getAsJsonObject();
+
+            if(data.get("playcount").isJsonNull()) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Total playcount and playtime for **_" + data.get("username").getAsString() + "_** has returned as null, which indicates that they haven't played **" + modeString + "** yet.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(data.get("username").getAsString() + " (" + data.get("country").getAsString() + ") | " + modeString)
+                    .setThumbnail("https://vignette.wikia.nocookie.net/logopedia/images/d/d3/Osu%21Logo_%282015%29.png")
+                    .setDescription("Account created **" + data.get("join_date").getAsString() + "**, amassing a total playcount of **" + data.get("playcount").getAsString() + "** over the course of **" + (data.get("total_seconds_played").getAsInt()/60)/60 + "** hours. In that time, also obtaining **" + data.get("pp_raw").getAsString() + "** of that delicious pp.")
+                    .addField("World Rank", "#" + data.get("pp_rank").getAsString(), true)
+                    .addField("Country Rank", "#" + data.get("pp_country_rank").getAsString(), true)
+                    .addField("Accuracy", (data.get("accuracy").getAsDouble() > 0.0) ? (data.get("accuracy").getAsString().length() > 5) ? data.get("accuracy").getAsString().substring(0, 5) + "%" : data.get("accuracy").getAsString() : "0" + "%", true)
+                    .addField("SS Ranks", data.get("count_rank_ss").getAsString(), true)
+                    .addField("SSH Ranks", data.get("count_rank_ssh").getAsString(), true)
+                    .addField("S Ranks", data.get("count_rank_s").getAsString(), true)
+                    .addField("SH Ranks", data.get("count_rank_sh").getAsString(), true)
+                    .addField("A Ranks", data.get("count_rank_a").getAsString(), true)
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
-            MessageHandler.sendMessage(e, Utils.xhtml2image(html, 425, 200), user.getUsername() + "-" + modeString + ".png");
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, e.getMessage().getContentRaw());
