@@ -11,7 +11,6 @@ import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utils.MessageHandler;
 import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -33,8 +32,7 @@ public class GenericMessageController {
             Statistics.MESSAGES_PROCESSED.getAndIncrement();
 
             // Figure out if the user is a bot or not, so we don't waste any time.
-            User user = e.getAuthor();
-            if(user.isBot()) {
+            if(e.getAuthor().isBot()) {
                 return;
             }
 
@@ -81,10 +79,9 @@ public class GenericMessageController {
     private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
         String inputPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
-        String serverId = e.getGuild().getId();
 
         try {
-            long executionTime;
+            final long executionTime;
 
             Constructor<?> constructor = null;
             String moduleDbName = "";
@@ -93,31 +90,31 @@ public class GenericMessageController {
             // find the module class that belongs to the command itself and create a new instance of that
             // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
             // Also return the command's module to check
-            for(Command c : Cache.COMMANDS) {
-                if((inputPrefix + input[0]).equalsIgnoreCase(c.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + c.getCommandName())) {
-                    String commandModule = c.getCommandModule();
+            for(Command cmd : Cache.COMMANDS) {
+                if((inputPrefix + input[0]).equalsIgnoreCase(cmd.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + cmd.getCommandName())) {
+                    String commandModule = cmd.getCommandModule();
                     moduleDbName = Utils.extractModuleName(commandModule, false, true);
                     constructor = Class.forName(commandModule).getConstructor(MessageReceivedEvent.class, String[].class);
+                    break;
                 }
             }
 
-            boolean isAllowed = checkBindings(e, moduleDbName, input[0]);
+            final boolean isAllowed = checkBindings(e, moduleDbName, input[0]);
 
             if(constructor != null && isAllowed) {
                 constructor.newInstance(e, input);
-
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 Utils.updateLatest(e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
                 MessageHandler.sendCommand(e, executionTime);
                 Statistics.COMMANDS_PROCESSED.getAndIncrement();
 
-                if(new DatabaseFunctions().getServerSetting("commandLogging", serverId).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
             }
 
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "GenericMessageController (Main) - " + e.getMessage().getContentRaw());
+            MessageHandler.sendException(ex, "GenericMessageController ~ " + ex.getMessage() + " ~ " +  e.getMessage().getContentRaw());
         }
     }
 
@@ -130,18 +127,17 @@ public class GenericMessageController {
         try {
             if(Cache.audioSearchResults.containsKey(e.getAuthor().getIdLong())) {
                 String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
-                String server = e.getGuild().getId();
 
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
                     new CommandSearch().executeCommand(e, input[0]);
                 }
 
-                if(new DatabaseFunctions().getServerSetting("deleteExecuted", server).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     e.getMessage().delete().queue();
                 }
 
-                if(new DatabaseFunctions().getServerSetting("commandLogging", server).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                     Utils.updateLatest(e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);

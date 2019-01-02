@@ -5,6 +5,9 @@ import com.yuuko.core.utils.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class Module {
     private final String moduleName;
     private final String dbModuleName;
@@ -22,8 +25,12 @@ public abstract class Module {
         return moduleName;
     }
 
-    public Command[] getModuleCommands() {
+    public Command[] getModuleCommandsArray() {
         return moduleCommands;
+    }
+
+    public List<Command> getModuleCommandsList() {
+        return Arrays.asList(moduleCommands);
     }
 
     public boolean checkModuleSettings(MessageReceivedEvent e) {

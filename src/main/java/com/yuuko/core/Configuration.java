@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "Y-1.0.1";
+    public static final String VERSION = "Y-1.0.2";
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static final String GLOBAL_PREFIX = "@Yuuko#2525";

@@ -2,6 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## Y-1.0.2
++ [~] General code optimisations here and there.
++ [~] Upgraded the [__nuke__] command to conform with the new standard which was overlooked in Y-1.0.1.
++ [~] Slightly optimised both the CommandExecutor and the GenericMessageController classes.
++ [~] Greatly improved the nuking speed of messages older than 2 weeks. (In preliminary testing, more testing needed in real world.)
++ [~] Increased [__nuke__] command's max channels from `5` to `10` since the lower bound was the victim of some premature optimisations.
+
 ## Y-1.0.1
 + [~] Refactored Sanitise to Sanitiser for peace of mind.
 + [~] Refactored isNumber() from Utils to Sanitiser.

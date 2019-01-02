@@ -21,53 +21,44 @@ public class CommandNuke extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        try {
-            // A way to nuke whole channels is to duplicate them and delete the old one.
-            List<TextChannel> channels = e.getMessage().getMentionedChannels();
-            if(channels.size() > 0) {
-                int i = 0;
-                for(TextChannel channel : channels) {
-                    if(i > 4) {
-                        return;
-                    }
-                    new DatabaseFunctions().cleanupBindings(channel.getId());
-                    channel.createCopy().queue();
-                    channel.delete().queue();
-                    i++;
-                }
+        List<TextChannel> channels = e.getMessage().getMentionedChannels();
+        if(channels.size() > 0 && channels.size() < 11) {
+            channels.forEach(channel -> {
+                new DatabaseFunctions().cleanupBindings(channel.getId());
+                channel.createCopy().queue((r) -> channel.delete().queue());
+            });
+            return;
+        }
+
+        if(Sanitiser.isNumber(command[1])) {
+            final int value = Integer.parseInt(command[1]);
+
+            if(value < 1 || value > 100) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a channel, e.g. #general.");
+                MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            if(Sanitiser.isNumber(command[1])) {
-                final int value = Integer.parseInt(command[1]);
+            List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(value).complete();
 
-                if(value < 1 || value > 100) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a channel, e.g. #general.");
-                    MessageHandler.sendMessage(e, embed.build());
-                    return;
-                }
-
-                List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(value).complete();
-
-                if(value < 2) {
-                    e.getTextChannel().deleteMessageById(nukeList.get(0).getId()).queue();
-                } else {
-                    // If a message in the nuke list is older than 2 weeks it can't be mass deleted, so recursion will need to take place.
-                    for(Message message : nukeList) {
-                        if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
-                            message.delete().queue();
-                            nukeList.remove(message);
-                        }
+            if(value < 2) {
+                e.getTextChannel().deleteMessageById(nukeList.get(0).getId()).queue();
+            } else {
+                // If a message in the nuke list is older than 2 weeks it can't be mass deleted, so recursion will need to take place.
+                nukeList.parallelStream().forEach(message -> {
+                    if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
+                        message.delete().queue();
+                        nukeList.remove(message);
                     }
+                });
+
+                if(nukeList.size() > 0) {
                     e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
                 }
-            } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. #general.");
-                MessageHandler.sendMessage(e, embed.build());
             }
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "CommandNuke.Class ~ " + e.getMessage().getContentRaw());
+        } else {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. #general.");
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 

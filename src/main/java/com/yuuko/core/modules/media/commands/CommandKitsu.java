@@ -46,7 +46,6 @@ public class CommandKitsu extends Command {
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, e.getMessage().getContentRaw());
-            MessageHandler.sendMessage(e, "There was an issue processing the request for command: " + e.getMessage().getContentDisplay());
         }
     }
 
