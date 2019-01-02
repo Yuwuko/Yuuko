@@ -57,7 +57,7 @@ public class CommandNuke extends Command {
                 }
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. #general.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. **#general**.");
             MessageHandler.sendMessage(e, embed.build());
         }
     }

@@ -22,6 +22,6 @@ public class Cache {
     public static LinkedList<String> LAST_THIRTEEN;
     public static String LATEST_INFO;
     public static String[] STANDARD_STRINGS;
-    public static HashMap<Long, List<SearchResult>> audioSearchResults = new HashMap<>();
+    public static final HashMap<Long, List<SearchResult>> audioSearchResults = new HashMap<>();
     static AudioManagerManager AUDIO_MANAGER_MANAGER;
 }

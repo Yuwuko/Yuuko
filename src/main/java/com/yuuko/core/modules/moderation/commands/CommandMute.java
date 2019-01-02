@@ -40,7 +40,7 @@ public class CommandMute extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription("**" + target.getEffectiveName()  + "** has been successfully unmuted.");
                 MessageHandler.sendMessage(e, embed.build());
             }, (r) -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription("Unmuting of " + target.getEffectiveName() + " was unsuccessful.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription("Unmuting of **" + target.getEffectiveName() + "** was unsuccessful.");
                 MessageHandler.sendMessage(e, embed.build());
             });
         }

@@ -8,6 +8,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Slightly optimised both the CommandExecutor and the GenericMessageController classes.
 + [~] Greatly improved the nuking speed of messages older than 2 weeks. (In preliminary testing, more testing needed in real world.)
 + [~] Increased [__nuke__] command's max channels from `5` to `10` since the lower bound was the victim of some premature optimisations.
++ [~] Moved dev checking from CommandExecutor into the ModuleDeveloper class itself to save some precious nanoseconds.
++ [~] Updated the [__user__] command to improve code and include some rich presence information where possible.
 
 ## Y-1.0.1
 + [~] Refactored Sanitise to Sanitiser for peace of mind.

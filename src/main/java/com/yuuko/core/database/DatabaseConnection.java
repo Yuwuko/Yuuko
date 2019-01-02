@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static BasicDataSource connectionPool = new BasicDataSource();
+    private static final BasicDataSource connectionPool = new BasicDataSource();
 
     public DatabaseConnection() {
         connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
