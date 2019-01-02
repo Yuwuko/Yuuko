@@ -278,31 +278,23 @@ public final class Utils {
     /**
      * Returns the first mentioned user from a given message.
      * @param e MessageReceivedEvent
-     * @param userId String
      * @return Member
      */
-    public static Member getMentionedUser(MessageReceivedEvent e, String userId) {
+    public static Member getMentionedMember(MessageReceivedEvent e) {
         List<Member> mentioned = e.getMessage().getMentionedMembers();
-        Member user;
 
         if(!e.getMessage().mentionsEveryone()) {
             if(mentioned.size() > 0) {
-                user = mentioned.get(0);
+                return mentioned.get(0);
             } else {
-                user = e.getGuild().getMemberById(userId);
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("There were no mentioned users found.");
+                MessageHandler.sendMessage(e, embed.build());
+                return null;
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("You cannot do _that_ to everyone.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
             MessageHandler.sendMessage(e, embed.build());
             return null;
-        }
-
-        if(user == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("User '**" + userId + "**' was not found.");
-            MessageHandler.sendMessage(e, embed.build());
-            return null;
-        } else {
-            return user;
         }
     }
 

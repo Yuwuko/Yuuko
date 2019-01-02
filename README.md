@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.0 (01/01/2019) 
+# Yuuko 1.0.1 (02/01/2019) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -66,7 +66,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| osu | Returns a small signature image for an Osu player on the specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus 3` |
+| osu | Returns information about an osu! player on a specified mode. (Modes: 0 = Osu, 1 = Taiko, 2 = CtB, 3 = Mania) | -osu [username] &#124; [mode] | `-osu galaxiosaurus`, `-osu galaxiosaurus 3` |
 | kitsu | Returns information about the given anime. (Types: show) (Character information to come soon!) | -kitsu [name] | `-kitsu naruto` |
 
 ### Audio

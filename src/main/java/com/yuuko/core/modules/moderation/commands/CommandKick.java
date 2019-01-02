@@ -15,14 +15,16 @@ public class CommandKick extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
-        Member target = Utils.getMentionedUser(e, commandParameters[0]);
+        Member target = Utils.getMentionedMember(e);
 
-        if(target != null) {
-            if(commandParameters.length < 3) {
-                e.getGuild().getController().kick(target).queue();
-            } else {
-                e.getGuild().getController().kick(target, commandParameters[1]).queue();
-            }
+        if(target == null) {
+            return;
+        }
+
+        if(commandParameters.length < 3) {
+            e.getGuild().getController().kick(target).queue();
+        } else {
+            e.getGuild().getController().kick(target, commandParameters[1]).queue();
         }
     }
 

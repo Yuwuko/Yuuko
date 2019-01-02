@@ -18,9 +18,14 @@ public class CommandBan extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
-        Member target = Utils.getMentionedUser(e, commandParameters[0]);
+        Member target = Utils.getMentionedMember(e);
+
+        if(target == null) {
+            return;
+        }
 
         final int time;
+
         if(Sanitiser.isNumber(commandParameters[1])) {
             time = Integer.parseInt(commandParameters[1]);
         } else {
@@ -29,12 +34,10 @@ public class CommandBan extends Command {
             time = 1;
         }
 
-        if(target != null) {
-            if(commandParameters.length < 3) {
-                e.getGuild().getController().ban(target, time).queue();
-            } else {
-                e.getGuild().getController().ban(target, time, commandParameters[2]).queue();
-            }
+        if(commandParameters.length < 3) {
+            e.getGuild().getController().ban(target, time).queue();
+        } else {
+            e.getGuild().getController().ban(target, time, commandParameters[2]).queue();
         }
     }
 

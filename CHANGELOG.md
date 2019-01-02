@@ -5,6 +5,9 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## Y-1.0.1
 + [~] Refactored Sanitise to Sanitiser for peace of mind.
 + [~] Refactored isNumber() from Utils to Sanitiser.
++ [~] Updated [__osu__], removing signature image because of hassle and processing time, also removing POJO classes in exchange for the easier implementation added in Y-1.0.0.
++ [~] Updated the [__mute__], [__kick__] and [__ban__] commands to correctly interpret messages, improve feedback and not throw unnecessary exceptions.
++ [~] Upgraded the code quality of the [__mute__] command in particular, giving it a long overdue lambda overhaul, setting a new standard for code on the bot.
 
 ## Y-1.0.0
 + [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
