@@ -3,7 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## Y-1.0.2
-+ [~] General code optimisations here and there, mostly conversions from verbose loops to streams.
++ [~] General code premature-optimisations here and there, mostly conversions from verbose loops to streams.
 + [~] Upgraded the [__nuke__] command to conform with the new standard which was overlooked in Y-1.0.1.
 + [~] Slightly optimised both the CommandExecutor and the GenericMessageController classes.
 + [~] Greatly improved the nuking speed of messages older than 2 weeks. (In preliminary testing, more testing needed in real world.)
