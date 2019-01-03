@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.0.2 (02/01/2019) 
+# Yuuko 1.1.0 (03/01/2019) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -56,7 +56,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | weather | Allows you to look up the weather in the given city *Note: Currently limited to a city name, without country code.* | -weather [city] | `-weather London` |
 | tesco | Returns product information about any item sold by Tesco PLC | -tesco [product] | `-tesco mount gay` |
 
-### Math
+### Fun
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|

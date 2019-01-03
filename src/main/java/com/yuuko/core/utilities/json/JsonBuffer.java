@@ -1,9 +1,9 @@
-package com.yuuko.core.utils.json;
+package com.yuuko.core.utilities.json;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utilities.MessageHandler;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;

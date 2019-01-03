@@ -4,8 +4,8 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -63,7 +63,7 @@ public class CommandHelp extends Command {
 
                 // Connect to the database, grab results about bindings for a certain command and return them.
                 // If the command is excluded add it to the first list, if it is bound add it to the second list.
-                // In the event that there are no bindings, just return "none".
+                // In the events that there are no bindings, just return "none".
                 StringBuilder bindList = new StringBuilder();
                 try {
                     Connection connection = getConnection();

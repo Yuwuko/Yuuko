@@ -1,4 +1,4 @@
-package com.yuuko.core.utils;
+package com.yuuko.core.utilities;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;

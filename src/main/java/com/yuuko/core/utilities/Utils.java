@@ -1,8 +1,8 @@
-package com.yuuko.core.utils;
+package com.yuuko.core.utilities;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Statistics;
+import com.yuuko.core.Metrics;
 import com.yuuko.core.database.DatabaseFunctions;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -175,7 +175,7 @@ public final class Utils {
         System.out.println("┃ " + Cache.LAST_THIRTEEN.get(11));
         System.out.println("┃ " + Cache.LAST_THIRTEEN.get(12));
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + Statistics.RUNTIME + ", Ping: " + Statistics.PING + ", DB Idle: " + Statistics.DB_POOL_IDLE + ", DB Active: " + Statistics.DB_POOL_ACTIVE);
+        System.out.println("┃ Uptime: " + Metrics.RUNTIME + ", Ping: " + Metrics.PING + ", DB Idle: " + Metrics.DB_POOL_IDLE + ", DB Active: " + Metrics.DB_POOL_ACTIVE);
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
 

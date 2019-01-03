@@ -4,29 +4,21 @@
 
 package com.yuuko.core;
 
-import com.yuuko.core.controllers.GenericGuildController;
-import com.yuuko.core.controllers.GenericGuildVoiceController;
-import com.yuuko.core.controllers.GenericMessageController;
-import com.yuuko.core.controllers.GenericMessageReactionController;
 import com.yuuko.core.database.DatabaseConnection;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.modules.C;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.M;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.scheduler.ScheduleHandler;
+import com.yuuko.core.scheduler.jobs.SecondlyJob;
+import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.Event;
-import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
-import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
-import net.dv8tion.jda.core.events.message.GenericMessageEvent;
-import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
-import net.dv8tion.jda.core.hooks.InterfacedEventManager;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.discordbots.api.client.DiscordBotListAPI;
 
 import javax.security.auth.login.LoginException;
@@ -35,13 +27,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-class Yuuko extends ListenerAdapter {
+public class Yuuko {
 
     /**
      * Initialises the bot and JDA.
@@ -50,38 +37,10 @@ class Yuuko extends ListenerAdapter {
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
-        Configuration.load();
-        Configuration.loadApi();
-        new DatabaseConnection();
-
-        Cache.JDA = new JDABuilder(AccountType.BOT)
-                .useSharding(0, 1)
-                .setToken(Configuration.BOT_TOKEN)
-                .addEventListener(new Yuuko())
-                .setEventManager(new Yuuko.ThreadedEventManager())
-                .build();
-        Cache.JDA.awaitReady();
-        Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
-
-        Cache.BOT = Cache.JDA.getSelfUser();
-        Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
-
-        if(Configuration.API_KEYS.containsKey("discordbots")) {
-            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
-            Utils.updateDiscordBotList();
-        }
-
-    }
-
-    /**
-     * Constructor for the class, initialises the UI, the internal clock.
-     * Retrieves a list of modules via reflection.
-     */
-    private Yuuko() {
         try {
             // Prints a cool banner :^)
-            String[] args = new String[] {"/bin/bash", "-c", "figlet -c Yuuko"};
-            Process p = new ProcessBuilder(args).start();
+            String[] arguments = new String[] {"/bin/bash", "-c", "figlet -c Yuuko"};
+            Process p = new ProcessBuilder(arguments).start();
             p.waitFor();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -93,9 +52,29 @@ class Yuuko extends ListenerAdapter {
             }
             Utils.removeLastOccurrence(output, "\n");
             System.out.println(output);
-
         } catch(Exception ex) {
             //
+        }
+
+        Configuration.load();
+        Configuration.loadApi();
+        new DatabaseConnection();
+
+        Cache.JDA = new JDABuilder(AccountType.BOT)
+                .useSharding(0, 1)
+                .setToken(Configuration.BOT_TOKEN)
+                .addEventListener(new GenericEventManager())
+                .setEventManager(new GenericEventManager.ThreadedEventManager())
+                .build();
+        Cache.JDA.awaitReady();
+        Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
+
+        Cache.BOT = Cache.JDA.getSelfUser();
+        Metrics.GUILD_COUNT = Cache.JDA.getGuilds().size();
+
+        if(Configuration.API_KEYS.containsKey("discordbots")) {
+            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
+            Utils.updateDiscordBotList();
         }
 
         try {
@@ -148,82 +127,15 @@ class Yuuko extends ListenerAdapter {
                 Cache.LAST_THIRTEEN.add("");
             }
 
-            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-            scheduler.scheduleAtFixedRate(() -> {
-                Statistics.RUNTIME.getAndIncrement();
-                new DatabaseFunctions().updateServerStatus();
-            }, 0, 1 , SECONDS);
-            scheduler.scheduleAtFixedRate(DatabaseConnection::queryConnections, 3, 10, SECONDS);
-            scheduler.scheduleAtFixedRate(() -> Statistics.PING.set(Cache.JDA.getPing()), 10, 300, SECONDS);
+            ScheduleHandler.registerJob(new SecondlyJob());
+            ScheduleHandler.registerJob(new ThirtySecondlyJob());
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "new Yuuko()");
         }
-    }
 
-    /**
-     * Captures and deals with generic guild events.
-     * @param e GenericGuildEvent
-     */
-    @Override
-    public void onGenericGuild(GenericGuildEvent e) {
-        try {
-            new GenericGuildController(e);
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericGuild(GenericGuildEvent e)");
-        }
-    }
+        new ScheduleHandler();
 
-    /**
-     * Captures and deals with generic message events.
-     * @param e -> GenericMessageEvent.
-     */
-    @Override
-    public void onGenericMessage(GenericMessageEvent e) {
-        try {
-            new GenericMessageController(e);
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericMessage(GenericMessageEvent e)");
-        }
-    }
-
-    /**
-     * Captures and deals generic reaction events.
-     * @param e -> GenericMessageReactionEvent.
-     */
-    @Override
-    public void onGenericMessageReaction(GenericMessageReactionEvent e) {
-        try {
-            new GenericMessageReactionController(e);
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericMessageReaction(GenericMessageReactionEvent e)");
-        }
-    }
-
-    /**
-     * Captures and deals with generic voice events.
-     * @param e -> GenericGuildVoiceEvent.
-     */
-    @Override
-    public void onGenericGuildVoice(GenericGuildVoiceEvent e) {
-        try {
-            new GenericGuildVoiceController(e);
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericGuildVoice(GenericGuildVoiceEvent e)");
-        }
-    }
-
-    /**
-     * Threaded Event Manager Class
-     */
-    private static class ThreadedEventManager extends InterfacedEventManager {
-        private final ExecutorService threadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
-
-        @Override
-        public void handle(Event e) {
-            threadPool.submit(() -> super.handle(e));
-        }
     }
 
 }

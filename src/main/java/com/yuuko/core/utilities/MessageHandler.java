@@ -1,4 +1,4 @@
-package com.yuuko.core.utils;
+package com.yuuko.core.utilities;
 
 import com.yuuko.core.Cache;
 import net.dv8tion.jda.core.entities.MessageChannel;

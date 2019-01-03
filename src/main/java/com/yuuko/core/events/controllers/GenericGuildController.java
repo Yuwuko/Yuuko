@@ -1,12 +1,12 @@
-package com.yuuko.core.controllers;
+package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Statistics;
+import com.yuuko.core.Metrics;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.core.commands.CommandSetup;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
@@ -27,7 +27,7 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         new CommandSetup().executeAutomated(e);
-        Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
+        Metrics.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
@@ -37,11 +37,11 @@ public class GenericGuildController {
                         .setThumbnail(Cache.BOT.getAvatarUrl())
                         .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                         .addField("Version", Configuration.VERSION, true)
-                        .addField("Servers", Statistics.GUILD_COUNT + "", true)
+                        .addField("Servers", Metrics.GUILD_COUNT + "", true)
                         .addField("Commands", Cache.COMMANDS.size() + "", true)
                         .addField("Invocation", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
-                        .addField("Uptime", Statistics.RUNTIME.toString(), true)
-                        .addField("Ping", Statistics.PING + "", true);
+                        .addField("Uptime", Metrics.RUNTIME.toString(), true)
+                        .addField("Ping", Metrics.PING + "", true);
                 MessageHandler.sendMessage(textChannel, about.build());
             });
         } catch(Exception ex) {
@@ -54,13 +54,13 @@ public class GenericGuildController {
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
-        Statistics.GUILD_COUNT = Cache.JDA.getGuilds().size();
+        Metrics.GUILD_COUNT = Cache.JDA.getGuilds().size();
         Utils.updateDiscordBotList();
         Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        Statistics.MEMBERS_JOINED.getAndIncrement();
+        Metrics.MEMBERS_JOINED.getAndIncrement();
 
         if(new DatabaseFunctions().getServerSetting("welcomeMembers", e.getGuild().getId()).equals("1")) {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {

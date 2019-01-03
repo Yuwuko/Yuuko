@@ -4,8 +4,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Sanitiser;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

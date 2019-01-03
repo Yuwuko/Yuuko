@@ -2,6 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## Y-1.1.0
++ [~] Refactored Math module into Fun module to allow for a wider range of commands to be encompassed such as coin flips and other such commands.
++ [~] Refactored utils package to utilities to actively try and make things more complete and professional.
++ [~] Refactored the Statistics class to Metrics since they're the latter and not the former.
++ [~] Refactored the scheduled events from the main class to their own scheduler package based on Avaire which is 1000% better.
++ [!] Removed the Yuuko class self event manager and event code, creating a dedicated events package to put in it's place.
+
 ## Y-1.0.2
 + [~] General code premature-optimisations here and there, mostly conversions from verbose loops to streams.
 + [~] Upgraded the [__nuke__] command to conform with the new standard which was overlooked in Y-1.0.1.
@@ -32,7 +39,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Modified Permission field in the Command class to be an array, allowing multiple permissions per command, modified related classes to accommodate for the change.
 + [~] Heavily modified the database logic, tidied it up a bunch and now use pooled connections to increase database speeds. (12-20ms to 2-8ms @ about)
 + [~] Heavily modified the API system, now allowing API keys to be reloaded and added on the fly.
-+ [~] Modified the [__nuke__] command. You can now tag channels instead of a value and those channels will be duplicated and the old versions deleted. (Also added guards for exceptions)
++ [~] Modified the [__nuke__] command. You can now tag channels instead of a value and those channels will be duplicated and the old versions deleted.
 + [~] Updated the system clock to keep time in a more meaningful way that can be used and isn't pre-formatted.
 + [~] Updated exception util to print the full stack trace so that debugging can be done more efficiently.
 + [~] Updated JsonBuffer class to allow for extra additional headers.

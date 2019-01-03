@@ -2,10 +2,10 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Statistics;
+import com.yuuko.core.Metrics;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -30,11 +30,11 @@ public class CommandAbout extends Command {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", Statistics.GUILD_COUNT + "", true)
+                .addField("Servers", Metrics.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
-                .addField("Uptime", Statistics.RUNTIME.toString(), true)
-                .addField("Ping", Statistics.PING + "", true);
+                .addField("Uptime", Metrics.RUNTIME.toString(), true)
+                .addField("Ping", Metrics.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }
 

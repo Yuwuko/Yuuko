@@ -1,6 +1,6 @@
 package com.yuuko.core;
 
-import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utilities.MessageHandler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "Y-1.0.2";
+    public static final String VERSION = "Y-1.1.0";
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static final String GLOBAL_PREFIX = "@Yuuko#2525";

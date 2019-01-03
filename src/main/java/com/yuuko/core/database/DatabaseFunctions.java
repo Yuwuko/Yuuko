@@ -1,8 +1,8 @@
 package com.yuuko.core.database;
 
 import com.yuuko.core.Cache;
-import com.yuuko.core.Statistics;
-import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.Metrics;
+import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
@@ -338,16 +338,16 @@ public class DatabaseFunctions {
         try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerStatus` SET `uptime` = ?, `ping` = ?, `latestInfo` = ?, `guilds` = ?, `modules` = ?, `commands` = ?, `messagesProcessed` = ?, `reactsProcessed` = ?, `commandsProcessed` = ?, `membersJoined` = ?");
-            stmt.setInt(1, Statistics.RUNTIME.get());
-            stmt.setDouble(2, Statistics.PING.get());
+            stmt.setInt(1, Metrics.RUNTIME.get());
+            stmt.setDouble(2, Metrics.PING.get());
             stmt.setString(3, Cache.LATEST_INFO);
-            stmt.setInt(4, Statistics.GUILD_COUNT);
+            stmt.setInt(4, Metrics.GUILD_COUNT);
             stmt.setInt(5, Cache.MODULES.size());
             stmt.setInt(6, Cache.COMMANDS.size());
-            stmt.setInt(7, Statistics.MESSAGES_PROCESSED.get());
-            stmt.setInt(8, Statistics.REACTS_PROCESSED.get());
-            stmt.setInt(9, Statistics.COMMANDS_PROCESSED.get());
-            stmt.setInt(10, Statistics.MEMBERS_JOINED.get());
+            stmt.setInt(7, Metrics.MESSAGES_PROCESSED.get());
+            stmt.setInt(8, Metrics.REACTS_PROCESSED.get());
+            stmt.setInt(9, Metrics.COMMANDS_PROCESSED.get());
+            stmt.setInt(10, Metrics.MEMBERS_JOINED.get());
             stmt.execute();
 
             stmt.close();

@@ -2,9 +2,9 @@ package com.yuuko.core;
 
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Module;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Sanitiser;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Sanitiser;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,7 +14,7 @@ import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 public class CommandExecutor {
 
     public CommandExecutor(MessageReceivedEvent e, String[] cmd, Module module) {
-        if(e == null || cmd == null) { // Is the command or event null? (This case is used by the M class to initialise a list of modules!)
+        if(e == null || cmd == null) { // Is the command or events null? (This case is used by the M class to initialise a list of modules!)
             return;
         }
 

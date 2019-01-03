@@ -1,7 +1,7 @@
 package com.yuuko.core.modules.developer.commands;
 
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.utils.MessageHandler;
+import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -17,7 +17,7 @@ public class CommandSetStatus extends Command {
         try {
             String[] commandParameters = command[1].split("\\s+", 3);
 
-            switch(commandParameters[0]) {
+            switch(commandParameters[0].toLowerCase()) {
                 case "playing":
                     e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, commandParameters[1]));
                     break;

@@ -1,7 +1,7 @@
 package com.yuuko.core.modules.moderation.commands;
 
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;

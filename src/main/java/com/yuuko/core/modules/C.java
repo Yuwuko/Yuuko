@@ -5,7 +5,7 @@ import com.yuuko.core.modules.core.commands.*;
 import com.yuuko.core.modules.developer.commands.CommandAddServers;
 import com.yuuko.core.modules.developer.commands.CommandReloadApi;
 import com.yuuko.core.modules.developer.commands.CommandSetStatus;
-import com.yuuko.core.modules.math.commands.CommandRoll;
+import com.yuuko.core.modules.fun.commands.CommandRoll;
 import com.yuuko.core.modules.media.commands.CommandKitsu;
 import com.yuuko.core.modules.media.commands.CommandOsu;
 import com.yuuko.core.modules.moderation.commands.CommandBan;

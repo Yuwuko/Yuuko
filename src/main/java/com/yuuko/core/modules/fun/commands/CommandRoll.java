@@ -1,8 +1,8 @@
-package com.yuuko.core.modules.math.commands;
+package com.yuuko.core.modules.fun.commands;
 
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Sanitiser;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -11,7 +11,7 @@ import java.util.Random;
 public class CommandRoll extends Command {
 
     public CommandRoll() {
-        super("roll", "com.yuuko.core.modules.math.ModuleMath", 1, new String[]{"-roll [number]", "-roll 00"}, null);
+        super("roll", "com.yuuko.core.modules.fun.ModuleFun", 1, new String[]{"-roll [number]", "-roll 00"}, null);
     }
 
     @Override

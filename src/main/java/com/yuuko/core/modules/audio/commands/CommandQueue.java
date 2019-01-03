@@ -6,8 +6,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

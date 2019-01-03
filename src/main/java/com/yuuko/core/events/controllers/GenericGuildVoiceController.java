@@ -1,4 +1,4 @@
-package com.yuuko.core.controllers;
+package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.modules.audio.commands.CommandStop;
 import net.dv8tion.jda.core.entities.GuildVoiceState;

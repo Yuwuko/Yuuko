@@ -1,15 +1,15 @@
-package com.yuuko.core.controllers;
+package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Statistics;
+import com.yuuko.core.Metrics;
 import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.commands.CommandSearch;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
-import com.yuuko.core.utils.MessageHandler;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -29,7 +29,7 @@ public class GenericMessageController {
     private void messageReceivedEvent(MessageReceivedEvent e) {
         try {
             // Increment message counter, regardless of it's author.
-            Statistics.MESSAGES_PROCESSED.getAndIncrement();
+            Metrics.MESSAGES_PROCESSED.getAndIncrement();
 
             // Figure out if the user is a bot or not, so we don't waste any time.
             if(e.getAuthor().isBot()) {
@@ -106,7 +106,7 @@ public class GenericMessageController {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 Utils.updateLatest(e.getGuild().getName() + " - " + e.getMessage().getContentDisplay().toLowerCase() + " (" + executionTime + "ms)");
                 MessageHandler.sendCommand(e, executionTime);
-                Statistics.COMMANDS_PROCESSED.getAndIncrement();
+                Metrics.COMMANDS_PROCESSED.getAndIncrement();
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);

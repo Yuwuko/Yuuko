@@ -3,7 +3,7 @@ package com.yuuko.core;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Statistics {
+public class Metrics {
     public static final AtomicInteger RUNTIME = new AtomicInteger();
     public static final AtomicLong PING = new AtomicLong();
     public static int DB_POOL_ACTIVE;

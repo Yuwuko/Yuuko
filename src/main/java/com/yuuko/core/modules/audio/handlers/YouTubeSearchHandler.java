@@ -6,7 +6,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.yuuko.core.utils.Utils;
+import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.io.IOException;
