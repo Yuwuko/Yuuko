@@ -3,13 +3,15 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## Y-1.0.2
-+ [~] General code optimisations here and there.
++ [~] General code optimisations here and there, mostly conversions from verbose loops to streams.
 + [~] Upgraded the [__nuke__] command to conform with the new standard which was overlooked in Y-1.0.1.
 + [~] Slightly optimised both the CommandExecutor and the GenericMessageController classes.
 + [~] Greatly improved the nuking speed of messages older than 2 weeks. (In preliminary testing, more testing needed in real world.)
 + [~] Increased [__nuke__] command's max channels from `5` to `10` since the lower bound was the victim of some premature optimisations.
 + [~] Moved dev checking from CommandExecutor into the ModuleDeveloper class itself to save some precious nanoseconds.
-+ [~] Updated the [__user__] command to improve code and include some rich presence information where possible.
++ [~] Updated the [__user__] command to improve code quality and include some rich presence information where possible.
++ [~] Updated the [__queue__] command to improve code quality and show some additional information about the queue such as total length and items in the queue. (much at the dismay to a certain man-child) 
++ [~] Updated dependencies to their latest versions and removed obsolete dependencies.
 
 ## Y-1.0.1
 + [~] Refactored Sanitise to Sanitiser for peace of mind.

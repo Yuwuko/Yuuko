@@ -78,9 +78,9 @@ class Yuuko extends ListenerAdapter {
      * Retrieves a list of modules via reflection.
      */
     private Yuuko() {
-        // Prints a cool banner :^)
         try {
-            String[] args = new String[] {"/bin/bash", "-c", "figlet -c Yuuko " + Configuration.VERSION};
+            // Prints a cool banner :^)
+            String[] args = new String[] {"/bin/bash", "-c", "figlet -c Yuuko"};
             Process p = new ProcessBuilder(args).start();
             p.waitFor();
 
@@ -95,7 +95,7 @@ class Yuuko extends ListenerAdapter {
             System.out.println(output);
 
         } catch(Exception ex) {
-            ex.printStackTrace();
+            //
         }
 
         try {
@@ -153,12 +153,8 @@ class Yuuko extends ListenerAdapter {
             scheduler.scheduleAtFixedRate(() -> {
                 Statistics.RUNTIME.getAndIncrement();
                 new DatabaseFunctions().updateServerStatus();
-                //Utils.consoleOutput();
             }, 0, 1 , SECONDS);
-            scheduler.scheduleAtFixedRate(() -> {
-                DatabaseConnection.queryConnections();
-                Utils.consoleOutput();
-            }, 3, 10, SECONDS);
+            scheduler.scheduleAtFixedRate(DatabaseConnection::queryConnections, 3, 10, SECONDS);
             scheduler.scheduleAtFixedRate(() -> Statistics.PING.set(Cache.JDA.getPing()), 10, 300, SECONDS);
 
         } catch(Exception ex) {

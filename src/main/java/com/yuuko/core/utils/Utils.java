@@ -9,14 +9,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
-import org.xhtmlrenderer.swing.Java2DRenderer;
 
-import javax.imageio.ImageIO;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -144,36 +137,6 @@ public final class Utils {
     }
 
     /**
-     * Take a xHTML input, renders and return an image based on it.
-     * @param html String
-     * @param width int
-     * @param height int
-     * @return File rendered by method.
-     */
-    public static byte[] xhtml2image(String html, int width, int height) {
-        try {
-            final ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-            // Subclasses 2DRenderer to allow transparent images and such.
-            final java.awt.Color TRANSPARENT = new Color(255, 255, 255, 0);
-            final Java2DRenderer renderer = new Java2DRenderer(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(html.getBytes())), width, height) {
-                @Override
-                protected BufferedImage createBufferedImage(final int width, final int height) {
-                    final BufferedImage image = org.xhtmlrenderer.util.ImageUtil.createCompatibleBufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-                    org.xhtmlrenderer.util.ImageUtil.clearImage(image, TRANSPARENT);
-                    return image;
-                }
-            };
-
-            ImageIO.write(renderer.getImage(), "png", output);
-            return output.toByteArray();
-
-        } catch(Exception ex) {
-            return null;
-        }
-    }
-
-    /**
      * Takes a path and encoding type and returns a string of the file.
      * @param path String
      * @param encoding Charset
@@ -240,8 +203,11 @@ public final class Utils {
         int seconds = (int) (milliseconds / 1000) % 60 ;
         int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
         int hours   = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+        int days    = (int) ((milliseconds / (1000 * 60 * 60 * 24)));
 
-        if(hours > 0) {
+        if(days > 0) {
+            return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
+        } else if(hours > 0) {
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         } else {
             return String.format("%02d:%02d", minutes, seconds);

@@ -37,17 +37,13 @@ public class CommandUser extends Command {
         String presence = "";
         if(target.getGame() != null) {
             switch(target.getGame().getType().name()) {
-                case "LISTENING":
-                    presence = "and is listening to ";
+                case "LISTENING": presence = "and is listening to ";
                 break;
-                case "DEFAULT":
-                    presence = "and is playing ";
+                case "DEFAULT": presence = "and is playing ";
                 break;
-                case "STREAMING":
-                    presence = "and is streaming ";
+                case "STREAMING": presence = "and is streaming ";
                 break;
-                case "WATCHING":
-                    presence = "and is watching ";
+                case "WATCHING": presence = "and is watching ";
                 break;
                 default: presence = "";
             }

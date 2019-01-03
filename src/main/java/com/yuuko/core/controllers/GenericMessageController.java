@@ -142,7 +142,6 @@ public class GenericMessageController {
                     Utils.updateLatest(e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
-
             }
 
         } catch (Exception ex) {

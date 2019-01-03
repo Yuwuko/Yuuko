@@ -11,6 +11,8 @@ import com.yuuko.core.utils.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class CommandQueue extends Command {
 
     public CommandQueue() {
@@ -24,26 +26,28 @@ public class CommandQueue extends Command {
         try {
             synchronized(manager.scheduler.queue) {
                 StringBuilder queue = new StringBuilder();
-                int i = 1;
-
+                int trackCount = 0;
                 for(AudioTrack track : manager.scheduler.queue) {
-                    queue.append("`").append(i).append(":` ").append(track.getInfo().title).append(" · (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
-                    i++;
-                    if(i > 10) {
+                    queue.append("`").append(trackCount+1).append(":` ").append(track.getInfo().title).append(" · (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
+                    trackCount++;
+                    if(trackCount > 9) {
                         break;
                     }
                 }
-                i--;
 
-                if(i > 0) {
+                final AtomicLong totalDuration = new AtomicLong();
+                manager.scheduler.queue.forEach(audioTrack -> totalDuration.getAndAdd(audioTrack.getDuration()));
+
+                if(trackCount > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
-                            .setTitle("Here are the next " + i + " tracks in the queue:")
+                            .setTitle("Here are the next " + trackCount + " tracks in the queue:")
                             .setDescription(queue.toString())
+                            .addField("In Queue", manager.scheduler.queue.size() + "", true)
+                            .addField("Total Duration", Utils.getTimestamp(totalDuration.get()), true)
                             .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
-
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("The queue is currently empty.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains **0** tracks.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }

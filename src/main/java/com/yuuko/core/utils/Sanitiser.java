@@ -3,6 +3,8 @@ package com.yuuko.core.utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.Arrays;
+
 public final class Sanitiser {
 
     /**
@@ -40,12 +42,6 @@ public final class Sanitiser {
      * @return boolean
      */
     public static boolean isNumber(String string) {
-        String[] characters = string.split("");
-        for(String character : characters){
-            if(!Character.isDigit(character.charAt(0))) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(string.split("")).allMatch(character -> Character.isDigit(character.charAt(0)));
     }
 }
