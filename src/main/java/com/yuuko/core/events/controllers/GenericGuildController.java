@@ -4,7 +4,7 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.Metrics;
-import com.yuuko.core.modules.core.commands.CommandSetup;
+import com.yuuko.core.modules.core.commands.SetupCommand;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -26,7 +26,7 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        new CommandSetup().executeAutomated(e);
+        new SetupCommand().executeAutomated(e);
         Metrics.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         try {

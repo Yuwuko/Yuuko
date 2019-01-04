@@ -2,7 +2,7 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.Metrics;
-import com.yuuko.core.modules.utility.ModuleUtility;
+import com.yuuko.core.modules.utility.UtilityModule;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
@@ -28,9 +28,9 @@ public class GenericMessageReactionController {
             if(e.getReaction().getReactionEmote().getName().equals("📌")) {
                 if(new DatabaseFunctions().checkModuleSettings("moduleUtility", e.getGuild().getId())) {
                     if(e instanceof MessageReactionAddEvent) {
-                        new ModuleUtility((MessageReactionAddEvent) e);
+                        new UtilityModule((MessageReactionAddEvent) e);
                     } else if(e instanceof MessageReactionRemoveEvent) {
-                        new ModuleUtility((MessageReactionRemoveEvent) e);
+                        new UtilityModule((MessageReactionRemoveEvent) e);
                     }
                 }
             }

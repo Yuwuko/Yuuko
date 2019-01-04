@@ -6,9 +6,10 @@ import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.metrics.Metrics;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.audio.commands.CommandSearch;
+import com.yuuko.core.modules.audio.commands.SearchCommand;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
@@ -87,14 +88,10 @@ public class GenericMessageController {
             String moduleDbName = "";
 
             // Iterate through the command list, if the input matches the effective name (includes invocation)
-            // find the module class that belongs to the command itself and create a new instance of that
-            // constructor (which takes a MessageReceivedEvent) with the parameter of a MessageReceivedEvent.
-            // Also return the command's module to check
+            // Get the command modules constructor from the command class. (Much easier than what I did previously)
             for(Command cmd : Cache.COMMANDS) {
-                if((inputPrefix + input[0]).equalsIgnoreCase(cmd.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + cmd.getCommandName())) {
-                    String commandModule = cmd.getCommandModule();
-                    moduleDbName = Utils.extractModuleName(commandModule, false, true);
-                    constructor = Class.forName(commandModule).getConstructor(MessageReceivedEvent.class, String[].class);
+                if((inputPrefix + input[0]).equalsIgnoreCase(cmd.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + cmd.getName())) {
+                    constructor = cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class);
                     break;
                 }
             }
@@ -131,7 +128,7 @@ public class GenericMessageController {
 
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                    new CommandSearch().executeCommand(e, input[0]);
+                    new SearchCommand().executeCommand(e, input[0]);
                 }
 
                 if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
@@ -175,7 +172,7 @@ public class GenericMessageController {
             if(boundChannels.toString().equals("")) {
                 return true;
             } else {
-                Utils.removeLastOccurrence(boundChannels, ", ");
+                TextUtility.removeLastOccurrence(boundChannels, ", ");
 
                 EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + command + "_** command is bound to " + boundChannels.toString() + ".");
                 MessageHandler.sendMessage(e, embed.build());

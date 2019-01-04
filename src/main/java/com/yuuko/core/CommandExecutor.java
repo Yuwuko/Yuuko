@@ -19,20 +19,20 @@ public class CommandExecutor {
         }
 
         if(module.checkModuleSettings(e)) { // Is the module enabled?
-            if(module.getModuleName().equals("Audio") && !audioChecks(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
+            if(module.getName().equals("Audio") && !audioChecks(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
                 return;
             }
             if(!module.isChannelNSFW(e) && module.isModuleNSFW()) { // Is the channel NSFW? If not, is the module NSFW?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                module.getModuleCommandsList().stream().filter(command -> command.getCommandName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
-                    if(command.getCommandPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getCommandPermissions())) { // Is the command permission NULL? If so, does the bot have the permission?
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getCommandPermissions()) + "**' permissions to use that command.");
+                module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
+                    if(command.getPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission NULL? If so, does the bot have the permission?
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                         MessageHandler.sendMessage(e, embed.build());
                     } else {
-                        if(command.getCommandPermissions() != null && !e.getMember().hasPermission(command.getCommandPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getCommandPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getCommandPermissions()) + "**' permissions to use that command.");
+                        if(command.getPermissions() != null && !e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                             MessageHandler.sendMessage(e, embed.build());
                         } else {
                             if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters())) { // Does the command contain the minimum number of parameters?

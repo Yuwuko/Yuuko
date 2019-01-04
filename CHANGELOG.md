@@ -2,13 +2,19 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## Y-1.1.0
+## Y-1.1.0 (The Big Refactor)
 + [!] Removed the Yuuko class self event manager and event code, creating a dedicated events package to put in it's place.
++ [+] Added the Interaction module which as the name suggests adds interactions. This module is being started with a [__poke__] command.
++ [+] Added a simple [__choice__] command which takes an undefiled number of parameters separated by commas and selects one of the choices.
++ [~] Improved the [__roll__] command to give a better indication on what the roll is against.
 + [~] Refactored Math module into Fun module to allow for a wider range of commands to be encompassed such as coin flips and other such commands.
 + [~] Refactored utils package to utilities to actively try and make things more complete and professional.
 + [~] Refactored the Statistics class to Metrics since they're the latter and not the former.
 + [~] Refactored the scheduled events from the main class to their own scheduler package based on Avaire which is 1000% better.
 + [~] Refactored database connections into their own package, and also started sending metrics to a separate server.
++ [~] Refactored both the Module and Command superclasses, changing method names and also changing the module field from String to Class<?> to improve efficiency all around.
++ [~] Refactored every command and module for a better naming convention overall.
++ [~] Refactored methods from the Utils class to their own respective MessageUtility and TextUtility classes.
 + [-] Removed M and C classes, instead using the Reflections package to improve command modularity greatly.
 
 ## Y-1.0.2
@@ -29,7 +35,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated the [__mute__], [__kick__] and [__ban__] commands to correctly interpret messages, improve feedback and not throw unnecessary exceptions.
 + [~] Upgraded the code quality of the [__mute__] command in particular, giving it a long overdue lambda overhaul, setting a new standard for code on the bot.
 
-## Y-1.0.0
+## Y-1.0.0 (The Re-brand)
 + [!] Completely rebranded the bot into something more personable instead of a random anecdotal name that only a few people will understand.
 + [!] Bumped JDK version to 12 (early release) because why wouldn't you live life dangerously in production. (also, jdk 11 ssl is broken)
 + [+] Put in place measures to allow for a web console to edit settings and also see status updates.
@@ -59,7 +65,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [-] Removed [__exclusion__] command because it isn't used compared to the superior bind.
 
 ## 3.4.0
-+ [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands.
++ [+] Introduced the profile module which is going to be the bases of the bots new level system and user commands. (Incubating)
 + [+] Added [__djMode__] setting which allows servers to lock down key audio commands to those with the DJ role.
 + [~] Edited the [__kitsu__] command so that the default functionality is show so users no longer need to type "show" as a parameter.
 + [-] Removed [__runescape__] command since it isn't used and hasn't actually worked correctly for a while and just degrades the quality of the bot.

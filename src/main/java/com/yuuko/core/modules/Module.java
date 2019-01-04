@@ -9,40 +9,40 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class Module {
-    private final String moduleName;
+    private final String name;
     private final String dbColumnName;
     private final boolean isNSFW;
-    private final Command[] moduleCommands;
+    private final Command[] commands;
 
-    public Module(String moduleName, String dbColumnName, boolean isNSFW, Command[] moduleCommands) {
-        this.moduleName = moduleName;
+    public Module(String name, String dbColumnName, boolean isNSFW, Command[] commands) {
+        this.name = name;
         this.dbColumnName = dbColumnName;
-        this.moduleCommands = moduleCommands;
+        this.commands = commands;
         this.isNSFW = isNSFW;
     }
 
-    public String getModuleName() {
-        return moduleName;
+    public String getName() {
+        return name;
     }
 
-    public Command[] getModuleCommandsArray() {
-        return moduleCommands;
+    public Command[] getCommandsArray() {
+        return commands;
     }
 
-    public List<Command> getModuleCommandsList() {
-        return Arrays.asList(moduleCommands);
+    public List<Command> getCommandsList() {
+        return Arrays.asList(commands);
     }
 
     public boolean checkModuleSettings(MessageReceivedEvent e) {
-        // Executor still checks core, in this case simply return true.
-        if(moduleName.equals("Core") || moduleName.equals("Developer")) {
+        // Executor still checks core/developer, in this case simply return true.
+        if(name.equals("Core") || name.equals("Developer")) {
             return true;
         }
 
         if(new DatabaseFunctions().checkModuleSettings(dbColumnName, e.getGuild().getId())) {
             return true;
         } else {
-            EmbedBuilder member = new EmbedBuilder().setTitle("Module Disabled").setDescription("The **_" + moduleName + "_** module is disabled.");
+            EmbedBuilder member = new EmbedBuilder().setTitle("Module Disabled").setDescription("The **_" + name + "_** module is disabled.");
             MessageHandler.sendMessage(e, member.build());
             return false;
         }

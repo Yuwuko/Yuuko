@@ -16,6 +16,7 @@ import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -54,7 +55,7 @@ public class Yuuko {
                 output.append(line).append("\n");
                 line = reader.readLine();
             }
-            Utils.removeLastOccurrence(output, "\n");
+            TextUtility.removeLastOccurrence(output, "\n");
             System.out.println(output);
         } catch(Exception ex) {
             //

@@ -5,42 +5,42 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class Command {
-    private final String commandName;
-    private final String commandModule;
+    private final String name;
+    private final Class<?> module;
     private final int expectedParameters;
-    private final String[] commandUsage;
-    private final Permission[] commandPermissions;
+    private final String[] usage;
+    private final Permission[] permissions;
 
-    public Command(String commandName, String commandModule, int expectedParameters, String[] commandUsage, Permission[] commandPermissions) {
-        this.commandName = commandName;
-        this.commandModule = commandModule;
+    public Command(String name, Class<?> module, int expectedParameters, String[] usage, Permission[] permissions) {
+        this.name = name;
+        this.module = module;
         this.expectedParameters = expectedParameters;
-        this.commandUsage = commandUsage;
-        this.commandPermissions = commandPermissions;
+        this.usage = usage;
+        this.permissions = permissions;
     }
 
-    public String getCommandName() {
-        return commandName;
+    public String getName() {
+        return name;
     }
 
     public String getGlobalName() {
-        return Configuration.GLOBAL_PREFIX + commandName;
+        return Configuration.GLOBAL_PREFIX + name;
     }
 
-    public String getCommandModule() {
-        return commandModule;
+    public Class<?> getModule() {
+        return module;
     }
 
     public int getExpectedParameters() {
         return expectedParameters;
     }
 
-    public String[] getCommandUsage() {
-        return commandUsage;
+    public String[] getUsage() {
+        return usage;
     }
 
-    public Permission[] getCommandPermissions() {
-        return commandPermissions;
+    public Permission[] getPermissions() {
+        return permissions;
     }
 
     // Abstract method signature to ensure method is implemented.

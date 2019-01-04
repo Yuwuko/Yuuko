@@ -4,10 +4,8 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.Metrics;
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
 import java.io.IOException;
@@ -37,42 +35,7 @@ public final class Utils {
         return user.getName() + "#" + user.getDiscriminator();
     }
 
-    /**
-     * Replaces the last occurrence of a pattern with nothing.
-     * @param stringBuilder StringBuilder
-     * @param pattern String
-     * @return StringBuilder
-     */
-    public static void removeLastOccurrence(StringBuilder stringBuilder, String pattern) {
-        int index = stringBuilder.lastIndexOf(pattern);
-        if(index > -1) {
-            stringBuilder.replace(index, index + 1, "");
-        }
-    }
 
-    /**
-     * Replaces the last occurrence of a pattern with nothing.
-     * @param stringBuffer StringBuilder
-     * @param pattern String
-     * @return StringBuilder
-     */
-    public static void removeLastOccurrence(StringBuffer stringBuffer, String pattern) {
-        int index = stringBuffer.lastIndexOf(pattern);
-        if(index > -1) {
-            stringBuffer.replace(index, index + 1, "");
-        }
-    }
-
-    /**
-     * Extracts the module name from a class path.
-     * @param string String
-     * @param shortened boolean
-     * @return String
-     */
-    public static String extractModuleName(String string, boolean shortened, boolean lowercase) {
-        String returnString = (shortened) ? string.substring(string.lastIndexOf(".") + 7) : string.substring(string.lastIndexOf(".") + 1);
-        return (lowercase) ? returnString.toLowerCase() : returnString;
-    }
 
     /**
      * Creates the muted role to correctly mute people.
@@ -239,29 +202,6 @@ public final class Utils {
      */
     public static String getServerPrefix(String server) {
         return new DatabaseFunctions().getServerSetting("commandPrefix", server);
-    }
-
-    /**
-     * Returns the first mentioned user from a given message.
-     * @param e MessageReceivedEvent
-     * @return Member
-     */
-    public static Member getMentionedMember(MessageReceivedEvent e) {
-        List<Member> mentioned = e.getMessage().getMentionedMembers();
-
-        if(!e.getMessage().mentionsEveryone()) {
-            if(mentioned.size() > 0) {
-                return mentioned.get(0);
-            } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("There were no mentioned users found.");
-                MessageHandler.sendMessage(e, embed.build());
-                return null;
-            }
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
-            MessageHandler.sendMessage(e, embed.build());
-            return null;
-        }
     }
 
     /**

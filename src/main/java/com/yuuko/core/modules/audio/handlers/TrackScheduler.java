@@ -5,7 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.modules.audio.commands.CommandCurrent;
+import com.yuuko.core.modules.audio.commands.CurrentCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Collections;
@@ -63,7 +63,7 @@ public class TrackScheduler extends AudioEventAdapter {
         } else {
             MessageReceivedEvent e = (MessageReceivedEvent)player.getPlayingTrack().getUserData();
             if(new DatabaseFunctions().getServerSetting("nowPlaying", e.getGuild().getId()).equalsIgnoreCase("1")) {
-                new CommandCurrent().executeCommand((MessageReceivedEvent) player.getPlayingTrack().getUserData(), null);
+                new CurrentCommand().executeCommand((MessageReceivedEvent) player.getPlayingTrack().getUserData(), null);
             }
         }
     }
