@@ -2,8 +2,8 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.core.settings.SettingCommandPrefix;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;

@@ -1,7 +1,9 @@
 package com.yuuko.core.database;
 
 import com.yuuko.core.Cache;
-import com.yuuko.core.Metrics;
+import com.yuuko.core.database.connections.DatabaseConnection;
+import com.yuuko.core.database.connections.MetricsDatabaseConnection;
+import com.yuuko.core.metrics.Metrics;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -332,29 +334,41 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Updates the database with the latest statistics.
+     * Updates the database with the latest metrics.
      */
-    public void updateServerStatus() {
+    public void updateShardMetrics() {
         try {
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerStatus` SET `uptime` = ?, `ping` = ?, `latestInfo` = ?, `guilds` = ?, `modules` = ?, `commands` = ?, `messagesProcessed` = ?, `reactsProcessed` = ?, `commandsProcessed` = ?, `membersJoined` = ?");
-            stmt.setInt(1, Metrics.RUNTIME.get());
-            stmt.setDouble(2, Metrics.PING.get());
-            stmt.setString(3, Cache.LATEST_INFO);
-            stmt.setInt(4, Metrics.GUILD_COUNT);
-            stmt.setInt(5, Cache.MODULES.size());
-            stmt.setInt(6, Cache.COMMANDS.size());
+            Connection conn = MetricsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ShardMetrics`(`shardId`, `uptime`, `ping`, `memoryTotal`, `memoryUsed`, `guildCount`, `messagesProcessed`, `reactsProcessed`, `commandsProcessed`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setLong(2, Metrics.UPTIME);
+            stmt.setDouble(3, Metrics.PING.get());
+            stmt.setLong(4, Metrics.MEMORY_TOTAL);
+            stmt.setLong(5, Metrics.MEMORY_USED);
+            stmt.setInt(6, Metrics.GUILD_COUNT);
             stmt.setInt(7, Metrics.MESSAGES_PROCESSED.get());
             stmt.setInt(8, Metrics.REACTS_PROCESSED.get());
             stmt.setInt(9, Metrics.COMMANDS_PROCESSED.get());
-            stmt.setInt(10, Metrics.MEMBERS_JOINED.get());
             stmt.execute();
 
             stmt.close();
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to update server status.");
+            MessageHandler.sendException(ex, "Unable to update metrics");
+        }
+    }
+
+    public void truncateMetrics() {
+        try {
+            Connection conn = MetricsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ShardMetrics`");
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+        } catch(Exception ex) {
+            MessageHandler.sendException(ex, "Unable to truncate database..");
         }
     }
 

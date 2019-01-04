@@ -2,8 +2,8 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
@@ -45,8 +45,8 @@ public class CommandModules extends Command {
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below are the list of bot modules!")
                     .setDescription("Each module can be toggled on or off by using the '" + Utils.getServerPrefix(e.getGuild().getId()) + "module <module>' command.")
-                    .addField("Enabled Modules", enabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
-                    .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), false)
+                    .addField("Enabled Modules", enabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
+                    .addField("Disabled Modules", disabled.toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setFooter(Cache.STANDARD_STRINGS[0], e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
 

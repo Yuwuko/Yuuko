@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import static com.yuuko.core.database.DatabaseConnection.getConnection;
+import static com.yuuko.core.database.connections.DatabaseConnection.getConnection;
 
 public class CommandHelp extends Command {
 

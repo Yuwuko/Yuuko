@@ -2,9 +2,9 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Metrics;
-import com.yuuko.core.database.DatabaseConnection;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.connections.DatabaseConnection;
+import com.yuuko.core.metrics.Metrics;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.commands.CommandSearch;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
@@ -114,6 +114,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
+
             MessageHandler.sendException(ex, "GenericMessageController ~ " + ex.getMessage() + " ~ " +  e.getMessage().getContentRaw());
         }
     }

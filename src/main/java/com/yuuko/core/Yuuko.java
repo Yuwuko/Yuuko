@@ -4,29 +4,33 @@
 
 package com.yuuko.core;
 
-import com.yuuko.core.database.DatabaseConnection;
+import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.connections.DatabaseConnection;
+import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.events.GenericEventManager;
-import com.yuuko.core.modules.C;
+import com.yuuko.core.metrics.Metrics;
 import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.M;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
-import com.yuuko.core.scheduler.jobs.SecondlyJob;
+import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.discordbots.api.client.DiscordBotListAPI;
+import org.reflections.Reflections;
 
 import javax.security.auth.login.LoginException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class Yuuko {
 
@@ -59,6 +63,8 @@ public class Yuuko {
         Configuration.load();
         Configuration.loadApi();
         new DatabaseConnection();
+        new MetricsDatabaseConnection();
+        new DatabaseFunctions().truncateMetrics();
 
         Cache.JDA = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)
@@ -78,30 +84,20 @@ public class Yuuko {
         }
 
         try {
-            Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
+            Reflections reflections = new Reflections("com.yuuko.core.modules");
 
-            ArrayList<Module> moduleList = new ArrayList<>();
-            try {
-                M m = new M();
-                Field[] modules = m.getClass().getDeclaredFields();
-                for(Field module : modules) {
-                    moduleList.add((Module) module.get(Module.class));
-                }
-                System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
+            List<Module> moduleList = new ArrayList<>();
+            for(Class<? extends Module> module: modules) {
+                Module obj = module.getConstructor(MessageReceivedEvent.class, String[].class).newInstance(null, null);
+                moduleList.add(obj);
             }
 
-            ArrayList<Command> commandList = new ArrayList<>();
-            try {
-                C c = new C();
-                Field[] commands = c.getClass().getDeclaredFields();
-                for(Field command : commands) {
-                    commandList.add((Command) command.get(Command.class));
-                }
-                System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
+            List<Command> commandList = new ArrayList<>();
+            for(Class<? extends Command> command: commands) {
+                Command obj = command.getConstructor().newInstance();
+                commandList.add(obj);
             }
 
             // Add them in lowercase so they're easier to compare later.
@@ -113,6 +109,7 @@ public class Yuuko {
             settingsList.add("djmode");
             settingsList.add("welcomemembers");
 
+            Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
             Cache.STANDARD_STRINGS = new String[3];
             Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
             Cache.STANDARD_STRINGS[1] = Cache.STANDARD_STRINGS[0] + " · Information requested by ";
@@ -127,15 +124,12 @@ public class Yuuko {
                 Cache.LAST_THIRTEEN.add("");
             }
 
-            ScheduleHandler.registerJob(new SecondlyJob());
+            ScheduleHandler.registerJob(new FiveSecondlyJob());
             ScheduleHandler.registerJob(new ThirtySecondlyJob());
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "new Yuuko()");
         }
-
-        new ScheduleHandler();
-
     }
 
 }

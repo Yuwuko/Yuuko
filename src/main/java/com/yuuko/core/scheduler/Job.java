@@ -26,7 +26,7 @@ public abstract class Job extends TimerTask {
         return period;
     }
 
-    public TimeUnit getUnit() {
+    TimeUnit getUnit() {
         return unit;
     }
 
@@ -40,4 +40,5 @@ public abstract class Job extends TimerTask {
             }
         }
     }
+
 }

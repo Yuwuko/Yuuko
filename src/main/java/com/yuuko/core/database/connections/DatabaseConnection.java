@@ -1,14 +1,12 @@
-package com.yuuko.core.database;
+package com.yuuko.core.database.connections;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Metrics;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-
     private static final BasicDataSource connectionPool = new BasicDataSource();
 
     public DatabaseConnection() {
@@ -27,14 +25,6 @@ public class DatabaseConnection {
      */
     public static Connection getConnection() throws SQLException {
         return connectionPool.getConnection();
-    }
-
-    /**
-     * Queries the active connections and updates the cache.
-     */
-    public static void queryConnections() {
-        Metrics.DB_POOL_IDLE = connectionPool.getNumIdle();
-        Metrics.DB_POOL_ACTIVE = connectionPool.getNumActive();
     }
 
 }

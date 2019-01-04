@@ -1,7 +1,7 @@
 package com.yuuko.core.events.controllers;
 
-import com.yuuko.core.Metrics;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.metrics.Metrics;
 import com.yuuko.core.modules.utility.ModuleUtility;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;

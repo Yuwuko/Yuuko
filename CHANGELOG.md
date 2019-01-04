@@ -3,11 +3,13 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## Y-1.1.0
++ [!] Removed the Yuuko class self event manager and event code, creating a dedicated events package to put in it's place.
 + [~] Refactored Math module into Fun module to allow for a wider range of commands to be encompassed such as coin flips and other such commands.
 + [~] Refactored utils package to utilities to actively try and make things more complete and professional.
 + [~] Refactored the Statistics class to Metrics since they're the latter and not the former.
 + [~] Refactored the scheduled events from the main class to their own scheduler package based on Avaire which is 1000% better.
-+ [!] Removed the Yuuko class self event manager and event code, creating a dedicated events package to put in it's place.
++ [~] Refactored database connections into their own package, and also started sending metrics to a separate server.
++ [-] Removed M and C classes, instead using the Reflections package to improve command modularity greatly.
 
 ## Y-1.0.2
 + [~] General code premature-optimisations here and there, mostly conversions from verbose loops to streams.

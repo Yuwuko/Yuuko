@@ -2,7 +2,7 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.Metrics;
+import com.yuuko.core.metrics.Metrics;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
@@ -33,7 +33,7 @@ public class CommandAbout extends Command {
                 .addField("Servers", Metrics.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
-                .addField("Uptime", Metrics.RUNTIME.toString(), true)
+                .addField("Uptime", Metrics.UPTIME + "", true)
                 .addField("Ping", Metrics.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }

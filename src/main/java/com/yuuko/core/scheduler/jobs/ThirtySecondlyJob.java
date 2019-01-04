@@ -1,14 +1,12 @@
 package com.yuuko.core.scheduler.jobs;
 
 import com.yuuko.core.scheduler.Job;
-import com.yuuko.core.scheduler.tasks.QueryDatabaseConnectionsTask;
-import com.yuuko.core.scheduler.tasks.UpdateMetricsTask;
+import com.yuuko.core.scheduler.tasks.UpdateMetricsPingTask;
 
 import java.util.concurrent.TimeUnit;
 
 public class ThirtySecondlyJob extends Job {
-    private final UpdateMetricsTask updateMetricsTask = new UpdateMetricsTask();
-    private final QueryDatabaseConnectionsTask queryDatabaseConnectionsTask = new QueryDatabaseConnectionsTask();
+    private final UpdateMetricsPingTask updateMetricsPingTask = new UpdateMetricsPingTask();
 
     public ThirtySecondlyJob() {
         super(0, 30, TimeUnit.SECONDS);
@@ -16,6 +14,6 @@ public class ThirtySecondlyJob extends Job {
 
     @Override
     public void run() {
-        handleTask(updateMetricsTask, queryDatabaseConnectionsTask);
+        handleTask(updateMetricsPingTask);
     }
 }
