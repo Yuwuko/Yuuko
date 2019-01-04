@@ -32,7 +32,7 @@ public class HelpCommand extends Command {
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
                     .addField("Core", "`about` `help` `module` `modules` `settings`", false)
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
-                    .addField("Fun", "`roll` `choose", false)
+                    .addField("Fun", "`roll` `choose`", false)
                     .addField("Interaction", "`poke`", false)
                     .addField("Media", "`kitsu` `osu`", false)
                     .addField("Moderation", "`ban` `kick` `mute` `nuke`", false)

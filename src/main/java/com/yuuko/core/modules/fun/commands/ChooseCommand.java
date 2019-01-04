@@ -11,14 +11,14 @@ import java.util.Random;
 public class ChooseCommand extends Command {
 
     public ChooseCommand() {
-        super("choose", FunModule.class, 2, new String[]{"-choose [choice], [choice]..."}, null);
+        super("choose", FunModule.class, 1, new String[]{"-choose [choice], [choice]..."}, null);
     }
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s+,\\s+");
+        String[] commandParameters = command[1].split("\\s*(,)\\s*");
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle(commandParameters[new Random().nextInt(commandParameters.length -1)]);
+        EmbedBuilder embed = new EmbedBuilder().setTitle((commandParameters.length > 1) ? commandParameters[new Random().nextInt(commandParameters.length)] : commandParameters[0]);
         MessageHandler.sendMessage(e, embed.build());
     }
 }
