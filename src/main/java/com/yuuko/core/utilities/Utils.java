@@ -3,7 +3,6 @@ package com.yuuko.core.utilities;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.metrics.Metrics;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.GuildController;
@@ -111,49 +110,12 @@ public final class Utils {
     }
 
     /**
-     * Console output message method.
-     */
-    public static void consoleOutput() {
-        // Default shell size is 80x24, this output will allow each message to take up the whole screen
-        // thus giving the illusion that the current page is changing rather than just being rewritten under.
-        System.out.println();
-        System.out.println("            __   __           _          __   __    _   ___   ___");
-        System.out.println("            \\ \\ / /   _ _   _| | _____   \\ \\ / /   / | / _ \\ / _ \\ ");
-        System.out.println("             \\ V / | | | | | | |/ / _ \\   \\ V /____| || | | | | | | ");
-        System.out.println("              | || |_| | |_| |   < (_) |   | |_____| || |_| | |_| | ");
-        System.out.println("              |_| \\__,_|\\__,_|_|\\_\\___/    |_|     |_(_)___(_)___/ ");
-        System.out.println();
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[COMMANDS " + Cache.MODULES.size() + "/" + Cache.COMMANDS.size() + "]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(0));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(1));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(2));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(3));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(4));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(5));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(6));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(7));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(8));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(9));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(10));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(11));
-        System.out.println("┃ " + Cache.LAST_THIRTEEN.get(12));
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[STATISTICS]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃ Uptime: " + Metrics.UPTIME + ", Ping: " + Metrics.PING);
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    }
-
-    /**
      * Updates the latest [INFO] message or the latest command message.
      * @param latest String
      */
     public static void updateLatest(String latest) {
         if(latest.startsWith("[INFO]")) {
             Cache.LATEST_INFO = latest;
-        } else {
-            Cache.LAST_THIRTEEN.addFirst(latest);
-            if(Cache.LAST_THIRTEEN.size() > 12) {
-                Cache.LAST_THIRTEEN.removeLast();
-            }
         }
     }
 

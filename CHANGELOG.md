@@ -12,7 +12,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Refactored utils package to utilities to actively try and make things more complete and professional.
 + [~] Refactored the Statistics class to Metrics since they're the latter and not the former.
 + [~] Refactored the scheduled events from the main class to their own scheduler package based on Avaire which is 1000% better.
-+ [~] Refactored database connections into their own package, and also started sending metrics to a separate server.
++ [~] Refactored database connections into their own package, and also started sending metrics to a separate server. (including commands)
 + [~] Refactored both the Module and Command superclasses, changing method names and also changing the module field from String to Class<?> to improve efficiency all around.
 + [~] Refactored every command and module for a better naming convention overall.
 + [~] Refactored methods from the Utils class to their own respective MessageUtility and TextUtility classes.

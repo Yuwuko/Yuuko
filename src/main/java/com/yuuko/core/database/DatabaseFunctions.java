@@ -355,14 +355,34 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to update metrics");
+            MessageHandler.sendException(ex, "Unable to update metrics.");
         }
     }
 
+    public void updateShardCommands(String serverId, String command) {
+        try {
+            Connection conn = MetricsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ShardCommands`(`shardId`, `serverId`, `command`) VALUES(?, ?, ?)");
+            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setString(2, serverId);
+            stmt.setString(3, command);
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+
+        } catch (Exception ex) {
+            MessageHandler.sendException(ex, "Unable to update commands.");
+        }
+    }
+
+    /**
+     * Truncates the metrics database. (This happens when the bot is first loaded.)
+     */
     public void truncateMetrics() {
         try {
             Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ShardMetrics`");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ShardMetrics`, `ShardCommands`");
             stmt.execute();
 
             stmt.close();
