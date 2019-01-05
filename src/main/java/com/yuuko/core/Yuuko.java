@@ -93,6 +93,7 @@ public class Yuuko {
                 Module obj = module.getConstructor(MessageReceivedEvent.class, String[].class).newInstance(null, null);
                 moduleList.add(obj);
             }
+            System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
 
             Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
             List<Command> commandList = new ArrayList<>();
@@ -100,6 +101,7 @@ public class Yuuko {
                 Command obj = command.getConstructor().newInstance();
                 commandList.add(obj);
             }
+            System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
 
             // Add them in lowercase so they're easier to compare later.
             ArrayList<String> settingsList = new ArrayList<>();

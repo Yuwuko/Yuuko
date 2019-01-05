@@ -10,24 +10,24 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Random;
 
-public class PokeCommand extends Command {
+public class HugCommand extends Command {
     private static final String[] interactionImage = new String[]{
-            "https://i.imgur.com/7l5duGX.gif",
-            "https://i.imgur.com/CYxJyxQ.gif",
-            "https://i.imgur.com/iy019QA.gif",
-            "https://i.imgur.com/VhwMdAW.gif",
-            "https://i.imgur.com/fZmUTgw.gif"
+            "https://i.imgur.com/wOmoeF8.gif",
+            "https://i.imgur.com/ntqYLGl.gif",
+            "https://i.imgur.com/v47M1S4.gif",
+            "https://i.imgur.com/cZWWATV.gif",
+            "https://i.imgur.com/CxmswPU.gif"
     };
 
-    public PokeCommand() {
-        super("poke", InteractionModule.class, 1, new String[]{"-poke @user"}, null);
+    public HugCommand() {
+        super("hug", InteractionModule.class, 1, new String[]{"-hug @user"}, null);
     }
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         Member target = MessageUtility.getFirstMentionedMember(e);
         if(target != null) {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pokes **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
+            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** hugs **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
             MessageHandler.sendMessage(e, embed.build());
         }
     }
