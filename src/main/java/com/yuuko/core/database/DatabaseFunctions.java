@@ -359,6 +359,11 @@ public class DatabaseFunctions {
         }
     }
 
+    /**
+     * Updates the database with the latest command.
+     * @param serverId String
+     * @param command String
+     */
     public void updateShardCommands(String serverId, String command) {
         try {
             Connection conn = MetricsDatabaseConnection.getConnection();

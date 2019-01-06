@@ -150,6 +150,11 @@ public final class MessageHandler {
         }
     }
 
+    /**
+     * Sends an executed command to the command log channel on the Yuuko official discord server.
+     * @param e MessageReceivedEvent
+     * @param executionTimeMs long
+     */
     public static void sendCommand(MessageReceivedEvent e, long executionTimeMs) {
         try {
             Cache.JDA.getTextChannelById("526328163580772352").sendMessage("```" + Instant.now().toString() + " >> " + e.getMessage().getContentDisplay() + " >> " + e.getMessage().getGuild().getName() + " >> Execution time: " + executionTimeMs + "ms```").queue();

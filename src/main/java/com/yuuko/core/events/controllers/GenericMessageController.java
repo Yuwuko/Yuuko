@@ -9,6 +9,7 @@ import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.commands.SearchCommand;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -37,30 +38,30 @@ public class GenericMessageController {
                 return;
             }
 
-            // Used to help calculate execution time of functions.
-            long startExecutionNano = System.nanoTime();
-
-            String msgRawLower = e.getMessage().getContentRaw().toLowerCase();
+            String message = e.getMessage().getContentRaw().toLowerCase();
 
             String prefix = Utils.getServerPrefix(e.getGuild().getId());
-            if(prefix == null || prefix.equals("") || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
+            if(message.startsWith(Configuration.GLOBAL_PREFIX) || prefix.equals("")) {
                 prefix = Configuration.GLOBAL_PREFIX;
             }
 
             // Ignores messages that consist of just the prefix or starts with the prefix twice.
-            if(msgRawLower.equalsIgnoreCase(prefix)
-                    || msgRawLower.startsWith(prefix + prefix)
-                    || msgRawLower.equals(Configuration.GLOBAL_PREFIX)
-                    || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
+            if(message.equalsIgnoreCase(prefix)
+                    || message.startsWith(prefix + prefix)
+                    || message.equals(Configuration.GLOBAL_PREFIX)
+                    || message.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
                 return;
             }
 
-            if(msgRawLower.startsWith(prefix) || msgRawLower.startsWith(Configuration.GLOBAL_PREFIX)) {
+            // Used to help calculate execution time of functions.
+            long startExecutionNano = System.nanoTime();
+
+            if(message.startsWith(prefix) || message.startsWith(Configuration.GLOBAL_PREFIX)) {
                 processMessage(e, startExecutionNano, prefix);
                 return;
             }
 
-            if(msgRawLower.matches("^[0-9]{1,2}$") || msgRawLower.equals("cancel")) {
+            if(Sanitiser.isNumber(message) || message.equals("cancel")) {
                 processMessage(e, startExecutionNano);
             }
 
@@ -78,8 +79,8 @@ public class GenericMessageController {
      * @param prefix String
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
-        String[] input = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
-        String inputPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
+        String[] command = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
+        String commandPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
 
         try {
             final long executionTime;
@@ -90,19 +91,19 @@ public class GenericMessageController {
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // Get the command modules constructor from the command class. (Much easier than what I did previously)
             for(Command cmd : Cache.COMMANDS) {
-                if((inputPrefix + input[0]).equalsIgnoreCase(cmd.getGlobalName()) || (inputPrefix + input[0]).equalsIgnoreCase(prefix + cmd.getName())) {
+                if((commandPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (commandPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
                     constructor = cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class);
                     break;
                 }
             }
 
-            final boolean isAllowed = checkBindings(e, moduleDbName, input[0]);
+            final boolean isAllowed = checkBindings(e, moduleDbName, command[0]);
 
             if(constructor != null && isAllowed) {
-                constructor.newInstance(e, input);
+                constructor.newInstance(e, command);
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 MessageHandler.sendCommand(e, executionTime);
-                new DatabaseFunctions().updateShardCommands(e.getGuild().getId(), input[0]);
+                new DatabaseFunctions().updateShardCommands(e.getGuild().getId(), command[0].toLowerCase());
                 Metrics.COMMANDS_PROCESSED.getAndIncrement();
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
@@ -111,7 +112,6 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-
             MessageHandler.sendException(ex, "GenericMessageController ~ " + ex.getMessage() + " ~ " +  e.getMessage().getContentRaw());
         }
     }
@@ -156,7 +156,6 @@ public class GenericMessageController {
     private boolean checkBindings(MessageReceivedEvent e, String moduleDbName, String command) {
         try {
             StringBuilder boundChannels = new StringBuilder();
-
             Connection connection = DatabaseConnection.getConnection();
             ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), moduleDbName);
 

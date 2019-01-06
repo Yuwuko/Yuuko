@@ -8,10 +8,14 @@ import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 
 public class CommandExecutor {
+
+    private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
     public CommandExecutor(MessageReceivedEvent e, String[] cmd, Module module) {
         if(e == null || cmd == null) { // Is the command or events null? (This case is used by the M class to initialise a list of modules!)
@@ -36,7 +40,12 @@ public class CommandExecutor {
                             MessageHandler.sendMessage(e, embed.build());
                         } else {
                             if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
-                                command.executeCommand(e, cmd);
+                                try {
+                                    log.trace("Invoking {}#executeCommand()", command.getClass().getName());
+                                    command.executeCommand(e, cmd);
+                                } catch(Exception ex) {
+                                    log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+                                }
                             }
                         }
                     }
@@ -74,7 +83,7 @@ public class CommandExecutor {
             if(new DatabaseFunctions().getServerSetting("djMode", e.getGuild().getId()).equals("1")) {
                 if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
                     if(!command[0].equals("queue") && !command[0].equals("current") && !command[0].equals("last")) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
                         MessageHandler.sendMessage(e, embed.build());
                         return false;
                     }
