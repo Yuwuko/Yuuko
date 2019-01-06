@@ -387,10 +387,13 @@ public class DatabaseFunctions {
     public void truncateMetrics() {
         try {
             Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ShardMetrics`, `ShardCommands`");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ShardMetrics`");
             stmt.execute();
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ShardCommands`");
+            stmt2.execute();
 
             stmt.close();
+            stmt2.close();
             conn.close();
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "Unable to truncate database..");
