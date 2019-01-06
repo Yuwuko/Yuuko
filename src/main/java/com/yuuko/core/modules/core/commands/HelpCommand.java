@@ -33,7 +33,7 @@ public class HelpCommand extends Command {
                     .addField("Core", "`about` `help` `module` `modules` `settings`", false)
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)
                     .addField("Fun", "`roll` `choose`", false)
-                    .addField("Interaction", "`poke` `hug` `bite` `attack`", false)
+                    .addField("Interaction", "`poke` `hug` `bite` `attack` `angry` `cry` `laugh` `pout` `shrug` `sleep` `tickle`", false)
                     .addField("Media", "`kitsu` `osu`", false)
                     .addField("Moderation", "`ban` `kick` `mute` `nuke`", false)
                     .addField("World", "`linestatus` `weather` `tesco`", false)

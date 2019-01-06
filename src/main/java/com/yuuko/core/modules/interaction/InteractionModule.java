@@ -3,10 +3,7 @@ package com.yuuko.core.modules.interaction;
 import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.Module;
-import com.yuuko.core.modules.interaction.commands.AttackCommand;
-import com.yuuko.core.modules.interaction.commands.BiteCommand;
-import com.yuuko.core.modules.interaction.commands.HugCommand;
-import com.yuuko.core.modules.interaction.commands.PokeCommand;
+import com.yuuko.core.modules.interaction.commands.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class InteractionModule extends Module {
@@ -16,7 +13,14 @@ public class InteractionModule extends Module {
                 new PokeCommand(),
                 new HugCommand(),
                 new AttackCommand(),
-                new BiteCommand()
+                new BiteCommand(),
+                new AngryCommand(),
+                new CryCommand(),
+                new LaughCommand(),
+                new PoutCommand(),
+                new ShrugCommand(),
+                new SleepCommand(),
+                new TickleCommand()
         });
 
         new CommandExecutor(e, command, this);

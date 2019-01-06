@@ -5,7 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## Y-1.1.0 (The Big Refactor)
 + [!] Removed the Yuuko class self event manager and event code, creating a dedicated events package to put in it's place.
 + [+] Added the Interaction module which as the name suggests adds interactions.
-+ [+] Added interactions: [__poke__], [__hug__], [__attack__], [__bite__].
++ [+] Added interactions: [__poke__], [__hug__], [__attack__], [__bite__], [__angry__], [__cry__], [__laugh__], [__pout__], [__shrug__], [__sleep__], [__tickle__].
 + [+] Added a simple [__choice__] command which takes an undefiled number of parameters separated by commas and selects one of the choices.
 + [~] Improved the [__roll__] command to give a better indication on what the roll is against.
 + [~] Refactored Math module into Fun module to allow for a wider range of commands to be encompassed such as coin flips and other such commands.
