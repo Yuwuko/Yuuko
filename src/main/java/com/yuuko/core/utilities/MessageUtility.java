@@ -31,6 +31,10 @@ public class MessageUtility {
         }
     }
 
+    public static boolean checkIfUserMentioned(MessageReceivedEvent e) {
+        return !e.getMessage().getMentionedMembers().isEmpty();
+    }
+
     /**
      * Returns a list of mentioned users from a given message.
      * @param e MessageReceivedEvent

@@ -25,10 +25,12 @@ public class LaughCommand extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        Member target = MessageUtility.getFirstMentionedMember(e);
-        if(target != null) {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** laughs at **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
-            MessageHandler.sendMessage(e, embed.build());
+        if(MessageUtility.checkIfUserMentioned(e)) {
+            Member target = MessageUtility.getFirstMentionedMember(e);
+            if(target != null) {
+                EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** laughs at **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
+                MessageHandler.sendMessage(e, embed.build());
+            }
         } else {
             EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** laughs.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
             MessageHandler.sendMessage(e, embed.build());
