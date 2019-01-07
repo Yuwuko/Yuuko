@@ -104,7 +104,6 @@ public class GenericMessageController {
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 MessageHandler.sendCommand(e, executionTime);
                 new DatabaseFunctions().updateShardCommands(e.getGuild().getId(), command[0].toLowerCase());
-                Metrics.COMMANDS_PROCESSED.getAndIncrement();
 
                 if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);

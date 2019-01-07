@@ -339,7 +339,7 @@ public class DatabaseFunctions {
     public void updateShardMetrics() {
         try {
             Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ShardMetrics`(`shardId`, `uptime`, `ping`, `memoryTotal`, `memoryUsed`, `guildCount`, `messagesProcessed`, `reactsProcessed`, `commandsProcessed`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ShardMetrics`(`shardId`, `uptime`, `ping`, `memoryTotal`, `memoryUsed`, `guildCount`, `messagesProcessed`, `reactsProcessed`, `commandsSuccessful`, `commandsUnsuccessful`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
             stmt.setLong(2, Metrics.UPTIME);
             stmt.setDouble(3, Metrics.PING.get());
@@ -348,7 +348,8 @@ public class DatabaseFunctions {
             stmt.setInt(6, Metrics.GUILD_COUNT);
             stmt.setInt(7, Metrics.MESSAGES_PROCESSED.get());
             stmt.setInt(8, Metrics.REACTS_PROCESSED.get());
-            stmt.setInt(9, Metrics.COMMANDS_PROCESSED.get());
+            stmt.setInt(9, Metrics.COMMANDS_SUCCESSFUL.get());
+            stmt.setInt(10, Metrics.COMMANDS_UNSUCCESSFUL.get());
             stmt.execute();
 
             stmt.close();

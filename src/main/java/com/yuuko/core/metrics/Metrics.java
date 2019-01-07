@@ -11,6 +11,7 @@ public class Metrics {
     public static final AtomicLong PING = new AtomicLong();
     public static final AtomicInteger MESSAGES_PROCESSED = new AtomicInteger();
     public static final AtomicInteger REACTS_PROCESSED = new AtomicInteger();
-    public static final AtomicInteger COMMANDS_PROCESSED = new AtomicInteger();
+    public static final AtomicInteger COMMANDS_SUCCESSFUL = new AtomicInteger();
+    public static final AtomicInteger COMMANDS_UNSUCCESSFUL = new AtomicInteger();
     public static final AtomicInteger MEMBERS_JOINED = new AtomicInteger();
 }
