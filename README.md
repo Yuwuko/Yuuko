@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.1.0 (05/01/2019) 
+# Yuuko 1.1.0 (07/01/2019) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -60,10 +60,17 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| poke | Pokes the tagged user | -poke @user | `-poke @Yuuko#2525` |
-| bite | Bites the tagged user | -bite @user | `-bite @Yuuko#2525` |
-| hug | Hugs the tagged user | -hug @user | `-hug @Yuuko#2525` |
-| attack | Attacks the tagged user | -attack @user | `-attack @Yuuko#2525` |
+| poke | Pokes the tagged user. | -poke @user | `-poke @Yuuko#2525` |
+| bite | Bites the tagged user. | -bite @user | `-bite @Yuuko#2525` |
+| hug | Hugs the tagged user. | -hug @user | `-hug @Yuuko#2525` |
+| attack | Attacks the tagged user. | -attack @user | `-attack @Yuuko#2525` |
+| angry | Displays that you are angry, or angry at the tagged user. | -angry &#124; @user | `-angry`, `-angry @Yuuko#2525` |
+| cry | Displays that you are crying. | -cry | `-cry` |
+| laugh | Displays that you are laughing, or laughing at the tagged user. | -laugh &#124; @user | `-laugh`, `laugh @Yuuko#2525` |
+| pout | Displays that you are pouting, or pouts at the tagged user. | -pout &#124; @user | `-pout`, `-pout @Yuuko#2525` |
+| shrug | Displays that you are shrugging, or shrugs at the tagged user. | -shrug &#124; @user | `-shrug`, `-shrug @Yuuko#2525` |
+| sleep | Displays that you are sleeping. | -sleep | `-sleep` |
+| tickle | Tickles the tagged user. | -tickle @user | `-tickle @Yuuko#2525` |
 
 ### Fun
 

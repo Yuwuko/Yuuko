@@ -46,7 +46,7 @@ public class NukeCommand extends Command {
                 e.getTextChannel().deleteMessageById(nukeList.get(0).getId()).queue();
             } else {
                 // If a message in the nuke list is older than 2 weeks it can't be mass deleted, so recursion will need to take place.
-                nukeList.forEach(message -> {
+                nukeList.iterator().forEachRemaining(message -> {
                     if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
                         message.delete().queue();
                         nukeList.remove(message);
