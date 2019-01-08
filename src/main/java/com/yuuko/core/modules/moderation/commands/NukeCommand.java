@@ -34,31 +34,27 @@ public class NukeCommand extends Command {
         if(Sanitiser.isNumber(command[1])) {
             final int value = Integer.parseInt(command[1]);
 
-            if(value < 1 || value > 100) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a channel, e.g. #general.");
+            if(value < 2 || value > 100) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
+            // Filter out old messages from the mass delete list.
             List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(value).complete();
-
-            if(value < 2) {
-                e.getTextChannel().deleteMessageById(nukeList.get(0).getId()).queue();
-            } else {
-                // If a message in the nuke list is older than 2 weeks it can't be mass deleted, so recursion will need to take place.
-                nukeList.iterator().forEachRemaining(message -> {
-                    if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
-                        message.delete().queue();
-                        nukeList.remove(message);
-                    }
-                });
-
-                if(nukeList.size() > 0) {
-                    e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
+            nukeList.iterator().forEachRemaining(message -> {
+                if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
+                    message.delete().queue();
+                    nukeList.remove(message);
                 }
+            });
+
+            if(nukeList.size() > 1) {
+                e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
             }
+
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **1** and **100** or a tagged channel, e.g. **#general**.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel, e.g. **#general**.");
             MessageHandler.sendMessage(e, embed.build());
         }
     }
