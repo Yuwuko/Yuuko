@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
 
-# Yuuko 1.1.0 (07/01/2019) 
+# Yuuko 1.1.0 (09/01/2019) 
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -124,17 +124,6 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 ## Other features
 
 As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.
-
-## Known issues
-
-__P:__ I still hear audio after I have muted the bot and restarted my client or switched channels. 
-
-__S:__ This is a [verified bug](https://trello.com/c/UkNEavqc), and there isn't anything I can do about it.
-
-__P:__ There's no audio playing with using the __-play__ command?
-
-__S:__ There have been issues connecting to some EU discord servers lately, a quick workout for this is to change the server location to US East or elsewhere by 'Clicking server name -> Server settings -> Server Region -> Change'.
-
 
 ## Notes
 

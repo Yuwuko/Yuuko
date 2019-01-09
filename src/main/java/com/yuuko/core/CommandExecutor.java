@@ -48,6 +48,7 @@ public class CommandExecutor {
                                 } catch(Exception ex) {
                                     log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
                                     Metrics.COMMANDS_UNSUCCESSFUL.getAndIncrement();
+                                    MessageHandler.sendException(ex, command.getClass().getSimpleName());
                                 }
                             }
                         }

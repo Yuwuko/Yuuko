@@ -16,6 +16,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Refactored both the Module and Command superclasses, changing method names and also changing the module field from String to Class<?> to improve efficiency all around.
 + [~] Refactored every command and module for a better naming convention overall.
 + [~] Refactored methods from the Utils class to their own respective MessageUtility and TextUtility classes.
++ [~] Fixed a bunch of new and old bugs that have been discovered since the last release.
 + [-] Removed M and C classes, instead using the Reflections package to improve command modularity greatly.
 
 ## Y-1.0.2

@@ -76,6 +76,7 @@ public class Yuuko {
         Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
 
         Cache.BOT = Cache.JDA.getSelfUser();
+        Configuration.GLOBAL_PREFIX = "<@" + Cache.BOT.getIdLong() + "> ";
         Metrics.GUILD_COUNT = Cache.JDA.getGuilds().size();
 
         if(Configuration.API_KEYS.containsKey("discordbots")) {

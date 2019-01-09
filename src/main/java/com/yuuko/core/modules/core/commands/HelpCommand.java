@@ -27,8 +27,8 @@ public class HelpCommand extends Command {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(cmd.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
-                    .setTitle("Have an issue, suggestion or just want me on your server?")
-                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/QcwghsA) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
+                    .setTitle("Have an issue, suggestion, or just want me on your server?")
+                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
                     .addField("Core", "`about` `help` `module` `modules` `settings`", false)
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `repeat` `shuffle` `skip` `stop`", false)

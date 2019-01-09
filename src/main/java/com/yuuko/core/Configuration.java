@@ -11,7 +11,7 @@ public class Configuration {
     public static final String VERSION = "Y-1.1.0";
     public static String BOT_ID;
     static String BOT_TOKEN;
-    public static final String GLOBAL_PREFIX = "@Yuuko#2525";
+    public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
     public static String DATABASE_IP;
     public static String DATABASE_NAME;
