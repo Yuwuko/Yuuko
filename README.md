@@ -2,11 +2,11 @@
 ![Servers](https://discordbots.org/api/widget/servers/420682957007880223.svg)
 ![Servers](https://discordbots.org/api/widget/upvotes/420682957007880223.svg)
 ![Library](https://discordbots.org/api/widget/lib/420682957007880223.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/BasketBandit/yuuko/badge)](https://www.codefactor.io/repository/github/BasketBandit/yuuko)
-[![GitHub release](https://img.shields.io/github/release/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko)
-[![GitHub stars](https://img.shields.io/github/stars/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/issues)
-[![GitHub license](https://img.shields.io/github/license/BasketBandit/Yuuko.svg)](https://github.com/BasketBandit/Yuuko/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/Yuuko-oh/yuuko/badge)](https://www.codefactor.io/repository/github/BasketBandit/yuuko)
+[![GitHub release](https://img.shields.io/github/release/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko)
+[![GitHub stars](https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
+[![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
 # Yuuko 1.1.0 (09/01/2019) 
 
