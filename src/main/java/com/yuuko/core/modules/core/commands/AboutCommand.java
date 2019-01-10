@@ -11,6 +11,8 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.lang.management.ManagementFactory;
+
 public class AboutCommand extends Command {
 
     public AboutCommand() {
@@ -34,9 +36,30 @@ public class AboutCommand extends Command {
                 .addField("Servers", Metrics.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
-                .addField("Uptime", Metrics.UPTIME + "", true)
+                .addField("Uptime", uptime(), true)
                 .addField("Ping", Metrics.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }
 
+    private String uptime() {
+        long seconds = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
+
+        long d = (long) Math.floor(seconds / 86400);
+        long h = (long) Math.floor((seconds % 86400) / 3600);
+        long m = (long) Math.floor(((seconds % 86400) % 3600) / 60);
+        long s = (long) Math.floor(((seconds % 86400) % 3600) % 60);
+
+        if (d > 0) {
+            return String.format("%sd %sh %sm %ss", d, h, m, s);
+        }
+
+        if (h > 0) {
+            return String.format("%sh %sm %ss", h, m, s);
+        }
+
+        if (m > 0) {
+            return String.format("%sm %ss", m, s);
+        }
+        return String.format("%ss", s);
+    }
 }
