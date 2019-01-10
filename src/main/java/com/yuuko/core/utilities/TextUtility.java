@@ -1,5 +1,7 @@
 package com.yuuko.core.utilities;
 
+import com.yuuko.core.metrics.Metrics;
+
 public class TextUtility {
 
     /**
@@ -37,6 +39,28 @@ public class TextUtility {
     public static String extractModuleName(String string, boolean shortened, boolean lowercase) {
         String returnString = (shortened) ? string.substring(string.lastIndexOf(".") + 7) : string.substring(string.lastIndexOf(".") + 1);
         return (lowercase) ? returnString.toLowerCase() : returnString;
+    }
+
+    public static String formatTime() {
+        long seconds = Metrics.UPTIME / 1000;
+
+        long d = (long) Math.floor(seconds / 86400);
+        long h = (long) Math.floor((seconds % 86400) / 3600);
+        long m = (long) Math.floor(((seconds % 86400) % 3600) / 60);
+        long s = (long) Math.floor(((seconds % 86400) % 3600) % 60);
+
+        if (d > 0) {
+            return String.format("%sd %sh %sm %ss", d, h, m, s);
+        }
+
+        if (h > 0) {
+            return String.format("%sh %sm %ss", h, m, s);
+        }
+
+        if (m > 0) {
+            return String.format("%sm %ss", m, s);
+        }
+        return String.format("%ss", s);
     }
 
 }
