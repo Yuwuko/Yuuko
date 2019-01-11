@@ -1,7 +1,5 @@
 package com.yuuko.core.utilities;
 
-import com.yuuko.core.metrics.Metrics;
-
 public class TextUtility {
 
     /**
@@ -41,8 +39,7 @@ public class TextUtility {
         return (lowercase) ? returnString.toLowerCase() : returnString;
     }
 
-    public static String formatTime() {
-        long seconds = Metrics.UPTIME / 1000;
+    public static String formatTime(long seconds) {
 
         long d = (long) Math.floor(seconds / 86400);
         long h = (long) Math.floor((seconds % 86400) / 3600);

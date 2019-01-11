@@ -35,7 +35,7 @@ public class AboutCommand extends Command {
                 .addField("Servers", Metrics.GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
-                .addField("Uptime", TextUtility.formatTime(), true)
+                .addField("Uptime", TextUtility.formatTime(Metrics.UPTIME/1000), true)
                 .addField("Ping", Metrics.PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }
