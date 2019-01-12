@@ -2,13 +2,12 @@ package com.yuuko.core.modules.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Cache;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.AudioModule;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -31,9 +30,9 @@ public class CurrentCommand extends Command {
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
                     .setThumbnail(imageUrl)
-                    .addField("Duration", Utils.getTimestamp(track.getPosition()) + "/" + Utils.getTimestamp(track.getDuration()), true)
+                    .addField("Duration", TextUtility.getTimestamp(track.getPosition()) + "/" + TextUtility.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
-                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, queuedTrack.build());
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a track currently playing.");

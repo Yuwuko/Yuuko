@@ -39,25 +39,24 @@ public class TextUtility {
         return (lowercase) ? returnString.toLowerCase() : returnString;
     }
 
-    public static String formatTime(long seconds) {
+    /**
+     * Gets current songs timeStamp.
+     * @param milliseconds; how many milliseconds of the song has played.
+     * @return formatted timeStamp.
+     */
+    public static String getTimestamp(long milliseconds) {
+        int seconds = (int) (milliseconds / 1000) % 60 ;
+        int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
+        int hours   = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+        int days    = (int) ((milliseconds / (1000 * 60 * 60 * 24)));
 
-        long d = (long) Math.floor(seconds / 86400);
-        long h = (long) Math.floor((seconds % 86400) / 3600);
-        long m = (long) Math.floor(((seconds % 86400) % 3600) / 60);
-        long s = (long) Math.floor(((seconds % 86400) % 3600) % 60);
-
-        if (d > 0) {
-            return String.format("%sd %sh %sm %ss", d, h, m, s);
+        if(days > 0) {
+            return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
+        } else if(hours > 0) {
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format("%02d:%02d", minutes, seconds);
         }
-
-        if (h > 0) {
-            return String.format("%sh %sm %ss", h, m, s);
-        }
-
-        if (m > 0) {
-            return String.format("%sm %ss", m, s);
-        }
-        return String.format("%ss", s);
     }
 
 }
