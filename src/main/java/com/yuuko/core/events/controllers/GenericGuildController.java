@@ -6,42 +6,54 @@ import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.core.commands.SetupCommand;
 import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 
 public class GenericGuildController {
 
     public GenericGuildController(GenericGuildEvent e) {
         if(e instanceof GuildJoinEvent) {
-            guildJoinEvent((GuildJoinEvent)e);
-        } else if(e instanceof GuildLeaveEvent) {
-            guildLeaveEvent((GuildLeaveEvent)e);
-        } else if(e instanceof GuildMemberJoinEvent) {
-            guildMemberJoinEvent((GuildMemberJoinEvent)e);
+            guildJoinEvent((GuildJoinEvent) e);
+            return;
         }
+
+        if(e instanceof GuildLeaveEvent) {
+            guildLeaveEvent((GuildLeaveEvent)e);
+            return;
+        }
+
+        if(e instanceof GuildMemberJoinEvent) {
+            guildMemberJoinEvent((GuildMemberJoinEvent)e);
+            return;
+        }
+
+        if(e instanceof GuildMemberLeaveEvent) {
+            guildMemberLeaveEvent((GuildMemberLeaveEvent)e);
+        }
+
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
         new SetupCommand().executeAutomated(e);
 
-        MetricsManager.updateDiscordMetrics();
-
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 EmbedBuilder about = new EmbedBuilder()
                         .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
-                        .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://github.com/BasketBandit/Yuuko)! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
+                        .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://www.yuuko.info) or by using the help command! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
                         .setThumbnail(Cache.BOT.getAvatarUrl())
                         .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                         .addField("Version", Configuration.VERSION, true)
                         .addField("Servers", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                         .addField("Commands", Cache.COMMANDS.size() + "", true)
                         .addField("Invocation", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
-                        .addField("Uptime", MetricsManager.getSystemMetrics().UPTIME + "", true)
+                        .addField("Uptime", TextUtility.formatTime(MetricsManager.getSystemMetrics().UPTIME/1000), true)
                         .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
                 MessageHandler.sendMessage(textChannel, about.build());
             });
@@ -50,14 +62,15 @@ public class GenericGuildController {
         }
 
         Utils.updateDiscordBotList();
-        Utils.updateLatest("[INFO] Joined server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
+        MetricsManager.updateDiscordMetrics();
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         new DatabaseFunctions().cleanup(e.getGuild().getId());
-        MetricsManager.getDiscordMetrics().GUILD_COUNT = Cache.JDA.getGuilds().size();
         Utils.updateDiscordBotList();
         Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
+
+        MetricsManager.getDiscordMetrics().GUILD_COUNT = Cache.JDA.getGuilds().size();
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
@@ -67,6 +80,11 @@ public class GenericGuildController {
                 MessageHandler.sendMessage(textChannel, member.build());
             });
         }
+
+        MetricsManager.getDiscordMetrics().USER_COUNT += 1;
     }
 
+    private void guildMemberLeaveEvent(GuildMemberLeaveEvent e) {
+        MetricsManager.getDiscordMetrics().USER_COUNT -= 1;
+    }
 }

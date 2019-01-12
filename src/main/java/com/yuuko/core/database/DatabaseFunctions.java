@@ -55,7 +55,7 @@ public class DatabaseFunctions {
     public boolean addNewGuild(String guild) {
         try {
             if(!exists(guild)) {
-                MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+                MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
                 Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");
