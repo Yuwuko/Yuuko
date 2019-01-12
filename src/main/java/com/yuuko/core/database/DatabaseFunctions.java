@@ -433,7 +433,7 @@ public class DatabaseFunctions {
      */
     public void truncateMetrics() {
         try {
-            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(4);
+            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);
 
             Connection conn = MetricsDatabaseConnection.getConnection();
 
@@ -449,10 +449,14 @@ public class DatabaseFunctions {
             PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
             stmt4.execute();
 
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog`");
+            stmt5.execute();
+
             stmt.close();
             stmt2.close();
             stmt3.close();
             stmt4.close();
+            stmt5.close();
             conn.close();
 
         } catch(Exception ex) {

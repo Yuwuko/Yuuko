@@ -9,6 +9,7 @@ import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.sql.Connection;
@@ -41,10 +42,12 @@ public class HelpCommand extends Command {
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Cache.STANDARD_STRINGS[0], e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Information has been sent to your direct messages.");
-            MessageHandler.sendMessage(e, embed.build());
+            if(e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
+                MessageHandler.sendMessage(e, commandInfo.build());
+            } else {
+                e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
+            }
 
-            e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
 
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
