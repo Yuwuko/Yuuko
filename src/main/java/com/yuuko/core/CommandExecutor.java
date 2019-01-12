@@ -1,7 +1,7 @@
 package com.yuuko.core;
 
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.metrics.Metrics;
+import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -44,10 +44,10 @@ public class CommandExecutor {
                                 try {
                                     log.trace("Invoking {}#executeCommand()", command.getClass().getName());
                                     command.executeCommand(e, cmd);
-                                    Metrics.COMMANDS_SUCCESSFUL.getAndIncrement();
+                                    MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
                                 } catch(Exception ex) {
                                     log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
-                                    Metrics.COMMANDS_UNSUCCESSFUL.getAndIncrement();
+                                    MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
                                     MessageHandler.sendException(ex, command.getClass().getSimpleName());
                                 }
                             }

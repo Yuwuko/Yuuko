@@ -2,7 +2,7 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.metrics.Metrics;
+import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.core.CoreModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -32,11 +32,11 @@ public class AboutCommand extends Command {
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", Metrics.GUILD_COUNT + "", true)
+                .addField("Servers", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
                 .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
-                .addField("Uptime", TextUtility.formatTime(Metrics.UPTIME/1000), true)
-                .addField("Ping", Metrics.PING + "", true);
+                .addField("Uptime", TextUtility.formatTime(MetricsManager.getSystemMetrics().UPTIME/1000), true)
+                .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }
 }

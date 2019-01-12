@@ -8,7 +8,7 @@ import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.events.GenericEventManager;
-import com.yuuko.core.metrics.Metrics;
+import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
@@ -77,7 +77,7 @@ public class Yuuko {
 
         Cache.BOT = Cache.JDA.getSelfUser();
         Configuration.GLOBAL_PREFIX = "<@" + Cache.BOT.getIdLong() + "> ";
-        Metrics.GUILD_COUNT = Cache.JDA.getGuilds().size();
+        MetricsManager.updateDiscordMetrics();
 
         if(Configuration.API_KEYS.containsKey("discordbots")) {
             Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();

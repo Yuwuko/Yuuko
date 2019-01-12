@@ -1,7 +1,7 @@
 package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.metrics.Metrics;
+import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.utility.UtilityModule;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
@@ -19,7 +19,7 @@ public class GenericMessageReactionController {
     private void processGenericMessageReactionEvent(GenericMessageReactionEvent e) {
         try {
             // Increment react counter, regardless of it's author.
-            Metrics.REACTS_PROCESSED.getAndIncrement();
+            MetricsManager.getEventMetrics().REACTS_PROCESSED.getAndIncrement();
 
             if(e.getUser().isBot()) {
                 return;

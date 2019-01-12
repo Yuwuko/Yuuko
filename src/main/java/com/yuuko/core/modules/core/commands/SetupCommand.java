@@ -16,7 +16,7 @@ public class SetupCommand extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        if(!new DatabaseFunctions().addNewServer(e.getGuild().getId())) {
+        if(!new DatabaseFunctions().addNewGuild(e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Setup").setDescription("Server setup was successful.");
             MessageHandler.sendMessage(e, embed.build());
         } else {
@@ -27,7 +27,7 @@ public class SetupCommand extends Command {
 
     public void executeAutomated(GuildJoinEvent e) {
         try {
-            new DatabaseFunctions().addNewServer(e.getGuild().getId());
+            new DatabaseFunctions().addNewGuild(e.getGuild().getId());
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "Server setup was unsuccessful (" + e.getGuild().getId() + ") [SetupCommand] (Automated)");
         }

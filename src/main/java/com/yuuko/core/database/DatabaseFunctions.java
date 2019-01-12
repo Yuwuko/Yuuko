@@ -3,7 +3,7 @@ package com.yuuko.core.database;
 import com.yuuko.core.Cache;
 import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
-import com.yuuko.core.metrics.Metrics;
+import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -13,7 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@SuppressWarnings("ALL")
+
+@SuppressWarnings("JpaQueryApiInspection")
 public class DatabaseFunctions {
 
     public DatabaseFunctions() {
@@ -21,14 +22,16 @@ public class DatabaseFunctions {
 
     /**
      * Small method that checks if a server exists on the database.
-     * @param server the server to check.
+     * @param guild the server to check.
      * @return boolean
      */
-    private boolean exists(String server) {
+    private boolean exists(String guild) {
         try {
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `serverId` FROM `ServerSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Guilds` WHERE `guildId` = ?");
+            stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
 
             final boolean existence = resultSet.next();
@@ -46,15 +49,17 @@ public class DatabaseFunctions {
 
     /**
      * Adds a new server to the database and initialises it's settings.
-     * @param server the server to add.
+     * @param guild the server to add.
      * @return if the add was successful.
      */
-    public boolean addNewServer(String server) {
+    public boolean addNewGuild(String guild) {
         try {
-            if(!exists(server)) {
+            if(!exists(guild)) {
+                MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
                 Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
-                stmt.setString(1, server);
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");
+                stmt.setString(1, guild);
                 stmt.execute();
 
                 stmt.close();
@@ -65,7 +70,7 @@ public class DatabaseFunctions {
                 return false;
             }
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to add new server to the database. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to add new guild to the database. (ID: " + guild + ")");
             return false;
         }
     }
@@ -75,29 +80,21 @@ public class DatabaseFunctions {
      * @param e MessageReceivedEvent.
      * @return if the add was successful.
      */
-    public boolean addServers(MessageReceivedEvent e) {
-        Guild guild;
-
+    public boolean addGuilds(MessageReceivedEvent e) {
         try {
-            SnowflakeCacheView servers = e.getJDA().getGuildCache();
+            SnowflakeCacheView guilds = e.getJDA().getGuildCache();
 
-            for(Object server : servers) {
-                guild = (Guild) server;
-                if(!exists(guild.getId())) {
-                    Connection conn = DatabaseConnection.getConnection();
-                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ServerSettings` (`serverId`, `commandPrefix`) VALUES (?, '-')");
-                    stmt.setString(1, guild.getId());
-                    stmt.execute();
-
-                    stmt.close();
-                    conn.close();
+            for(Object guild : guilds) {
+                Guild matchedGuild = (Guild) guild;
+                if(!exists(matchedGuild.getId())) {
+                    addNewGuild(matchedGuild.getId());
                 }
             }
 
             return true;
 
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "Unable to add new server to the database.");
+            MessageHandler.sendException(ex, "Unable to add new guilds to the database.");
             return false;
         }
     }
@@ -105,16 +102,19 @@ public class DatabaseFunctions {
     /**
      * Retrieves all of the server settings for a server.
      * ** Doesn't close connection or resultset is lost **
-     * @param server the server id.
+     * @param guild the server id.
      * @return the results of the query.
      */
-    public ResultSet getModuleSettings(Connection connection, String server) {
+    public ResultSet getModuleSettings(Connection connection, String guild) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `guildId` = ?");
+            stmt.setString(1, guild);
+
             return stmt.executeQuery();
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get module settings. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get module settings. (ID: " + guild + ")");
             return null;
         }
     }
@@ -124,11 +124,13 @@ public class DatabaseFunctions {
      * @param moduleName the name of the module.
      * @return (boolean) if the module is active or not.
      */
-    public boolean checkModuleSettings(String moduleName, String server) {
+    public boolean checkModuleSettings(String moduleName, String guild) {
         try {
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `guildId` = ?");
+            stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
 
@@ -140,7 +142,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + guild + ")");
             return false;
         }
     }
@@ -153,8 +155,10 @@ public class DatabaseFunctions {
      */
     public boolean toggleModule(String moduleIn, String server) {
         try {
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `serverId` = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `guildId` = ?");
             stmt.setString(1, server);
             stmt.execute();
 
@@ -175,17 +179,20 @@ public class DatabaseFunctions {
      * Returns all of the server settings for the given server.
      * ** Doesn't close connection or resultset is lost **
      * @param connection the database connection used.
-     * @param server the server to get the settings for.
+     * @param guild the server to get the settings for.
      * @return ResultSet
      */
-    public ResultSet getServerSettings(Connection connection, String server) {
+    public ResultSet getServerSettings(Connection connection, String guild) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ServerSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `GuildSettings` WHERE `guildId` = ?");
+            stmt.setString(1, guild);
+
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get server settings. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get server settings. (ID: " + guild + ")");
             return null;
         }
     }
@@ -193,14 +200,16 @@ public class DatabaseFunctions {
     /**
      * Returns the value of a single server settings.
      * @param setting the setting to be checked
-     * @param server the server to check the setting for
+     * @param guild the server to check the setting for
      * @return String
      */
-    public String getServerSetting(String setting, String server) {
+    public String getServerSetting(String setting, String guild) {
         try {
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `ServerSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `GuildSettings` WHERE `guildId` = ?");
+            stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
 
@@ -212,7 +221,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get server setting. (ID: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to get server setting. (ID: " + guild + ")");
             return null;
         }
     }
@@ -221,15 +230,17 @@ public class DatabaseFunctions {
      * Changes a setting value for the given server setting. (Very dangerous without the correct checking...)
      * @param setting the setting to be changed.
      * @param value the value of the setting being changed.
-     * @param server the server where the setting will be changed.
+     * @param guild the server where the setting will be changed.
      * @return if the set was successful.
      */
-    public boolean setServerSettings(String setting, String value, String server) {
+    public boolean setServerSettings(String setting, String value, String guild) {
         try {
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ServerSettings` SET `" + setting + "` = ? WHERE `serverId` = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `" + setting + "` = ? WHERE `guildId` = ?");
             stmt.setString(1, value);
-            stmt.setString(2, server);
+            stmt.setString(2, guild);
 
             final boolean result = !stmt.execute();
 
@@ -239,7 +250,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + guild + ")");
             return false;
         }
     }
@@ -248,59 +259,63 @@ public class DatabaseFunctions {
      * Binds a particular module to a channel.
      * @param modName the name of the module.
      * @param channel the idLong of the channel.
-     * @param server the idLong of the server.
+     * @param guild the idLong of the server.
      * @return boolean
      */
-    public int toggleBinding(String modName, String channel, String server) {
+    public int toggleBinding(String modName, String channel, String guild) {
         String moduleIn = "module" + modName;
 
         try {
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-            stmt.setString(1, server);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            stmt.setString(1, guild);
             stmt.setString(2, channel);
             stmt.setString(3, moduleIn);
             ResultSet resultSet = stmt.executeQuery();
 
             if(!resultSet.next()) {
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?)");
-                stmt2.setString(1, server);
+                stmt2.setString(1, guild);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, moduleIn);
                 if(!stmt2.execute()) {
                     stmt2.close();
                     conn.close();
+                    MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
                     return 0;
                 }
             }
 
             stmt.close();
             conn.close();
-            return deleteBindingsRecord(server, channel, moduleIn);
+            return deleteBindingsRecord(guild, channel, moduleIn);
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + server + ", Channel: " + channel + ")");
+            MessageHandler.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + guild + ", Channel: " + channel + ")");
             return -1;
         }
     }
 
     /**
      * Removes a binding record from the database.
-     * @param server String
+     * @param guild String
      * @param channel String
      * @param moduleIn String
      * @return int
      */
-    private int deleteBindingsRecord(String server, String channel, String moduleIn) {
+    private int deleteBindingsRecord(String guild, String channel, String moduleIn) {
         try {
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `serverId` = ? AND `channelId` = ? AND `moduleName` = ?");
-            stmt.setString(1, server);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            stmt.setString(1, guild);
             stmt.setString(2, channel);
             stmt.setString(3, moduleIn);
             if(!stmt.execute()) {
                 stmt.close();
                 conn.close();
+                MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
                 return 1;
             }
 
@@ -309,7 +324,7 @@ public class DatabaseFunctions {
             return -1;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to return bindings/exclusions. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to return bindings/exclusions. (" + guild + ")");
             return -1;
         }
     }
@@ -317,18 +332,21 @@ public class DatabaseFunctions {
     /**
      * Gets the bindings/exclusions for a particular channel.
      * ** Doesn't close connection or resultset is lost **
-     * @param server the idLong of the server.
+     * @param guild the idLong of the server.
      * @return ResultSet
      */
-    public ResultSet getBindingsByModule(Connection connection, String server, String moduleIn) {
+    public ResultSet getBindingsByModule(Connection connection, String guild, String moduleIn) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `serverId` = ? AND `moduleName` = ?");
-            stmt.setString(1, server);
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?");
+            stmt.setString(1, guild);
             stmt.setString(2, moduleIn);
+
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to return bindings. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to return bindings. (" + guild + ")");
             return null;
         }
     }
@@ -336,23 +354,49 @@ public class DatabaseFunctions {
     /**
      * Updates the database with the latest metrics.
      */
-    public void updateShardMetrics() {
+    public void updateMetricsDatabase() {
         try {
-            Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ShardMetrics`(`shardId`, `uptime`, `ping`, `memoryTotal`, `memoryUsed`, `guildCount`, `messagesProcessed`, `reactsProcessed`, `commandsSuccessful`, `commandsUnsuccessful`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
-            stmt.setLong(2, Metrics.UPTIME);
-            stmt.setDouble(3, Metrics.PING.get());
-            stmt.setLong(4, Metrics.MEMORY_TOTAL);
-            stmt.setLong(5, Metrics.MEMORY_USED);
-            stmt.setInt(6, Metrics.GUILD_COUNT);
-            stmt.setInt(7, Metrics.MESSAGES_PROCESSED.get());
-            stmt.setInt(8, Metrics.REACTS_PROCESSED.get());
-            stmt.setInt(9, Metrics.COMMANDS_SUCCESSFUL.get());
-            stmt.setInt(10, Metrics.COMMANDS_UNSUCCESSFUL.get());
-            stmt.execute();
+            MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
 
+            Connection conn = MetricsDatabaseConnection.getConnection();
+
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
+            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setLong(2, MetricsManager.getSystemMetrics().UPTIME);
+            stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
+            stmt.setLong(4, MetricsManager.getSystemMetrics().MEMORY_USED);
+            stmt.execute();
             stmt.close();
+
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `messagesProcessed`, `reactsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?)");
+            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
+            stmt.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
+            stmt.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
+            stmt.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
+            stmt2.execute();
+            stmt2.close();
+
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
+            stmt.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
+            stmt.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
+            stmt.setInt(5, MetricsManager.getDiscordMetrics().USER_COUNT);
+            stmt.setInt(6, MetricsManager.getDiscordMetrics().ROLE_COUNT);
+            stmt.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
+            stmt3.execute();
+            stmt3.close();
+
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");
+            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
+            stmt.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
+            stmt.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
+            stmt.setInt(5, MetricsManager.getDatabaseMetrics().DELETE.get());
+            stmt4.execute();
+            stmt4.close();
+
             conn.close();
 
         } catch(Exception ex) {
@@ -362,15 +406,17 @@ public class DatabaseFunctions {
 
     /**
      * Updates the database with the latest command.
-     * @param serverId String
+     * @param guildId String
      * @param command String
      */
-    public void updateShardCommands(String serverId, String command) {
+    public void updateCommandsLog(String guildId, String command) {
         try {
+            MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
+
             Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ShardCommands`(`shardId`, `serverId`, `command`) VALUES(?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`) VALUES(?, ?, ?)");
             stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
-            stmt.setString(2, serverId);
+            stmt.setString(2, guildId);
             stmt.setString(3, command);
             stmt.execute();
 
@@ -387,15 +433,28 @@ public class DatabaseFunctions {
      */
     public void truncateMetrics() {
         try {
-            Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ShardMetrics`");
-            stmt.execute();
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `ShardCommands`");
-            stmt2.execute();
+            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(4);
 
+            Connection conn = MetricsDatabaseConnection.getConnection();
+
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics`");
+            stmt.execute();
             stmt.close();
+
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics`");
+            stmt2.execute();
             stmt2.close();
+
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics`");
+            stmt3.execute();
+            stmt3.close();
+
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
+            stmt4.execute();
+            stmt4.close();
+
             conn.close();
+
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "Unable to truncate database..");
         }
@@ -403,20 +462,22 @@ public class DatabaseFunctions {
 
     /**
      * Cleans up any server's that ask the bot to leave. (Uses CASCADE)
-     * @param server the server's id.
+     * @param guild the server's id.
      */
-    public void cleanup(String server) {
+    public void cleanup(String guild) {
         try {
+            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ServerSettings` WHERE `serverId` = ?");
-            stmt.setString(1, server);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?");
+            stmt.setString(1, guild);
             stmt.execute();
 
             stmt.close();
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to remove server from the database. (" + server + ")");
+            MessageHandler.sendException(ex, "Unable to remove server from the database. (" + guild + ")");
         }
     }
 
@@ -426,6 +487,8 @@ public class DatabaseFunctions {
      */
     public void cleanupBindings(String channel) {
         try {
+            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
+
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `channelId` = ?");
             stmt.setString(1, channel);
