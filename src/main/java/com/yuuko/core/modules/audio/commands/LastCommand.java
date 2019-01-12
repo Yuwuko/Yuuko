@@ -7,7 +7,7 @@ import com.yuuko.core.modules.audio.AudioModule;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -31,7 +31,7 @@ public class LastCommand extends Command {
 						.setAuthor("Last track")
 						.setTitle(track.getInfo().title, track.getInfo().uri)
 						.setThumbnail(imageUrl)
-						.addField("Duration", Utils.getTimestamp(track.getDuration()), true)
+						.addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
 						.addField("Channel", track.getInfo().author, true)
 						.setFooter(Configuration.VERSION + " · Requested by " + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
 				MessageHandler.sendMessage(e, queuedTrack.build());

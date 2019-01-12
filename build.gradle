@@ -23,6 +23,6 @@ dependencies {
     compile 'org.reflections:reflections:0.9.11'
 }
 
-group = 'com.yuuko'
-version = '12/01/2019_2'
+group = 'com.yuuko.core'
+version = '12/01/2019_3'
 sourceCompatibility = '11'

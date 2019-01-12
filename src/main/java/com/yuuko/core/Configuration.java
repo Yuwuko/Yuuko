@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "12/01/2019_2";
+    public static final String VERSION = "12/01/2019_3";
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static String GLOBAL_PREFIX;

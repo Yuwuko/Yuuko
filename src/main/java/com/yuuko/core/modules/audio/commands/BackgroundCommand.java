@@ -11,7 +11,7 @@ import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
 import com.yuuko.core.modules.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -80,7 +80,7 @@ public class BackgroundCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setAuthor(e.getMember().getEffectiveName() + " set the background track!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .addField("Duration", Utils.getTimestamp(track.getDuration()), true)
+                        .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
                         .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 channel.sendMessage(embed.build()).queue();

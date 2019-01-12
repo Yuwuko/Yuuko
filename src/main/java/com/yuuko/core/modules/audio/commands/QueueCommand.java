@@ -8,7 +8,7 @@ import com.yuuko.core.modules.audio.AudioModule;
 import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.modules.audio.handlers.GuildAudioManager;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -29,7 +29,7 @@ public class QueueCommand extends Command {
                 StringBuilder queue = new StringBuilder();
                 int trackCount = 0;
                 for(AudioTrack track : manager.scheduler.queue) {
-                    queue.append("`").append(trackCount+1).append(":` ").append(track.getInfo().title).append(" · (").append(Utils.getTimestamp(track.getInfo().length)).append(") \n");
+                    queue.append("`").append(trackCount+1).append(":` ").append(track.getInfo().title).append(" · (").append(TextUtility.getTimestamp(track.getInfo().length)).append(") \n");
                     trackCount++;
                     if(trackCount > 9) {
                         break;
@@ -44,7 +44,7 @@ public class QueueCommand extends Command {
                             .setTitle("Here are the next " + trackCount + " tracks in the queue:")
                             .setDescription(queue.toString())
                             .addField("In Queue", manager.scheduler.queue.size() + "", true)
-                            .addField("Total Duration", Utils.getTimestamp(totalDuration.get()), true)
+                            .addField("Total Duration", TextUtility.getTimestamp(totalDuration.get()), true)
                             .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
                 } else {
