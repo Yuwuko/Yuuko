@@ -2,7 +2,7 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 12/01/2019_*
+## 12-01-2019_*
 + [!] Instead of using classical version numbers, from now on I'll be using the date, followed by a build number for that date. (trying to keep semantic versions is a hassle)
 + [!] Migrated from Maven to Gradle, for the purposes of learning and increased build speeds. (apparently)
 
