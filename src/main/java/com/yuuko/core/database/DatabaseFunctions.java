@@ -366,37 +366,37 @@ public class DatabaseFunctions {
             stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
             stmt.setLong(4, MetricsManager.getSystemMetrics().MEMORY_USED);
             stmt.execute();
-            stmt.close();
 
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `messagesProcessed`, `reactsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?)");
-            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
-            stmt.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
-            stmt.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
-            stmt.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
-            stmt.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
+            stmt2.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt2.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
+            stmt2.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
+            stmt2.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
+            stmt2.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
             stmt2.execute();
-            stmt2.close();
 
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
-            stmt.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
-            stmt.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
-            stmt.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
-            stmt.setInt(5, MetricsManager.getDiscordMetrics().USER_COUNT);
-            stmt.setInt(6, MetricsManager.getDiscordMetrics().ROLE_COUNT);
-            stmt.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
+            stmt3.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt3.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
+            stmt3.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
+            stmt3.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
+            stmt3.setInt(5, MetricsManager.getDiscordMetrics().USER_COUNT);
+            stmt3.setInt(6, MetricsManager.getDiscordMetrics().ROLE_COUNT);
+            stmt3.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
             stmt3.execute();
-            stmt3.close();
 
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");
-            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
-            stmt.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
-            stmt.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
-            stmt.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
-            stmt.setInt(5, MetricsManager.getDatabaseMetrics().DELETE.get());
+            stmt4.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt4.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
+            stmt4.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
+            stmt4.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
+            stmt4.setInt(5, MetricsManager.getDatabaseMetrics().DELETE.get());
             stmt4.execute();
-            stmt4.close();
 
+            stmt.close();
+            stmt2.close();
+            stmt3.close();
+            stmt4.close();
             conn.close();
 
         } catch(Exception ex) {
@@ -439,20 +439,20 @@ public class DatabaseFunctions {
 
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics`");
             stmt.execute();
-            stmt.close();
 
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics`");
             stmt2.execute();
-            stmt2.close();
 
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics`");
             stmt3.execute();
-            stmt3.close();
 
             PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
             stmt4.execute();
-            stmt4.close();
 
+            stmt.close();
+            stmt2.close();
+            stmt3.close();
+            stmt4.close();
             conn.close();
 
         } catch(Exception ex) {
