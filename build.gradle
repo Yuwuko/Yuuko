@@ -1,5 +1,26 @@
 plugins {
-    id 'java'
+    id 'application'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.yuuko.core'
+version = '12-01-2019_3'
+sourceCompatibility = 1.10
+mainClassName = 'com.yuuko.core.Yuuko'
+
+jar {
+    doFirst {
+        manifest {
+            if (!configurations.compile.isEmpty()) {
+                attributes(
+                        'Class-Path': configurations.compile.collect { it.toURI().toString() }.join(' '),
+                        'Main-Class': mainClassName
+                )
+            }
+        }
+    }
 }
 
 repositories {
@@ -22,7 +43,3 @@ dependencies {
     compile 'org.jsoup:jsoup:1.11.3'
     compile 'org.reflections:reflections:0.9.11'
 }
-
-group = 'com.yuuko.core'
-version = '12-01-2019_3'
-sourceCompatibility = '11'
