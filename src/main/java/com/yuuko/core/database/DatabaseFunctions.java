@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-@SuppressWarnings("JpaQueryApiInspection")
+@SuppressWarnings("ALL")
 public class DatabaseFunctions {
 
     public DatabaseFunctions() {

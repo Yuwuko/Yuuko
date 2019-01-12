@@ -10,7 +10,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Improved the [__roll__] command to give a better indication on what the roll is against.
 + [~] Refactored Math module into Fun module to allow for a wider range of commands to be encompassed such as coin flips and other such commands.
 + [~] Refactored utils package to utilities to actively try and make things more complete and professional.
-+ [~] Refactored the Statistics class to Metrics since they're the latter and not the former.
++ [~] Refactored the Statistics class to Metrics since they're the latter and not the former and give them an overhaul.
 + [~] Refactored the scheduled events from the main class to their own scheduler package based on Avaire which is 1000% better.
 + [~] Refactored database connections into their own package, and also started sending metrics to a separate server. (including commands)
 + [~] Refactored both the Module and Command superclasses, changing method names and also changing the module field from String to Class<?> to improve efficiency all around.
