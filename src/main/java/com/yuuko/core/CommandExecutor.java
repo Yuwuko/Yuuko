@@ -1,10 +1,12 @@
 package com.yuuko.core;
 
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
+import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -12,53 +14,62 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+
 import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 
 public class CommandExecutor {
 
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
-    public CommandExecutor(MessageReceivedEvent e, String[] cmd, Module module) {
+    public CommandExecutor(MessageReceivedEvent e, Module module, String[] cmd) {
         if(e == null || cmd == null) { // Is the command or events null? (This case is used by the M class to initialise a list of modules!)
             return;
         }
 
         if(module.checkModuleSettings(e)) { // Is the module enabled?
-            if(module.getName().equals("Audio") && !audioChecks(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
+            if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
                 return;
             }
             if(!module.isChannelNSFW(e) && module.isModuleNSFW()) { // Is the channel NSFW? If not, is the module NSFW?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
-                    if(command.getPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission NULL? If so, does the bot have the permission?
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
-                        MessageHandler.sendMessage(e, embed.build());
-                    } else {
-                        if(command.getPermissions() != null && !e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                if(checkBinding(e, module, cmd)) {
+                    module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
+                        if(command.getPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission NULL? If so, does the bot have the permission?
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                             MessageHandler.sendMessage(e, embed.build());
                         } else {
-                            if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
-                                try {
-                                    log.trace("Invoking {}#executeCommand()", command.getClass().getName());
-                                    command.executeCommand(e, cmd);
-                                    MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
-                                } catch(Exception ex) {
-                                    log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
-                                    MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
-                                    MessageHandler.sendException(ex, command.getClass().getSimpleName());
+                            if(command.getPermissions() != null && !e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
+                                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                                MessageHandler.sendMessage(e, embed.build());
+                            } else {
+                                if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
+                                    try {
+                                        log.trace("Invoking {}#executeCommand()", command.getClass().getName());
+                                        command.executeCommand(e, cmd);
+                                        MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
+                                    } catch (Exception ex) {
+                                        log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+                                        MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
+                                        MessageHandler.sendException(ex, command.getClass().getSimpleName());
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
         }
         messageCleanup(e);
     }
 
+    /**
+     * Removes the message the caused the command to execute if the deleteExecuted setting is toggled to on.
+     * @param e MessageReceivedEvent
+     */
     private void messageCleanup(MessageReceivedEvent e) {
         if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
@@ -70,7 +81,13 @@ public class CommandExecutor {
         }
     }
 
-    private boolean audioChecks(MessageReceivedEvent e, String[] command) {
+    /**
+     * Checks various conditions to see if using certain audio commands are appropriate for the context of the user. Also checks the DJ Mode setting.
+     * @param e MessageReceivedEvent
+     * @param command String[]
+     * @return boolean
+     */
+    private boolean checkAudio(MessageReceivedEvent e, String[] command) {
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
             MessageHandler.sendMessage(e, embed.build());
@@ -96,6 +113,42 @@ public class CommandExecutor {
         }
 
         return true;
+    }
+
+    /**
+     * Checks channel bindings to see if commands are allowed to be executed there.
+     * @param e MessageReceivedEvent
+     * @param module Module
+     * @return boolean
+     */
+    private boolean checkBinding(MessageReceivedEvent e, Module module, String[] command) {
+        try {
+            StringBuilder boundChannels = new StringBuilder();
+            Connection connection = DatabaseConnection.getConnection();
+            ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), module.getDbColumnName());
+
+            while(rs.next()) {
+                if(rs.getString(2).equals(e.getTextChannel().getId()) && rs.getString(3).toLowerCase().equals(module.getDbColumnName())) { // If the text channel and module match, let em in!
+                    connection.close();
+                    return true;
+                }
+                boundChannels.append(e.getGuild().getTextChannelById(rs.getString(2)).getName()).append(", ");
+            }
+            connection.close();
+
+            if(!boundChannels.toString().equals("")) {
+                TextUtility.removeLastOccurrence(boundChannels, ", ");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("The **" + command[0] + "** command is bound to **" + boundChannels.toString() + "**.");
+                MessageHandler.sendMessage(e, embed.build());
+                return false;
+            }
+
+            return true;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+            return true;
+        }
     }
 
 }

@@ -15,7 +15,7 @@ public class FunModule extends Module {
                 new ChooseCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }

@@ -15,7 +15,7 @@ public class NSFWModule extends Module {
                 new NekoCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }

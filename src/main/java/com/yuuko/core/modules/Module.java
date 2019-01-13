@@ -25,6 +25,10 @@ public abstract class Module {
         return name;
     }
 
+    public String getDbColumnName() {
+        return dbColumnName;
+    }
+
     public Command[] getCommandsArray() {
         return commands;
     }

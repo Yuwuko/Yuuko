@@ -36,7 +36,7 @@ public class BindCommand extends Command {
         }
 
         if(!present) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid modules can be found by using the '" + Utils.getServerPrefix(e.getGuild().getId()) + "modules' command.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid modules can be found by using the **" + Utils.getServerPrefix(e.getGuild().getId()) + "modules** command.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
@@ -45,7 +45,7 @@ public class BindCommand extends Command {
             List<TextChannel> channels = e.getMessage().getMentionedChannels();
 
             if(channels.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("I expected at least **1** \\#tagged channel to bind, but found **0**");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Expected at least **1** \\#tagged channel to bind, found **0**.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

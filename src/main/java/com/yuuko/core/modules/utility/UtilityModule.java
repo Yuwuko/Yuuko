@@ -23,7 +23,7 @@ public class UtilityModule extends Module {
                 new ChannelCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
     /**

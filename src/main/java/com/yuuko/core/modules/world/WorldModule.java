@@ -17,7 +17,7 @@ public class WorldModule extends Module {
                 new TescoCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }

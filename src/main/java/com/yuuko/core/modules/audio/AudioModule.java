@@ -24,7 +24,7 @@ public class AudioModule extends Module {
                 new RepeatCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }

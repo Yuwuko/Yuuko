@@ -15,7 +15,7 @@ public class MediaModule extends Module {
                 new OsuCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }

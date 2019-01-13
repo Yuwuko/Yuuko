@@ -23,7 +23,7 @@ public class InteractionModule extends Module {
                 new TickleCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }

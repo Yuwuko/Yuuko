@@ -3,22 +3,17 @@ package com.yuuko.core.events.controllers;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.audio.commands.SearchCommand;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.lang.reflect.Constructor;
-import java.sql.Connection;
-import java.sql.ResultSet;
 
 public class GenericMessageController {
 
@@ -97,9 +92,7 @@ public class GenericMessageController {
                 }
             }
 
-            final boolean isAllowed = checkBindings(e, moduleDbName, command[0]);
-
-            if(constructor != null && isAllowed) {
+            if(constructor != null) {
                 constructor.newInstance(e, command);
                 executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                 MessageHandler.sendCommand(e, executionTime);
@@ -143,43 +136,6 @@ public class GenericMessageController {
 
         } catch (Exception ex) {
             MessageHandler.sendException(ex, "GenericMessageController (Aux) - " + e.getMessage().getContentRaw());
-        }
-    }
-
-    /**
-     * Checks channel bindings to see if commands are allowed to be executed there.
-     * @param e MessageReceivedEvent
-     * @param moduleDbName String
-     * @return boolean
-     */
-    private boolean checkBindings(MessageReceivedEvent e, String moduleDbName, String command) {
-        try {
-            StringBuilder boundChannels = new StringBuilder();
-            Connection connection = DatabaseConnection.getConnection();
-            ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), moduleDbName);
-
-            while(rs.next()) {
-                if(rs.getString(2).equals(e.getTextChannel().getId()) && rs.getString(3).toLowerCase().equals(moduleDbName)) {
-                    connection.close();
-                    return true;
-                }
-                boundChannels.append(e.getGuild().getTextChannelById(rs.getString(2)).getName()).append(", ");
-            }
-            connection.close();
-
-            if(boundChannels.toString().equals("")) {
-                return true;
-            } else {
-                TextUtility.removeLastOccurrence(boundChannels, ", ");
-
-                EmbedBuilder embed = new EmbedBuilder().setTitle("The **_" + command + "_** command is bound to " + boundChannels.toString() + ".");
-                MessageHandler.sendMessage(e, embed.build());
-                return false;
-            }
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Bindings");
-            return true;
         }
     }
 

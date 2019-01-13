@@ -19,7 +19,7 @@ public class ModerationModule extends Module {
                 new KickCommand()
         });
 
-        new CommandExecutor(e, command, this);
+        new CommandExecutor(e,this, command);
     }
 
 }
