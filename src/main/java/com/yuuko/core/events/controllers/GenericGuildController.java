@@ -4,7 +4,6 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.modules.core.commands.SetupCommand;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
@@ -40,7 +39,7 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        new SetupCommand().executeAutomated(e);
+        new DatabaseFunctions().addNewGuild(e.getGuild().getId());
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {

@@ -14,8 +14,7 @@ public class CoreModule extends Module {
 				new SettingsCommand(),
 				new ModuleCommand(),
 				new ModulesCommand(),
-				new HelpCommand(),
-				new SetupCommand()
+				new HelpCommand()
 		});
 
 		new CommandExecutor(e,this, command);

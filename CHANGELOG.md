@@ -4,6 +4,9 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 13-01-2019_*
 + [~] Updated the [__bind__] command to make it less scuffed, properly checking parameters, also now allowing multiple channels to be bound at once.
++ [~] Updated the CommandExecutor, moving key logic from the GenericMessageHandler class.
++ [-] Removed the last remnants of the setup command, since it wasn't actually used at all.
++ [-] Removed all command logging functions that send data to the support server directly. (everything now goes to the metrics database)
 
 ## 12-01-2019_3
 + [!] Instead of using classical version numbers, from now on I'll be using the date, followed by a build number for that date. (trying to keep semantic versions is a hassle)

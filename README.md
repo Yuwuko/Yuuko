@@ -2,13 +2,13 @@
 ![Servers](https://discordbots.org/api/widget/servers/420682957007880223.svg)
 ![Servers](https://discordbots.org/api/widget/upvotes/420682957007880223.svg)
 ![Library](https://discordbots.org/api/widget/lib/420682957007880223.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/Yuuko-oh/yuuko/badge)](https://www.codefactor.io/repository/github/BasketBandit/yuuko)
+[![CodeFactor](https://www.codefactor.io/repository/github/Yuuko-oh/yuuko/badge)](https://www.codefactor.io/repository/github/yuuko-oh/yuuko)
 [![GitHub release](https://img.shields.io/github/release/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko)
 [![GitHub stars](https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 12-01-2019_3
+# Yuuko 13-01-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
