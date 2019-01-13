@@ -9,6 +9,9 @@ import java.util.HashMap;
 
 public class Configuration {
     public static final String VERSION = "13-01-2019_1";
+    public static String AUTHOR;
+    public static String AUTHOR_WEBSITE;
+    public static String SUPPORT_GUILD;
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static String GLOBAL_PREFIX;
@@ -22,6 +25,9 @@ public class Configuration {
     static void load() {
         try {
             BufferedReader c = new BufferedReader(new FileReader("configuration.txt"));
+            AUTHOR = c.readLine();
+            AUTHOR_WEBSITE = c.readLine();
+            SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
             DATABASE_IP = c.readLine();

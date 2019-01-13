@@ -45,9 +45,9 @@ public class GenericGuildController {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 EmbedBuilder about = new EmbedBuilder()
                         .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
-                        .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is information about myself. Commands can be found [here](https://www.yuuko.info) or by using the help command! If you have any problems, suggestions, or general feedback, please join the (support server)[https://discord.gg/QcwghsA] and let yourself be known!")
+                        .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is some information about myself. Commands can be found [here](https://www.yuuko.info) or by using the help command! If you have any problems, suggestions, or general feedback, please join the (support server)[" + Configuration.SUPPORT_GUILD + "] and let yourself be known!")
                         .setThumbnail(Cache.BOT.getAvatarUrl())
-                        .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
+                        .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                         .addField("Version", Configuration.VERSION, true)
                         .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                         .addField("Commands", Cache.COMMANDS.size() + "", true)
