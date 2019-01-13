@@ -25,16 +25,16 @@ public class AboutCommand extends Command {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(bot.getName() + "#" + bot.getDiscriminator(), null, bot.getAvatarUrl())
                 .setDescription(bot.getName() + ", programmed in " +
-                        "[Java](https://www.oracle.com/uk/java/index.html) using [Maven](https://maven.apache.org/) " +
+                        "[Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) " +
                         "for dependencies. Built upon the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries. " +
                         "If you would like me in your guild [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot)"
                 )
                 .setThumbnail(bot.getAvatarUrl())
                 .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Servers", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                 .addField("Commands", Cache.COMMANDS.size() + "", true)
-                .addField("Invocation", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
+                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
                 .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                 .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
         MessageHandler.sendMessage(e, about.build());

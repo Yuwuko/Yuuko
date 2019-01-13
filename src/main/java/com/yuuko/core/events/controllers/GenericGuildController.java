@@ -49,9 +49,9 @@ public class GenericGuildController {
                         .setThumbnail(Cache.BOT.getAvatarUrl())
                         .addField("Author", "[0x00000000#0001](https://github.com/BasketBandit/)", true)
                         .addField("Version", Configuration.VERSION, true)
-                        .addField("Servers", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                        .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                         .addField("Commands", Cache.COMMANDS.size() + "", true)
-                        .addField("Invocation", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
+                        .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
                         .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                         .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
                 MessageHandler.sendMessage(textChannel, about.build());
