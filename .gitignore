@@ -1,4 +1,3 @@
-*.class
 .DS_Store
 
 # Mobile Tools for Java (J2ME)
@@ -19,14 +18,12 @@ hs_err_pid*
 /*.iws
 /*.ipr
 /*.iml
-/*.iml
 
 # Compile location
 .gradle/*
 target/
 build/
 out/
-Yuuko.jar
 
 # Configuration files
 metrics_configuration.txt

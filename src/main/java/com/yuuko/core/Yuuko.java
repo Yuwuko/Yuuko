@@ -105,7 +105,7 @@ public class Yuuko {
 
             // Add them in lowercase so they're easier to compare later.
             ArrayList<String> settingsList = new ArrayList<>();
-            settingsList.add("commandprefix");
+            settingsList.add("prefix");
             settingsList.add("deleteexecuted");
             settingsList.add("commandlogging");
             settingsList.add("nowplaying");

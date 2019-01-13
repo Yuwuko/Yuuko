@@ -5,9 +5,9 @@ import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class SettingCommandPrefix {
+public class PrefixSetting {
 
-    public SettingCommandPrefix(MessageReceivedEvent e, String value) {
+    public PrefixSetting(MessageReceivedEvent e, String value) {
         executeCommand(e, value);
     }
 
@@ -19,7 +19,7 @@ public class SettingCommandPrefix {
         }
 
         if(new DatabaseFunctions().setServerSettings("commandPrefix", value, e.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("COMMANDPREFIX set to " + value);
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to " + value);
             MessageHandler.sendMessage(e, embed.build());
         }
     }

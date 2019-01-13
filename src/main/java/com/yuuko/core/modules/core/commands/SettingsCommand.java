@@ -6,7 +6,7 @@ import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.core.CoreModule;
-import com.yuuko.core.modules.core.settings.SettingCommandPrefix;
+import com.yuuko.core.modules.core.settings.PrefixSetting;
 import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -54,8 +54,8 @@ public class SettingsCommand extends Command {
                     return;
                 }
 
-                if(commandParameters[0].equalsIgnoreCase("commandPrefix")) {
-                    new SettingCommandPrefix(e, commandParameters[1]);
+                if(commandParameters[0].equalsIgnoreCase("prefix")) {
+                    new PrefixSetting(e, commandParameters[1]);
                 }
 
             } else {
@@ -69,7 +69,7 @@ public class SettingsCommand extends Command {
                     EmbedBuilder commandModules = new EmbedBuilder()
                         .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
-                            .addField("commandPrefix", "[" + resultSet.getString("commandPrefix") + "] - The message prefix used to symbolise a command.", false)
+                            .addField("prefix", "[" + resultSet.getString("commandPrefix") + "] - The message prefix used to symbolise a command.", false)
                             .addField("deleteExecuted", "[" + resultSet.getBoolean("deleteExecuted") + "] - Deletes the users command string when it is executed.", false)
                             .addField("commandLogging", "[" + resultSet.getBoolean("commandLogging") + "] - Sends executed commands to a predefined logging channel.", false)
                             .addField("nowPlaying", "[" + resultSet.getBoolean("nowPlaying") + "] - Sends information of the current track when it changes.", false)

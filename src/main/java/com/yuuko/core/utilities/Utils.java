@@ -119,8 +119,6 @@ public final class Utils {
         }
     }
 
-
-
     /**
      * Returns an API ApplicationId.
      * @param name name of the api

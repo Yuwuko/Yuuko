@@ -70,7 +70,7 @@ public class GenericGuildController {
         Utils.updateDiscordBotList();
         Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
 
-        MetricsManager.getDiscordMetrics().GUILD_COUNT = Cache.JDA.getGuilds().size();
+        MetricsManager.updateDiscordMetrics();
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
