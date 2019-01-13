@@ -25,6 +25,10 @@ target/
 build/
 out/
 
+# Gradle Stuff
+/gradlew
+/gradlew.bat
+
 # Configuration files
 metrics_configuration.txt
 configuration.txt

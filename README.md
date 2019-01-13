@@ -46,7 +46,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @Yuuko` |
 | server | Returns information about the current server. | -server | `-server` |
 | channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | `-channel add text cool-text-channel nsfw` | MANAGE_CHANNELS |
-| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels. Modules can be unbound by retyping the command. | -bind [module] &#124; [channel] | `-bind audio`, `-bind audio test-channel` | ADMINISTRATOR  |
+| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels and unbound by retyping the command. (A toggle) | -bind [module] &#124; #channel... | `-bind audio`, `-bind audio #test-channel #another-channel` | ADMINISTRATOR  |
 
 ### World
 

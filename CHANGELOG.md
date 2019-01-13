@@ -2,9 +2,14 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 12-01-2019_*
+## 13-01-2019_*
++ [~] Updated the [__bind__] command to make it less scuffed, properly checking parameters, also now allowing multiple channels to be bound at once.
+
+## 12-01-2019_3
 + [!] Instead of using classical version numbers, from now on I'll be using the date, followed by a build number for that date. (trying to keep semantic versions is a hassle)
 + [!] Migrated from Maven to Gradle, for the purposes of learning and increased build speeds. (apparently)
++ [~] Made a number of changes to the database and it's internal logic.
++ [~] Small number of formatting changes and other general house keeping.
 
 ## Y-1.1.0 (The Big Refactor)
 + [!] Removed the Yuuko class self event manager and event code, creating a dedicated events package to put in it's place.
