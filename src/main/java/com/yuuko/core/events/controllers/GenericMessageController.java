@@ -92,7 +92,7 @@ public class GenericMessageController {
 
             if(executed) {
                 new DatabaseFunctions().updateCommandsLog(e.getGuild().getId(), command[0].toLowerCase());
-                if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getGuildSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
             }
@@ -117,11 +117,11 @@ public class GenericMessageController {
                     new SearchCommand().executeCommand(e, input[0]);
                 }
 
-                if(new DatabaseFunctions().getServerSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getGuildSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     e.getMessage().delete().queue();
                 }
 
-                if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(new DatabaseFunctions().getGuildSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                     Utils.updateLatest(e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);

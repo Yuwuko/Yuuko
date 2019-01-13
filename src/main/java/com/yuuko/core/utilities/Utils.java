@@ -143,7 +143,7 @@ public final class Utils {
      * @return String
      */
     public static String getServerPrefix(String server) {
-        return new DatabaseFunctions().getServerSetting("commandPrefix", server);
+        return new DatabaseFunctions().getGuildSetting("commandPrefix", server);
     }
 
     /**

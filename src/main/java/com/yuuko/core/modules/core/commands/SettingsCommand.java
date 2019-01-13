@@ -62,7 +62,7 @@ public class SettingsCommand extends Command {
                 Connection connection = DatabaseConnection.getConnection();
 
                 try {
-                    ResultSet resultSet = new DatabaseFunctions().getServerSettings(connection, e.getGuild().getId());
+                    ResultSet resultSet = new DatabaseFunctions().getGuildSettings(connection, e.getGuild().getId());
                     resultSet.next();
 
                     // Embed displaying all of the current settings for the server, giving information about each setting.

@@ -21,8 +21,8 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Small method that checks if a server exists on the database.
-     * @param guild the server to check.
+     * Small method that checks if a guild exists on the database.
+     * @param guild the guild to check.
      * @return boolean
      */
     private boolean exists(String guild) {
@@ -48,8 +48,8 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Adds a new server to the database and initialises it's settings.
-     * @param guild the server to add.
+     * Adds a new guild to the database and initialises it's settings.
+     * @param guild the guild to add.
      * @return if the add was successful.
      */
     public boolean addNewGuild(String guild) {
@@ -76,7 +76,7 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Adds a new server to the database and initialises it's settings.
+     * Adds a new guild to the database and initialises it's settings.
      * @param e MessageReceivedEvent.
      * @return if the add was successful.
      */
@@ -100,9 +100,9 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Retrieves all of the server settings for a server.
+     * Retrieves all of the guild settings for a guild.
      * ** Doesn't close connection or resultset is lost **
-     * @param guild the server id.
+     * @param guild the guild id.
      * @return the results of the query.
      */
     public ResultSet getModuleSettings(Connection connection, String guild) {
@@ -142,27 +142,27 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", Server: " + guild + ")");
+            MessageHandler.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", guild: " + guild + ")");
             return false;
         }
     }
 
     /**
-     * Toggles a module for a server, returns the new value.
+     * Toggles a module for a guild, returns the new value.
      * @param moduleIn the module to toggle.
-     * @param server the server in which the module is to be toggled.
+     * @param guild the guild in which the module is to be toggled.
      * @return boolean.
      */
-    public boolean toggleModule(String moduleIn, String server) {
+    public boolean toggleModule(String moduleIn, String guild) {
         try {
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `guildId` = ?");
-            stmt.setString(1, server);
+            stmt.setString(1, guild);
             stmt.execute();
 
-            final boolean result = checkModuleSettings(moduleIn, server);
+            final boolean result = checkModuleSettings(moduleIn, guild);
 
             stmt.close();
             conn.close();
@@ -170,19 +170,19 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", Server: " + server + ")");
+            MessageHandler.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", guild: " + guild + ")");
             return false;
         }
     }
 
     /**
-     * Returns all of the server settings for the given server.
+     * Returns all of the guild settings for the given guild.
      * ** Doesn't close connection or resultset is lost **
      * @param connection the database connection used.
-     * @param guild the server to get the settings for.
+     * @param guild the guild to get the settings for.
      * @return ResultSet
      */
-    public ResultSet getServerSettings(Connection connection, String guild) {
+    public ResultSet getGuildSettings(Connection connection, String guild) {
         try {
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
@@ -192,18 +192,18 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get server settings. (ID: " + guild + ")");
+            MessageHandler.sendException(ex, "Unable to get guild settings. (ID: " + guild + ")");
             return null;
         }
     }
 
     /**
-     * Returns the value of a single server settings.
+     * Returns the value of a single guild settings.
      * @param setting the setting to be checked
-     * @param guild the server to check the setting for
+     * @param guild the guild to check the setting for
      * @return String
      */
-    public String getServerSetting(String setting, String guild) {
+    public String getGuildSetting(String setting, String guild) {
         try {
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
@@ -221,19 +221,19 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get server setting. (ID: " + guild + ")");
+            MessageHandler.sendException(ex, "Unable to get guild setting. (ID: " + guild + ")");
             return null;
         }
     }
 
     /**
-     * Changes a setting value for the given server setting. (Very dangerous without the correct checking...)
+     * Changes a setting value for the given guild setting. (Very dangerous without the correct checking...)
      * @param setting the setting to be changed.
      * @param value the value of the setting being changed.
-     * @param guild the server where the setting will be changed.
+     * @param guild the guild where the setting will be changed.
      * @return if the set was successful.
      */
-    public boolean setServerSettings(String setting, String value, String guild) {
+    public boolean setGuildSettings(String setting, String value, String guild) {
         try {
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
@@ -250,7 +250,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to set server setting '"+ setting +"'. (" + guild + ")");
+            MessageHandler.sendException(ex, "Unable to set guild setting '"+ setting +"'. (" + guild + ")");
             return false;
         }
     }
@@ -259,7 +259,7 @@ public class DatabaseFunctions {
      * Binds a particular module to a channel.
      * @param modName the name of the module.
      * @param channel the idLong of the channel.
-     * @param guild the idLong of the server.
+     * @param guild the idLong of the guild.
      * @return boolean
      */
     public int toggleBinding(String modName, String channel, String guild) {
@@ -293,7 +293,7 @@ public class DatabaseFunctions {
             return deleteBindingsRecord(guild, channel, moduleIn);
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", Server: " + guild + ", Channel: " + channel + ")");
+            MessageHandler.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", guild: " + guild + ", Channel: " + channel + ")");
             return -1;
         }
     }
@@ -332,7 +332,7 @@ public class DatabaseFunctions {
     /**
      * Gets the bindings/exclusions for a particular channel.
      * ** Doesn't close connection or resultset is lost **
-     * @param guild the idLong of the server.
+     * @param guild the idLong of the guild.
      * @return ResultSet
      */
     public ResultSet getBindingsByModule(Connection connection, String guild, String moduleIn) {
@@ -465,8 +465,8 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Cleans up any server's that ask the bot to leave. (Uses CASCADE)
-     * @param guild the server's id.
+     * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
+     * @param guild the guild's id.
      */
     public void cleanup(String guild) {
         try {
@@ -481,7 +481,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to remove server from the database. (" + guild + ")");
+            MessageHandler.sendException(ex, "Unable to remove guild from the database. (" + guild + ")");
         }
     }
 
