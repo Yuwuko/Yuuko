@@ -4,12 +4,10 @@ import com.yuuko.core.Cache;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.time.Instant;
 
 public final class MessageHandler {
 
@@ -146,19 +144,6 @@ public final class MessageHandler {
 
             channel.sendMessage(command + "\n`" + traceString.toString() + "`").queue();
         } catch(Exception exc) {
-            //
-        }
-    }
-
-    /**
-     * Sends an executed command to the command log channel on the Yuuko official discord server.
-     * @param e MessageReceivedEvent
-     * @param executionTimeMs long
-     */
-    public static void sendCommand(MessageReceivedEvent e, long executionTimeMs) {
-        try {
-            Cache.JDA.getTextChannelById("526328163580772352").sendMessage("```" + Instant.now().toString() + " >> " + e.getMessage().getContentDisplay() + " >> " + e.getMessage().getGuild().getName() + " >> Execution time: " + executionTimeMs + "ms```").queue();
-        } catch(Exception ex) {
             //
         }
     }

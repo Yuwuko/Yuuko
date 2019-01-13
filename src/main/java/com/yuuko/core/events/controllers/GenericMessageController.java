@@ -13,8 +13,6 @@ import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.lang.reflect.Constructor;
-
 public class GenericMessageController {
 
     public GenericMessageController(GenericMessageEvent e) {
@@ -78,26 +76,22 @@ public class GenericMessageController {
         String commandPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
 
         try {
-            final long executionTime;
-
-            Constructor<?> constructor = null;
-            String moduleDbName = "";
+            long executionTime = 0;
+            boolean executed = false;
 
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // Get the command modules constructor from the command class. (Much easier than what I did previously)
             for(Command cmd : Cache.COMMANDS) {
                 if((commandPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (commandPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
-                    constructor = cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class);
+                    cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class).newInstance(e, command);
+                    executionTime = (System.nanoTime() - startExecutionNano)/1000000;
+                    executed = true;
                     break;
                 }
             }
 
-            if(constructor != null) {
-                constructor.newInstance(e, command);
-                executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                MessageHandler.sendCommand(e, executionTime);
+            if(executed) {
                 new DatabaseFunctions().updateCommandsLog(e.getGuild().getId(), command[0].toLowerCase());
-
                 if(new DatabaseFunctions().getServerSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
                 }
