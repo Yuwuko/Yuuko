@@ -151,7 +151,7 @@ public class ModuleBindFunctions {
 
             StringBuilder string = new StringBuilder();
             while(rs.next()) {
-                string.append(guild.getTextChannelCache().getElementById(rs.getString(2)).getName()).append(delimiter);
+                string.append(guild.getTextChannelCache().getElementById(rs.getString(2)).getAsMention()).append(delimiter);
             }
 
             if(string.length() > 0) {
