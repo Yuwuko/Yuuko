@@ -35,7 +35,7 @@ public class TextUtility {
      * @return String
      */
     public static String extractModuleName(String string, boolean shortened, boolean lowercase) {
-        String returnString = (shortened) ? string.substring(string.lastIndexOf(".") + 7) : string.substring(string.lastIndexOf(".") + 1);
+        String returnString = (shortened) ? string.substring(string.lastIndexOf(".") + 1).replace("Module", "") : string.substring(string.lastIndexOf(".") + 1);
         return (lowercase) ? returnString.toLowerCase() : returnString;
     }
 

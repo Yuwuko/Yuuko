@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 13-01-2019_2
+# Yuuko 15-01-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -46,7 +46,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | user | Returns information about the provided user, such as join date, online status and roles. | -user @user | `-user @Yuuko` |
 | server | Returns information about the current server. | -server | `-server` |
 | channel | Adds or removes a channel to/from the server. *Note: You cannot have NSFW voice channels, even if you tried.* | -channel [action] [type] [name] &#124; [nsfw] | `-channel add text cool-text-channel nsfw` | MANAGE_CHANNELS |
-| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels and unbound by retyping the command. (A toggle) | -bind [module] &#124; #channel... | `-bind audio`, `-bind audio #test-channel #another-channel` | ADMINISTRATOR  |
+| bind | Binds a module to a text channel preventing commands from being executed outside of that channel. Modules can be bound to multiple channels and unbound by retyping the command. (A toggle) No parameters will return a list of bound channels. | -bind [module] &#124; #channel... | `-bind audio`, `-bind audio #test-channel #another-channel` | ADMINISTRATOR  |
 
 ### World
 

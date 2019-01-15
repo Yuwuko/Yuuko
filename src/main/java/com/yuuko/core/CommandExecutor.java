@@ -1,21 +1,17 @@
 package com.yuuko.core;
 
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.database.connections.DatabaseConnection;
+import com.yuuko.core.database.ModuleBindFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.modules.Module;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
 
 import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 
@@ -24,7 +20,7 @@ public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
     public CommandExecutor(MessageReceivedEvent e, Module module, String[] cmd) {
-        if(e == null || cmd == null) { // Is the command or events null? (This case is used by the M class to initialise a list of modules!)
+        if(e == null) { // Is the event null?
             return;
         }
 
@@ -123,27 +119,14 @@ public class CommandExecutor {
      */
     private boolean checkBinding(MessageReceivedEvent e, Module module, String[] command) {
         try {
-            StringBuilder boundChannels = new StringBuilder();
-            Connection connection = DatabaseConnection.getConnection();
-            ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), module.getDbColumnName());
-
-            while(rs.next()) {
-                if(rs.getString(2).equals(e.getTextChannel().getId()) && rs.getString(3).toLowerCase().equals(module.getDbColumnName())) { // If the text channel and module match, let em in!
-                    connection.close();
-                    return true;
-                }
-                boundChannels.append(e.getGuild().getTextChannelById(rs.getString(2)).getName()).append(", ");
-            }
-            connection.close();
-
-            if(!boundChannels.toString().equals("")) {
-                TextUtility.removeLastOccurrence(boundChannels, ", ");
-                EmbedBuilder embed = new EmbedBuilder().setTitle("The **" + command[0] + "** command is bound to **" + boundChannels.toString() + "**.");
-                MessageHandler.sendMessage(e, embed.build());
-                return false;
+            if(ModuleBindFunctions.checkBind(e.getGuild().getId(), e.getChannel().getId(), module.getName())) {
+                return true;
             }
 
-            return true;
+            EmbedBuilder embed = new EmbedBuilder().setTitle("The **" + command[0] + "** command is bound to **" + ModuleBindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
+            MessageHandler.sendMessage(e, embed.build());
+
+            return false;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);

@@ -2,7 +2,7 @@ package com.yuuko.core.modules.core.commands;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.ModuleBindFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.core.CoreModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -11,11 +11,6 @@ import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-
-import static com.yuuko.core.database.connections.DatabaseConnection.getConnection;
 
 public class HelpCommand extends Command {
 
@@ -66,33 +61,12 @@ public class HelpCommand extends Command {
                 }
                 TextUtility.removeLastOccurrence(usages, "\n");
 
-                // Connect to the database, grab results about bindings for a certain command and return them.
-                // If the command is excluded add it to the first list, if it is bound add it to the second list.
-                // In the events that there are no bindings, just return "none".
-                StringBuilder bindList = new StringBuilder();
-                try {
-                    Connection connection = getConnection();
-                    ResultSet rs = new DatabaseFunctions().getBindingsByModule(connection, e.getGuild().getId(), command.getModule().getName());
-                    while(rs.next()) {
-                        bindList.append(e.getGuild().getTextChannelCache().getElementById(rs.getString(2)).getName()).append("\n");
-                    }
-                    connection.close();
-
-                    TextUtility.removeLastOccurrence(bindList, "\n");
-
-                    if(bindList.length() == 0) {
-                        bindList.append("None");
-                    }
-                } catch(Exception ex) {
-                    MessageHandler.sendException(ex, e.getMessage().getContentRaw());
-                }
-
                 EmbedBuilder embed = new EmbedBuilder()
                         .setThumbnail(Cache.BOT.getAvatarUrl())
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getSimpleName().substring(0, command.getModule().getSimpleName().length() - 6), true)
                         .addField("Required Permissions", commandPermission, true)
-                        .addField("Binds", bindList.toString(), true)
+                        .addField("Binds", ModuleBindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
                         .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());

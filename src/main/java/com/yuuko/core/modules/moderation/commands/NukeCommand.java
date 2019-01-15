@@ -1,6 +1,6 @@
 package com.yuuko.core.modules.moderation.commands;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.ModuleBindFunctions;
 import com.yuuko.core.modules.Command;
 import com.yuuko.core.modules.moderation.ModerationModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -25,7 +25,7 @@ public class NukeCommand extends Command {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
         if(channels.size() > 0 && channels.size() < 11) {
             channels.forEach(channel -> {
-                new DatabaseFunctions().cleanupBindings(channel.getId());
+                ModuleBindFunctions.cleanupBinds(channel.getId());
                 channel.createCopy().queue((r) -> channel.delete().queue());
             });
             return;

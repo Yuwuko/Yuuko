@@ -4,10 +4,11 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ import java.sql.ResultSet;
 
 @SuppressWarnings("ALL")
 public class DatabaseFunctions {
+
+    private static final Logger log = LoggerFactory.getLogger(DatabaseFunctions.class);
 
     public DatabaseFunctions() {
     }
@@ -42,7 +45,7 @@ public class DatabaseFunctions {
             return existence;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Existence");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
         return true;
     }
@@ -70,7 +73,7 @@ public class DatabaseFunctions {
                 return false;
             }
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to add new guild to the database. (ID: " + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -94,7 +97,7 @@ public class DatabaseFunctions {
             return true;
 
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "Unable to add new guilds to the database.");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -114,7 +117,7 @@ public class DatabaseFunctions {
 
             return stmt.executeQuery();
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get module settings. (ID: " + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return null;
         }
     }
@@ -142,7 +145,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get individual module setting. (Module: " + moduleName + ", guild: " + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -170,7 +173,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to toggle module setting. (Module: " + moduleIn + ", guild: " + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -192,7 +195,7 @@ public class DatabaseFunctions {
             return stmt.executeQuery();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get guild settings. (ID: " + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return null;
         }
     }
@@ -221,7 +224,7 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to get guild setting. (ID: " + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return null;
         }
     }
@@ -250,104 +253,8 @@ public class DatabaseFunctions {
             return result;
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to set guild setting '"+ setting +"'. (" + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
             return false;
-        }
-    }
-
-    /**
-     * Binds a particular module to a channel.
-     * @param modName the name of the module.
-     * @param channel the idLong of the channel.
-     * @param guild the idLong of the guild.
-     * @return boolean
-     */
-    public int toggleBinding(String modName, String channel, String guild) {
-        String moduleIn = "module" + modName;
-
-        try {
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
-            stmt.setString(1, guild);
-            stmt.setString(2, channel);
-            stmt.setString(3, moduleIn);
-            ResultSet resultSet = stmt.executeQuery();
-
-            if(!resultSet.next()) {
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings` VALUES (?,?,?)");
-                stmt2.setString(1, guild);
-                stmt2.setString(2, channel);
-                stmt2.setString(3, moduleIn);
-                if(!stmt2.execute()) {
-                    stmt2.close();
-                    conn.close();
-                    MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
-                    return 0;
-                }
-            }
-
-            stmt.close();
-            conn.close();
-            return deleteBindingsRecord(guild, channel, moduleIn);
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to bind module to channel. (Module: " + moduleIn + ", guild: " + guild + ", Channel: " + channel + ")");
-            return -1;
-        }
-    }
-
-    /**
-     * Removes a binding record from the database.
-     * @param guild String
-     * @param channel String
-     * @param moduleIn String
-     * @return int
-     */
-    private int deleteBindingsRecord(String guild, String channel, String moduleIn) {
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
-            stmt.setString(1, guild);
-            stmt.setString(2, channel);
-            stmt.setString(3, moduleIn);
-            if(!stmt.execute()) {
-                stmt.close();
-                conn.close();
-                MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
-                return 1;
-            }
-
-            stmt.close();
-            conn.close();
-            return -1;
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to return bindings/exclusions. (" + guild + ")");
-            return -1;
-        }
-    }
-
-    /**
-     * Gets the bindings/exclusions for a particular channel.
-     * ** Doesn't close connection or resultset is lost **
-     * @param guild the idLong of the guild.
-     * @return ResultSet
-     */
-    public ResultSet getBindingsByModule(Connection connection, String guild, String moduleIn) {
-        try {
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?");
-            stmt.setString(1, guild);
-            stmt.setString(2, moduleIn);
-
-            return stmt.executeQuery();
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to return bindings. (" + guild + ")");
-            return null;
         }
     }
 
@@ -400,7 +307,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to update metrics.");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -424,7 +331,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "Unable to update commands.");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -439,16 +346,12 @@ public class DatabaseFunctions {
 
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics`");
             stmt.execute();
-
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics`");
             stmt2.execute();
-
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics`");
             stmt3.execute();
-
             PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
             stmt4.execute();
-
             PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog`");
             stmt5.execute();
 
@@ -460,7 +363,7 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to truncate database..");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -481,31 +384,8 @@ public class DatabaseFunctions {
             conn.close();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to remove guild from the database. (" + guild + ")");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
-
-    /**
-     * Removes binding from channels that are deleted.
-     * @param channel the channel to clean up.
-     */
-    public void cleanupBindings(String channel) {
-        try {
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
-
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `channelId` = ?");
-            stmt.setString(1, channel);
-            stmt.execute();
-
-            stmt.close();
-            conn.close();
-
-        } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Unable to update bindings in the database. (Channel:" + channel + ")");
-        }
-    }
-
-
 
 }

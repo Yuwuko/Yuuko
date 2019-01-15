@@ -2,7 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 13-01-2019_*
+## 15-01-2019_1
++ [~] Modified the [__bind__] command, where giving no parameters will returns a list of binds.
++ [~] Refactored all of the database bind functions from the DatabaseFunctions class into it's own respective class.
+
+## 13-01-2019_2
 + [~] Updated the [__bind__] command to make it less scuffed, properly checking parameters, also now allowing multiple channels to be bound at once.
 + [~] Updated the CommandExecutor, moving key logic from the GenericMessageHandler class.
 + [-] Removed the last remnants of the setup command, since it wasn't actually used at all.
