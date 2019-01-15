@@ -123,7 +123,7 @@ public class CommandExecutor {
                 return true;
             }
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle("The **" + command[0] + "** command is bound to **" + ModuleBindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command[0] + "** command is bound to **" + ModuleBindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
             MessageHandler.sendMessage(e, embed.build());
 
             return false;
