@@ -52,11 +52,7 @@ public abstract class Module {
         }
     }
 
-    public boolean isModuleNSFW() {
+    public boolean isNSFW() {
         return isNSFW;
-    }
-
-    public boolean isChannelNSFW(MessageReceivedEvent e) {
-        return e.getTextChannel().isNSFW();
     }
 }

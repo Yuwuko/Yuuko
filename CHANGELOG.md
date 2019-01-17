@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 17-01-2019_1
++ [~] Refactored module package to commands to keep the intent of the package clear. (everyone knows what a command is, but maybe not module in this context)
++ [~] Refactored the isChannelNSFW function from the Module super class to the Utils class.
++ [~] Updated dependencies to their latest versions.
+
 ## 15-01-2019_1
 + [~] Modified the [__bind__] command, where giving no parameters will returns a list of binds.
 + [~] Refactored all of the database bind functions from the DatabaseFunctions class into it's own respective class.

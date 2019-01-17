@@ -28,7 +28,7 @@ public class CommandExecutor {
             if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
                 return;
             }
-            if(!module.isChannelNSFW(e) && module.isModuleNSFW()) { // Is the channel NSFW? If not, is the module NSFW?
+            if(!Utils.isChannelNSFW(e) && module.isNSFW()) { // Is the channel NSFW? If not, is the module NSFW?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {

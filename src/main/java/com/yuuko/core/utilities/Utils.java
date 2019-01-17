@@ -5,6 +5,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
 import java.io.IOException;
@@ -153,6 +154,15 @@ public final class Utils {
      */
     public static String getCommandPermissions(Permission[] permissions) {
         return Arrays.toString(permissions).replace("[", "").replace("]", "");
+    }
+
+    /**
+     * Returns if a text channel is nsfw or not.
+     * @param e MessageReceivedEvent
+     * @return boolean
+     */
+    public static boolean isChannelNSFW(MessageReceivedEvent e) {
+        return e.getTextChannel().isNSFW();
     }
 
 }
