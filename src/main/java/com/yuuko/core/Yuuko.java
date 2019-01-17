@@ -4,14 +4,14 @@
 
 package com.yuuko.core;
 
+import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.Module;
+import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.Module;
-import com.yuuko.core.modules.audio.handlers.AudioManagerManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
@@ -85,7 +85,7 @@ public class Yuuko {
         }
 
         try {
-            Reflections reflections = new Reflections("com.yuuko.core.modules");
+            Reflections reflections = new Reflections("com.yuuko.core.commands");
 
             Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
             List<Module> moduleList = new ArrayList<>();
@@ -93,7 +93,7 @@ public class Yuuko {
                 Module obj = module.getConstructor(MessageReceivedEvent.class, String[].class).newInstance(null, null);
                 moduleList.add(obj);
             }
-            System.out.println("[INFO] " + moduleList.size() + " modules successfully loaded.");
+            System.out.println("[INFO] " + moduleList.size() + " commands successfully loaded.");
 
             Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
             List<Command> commandList = new ArrayList<>();

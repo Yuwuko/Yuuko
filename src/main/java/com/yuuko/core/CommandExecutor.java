@@ -1,9 +1,9 @@
 package com.yuuko.core;
 
+import com.yuuko.core.commands.Module;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.ModuleBindFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.modules.Module;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utils;

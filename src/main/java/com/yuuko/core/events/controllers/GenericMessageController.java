@@ -2,11 +2,11 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.audio.commands.SearchCommand;
+import com.yuuko.core.commands.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.modules.Command;
-import com.yuuko.core.modules.audio.commands.SearchCommand;
-import com.yuuko.core.modules.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utils;
@@ -80,7 +80,7 @@ public class GenericMessageController {
             boolean executed = false;
 
             // Iterate through the command list, if the input matches the effective name (includes invocation)
-            // Get the command modules constructor from the command class. (Much easier than what I did previously)
+            // Get the command commands constructor from the command class. (Much easier than what I did previously)
             for(Command cmd : Cache.COMMANDS) {
                 if((commandPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (commandPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
                     cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class).newInstance(e, command);
