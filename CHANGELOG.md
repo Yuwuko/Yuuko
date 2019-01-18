@@ -2,7 +2,7 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 18-01-2019_1
+## 18-01-2019_2
 + [~] Added a GenericTextChannelController to check when channels are removed to update bindings appropriately.
 + [~] Refactored parts of the DatabaseConnection subclasses into a DatabaseConnection superclass.
 + [~] Made all of the methods in the SettingsDatabaseFunctions class static since individual instances of database classes were unnecessary.
