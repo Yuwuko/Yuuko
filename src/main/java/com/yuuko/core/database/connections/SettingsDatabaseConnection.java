@@ -1,8 +1,16 @@
 package com.yuuko.core.database.connections;
 
 import com.yuuko.core.Configuration;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class SettingsDatabaseConnection extends DatabaseConnection {
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class SettingsDatabaseConnection {
+    private static final Logger log = LoggerFactory.getLogger(SettingsDatabaseConnection.class);
+    private static final BasicDataSource connectionPool = new BasicDataSource();
 
     public SettingsDatabaseConnection() {
         try {
@@ -17,6 +25,15 @@ public class SettingsDatabaseConnection extends DatabaseConnection {
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
+    }
+
+
+    /**
+     * Gets the fresh database connection.
+     * @return BasicDataSource.
+     */
+    public static Connection getConnection() throws SQLException {
+        return connectionPool.getConnection();
     }
 
 }

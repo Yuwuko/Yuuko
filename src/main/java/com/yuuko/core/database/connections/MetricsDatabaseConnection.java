@@ -1,9 +1,17 @@
 package com.yuuko.core.database.connections;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-public class MetricsDatabaseConnection extends DatabaseConnection{
+public class MetricsDatabaseConnection {
+    private static final Logger log = LoggerFactory.getLogger(MetricsDatabaseConnection.class);
+    private static final BasicDataSource connectionPool = new BasicDataSource();
 
     public MetricsDatabaseConnection() {
         try {
@@ -19,6 +27,14 @@ public class MetricsDatabaseConnection extends DatabaseConnection{
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
+    }
+
+    /**
+     * Gets the fresh database connection.
+     * @return BasicDataSource.
+     */
+    public static Connection getConnection() throws SQLException {
+        return connectionPool.getConnection();
     }
 
 }
