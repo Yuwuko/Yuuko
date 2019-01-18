@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.OffsetDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 public class NukeCommand extends Command {
@@ -42,12 +43,14 @@ public class NukeCommand extends Command {
 
             // Filter out old messages from the mass delete list.
             List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(value).complete();
-            nukeList.iterator().forEachRemaining(message -> {
+            Iterator<Message> it = nukeList.iterator();
+            while(it.hasNext()) {
+                Message message = it.next();
                 if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
                     message.delete().queue();
-                    nukeList.remove(message);
+                    it.remove();
                 }
-            });
+            }
 
             if(nukeList.size() > 1) {
                 e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
