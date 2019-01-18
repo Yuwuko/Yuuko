@@ -16,7 +16,7 @@ public class SyncServersCommand extends Command {
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         try {
-            if(new DatabaseFunctions().addGuilds(e)) {
+            if(DatabaseFunctions.addGuilds(e)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds added successfully.");
                 MessageHandler.sendMessage(e, embed.build());
             }

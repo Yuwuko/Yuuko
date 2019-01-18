@@ -38,7 +38,7 @@ public class ModuleCommand extends Command {
             return;
         }
 
-        if(new DatabaseFunctions().toggleModule("module" + moduleName, server)) {
+        if(DatabaseFunctions.toggleModule("module" + moduleName, server)) {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + moduleName + "_ was enabled on this server!");
             MessageHandler.sendMessage(e, embed.build());
         } else {

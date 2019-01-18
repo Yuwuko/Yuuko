@@ -35,11 +35,10 @@ public class GenericGuildController {
         if(e instanceof GuildMemberLeaveEvent) {
             guildMemberLeaveEvent((GuildMemberLeaveEvent)e);
         }
-
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        new DatabaseFunctions().addNewGuild(e.getGuild().getId());
+        DatabaseFunctions.addNewGuild(e.getGuild().getId());
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
@@ -65,7 +64,7 @@ public class GenericGuildController {
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
-        new DatabaseFunctions().cleanup(e.getGuild().getId());
+        DatabaseFunctions.cleanup(e.getGuild().getId());
         Utils.updateDiscordBotList();
         Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
 
@@ -73,7 +72,7 @@ public class GenericGuildController {
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        if(new DatabaseFunctions().getGuildSetting("welcomeMembers", e.getGuild().getId()).equals("1")) {
+        if(DatabaseFunctions.getGuildSetting("welcomeMembers", e.getGuild().getId()).equals("1")) {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription("Welcome to **" + e.getGuild().getName() + "**, " + e.getMember().getAsMention() + "!");
                 MessageHandler.sendMessage(textChannel, member.build());

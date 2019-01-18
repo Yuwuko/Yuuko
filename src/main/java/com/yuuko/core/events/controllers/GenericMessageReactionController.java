@@ -26,7 +26,7 @@ public class GenericMessageReactionController {
             }
 
             if(e.getReaction().getReactionEmote().getName().equals("📌")) {
-                if(new DatabaseFunctions().checkModuleSettings("moduleUtility", e.getGuild().getId())) {
+                if(DatabaseFunctions.checkModuleSettings("moduleUtility", e.getGuild().getId())) {
                     if(e instanceof MessageReactionAddEvent) {
                         new UtilityModule((MessageReactionAddEvent) e);
                     } else if(e instanceof MessageReactionRemoveEvent) {

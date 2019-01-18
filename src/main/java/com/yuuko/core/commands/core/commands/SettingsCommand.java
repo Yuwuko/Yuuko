@@ -7,15 +7,13 @@ import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.commands.core.settings.PrefixSetting;
 import com.yuuko.core.commands.core.settings.SettingExecuteBoolean;
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class SettingsCommand extends Command {
 
@@ -59,33 +57,20 @@ public class SettingsCommand extends Command {
                 }
 
             } else {
-                Connection connection = DatabaseConnection.getConnection();
+                ArrayList<Boolean> settings = DatabaseFunctions.getGuildSettings(e.getGuild().getId());
 
-                try {
-                    ResultSet resultSet = new DatabaseFunctions().getGuildSettings(connection, e.getGuild().getId());
-                    resultSet.next();
-
-                    // Embed displaying all of the current settings for the server, giving information about each setting.
-                    EmbedBuilder commandModules = new EmbedBuilder()
+                // Embed displaying all of the current settings for the server, giving information about each setting.
+                EmbedBuilder commandModules = new EmbedBuilder()
                         .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing '<prefix>settings [setting] [value]' where [setting] is a value found below and [value] is a valid value, with special values like booleans being either TRUE or FALSE (case insensitive)")
-                            .addField("prefix", "[" + resultSet.getString("commandPrefix") + "] - The message prefix used to symbolise a command.", false)
-                            .addField("deleteExecuted", "[" + resultSet.getBoolean("deleteExecuted") + "] - Deletes the users command string when it is executed.", false)
-                            .addField("commandLogging", "[" + resultSet.getBoolean("commandLogging") + "] - Sends executed commands to a predefined logging channel.", false)
-                            .addField("nowPlaying", "[" + resultSet.getBoolean("nowPlaying") + "] - Sends information of the current track when it changes.", false)
-                            .addField("djMode", "[" + resultSet.getBoolean("djMode") + "] - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
-                            .addField("welcomeMembers", "[" + resultSet.getBoolean("welcomeMembers") + "] - Whether or not Yuuko will greet each new member that joins the server.", false)
+                            .addField("prefix", "[**" + DatabaseFunctions.getGuildSetting("commandPrefix", e.getGuild().getId()) + "**] - The message prefix used to symbolise a command.", false)
+                            .addField("deleteExecuted", "[**" + settings.get(0) + "**] - Deletes the users command string when it is executed.", false)
+                            .addField("commandLogging", "[**" + settings.get(1) + "**] - Sends executed commands to a predefined logging channel.", false)
+                            .addField("nowPlaying", "[**" + settings.get(2) + "**] - Sends information of the current track when it changes.", false)
+                            .addField("djMode", "[**" + settings.get(3) + "**] - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
+                            .addField("welcomeMembers", "[**" + settings.get(4) + "**] - Whether or not Yuuko will greet each new member that joins the server.", false)
                         .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-                    MessageHandler.sendMessage(e, commandModules.build());
-                } catch(Exception ex) {
-                    MessageHandler.sendException(ex, e.getMessage().getContentRaw());
-                } finally {
-                    try {
-                        connection.close();
-                    } catch(Exception ex) {
-                        MessageHandler.sendException(ex, "Unable to close connection to database. [SettingsCommand]");
-                    }
-                }
+                MessageHandler.sendMessage(e, commandModules.build());
             }
 
         } catch(Exception ex) {

@@ -67,7 +67,7 @@ public class CommandExecutor {
      * @param e MessageReceivedEvent
      */
     private void messageCleanup(MessageReceivedEvent e) {
-        if(new DatabaseFunctions().getGuildSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
+        if(DatabaseFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -97,7 +97,7 @@ public class CommandExecutor {
         }
 
         if(!e.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
-            if(new DatabaseFunctions().getGuildSetting("djMode", e.getGuild().getId()).equals("1")) {
+            if(DatabaseFunctions.getGuildSetting("djMode", e.getGuild().getId()).equals("1")) {
                 if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
                     if(!command[0].equals("queue") && !command[0].equals("current") && !command[0].equals("last")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");

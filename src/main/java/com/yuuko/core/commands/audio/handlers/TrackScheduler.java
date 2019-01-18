@@ -64,7 +64,7 @@ public class TrackScheduler extends AudioEventAdapter {
         } else {
             try {
                 MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
-                if(new DatabaseFunctions().getGuildSetting("nowPlaying", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     new CurrentCommand().executeCommand((MessageReceivedEvent) player.getPlayingTrack().getUserData(), null);
                 }
             } catch(Exception ex) {

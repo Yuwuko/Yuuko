@@ -8,8 +8,9 @@ public class UploadMetricsTask implements Task {
 
     @Override
     public void handle() {
-        new DatabaseFunctions().updateMetricsDatabase();
+        DatabaseFunctions.updateMetricsDatabase();
         MetricsManager.reset();
+        //System.out.println("Main: " + SettingsDatabaseConnection.getLockedConnections() + ", Metrics: " + MetricsDatabaseConnection.getLockedConnections());
     }
 
 }

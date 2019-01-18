@@ -2,6 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 18-01-2019_1
++ [~] Added a GenericTextChannelController to check when channels are removed to update bindings appropriately.
++ [~] Refactored parts of the DatabaseConnection subclasses into a DatabaseConnection superclass.
++ [~] Made all of the methods in the SettingsDatabaseFunctions class static since individual instances of database classes were unnecessary.
++ [~] Moved all of the connection logic for all database functions into a try with resources structure to ensure the prevention of database lockups. (which happened today somehow)
++ [~] Migrated the GenericEventManager to use the correct logger.
+
 ## 17-01-2019_1
 + [~] Refactored module package to commands to keep the intent of the package clear. (everyone knows what a command is, but maybe not module in this context)
 + [~] Refactored the isChannelNSFW function from the Module super class to the Utils class.

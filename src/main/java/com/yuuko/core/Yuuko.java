@@ -8,8 +8,8 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.database.connections.DatabaseConnection;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
+import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
@@ -62,9 +62,9 @@ public class Yuuko {
 
         Configuration.load();
         Configuration.loadApi();
-        new DatabaseConnection();
+        new SettingsDatabaseConnection();
         new MetricsDatabaseConnection();
-        new DatabaseFunctions().truncateMetrics();
+        DatabaseFunctions.truncateMetrics();
 
         Cache.JDA = new JDABuilder(AccountType.BOT)
                 .useSharding(0, 1)

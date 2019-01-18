@@ -1,22 +1,23 @@
 package com.yuuko.core.events;
 
-import com.yuuko.core.events.controllers.GenericGuildController;
-import com.yuuko.core.events.controllers.GenericGuildVoiceController;
-import com.yuuko.core.events.controllers.GenericMessageController;
-import com.yuuko.core.events.controllers.GenericMessageReactionController;
-import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.events.controllers.*;
 import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.channel.text.GenericTextChannelEvent;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.hooks.InterfacedEventManager;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GenericEventManager extends ListenerAdapter {
+
+    private static final Logger log = LoggerFactory.getLogger(GenericEventManager.class);
 
     /**
      * Captures and deals with generic guild events.
@@ -27,7 +28,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericGuildController(e);
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericGuild(GenericGuildEvent e)");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -40,7 +41,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericMessageController(e);
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericMessage(GenericMessageEvent e)");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -53,7 +54,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericMessageReactionController(e);
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericMessageReaction(GenericMessageReactionEvent e)");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -66,7 +67,16 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericGuildVoiceController(e);
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public void onGenericGuildVoice(GenericGuildVoiceEvent e)");
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public void onGenericTextChannel(GenericTextChannelEvent e) {
+        try {
+            new GenericTextChannelController(e);
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 

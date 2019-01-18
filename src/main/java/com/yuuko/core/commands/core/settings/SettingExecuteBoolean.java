@@ -22,7 +22,7 @@ public class SettingExecuteBoolean {
         try {
             String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 
-            if(new DatabaseFunctions().setGuildSettings(setting, intValue, e.getGuild().getId())) {
+            if(DatabaseFunctions.setGuildSettings(setting, intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(setting.toUpperCase() + " set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());
