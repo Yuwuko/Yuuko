@@ -23,7 +23,10 @@ public class ModuleBindFunctions {
      * @return boolean
      */
     public static int toggleBind(String guildId, String channel, String moduleName) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?"); PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             moduleName = TextUtility.extractModuleName(moduleName, true, false); // Sometimes the input will be the whole classpath, this removes that junk and returns just the module name.
@@ -59,7 +62,9 @@ public class ModuleBindFunctions {
      * @return int
      */
     private static boolean deleteBindsRecord(String guild, String channel, String moduleName) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
+
             moduleName = TextUtility.extractModuleName(moduleName, true, false);
 
             stmt.setString(1, guild);
@@ -89,7 +94,9 @@ public class ModuleBindFunctions {
      * @return String
      */
     public static String getGuildBinds(Guild guild, String delimiter) {
-        try(Connection connection = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? ORDER BY `channelId` ASC")) {
+        try(Connection connection = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? ORDER BY `channelId` ASC")) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
 
@@ -123,7 +130,9 @@ public class ModuleBindFunctions {
      * @return String
      */
     public static String getBindsByModule(Guild guild, String moduleName, String delimiter) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             moduleName = TextUtility.extractModuleName(moduleName, true, false);
@@ -160,7 +169,9 @@ public class ModuleBindFunctions {
      * @return boolean
      */
     public static boolean checkBind(String guildId, String channelId, String moduleName) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             moduleName = TextUtility.extractModuleName(moduleName, true, false);
@@ -190,7 +201,9 @@ public class ModuleBindFunctions {
      * @param channel the channel to clean up.
      */
     public static void cleanupBinds(String channel) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `channelId` = ?")) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `channelId` = ?")) {
+
             MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
             stmt.setString(1, channel);

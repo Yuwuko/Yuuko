@@ -28,7 +28,9 @@ public class DatabaseFunctions {
      * @return boolean
      */
     private static boolean exists(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Guilds` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Guilds` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             stmt.setString(1, guild);
@@ -49,7 +51,9 @@ public class DatabaseFunctions {
      * @return if the add was successful.
      */
     public static boolean addNewGuild(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");) {
+
             if(!exists(guild)) {
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
@@ -96,7 +100,9 @@ public class DatabaseFunctions {
      * @return ArrayList<ArrayList<String>>
      */
     public static ArrayList<ArrayList<String>> getModuleSettings(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             stmt.setString(1, guild);
@@ -131,7 +137,9 @@ public class DatabaseFunctions {
      * @return (boolean) if the module is active or not.
      */
     public static boolean checkModuleSettings(String moduleName, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             stmt.setString(1, guild);
@@ -155,7 +163,9 @@ public class DatabaseFunctions {
      * @return boolean.
      */
     public static boolean toggleModule(String moduleIn, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             stmt.setString(1, guild);
@@ -179,7 +189,9 @@ public class DatabaseFunctions {
      * @return ResultSet
      */
     public static ArrayList<Boolean> getGuildSettings(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `GuildSettings` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `GuildSettings` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             stmt.setString(1, guild);
@@ -210,7 +222,9 @@ public class DatabaseFunctions {
      * @return String
      */
     public static String getGuildSetting(String setting, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `GuildSettings` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `GuildSettings` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             stmt.setString(1, guild);
@@ -235,7 +249,9 @@ public class DatabaseFunctions {
      * @return if the set was successful.
      */
     public static boolean setGuildSettings(String setting, String value, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `" + setting + "` = ? WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `" + setting + "` = ? WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             stmt.setString(1, value);
@@ -256,7 +272,11 @@ public class DatabaseFunctions {
      */
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)"); PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `messagesProcessed`, `reactsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?)"); PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)"); PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `messagesProcessed`, `reactsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");) {
+
             MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
 
             stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
@@ -299,7 +319,9 @@ public class DatabaseFunctions {
      * @param command String
      */
     public static void updateCommandsLog(String guildId, String command) {
-        try(Connection conn = MetricsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`) VALUES(?, ?, ?)");) {
+        try(Connection conn = MetricsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`) VALUES(?, ?, ?)");) {
+
             MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
             stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
@@ -316,7 +338,13 @@ public class DatabaseFunctions {
      * Truncates the metrics database. (This happens when the bot is first loaded.)
      */
     public static void truncateMetrics() {
-        try(Connection conn = MetricsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics`"); PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics`"); PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics`"); PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`"); PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog`");) {
+        try(Connection conn = MetricsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics`");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics`");
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics`");
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog`");) {
+
             MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);
 
             stmt.execute();
@@ -335,7 +363,9 @@ public class DatabaseFunctions {
      * @param guild the guild's id.
      */
     public static void cleanup(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?");) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?");) {
+
             MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
             stmt.setString(1, guild);
