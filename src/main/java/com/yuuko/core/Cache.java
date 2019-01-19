@@ -17,7 +17,6 @@ public class Cache {
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
-    public static String LATEST_INFO;
     public static String[] STANDARD_STRINGS;
     public static final HashMap<Long, List<SearchResult>> audioSearchResults = new HashMap<>();
     static AudioManagerManager AUDIO_MANAGER_MANAGER;

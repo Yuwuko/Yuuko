@@ -18,7 +18,7 @@ public class PrefixSetting {
             return;
         }
 
-        if(DatabaseFunctions.setGuildSettings("commandPrefix", value, e.getGuild().getId())) {
+        if(DatabaseFunctions.setGuildSettings("prefix", value, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to " + value);
             MessageHandler.sendMessage(e, embed.build());
         }

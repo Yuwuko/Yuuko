@@ -110,8 +110,6 @@ public class Yuuko {
             Cache.MODULES = moduleList;
             Cache.COMMANDS = commandList;
 
-            Cache.LATEST_INFO = "";
-
             ScheduleHandler.registerJob(new FiveSecondlyJob());
             ScheduleHandler.registerJob(new ThirtySecondlyJob());
 

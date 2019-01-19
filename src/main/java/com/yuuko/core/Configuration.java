@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "19-01-2019_1";
+    public static final String VERSION = "19-01-2019_2";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;

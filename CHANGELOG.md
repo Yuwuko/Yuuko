@@ -2,9 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 19-01-2019_1
+## 19-01-2019_*
 + [+] Added a starboard feature... everyone loves those right?
++ [~] Refactored all of the non-boolean settings into their own settings classes and also refactored the database to allow the commandLog and member welcoming to be customised.
 + [~] Moved settings from being stored in the Cache class and initiated in the main class to being parked in the CommandSettings class.
++ [~] Shortened commandPrefix in the database to simply prefix since there is no other type of prefix to describe.
++ [-] Trimmed some excess fat that was no longer needed.
 
 ## 18-01-2019_2
 + [~] Added a GenericTextChannelController to check when channels are removed to update bindings appropriately.

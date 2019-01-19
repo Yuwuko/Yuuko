@@ -188,7 +188,7 @@ public class DatabaseFunctions {
      * @param guild the guild to get the settings for.
      * @return ResultSet
      */
-    public static ArrayList<Boolean> getGuildSettings(String guild) {
+    public static ArrayList<String> getGuildSettings(String guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `GuildSettings` WHERE `guildId` = ?");) {
 
@@ -197,14 +197,16 @@ public class DatabaseFunctions {
             stmt.setString(1, guild);
             ResultSet rs = stmt.executeQuery();
 
-            ArrayList<Boolean> settings = new ArrayList<>();
+            ArrayList<String> settings = new ArrayList<>();
 
             while(rs.next()) {
-                settings.add(rs.getBoolean("deleteExecuted"));
-                settings.add(rs.getBoolean("commandLogging"));
-                settings.add(rs.getBoolean("nowPlaying"));
-                settings.add(rs.getBoolean("djMode"));
-                settings.add(rs.getBoolean("welcomeMembers"));
+                settings.add(rs.getString("prefix"));
+                settings.add(rs.getBoolean("deleteExecuted") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("nowPlaying") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("djMode") ? "Enabled" : "Disabled");
+                settings.add(rs.getString("newMember"));
+                settings.add(rs.getString("starboard"));
+                settings.add(rs.getString("commandLog"));
             }
 
             return settings;
@@ -380,9 +382,9 @@ public class DatabaseFunctions {
      * Updates settings from channels that are deleted.
      * @param channel the channel to clean up.
      */
-    public static void cleanupSettings(String guildId) {
+    public static void cleanupSettings(String setting, String guildId) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `starboard` = null WHERE `guildId` = guildId");){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET " + setting + " = null WHERE `guildId` = guildId");){
             stmt.execute();
 
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();

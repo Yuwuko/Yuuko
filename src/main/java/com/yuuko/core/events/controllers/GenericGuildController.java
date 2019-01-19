@@ -66,8 +66,6 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent e) {
         DatabaseFunctions.cleanup(e.getGuild().getId());
         Utils.updateDiscordBotList();
-        Utils.updateLatest("[INFO] Left server: " + e.getGuild().getName() + " (Id: " + e.getGuild().getIdLong() + ", Users: " + e.getGuild().getMemberCache().size() + ")");
-
         MetricsManager.updateDiscordMetrics();
     }
 

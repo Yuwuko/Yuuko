@@ -42,9 +42,10 @@ public class StarboardSetting {
     private void setupStarboard(MessageReceivedEvent e) {
         try {
             e.getGuild().getController().createTextChannel("starboard").queue(channel -> {
+                TextChannel textChannel = (TextChannel)channel;
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
                 if(DatabaseFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The **starboard** channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             });

@@ -8,10 +8,6 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -100,27 +96,6 @@ public final class Utils {
     }
 
     /**
-     * Takes a path and encoding type and returns a string of the file.
-     * @param path String
-     * @param encoding Charset
-     * @return String retrieved from file.
-     */
-    public static String readFile(String path, Charset encoding) throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
-    }
-
-    /**
-     * Updates the latest [INFO] message or the latest command message.
-     * @param latest String
-     */
-    public static void updateLatest(String latest) {
-        if(latest.startsWith("[INFO]")) {
-            Cache.LATEST_INFO = latest;
-        }
-    }
-
-    /**
      * Returns an API ApplicationId.
      * @param name name of the api
      * @return String
@@ -144,7 +119,7 @@ public final class Utils {
      * @return String
      */
     public static String getServerPrefix(String server) {
-        return DatabaseFunctions.getGuildSetting("commandPrefix", server);
+        return DatabaseFunctions.getGuildSetting("prefix", server);
     }
 
     /**

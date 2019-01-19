@@ -4,7 +4,7 @@ import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.commands.SearchCommand;
-import com.yuuko.core.commands.core.settings.SettingExecuteBoolean;
+import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
@@ -73,7 +73,7 @@ public class GenericMessageController {
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] command = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
-        String commandPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
+        String cmdPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
 
         try {
             long executionTime = 0;
@@ -82,7 +82,7 @@ public class GenericMessageController {
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // Get the command commands constructor from the command class. (Much easier than what I did previously)
             for(Command cmd : Cache.COMMANDS) {
-                if((commandPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (commandPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
+                if((cmdPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (cmdPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
                     cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class).newInstance(e, command);
                     executionTime = (System.nanoTime() - startExecutionNano)/1000000;
                     executed = true;
@@ -92,8 +92,8 @@ public class GenericMessageController {
 
             if(executed) {
                 DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), command[0].toLowerCase());
-                if(DatabaseFunctions.getGuildSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
-                    new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
+                if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
+                    CommandLogSetting.executeLogging(e, executionTime);
                 }
             }
 
@@ -121,10 +121,9 @@ public class GenericMessageController {
                     e.getMessage().delete().queue();
                 }
 
-                if(DatabaseFunctions.getGuildSetting("commandLogging", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    Utils.updateLatest(e.getGuild().getName() + " - " + input[0] + " (" + executionTime + "ms)");
-                    new SettingExecuteBoolean(null, null, null).executeLogging(e, executionTime);
+                    CommandLogSetting.executeLogging(e, executionTime);
                 }
             }
 

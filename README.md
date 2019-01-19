@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 19-01-2019_1
+# Yuuko 19-01-2019_2
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
 
@@ -116,11 +116,11 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 |---------|-------------|-------|---------|
 | prefix | Changes the custom prefix for the server. (Characters: Min `1`, Max `5`) | String | `-settings prefix !` |
 | deleteExecuted | Deletes the command message after it has been executed. | TRUE, FALSE | `-settings deleteExecuted true` |
-| commandLogging | Logs any executed command into a logging channel. | TRUE, FALSE | `-settings commandLogging true` |
 | nowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings nowPlaying true` |
 | djMode | Toggles whether or not the role of `DJ` is required to use key audio module commands. | TRUE, FALSE | `-settings djMode true` |
-| welcomeMembers | Whether or not to welcome members with a predefined message in the first channel that contains the name 'general' or 'primary'. (customisation soon) | TRUE, FALSE | `-settings welcomeMembers true` | 
-| starboard | The channel used for a starboard (messages reacted with a star) Use no parameter to turn it off, tagged channel to set and 'setup' to automatically setup a channel. | #channel, 'setup', null | `-settings starboard #starboard`, `-settings starboard setup` |
+| newMember | Channel used to welcome new members, default value of null (off) set by tagging a channel, unset by typing anything else. | #channel, null | `-settings newmember #general`, `-settings newmember null` | 
+| starboard | Channel used for the starboard, default value of null (off) set by tagging a channel, unset by typing anything else. Use setup to automatically setup the channel. | #channel, 'setup', null | `-settings starboard #starboard`, `-settings starboard setup` |
+| commandLog | Channel used for the command log, default value of null (off) set by tagging a channel, unset by typing anything else. Use setup to automatically setup the channel. | #channel, 'setup', null | `-settings commandLog #commandLog` |
 
 ## Other features
 

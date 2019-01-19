@@ -17,8 +17,19 @@ public class GenericTextChannelController {
         ModuleBindFunctions.cleanupBinds(e.getChannel().getId());
 
         if(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()).equals(e.getChannel().getId())) {
-            DatabaseFunctions.cleanupSettings(e.getGuild().getId());
+            DatabaseFunctions.cleanupSettings("starboard", e.getGuild().getId());
+            return;
         }
+
+        if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()).equals(e.getChannel().getId())) {
+            DatabaseFunctions.cleanupSettings("commandLog", e.getGuild().getId());
+            return;
+        }
+
+        if(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId()).equals(e.getChannel().getId())) {
+            DatabaseFunctions.cleanupSettings("newMember", e.getGuild().getId());
+        }
+
     }
 
 }
