@@ -125,9 +125,3 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 ## Other features
 
 As a part of the __utility__ module, reacting with :pushpin: (\:pushpin\:) will automatically pin the post as such, removing it will unpin the post. However if there are multiple of the react, they will all need to be removed before the post is unpinned.
-
-## Notes
-
-For the welcome message a basic 'general' text-channel is used. If that does or doesn't exist the bot will also send a PM to the server owner but not attempt to send the message anywhere else.
-
-The logging setting currently requires a text-channel named 'command-log' to work correctly. If this doesn't exist and the module is active, the bot will remind you that it is needed. (this will be changed in the future)
