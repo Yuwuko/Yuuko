@@ -14,7 +14,7 @@ public class StarboardSetting {
         executeCommand(e, value);
     }
 
-    public void executeCommand(MessageReceivedEvent e, String value) {
+    private void executeCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setupStarboard(e);

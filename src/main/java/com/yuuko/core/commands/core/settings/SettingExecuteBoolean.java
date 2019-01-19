@@ -15,7 +15,7 @@ public class SettingExecuteBoolean {
         }
     }
 
-    public void executeCommand(MessageReceivedEvent e, String setting, String value) {
+    private void executeCommand(MessageReceivedEvent e, String setting, String value) {
         try {
             String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 

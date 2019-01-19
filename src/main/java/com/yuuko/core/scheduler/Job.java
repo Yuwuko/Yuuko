@@ -12,17 +12,17 @@ public abstract class Job extends TimerTask {
     private final long period;
     private final TimeUnit unit;
 
-    public Job(long delay, long period, TimeUnit unit) {
+    protected Job(long delay, long period, TimeUnit unit) {
         this.delay = delay;
         this.period = period;
         this.unit = unit;
     }
 
-    public long getDelay() {
+    long getDelay() {
         return delay;
     }
 
-    public long getPeriod() {
+    long getPeriod() {
         return period;
     }
 

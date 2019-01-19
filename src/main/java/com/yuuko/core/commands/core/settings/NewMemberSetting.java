@@ -13,7 +13,7 @@ public class NewMemberSetting {
         executeCommand(e);
     }
 
-    public void executeCommand(MessageReceivedEvent e) {
+    private void executeCommand(MessageReceivedEvent e) {
         TextChannel channel = MessageUtility.getFirstMentionedChannel(e);
         if(channel != null) {
             if(DatabaseFunctions.setGuildSettings("newMember", channel.getId(), e.getGuild().getId())) {
