@@ -235,11 +235,11 @@ public class DatabaseFunctions {
 
             final String result = resultSet.getString(1);
 
-            return (result != null) ? result : "";
+            return (result != null) ? result : null;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return "";
+            return null;
         }
     }
 
