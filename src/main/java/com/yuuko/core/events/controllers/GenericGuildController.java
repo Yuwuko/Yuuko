@@ -70,7 +70,7 @@ public class GenericGuildController {
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        if(DatabaseFunctions.getGuildSetting("welcomeMembers", e.getGuild().getId()).equals("1")) {
+        if(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId()).equals("1")) {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription("Welcome to **" + e.getGuild().getName() + "**, " + e.getMember().getAsMention() + "!");
                 MessageHandler.sendMessage(textChannel, member.build());

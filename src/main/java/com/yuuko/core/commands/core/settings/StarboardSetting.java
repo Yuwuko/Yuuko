@@ -28,7 +28,7 @@ public class StarboardSetting {
         TextChannel channel = MessageUtility.getFirstMentionedChannel(e);
         if(channel != null) {
             if(DatabaseFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been set to **" + channel.getName() + "**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been set to **" + channel.getAsMention() + "**.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
