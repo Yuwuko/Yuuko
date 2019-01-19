@@ -44,17 +44,19 @@ public class GenericMessageReactionController {
 
             // Starboard
             if(e instanceof MessageReactionAddEvent && e.getReactionEmote().getName().equals("⭐")) {
-                TextChannel starboard = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()));
-                if(starboard != null && !e.getTextChannel().getId().equals(starboard.getId())) {
-                    Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();
+                if(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()) != null) {
+                    TextChannel starboard = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()));
+                    if(starboard != null && !e.getTextChannel().getId().equals(starboard.getId())) {
+                        Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
-                    EmbedBuilder starredEmbed = new EmbedBuilder()
-                            .setColor(Color.ORANGE)
-                            .setAuthor(starred.getMember().getEffectiveName(),null, starred.getAuthor().getEffectiveAvatarUrl())
-                            .setDescription(starred.getContentDisplay())
-                            .setImage(starred.getAttachments().size() > 0 ? starred.getAttachments().get(0).getUrl() : null)
-                            .setFooter(starred.getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), null);
-                    starboard.sendMessage("⭐ - " + e.getTextChannel().getAsMention()).queue((message) -> starboard.sendMessage(starredEmbed.build()).queue());
+                        EmbedBuilder starredEmbed = new EmbedBuilder()
+                                .setColor(Color.ORANGE)
+                                .setAuthor(starred.getMember().getEffectiveName(), null, starred.getAuthor().getEffectiveAvatarUrl())
+                                .setDescription(starred.getContentDisplay())
+                                .setImage(starred.getAttachments().size() > 0 ? starred.getAttachments().get(0).getUrl() : null)
+                                .setFooter(starred.getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), null);
+                        starboard.sendMessage("⭐ - " + e.getTextChannel().getAsMention()).queue((message) -> starboard.sendMessage(starredEmbed.build()).queue());
+                    }
                 }
             }
 
