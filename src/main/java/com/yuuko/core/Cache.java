@@ -16,7 +16,6 @@ public class Cache {
     public static User BOT;
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
-    public static List<String> SETTINGS;
     public static DiscordBotListAPI BOT_LIST;
     public static String LATEST_INFO;
     public static String[] STANDARD_STRINGS;

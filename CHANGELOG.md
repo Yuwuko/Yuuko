@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 19-01-2019_1
++ [+] Added a starboard feature... everyone loves those right?
++ [~] Moved settings from being stored in the Cache class and initiated in the main class to being parked in the CommandSettings class.
+
 ## 18-01-2019_2
 + [~] Added a GenericTextChannelController to check when channels are removed to update bindings appropriately.
 + [~] Refactored parts of the DatabaseConnection subclasses into a DatabaseConnection superclass.

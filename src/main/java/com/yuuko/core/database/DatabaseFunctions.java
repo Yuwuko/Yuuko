@@ -376,4 +376,20 @@ public class DatabaseFunctions {
         }
     }
 
+    /**
+     * Updates settings from channels that are deleted.
+     * @param channel the channel to clean up.
+     */
+    public static void cleanupSettings(String guildId) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `starboard` = null WHERE `guildId` = guildId");){
+            stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
 }

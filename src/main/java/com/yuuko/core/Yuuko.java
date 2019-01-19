@@ -103,22 +103,12 @@ public class Yuuko {
             }
             System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
 
-            // Add them in lowercase so they're easier to compare later.
-            ArrayList<String> settingsList = new ArrayList<>();
-            settingsList.add("prefix");
-            settingsList.add("deleteexecuted");
-            settingsList.add("commandlogging");
-            settingsList.add("nowplaying");
-            settingsList.add("djmode");
-            settingsList.add("welcomemembers");
-
             Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
             Cache.STANDARD_STRINGS = new String[2];
             Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
             Cache.STANDARD_STRINGS[1] = Cache.STANDARD_STRINGS[0] + " · Requested by ";
             Cache.MODULES = moduleList;
             Cache.COMMANDS = commandList;
-            Cache.SETTINGS = settingsList;
 
             Cache.LATEST_INFO = "";
 

@@ -3,12 +3,31 @@ package com.yuuko.core.utilities;
 import com.yuuko.core.Cache;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageUtility {
+
+    /**
+     * Returns whether or not a user is mentioned in the message.
+     * @param e MessageReceivedEvent
+     * @return boolean
+     */
+    public static boolean checkIfUserMentioned(MessageReceivedEvent e) {
+        return getMutableMembersCollection(e).size() > 0;
+    }
+
+    /**
+     * Returns whether or not a channel is mentioned in the message.
+     * @param e MessageReceivedEvent
+     * @return boolean
+     */
+    public static boolean checkIfChannelMentioned(MessageReceivedEvent e) {
+        return e.getMessage().getMentionedChannels().size() > 0;
+    }
 
     /**
      * Returns the first mentioned user from a given message.
@@ -34,12 +53,13 @@ public class MessageUtility {
     }
 
     /**
-     * Returns whether or not a user is mentioned in the message.
+     * Returns the first mentioned channel from a given message.
      * @param e MessageReceivedEvent
-     * @return boolean
+     * @return TextChannel
      */
-    public static boolean checkIfUserMentioned(MessageReceivedEvent e) {
-        return getMutableMembersCollection(e).size() > 0;
+    public static TextChannel getFirstMentionedChannel(MessageReceivedEvent e) {
+        List<TextChannel> mentioned = e.getMessage().getMentionedChannels();
+        return (mentioned.size() > 0) ? mentioned.get(0) : null;
     }
 
     /**
