@@ -14,22 +14,25 @@ public class GenericTextChannelController {
     }
 
     private void textChannelDeleteEvent(TextChannelDeleteEvent e) {
-        ModuleBindFunctions.cleanupBinds(e.getChannel().getId());
+        String channel = e.getChannel().getId();
 
-        if(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()).equals(e.getChannel().getId())) {
-            DatabaseFunctions.cleanupSettings("starboard", e.getGuild().getId());
-            return;
+        if(channel != null) {
+            ModuleBindFunctions.cleanupBinds(channel);
+
+            if(channel.equals(DatabaseFunctions.getGuildSetting("starboard", channel))) {
+                DatabaseFunctions.cleanupSettings("starboard", e.getGuild().getId());
+                return;
+            }
+
+            if(channel.equals(DatabaseFunctions.getGuildSetting("commandLog", channel))) {
+                DatabaseFunctions.cleanupSettings("commandLog", e.getGuild().getId());
+                return;
+            }
+
+            if(channel.equals(DatabaseFunctions.getGuildSetting("newMember", channel))) {
+                DatabaseFunctions.cleanupSettings("newMember", e.getGuild().getId());
+            }
         }
-
-        if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()).equals(e.getChannel().getId())) {
-            DatabaseFunctions.cleanupSettings("commandLog", e.getGuild().getId());
-            return;
-        }
-
-        if(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId()).equals(e.getChannel().getId())) {
-            DatabaseFunctions.cleanupSettings("newMember", e.getGuild().getId());
-        }
-
     }
 
 }
