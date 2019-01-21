@@ -8,9 +8,9 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 21-01-2019_1
+# Yuuko 21-01-2019_3
 
-Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer) libraries.
+Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
 If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link or if you have any feature requests, feel free to post them in my Discord server [here](https://discord.gg/VsM25fN).
 
@@ -28,7 +28,8 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | `-help`, `-help play` |
 | about | Returns some technical information about Yuuko, such as uptime, ping and server count. | -about | `-about` |
-| settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | `settings`, `-settings deleteExecuted true` | MANAGE_SERVER |
+| settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | `-settings`, `-settings deleteExecuted true` | MANAGE_SERVER |
+| shards | Returns some information about all of the bot's current shards. | -shards | `-shards` |
 
 ### Moderation
 

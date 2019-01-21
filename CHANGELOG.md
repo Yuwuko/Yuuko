@@ -2,9 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 21-01-2019_2
+## 21-01-2019_3
++ [+] Added [__shards__] command to give the user some basic information about the bot's current shards.
 + [~] Migrated from pure Lavaplayer to using Lavalink for audio, in preparation for when the bot is sharded (not necessary but wanted)
 + [~] Migrated from JDABuilder to DefaultShardManagerBuilder.
++ [~] Fixed some minor bugs.
 
 ## 19-01-2019_2
 + [+] Added a starboard feature... everyone loves those right?

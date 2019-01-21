@@ -35,9 +35,8 @@ public class DatabaseFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-            final boolean existence = resultSet.next();
 
-            return existence;
+            return resultSet.next();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -144,11 +143,8 @@ public class DatabaseFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-            resultSet.next();
 
-            final boolean result = resultSet.getBoolean(1);
-
-            return result;
+            return resultSet.next() ? resultSet.getBoolean(1) : false;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -171,9 +167,7 @@ public class DatabaseFunctions {
             stmt.setString(1, guild);
             stmt.execute();
 
-            final boolean result = checkModuleSettings(moduleIn, guild);
-
-            return result;
+            return checkModuleSettings(moduleIn, guild);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -231,11 +225,8 @@ public class DatabaseFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-            resultSet.next();
 
-            final String result = resultSet.getString(1);
-
-            return (result != null) ? result : null;
+            return resultSet.next() ? resultSet.getString(1) : null;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -259,9 +250,7 @@ public class DatabaseFunctions {
             stmt.setString(1, value);
             stmt.setString(2, guild);
 
-            final boolean result = !stmt.execute();
-
-            return result;
+            return !stmt.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
