@@ -8,6 +8,6 @@ public class UpdateMetricsPingTask implements Task {
 
     @Override
     public void handle() {
-        MetricsManager.getDiscordMetrics().PING.set(Cache.JDA.getPing());
+        MetricsManager.getDiscordMetrics().PING.set(Cache.BOT.getJDA().getPing());
     }
 }

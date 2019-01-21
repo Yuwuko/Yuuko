@@ -281,20 +281,20 @@ public class DatabaseFunctions {
 
             MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
 
-            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt.setLong(2, MetricsManager.getSystemMetrics().UPTIME);
             stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
             stmt.setLong(4, MetricsManager.getSystemMetrics().MEMORY_USED);
             stmt.execute();
 
-            stmt2.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt2.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt2.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
             stmt2.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
             stmt2.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
             stmt2.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
             stmt2.execute();
 
-            stmt3.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt3.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt3.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
             stmt3.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
             stmt3.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
@@ -303,7 +303,7 @@ public class DatabaseFunctions {
             stmt3.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
             stmt3.execute();
 
-            stmt4.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt4.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt4.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
             stmt4.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
             stmt4.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
@@ -326,7 +326,7 @@ public class DatabaseFunctions {
 
             MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
-            stmt.setInt(1, Cache.JDA.getShardInfo().getShardId());
+            stmt.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt.setString(2, guildId);
             stmt.setString(3, command);
             stmt.execute();

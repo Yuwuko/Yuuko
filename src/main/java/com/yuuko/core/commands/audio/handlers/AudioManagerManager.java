@@ -8,7 +8,6 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
-import com.yuuko.core.Cache;
 
 import java.util.HashMap;
 
@@ -31,7 +30,6 @@ public class AudioManagerManager {
         playerManager.registerSourceManager(new VimeoAudioSourceManager());
         playerManager.registerSourceManager(new TwitchStreamAudioSourceManager());
         playerManager.registerSourceManager(new HttpAudioSourceManager());
-        playerManager.setFrameBufferDuration(400);
         playerManager.setTrackStuckThreshold(5000);
     }
 
@@ -39,17 +37,15 @@ public class AudioManagerManager {
      * Finds and sets the guild's handlers manager.
      * @return GuildAudioManager.
      */
-    public static GuildAudioManager getGuildAudioManager(String id) {
-        GuildAudioManager manager = managers.get(id);
+    public static GuildAudioManager getGuildAudioManager(String guildId) {
+        GuildAudioManager manager = managers.get(guildId);
 
         if(manager == null) {
             synchronized(AudioManagerManager.getGuildAudioManagers()) {
-                manager = new GuildAudioManager(playerManager);
-                addGuildMusicManager(id, manager);
+                manager = new GuildAudioManager(guildId);
+                addGuildMusicManager(guildId, manager);
             }
         }
-
-        Cache.JDA.getGuildById(id).getAudioManager().setSendingHandler(manager.getSendHandler());
 
         return manager;
     }

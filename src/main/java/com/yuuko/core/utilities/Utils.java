@@ -3,6 +3,7 @@ package com.yuuko.core.utilities;
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -89,7 +90,7 @@ public final class Utils {
      */
     public static void updateDiscordBotList() {
         try {
-            Cache.BOT_LIST.setStats(Cache.JDA.getShardInfo().getShardId(), Cache.JDA.getShardInfo().getShardTotal(), Math.toIntExact(Cache.JDA.getGuildCache().size()));
+            Cache.BOT_LIST.setStats(Cache.BOT.getJDA().getShardInfo().getShardId(), Cache.BOT.getJDA().getShardInfo().getShardTotal(), Math.toIntExact(Cache.BOT.getJDA().getGuildCache().size()));
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -140,4 +141,17 @@ public final class Utils {
         return e.getTextChannel().isNSFW();
     }
 
+
+    /**
+     * Returns the specific shard's SelfUser object.
+     * @return SelfUser
+     */
+    public static SelfUser getSelfUser() {
+        for(JDA shard : Cache.SHARD_MANAGER.getShards()) {
+            if(shard.getStatus().equals(JDA.Status.CONNECTED)) {
+                return shard.getSelfUser();
+            }
+        }
+        return null;
+    }
 }

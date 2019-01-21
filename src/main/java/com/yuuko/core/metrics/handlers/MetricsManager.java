@@ -44,7 +44,7 @@ public class MetricsManager {
     }
 
     public static void updateDiscordMetrics() {
-        List<Guild> guilds = Cache.JDA.getGuilds();
+        List<Guild> guilds = Cache.BOT.getJDA().getGuilds();
 
         int userCount = 0;
         int channelCount = 0;

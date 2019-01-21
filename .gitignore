@@ -32,3 +32,5 @@ out/
 # Configuration files
 metrics_configuration.txt
 configuration.txt
+shard_configuration.txt
+lavalink_configuration.txt

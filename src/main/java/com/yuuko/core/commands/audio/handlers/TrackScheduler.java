@@ -1,12 +1,12 @@
 package com.yuuko.core.commands.audio.handlers;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.commands.audio.commands.CurrentCommand;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utilities.MessageHandler;
+import lavalink.client.player.IPlayer;
+import lavalink.client.player.event.PlayerEventListenerAdapter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Collections;
@@ -14,15 +14,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class TrackScheduler extends AudioEventAdapter {
+public class TrackScheduler extends PlayerEventListenerAdapter {
 
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;
     private boolean repeating = false;
-    private final AudioPlayer player;
+    private final IPlayer player;
     public final Queue<AudioTrack> queue;
 
-    TrackScheduler(AudioPlayer player) {
+    TrackScheduler(IPlayer player) {
         this.player = player;
         this.queue = new LinkedList<>();
     }
@@ -43,11 +43,13 @@ public class TrackScheduler extends AudioEventAdapter {
      */
     public boolean queue(AudioTrack track) {
         if(background != null && player.getPlayingTrack() == background) {
-            return player.startTrack(track, false);
+            player.playTrack(track);
 
-        } else if(!player.startTrack(track, true)) {
+        } else if(player.getPlayingTrack() != null) {
             return queue.offer(track);
-
+        } else {
+            player.playTrack(track);
+            return true;
         }
         return false;
     }
@@ -56,15 +58,17 @@ public class TrackScheduler extends AudioEventAdapter {
      * Start the next track, stopping the current one if it is playing.
      */
     public void nextTrack() {
-        if(!player.startTrack(queue.poll(), false)) {
+        AudioTrack track = queue.poll();
+        if(track == null) {
             if(background != null) {
                 background = background.makeClone();
-                player.startTrack(background, false);
+                player.playTrack(background);
             }
         } else {
             try {
+                player.playTrack(track);
                 MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
-                if(DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
                     new CurrentCommand().executeCommand((MessageReceivedEvent) player.getPlayingTrack().getUserData(), null);
                 }
             } catch(Exception ex) {
@@ -75,35 +79,32 @@ public class TrackScheduler extends AudioEventAdapter {
 
     /**
      * What to do when the current track ends.
-     * @param player; AudioPlayer.
-     * @param track; Track.
-     * @param endReason; AudioTrackEndReason
+     * @param player IPlayer.
+     * @param track AudioTrack.
+     * @param endReason AudioTrackEndReason
      */
     @Override
-    public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+    public void onTrackEnd(IPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         this.lastTrack = track;
 
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
         if(endReason.mayStartNext) {
             if(repeating) {
-                player.startTrack(lastTrack.makeClone(), false);
+                player.playTrack(lastTrack.makeClone());
             } else {
                 nextTrack();
             }
         }
-
     }
 
-    /**
-     * What to do if the track gets stuck.
-     * @param player; AudioPlayer
-     * @param track; Track.
-     * @param thresholdMs; Long
-     */
     @Override
-    public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
-        player.stopTrack();
-        player.startTrack(track.makeClone(), false);
+    public void onTrackException(IPlayer player, AudioTrack track, Exception exception) {
+        super.onTrackException(player, track, exception);
+    }
+
+    @Override
+    public void onTrackStuck(IPlayer player, AudioTrack track, long thresholdMs) {
+        super.onTrackStuck(player, track, thresholdMs);
     }
 
     /**
@@ -116,7 +117,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     /**
      * Sets repeating.
-     * @param repeating; boolean.
+     * @param repeating boolean.
      */
     public void setRepeating(boolean repeating) {
         this.repeating = repeating;
@@ -139,7 +140,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     /**
      * Sets the background track.
-     * @param track;
+     * @param track audio track
      */
     public void setBackground(AudioTrack track) {
         background = track;

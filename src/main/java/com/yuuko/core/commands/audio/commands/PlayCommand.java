@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
@@ -31,7 +32,7 @@ public class PlayCommand extends Command {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(e.getGuild().getAudioManager().getConnectionStatus() != CONNECTED) {
-            e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
+            Cache.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
         if(command.length == 1) {

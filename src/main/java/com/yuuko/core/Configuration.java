@@ -8,12 +8,13 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "19-01-2019_2";
+    public static final String VERSION = "21-01-2019_2";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
     public static String BOT_ID;
     static String BOT_TOKEN;
+    public static int SHARD_COUNT = 0;
     public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
     public static String DATABASE_IP;
@@ -35,6 +36,10 @@ public class Configuration {
             DATABASE_USERNAME = c.readLine();
             DATABASE_PASSWORD = c.readLine();
             c.close();
+
+            BufferedReader s = new BufferedReader(new FileReader("shard_configuration.txt"));
+            SHARD_COUNT = Integer.parseInt(s.readLine());
+            s.close();
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "Configuration.load()");

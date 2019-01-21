@@ -2,7 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 19-01-2019_*
+## 21-01-2019_2
++ [~] Migrated from pure Lavaplayer to using Lavalink for audio, in preparation for when the bot is sharded (not necessary but wanted)
++ [~] Migrated from JDABuilder to DefaultShardManagerBuilder.
+
+## 19-01-2019_2
 + [+] Added a starboard feature... everyone loves those right?
 + [~] Refactored all of the non-boolean settings into their own settings classes and also refactored the database to allow the commandLog and member welcoming to be customised.
 + [~] Moved settings from being stored in the Cache class and initiated in the main class to being parked in the CommandSettings class.

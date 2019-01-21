@@ -4,9 +4,11 @@
 
 package com.yuuko.core;
 
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.commands.audio.handlers.LavalinkManager;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
@@ -16,23 +18,25 @@ import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.utils.SessionControllerAdapter;
 import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Yuuko {
+
+    private static final Logger log = LoggerFactory.getLogger(Yuuko.class);
 
     /**
      * Initialises the bot and JDA.
@@ -41,42 +45,30 @@ public class Yuuko {
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.
      */
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
-        try {
-            // Prints a cool banner :^)
-            String[] arguments = new String[] {"/bin/bash", "-c", "figlet -c Yuuko"};
-            Process p = new ProcessBuilder(arguments).start();
-            p.waitFor();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = reader.readLine();
-            StringBuffer output = new StringBuffer();
-            while(line != null) {
-                output.append(line).append("\n");
-                line = reader.readLine();
-            }
-            TextUtility.removeLastOccurrence(output, "\n");
-            System.out.println(output);
-        } catch(Exception ex) {
-            //
-        }
-
         Configuration.load();
         Configuration.loadApi();
         new SettingsDatabaseConnection();
         new MetricsDatabaseConnection();
         DatabaseFunctions.truncateMetrics();
 
-        Cache.JDA = new JDABuilder(AccountType.BOT)
-                .useSharding(0, 1)
-                .setToken(Configuration.BOT_TOKEN)
-                .addEventListener(new GenericEventManager())
-                .setEventManager(new GenericEventManager.ThreadedEventManager())
-                .build();
-        Cache.JDA.awaitReady();
-        Cache.JDA.getPresence().setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS));
+        // Lavalink client node setup.
+        Cache.LAVALINK = new LavalinkManager();
 
-        Cache.BOT = Cache.JDA.getSelfUser();
-        Configuration.GLOBAL_PREFIX = "<@" + Cache.BOT.getIdLong() + "> ";
+        Cache.SHARD_MANAGER = new DefaultShardManagerBuilder()
+                .setSessionController(new SessionControllerAdapter())
+                .setToken(Configuration.BOT_TOKEN)
+                .addEventListeners(new GenericEventManager(), Cache.LAVALINK.getLavalink())
+                .setAudioSendFactory(new NativeAudioSendFactory())
+                .setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS))
+                .build();
+
+        while(!areShardsBuilt()) {
+            log.info("Still waiting...");
+            Thread.sleep(1000);
+        }
+
+        Cache.BOT = Utils.getSelfUser();
+        Configuration.GLOBAL_PREFIX = "<@" + Cache.BOT.getId() + "> ";
         MetricsManager.updateDiscordMetrics();
 
         if(Configuration.API_KEYS.containsKey("discordbots")) {
@@ -116,6 +108,19 @@ public class Yuuko {
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "new Yuuko()");
         }
+    }
+
+    private static boolean areShardsBuilt() {
+        if(Cache.SHARD_MANAGER == null) {
+            return false;
+        }
+
+        for(JDA shard : Cache.SHARD_MANAGER.getShards()) {
+            if(shard.getStatus() != JDA.Status.CONNECTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

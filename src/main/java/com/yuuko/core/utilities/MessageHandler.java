@@ -134,7 +134,7 @@ public final class MessageHandler {
      */
     public static void sendException(Exception ex, String command) {
         try {
-            MessageChannel channel = Cache.JDA.getTextChannelById(520158641484201994L);
+            MessageChannel channel = Cache.BOT.getJDA().getTextChannelById(520158641484201994L);
 
             StringBuilder traceString = new StringBuilder();
             for(StackTraceElement trace: ex.getStackTrace()) {

@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
@@ -27,8 +28,7 @@ public class BackgroundCommand extends Command {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length > 1) {
-            e.getGuild().getAudioManager().setSendingHandler(manager.getSendHandler());
-            e.getGuild().getAudioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
+            Cache.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
             if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
