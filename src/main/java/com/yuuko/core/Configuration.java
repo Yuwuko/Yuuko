@@ -8,13 +8,14 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "21-01-2019_2";
+    public static final String VERSION = "22-01-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static int SHARD_COUNT = 0;
+    public static int SHARD_ID = 0;
     public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
     public static String DATABASE_IP;

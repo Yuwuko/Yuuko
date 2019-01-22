@@ -23,7 +23,6 @@ import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.utils.SessionControllerAdapter;
 import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
@@ -50,22 +49,26 @@ public class Yuuko {
         new SettingsDatabaseConnection();
         new MetricsDatabaseConnection();
         DatabaseFunctions.truncateMetrics();
+        Configuration.SHARD_ID = Integer.parseInt(args[0]);
 
         // Lavalink client node setup.
         Cache.LAVALINK = new LavalinkManager();
 
         Cache.SHARD_MANAGER = new DefaultShardManagerBuilder()
-                .setSessionController(new SessionControllerAdapter())
                 .setToken(Configuration.BOT_TOKEN)
                 .addEventListeners(new GenericEventManager(), Cache.LAVALINK.getLavalink())
                 .setAudioSendFactory(new NativeAudioSendFactory())
                 .setGame(Game.of(Game.GameType.LISTENING, Configuration.STATUS))
+                .setShardsTotal(Configuration.SHARD_COUNT)
+                .setShards(Configuration.SHARD_ID)
                 .build();
 
         while(!areShardsBuilt()) {
             log.info("Still waiting...");
             Thread.sleep(1000);
         }
+
+        log.info("Active Shards: " + Cache.SHARD_MANAGER.getShards().size());
 
         Cache.BOT = Utils.getSelfUser();
         Configuration.GLOBAL_PREFIX = "<@" + Cache.BOT.getId() + "> ";
@@ -85,7 +88,7 @@ public class Yuuko {
                 Module obj = module.getConstructor(MessageReceivedEvent.class, String[].class).newInstance(null, null);
                 moduleList.add(obj);
             }
-            System.out.println("[INFO] " + moduleList.size() + " commands successfully loaded.");
+            log.info(moduleList.size() + " commands successfully loaded.");
 
             Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
             List<Command> commandList = new ArrayList<>();
@@ -93,7 +96,7 @@ public class Yuuko {
                 Command obj = command.getConstructor().newInstance();
                 commandList.add(obj);
             }
-            System.out.println("[INFO] " + commandList.size() + " commands successfully loaded.");
+            log.info(commandList.size() + " commands successfully loaded.");
 
             Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
             Cache.STANDARD_STRINGS = new String[2];

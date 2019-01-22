@@ -3,6 +3,7 @@ package com.yuuko.core.commands.developer;
 import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
+import com.yuuko.core.commands.developer.commands.LavalinkNodeCommand;
 import com.yuuko.core.commands.developer.commands.ReloadApiCommand;
 import com.yuuko.core.commands.developer.commands.SetStatusCommand;
 import com.yuuko.core.commands.developer.commands.SyncServersCommand;
@@ -14,7 +15,8 @@ public class DeveloperModule extends Module {
         super("Developer", null, false, new Command[]{
                 new SetStatusCommand(),
                 new SyncServersCommand(),
-                new ReloadApiCommand()
+                new ReloadApiCommand(),
+                new LavalinkNodeCommand()
         });
 
         if(e == null || e.getAuthor().getIdLong() != 215161101460045834L) {

@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 22-01-2019_1
++ [+] Added [__lavalink__] command to be able to add/remove lavalink nodes on demand.
+
 ## 21-01-2019_3
 + [+] Added [__shards__] command to give the user some basic information about the bot's current shards.
 + [~] Migrated from pure Lavaplayer to using Lavalink for audio, in preparation for when the bot is sharded (not necessary but wanted)
