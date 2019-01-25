@@ -14,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class LastCommand extends Command {
 
 	public LastCommand() {
-		super("last", AudioModule.class, 0, new String[]{"-last"}, null);
+		super("last", AudioModule.class, 0, new String[]{"-last"}, false, null);
 	}
 
 	@Override

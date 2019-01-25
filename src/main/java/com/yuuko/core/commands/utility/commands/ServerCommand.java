@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class ServerCommand extends Command {
 
     public ServerCommand() {
-        super("server", UtilityModule.class, 0, new String[]{"-server"}, null);
+        super("server", UtilityModule.class, 0, new String[]{"-server"}, false, null);
     }
 
     @Override

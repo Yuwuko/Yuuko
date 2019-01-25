@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SyncServersCommand extends Command {
 
     public SyncServersCommand() {
-        super("syncservers", DeveloperModule.class, 0, new String[]{"-syncservers"}, null);
+        super("syncservers", DeveloperModule.class, 0, new String[]{"-syncservers"}, false, null);
     }
 
     @Override

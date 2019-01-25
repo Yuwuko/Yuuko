@@ -14,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class CurrentCommand extends Command {
 
     public CurrentCommand() {
-        super("current", AudioModule.class, 0, new String[]{"-current"}, null);
+        super("current", AudioModule.class, 0, new String[]{"-current"}, false, null);
     }
 
     @Override

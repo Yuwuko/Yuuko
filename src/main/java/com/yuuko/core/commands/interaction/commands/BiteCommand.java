@@ -20,7 +20,7 @@ public class BiteCommand extends Command {
     };
 
     public BiteCommand() {
-        super("bite", InteractionModule.class, 1, new String[]{"-bite @user"}, null);
+        super("bite", InteractionModule.class, 1, new String[]{"-bite @user"}, false, null);
     }
 
     @Override

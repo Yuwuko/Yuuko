@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class PauseCommand extends Command {
 
     public PauseCommand() {
-        super("pause", AudioModule.class, 0, new String[]{"-pause"}, null);
+        super("pause", AudioModule.class, 0, new String[]{"-pause"}, false, null);
     }
 
     @Override

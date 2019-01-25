@@ -16,7 +16,7 @@ import java.util.List;
 public class SearchCommand extends Command {
 
     public SearchCommand() {
-        super("search", AudioModule.class, 1, new String[]{"-search [term]"}, null);
+        super("search", AudioModule.class, 1, new String[]{"-search [term]"}, false, null);
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.jsoup.nodes.Document;
 public class EfuktCommand extends Command {
 
     public EfuktCommand() {
-        super("efukt", NSFWModule.class, 0, new String[]{"-efukt"}, null);
+        super("efukt", NSFWModule.class, 0, new String[]{"-efukt"}, true, null);
     }
 
     @Override

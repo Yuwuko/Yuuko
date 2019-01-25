@@ -18,7 +18,7 @@ public class CryCommand extends Command {
     };
 
     public CryCommand() {
-        super("cry", InteractionModule.class, 0, new String[]{"-cry"}, null);
+        super("cry", InteractionModule.class, 0, new String[]{"-cry"}, false, null);
     }
 
     @Override

@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ReloadApiCommand extends Command {
 
     public ReloadApiCommand() {
-        super("reloadapi", DeveloperModule.class, 1, new String[]{"-reloadapi [type] [status]"}, null);
+        super("reloadapi", DeveloperModule.class, 1, new String[]{"-reloadapi [type] [status]"}, false, null);
     }
 
     @Override

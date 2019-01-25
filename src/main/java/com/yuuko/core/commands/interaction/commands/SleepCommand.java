@@ -18,7 +18,7 @@ public class SleepCommand extends Command {
     };
 
     public SleepCommand() {
-        super("sleep", InteractionModule.class, 0, new String[]{"-sleep"}, null);
+        super("sleep", InteractionModule.class, 0, new String[]{"-sleep"}, false, null);
     }
 
     @Override

@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class QueueCommand extends Command {
 
     public QueueCommand() {
-        super("queue", AudioModule.class, 0, new String[]{"-queue"}, null);
+        super("queue", AudioModule.class, 0, new String[]{"-queue"}, false, null);
     }
 
     @Override

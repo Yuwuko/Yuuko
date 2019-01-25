@@ -21,7 +21,7 @@ import java.util.List;
 public class LineStatusCommand extends Command {
 
     public LineStatusCommand() {
-        super("linestatus", WorldModule.class, 0, new String[]{"-linestatus", "-linestatus [min]"}, null);
+        super("linestatus", WorldModule.class, 0, new String[]{"-linestatus", "-linestatus [min]"}, false, null);
     }
 
     @Override

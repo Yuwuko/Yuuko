@@ -20,7 +20,7 @@ public class PokeCommand extends Command {
     };
 
     public PokeCommand() {
-        super("poke", InteractionModule.class, 1, new String[]{"-poke @user"}, null);
+        super("poke", InteractionModule.class, 1, new String[]{"-poke @user"}, false, null);
     }
 
     @Override

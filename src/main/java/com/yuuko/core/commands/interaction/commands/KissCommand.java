@@ -10,26 +10,25 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Random;
 
-public class HugCommand extends Command {
+public class KissCommand extends Command {
     private static final String[] interactionImage = new String[]{
-            "https://i.imgur.com/wOmoeF8.gif",
-            "https://i.imgur.com/ntqYLGl.gif",
-            "https://i.imgur.com/v47M1S4.gif",
-            "https://i.imgur.com/cZWWATV.gif",
-            "https://i.imgur.com/CxmswPU.gif"
+            "https://i.imgur.com/sGVgr74.gif",
+            "https://i.imgur.com/TItLfqh.gif",
+            "https://i.imgur.com/YbNv10F.gif",
+            "https://i.imgur.com/wQjUdnZ.gif",
+            "https://i.imgur.com/lmY5soG.gif"
     };
 
-    public HugCommand() {
-        super("hug", InteractionModule.class, 1, new String[]{"-hug @user"}, false, null);
+    public KissCommand() {
+        super("kiss", InteractionModule.class, 1, new String[]{"-kiss @user"}, false, null);
     }
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         Member target = MessageUtility.getFirstMentionedMember(e);
         if(target != null) {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** hugs **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
+            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** kisses **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

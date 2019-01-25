@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ShuffleCommand extends Command {
 
     public ShuffleCommand() {
-        super("shuffle", AudioModule.class, 0, new String[]{"-shuffle"}, null);
+        super("shuffle", AudioModule.class, 0, new String[]{"-shuffle"}, false, null);
     }
 
     @Override

@@ -16,7 +16,7 @@ import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 public class StopCommand extends Command {
 
     public StopCommand() {
-        super("stop", AudioModule.class, 0, new String[]{"-stop"}, null);
+        super("stop", AudioModule.class, 0, new String[]{"-stop"}, false, null);
     }
 
     @Override

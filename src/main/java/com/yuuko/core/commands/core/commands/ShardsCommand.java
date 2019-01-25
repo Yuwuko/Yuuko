@@ -14,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ShardsCommand extends Command {
 
     public ShardsCommand() {
-        super("shards", CoreModule.class, 0, new String[]{"-shards"}, null);
+        super("shards", CoreModule.class, 0, new String[]{"-shards"}, false, null);
     }
 
     @Override

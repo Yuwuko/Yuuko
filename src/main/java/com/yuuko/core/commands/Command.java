@@ -10,12 +10,14 @@ public abstract class Command {
     private final int expectedParameters;
     private final String[] usage;
     private final Permission[] permissions;
+    private final boolean nsfw;
 
-    public Command(String name, Class<?> module, int expectedParameters, String[] usage, Permission[] permissions) {
+    public Command(String name, Class<?> module, int expectedParameters, String[] usage, boolean nsfw, Permission[] permissions) {
         this.name = name;
         this.module = module;
         this.expectedParameters = expectedParameters;
         this.usage = usage;
+        this.nsfw = nsfw;
         this.permissions = permissions;
     }
 
@@ -37,6 +39,10 @@ public abstract class Command {
 
     public String[] getUsage() {
         return usage;
+    }
+
+    public boolean isNSFW() {
+        return nsfw;
     }
 
     public Permission[] getPermissions() {

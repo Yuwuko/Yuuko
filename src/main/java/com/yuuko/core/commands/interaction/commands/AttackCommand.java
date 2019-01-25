@@ -20,7 +20,7 @@ public class AttackCommand extends Command {
     };
 
     public AttackCommand() {
-        super("attack", InteractionModule.class, 1, new String[]{"-attack @user"}, null);
+        super("attack", InteractionModule.class, 1, new String[]{"-attack @user"}, false, null);
     }
 
     @Override

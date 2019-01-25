@@ -65,7 +65,7 @@ public class Yuuko {
 
         while(!areShardsBuilt()) {
             log.info("Still waiting...");
-            Thread.sleep(1000);
+            Thread.sleep(2500);
         }
 
         log.info("Active Shards: " + Cache.SHARD_MANAGER.getShards().size());

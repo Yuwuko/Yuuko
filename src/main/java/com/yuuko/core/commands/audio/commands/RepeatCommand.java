@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class RepeatCommand extends Command {
 
     public RepeatCommand() {
-        super("repeat", AudioModule.class, 0, new String[]{"-repeat"}, null);
+        super("repeat", AudioModule.class, 0, new String[]{"-repeat"}, false, null);
     }
 
     @Override

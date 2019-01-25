@@ -11,7 +11,7 @@ import java.net.URI;
 public class LavalinkNodeCommand extends Command {
 
     public LavalinkNodeCommand() {
-        super("lavalink", DeveloperModule.class, 2, new String[]{"-lavalink [action] [node] [secret]"}, null);
+        super("lavalink", DeveloperModule.class, 2, new String[]{"-lavalink [action] [node] [secret]"}, false, null);
     }
 
     @Override

@@ -71,6 +71,10 @@ public class GenericEventManager extends ListenerAdapter {
         }
     }
 
+    /**
+     * Captures and deals with generic text-channel events.
+     * @param e -> GenericTextChannelEvent.
+     */
     @Override
     public void onGenericTextChannel(GenericTextChannelEvent e) {
         try {

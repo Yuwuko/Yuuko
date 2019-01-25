@@ -20,7 +20,7 @@ public class TickleCommand extends Command {
     };
 
     public TickleCommand() {
-        super("tickle", InteractionModule.class, 1, new String[]{"-tickle @user"}, null);
+        super("tickle", InteractionModule.class, 1, new String[]{"-tickle @user"}, false, null);
     }
 
     @Override

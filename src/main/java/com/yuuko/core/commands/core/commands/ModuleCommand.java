@@ -15,7 +15,7 @@ import java.awt.*;
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", CoreModule.class, 1, new String[]{"-module [module]"}, new Permission[]{Permission.MANAGE_SERVER});
+        super("module", CoreModule.class, 1, new String[]{"-module [module]"}, false, new Permission[]{Permission.MANAGE_SERVER});
     }
 
     @Override

@@ -14,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class AboutCommand extends Command {
 
     public AboutCommand() {
-        super("about", CoreModule.class, 0, new String[]{"-about"}, null);
+        super("about", CoreModule.class, 0, new String[]{"-about"}, false, null);
     }
 
     @Override

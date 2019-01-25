@@ -20,7 +20,7 @@ public class LaughCommand extends Command {
     };
 
     public LaughCommand() {
-        super("laugh", InteractionModule.class, 0, new String[]{"-laugh", "-laugh @user"}, null);
+        super("laugh", InteractionModule.class, 0, new String[]{"-laugh", "-laugh @user"}, false, null);
     }
 
     @Override

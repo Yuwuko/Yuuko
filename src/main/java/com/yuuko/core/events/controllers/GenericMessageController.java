@@ -26,7 +26,6 @@ public class GenericMessageController {
             // Increment message counter, regardless of it's author.
             MetricsManager.getEventMetrics().MESSAGES_PROCESSED.getAndIncrement();
 
-            // Figure out if the user is a bot or not, so we don't waste any time.
             if(e.getAuthor().isBot()) {
                 return;
             }

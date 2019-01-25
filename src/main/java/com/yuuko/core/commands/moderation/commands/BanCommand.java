@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class BanCommand extends Command {
 
     public BanCommand() {
-        super("ban", ModerationModule.class,1, new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, new Permission[]{Permission.BAN_MEMBERS});
+        super("ban", ModerationModule.class,1, new String[]{"-ban @user [days]", "-ban @user [days] [reason]"}, false, new Permission[]{Permission.BAN_MEMBERS});
     }
 
     @Override

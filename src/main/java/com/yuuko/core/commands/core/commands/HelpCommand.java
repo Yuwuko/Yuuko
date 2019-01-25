@@ -15,7 +15,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", CoreModule.class, 0, new String[]{"-help", "-help [command]"}, null);
+        super("help", CoreModule.class, 0, new String[]{"-help", "-help [command]"}, false, null);
     }
 
     @Override

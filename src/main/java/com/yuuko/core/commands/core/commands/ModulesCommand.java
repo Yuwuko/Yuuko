@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ModulesCommand extends Command {
 
     public ModulesCommand() {
-        super("commands", CoreModule.class, 0, new String[]{"-commands"}, null);
+        super("commands", CoreModule.class, 0, new String[]{"-commands"}, false, null);
     }
 
     @Override

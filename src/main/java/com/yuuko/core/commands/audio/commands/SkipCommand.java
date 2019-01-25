@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SkipCommand extends Command {
 
     public SkipCommand() {
-        super("skip", AudioModule.class, 0, new String[]{"-skip"}, null);
+        super("skip", AudioModule.class, 0, new String[]{"-skip"}, false, null);
     }
 
     @Override

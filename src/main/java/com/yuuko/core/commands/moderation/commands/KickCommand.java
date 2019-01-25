@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class KickCommand extends Command {
 
     public KickCommand() {
-        super("kick", ModerationModule.class,1, new String[]{"-kick @user", "-ban @user [reason]"}, new Permission[]{Permission.KICK_MEMBERS});
+        super("kick", ModerationModule.class,1, new String[]{"-kick @user", "-ban @user [reason]"}, false, new Permission[]{Permission.KICK_MEMBERS});
     }
 
     @Override

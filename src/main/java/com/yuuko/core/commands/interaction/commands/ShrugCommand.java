@@ -20,7 +20,7 @@ public class ShrugCommand extends Command {
     };
 
     public ShrugCommand() {
-        super("shrug", InteractionModule.class, 0, new String[]{"-shrug", "-shrug @user"}, null);
+        super("shrug", InteractionModule.class, 0, new String[]{"-shrug", "-shrug @user"}, false, null);
     }
 
     @Override

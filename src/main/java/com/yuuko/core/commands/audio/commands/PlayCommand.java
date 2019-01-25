@@ -24,7 +24,7 @@ import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.CONNECTED;
 public class PlayCommand extends Command {
 
     public PlayCommand() {
-        super("play", AudioModule.class, 0, new String[]{"-play", "-play [url]", "-play [term]"}, null);
+        super("play", AudioModule.class, 0, new String[]{"-play", "-play [url]", "-play [term]"}, false, null);
     }
 
     @Override

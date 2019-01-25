@@ -20,7 +20,7 @@ public class PoutCommand extends Command {
     };
 
     public PoutCommand() {
-        super("pout", InteractionModule.class, 0, new String[]{"-pout", "-pout @user"}, null);
+        super("pout", InteractionModule.class, 0, new String[]{"-pout", "-pout @user"}, false, null);
     }
 
     @Override

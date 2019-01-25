@@ -20,7 +20,7 @@ public class AngryCommand extends Command {
     };
 
     public AngryCommand() {
-        super("angry", InteractionModule.class, 0, new String[]{"-angry", "-angry @user"}, null);
+        super("angry", InteractionModule.class, 0, new String[]{"-angry", "-angry @user"}, false, null);
     }
 
     @Override
