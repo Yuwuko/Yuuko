@@ -24,16 +24,16 @@ public class CommandExecutor {
         }
 
         if(module.checkModuleSettings(e)) { // Is the module enabled?
-            if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
-                return;
-            }
-            if(!Utils.isChannelNSFW(e) && module.isNSFW()) { // Is the channel NSFW? If not, is the module NSFW?
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
-                MessageHandler.sendMessage(e, embed.build());
-            } else {
-                if(checkBinding(e, module, cmd)) {
-                    module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
-                        if(command.getPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission NULL? If so, does the bot have the permission?
+            if(checkBinding(e, module, cmd)) {
+                if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
+                    return;
+                }
+                module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
+                    if((module.isNSFW() && !Utils.isChannelNSFW(e)) || (command.isNSFW() && !Utils.isChannelNSFW(e))) { // Is the module or command NSFW? If so is the channel /NOT/ NSFW?
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
+                        MessageHandler.sendMessage(e, embed.build());
+                    } else {
+                        if(command.getPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission /NOT/ NULL? If so, does the bot have the permission?
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                             MessageHandler.sendMessage(e, embed.build());
                         } else {
@@ -54,8 +54,8 @@ public class CommandExecutor {
                                 }
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
         }
         messageCleanup(e);
