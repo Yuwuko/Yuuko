@@ -11,15 +11,15 @@ import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
+import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
+import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
-
-import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.CONNECTED;
 
 public class PlayCommand extends Command {
 
@@ -31,7 +31,7 @@ public class PlayCommand extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
-        if(e.getGuild().getAudioManager().getConnectionStatus() != CONNECTED) {
+        if(!LavalinkUtilities.isState(e.getGuild(), Link.State.CONNECTED)) {
             Cache.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 

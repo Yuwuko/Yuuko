@@ -5,13 +5,12 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
+import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.MessageHandler;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-import static net.dv8tion.jda.core.audio.hooks.ConnectionStatus.NOT_CONNECTED;
 
 public class StopCommand extends Command {
 
@@ -21,7 +20,7 @@ public class StopCommand extends Command {
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        if(Cache.LAVALINK.getLavalink().getLink(e.getGuild()).getState() != Link.State.NOT_CONNECTED) {
+        if(!LavalinkUtilities.isState(e.getGuild(), Link.State.NOT_CONNECTED)) {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             manager.scheduler.queue.clear();
@@ -42,7 +41,7 @@ public class StopCommand extends Command {
      * @param e; GenericGuildEvent
      */
     public void executeCommand(GenericGuildEvent e) {
-        if(e.getGuild().getAudioManager().getConnectionStatus() != NOT_CONNECTED) {
+        if(!LavalinkUtilities.isState(e.getGuild(), Link.State.NOT_CONNECTED)) {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
             manager.scheduler.queue.clear();

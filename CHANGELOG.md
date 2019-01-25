@@ -4,7 +4,9 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 25-01-2019_1
 + [+] Added [__kiss__], [__pet__], [__embarrassed__] interactions.
-+ [~] Added an NSFW tag on a command by command basis instead of just per module.
++ [+] Added an NSFW tag on a command by command basis instead of just per module.
++ [+] Added Lavalink utilities class to cut down on verbose chained methods.
++ [~] Fixed bug present since 21-01-2019_3 where bot wouldn't leave channel when everyone else has.
 
 ## 22-01-2019_1
 + [+] Added [__lavalink__] command to be able to add/remove lavalink nodes on demand.
