@@ -1,6 +1,8 @@
 package com.yuuko.core;
 
 import com.yuuko.core.utilities.MessageHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +26,8 @@ public class Configuration {
     public static String DATABASE_PASSWORD;
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
 
+    private static final Logger log = LoggerFactory.getLogger(Configuration.class);
+
     static void load() {
         try {
             BufferedReader c = new BufferedReader(new FileReader("configuration.txt"));
@@ -38,9 +42,13 @@ public class Configuration {
             DATABASE_PASSWORD = c.readLine();
             c.close();
 
+            log.info("Loaded configurations from 'configurations.txt");
+
             BufferedReader s = new BufferedReader(new FileReader("shard_configuration.txt"));
             SHARD_COUNT = Integer.parseInt(s.readLine());
             s.close();
+
+            log.info("Loaded configurations from 'shard_configurations.txt");
 
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "Configuration.load()");
@@ -59,7 +67,8 @@ public class Configuration {
                     API_KEYS.put(key.getName(), new ApplicationProgrammingInterface(key.getName(), c.readLine(), c.readLine()));
                     c.close();
                 }
-                System.out.println("[INFO] " + keyFiles.length + " API keys successfully loaded.");
+
+                log.info(keyFiles.length + " API keys successfully loaded.");
             }
 
         } catch(Exception ex) {
