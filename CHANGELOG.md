@@ -3,7 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 25-01-2019_1
-+ [+] Added [__kiss__] command to add to the total interactions.
++ [+] Added [__kiss__], [__pet__], [__embarrassed__] interactions.
 + [~] Added an NSFW tag on a command by command basis instead of just per module.
 
 ## 22-01-2019_1

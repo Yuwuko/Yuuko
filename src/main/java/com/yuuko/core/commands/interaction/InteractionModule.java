@@ -22,7 +22,8 @@ public class InteractionModule extends Module {
                 new SleepCommand(),
                 new TickleCommand(),
                 new KissCommand(),
-                new PetCommand()
+                new PetCommand(),
+                new EmbarrassedCommand()
         });
 
         new CommandExecutor(e,this, command);

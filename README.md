@@ -73,6 +73,8 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | sleep | Displays that you are sleeping. | -sleep | `-sleep` |
 | tickle | Tickles the tagged user. | -tickle @user | `-tickle @Yuuko#2525` |
 | kiss | Kisses the tagged user. | -kiss @user | `-kiss @Yuuko#2525` |
+| pet | Pets the tagged user. | -pet @user | `-pet @Yuuko#2525` |
+| embarrassed | Displays that you are embarrassed. | -embarrassed | `-embarrassed` |
 
 ### Fun
 
