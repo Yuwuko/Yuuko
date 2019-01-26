@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 26-01-2019_1
++ [~] Fixed a bug that stopped the modules command from working correctly. (just another missed rs.next() *sigh*)
++ [-] Removed the [__modules__] command and combined it with the regular module command to achieve dual functionality.
+
 ## 25-01-2019_1
 + [+] Added [__kiss__], [__pet__], [__embarrassed__] interactions.
 + [+] Added an NSFW tag on a command by command basis instead of just per module.

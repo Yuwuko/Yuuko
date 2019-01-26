@@ -13,7 +13,6 @@ public class CoreModule extends Module {
 				new AboutCommand(),
 				new SettingsCommand(),
 				new ModuleCommand(),
-				new ModulesCommand(),
 				new HelpCommand(),
 				new ShardsCommand()
 		});

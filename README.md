@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 25-01-2019_1
+# Yuuko 26-01-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -24,8 +24,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 
 | Command | Description | Usage | Example | Permission |
 |---------|-------------|-------|---------|------------|
-| module | Toggles a module on or off based on it's current value. | -module [module] | `-module audio` | MANAGE_SERVER|
-| modules | Lists all of modules, separated by their on/off state. | -modules | `-modules` |
+| module | Toggles a module on or off based on it's current value. If no parameters given, lists the state of each module. | -module, -module [module] | `-module`, `-module audio` | MANAGE_SERVER|
 | help | Sends a private message to the user with a link to the GitHub repository where this list is located, or sends usage information about the given command. | -help &#124; [command] | `-help`, `-help play` |
 | about | Returns some technical information about Yuuko, such as uptime, ping and server count. | -about | `-about` |
 | settings | Gives the ability to display or set a variety of server settings. | -settings &#124; [setting] [value] | `-settings`, `-settings deleteExecuted true` | MANAGE_SERVER |

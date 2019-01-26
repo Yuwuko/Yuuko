@@ -98,13 +98,13 @@ public class DatabaseFunctions {
      * @param guild the guild id.
      * @return ArrayList<ArrayList<String>>
      */
-    public static ArrayList<ArrayList<String>> getModuleSettings(String guild) {
+    public static ArrayList<ArrayList<String>> getModuleSettings(String guildId) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `guildId` = ?");) {
 
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
-            stmt.setString(1, guild);
+            stmt.setString(1, guildId);
             ResultSet rs = stmt.executeQuery();
             ResultSetMetaData meta = rs.getMetaData();
 
@@ -112,12 +112,16 @@ public class DatabaseFunctions {
             ArrayList<String> enabled = new ArrayList<>();
             ArrayList<String> disabled = new ArrayList<>();
 
-            for(int i = 2; i < (Cache.MODULES.size()); i++) {
-                if(rs.getBoolean(i)) {
-                    enabled.add(meta.getColumnName(i).substring(6));
-                } else {
-                    disabled.add(meta.getColumnName(i).substring(6));
+            if(rs.next()) {
+                for(int i = 2; i < Cache.MODULES.size(); i++) {
+                    if(rs.getBoolean(i)) {
+                        enabled.add(meta.getColumnName(i).substring(6));
+                    } else {
+                        disabled.add(meta.getColumnName(i).substring(6));
+                    }
                 }
+            } else {
+                return new ArrayList<>();
             }
 
             arrayLists.add(enabled);
