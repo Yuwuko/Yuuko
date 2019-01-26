@@ -51,7 +51,8 @@ public class DatabaseFunctions {
      */
     public static boolean addNewGuild(String guildId, String guildName, String guildRegion) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ? WHERE `guildId` = ?");) {
 
             if(!exists(guildId)) {
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
@@ -60,11 +61,17 @@ public class DatabaseFunctions {
                 stmt.setString(2, guildName);
                 stmt.setString(3, guildRegion);
                 stmt.execute();
-
-                return true;
             } else {
-                return false;
+                MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+                stmt2.setString(1, guildName);
+                stmt2.setString(2, guildRegion);
+                stmt2.setString(3, guildId);
+                stmt2.execute();
             }
+
+            return true;
+
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
@@ -72,7 +79,7 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Adds a new guild to the database and initialises it's settings.
+     * Adds a new guild to the database and initialises it's settings, or updates current guilds if they already exist on the database.
      * @param e MessageReceivedEvent.
      * @return if the add was successful.
      */
@@ -82,9 +89,7 @@ public class DatabaseFunctions {
 
             for(Object guild : guilds) {
                 Guild matchedGuild = (Guild) guild;
-                if(!exists(matchedGuild.getId())) {
-                    addNewGuild(matchedGuild.getId(), matchedGuild.getName(), matchedGuild.getRegion().getName());
-                }
+                addNewGuild(matchedGuild.getId(), matchedGuild.getName(), matchedGuild.getRegion().getName());
             }
 
             return true;

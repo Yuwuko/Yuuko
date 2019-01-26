@@ -6,7 +6,7 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.developer.commands.LavalinkNodeCommand;
 import com.yuuko.core.commands.developer.commands.ReloadApiCommand;
 import com.yuuko.core.commands.developer.commands.SetStatusCommand;
-import com.yuuko.core.commands.developer.commands.SyncServersCommand;
+import com.yuuko.core.commands.developer.commands.SyncGuildsCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class DeveloperModule extends Module {
@@ -14,7 +14,7 @@ public class DeveloperModule extends Module {
     public DeveloperModule(MessageReceivedEvent e, String[] command) {
         super("Developer", null, false, new Command[]{
                 new SetStatusCommand(),
-                new SyncServersCommand(),
+                new SyncGuildsCommand(),
                 new ReloadApiCommand(),
                 new LavalinkNodeCommand()
         });
