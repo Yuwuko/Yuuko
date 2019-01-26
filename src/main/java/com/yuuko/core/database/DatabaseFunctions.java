@@ -49,14 +49,16 @@ public class DatabaseFunctions {
      * @param guild the guild to add.
      * @return if the add was successful.
      */
-    public static boolean addNewGuild(String guild) {
+    public static boolean addNewGuild(String guildId, String guildName, String guildRegion) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");) {
 
-            if(!exists(guild)) {
+            if(!exists(guildId)) {
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
-                stmt.setString(1, guild);
+                stmt.setString(1, guildId);
+                stmt.setString(2, guildName);
+                stmt.setString(3, guildRegion);
                 stmt.execute();
 
                 return true;
@@ -81,7 +83,7 @@ public class DatabaseFunctions {
             for(Object guild : guilds) {
                 Guild matchedGuild = (Guild) guild;
                 if(!exists(matchedGuild.getId())) {
-                    addNewGuild(matchedGuild.getId());
+                    addNewGuild(matchedGuild.getId(), matchedGuild.getName(), matchedGuild.getRegion().getName());
                 }
             }
 
@@ -90,6 +92,46 @@ public class DatabaseFunctions {
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
+        }
+    }
+
+    /**
+     * Updates a guilds name in the database when it is changed.
+     * @param guildId String
+     * @param guildName String
+     */
+    public static void updateGuildName(String guildId, String guildName) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ? WHERE `guildId` = ?");) {
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+            stmt.setString(1, guildName);
+            stmt.setString(2, guildId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Updates a guilds region in the database when it is changed.
+     * @param guildId String
+     * @param guildRegion String
+     */
+    public static void updateGuildRegion(String guildId, String guildRegion) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildRegion` = ? WHERE `guildId` = ?");) {
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+            stmt.setString(1, guildRegion);
+            stmt.setString(2, guildId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 

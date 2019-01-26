@@ -13,6 +13,8 @@ import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.core.events.guild.update.GuildUpdateNameEvent;
+import net.dv8tion.jda.core.events.guild.update.GuildUpdateRegionEvent;
 
 public class GenericGuildController {
 
@@ -27,6 +29,16 @@ public class GenericGuildController {
             return;
         }
 
+        if(e instanceof GuildUpdateNameEvent) {
+            guildUpdateNameEvent((GuildUpdateNameEvent) e);
+            return;
+        }
+
+        if(e instanceof GuildUpdateRegionEvent) {
+            guildUpdateRegionEvent((GuildUpdateRegionEvent) e);
+            return;
+        }
+
         if(e instanceof GuildMemberJoinEvent) {
             guildMemberJoinEvent((GuildMemberJoinEvent)e);
             return;
@@ -38,13 +50,13 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        DatabaseFunctions.addNewGuild(e.getGuild().getId());
+        DatabaseFunctions.addNewGuild(e.getGuild().getId(), e.getGuild().getName(), e.getGuild().getRegion().getName());
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 EmbedBuilder about = new EmbedBuilder()
                         .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
-                        .setDescription("Automatic setup was successful! Thanks for inviting me to your server, below is some information about myself. Commands can be found [here](https://www.yuuko.info) or by using the help command! If you have any problems, suggestions, or general feedback, please join the (support server)[" + Configuration.SUPPORT_GUILD + "] and let yourself be known!")
+                        .setDescription("Automatic setup was successful! Thanks for inviting me to your guild, below is some information about myself. Commands can be found [here](https://www.yuuko.info) or by using the **-help** command! If you have any problems, suggestions, or general feedback, please join the (support server)[" + Configuration.SUPPORT_GUILD + "] and let yourself be known!")
                         .setThumbnail(Cache.BOT.getAvatarUrl())
                         .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                         .addField("Version", Configuration.VERSION, true)
@@ -67,6 +79,14 @@ public class GenericGuildController {
         DatabaseFunctions.cleanup(e.getGuild().getId());
         Utils.updateDiscordBotList();
         MetricsManager.updateDiscordMetrics();
+    }
+
+    private void guildUpdateNameEvent(GuildUpdateNameEvent e) {
+        DatabaseFunctions.updateGuildName(e.getGuild().getId(), e.getNewName());
+    }
+
+    private void guildUpdateRegionEvent(GuildUpdateRegionEvent e) {
+        DatabaseFunctions.updateGuildRegion(e.getGuild().getId(), e.getNewRegion().getName());
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
