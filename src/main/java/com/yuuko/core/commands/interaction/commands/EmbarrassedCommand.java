@@ -18,7 +18,7 @@ public class EmbarrassedCommand extends Command {
     };
 
     public EmbarrassedCommand() {
-        super("cry", InteractionModule.class, 0, new String[]{"-embarrassed"}, false, null);
+        super("embarrassed", InteractionModule.class, 0, new String[]{"-embarrassed"}, false, null);
     }
 
     @Override

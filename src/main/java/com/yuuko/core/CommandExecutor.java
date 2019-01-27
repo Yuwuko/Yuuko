@@ -24,7 +24,7 @@ public class CommandExecutor {
         }
 
         if(module.checkModuleSettings(e)) { // Is the module enabled?
-            if(checkBinding(e, module, cmd)) {
+            if(checkBinding(e, module, cmd)) { // Does the command pass the binding checks?
                 if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
                     return;
                 }
