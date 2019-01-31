@@ -31,10 +31,10 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Guilds` WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             return resultSet.next();
 
@@ -55,19 +55,19 @@ public class DatabaseFunctions {
             PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ? WHERE `guildId` = ?");) {
 
             if(!exists(guildId)) {
-                MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
-
                 stmt.setString(1, guildId);
                 stmt.setString(2, guildName);
                 stmt.setString(3, guildRegion);
                 stmt.execute();
-            } else {
-                MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
+                MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
+            } else {
                 stmt2.setString(1, guildName);
                 stmt2.setString(2, guildRegion);
                 stmt2.setString(3, guildId);
                 stmt2.execute();
+
+                MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
             }
 
             return true;
@@ -109,11 +109,13 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ? WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
 
             stmt.setString(1, guildName);
             stmt.setString(2, guildId);
             stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -129,11 +131,11 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildRegion` = ? WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
-
             stmt.setString(1, guildRegion);
             stmt.setString(2, guildId);
             stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -148,8 +150,6 @@ public class DatabaseFunctions {
     public static ArrayList<ArrayList<String>> getModuleSettings(String guildId) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `guildId` = ?");) {
-
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             stmt.setString(1, guildId);
             ResultSet rs = stmt.executeQuery();
@@ -174,6 +174,8 @@ public class DatabaseFunctions {
             arrayLists.add(enabled);
             arrayLists.add(disabled);
 
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
             return arrayLists;
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -190,10 +192,10 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             return resultSet.next() ? resultSet.getBoolean(1) : false;
 
@@ -213,10 +215,10 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
-
             stmt.setString(1, guild);
             stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             return checkModuleSettings(moduleIn, guild);
 
@@ -237,8 +239,6 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `GuildSettings` WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             stmt.setString(1, guild);
             ResultSet rs = stmt.executeQuery();
 
@@ -253,6 +253,8 @@ public class DatabaseFunctions {
                 settings.add(rs.getString("starboard"));
                 settings.add(rs.getString("commandLog"));
             }
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             return settings;
 
@@ -272,10 +274,10 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `GuildSettings` WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             return resultSet.next() ? resultSet.getString(1) : null;
 
@@ -319,8 +321,6 @@ public class DatabaseFunctions {
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");) {
 
-            MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
-
             stmt.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt.setLong(2, MetricsManager.getSystemMetrics().UPTIME);
             stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
@@ -350,6 +350,8 @@ public class DatabaseFunctions {
             stmt4.setInt(5, MetricsManager.getDatabaseMetrics().DELETE.get());
             stmt4.execute();
 
+            MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
+
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -364,12 +366,12 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`) VALUES(?, ?, ?)");) {
 
-            MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
-
             stmt.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
             stmt.setString(2, guildId);
             stmt.setString(3, command);
             stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -387,13 +389,13 @@ public class DatabaseFunctions {
             PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
             PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog`");) {
 
-            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);
-
             stmt.execute();
             stmt2.execute();
             stmt3.execute();
             stmt4.execute();
             stmt5.execute();
+
+            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -408,10 +410,10 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?");) {
 
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
-
             stmt.setString(1, guild);
             stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -425,6 +427,7 @@ public class DatabaseFunctions {
     public static void cleanupSettings(String setting, String guildId) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET " + setting + " = null WHERE `guildId` = guildId");){
+
             stmt.execute();
 
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
