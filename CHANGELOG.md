@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 31-01-2019_1
 + [+] Added a vote command to show users where they can vote for the bot.
 + [~] Refactored [__embarrassed__] to [__blush__] for fairly obvious reasons.
++ [~] Refactored [__repeat__] command to [__loop__], also changed the functionality to loop the whole queue instead of just the current song.
 + [~] Updated the help command to reflect changes.
 
 ## 26-01-2019_1

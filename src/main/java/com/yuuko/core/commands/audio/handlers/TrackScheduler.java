@@ -18,7 +18,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;
-    private boolean repeating = false;
+    private boolean looping = false;
     private final IPlayer player;
     public final Queue<AudioTrack> queue;
 
@@ -89,8 +89,9 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
         if(endReason.mayStartNext) {
-            if(repeating) {
-                player.playTrack(lastTrack.makeClone());
+            if(looping) {
+                queue.add(lastTrack.makeClone());
+                nextTrack();
             } else {
                 nextTrack();
             }
@@ -111,16 +112,16 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
      * Checks if repeating.
      * @return boolean repeating.
      */
-    public boolean isRepeating() {
-        return repeating;
+    public boolean isLooping() {
+        return looping;
     }
 
     /**
      * Sets repeating.
      * @param repeating boolean.
      */
-    public void setRepeating(boolean repeating) {
-        this.repeating = repeating;
+    public void setLooping(boolean repeating) {
+        this.looping = repeating;
     }
 
     /**

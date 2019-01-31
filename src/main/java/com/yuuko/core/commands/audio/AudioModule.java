@@ -21,7 +21,7 @@ public class AudioModule extends Module {
                 new CurrentCommand(),
                 new LastCommand(),
                 new ShuffleCommand(),
-                new RepeatCommand()
+                new LoopCommand()
         });
 
         new CommandExecutor(e,this, command);

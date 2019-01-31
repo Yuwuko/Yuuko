@@ -103,7 +103,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | queue | Returns the first 10 tracks in the queue or however many there are if under 10. | -queue | `-queue` |
 | clear | Clears the current queue of all of the current tracks, or clears a single track from the given position in the queue. | -clear &#124; [position] | `-clear`, `-clear 4` |
 | background | Sets the background track and starts playback. Background tracks will play if there is nothing in queue and queued tracks will play instead of the background track. Use the command with no parameters to unset a set background. | -background [url] &#124; [term] | `-background https://www.youtube.com/watch?v=va3Dj_sUCJs`, `-background cool music`  |
-| repeat | Toggles a track to repeat. | -repeat | `-repeat` |
+| loop | Toggles looping of the queue. (Finished tracks will be re-added to the end of the queue) | -loop | `-loop` |
 | search | Searches YouTube and returns the first 10 results, a choice is made by typing the number and the selected track will be queued. | -search [term] | `-search funky beats` |
 
 ### NSFW
