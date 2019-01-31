@@ -14,7 +14,8 @@ public class CoreModule extends Module {
 				new SettingsCommand(),
 				new ModuleCommand(),
 				new HelpCommand(),
-				new ShardsCommand()
+				new ShardsCommand(),
+				new VoteCommand()
 		});
 
 		new CommandExecutor(e,this, command);

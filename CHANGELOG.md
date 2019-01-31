@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 31-01-2019_1
++ [+] Added a vote command to show users where they can vote for the bot.
++ [~] Refactored [__embarrassed__] to [__blush__] for fairly obvious reasons.
++ [~] Updated the help command to reflect changes.
+
 ## 26-01-2019_1
 + [~] Fixed a bug that stopped the modules command from working correctly. (just another missed rs.next() *sigh*)
 + [-] Removed the [__modules__] command and combined it with the regular module command to achieve dual functionality.

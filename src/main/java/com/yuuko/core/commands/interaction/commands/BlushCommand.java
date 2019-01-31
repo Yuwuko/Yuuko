@@ -8,7 +8,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Random;
 
-public class EmbarrassedCommand extends Command {
+public class BlushCommand extends Command {
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/I3apoUB.gif",
             "https://i.imgur.com/0lfLa2Z.gif",
@@ -17,13 +17,13 @@ public class EmbarrassedCommand extends Command {
             "https://i.imgur.com/CyjUV4W.gif"
     };
 
-    public EmbarrassedCommand() {
-        super("embarrassed", InteractionModule.class, 0, new String[]{"-embarrassed"}, false, null);
+    public BlushCommand() {
+        super("blush", InteractionModule.class, 0, new String[]{"-blush"}, false, null);
     }
 
     @Override
     public void executeCommand(MessageReceivedEvent e, String[] command) {
-        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** is embarrassed.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
+        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** blushes.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
         MessageHandler.sendMessage(e, embed.build());
     }
 }

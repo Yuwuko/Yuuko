@@ -32,8 +32,6 @@ public final class Utils {
         return user.getName() + "#" + user.getDiscriminator();
     }
 
-
-
     /**
      * Creates the muted role to correctly mute people.
      * @param guild Guild
@@ -140,7 +138,6 @@ public final class Utils {
     public static boolean isChannelNSFW(MessageReceivedEvent e) {
         return e.getTextChannel().isNSFW();
     }
-
 
     /**
      * Returns the specific shard's SelfUser object.

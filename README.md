@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 26-01-2019_1
+# Yuuko 31-01-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -73,7 +73,7 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | tickle | Tickles the tagged user. | -tickle @user | `-tickle @Yuuko#2525` |
 | kiss | Kisses the tagged user. | -kiss @user | `-kiss @Yuuko#2525` |
 | pet | Pets the tagged user. | -pet @user | `-pet @Yuuko#2525` |
-| embarrassed | Displays that you are embarrassed. | -embarrassed | `-embarrassed` |
+| blush | Displays that you are blushing. | -blush | `-blush` |
 
 ### Fun
 

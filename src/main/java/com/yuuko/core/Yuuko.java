@@ -74,11 +74,6 @@ public class Yuuko {
         Configuration.GLOBAL_PREFIX = "<@" + Cache.BOT.getId() + "> ";
         MetricsManager.updateDiscordMetrics();
 
-        if(Configuration.API_KEYS.containsKey("discordbots")) {
-            Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
-            Utils.updateDiscordBotList();
-        }
-
         try {
             Reflections reflections = new Reflections("com.yuuko.core.commands");
 
@@ -104,6 +99,11 @@ public class Yuuko {
             Cache.STANDARD_STRINGS[1] = Cache.STANDARD_STRINGS[0] + " · Requested by ";
             Cache.MODULES = moduleList;
             Cache.COMMANDS = commandList;
+
+            if(Configuration.API_KEYS.containsKey("discordbots")) {
+                Cache.BOT_LIST = new DiscordBotListAPI.Builder().botId(Cache.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
+                Utils.updateDiscordBotList();
+            }
 
             ScheduleHandler.registerJob(new FiveSecondlyJob());
             ScheduleHandler.registerJob(new ThirtySecondlyJob());

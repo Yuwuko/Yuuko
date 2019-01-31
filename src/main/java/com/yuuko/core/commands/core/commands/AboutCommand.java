@@ -21,8 +21,8 @@ public class AboutCommand extends Command {
     public void executeCommand(MessageReceivedEvent e, String[] command) {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
-                .setDescription(Cache.BOT.getName() + ", programmed in " +
-                        "[Java](https://www.oracle.com/uk/java/index.html), using [Gradle](https://gradle.org/) for dependencies.  " +
+                .setDescription(
+                        Cache.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html), using [Gradle](https://gradle.org/) for dependencies.  " +
                         "If you would like me in your guild, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) " +
                         "If I already am, thank you for your continued support!"
                 )
