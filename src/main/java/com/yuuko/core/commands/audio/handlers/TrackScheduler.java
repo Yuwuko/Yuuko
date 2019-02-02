@@ -4,7 +4,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.commands.audio.commands.CurrentCommand;
 import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.utilities.MessageHandler;
 import lavalink.client.player.IPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -55,7 +54,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     }
 
     /**
-     * Start the next track, stopping the current one if it is playing.
+     * Start the next track when the previous has finished.
      */
     public void nextTrack() {
         AudioTrack track = queue.poll();
@@ -69,10 +68,10 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                 player.playTrack(track);
                 MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
                 if(DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
-                    new CurrentCommand().executeCommand((MessageReceivedEvent) player.getPlayingTrack().getUserData(), null);
+                    new CurrentCommand().executeCommand(e, null);
                 }
             } catch(Exception ex) {
-                MessageHandler.sendException(ex, "nextTrack() -> " + ex.getMessage());
+                //
             }
         }
     }
@@ -109,19 +108,19 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     }
 
     /**
-     * Checks if repeating.
-     * @return boolean repeating.
+     * Checks if looping.
+     * @return boolean looping.
      */
     public boolean isLooping() {
         return looping;
     }
 
     /**
-     * Sets repeating.
-     * @param repeating boolean.
+     * Sets looping.
+     * @param looping boolean.
      */
-    public void setLooping(boolean repeating) {
-        this.looping = repeating;
+    public void setLooping(boolean looping) {
+        this.looping = looping;
     }
 
     /**

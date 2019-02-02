@@ -25,6 +25,7 @@ public class StopCommand extends Command {
 
             manager.scheduler.queue.clear();
             manager.scheduler.setBackground(null);
+            manager.scheduler.setLooping(false);
             manager.player.stopTrack();
             manager.player.setPaused(false);
             Cache.LAVALINK.closeConnection(e.getGuild());
@@ -46,6 +47,7 @@ public class StopCommand extends Command {
 
             manager.scheduler.queue.clear();
             manager.scheduler.setBackground(null);
+            manager.scheduler.setLooping(false);
             manager.player.stopTrack();
             manager.player.setPaused(false);
             e.getGuild().getAudioManager().setSendingHandler(null);
