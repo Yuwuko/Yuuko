@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 02-02-2019_1
++ [~] Modified the [__ban__], [__kick__] and [__muted__] commands to allow input of ID strings instead of always tagging the user.
++ [~] Fixed small issue with the track scheduler which wouldn't reset the looping status when the player is destroyed and recreated.
+
 ## 31-01-2019_1
 + [+] Added a vote command to show users where they can vote for the bot.
 + [~] Refactored [__embarrassed__] to [__blush__] for fairly obvious reasons.

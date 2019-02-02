@@ -8,6 +8,7 @@ import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
@@ -90,9 +91,10 @@ public class GenericGuildController {
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        if(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId()) != null) {
+        TextChannel textChannel = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId()));
+        if(textChannel != null) {
             EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription("Welcome to **" + e.getGuild().getName() + "**, " + e.getMember().getAsMention() + "!");
-            MessageHandler.sendMessage(e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId())), member.build());
+            MessageHandler.sendMessage(textChannel, member.build());
         }
 
         MetricsManager.getDiscordMetrics().USER_COUNT += 1;

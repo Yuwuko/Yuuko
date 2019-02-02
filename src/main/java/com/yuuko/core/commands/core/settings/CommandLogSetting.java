@@ -61,6 +61,8 @@ public class CommandLogSetting {
      */
     public static void executeLogging(MessageReceivedEvent e, long executionTimeMs) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()));
-        MessageHandler.sendMessage(log, "```" + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator() + " used command " + e.getMessage().getContentDisplay() + " in " + e.getMessage().getChannel().getName() + ". (Execution time: "+ executionTimeMs +"ms)```");
+        if(log != null) {
+            MessageHandler.sendMessage(log, "```" + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator() + " used command " + e.getMessage().getContentDisplay() + " in " + e.getMessage().getChannel().getName() + ". (Execution time: " + executionTimeMs + "ms)```");
+        }
     }
 }
