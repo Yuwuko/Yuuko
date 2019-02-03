@@ -83,8 +83,8 @@ public class PlayCommand extends Command {
             @Override
             public void trackLoaded(AudioTrack track) {
                 try {
-                    manager.scheduler.queue(track);
                     track.setUserData(e);
+                    manager.scheduler.queue(track);
 
                     String[] uri = track.getInfo().uri.split("=");
                     String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";

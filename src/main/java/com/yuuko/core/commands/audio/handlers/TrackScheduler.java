@@ -67,11 +67,11 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
             try {
                 player.playTrack(track);
                 MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
-                if(DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
+                if(e != null && DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
                     new CurrentCommand().executeCommand(e, null);
                 }
             } catch(Exception ex) {
-                //
+                System.out.println("no");
             }
         }
     }
@@ -89,7 +89,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
         if(endReason.mayStartNext) {
             if(looping) {
-                queue.add(lastTrack.makeClone());
+                queue.add(track);
                 nextTrack();
             } else {
                 nextTrack();
