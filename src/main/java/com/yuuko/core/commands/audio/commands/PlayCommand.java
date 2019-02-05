@@ -97,7 +97,6 @@ public class PlayCommand extends Command {
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
                             .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
-
                     MessageHandler.sendMessage(channel, embed.build());
                 } catch(Exception ex) {
                     MessageHandler.sendException(ex, "public void trackLoaded(AudioTrack track) [PlayCommand]");

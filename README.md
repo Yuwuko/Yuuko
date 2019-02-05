@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 03-02-2019_1
+# Yuuko 05-02-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -122,8 +122,9 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | nowPlaying | Announces the next track in the queue when the previous finishes. | TRUE, FALSE | `-settings nowPlaying true` |
 | djMode | Toggles whether or not the role of `DJ` is required to use key audio module commands. | TRUE, FALSE | `-settings djMode true` |
 | newMember | Channel used to welcome new members, default value of null (off) set by tagging a channel, unset by typing anything else. | #channel, null | `-settings newmember #general`, `-settings newmember null` | 
-| starboard | Channel used for the starboard, default value of null (off) set by tagging a channel, unset by typing anything else. Use setup to automatically setup the channel. | #channel, 'setup', null | `-settings starboard #starboard`, `-settings starboard setup` |
-| commandLog | Channel used for the command log, default value of null (off) set by tagging a channel, unset by typing anything else. Use setup to automatically setup the channel. | #channel, 'setup', null | `-settings commandLog #commandLog` |
+| starboard | Channel used for the starboard, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel. | #channel, 'setup', null | `-settings starboard #starboard`, `-settings starboard setup` |
+| commandLog | Channel used for the command log, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel. | #channel, 'setup', null | `-settings commandLog #commandLog` | `-settings commandLog setup` |
+| modLog | Channel used for the moderation log, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel.  `-settings modLog #modLog` | `-settings modLog setup` |
 
 ## Other features
 

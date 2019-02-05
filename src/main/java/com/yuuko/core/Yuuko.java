@@ -96,7 +96,7 @@ public class Yuuko {
             Cache.AUDIO_MANAGER_MANAGER = new AudioManagerManager();
             Cache.STANDARD_STRINGS = new String[2];
             Cache.STANDARD_STRINGS[0] = Configuration.VERSION;
-            Cache.STANDARD_STRINGS[1] = Cache.STANDARD_STRINGS[0] + " · Requested by ";
+            Cache.STANDARD_STRINGS[1] = Cache.STANDARD_STRINGS[0] + " • Requested by ";
             Cache.MODULES = moduleList;
             Cache.COMMANDS = commandList;
 

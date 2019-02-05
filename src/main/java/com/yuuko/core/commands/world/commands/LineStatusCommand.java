@@ -13,8 +13,7 @@ import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class LineStatusCommand extends Command {
 
             if(command.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Tube Line Status - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
+                        .setTitle("Tube Line Status")
                         .addField(lineManager.get(0).getName(), lineManager.get(0).getLineStatusString(), true)
                         .addField(lineManager.get(1).getName(), lineManager.get(1).getLineStatusString(), true)
                         .addField(lineManager.get(2).getName(), lineManager.get(2).getLineStatusString(), true)
@@ -58,7 +57,8 @@ public class LineStatusCommand extends Command {
                         .addField(lineManager.get(10).getName(), lineManager.get(10).getLineStatusString(), true)
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
-                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl())
+                        .setTimestamp(Instant.now());
                 MessageHandler.sendMessage(e, embed.build());
 
             } else {
@@ -70,9 +70,10 @@ public class LineStatusCommand extends Command {
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Tube Line Status (Minified) - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")))
+                        .setTitle("Tube Line Status (Minified)")
                         .addField("", reasons.toString(), false)
-                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl())
+                        .setTimestamp(Instant.now());
                 MessageHandler.sendMessage(e, embed.build());
             }
 

@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 05-02-2019_1
++ [+] Added mod log setting, to log bans, unbans, message deletes, etc.
++ [~] Modified command log from the old inline `version` to use embeds instead.
++ [~] Changed timestamp of several commands to use embed timestamp feature instead of formatting own timestamp.
+
 ## 02-02-2019_1
 + [~] Modified the [__ban__], [__kick__] and [__muted__] commands to allow input of ID strings instead of always tagging the user.
 + [~] Fixed small issue with the track scheduler which wouldn't reset the looping status when the player is destroyed and recreated.

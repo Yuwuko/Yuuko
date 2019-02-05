@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.time.Instant;
+
 public class CommandLogSetting {
 
     public CommandLogSetting(MessageReceivedEvent e, String value) {
@@ -33,7 +35,7 @@ public class CommandLogSetting {
             }
         } else {
             if(DatabaseFunctions.setGuildSettings("commandLog", null, e.getGuild().getId())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been unset, thus deactivating the command log.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been unset, deactivating the log.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         }
@@ -62,7 +64,15 @@ public class CommandLogSetting {
     public static void executeLogging(MessageReceivedEvent e, long executionTimeMs) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()));
         if(log != null) {
-            MessageHandler.sendMessage(log, "```" + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator() + " used command " + e.getMessage().getContentDisplay() + " in " + e.getMessage().getChannel().getName() + ". (Execution time: " + executionTimeMs + "ms)```");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Command")
+                    .setThumbnail(e.getAuthor().getAvatarUrl())
+                    .addField("User", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
+                    .addField("Command", e.getMessage().getContentDisplay(), true)
+                    .addField("Channel", e.getMessage().getTextChannel().getAsMention(), true)
+                    .addField("Execution Time", executionTimeMs + "ms", true)
+                    .setTimestamp(Instant.now());
+            MessageHandler.sendMessage(log, embed.build());
         }
     }
 }
