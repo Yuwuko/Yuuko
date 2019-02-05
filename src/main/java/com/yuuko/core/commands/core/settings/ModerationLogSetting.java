@@ -9,6 +9,8 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GuildBanEvent;
 import net.dv8tion.jda.core.events.guild.GuildUnbanEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
 
 import java.time.Instant;
 
@@ -67,7 +69,7 @@ public class ModerationLogSetting {
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Ban")
-                    .addField("User", e.getUser().getName() + "#" + e.getUser().getDiscriminator() + "(" + e.getUser().getAsTag() + ")" , true)
+                    .addField("User", e.getUser().getName() + "#" + e.getUser().getDiscriminator(), true)
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
@@ -82,7 +84,38 @@ public class ModerationLogSetting {
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
-                    .addField("User", e.getUser().getName() + "#" + e.getUser().getDiscriminator() + "(" + e.getUser().getAsTag() + ")" , true)
+                    .addField("User", e.getUser().getName(), true)
+                    .setTimestamp(Instant.now());
+            MessageHandler.sendMessage(log, embed.build());
+        }
+    }
+
+    /**
+     * Executes the logging feature of the bot.
+     * @param e GuildMessageUpdateEvent
+     */
+    public static void executeLogging(GuildMessageUpdateEvent e) {
+        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
+        if(log != null) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Unban")
+                    .addField("User", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
+                    // TODO
+                    .setTimestamp(Instant.now());
+            MessageHandler.sendMessage(log, embed.build());
+        }
+    }
+
+    /**
+     * Executes the logging feature of the bot.
+     * @param e GuildMessageDeleteEvent
+     */
+    public static void executeLogging(GuildMessageDeleteEvent e) {
+        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
+        if(log != null) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Unban")
+                    //TODO
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
