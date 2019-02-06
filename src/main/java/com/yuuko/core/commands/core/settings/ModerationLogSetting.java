@@ -23,7 +23,7 @@ public class ModerationLogSetting {
     private void executeCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
-                setupModerationLog(e);
+                setup(e);
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the **Manage Channel** and **Manage Permissions** permissions to setup the moderation log automatically.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -45,7 +45,7 @@ public class ModerationLogSetting {
         }
     }
 
-    private void setupModerationLog(MessageReceivedEvent e) {
+    private void setup(MessageReceivedEvent e) {
         try {
             e.getGuild().getController().createTextChannel("modlog").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
@@ -61,10 +61,10 @@ public class ModerationLogSetting {
     }
 
     /**
-     * Executes the logging feature of the bot.
+     * Executes GuildBanEvent logging if the mod log is set.
      * @param e GuildBanEvent
      */
-    public static void executeLogging(GuildBanEvent e) {
+    public static void execute(GuildBanEvent e) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
@@ -76,10 +76,10 @@ public class ModerationLogSetting {
     }
 
     /**
-     * Executes the logging feature of the bot.
+     * Executes GuildUnbanEvent logging if the mod log is set.
      * @param e GuildUnbanEvent
      */
-    public static void executeLogging(GuildUnbanEvent e) {
+    public static void execute(GuildUnbanEvent e) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
@@ -91,10 +91,10 @@ public class ModerationLogSetting {
     }
 
     /**
-     * Executes the logging feature of the bot.
+     * Executes GuildMessageUpdateEvent logging if the mod log is set.
      * @param e GuildMessageUpdateEvent
      */
-    public static void executeLogging(GuildMessageUpdateEvent e) {
+    public static void execute(GuildMessageUpdateEvent e) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
@@ -107,15 +107,15 @@ public class ModerationLogSetting {
     }
 
     /**
-     * Executes the logging feature of the bot.
+     * Executes GuildMessageDeleteEvent logging if the mod log is set.
      * @param e GuildMessageDeleteEvent
      */
-    public static void executeLogging(GuildMessageDeleteEvent e) {
+    public static void execute(GuildMessageDeleteEvent e) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
-                    //TODO
+                    //TODO Add to database!
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

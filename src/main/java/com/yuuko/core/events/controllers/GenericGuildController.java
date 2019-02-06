@@ -52,22 +52,22 @@ public class GenericGuildController {
         }
 
         if(e instanceof GuildBanEvent) {
-            ModerationLogSetting.executeLogging((GuildBanEvent) e);
+            ModerationLogSetting.execute((GuildBanEvent) e);
             return;
         }
 
         if(e instanceof GuildUnbanEvent) {
-            ModerationLogSetting.executeLogging((GuildUnbanEvent) e);
+            ModerationLogSetting.execute((GuildUnbanEvent) e);
             return;
         }
 
         if(e instanceof GuildMessageUpdateEvent) {
-            ModerationLogSetting.executeLogging((GuildMessageUpdateEvent) e);
+            ModerationLogSetting.execute((GuildMessageUpdateEvent) e);
             return;
         }
 
         if(e instanceof GuildMessageDeleteEvent) {
-            ModerationLogSetting.executeLogging((GuildMessageDeleteEvent) e);
+            ModerationLogSetting.execute((GuildMessageDeleteEvent) e);
         }
     }
 

@@ -92,7 +92,7 @@ public class GenericMessageController {
             if(executed) {
                 DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), command[0].toLowerCase());
                 if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
-                    CommandLogSetting.executeLogging(e, executionTime);
+                    CommandLogSetting.execute(e, executionTime);
                 }
             }
 
@@ -122,7 +122,7 @@ public class GenericMessageController {
 
                 if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
                     long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    CommandLogSetting.executeLogging(e, executionTime);
+                    CommandLogSetting.execute(e, executionTime);
                 }
             }
 

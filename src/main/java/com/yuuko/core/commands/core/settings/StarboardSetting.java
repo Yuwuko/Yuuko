@@ -5,8 +5,13 @@ import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+
+import java.awt.*;
+import java.time.Instant;
 
 public class StarboardSetting {
 
@@ -17,7 +22,7 @@ public class StarboardSetting {
     private void executeCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
-                setupStarboard(e);
+                setup(e);
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the **Manage Channel** and **Manage Permissions** permissions to setup the starboard automatically.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -39,7 +44,7 @@ public class StarboardSetting {
         }
     }
 
-    private void setupStarboard(MessageReceivedEvent e) {
+    private void setup(MessageReceivedEvent e) {
         try {
             e.getGuild().getController().createTextChannel("starboard").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
@@ -51,6 +56,25 @@ public class StarboardSetting {
             });
         } catch(Exception ex) {
             //
+        }
+    }
+
+    /**
+     * Executes starboard setting.
+     * @param e GuildBanEvent
+     */
+    public static void execute(MessageReactionAddEvent e) {
+        TextChannel starboard = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()));
+        if(starboard != null && !e.getTextChannel().getId().equals(starboard.getId())) {
+            Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();
+
+            EmbedBuilder starredEmbed = new EmbedBuilder()
+                    .setColor(Color.ORANGE)
+                    .setAuthor(starred.getMember().getEffectiveName(), null, starred.getAuthor().getEffectiveAvatarUrl())
+                    .setDescription(starred.getContentDisplay())
+                    .setImage(starred.getAttachments().size() > 0 ? starred.getAttachments().get(0).getUrl() : null)
+                    .setTimestamp(Instant.now());
+            starboard.sendMessage("⭐ - " + e.getTextChannel().getAsMention()).queue((message) -> starboard.sendMessage(starredEmbed.build()).queue());
         }
     }
 }

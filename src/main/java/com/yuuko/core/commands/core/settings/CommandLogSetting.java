@@ -19,7 +19,7 @@ public class CommandLogSetting {
     private void executeCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
-                setupCommandLog(e);
+                setup(e);
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the **Manage Channel** and **Manage Permissions** permissions to setup the command log automatically.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -41,7 +41,7 @@ public class CommandLogSetting {
         }
     }
 
-    private void setupCommandLog(MessageReceivedEvent e) {
+    private void setup(MessageReceivedEvent e) {
         try {
             e.getGuild().getController().createTextChannel("command-log").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
@@ -57,11 +57,11 @@ public class CommandLogSetting {
     }
 
     /**
-     * Executes the logging feature of the bot.
+     * Executes the command logging function if it is enabled.
      * @param e MessageReceivedEvent
      * @param executionTimeMs long
      */
-    public static void executeLogging(MessageReceivedEvent e, long executionTimeMs) {
+    public static void execute(MessageReceivedEvent e, long executionTimeMs) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
