@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 07-02-2019_1
++ [~] Refactored executeCommand to onCommand to be more consistent with naming conventions.
+
+
 ## 05-02-2019_1
 + [+] Added mod log setting, to log bans, unbans, message deletes, etc.
 + [~] Modified command log from the old inline `version` to use embeds instead.

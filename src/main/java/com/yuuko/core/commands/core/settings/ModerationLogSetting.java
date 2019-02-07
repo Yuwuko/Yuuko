@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GuildBanEvent;
 import net.dv8tion.jda.core.events.guild.GuildUnbanEvent;
+import net.dv8tion.jda.core.events.message.MessageBulkDeleteEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
@@ -67,11 +68,14 @@ public class ModerationLogSetting {
     public static void execute(GuildBanEvent e) {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
-            EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Ban")
-                    .addField("User", e.getUser().getName() + "#" + e.getUser().getDiscriminator(), true)
-                    .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(log, embed.build());
+            e.getGuild().getBan(e.getUser()).queue(ban -> {
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle("Ban")
+                        .addField("User", ban.getUser().getName() + "#" + ban.getUser().getDiscriminator(), true)
+                        .addField("Reason", ban.getReason(), true)
+                        .setTimestamp(Instant.now());
+                MessageHandler.sendMessage(log, embed.build());
+            });
         }
     }
 
@@ -116,6 +120,21 @@ public class ModerationLogSetting {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Message Deleted")
                     //TODO Add to database!
+                    .setTimestamp(Instant.now());
+            MessageHandler.sendMessage(log, embed.build());
+        }
+    }
+
+    /**
+     * Executes MessageBulkDeleteEvent logging if the mod log is set.
+     * @param e MessageBulkDeleteEvent
+     */
+    public static void execute(MessageBulkDeleteEvent e) {
+        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
+        if(log != null) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Messages Deleted")
+                    .addField("Count", e.getMessageIds().size() + "", true)
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

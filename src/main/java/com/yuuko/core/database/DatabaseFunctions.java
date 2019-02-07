@@ -252,6 +252,7 @@ public class DatabaseFunctions {
                 settings.add(rs.getString("newMember"));
                 settings.add(rs.getString("starboard"));
                 settings.add(rs.getString("commandLog"));
+                settings.add(rs.getString("modLog"));
             }
 
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
