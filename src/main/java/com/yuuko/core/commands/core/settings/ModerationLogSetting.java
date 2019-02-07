@@ -76,7 +76,7 @@ public class ModerationLogSetting {
                     .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
                     .addField("Reason", reason, true)
                     .addField("Time", (time == 0) ? "Permanent" : time + "", false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], null)
+                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
@@ -93,7 +93,7 @@ public class ModerationLogSetting {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
                     .addField("User", e.getUser().getName(), true)
-                    .setFooter(Cache.STANDARD_STRINGS[0], null)
+                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
@@ -116,9 +116,9 @@ public class ModerationLogSetting {
                     .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
                     .addField("Moderator", e.getMessage().getMember().getEffectiveName(), true)
                     .addField("Reason", reason, false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], null)
+                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.sendMessage(log, embed.build());
         }
     }
 
@@ -136,7 +136,7 @@ public class ModerationLogSetting {
                     .addField("Moderator", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
                     .addField("Channel", e.getTextChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], null)
+                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

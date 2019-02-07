@@ -48,6 +48,7 @@ public class CommandExecutor {
                                         MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
                                     } catch (Exception ex) {
                                         log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+                                        e.getMessage().addReaction("❌").queue();
                                         MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
                                         MessageHandler.sendException(ex, command.getClass().getSimpleName());
                                     }
@@ -64,8 +65,9 @@ public class CommandExecutor {
     /**
      * Removes the message the caused the command to execute if the deleteExecuted setting is toggled to on.
      * @param e MessageReceivedEvent
+     * @return boolean
      */
-    private void messageCleanup(MessageReceivedEvent e) {
+    private boolean messageCleanup(MessageReceivedEvent e) {
         if(DatabaseFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
@@ -73,7 +75,9 @@ public class CommandExecutor {
             } else {
                 e.getMessage().delete().queue();
             }
+            return true;
         }
+        return false;
     }
 
     /**

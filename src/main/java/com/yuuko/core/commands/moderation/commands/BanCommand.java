@@ -43,12 +43,18 @@ public class BanCommand extends Command {
         }
 
         if(commandParameters.length < 3) {
-            e.getGuild().getController().ban(target, time).queue(r -> {
+            e.getGuild().getController().ban(target, time).queue(s -> {
+                e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, target.getUser(), time, "None");
+            }, f -> {
+                e.getMessage().addReaction("❌").queue();
             });
         } else {
-            e.getGuild().getController().ban(target, time, commandParameters[2]).queue(r -> {
+            e.getGuild().getController().ban(target, time, commandParameters[2]).queue(s -> {
+                e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, target.getUser(), time, commandParameters[2]);
+            }, f -> {
+                e.getMessage().addReaction("❌").queue();
             });
         }
     }
