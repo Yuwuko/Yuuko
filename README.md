@@ -123,8 +123,8 @@ The global invocation/prefix is `@Yuuko` (mention) and the custom prefix is auto
 | djMode | Toggles whether or not the role of `DJ` is required to use key audio module commands. | TRUE, FALSE | `-settings djMode true` |
 | newMember | Channel used to welcome new members, default value of null (off) set by tagging a channel, unset by typing anything else. | #channel, null | `-settings newmember #general`, `-settings newmember null` | 
 | starboard | Channel used for the starboard, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel. | #channel, 'setup', null | `-settings starboard #starboard`, `-settings starboard setup` |
-| commandLog | Channel used for the command log, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel. | #channel, 'setup', null | `-settings commandLog #commandLog` | `-settings commandLog setup` |
-| modLog | Channel used for the moderation log, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel.  `-settings modLog #modLog` | `-settings modLog setup` |
+| commandLog | Channel used for the command log, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel. | #channel, 'setup', null | `-settings commandLog #commandLog`, `-settings commandLog setup` |
+| modLog | Channel used for the moderation log, default value of null (off) set by tagging a channel, unset by typing anything else. Use `setup` to automatically setup the channel. | #channel, 'setup', null | `-settings modLog #modLog`, `-settings modLog setup` |
 
 ## Other features
 
