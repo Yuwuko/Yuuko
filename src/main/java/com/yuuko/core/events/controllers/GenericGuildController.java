@@ -91,10 +91,11 @@ public class GenericGuildController {
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        TextChannel textChannel = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId()));
-        if(textChannel != null) {
+        String channelId = DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel channel = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription("Welcome to **" + e.getGuild().getName() + "**, " + e.getMember().getAsMention() + "!");
-            MessageHandler.sendMessage(textChannel, member.build());
+            MessageHandler.sendMessage(channel, member.build());
         }
 
         MetricsManager.getDiscordMetrics().USER_COUNT += 1;

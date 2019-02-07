@@ -22,7 +22,7 @@ public class NewMemberSetting {
             }
         } else {
             if(DatabaseFunctions.setGuildSettings("newMember", null, e.getGuild().getId())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("New Member").setDescription("The welcome channel has been unset, thus deactivating the greeting of new members.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("New Member").setDescription("The welcome channel has been unset, deactivating the greeting of new members.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         }

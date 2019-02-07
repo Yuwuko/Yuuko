@@ -63,8 +63,9 @@ public class CommandLogSetting {
      * @param executionTimeMs long
      */
     public static void execute(MessageReceivedEvent e, long executionTimeMs) {
-        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()));
-        if(log != null) {
+        String channelId = DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Command")
                     .setThumbnail(e.getAuthor().getAvatarUrl())

@@ -88,8 +88,9 @@ public class ModerationLogSetting {
      * @param e GuildUnbanEvent
      */
     public static void execute(GuildUnbanEvent e) {
-        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
-        if(log != null) {
+        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
                     .addField("User", e.getUser().getName(), true)

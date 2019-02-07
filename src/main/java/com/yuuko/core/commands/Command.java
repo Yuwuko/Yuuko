@@ -3,6 +3,8 @@ package com.yuuko.core.commands;
 import com.yuuko.core.Configuration;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Command {
     private final String name;
@@ -11,6 +13,8 @@ public abstract class Command {
     private final String[] usage;
     private final Permission[] permissions;
     private final boolean nsfw;
+
+    protected static final Logger log = LoggerFactory.getLogger(Command.class);
 
     public Command(String name, Class<?> module, int expectedParameters, String[] usage, boolean nsfw, Permission[] permissions) {
         this.name = name;

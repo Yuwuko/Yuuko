@@ -2,9 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 07-02-2019_1
+## 07-02-2019_2
 + [~] Refactored executeCommand to onCommand to be more consistent with naming conventions.
-
++ [~] Finished mod log, hooking nuke, ban, kick and mute instead of relying on JDA events.
++ [~] General refactoring and code maintenance.
 
 ## 05-02-2019_1
 + [+] Added mod log setting, to log bans, unbans, message deletes, etc.

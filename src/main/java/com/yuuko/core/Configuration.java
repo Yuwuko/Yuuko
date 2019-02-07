@@ -1,6 +1,5 @@
 package com.yuuko.core;
 
-import com.yuuko.core.utilities.MessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +9,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Configuration {
-    public static final String VERSION = "07-02-2019_1";
+    public static final String VERSION = "07-02-2019_2";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -51,7 +50,7 @@ public class Configuration {
             log.info("Loaded configurations from 'shard_configurations.txt");
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "Configuration.load()");
+            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -72,7 +71,7 @@ public class Configuration {
             }
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "loadAPI");
+            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 

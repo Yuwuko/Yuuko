@@ -64,8 +64,9 @@ public class StarboardSetting {
      * @param e GuildBanEvent
      */
     public static void execute(MessageReactionAddEvent e) {
-        TextChannel starboard = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("starboard", e.getGuild().getId()));
-        if(starboard != null && !e.getTextChannel().getId().equals(starboard.getId())) {
+        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel starboard = e.getGuild().getTextChannelById(channelId);
             Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
             EmbedBuilder starredEmbed = new EmbedBuilder()
