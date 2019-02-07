@@ -68,8 +68,9 @@ public class ModerationLogSetting {
      * @param reason why the user was banned
      */
     public static void execute(MessageReceivedEvent e, User target, int time, String reason) {
-        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
-        if(log != null) {
+        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Ban")
                     .setThumbnail(target.getAvatarUrl())
@@ -109,8 +110,9 @@ public class ModerationLogSetting {
      * @param reason String
      */
     public static void execute(MessageReceivedEvent e, String action, User target, String reason) {
-        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
-        if(log != null) {
+        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(action)
                     .setThumbnail(target.getAvatarUrl())
@@ -129,8 +131,9 @@ public class ModerationLogSetting {
      * @param e MessageReceivedEvent
      */
     public static void execute(MessageReceivedEvent e, int messagesDeleted) {
-        TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
-        if(log != null) {
+        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        if(channelId != null) {
+            TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Message Deleted")
                     .setThumbnail(e.getAuthor().getAvatarUrl())
