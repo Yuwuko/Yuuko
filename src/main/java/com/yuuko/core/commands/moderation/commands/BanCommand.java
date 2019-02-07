@@ -3,7 +3,7 @@ package com.yuuko.core.commands.moderation.commands;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.MessageUtility;
+import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -24,7 +24,7 @@ public class BanCommand extends Command {
         if(commandParameters[0].length() == 18 && Sanitiser.isNumber(commandParameters[0])) {
             target = e.getGuild().getMemberById(commandParameters[0]);
         } else {
-            target = MessageUtility.getFirstMentionedMember(e);
+            target = MessageUtilities.getFirstMentionedMember(e);
         }
 
         if(target == null) {

@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageUtility {
+public class MessageUtilities {
 
     /**
      * Returns whether or not a user is mentioned in the message.

@@ -62,7 +62,6 @@ public final class Utils {
                 channel.createPermissionOverride(muted).setDeny(Permission.VOICE_SPEAK).complete();
             }
 
-
             for(TextChannel channel: channels) {
                 PermissionOverride override = null;
 

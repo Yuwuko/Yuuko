@@ -5,7 +5,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.MessageUtility;
+import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -21,7 +21,7 @@ public class UserCommand extends Command {
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        Member target = MessageUtility.getFirstMentionedMember(e);
+        Member target = MessageUtilities.getFirstMentionedMember(e);
 
         if(target == null) {
             return;

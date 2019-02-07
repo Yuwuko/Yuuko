@@ -2,7 +2,7 @@ package com.yuuko.core.commands.core.settings;
 
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.MessageUtility;
+import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -27,7 +27,7 @@ public class CommandLogSetting {
             return;
         }
 
-        TextChannel channel = MessageUtility.getFirstMentionedChannel(e);
+        TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
             if(DatabaseFunctions.setGuildSettings("commandLog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been set to " + channel.getAsMention() + ".");

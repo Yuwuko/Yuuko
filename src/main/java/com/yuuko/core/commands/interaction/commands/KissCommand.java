@@ -3,7 +3,7 @@ package com.yuuko.core.commands.interaction.commands;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.interaction.InteractionModule;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.MessageUtility;
+import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -25,7 +25,7 @@ public class KissCommand extends Command {
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        Member target = MessageUtility.getFirstMentionedMember(e);
+        Member target = MessageUtilities.getFirstMentionedMember(e);
         if(target != null) {
             EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** kisses **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
             MessageHandler.sendMessage(e, embed.build());

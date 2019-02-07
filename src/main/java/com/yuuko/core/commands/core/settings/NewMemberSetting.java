@@ -2,7 +2,7 @@ package com.yuuko.core.commands.core.settings;
 
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.MessageUtility;
+import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,7 +14,7 @@ public class NewMemberSetting {
     }
 
     private void onCommand(MessageReceivedEvent e) {
-        TextChannel channel = MessageUtility.getFirstMentionedChannel(e);
+        TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
             if(DatabaseFunctions.setGuildSettings("newMember", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("New Member").setDescription("The welcome channel has been set to **" + channel.getAsMention() + "**.");
