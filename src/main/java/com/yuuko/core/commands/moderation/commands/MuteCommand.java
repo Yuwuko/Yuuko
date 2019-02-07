@@ -1,12 +1,11 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utils;
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,7 +13,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class MuteCommand extends Command {
 
     public MuteCommand() {
-        super("mute", ModerationModule.class, 1, new String[]{"-mute @user", "-ban @user [reason]"}, false, new Permission[]{Permission.VOICE_MUTE_OTHERS});
+        super("mute", ModerationModule.class, 1, new String[]{"-mute @user", "-mute @user [reason]"}, false, new Permission[]{Permission.VOICE_MUTE_OTHERS});
     }
 
     @Override
@@ -33,24 +32,12 @@ public class MuteCommand extends Command {
         }
 
         if(target.getRoles().stream().noneMatch((role) -> role.getName().equalsIgnoreCase("Muted"))) {
-            e.getGuild().getController().addSingleRoleToMember(target, Utils.setupMutedRole(e.getGuild())).queue((r) -> {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Mute")
-                        .setDescription("**" + target.getEffectiveName()  + "** has been successfully muted.")
-                        .addField("Moderator", e.getMessage().getMember().getEffectiveName(), true)
-                        .addField("Reason", (commandParameters.length < 2) ? "None" : commandParameters[1], true);
-                MessageHandler.sendMessage(e, embed.build());
-            }, (r) -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Mute").setDescription("Muting of **" + target.getEffectiveName()  + "** was unsuccessful.");
-                MessageHandler.sendMessage(e, embed.build());
+            e.getGuild().getController().addSingleRoleToMember(target, Utils.setupMutedRole(e.getGuild())).queue(r -> {
+                ModerationLogSetting.execute(e, "Mute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
             });
         } else {
-            e.getGuild().getController().removeSingleRoleFromMember(target, Utils.setupMutedRole(e.getGuild())).queue((r) -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription("**" + target.getEffectiveName()  + "** has been successfully unmuted.");
-                MessageHandler.sendMessage(e, embed.build());
-            }, (r) -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription("Unmuting of **" + target.getEffectiveName() + "** was unsuccessful.");
-                MessageHandler.sendMessage(e, embed.build());
+            e.getGuild().getController().removeSingleRoleFromMember(target, Utils.setupMutedRole(e.getGuild())).queue(r -> {
+                ModerationLogSetting.execute(e, "Unmute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
             });
         }
     }

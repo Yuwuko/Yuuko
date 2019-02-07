@@ -1,6 +1,7 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -36,15 +37,19 @@ public class BanCommand extends Command {
         if(Sanitiser.isNumber(commandParameters[1])) {
             time = Integer.parseInt(commandParameters[1]);
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Time parameter '**" + commandParameters[1] + "**' is invalid, ban defaulted to 1 day.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Time parameter '**" + commandParameters[1] + "**' is invalid, ban defaulted to permanent.");
             MessageHandler.sendMessage(e, embed.build());
-            time = 1;
+            time = 0;
         }
 
         if(commandParameters.length < 3) {
-            e.getGuild().getController().ban(target, time).queue();
+            e.getGuild().getController().ban(target, time).queue(r -> {
+                ModerationLogSetting.execute(e, target.getUser(), time, "None");
+            });
         } else {
-            e.getGuild().getController().ban(target, time, commandParameters[2]).queue();
+            e.getGuild().getController().ban(target, time, commandParameters[2]).queue(r -> {
+                ModerationLogSetting.execute(e, target.getUser(), time, commandParameters[2]);
+            });
         }
     }
 

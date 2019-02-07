@@ -24,7 +24,8 @@ public class SettingsCommand extends Command {
             "nowplaying",
             "djmode",
             "newmember",
-            "starboard"
+            "starboard",
+            "modlog"
     };
 
     public SettingsCommand() {
@@ -56,6 +57,8 @@ public class SettingsCommand extends Command {
                         return;
                     case "commandlog": new CommandLogSetting(e, commandParameters[1]);
                         return;
+                    case "modlog": new ModerationLogSetting(e, commandParameters[1]);
+                        return;
                     case "newmember": new NewMemberSetting(e);
                         return;
                     default:
@@ -81,6 +84,7 @@ public class SettingsCommand extends Command {
                             .addField("newMember (Mention)", (settings.get(4) != null ? e.getGuild().getTextChannelById(settings.get(4)).getAsMention() : "**__Disabled__**") + " - Where Yuuko will greet each new member that joins the server.", false)
                             .addField("starboard (Mention)", (settings.get(5) != null ? e.getGuild().getTextChannelById(settings.get(5)).getAsMention() : "**__Disabled__**") + " - Where any messages reacted to with a ⭐ will be sent.", false)
                             .addField("commandLog (Mention)", (settings.get(6) != null ? e.getGuild().getTextChannelById(settings.get(6)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
+                            .addField("modLog (Mention)", (settings.get(7) != null ? e.getGuild().getTextChannelById(settings.get(7)).getAsMention() : "**__Disabled__**") + " - Sends moderation events to a defined log channel.", false)
                         .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
                 MessageHandler.sendMessage(e, commandModules.build());
             }

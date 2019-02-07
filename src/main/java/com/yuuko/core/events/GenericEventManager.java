@@ -1,12 +1,10 @@
 package com.yuuko.core.events;
 
-import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.events.controllers.*;
 import net.dv8tion.jda.core.events.channel.text.GenericTextChannelEvent;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
-import net.dv8tion.jda.core.events.message.MessageBulkDeleteEvent;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.slf4j.Logger;
@@ -37,15 +35,6 @@ public class GenericEventManager extends ListenerAdapter {
     public void onGenericMessage(GenericMessageEvent e) {
         try {
             new GenericMessageController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    @Override
-    public void onMessageBulkDelete(MessageBulkDeleteEvent e) {
-        try {
-            ModerationLogSetting.execute(e);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
         }

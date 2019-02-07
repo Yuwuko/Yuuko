@@ -1,5 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
+import com.yuuko.core.Cache;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -71,6 +72,7 @@ public class CommandLogSetting {
                     .addField("Command", e.getMessage().getContentDisplay(), true)
                     .addField("Channel", e.getMessage().getTextChannel().getAsMention(), true)
                     .addField("Execution Time", executionTimeMs + "ms", true)
+                    .setFooter(Cache.STANDARD_STRINGS[0], null)
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

@@ -1,6 +1,7 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.database.ModuleBindFunctions;
 import com.yuuko.core.utilities.MessageHandler;
@@ -42,19 +43,22 @@ public class NukeCommand extends Command {
             }
 
             // Filter out old messages from the mass delete list.
-            List<Message> nukeList = e.getTextChannel().getHistory().retrievePast(value).complete();
-            Iterator<Message> it = nukeList.iterator();
-            while(it.hasNext()) {
-                Message message = it.next();
-                if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
-                    message.delete().queue();
-                    it.remove();
+            e.getTextChannel().getHistory().retrievePast(value).queue(messages -> {
+                Iterator<Message> it = messages.iterator();
+                while(it.hasNext()) {
+                    Message message = it.next();
+                    if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
+                        message.delete().queue();
+                        it.remove();
+                    }
                 }
-            }
 
-            if(nukeList.size() > 1) {
-                e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(nukeList).queue();
-            }
+                if(messages.size() > 1) {
+                    e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(messages).queue(s -> {
+                        ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
+                    });
+                }
+            });
 
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel, e.g. **#general**.");

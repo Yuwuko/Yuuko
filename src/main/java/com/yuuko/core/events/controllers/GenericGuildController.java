@@ -2,7 +2,6 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
-import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
@@ -10,13 +9,13 @@ import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.guild.*;
+import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
+import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.core.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.core.events.guild.update.GuildUpdateRegionEvent;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
 
 public class GenericGuildController {
 
@@ -48,26 +47,6 @@ public class GenericGuildController {
 
         if(e instanceof GuildMemberLeaveEvent) {
             guildMemberLeaveEvent((GuildMemberLeaveEvent)e);
-            return;
-        }
-
-        if(e instanceof GuildBanEvent) {
-            ModerationLogSetting.execute((GuildBanEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildUnbanEvent) {
-            ModerationLogSetting.execute((GuildUnbanEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildMessageUpdateEvent) {
-            ModerationLogSetting.execute((GuildMessageUpdateEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildMessageDeleteEvent) {
-            ModerationLogSetting.execute((GuildMessageDeleteEvent) e);
         }
     }
 
