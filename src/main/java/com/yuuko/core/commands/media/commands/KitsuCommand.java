@@ -17,7 +17,7 @@ public class KitsuCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json", null, null).getAsJsonObject();
 

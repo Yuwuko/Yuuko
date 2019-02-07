@@ -22,7 +22,7 @@ public class BlushCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** blushes.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
         MessageHandler.sendMessage(e, embed.build());
     }

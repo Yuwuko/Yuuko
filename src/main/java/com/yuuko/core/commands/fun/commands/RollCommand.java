@@ -16,7 +16,7 @@ public class RollCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         int rollNum;
         if(Sanitiser.isNumber(command[1])) {
             rollNum = Integer.parseUnsignedInt(command[1]);

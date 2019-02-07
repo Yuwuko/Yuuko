@@ -22,7 +22,7 @@ public class ModuleCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         if(command.length > 1) {
             String moduleName = command[1].split("\\s+", 2)[0].toLowerCase();
             String server = e.getGuild().getId();

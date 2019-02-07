@@ -68,7 +68,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                 player.playTrack(track);
                 MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
                 if(e != null && DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
-                    new CurrentCommand().executeCommand(e, null);
+                    new CurrentCommand().onCommand(e, null);
                 }
             } catch(Exception ex) {
                 System.out.println("no");

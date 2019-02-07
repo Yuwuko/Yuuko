@@ -20,7 +20,7 @@ public class UserCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         Member target = MessageUtility.getFirstMentionedMember(e);
 
         if(target == null) {

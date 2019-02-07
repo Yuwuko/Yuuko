@@ -11,11 +11,11 @@ public class SettingExecuteBoolean {
 
     public SettingExecuteBoolean(MessageReceivedEvent e, String setting, String value) {
         if(e != null && setting != null && value != null) {
-            executeCommand(e, setting, value);
+            onCommand(e, setting, value);
         }
     }
 
-    private void executeCommand(MessageReceivedEvent e, String setting, String value) {
+    private void onCommand(MessageReceivedEvent e, String setting, String value) {
         try {
             String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 

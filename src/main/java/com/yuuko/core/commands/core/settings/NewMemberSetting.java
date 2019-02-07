@@ -10,10 +10,10 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class NewMemberSetting {
 
     public NewMemberSetting(MessageReceivedEvent e) {
-        executeCommand(e);
+        onCommand(e);
     }
 
-    private void executeCommand(MessageReceivedEvent e) {
+    private void onCommand(MessageReceivedEvent e) {
         TextChannel channel = MessageUtility.getFirstMentionedChannel(e);
         if(channel != null) {
             if(DatabaseFunctions.setGuildSettings("newMember", channel.getId(), e.getGuild().getId())) {

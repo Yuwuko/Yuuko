@@ -113,7 +113,7 @@ public class GenericMessageController {
 
                 // Search function check if regex matches. Used in conjunction with the search input.
                 if(input[0].matches("^[0-9]{1,2}$") || input[0].equals("cancel")) {
-                    new SearchCommand().executeCommand(e, input[0]);
+                    new SearchCommand().onCommand(e, input[0]);
                 }
 
                 if(DatabaseFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {

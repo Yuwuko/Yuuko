@@ -18,7 +18,7 @@ public class ShardsCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         StringBuilder shards = new StringBuilder();
         for(JDA shard : Cache.SHARD_MANAGER.getShards()) {
             int userCount = 0;

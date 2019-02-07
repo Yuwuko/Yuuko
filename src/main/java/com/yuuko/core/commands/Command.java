@@ -50,5 +50,5 @@ public abstract class Command {
     }
 
     // Abstract method signature to ensure method is implemented.
-    public abstract void executeCommand(MessageReceivedEvent e, String[] command);
+    public abstract void onCommand(MessageReceivedEvent e, String[] command);
 }

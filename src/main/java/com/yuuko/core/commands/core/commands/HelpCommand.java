@@ -19,7 +19,7 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] cmd) {
+    public void onCommand(MessageReceivedEvent e, String[] cmd) {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(cmd.length < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()

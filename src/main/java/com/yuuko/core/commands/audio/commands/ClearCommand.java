@@ -20,7 +20,7 @@ public class ClearCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 

@@ -22,7 +22,7 @@ public class NukeCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
         if(channels.size() > 0 && channels.size() < 11) {
             channels.forEach(channel -> {

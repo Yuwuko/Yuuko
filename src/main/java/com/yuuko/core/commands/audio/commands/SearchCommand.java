@@ -20,7 +20,7 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
             StringBuilder resultString = new StringBuilder();
@@ -50,13 +50,13 @@ public class SearchCommand extends Command {
         }
     }
 
-    public void executeCommand(MessageReceivedEvent e, String input) {
+    public void onCommand(MessageReceivedEvent e, String input) {
         if(!input.equalsIgnoreCase("cancel")) {
             if(Sanitiser.isNumber(input)) {
                 final int value = Integer.parseInt(input);
                 if(value < 11 && value > 0) {
                     String videoId = Cache.audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(input) - 1).getId().getVideoId();
-                    new PlayCommand().executeCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                    new PlayCommand().onCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
                     Cache.audioSearchResults.remove(e.getAuthor().getIdLong());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");

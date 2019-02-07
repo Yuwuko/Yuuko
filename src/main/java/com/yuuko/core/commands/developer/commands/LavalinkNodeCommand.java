@@ -15,7 +15,7 @@ public class LavalinkNodeCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             String[] commandParameters = command[1].split("\\s+", 3);
             if(commandParameters[0].equals("add")) {

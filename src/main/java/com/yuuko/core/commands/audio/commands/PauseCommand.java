@@ -15,7 +15,7 @@ public class PauseCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         try {

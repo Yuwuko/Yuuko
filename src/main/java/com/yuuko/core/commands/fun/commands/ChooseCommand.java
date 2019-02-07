@@ -15,7 +15,7 @@ public class ChooseCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s*(,)\\s*");
 
         EmbedBuilder embed = new EmbedBuilder().setTitle((commandParameters.length > 1) ? commandParameters[new Random().nextInt(commandParameters.length)] : commandParameters[0]);

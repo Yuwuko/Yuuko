@@ -19,7 +19,7 @@ public class ServerCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         Guild server = e.getGuild();
         StringBuilder emoteString = new StringBuilder();
 

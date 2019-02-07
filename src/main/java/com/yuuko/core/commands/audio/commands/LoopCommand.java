@@ -15,7 +15,7 @@ public class LoopCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         manager.scheduler.setLooping(!manager.scheduler.isLooping());

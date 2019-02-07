@@ -21,7 +21,7 @@ public class TescoCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             JsonObject json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + command[1].replace(" ", "%20") + "&offset=0&limit=1", "default", "default", "Ocp-Apim-Subscription-Key", Utils.getApiKey("tesco")).getAsJsonObject();
             JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();

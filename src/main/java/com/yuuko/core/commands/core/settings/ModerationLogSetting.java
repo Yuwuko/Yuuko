@@ -17,10 +17,10 @@ import java.time.Instant;
 public class ModerationLogSetting {
 
     public ModerationLogSetting(MessageReceivedEvent e, String value) {
-        executeCommand(e, value);
+        onCommand(e, value);
     }
 
-    private void executeCommand(MessageReceivedEvent e, String value) {
+    private void onCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setup(e);
@@ -98,7 +98,7 @@ public class ModerationLogSetting {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Unban")
+                    .setTitle("Message Updated")
                     .addField("User", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
                     // TODO
                     .setTimestamp(Instant.now());
@@ -114,7 +114,7 @@ public class ModerationLogSetting {
         TextChannel log = e.getGuild().getTextChannelById(DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId()));
         if(log != null) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Unban")
+                    .setTitle("Message Deleted")
                     //TODO Add to database!
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());

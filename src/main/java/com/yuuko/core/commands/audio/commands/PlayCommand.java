@@ -28,7 +28,7 @@ public class PlayCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(!LavalinkUtilities.isState(e.getGuild(), Link.State.CONNECTED)) {
@@ -115,7 +115,7 @@ public class PlayCommand extends Command {
                         manager.scheduler.queue(track);
                     }
 
-                    new CurrentCommand().executeCommand(e, null);
+                    new CurrentCommand().onCommand(e, null);
 
                 } catch(Exception ex) {
                     MessageHandler.sendException(ex, "public void playlistLoaded(AudioPlaylist playlist) [PlayCommand]");

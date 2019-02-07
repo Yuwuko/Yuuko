@@ -18,7 +18,7 @@ public class LastCommand extends Command {
 	}
 
 	@Override
-	public void executeCommand(MessageReceivedEvent e, String[] command) {
+	public void onCommand(MessageReceivedEvent e, String[] command) {
 		try {
 			GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 			AudioTrack track = manager.scheduler.getLastTrack();
@@ -41,7 +41,7 @@ public class LastCommand extends Command {
 			}
 
 		} catch(Exception ex) {
-			MessageHandler.sendException(ex, "public void executeCommand(MessageReceivedEvent e, String[] command)");
+			MessageHandler.sendException(ex, "public void onCommand(MessageReceivedEvent e, String[] command)");
 		}
 	}
 

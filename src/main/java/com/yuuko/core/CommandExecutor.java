@@ -43,8 +43,8 @@ public class CommandExecutor {
                             } else {
                                 if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
                                     try {
-                                        log.trace("Invoking {}#executeCommand()", command.getClass().getName());
-                                        command.executeCommand(e, cmd);
+                                        log.trace("Invoking {}#onCommand()", command.getClass().getName());
+                                        command.onCommand(e, cmd);
                                         MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
                                     } catch (Exception ex) {
                                         log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);

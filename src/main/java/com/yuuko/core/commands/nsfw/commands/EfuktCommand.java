@@ -17,7 +17,7 @@ public class EfuktCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             Document doc = Jsoup.connect("https://efukt.com/random.php").get();
             EmbedBuilder efuktPost;

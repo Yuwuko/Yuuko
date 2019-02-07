@@ -22,7 +22,7 @@ public class WeatherCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (command[1].replace(" ", "+")) + "&units=metric&APPID=" + Utils.getApiKey("openweathermap"), "default", "default", null, null).getAsJsonObject();
 

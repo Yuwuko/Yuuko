@@ -13,10 +13,10 @@ import java.time.Instant;
 public class CommandLogSetting {
 
     public CommandLogSetting(MessageReceivedEvent e, String value) {
-        executeCommand(e, value);
+        onCommand(e, value);
     }
 
-    private void executeCommand(MessageReceivedEvent e, String value) {
+    private void onCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setup(e);

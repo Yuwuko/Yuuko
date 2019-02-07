@@ -15,7 +15,7 @@ public class KickCommand extends Command {
     }
 
     @Override
-    public void executeCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
         Member target;
 
