@@ -82,7 +82,7 @@ public class BackgroundCommand extends Command {
                         .setTitle(track.getInfo().title, trackUrl)
                         .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
-                        .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Configuration.VERSION, Cache.BOT.getAvatarUrl());
                 channel.sendMessage(embed.build()).queue();
             }
 

@@ -72,7 +72,7 @@ public class CommandLogSetting {
                     .addField("Command", e.getMessage().getContentDisplay(), true)
                     .addField("Channel", e.getMessage().getTextChannel().getAsMention(), true)
                     .addField("Execution Time", executionTimeMs + "ms", true)
-                    .setFooter(Cache.STANDARD_STRINGS[0], null)
+                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

@@ -2,7 +2,6 @@ package com.yuuko.core.commands.world.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Cache;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -48,7 +47,7 @@ public class WeatherCommand extends Command {
                     .addField("Sunset", LocalDateTime.ofEpochSecond(data.get("sys").getAsJsonObject().get("sunset").getAsInt(), 0, ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("hh:mma")), true)
                     .addField("Longitude", data.get("coord").getAsJsonObject().get("lon").getAsString(), true)
                     .addField("Wind Angle", data.get("wind").getAsJsonObject().get("deg").getAsString() + "°", true)
-                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

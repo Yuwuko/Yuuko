@@ -5,7 +5,6 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Cache;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
@@ -96,7 +95,7 @@ public class PlayCommand extends Command {
                             .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
-                            .setFooter(Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                            .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl());
                     MessageHandler.sendMessage(channel, embed.build());
                 } catch(Exception ex) {
                     MessageHandler.sendException(ex, "public void trackLoaded(AudioTrack track) [PlayCommand]");

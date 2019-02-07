@@ -2,7 +2,6 @@ package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Cache;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -42,7 +41,7 @@ public class KitsuCommand extends Command {
                     .addField("Status", data.get("status").getAsString(), true)
                     .addField("Start Date", data.get("startDate").getAsString(), true)
                     .addField("End Date", data.get("endDate").getAsString(), true)
-                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName() , e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

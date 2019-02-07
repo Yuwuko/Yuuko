@@ -1,7 +1,6 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Cache;
-import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.commands.core.settings.*;
@@ -85,7 +84,7 @@ public class SettingsCommand extends Command {
                             .addField("starboard (Mention)", (settings.get(5) != null ? e.getGuild().getTextChannelById(settings.get(5)).getAsMention() : "**__Disabled__**") + " - Where any messages reacted to with a ⭐ will be sent.", false)
                             .addField("commandLog (Mention)", (settings.get(6) != null ? e.getGuild().getTextChannelById(settings.get(6)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
                             .addField("modLog (Mention)", (settings.get(7) != null ? e.getGuild().getTextChannelById(settings.get(7)).getAsMention() : "**__Disabled__**") + " - Sends moderation events to a defined log channel.", false)
-                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, commandModules.build());
             }
 

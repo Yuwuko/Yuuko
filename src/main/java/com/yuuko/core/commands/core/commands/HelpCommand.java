@@ -35,7 +35,7 @@ public class HelpCommand extends Command {
                     .addField("World", "`linestatus` `weather` `tesco`", false)
                     .addField("Utility", "`bind` `channel` `server` `user`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl());
 
             if(e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
                 MessageHandler.sendMessage(e, commandInfo.build());
@@ -68,7 +68,7 @@ public class HelpCommand extends Command {
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", ModuleBindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
-                        .setFooter("Version: " + Configuration.VERSION, e.getGuild().getMemberById(Configuration.BOT_ID).getUser().getAvatarUrl());
+                        .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             });
         }
