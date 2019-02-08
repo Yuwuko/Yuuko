@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.handlers;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import lavalink.client.player.IPlayer;
 
 public class GuildAudioManager {
@@ -15,7 +15,7 @@ public class GuildAudioManager {
      * @param guildId Id of the guild to create a player for.
      */
     public GuildAudioManager(String guildId) {
-        player = Cache.LAVALINK.createPlayer(guildId);
+        player = Configuration.LAVALINK.createPlayer(guildId);
         scheduler = new TrackScheduler(player);
         player.addListener(scheduler);
     }

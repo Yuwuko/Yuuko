@@ -4,7 +4,6 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
@@ -28,7 +27,7 @@ public class BackgroundCommand extends Command {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(command.length > 1) {
-            Cache.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
+            Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
             if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
@@ -82,7 +81,7 @@ public class BackgroundCommand extends Command {
                         .setTitle(track.getInfo().title, trackUrl)
                         .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
-                        .setFooter(Configuration.VERSION, Cache.BOT.getAvatarUrl());
+                        .setFooter(Configuration.VERSION, Configuration.BOT.getAvatarUrl());
                 channel.sendMessage(embed.build()).queue();
             }
 

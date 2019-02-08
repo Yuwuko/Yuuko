@@ -2,7 +2,7 @@ package com.yuuko.core.commands.world.commands;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.commands.world.tfl.LineManager;
@@ -56,7 +56,7 @@ public class LineStatusCommand extends Command {
                         .addField(lineManager.get(10).getName(), lineManager.get(10).getLineStatusString(), true)
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
-                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl())
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl())
                         .setTimestamp(Instant.now());
                 MessageHandler.sendMessage(e, embed.build());
 
@@ -71,7 +71,7 @@ public class LineStatusCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Tube Line Status (Minified)")
                         .addField("", reasons.toString(), false)
-                        .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl())
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl())
                         .setTimestamp(Instant.now());
                 MessageHandler.sendMessage(e, embed.build());
             }

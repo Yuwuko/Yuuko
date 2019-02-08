@@ -1,6 +1,5 @@
 package com.yuuko.core.events.controllers;
 
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
@@ -56,13 +55,13 @@ public class GenericGuildController {
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 EmbedBuilder about = new EmbedBuilder()
-                        .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
+                        .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
                         .setDescription("Automatic setup was successful! Thanks for inviting me to your guild, below is some information about myself. Commands can be found at https://www.yuuko.info or by using the **-help** command! If you have any problems, suggestions, or general feedback, please join the support guild at " + Configuration.SUPPORT_GUILD + " and drop me a line!")
-                        .setThumbnail(Cache.BOT.getAvatarUrl())
+                        .setThumbnail(Configuration.BOT.getAvatarUrl())
                         .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                         .addField("Version", Configuration.VERSION, true)
                         .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
-                        .addField("Commands", Cache.COMMANDS.size() + "", true)
+                        .addField("Commands", Configuration.COMMANDS.size() + "", true)
                         .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
                         .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                         .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);

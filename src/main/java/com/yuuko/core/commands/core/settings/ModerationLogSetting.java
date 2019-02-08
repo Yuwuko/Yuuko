@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -77,7 +77,7 @@ public class ModerationLogSetting {
                     .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
                     .addField("Reason", reason, true)
                     .addField("Time", (time == 0) ? "Permanent" : time + "", false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
@@ -95,7 +95,7 @@ public class ModerationLogSetting {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
                     .addField("User", e.getUser().getName(), true)
-                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
@@ -119,7 +119,7 @@ public class ModerationLogSetting {
                     .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
                     .addField("Moderator", e.getMessage().getMember().getEffectiveName(), true)
                     .addField("Reason", reason, false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }
@@ -140,7 +140,7 @@ public class ModerationLogSetting {
                     .addField("Moderator", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
                     .addField("Channel", e.getTextChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

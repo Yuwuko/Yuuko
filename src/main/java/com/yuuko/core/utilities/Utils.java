@@ -1,6 +1,5 @@
 package com.yuuko.core.utilities;
 
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import net.dv8tion.jda.core.JDA;
@@ -87,7 +86,7 @@ public final class Utils {
      */
     public static void updateDiscordBotList() {
         try {
-            Cache.BOT_LIST.setStats(Cache.BOT.getJDA().getShardInfo().getShardId(), Cache.BOT.getJDA().getShardInfo().getShardTotal(), Math.toIntExact(Cache.BOT.getJDA().getGuildCache().size()));
+            Configuration.BOT_LIST.setStats(Configuration.BOT.getJDA().getShardInfo().getShardId(), Configuration.BOT.getJDA().getShardInfo().getShardTotal(), Math.toIntExact(Configuration.BOT.getJDA().getGuildCache().size()));
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -143,7 +142,7 @@ public final class Utils {
      * @return SelfUser
      */
     public static SelfUser getSelfUser() {
-        for(JDA shard : Cache.SHARD_MANAGER.getShards()) {
+        for(JDA shard : Configuration.SHARD_MANAGER.getShards()) {
             if(shard.getStatus().equals(JDA.Status.CONNECTED)) {
                 return shard.getSelfUser();
             }

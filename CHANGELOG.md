@@ -2,8 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 08-02-2019_1
+## 08-02-2019_2
 + [+] Added [__spoilerify__] command which returns the raw string for those really annoying 'every character' spoiler messages.
++ [~] Improved the Configuration class, adding everything that doesn't require JDA to be built first and logging each step to console.
++ [-] Removed the Cache class and moved everything into more appropriate places, with 90% of it going into the Configuration class.
 
 ## 07-02-2019_2
 + [~] Refactored executeCommand to onCommand to be more consistent with naming conventions.

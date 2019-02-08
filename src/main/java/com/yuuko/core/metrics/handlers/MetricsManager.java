@@ -1,6 +1,6 @@
 package com.yuuko.core.metrics.handlers;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.metrics.DatabaseMetrics;
 import com.yuuko.core.metrics.DiscordMetrics;
 import com.yuuko.core.metrics.EventMetrics;
@@ -44,7 +44,7 @@ public class MetricsManager {
     }
 
     public static void updateDiscordMetrics() {
-        List<Guild> guilds = Cache.BOT.getJDA().getGuilds();
+        List<Guild> guilds = Configuration.BOT.getJDA().getGuilds();
 
         int userCount = 0;
         int channelCount = 0;

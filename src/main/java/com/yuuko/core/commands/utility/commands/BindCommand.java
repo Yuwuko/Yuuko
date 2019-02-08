@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.utility.commands;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.UtilityModule;
@@ -28,7 +28,7 @@ public class BindCommand extends Command {
             String selectedModule = "";
 
             boolean present = false;
-            for(Module module : Cache.MODULES) {
+            for(Module module : Configuration.MODULES) {
                 if(module.getName().equalsIgnoreCase(commandParameters[0])) {
                     selectedModule = module.getName();
                     present = true;

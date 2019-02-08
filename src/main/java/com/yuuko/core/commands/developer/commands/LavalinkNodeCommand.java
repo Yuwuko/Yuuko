@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.developer.commands;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -19,9 +19,9 @@ public class LavalinkNodeCommand extends Command {
         try {
             String[] commandParameters = command[1].split("\\s+", 3);
             if(commandParameters[0].equals("add")) {
-                Cache.LAVALINK.getLavalink().addNode(URI.create(commandParameters[1]), commandParameters[2]);
+                Configuration.LAVALINK.getLavalink().addNode(URI.create(commandParameters[1]), commandParameters[2]);
             } else if(commandParameters[0].equals("remove")) {
-                Cache.LAVALINK.getLavalink().removeNode(Integer.parseInt(commandParameters[1]));
+                Configuration.LAVALINK.getLavalink().removeNode(Integer.parseInt(commandParameters[1]));
             }
         } catch(Exception ex) {
             MessageHandler.sendException(ex, e.getMessage().getContentRaw());

@@ -93,7 +93,7 @@ public class CommandExecutor {
             return false;
         }
 
-        if(Cache.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !command[0].equals("play") && !command[0].equals("search") && !command[0].equals("background")) {
+        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !command[0].equals("play") && !command[0].equals("search") && !command[0].equals("background")) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(e, embed.build());
             return false;

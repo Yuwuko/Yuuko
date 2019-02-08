@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.commands;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
@@ -28,7 +28,7 @@ public class StopCommand extends Command {
             manager.scheduler.setLooping(false);
             manager.player.stopTrack();
             manager.player.setPaused(false);
-            Cache.LAVALINK.closeConnection(e.getGuild());
+            Configuration.LAVALINK.closeConnection(e.getGuild());
 
             if(command != null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");

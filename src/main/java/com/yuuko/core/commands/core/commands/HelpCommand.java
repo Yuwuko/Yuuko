@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
@@ -35,7 +34,7 @@ public class HelpCommand extends Command {
                     .addField("World", "`linestatus` `weather` `tesco`", false)
                     .addField("Utility", "`bind` `channel` `server` `user`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
-                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
 
             if(e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
                 MessageHandler.sendMessage(e, commandInfo.build());
@@ -47,7 +46,7 @@ public class HelpCommand extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            Cache.COMMANDS.stream().filter(command -> command.getName().equalsIgnoreCase(cmd[1])).findFirst().ifPresent(command -> {
+            Configuration.COMMANDS.stream().filter(command -> command.getName().equalsIgnoreCase(cmd[1])).findFirst().ifPresent(command -> {
                 final String commandPermission;
                 if(command.getPermissions() == null) {
                     commandPermission = "None";
@@ -62,13 +61,13 @@ public class HelpCommand extends Command {
                 TextUtility.removeLastOccurrence(usages, "\n");
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setThumbnail(Cache.BOT.getAvatarUrl())
+                        .setThumbnail(Configuration.BOT.getAvatarUrl())
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getSimpleName().substring(0, command.getModule().getSimpleName().length() - 6), true)
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", ModuleBindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
-                        .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             });
         }

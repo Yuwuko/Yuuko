@@ -1,6 +1,6 @@
 package com.yuuko.core.utilities;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
@@ -134,7 +134,7 @@ public final class MessageHandler {
      */
     public static void sendException(Exception ex, String command) {
         try {
-            MessageChannel channel = Cache.BOT.getJDA().getTextChannelById(520158641484201994L);
+            MessageChannel channel = Configuration.BOT.getJDA().getTextChannelById(520158641484201994L);
 
             StringBuilder traceString = new StringBuilder();
             for(StackTraceElement trace: ex.getStackTrace()) {

@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
@@ -31,7 +31,7 @@ public class PlayCommand extends Command {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(!LavalinkUtilities.isState(e.getGuild(), Link.State.CONNECTED)) {
-            Cache.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
+            Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
         if(command.length == 1) {
@@ -95,7 +95,7 @@ public class PlayCommand extends Command {
                             .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
-                            .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
+                            .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
                     MessageHandler.sendMessage(channel, embed.build());
                 } catch(Exception ex) {
                     MessageHandler.sendException(ex, "public void trackLoaded(AudioTrack track) [PlayCommand]");

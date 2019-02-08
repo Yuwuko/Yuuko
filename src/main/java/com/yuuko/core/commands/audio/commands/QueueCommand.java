@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
@@ -44,7 +44,7 @@ public class QueueCommand extends Command {
                             .setDescription(queue.toString())
                             .addField("In Queue", manager.scheduler.queue.size() + "", true)
                             .addField("Total Duration", TextUtility.getTimestamp(totalDuration.get()), true)
-                            .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
+                            .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains **0** tracks.");

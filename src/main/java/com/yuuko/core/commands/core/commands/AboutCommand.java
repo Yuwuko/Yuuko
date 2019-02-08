@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
@@ -20,19 +19,19 @@ public class AboutCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         EmbedBuilder about = new EmbedBuilder()
-                .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
+                .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
                 .setDescription(
-                        Cache.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html), using [Gradle](https://gradle.org/) for dependencies.  " +
+                        Configuration.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html), using [Gradle](https://gradle.org/) for dependencies.  " +
                         "If you would like me in your guild, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) " +
                         "If I already am, thank you for your continued support!"
                 )
-                .setThumbnail(Cache.BOT.getAvatarUrl())
+                .setThumbnail(Configuration.BOT.getAvatarUrl())
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                 .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
-                .addField("Commands", Cache.COMMANDS.size() + "", true)
-                .addField("Modules", Cache.MODULES.size() + "", true)
+                .addField("Commands", Configuration.COMMANDS.size() + "", true)
+                .addField("Modules", Configuration.MODULES.size() + "", true)
                 .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                 .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
         MessageHandler.sendMessage(e, about.build());

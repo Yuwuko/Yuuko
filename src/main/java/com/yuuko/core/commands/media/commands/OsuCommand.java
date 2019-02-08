@@ -2,7 +2,7 @@ package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -76,7 +76,7 @@ public class OsuCommand extends Command {
                     .addField("S Ranks", data.get("count_rank_s").getAsString(), true)
                     .addField("SH Ranks", data.get("count_rank_sh").getAsString(), true)
                     .addField("A Ranks", data.get("count_rank_a").getAsString(), true)
-                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

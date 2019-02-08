@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -16,7 +16,7 @@ public class VoteCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         EmbedBuilder about = new EmbedBuilder()
-                .setAuthor(Cache.BOT.getName() + "#" + Cache.BOT.getDiscriminator(), null, Cache.BOT.getAvatarUrl())
+                .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
                 .setDescription(
                         "To help with growth, I am listed on some of the popular Discord bot lists, here you can find links on where to vote for me. " +
                         "Voting is an important part of this growth because with more votes comes more exposure and thus more people who will use me. " +

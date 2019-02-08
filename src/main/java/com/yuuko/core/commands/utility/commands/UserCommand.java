@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.utility.commands;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -64,7 +64,7 @@ public class UserCommand extends Command {
                 .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
-                .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
         MessageHandler.sendMessage(e, commandInfo.build());
     }
 

@@ -1,6 +1,6 @@
 package com.yuuko.core.database;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
@@ -160,7 +160,7 @@ public class DatabaseFunctions {
             ArrayList<String> disabled = new ArrayList<>();
 
             if(rs.next()) {
-                for(int i = 2; i < Cache.MODULES.size(); i++) {
+                for(int i = 2; i < Configuration.MODULES.size(); i++) {
                     if(rs.getBoolean(i)) {
                         enabled.add(meta.getColumnName(i).substring(6));
                     } else {
@@ -322,20 +322,20 @@ public class DatabaseFunctions {
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");) {
 
-            stmt.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
+            stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt.setLong(2, MetricsManager.getSystemMetrics().UPTIME);
             stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
             stmt.setLong(4, MetricsManager.getSystemMetrics().MEMORY_USED);
             stmt.execute();
 
-            stmt2.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
+            stmt2.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt2.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
             stmt2.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
             stmt2.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
             stmt2.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
             stmt2.execute();
 
-            stmt3.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
+            stmt3.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt3.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
             stmt3.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
             stmt3.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
@@ -344,7 +344,7 @@ public class DatabaseFunctions {
             stmt3.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
             stmt3.execute();
 
-            stmt4.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
+            stmt4.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt4.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
             stmt4.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
             stmt4.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
@@ -367,7 +367,7 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`) VALUES(?, ?, ?)");) {
 
-            stmt.setInt(1, Cache.BOT.getJDA().getShardInfo().getShardId());
+            stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt.setString(2, guildId);
             stmt.setString(3, command);
             stmt.execute();

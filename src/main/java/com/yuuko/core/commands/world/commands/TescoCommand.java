@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.world.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.utilities.MessageHandler;
@@ -41,7 +41,7 @@ public class TescoCommand extends Command {
                     .addField("Weight", new BigDecimal(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
                     .addField("Quantity", data.get("UnitOfSale").getAsString() + "", true)
                     .addField("Department", data.get("superDepartment").getAsString() + " (" + data.get("department").getAsString() + ")", true)
-                    .setFooter(Cache.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Cache.BOT.getAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

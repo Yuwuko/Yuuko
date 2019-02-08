@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
-import com.yuuko.core.Cache;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -9,6 +9,8 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 
 public class CommandLogSetting {
@@ -62,7 +64,7 @@ public class CommandLogSetting {
      * @param e MessageReceivedEvent
      * @param executionTimeMs long
      */
-    public static void execute(MessageReceivedEvent e, long executionTimeMs) {
+    public static void execute(MessageReceivedEvent e, double executionTimeMs) {
         String channelId = DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
@@ -72,8 +74,8 @@ public class CommandLogSetting {
                     .addField("User", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
                     .addField("Command", e.getMessage().getContentDisplay(), true)
                     .addField("Channel", e.getMessage().getTextChannel().getAsMention(), true)
-                    .addField("Execution Time", executionTimeMs + "ms", true)
-                    .setFooter(Cache.STANDARD_STRINGS[0], Cache.BOT.getAvatarUrl())
+                    .addField("Execution Time", new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(log, embed.build());
         }

@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.audio.handlers;
 
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import lavalink.client.io.jda.JdaLavalink;
 import lavalink.client.player.IPlayer;
@@ -19,7 +18,7 @@ public class LavalinkManager {
         lavalink = new JdaLavalink(
                 Configuration.BOT_ID,
                 Configuration.SHARD_COUNT,
-                shardId -> Cache.SHARD_MANAGER.getShardById(shardId)
+                shardId -> Configuration.SHARD_MANAGER.getShardById(shardId)
         );
         lavalink.setAutoReconnect(true);
 

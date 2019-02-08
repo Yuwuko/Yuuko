@@ -1,8 +1,8 @@
 package com.yuuko.core.events.controllers;
 
-import com.yuuko.core.Cache;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.commands.SearchCommand;
 import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
@@ -75,15 +75,15 @@ public class GenericMessageController {
         String cmdPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
 
         try {
-            long executionTime = 0;
+            double executionTime = 0;
             boolean executed = false;
 
             // Iterate through the command list, if the input matches the effective name (includes invocation)
             // Get the command commands constructor from the command class. (Much easier than what I did previously)
-            for(Command cmd : Cache.COMMANDS) {
+            for(Command cmd : Configuration.COMMANDS) {
                 if((cmdPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (cmdPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
                     cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class).newInstance(e, command);
-                    executionTime = (System.nanoTime() - startExecutionNano)/1000000;
+                    executionTime = (System.nanoTime() - startExecutionNano)/1000000.0;
                     executed = true;
                     break;
                 }
@@ -108,7 +108,7 @@ public class GenericMessageController {
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano) {
         try {
-            if(Cache.audioSearchResults.containsKey(e.getAuthor().getIdLong())) {
+            if(AudioModule.audioSearchResults.containsKey(e.getAuthor().getIdLong())) {
                 String[] input = e.getMessage().getContentRaw().toLowerCase().split("\\s+", 2);
 
                 // Search function check if regex matches. Used in conjunction with the search input.
@@ -121,8 +121,7 @@ public class GenericMessageController {
                 }
 
                 if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
-                    long executionTime = (System.nanoTime() - startExecutionNano)/1000000;
-                    CommandLogSetting.execute(e, executionTime);
+                    CommandLogSetting.execute(e, (System.nanoTime() - startExecutionNano)/1000000.0);
                 }
             }
 
