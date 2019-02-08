@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 08-02-2019_1
++ [+] Added [__spoilerify__] command which returns the raw string for those really annoying 'every character' spoiler messages.
+
 ## 07-02-2019_2
 + [~] Refactored executeCommand to onCommand to be more consistent with naming conventions.
 + [~] Finished mod log, hooking nuke, ban, kick and mute instead of relying on JDA events.
