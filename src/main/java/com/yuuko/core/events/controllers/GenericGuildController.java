@@ -7,6 +7,8 @@ import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
@@ -51,22 +53,25 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         DatabaseFunctions.addNewGuild(e.getGuild().getId(), e.getGuild().getName(), e.getGuild().getRegion().getName());
+        Member bot = e.getGuild().getSelfMember();
 
         try {
-            e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
-                EmbedBuilder about = new EmbedBuilder()
-                        .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
-                        .setDescription("Automatic setup was successful! Thanks for inviting me to your guild, below is some information about myself. Commands can be found at https://www.yuuko.info or by using the **-help** command! If you have any problems, suggestions, or general feedback, please join the support guild at " + Configuration.SUPPORT_GUILD + " and drop me a line!")
-                        .setThumbnail(Configuration.BOT.getAvatarUrl())
-                        .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
-                        .addField("Version", Configuration.VERSION, true)
-                        .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
-                        .addField("Commands", Configuration.COMMANDS.size() + "", true)
-                        .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
-                        .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                        .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
-                MessageHandler.sendMessage(textChannel, about.build());
-            });
+            if(bot.hasPermission(Permission.MESSAGE_READ) && bot.hasPermission(Permission.MESSAGE_WRITE)) {
+                e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
+                    EmbedBuilder about = new EmbedBuilder()
+                            .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
+                            .setDescription("Automatic setup was successful! Thanks for inviting me to your guild, below is some information about myself. Commands can be found at https://www.yuuko.info or by using the **-help** command! If you have any problems, suggestions, or general feedback, please join the support guild at " + Configuration.SUPPORT_GUILD + " and drop me a line!")
+                            .setThumbnail(Configuration.BOT.getAvatarUrl())
+                            .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
+                            .addField("Version", Configuration.VERSION, true)
+                            .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                            .addField("Commands", Configuration.COMMANDS.size() + "", true)
+                            .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
+                            .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
+                            .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
+                    MessageHandler.sendMessage(textChannel, about.build());
+                });
+            }
         } catch(Exception ex) {
             MessageHandler.sendException(ex, "GuildJoinEvent -> Initial Message");
         }
