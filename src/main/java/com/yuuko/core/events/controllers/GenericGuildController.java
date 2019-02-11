@@ -8,7 +8,6 @@ import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
@@ -53,10 +52,9 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         DatabaseFunctions.addNewGuild(e.getGuild().getId(), e.getGuild().getName(), e.getGuild().getRegion().getName());
-        Member bot = e.getGuild().getSelfMember();
 
         try {
-            if(bot.hasPermission(Permission.MESSAGE_READ) && bot.hasPermission(Permission.MESSAGE_WRITE)) {
+            if(e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)) {
                 e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
