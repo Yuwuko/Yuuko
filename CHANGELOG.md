@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 11-02-2019_1
++ [~] Changed how the [__ban__] command works, it turns out I didn't realise what one of the ban parameters was this whole time.
++ [~] Updated dependencies, namely JDA 3.8.2 and okhttp 3.13.1.
+
 ## 08-02-2019_2
 + [+] Added [__github__] command which allows users to lookup github repositories and return some information about them.
 + [+] Added [__spoilerify__] command which returns the raw string for those really annoying 'every character' spoiler messages.
