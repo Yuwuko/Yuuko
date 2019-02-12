@@ -41,7 +41,7 @@ public class CommandExecutor {
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                                 MessageHandler.sendMessage(e, embed.build());
                             } else {
-                                if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters())) { // Does the command contain the minimum number of parameters?
+                                if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters(), true)) { // Does the command contain the minimum number of parameters?
                                     try {
                                         log.trace("Invoking {}#onCommand()", command.getClass().getName());
                                         command.onCommand(e, cmd);

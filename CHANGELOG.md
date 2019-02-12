@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 12-02-2019_1
++ [~] Updated moderation commands to check role hierarchy before trying to do anything.
++ [~] Changed Sanitiser to take an optional parameter to silence feedback from its results.
+
 ## 11-02-2019_1
 + [~] Changed how the [__ban__] command works, it turns out I didn't realise what one of the ban parameters was this whole time.
 + [~] Updated dependencies, namely JDA 3.8.2 and okhttp 3.13.1.

@@ -109,8 +109,6 @@ public class DatabaseFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ? WHERE `guildId` = ?");) {
 
-
-
             stmt.setString(1, guildName);
             stmt.setString(2, guildId);
             stmt.execute();

@@ -30,20 +30,20 @@ public class KickCommand extends Command {
             return;
         }
 
+        if(!Sanitiser.canInteract(e, target, "kick", true)) {
+            return;
+        }
+
         if(commandParameters.length < 3) {
             e.getGuild().getController().kick(target).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), "None");
-            }, f -> {
-                e.getMessage().addReaction("❌").queue();
-            });
+            }, f -> e.getMessage().addReaction("❌").queue());
         } else {
             e.getGuild().getController().kick(target, commandParameters[1]).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), commandParameters[1]);
-            }, f -> {
-                e.getMessage().addReaction("❌").queue();
-            });
+            }, f -> e.getMessage().addReaction("❌").queue());
         }
     }
 
