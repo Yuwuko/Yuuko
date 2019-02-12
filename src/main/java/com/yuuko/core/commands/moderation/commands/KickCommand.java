@@ -18,13 +18,7 @@ public class KickCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 3);
-        Member target;
-
-        if(commandParameters[0].length() == 18 && Sanitiser.isNumber(commandParameters[0])) {
-            target = e.getGuild().getMemberById(commandParameters[0]);
-        } else {
-            target = MessageUtilities.getFirstMentionedMember(e);
-        }
+        Member target = MessageUtilities.getMentionedMember(e, commandParameters, true);
 
         if(target == null) {
             return;

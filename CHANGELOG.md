@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 12-02-2019_1
++ [+] Added [__avatar__] command so users can look at other user's avatars... but bigger.
 + [~] Updated moderation commands to check role hierarchy before trying to do anything.
 + [~] Changed Sanitiser to take an optional parameter to silence feedback from its results.
 

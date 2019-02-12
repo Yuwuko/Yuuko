@@ -3,10 +3,7 @@ package com.yuuko.core.commands.utility;
 import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.commands.utility.commands.BindCommand;
-import com.yuuko.core.commands.utility.commands.ChannelCommand;
-import com.yuuko.core.commands.utility.commands.ServerCommand;
-import com.yuuko.core.commands.utility.commands.UserCommand;
+import com.yuuko.core.commands.utility.commands.*;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -20,7 +17,8 @@ public class UtilityModule extends Module {
                 new UserCommand(),
                 new ServerCommand(),
                 new BindCommand(),
-                new ChannelCommand()
+                new ChannelCommand(),
+                new AvatarCommand()
         });
 
         new CommandExecutor(e,this, command);

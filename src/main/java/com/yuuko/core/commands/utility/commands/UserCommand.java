@@ -15,12 +15,12 @@ import java.time.format.DateTimeFormatter;
 public class UserCommand extends Command {
 
     public UserCommand() {
-        super("user", UtilityModule.class, 1, new String[]{"-user @user"}, false, null);
+        super("user", UtilityModule.class, 1, new String[]{"-user @user", "-user 420682957007880223"}, false, null);
     }
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        Member target = MessageUtilities.getFirstMentionedMember(e);
+        Member target = MessageUtilities.getMentionedMember(e, command, true);
 
         if(target == null) {
             return;

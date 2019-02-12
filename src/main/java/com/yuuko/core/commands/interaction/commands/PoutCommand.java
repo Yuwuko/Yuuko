@@ -26,7 +26,7 @@ public class PoutCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         if(MessageUtilities.checkIfUserMentioned(e)) {
-            Member target = MessageUtilities.getFirstMentionedMember(e);
+            Member target = MessageUtilities.getMentionedMember(e, null, true);
             if(target != null) {
                 EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts at **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length - 1)]);
                 MessageHandler.sendMessage(e, embed.build());
