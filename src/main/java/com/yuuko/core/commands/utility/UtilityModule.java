@@ -18,7 +18,8 @@ public class UtilityModule extends Module {
                 new ServerCommand(),
                 new BindCommand(),
                 new ChannelCommand(),
-                new AvatarCommand()
+                new AvatarCommand(),
+                new RolesCommand()
         });
 
         new CommandExecutor(e,this, command);

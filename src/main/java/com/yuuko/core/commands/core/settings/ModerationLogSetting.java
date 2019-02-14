@@ -60,30 +60,6 @@ public class ModerationLogSetting {
     }
 
     /**
-     * Logs ban events from the ban command.
-     *
-     * @param e MessageReceivedEvent
-     * @param target User to be banned
-     * @param time length of time for user to be banned
-     * @param reason why the user was banned
-     */
-    public static void execute(MessageReceivedEvent e, User target, int time, String reason) {
-        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
-        if(channelId != null) {
-            TextChannel log = e.getGuild().getTextChannelById(channelId);
-            EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Ban")
-                    .setThumbnail(target.getAvatarUrl())
-                    .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
-                    .addField("Reason", reason, true)
-                    .addField("Time", (time == 0) ? "Permanent" : time + "", false)
-                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
-                    .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(log, embed.build());
-        }
-    }
-
-    /**
      * Executes GuildUnbanEvent logging if the mod log is set.
      *
      * @param e GuildUnbanEvent

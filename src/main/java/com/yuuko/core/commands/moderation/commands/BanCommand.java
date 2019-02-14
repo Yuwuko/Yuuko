@@ -35,7 +35,7 @@ public class BanCommand extends Command {
         if(commandParameters.length == 1) { // Case: Ban w/o reason and delDays.
             e.getGuild().getController().ban(target, 0).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(e, target.getUser(), 0, "None");
+                ModerationLogSetting.execute(e, "Ban", target.getUser(), "None");
             }, f -> e.getMessage().addReaction("❌").queue());
             return;
         }
@@ -52,7 +52,7 @@ public class BanCommand extends Command {
         } else {
             e.getGuild().getController().ban(target, 0, commandParameters[1]).queue(s -> { // Case: Ban w/reason, but no delDays.
                 e.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(e, target.getUser(), 0, commandParameters[1]);
+                ModerationLogSetting.execute(e, "Ban", target.getUser(), commandParameters[1]);
             }, f -> e.getMessage().addReaction("❌").queue());
             return;
         }
@@ -60,12 +60,12 @@ public class BanCommand extends Command {
         if(commandParameters.length < 3) {
             e.getGuild().getController().ban(target, delDays.get()).queue(s -> { // Case: Ban w/delDays, but no reason.
                 e.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(e, target.getUser(), delDays.get(), "None");
+                ModerationLogSetting.execute(e, "Ban", target.getUser(), "None");
             }, f -> e.getMessage().addReaction("❌").queue());
         } else {
             e.getGuild().getController().ban(target, delDays.get(), commandParameters[2]).queue(s -> { // Case: Ban w/reason and delDays.
                 e.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(e, target.getUser(), delDays.get(), commandParameters[2]);
+                ModerationLogSetting.execute(e, "Ban", target.getUser(), commandParameters[2]);
             }, f -> e.getMessage().addReaction("❌").queue());
         }
     }

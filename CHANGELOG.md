@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 14-02-2019_1
++ [+] Added [__roles__] command to return a list of the guild's roles to the user.
++ [~] Refactored moderation log setting to be more generic internally.
+
 ## 12-02-2019_1
 + [+] Added [__avatar__] command so users can look at other user's avatars... but bigger.
 + [~] Updated moderation commands to check role hierarchy before trying to do anything.
