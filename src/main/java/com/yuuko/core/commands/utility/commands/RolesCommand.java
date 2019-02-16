@@ -18,10 +18,20 @@ public class RolesCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         StringBuilder roles = new StringBuilder();
-        for(Role role: e.getGuild().getRoleCache()) {
-            roles.append(role.getAsMention()).append(" (").append(role.getColor().toString()).append(")").append("\n");
+
+        if(!e.getGuild().getRoleCache().isEmpty()) {
+            int characterCount = 0;
+
+            for(Role role : e.getGuild().getRoleCache()) {
+                if(characterCount + role.getAsMention().length() + 2 < 2048) {
+                    roles.append(role.getAsMention()).append("\n");
+                    characterCount += role.getAsMention().length() + 1;
+                }
+            }
+            TextUtility.removeLastOccurrence(roles, "\n");
+        } else {
+            roles.append("None Available");
         }
-        TextUtility.removeLastOccurrence(roles, "\n");
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(e.getGuild().getName() + " Roles")

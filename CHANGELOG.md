@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 16-02-2019_1
++ [~] Fixed some minor bugs with the recent changes.
++ [~] Altered the new [__roles__] command to give it better guarding in guilds with many, many roles.
++ [~] Updated help command to reflect recent changes.
+
 ## 14-02-2019_1
 + [+] Added [__roles__] command to return a list of the guild's roles to the user.
 + [~] Refactored moderation log setting to be more generic internally.
