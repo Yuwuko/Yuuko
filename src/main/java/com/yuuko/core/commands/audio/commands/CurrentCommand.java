@@ -32,7 +32,7 @@ public class CurrentCommand extends Command {
                     .setThumbnail(imageUrl)
                     .addField("Duration", TextUtility.getTimestamp(track.getPosition()) + "/" + TextUtility.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, queuedTrack.build());
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a track currently playing.");

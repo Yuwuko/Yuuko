@@ -26,14 +26,14 @@ public class EfuktCommand extends Command {
                         .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByTag("source").attr("src"))
                         .setImage(doc.getElementsByTag("video").attr("poster"))
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e.getTextChannel(), efuktPost.build());
             } else {
                 efuktPost = new EmbedBuilder()
                         .setTitle("Efukt: " + doc.getElementsByTag("h1").text())
                         .setDescription(doc.getElementsByClass("image_content").attr("src"))
                         .setImage(doc.getElementsByClass("image_content").attr("src"))
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e.getTextChannel(), efuktPost.build());
             }
 

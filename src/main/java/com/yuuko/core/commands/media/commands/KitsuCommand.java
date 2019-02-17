@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class KitsuCommand extends Command {
 
     public KitsuCommand() {
-        super("kitsu", MediaModule.class, 1, new String[]{"-kitsu [name]"}, false, null);
+        super("kitsu", MediaModule.class, 1, new String[]{"-kitsu [title]", "-kitsu show [title]", "-kitsu character [name]"}, false, null);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class KitsuCommand extends Command {
                     .addField("Status", data.get("status").getAsString(), true)
                     .addField("Start Date", data.get("startDate").getAsString(), true)
                     .addField("End Date", data.get("endDate").getAsString(), true)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

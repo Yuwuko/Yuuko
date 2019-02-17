@@ -57,7 +57,7 @@ public class LineStatusCommand extends Command {
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
 
             } else {
@@ -71,7 +71,7 @@ public class LineStatusCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Tube Line Status (Minified)")
                         .addField("", reasons.toString(), false)
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl())
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
                 MessageHandler.sendMessage(e, embed.build());
             }

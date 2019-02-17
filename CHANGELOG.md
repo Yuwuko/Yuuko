@@ -2,9 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 17-02-2019_1
+## 17-02-2019_2
 + [+] Added [__8ball__] command so people can get some more RNG in their lives.
 + [+] Added [__flip__] command for more RNG, because they're free.
++ [~] Updated dependencies to their latest versions.
 + [~] Minor refactoring to various commands.
 
 ## 16-02-2019_1

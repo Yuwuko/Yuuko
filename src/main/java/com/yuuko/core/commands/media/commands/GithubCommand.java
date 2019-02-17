@@ -46,7 +46,7 @@ public class GithubCommand extends Command {
                 .addField("Pull Requests", "[link](https://github.com/" + json.get("full_name").getAsString() + "/pulls)", true)
                 .addField("Commits", "[link](https://github.com/" + json.get("full_name").getAsString() + "/commits/" + json.get("default_branch").getAsString() + ")", true)
                 .addField("Size", new BigDecimal(json.get("size").getAsInt()/1024.0).setScale(2, RoundingMode.HALF_UP) + "MB",true)
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

@@ -47,7 +47,7 @@ public class ServerCommand extends Command {
                 .addField("Voice Channels", server.getVoiceChannels().size()+"", true)
                 .addField("Roles", server.getRoles().size()+"", true)
                 .addField("Emotes", emoteString.toString(), false)
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, commandInfo.build());
     }
 

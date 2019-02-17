@@ -41,7 +41,7 @@ public class SearchCommand extends Command {
             EmbedBuilder presentResults = new EmbedBuilder()
                     .setAuthor("Search results for " + command[1], null)
                     .setDescription("Input the number of the track you would like to play, or 'cancel' to stop me waiting for a response. \n\n" + resultString)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {

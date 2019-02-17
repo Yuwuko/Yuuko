@@ -44,7 +44,7 @@ public class QueueCommand extends Command {
                             .setDescription(queue.toString())
                             .addField("In Queue", manager.scheduler.queue.size() + "", true)
                             .addField("Total Duration", TextUtility.getTimestamp(totalDuration.get()), true)
-                            .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
+                            .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains **0** tracks.");
