@@ -50,7 +50,6 @@ public class CommandExecutor {
                                         log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
                                         e.getMessage().addReaction("❌").queue();
                                         MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
-                                        MessageHandler.sendException(ex, command.getClass().getSimpleName());
                                     }
                                 }
                             }

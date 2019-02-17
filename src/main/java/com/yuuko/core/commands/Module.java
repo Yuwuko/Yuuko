@@ -46,8 +46,8 @@ public abstract class Module {
         if(DatabaseFunctions.checkModuleSettings(dbColumnName, e.getGuild().getId())) {
             return true;
         } else {
-            EmbedBuilder member = new EmbedBuilder().setTitle("Module Disabled").setDescription("The **_" + name + "_** module is disabled.");
-            MessageHandler.sendMessage(e, member.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("The **_" + name + "_** module is disabled.");
+            MessageHandler.sendMessage(e, embed.build());
             return false;
         }
     }
