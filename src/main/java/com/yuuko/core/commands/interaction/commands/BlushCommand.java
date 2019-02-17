@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class BlushCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/I3apoUB.gif",
             "https://i.imgur.com/0lfLa2Z.gif",

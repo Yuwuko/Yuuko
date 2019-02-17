@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class PokeCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/7l5duGX.gif",
             "https://i.imgur.com/CYxJyxQ.gif",

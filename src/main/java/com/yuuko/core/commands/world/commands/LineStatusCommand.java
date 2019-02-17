@@ -56,8 +56,8 @@ public class LineStatusCommand extends Command {
                         .addField(lineManager.get(10).getName(), lineManager.get(10).getLineStatusString(), true)
                         .addField("", "", true)
                         .addField("", reasons.toString(), false)
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl())
-                        .setTimestamp(Instant.now());
+                        .setTimestamp(Instant.now())
+                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
 
             } else {

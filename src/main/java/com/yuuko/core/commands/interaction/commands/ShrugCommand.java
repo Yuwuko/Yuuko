@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class ShrugCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/ghlye0C.gif",
             "https://i.imgur.com/nUacE87.gif",

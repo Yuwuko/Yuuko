@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Configuration {
-    public static final String VERSION = "16-02-2019_1";
+    public static final String VERSION = "17-02-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -114,7 +114,8 @@ public class Configuration {
             log.info("Setting up standard strings...");
             STANDARD_STRINGS = new String[]{
                     VERSION,
-                    VERSION + " • Requested by "
+                    VERSION + " • Requested by ",
+                    VERSION + " • Asked by "
             };
 
         } catch(Exception ex) {

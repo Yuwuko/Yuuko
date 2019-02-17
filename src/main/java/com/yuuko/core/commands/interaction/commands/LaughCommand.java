@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class LaughCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/SGboaP0.gif",
             "https://i.imgur.com/S0m2mfm.gif",

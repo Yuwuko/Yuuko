@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class HugCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/wOmoeF8.gif",
             "https://i.imgur.com/ntqYLGl.gif",

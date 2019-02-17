@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 17-02-2019_1
++ [+] Added [__8ball__] command so people can get some more RNG in their lives.
++ [+] Added [__flip__] command for more RNG, because they're free.
++ [~] Minor refactoring to various commands.
+
 ## 16-02-2019_1
 + [~] Fixed some minor bugs with the recent changes.
 + [~] Altered the new [__roles__] command to give it better guarding in guilds with many, many roles.

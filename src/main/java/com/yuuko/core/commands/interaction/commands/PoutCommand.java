@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class PoutCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/WdQgoDb.gif",
             "https://i.imgur.com/FgsaLup.gif",

@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class SleepCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/W5SEYT6.gif",
             "https://i.imgur.com/7AOboGB.gif",

@@ -10,19 +10,24 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.time.Instant;
 import java.util.Random;
 
-public class ChooseCommand extends Command {
+public class CoinFlipCommand extends Command {
 
-    public ChooseCommand() {
-        super("choose", FunModule.class, 1, new String[]{"-choose [choice], [choice]..."}, false, null);
+    private static final String[] responses = new String[]{
+            "Heads",
+            "Tails",
+            "Edge"
+    };
+
+    public CoinFlipCommand() {
+        super("flip", FunModule.class, 0, new String[]{"-flip"}, false, null);
     }
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s*(,)\\s*");
-
+        int rng = new Random().nextInt(6000);
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Choose")
-                .setDescription((commandParameters.length > 1) ? commandParameters[new Random().nextInt(commandParameters.length)] : commandParameters[0])
+                .setTitle("Coin Flip")
+                .setDescription((rng == 0) ? responses[2] : (rng < 3000) ? responses[0] : responses[1])
                 .setTimestamp(Instant.now())
                 .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());

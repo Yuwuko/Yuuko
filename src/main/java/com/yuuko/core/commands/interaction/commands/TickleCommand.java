@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Random;
 
 public class TickleCommand extends Command {
+
     private static final String[] interactionImage = new String[]{
             "https://i.imgur.com/lapBsXk.gif",
             "https://i.imgur.com/LNk70yS.gif",
