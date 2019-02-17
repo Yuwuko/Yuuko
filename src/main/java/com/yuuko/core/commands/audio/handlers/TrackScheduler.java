@@ -71,7 +71,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                     new CurrentCommand().onCommand(e, null);
                 }
             } catch(Exception ex) {
-                System.out.println("no");
+                // This exception occurs 99% of the time on repeating tracks.
             }
         }
     }
