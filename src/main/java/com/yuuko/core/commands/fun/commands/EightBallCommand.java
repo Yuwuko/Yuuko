@@ -45,7 +45,7 @@ public class EightBallCommand extends Command {
         question += (question.indexOf("?") == question.length()-1) ? "" : "?";
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(question)
+                .setTitle("8ball, " + question)
                 .setDescription(responses[new Random().nextInt(responses.length -1)])
                 .setTimestamp(Instant.now())
                 .setFooter(Configuration.STANDARD_STRINGS[2] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
