@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 24-02-2019_1
++ [~] Minor fixes to the spoilerify and eightball commands.
++ [~] Updated dependencies to their latest versions.
+
 ## 17-02-2019_2
 + [+] Added [__8ball__] command so people can get some more RNG in their lives.
 + [+] Added [__flip__] command for more RNG, because they're free.
@@ -289,7 +293,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated the [__server__] command to conform with other similar commands.
 
 ## 2.0.0
-
 + [+] Forced into 2.0.0 due to classpath change from e.g. yuuko.core -\> com.yuuko.core
 + [+] Added utils package to help break up the various utility classes.
 + [~] Separated the controller class into separate generic event classes to isolate things a bit more.
@@ -297,7 +300,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Finished and integrated the [__mute__] and [__unmute__] commands.
 
 ## 1.10.0
-
 + [+] Added [__mute__] command (voice and text) to mute users with an optional reason.
 + [+] Added [__unmute__] command to reverse a mute previous mute.
 + [+] Added a cool looking banner to the console. \:\^\)
@@ -311,14 +313,12 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Rewrote README to use tables instead of just listing commands.
 
 ## 1.9.4
-
 + [~] Major /minor/ change to the way commands are handled.
 + [~] General clean up of unused code from previous versions.
 + [~] Replaced some exception throws with feedback instead to make it more useful.
 + [~] Added some overlooked functions from the execution timer.
 
 ## 1.9.3
-
 + [+] Added a cleanup function for when the bot is removed from a server.
 + [~] Remedied a problem that would only auto-skip a background track once.
 + [~] Changed some of the emotes used as some of them weren't working correctly.
@@ -329,14 +329,12 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Finished the join SQL function. (Apparently I didn't finish it!)
 
 ## 1.9.2
-
 + [+] Prints into console when new server is joined (name, server id).
 + [-] Removed the 'fun' module, it was outdated and I can do better.
 + [~] Edited the README file to clarify potential misunderstandings with the default prefix.
 + [~] Remedied an unnecessary prefix for the roll command and updated the documentation accordingly.
 
 ## 1.9.1
-
 + [+] Added command execution time in milliseconds but with original resolution of nanoseconds.
 + [~] Changed the message delete procedure to only delete executed commands.
 + [~] Fixed a bug involving binding multiple channels and then using a command in one.
@@ -345,7 +343,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Altered the voice channel leave feature to work for all events instead of just leave.
 
 ## 1.9.0
-
 + [+] Added a welcome message to give users the commands and some other information.
 + [+] Added [__setprefix__] to allow admins to set their server command prefix.
 + [+] Added a bind/exclude system for all of the modules, allowing users to decide where the bot works.
@@ -371,7 +368,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [-] Stopped playing with lottie's tits. (Unset the default status)
 
 ## 1.8.2
-
 + [~] Changed the structure of [__currenttrack__], [__lasttrack__] and [__play__] to give a little more info.
 + [~] Altered the Monitor and TimeKeeper to reduce rate limiting.
 + [~] Fixed [__lasttrack__] to actually show the last track and not the current.
@@ -379,13 +375,11 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Fixed [__search__] cancelling not actually working.
 
 ## 1.8.1
-
 + [~] Refactored UserInterface to Monitor since I only use it to monitor...
 + [~] Changed field names in class M to match those of class C.
 + [-] Removed obsolete end of constructor warnings for modules.
 
 ## 1.8.0
-
 + [+] Added search command for music. [__search__]
 + [+] Added about command. [__about__]
 + [+] Added a check to the [__linestatus__] command that allows for a minified version 
@@ -394,7 +388,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Rewrite of the controller; module selection down from 120 lines to 9. (Yes, 9)
 
 ## 1.7.0
-
 + [+] Added a notice a the bottom of the README.md concerning a verified voice bug.
 + [+] Added developer only command to change presence, finished refactor.
 + [~] Moved all hardcoded configurations to program arguments. [args[]]
@@ -403,7 +396,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Resolved the rest of the compiler warning I felt needed attention.
 
 ## 1.6.0
-
 + [+] TFL London Tube service status command. [__linestatus__]
 + [+] Last track command to retrieve the last played track. [__lasttrack__]
 + [+] Repeat command to repeat the watermelon song over and over. [__togglerepeat__]
@@ -411,7 +403,6 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Resolved a ton of compiler warnings, including all performance warnings.
 
 ## 1.5.0
-
 + [+] Added Changelog to actually keep track of what has happened throughout versions. 
 
  

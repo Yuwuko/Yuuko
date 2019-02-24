@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '17-02-2019_2'
+version = '24-02-2019_1'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -36,7 +36,7 @@ dependencies {
     compile 'com.sedmelluq:jda-nas:1.0.6'
     compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: 'fbd297512f'
     compile 'com.google.apis:google-api-services-youtube:v3-rev206-1.25.0'
-    compile 'mysql:mysql-connector-java:8.0.13'
+    compile 'mysql:mysql-connector-java:8.0.15'
     compile 'org.apache.commons:commons-dbcp2:2.5.0'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'

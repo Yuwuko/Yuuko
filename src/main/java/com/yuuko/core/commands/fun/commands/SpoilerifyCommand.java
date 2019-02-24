@@ -13,7 +13,7 @@ public class SpoilerifyCommand extends Command {
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        String[] characters = command[1].split("");
+        String[] characters = command[1].replace("`", "").split("");
         StringBuilder spoiler = new StringBuilder();
 
         spoiler.append("`");
