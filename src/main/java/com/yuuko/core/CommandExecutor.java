@@ -63,6 +63,7 @@ public class CommandExecutor {
 
     /**
      * Removes the message the caused the command to execute if the deleteExecuted setting is toggled to on.
+     *
      * @param e MessageReceivedEvent
      * @return boolean
      */
@@ -81,6 +82,7 @@ public class CommandExecutor {
 
     /**
      * Checks various conditions to see if using certain audio commands are appropriate for the context of the user. Also checks the DJ Mode setting.
+     *
      * @param e MessageReceivedEvent
      * @param command String[]
      * @return boolean
@@ -115,6 +117,7 @@ public class CommandExecutor {
 
     /**
      * Checks channel bindings to see if commands are allowed to be executed there.
+     *
      * @param e MessageReceivedEvent
      * @param module Module
      * @return boolean

@@ -13,6 +13,7 @@ public class MessageUtilities {
 
     /**
      * Returns whether or not a user is mentioned in the message.
+     *
      * @param e MessageReceivedEvent
      * @return boolean
      */
@@ -22,6 +23,7 @@ public class MessageUtilities {
 
     /**
      * Returns whether or not a channel is mentioned in the message.
+     *
      * @param e MessageReceivedEvent
      * @return boolean
      */
@@ -31,6 +33,7 @@ public class MessageUtilities {
 
     /**
      * Returns the first mentioned user from a given message.
+     *
      * @param e MessageReceivedEvent
      * @return Member
      */
@@ -62,6 +65,7 @@ public class MessageUtilities {
 
     /**
      * Returns the first mentioned channel from a given message.
+     *
      * @param e MessageReceivedEvent
      * @return TextChannel
      */
@@ -72,6 +76,7 @@ public class MessageUtilities {
 
     /**
      * Returns a list of mentioned users from a given message.
+     *
      * @param e MessageReceivedEvent
      * @return List<Member>
      */
@@ -91,6 +96,7 @@ public class MessageUtilities {
 
     /**
      * Since JDA by default returns unmodifiable collections, we need one that is... (that also removes if the bot is mentioned!)
+     *
      * @param e MessageReceivedEvent
      * @return List<Member>
      */

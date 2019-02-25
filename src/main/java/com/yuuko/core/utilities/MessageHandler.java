@@ -15,6 +15,7 @@ public final class MessageHandler {
 
     /**
      * Sends a message, saving those precious bytes.
+     *
      * @param event GenericMessageEvent
      * @param message String
      */
@@ -29,6 +30,7 @@ public final class MessageHandler {
 
     /**
      * Sends an embedded message.
+     *
      * @param event GenericMessageEvent
      * @param embed MessageEmbed
      */
@@ -43,6 +45,7 @@ public final class MessageHandler {
 
     /**
      * Sends a file via message channel.
+     *
      * @param event GenericMessageEvent
      * @param file File
      */
@@ -57,6 +60,7 @@ public final class MessageHandler {
 
     /**
      * Sends a file via message channel.
+     *
      * @param event GenericMessageEvent
      * @param bytes byte[]
      * @param fileName String
@@ -72,6 +76,7 @@ public final class MessageHandler {
 
     /**
      * Sends a message via message channel.
+     *
      * @param channel MessageChannel
      * @param message String
      */
@@ -86,6 +91,7 @@ public final class MessageHandler {
 
     /**
      * Sends an embedded message via message channel.
+     *
      * @param channel MessageChannel
      * @param embed MessageEmbed
      */
@@ -100,6 +106,7 @@ public final class MessageHandler {
 
     /**
      * Sends a file via message channel.
+     *
      * @param channel MessageChannel
      * @param file File
      */
@@ -114,6 +121,7 @@ public final class MessageHandler {
 
     /**
      * Sends a file via message channel.
+     *
      * @param channel MessageChannel
      * @param bytes byte[]
      * @param fileName String
@@ -129,6 +137,7 @@ public final class MessageHandler {
 
     /**
      * Sends an exception to the support server's exception channel.
+     *
      * @param ex Exception
      * @param command String
      */

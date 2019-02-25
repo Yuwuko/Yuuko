@@ -4,6 +4,7 @@ public class TextUtility {
 
     /**
      * Replaces the last occurrence of a pattern with nothing.
+     *
      * @param stringBuilder StringBuilder
      * @param pattern String
      * @return StringBuilder
@@ -17,6 +18,7 @@ public class TextUtility {
 
     /**
      * Replaces the last occurrence of a pattern with nothing.
+     *
      * @param stringBuffer StringBuilder
      * @param pattern String
      * @return StringBuilder
@@ -30,6 +32,7 @@ public class TextUtility {
 
     /**
      * Extracts the module name from a class path.
+     *
      * @param string String
      * @param shortened boolean
      * @return String
@@ -41,6 +44,7 @@ public class TextUtility {
 
     /**
      * Gets current songs timeStamp.
+     *
      * @param milliseconds; how many milliseconds of the song has played.
      * @return formatted timeStamp.
      */

@@ -44,10 +44,21 @@ public class JsonBuffer {
         }
     }
 
+    /**
+     * Retrieves the json output as a string, does nothing else to it.
+     *
+     * @return String
+     */
     public String getAsString() {
         return jsonOutput;
     }
 
+    /**
+     * Retrieves the json output as a JsonObject which can be handled and manipulated with the Google Gson package.
+     *
+     * @return JsonObject
+     * @throws IllegalStateException IllegalStateException
+     */
     public JsonObject getAsJsonObject() throws IllegalStateException {
         try {
             return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonObject();
@@ -57,6 +68,12 @@ public class JsonBuffer {
         }
     }
 
+    /**
+     * Retrieves the json output as a JsonArray which can be handled and manipulated with the Google Gson package.
+     *
+     * @return JsonArray
+     * @throws IllegalStateException IllegalStateException
+     */
     public JsonArray getAsJsonArray() throws IllegalStateException {
         try {
             return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonArray();

@@ -15,6 +15,7 @@ public final class Utils {
 
     /**
      * Returns a username and discriminator in format username#discriminator.
+     *
      * @param member the member to retrieve
      * @return username#discriminator
      */
@@ -24,6 +25,7 @@ public final class Utils {
 
     /**
      * Returns a username and discriminator in format username#discriminator.
+     *
      * @param user the user to retrieve
      * @return username#discriminator
      */
@@ -33,6 +35,7 @@ public final class Utils {
 
     /**
      * Creates the muted role to correctly mute people.
+     *
      * @param guild Guild
      * @return Role
      */
@@ -94,6 +97,7 @@ public final class Utils {
 
     /**
      * Returns an API ApplicationId.
+     *
      * @param name name of the api
      * @return String
      */
@@ -103,6 +107,7 @@ public final class Utils {
 
     /**
      * Returns an API key.
+     *
      * @param name name of the api
      * @return String
      */
@@ -112,6 +117,7 @@ public final class Utils {
 
     /**
      * Returns the server custom prefix.
+     *
      * @param server the server to retrieve the prefix from
      * @return String
      */
@@ -121,6 +127,7 @@ public final class Utils {
 
     /**
      * Returns a pretty version of a command's permission array by removing the brackets surrounding them.
+     *
      * @param permissions Permission[]
      * @return String
      */
@@ -129,7 +136,8 @@ public final class Utils {
     }
 
     /**
-     * Returns if a text channel is nsfw or not.
+     * Checks to see if a text channel is nsfw or not.
+     *
      * @param e MessageReceivedEvent
      * @return boolean
      */
@@ -139,6 +147,7 @@ public final class Utils {
 
     /**
      * Returns the specific shard's SelfUser object.
+     *
      * @return SelfUser
      */
     public static SelfUser getSelfUser() {

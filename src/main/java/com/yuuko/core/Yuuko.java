@@ -73,6 +73,11 @@ public class Yuuko {
         log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadConfigStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
     }
 
+    /**
+     * Checks to see if all shards are connected.
+     *
+     * @return boolean
+     */
     private static boolean isConstructed() {
         if(Configuration.SHARD_MANAGER == null) {
             return false;

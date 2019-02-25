@@ -10,6 +10,7 @@ public final class Sanitiser {
 
     /**
      * Checks a command to ensure all parameters are present.
+     *
      * @param command String[]
      * @param expectedParameters int
      * @return boolean
@@ -43,6 +44,7 @@ public final class Sanitiser {
 
     /**
      * Checks to see if the command executor can interact with the command target.
+     *
      * @param e MessageReceivedEvent
      * @param member Member
      * @return boolean
@@ -69,6 +71,7 @@ public final class Sanitiser {
 
     /**
      * Checks to see if a string is a number or not without the whole Integer.parseInt() exception thang.
+     *
      * @param string String
      * @return boolean
      */
