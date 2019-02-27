@@ -33,10 +33,6 @@ public class Configuration {
     public static int SHARD_ID = 0;
     public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
-    public static String DATABASE_IP;
-    public static String DATABASE_NAME;
-    public static String DATABASE_USERNAME;
-    public static String DATABASE_PASSWORD;
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
     public static LavalinkManager LAVALINK;
     public static net.dv8tion.jda.bot.sharding.ShardManager SHARD_MANAGER;
@@ -61,10 +57,7 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
-            DATABASE_IP = c.readLine();
-            DATABASE_NAME = c.readLine();
-            DATABASE_USERNAME = c.readLine();
-            DATABASE_PASSWORD = c.readLine();
+
             c.close();
             log.info("Loaded configurations from 'configurations.txt'.");
 
