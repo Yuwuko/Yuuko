@@ -11,14 +11,14 @@ import java.util.List;
 public abstract class Module {
     private final String name;
     private final String dbColumnName;
-    private final boolean isNSFW;
+    private final boolean nsfw;
     private final Command[] commands;
 
     public Module(String name, String dbColumnName, boolean isNSFW, Command[] commands) {
         this.name = name;
         this.dbColumnName = dbColumnName;
         this.commands = commands;
-        this.isNSFW = isNSFW;
+        this.nsfw = isNSFW;
     }
 
     public String getName() {
@@ -53,6 +53,6 @@ public abstract class Module {
     }
 
     public boolean isNSFW() {
-        return isNSFW;
+        return nsfw;
     }
 }

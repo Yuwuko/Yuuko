@@ -1,21 +1,23 @@
 package com.yuuko.core.commands.developer.commands;
 
-import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
+import com.yuuko.core.database.connections.MetricsDatabaseConnection;
+import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class ReloadApiCommand extends Command {
+public class ReloadDatabaseCommand extends Command {
 
-    public ReloadApiCommand() {
-        super("reapi", DeveloperModule.class, 1, new String[]{"-reapi"}, false, null);
+    public ReloadDatabaseCommand() {
+        super("redatabase", DeveloperModule.class, 1, new String[]{"-redatabase"}, false, null);
     }
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
-            Configuration.loadApi();
+            new MetricsDatabaseConnection();
+            new SettingsDatabaseConnection();
         } catch(Exception ex) {
             MessageHandler.sendException(ex, e.getMessage().getContentRaw());
         }
