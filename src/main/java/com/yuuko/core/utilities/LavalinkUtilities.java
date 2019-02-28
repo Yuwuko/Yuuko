@@ -2,6 +2,7 @@ package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
 import lavalink.client.io.Link;
+import lavalink.client.player.LavalinkPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 
 public class LavalinkUtilities {
@@ -16,4 +17,25 @@ public class LavalinkUtilities {
     public static boolean isState(Guild guild, Link.State state) {
         return Configuration.LAVALINK.getLavalink().getLink(guild).getState() == state;
     }
+
+    /**
+     * Gets the guild's Lavalink player
+     *
+     * @param guild Guild
+     * @return LavalinkPlayer
+     */
+    public static LavalinkPlayer getPlayer(Guild guild) {
+        return Configuration.LAVALINK.getLavalink().getLink(guild).getPlayer();
+    }
+
+    /**
+     * Gets the currently playing tracks position.
+     *
+     * @param guild Guild
+     * @return long
+     */
+    public static long getTrackPosition(Guild guild) {
+        return getPlayer(guild).getTrackPosition();
+    }
+
 }

@@ -26,7 +26,7 @@ public class HelpCommand extends Command {
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
                     .addField("Core", "`about` `help` `module` `commands` `settings` `vote`", false)
-                    .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `loop` `shuffle` `skip` `stop`", false)
+                    .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `loop` `shuffle` `skip` `stop` `seek`", false)
                     .addField("Fun", "`roll` `choose` `spoilerify` `8ball` `flip`", false)
                     .addField("Interaction", "`poke` `hug` `bite` `attack` `angry` `cry` `laugh` `pout` `shrug` `sleep` `tickle` `kiss` `blush` `pet`", false)
                     .addField("Media", "`kitsu` `osu`", false)

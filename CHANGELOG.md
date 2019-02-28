@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 28-02-2019-1
++ [+] Added [__seek__] to allow seeking of the currently playing track.
++ [~] Updated Lavalink utilities to add quality of life changes.
++ [~] Fixed [__current__] command to actually show correct timestamp.
+
 ## 24-02-2019_1
 + [~] Minor fixes to the spoilerify and eightball commands.
 + [~] Updated dependencies to their latest versions.
