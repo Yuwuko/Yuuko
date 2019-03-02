@@ -17,14 +17,8 @@ public class MetricsManager {
     private static final DiscordMetrics discordMetrics = new DiscordMetrics();
 
     public static void reset() {
-        eventMetrics.MESSAGES_PROCESSED.set(0);
-        eventMetrics.REACTS_PROCESSED.set(0);
-        eventMetrics.COMMANDS_EXECUTED.set(0);
-        eventMetrics.COMMANDS_FAILED.set(0);
-        databaseMetrics.INSERT.set(0);
-        databaseMetrics.SELECT.set(0);
-        databaseMetrics.DELETE.set(0);
-        databaseMetrics.UPDATE.set(0);
+        eventMetrics.reset();
+        databaseMetrics.reset();
     }
 
     public static DatabaseMetrics getDatabaseMetrics() {

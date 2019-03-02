@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Configuration {
-    public static final String VERSION = "28-02-2019_1";
+    public static final String VERSION = "02-03-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -57,7 +57,6 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
-
             c.close();
             log.info("Loaded configurations from 'configurations.txt'.");
 
