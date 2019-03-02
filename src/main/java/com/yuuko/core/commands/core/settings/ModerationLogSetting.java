@@ -48,7 +48,7 @@ public class ModerationLogSetting {
         try {
             e.getGuild().getController().createTextChannel("mod-log").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
-                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
+                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(DatabaseFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
