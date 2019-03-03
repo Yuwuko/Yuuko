@@ -19,7 +19,8 @@ public class UtilityModule extends Module {
                 new BindCommand(),
                 new ChannelCommand(),
                 new AvatarCommand(),
-                new RolesCommand()
+                new RolesCommand(),
+                new PingCommand()
         });
 
         new CommandExecutor(e,this, command);

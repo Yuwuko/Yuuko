@@ -28,6 +28,7 @@ public class Yuuko {
 
     /**
      * Initialises the bot and JDA.
+     *
      * @param args -> program arguments (currently unused)
      * @throws LoginException -> If there was an error logging in.
      * @throws IllegalArgumentException -> If a JDA argument was incorrect.

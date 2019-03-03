@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 03-03-2019_1
++ [+] Added [__ping__] command, because it seems like users appreciate small commands as much as larger ones with more information.
++ [~] Minor refactoring to metrics classes to make things a little more concise.
+
 ## 28-02-2019-1
 + [+] Added [__seek__] to allow seeking of the currently playing track.
 + [~] Updated Lavalink utilities to add quality of life changes.

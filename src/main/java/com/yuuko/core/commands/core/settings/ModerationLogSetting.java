@@ -95,8 +95,8 @@ public class ModerationLogSetting {
                     .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
                     .addField("Moderator", e.getMessage().getMember().getEffectiveName(), true)
                     .addField("Reason", reason, false)
-                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
-                    .setTimestamp(Instant.now());
+                    .setTimestamp(Instant.now())
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
             MessageHandler.sendMessage(log, embed.build());
         }
     }
@@ -116,8 +116,8 @@ public class ModerationLogSetting {
                     .addField("Moderator", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
                     .addField("Channel", e.getTextChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
-                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
-                    .setTimestamp(Instant.now());
+                    .setTimestamp(Instant.now())
+                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
             MessageHandler.sendMessage(log, embed.build());
         }
     }
