@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## **-03-2019_1
++ [+] Added the base of a [__reddit__] command which will enable users to grab the latest post from any subreddit.
+
 ## 03-03-2019_1
 + [+] Added [__ping__] command, because it seems like users appreciate small commands as much as larger ones with more information.
 + [~] Minor refactoring to metrics classes to make things a little more concise.
