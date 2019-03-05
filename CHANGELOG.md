@@ -2,8 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## **-03-2019_1
-+ [+] Added the base of a [__reddit__] command which will enable users to grab the latest post from any subreddit.
+## 05-03-2019_1
++ [+] Added the base of a [__reddit__] command which will enable users to grab the latest post from any subreddit. (Soon)
++ [~] Refactored [__server__] to [__guild__] to reflect how it's officially named.
++ [~] Modified ping command to say pong like every other ping command ever.
 
 ## 03-03-2019_1
 + [+] Added [__ping__] command, because it seems like users appreciate small commands as much as larger ones with more information.

@@ -19,7 +19,7 @@ public class PingCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Ping")
+                .setTitle("Pong!")
                 .setDescription("Current ping to Discord is " + MetricsManager.getDiscordMetrics().PING + "ms.")
                 .setTimestamp(Instant.now())
                 .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());

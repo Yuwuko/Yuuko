@@ -15,7 +15,7 @@ public class UtilityModule extends Module {
     public UtilityModule(MessageReceivedEvent e, String[] command) {
         super("Utility", "moduleUtility", false, new Command[]{
                 new UserCommand(),
-                new ServerCommand(),
+                new GuildCommand(),
                 new BindCommand(),
                 new ChannelCommand(),
                 new AvatarCommand(),

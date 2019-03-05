@@ -32,7 +32,7 @@ public class HelpCommand extends Command {
                     .addField("Media", "`kitsu` `osu`", false)
                     .addField("Moderation", "`ban` `kick` `mute` `nuke`", false)
                     .addField("World", "`linestatus` `weather` `tesco`", false)
-                    .addField("Utility", "`bind` `channel` `server` `user` `avatar` `roles`", false)
+                    .addField("Utility", "`bind` `channel` `guild` `user` `avatar` `roles`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
 
