@@ -50,8 +50,7 @@ public class StopCommand extends Command {
             manager.scheduler.setLooping(false);
             manager.player.stopTrack();
             manager.player.setPaused(false);
-            e.getGuild().getAudioManager().setSendingHandler(null);
-            e.getGuild().getAudioManager().closeAudioConnection();
+            Configuration.LAVALINK.closeConnection(e.getGuild());
         }
     }
 }
