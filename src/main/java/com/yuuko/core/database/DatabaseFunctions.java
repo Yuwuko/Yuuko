@@ -24,6 +24,7 @@ public class DatabaseFunctions {
 
     /**
      * Small method that checks if a guild exists on the database.
+     *
      * @param guild the guild to check.
      * @return boolean
      */
@@ -46,6 +47,7 @@ public class DatabaseFunctions {
 
     /**
      * Adds a new guild to the database and initialises it's settings.
+     *
      * @param guild the guild to add.
      * @return if the add was successful.
      */
@@ -80,6 +82,7 @@ public class DatabaseFunctions {
 
     /**
      * Adds a new guild to the database and initialises it's settings, or updates current guilds if they already exist on the database.
+     *
      * @param e MessageReceivedEvent.
      * @return if the add was successful.
      */
@@ -102,6 +105,7 @@ public class DatabaseFunctions {
 
     /**
      * Updates a guilds name in the database when it is changed.
+     *
      * @param guildId String
      * @param guildName String
      */
@@ -122,6 +126,7 @@ public class DatabaseFunctions {
 
     /**
      * Updates a guilds region in the database when it is changed.
+     *
      * @param guildId String
      * @param guildRegion String
      */
@@ -142,6 +147,7 @@ public class DatabaseFunctions {
 
     /**
      * Retrieves all of the module settings for a guild and returns them in an arrayList of an arrayList.
+     *
      * @param guild the guild id.
      * @return ArrayList<ArrayList<String>>
      */
@@ -183,7 +189,9 @@ public class DatabaseFunctions {
 
     /**
      * Checks to see if a module is active before parsing a command.
+     *
      * @param moduleName the name of the module.
+     * @param guild the guild id to check against.
      * @return (boolean) if the module is active or not.
      */
     public static boolean checkModuleSettings(String moduleName, String guild) {
@@ -205,6 +213,7 @@ public class DatabaseFunctions {
 
     /**
      * Toggles a module for a guild, returns the new value.
+     *
      * @param moduleIn the module to toggle.
      * @param guild the guild in which the module is to be toggled.
      * @return boolean.
@@ -227,8 +236,122 @@ public class DatabaseFunctions {
     }
 
     /**
+     * Retrieves all of the command settings for a guild and returns them in an arrayList of an arrayList.
+     *
+     * @param guild the guild id.
+     * @return ArrayList<ArrayList<String>>
+     */
+    public static ArrayList<String> getCommandSettings(String guildId) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `CommandBindings` WHERE `guildId` = ?");) {
+
+            stmt.setString(1, guildId);
+            ResultSet rs = stmt.executeQuery();
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
+            ArrayList<String> disabled = new ArrayList<>();
+
+            int hits = 0;
+            while(rs.next()) {
+                String command = (rs.getString(3).equals("*")) ? "All" : rs.getString(3);
+                String channel = (rs.getString(2).equals("*")) ? "Global" : rs.getString(2);
+                disabled.add("`" + command + "` : " + channel );
+                hits++;
+            }
+
+            return (hits == 0) ? new ArrayList<>() : disabled;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Checks to see if a command is active before parsing a command.
+     *
+     * @param command the name of the command.
+     * @param guild the guild id to check against.
+     * @param channel the channel id to check against.
+     * @return (boolean) if the module is active or not.
+     */
+    public static boolean checkCommandSettings(String command, String guild, String channel) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `command` FROM `CommandBindings` WHERE `guildId` = ? AND `channelId` = ? AND `command` = ?");) {
+
+            stmt.setString(1, guild);
+            stmt.setString(2, channel);
+            stmt.setString(3, command);
+            ResultSet resultSet = stmt.executeQuery();
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
+            return resultSet.next();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+    /**
+     * Toggles a command for a guild, returns the new value.
+     *
+     * @param commandName the command to toggle.
+     * @param guild the guild in which the command is to be toggled.
+     * @param channel the channel where the command will be disabled
+     * @return boolean.
+     */
+    public static boolean toggleCommand(String command, String guild, String channel) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandBindings` (`guildId`, `channelId`, `command`) VALUES (?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND channelId = ? AND command = ?");) {
+
+            if(!checkCommandSettings(command, guild, channel)) {
+                stmt.setString(1, guild);
+                stmt.setString(2, channel);
+                stmt.setString(3, command);
+                stmt.execute();
+                MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
+            } else {
+                stmt2.setString(1, guild);
+                stmt2.setString(2, channel);
+                stmt2.setString(3, command);
+                stmt2.execute();
+                MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
+            }
+
+            return !checkCommandSettings(command, guild, channel); // Returns inverse because command being enabled means that they ARENT found in the database.
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+    /**
+     * Resets all of the command settings for a guild.
+     *
+     * @param guild the guild in which the settings are reset.
+     */
+    public static void resetCommandSettings(String guild) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ?");) {
+
+            stmt.setString(1, guild);
+            stmt.execute();
+            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Returns all of the guild settings for the given guild.
      * ** Doesn't close connection or resultset is lost **
+     *
      * @param connection the database connection used.
      * @param guild the guild to get the settings for.
      * @return ResultSet
@@ -265,6 +388,7 @@ public class DatabaseFunctions {
 
     /**
      * Returns the value of a single guild settings.
+     *
      * @param setting the setting to be checked
      * @param guild the guild to check the setting for
      * @return String
@@ -288,6 +412,7 @@ public class DatabaseFunctions {
 
     /**
      * Changes a setting value for the given guild setting. (Very dangerous without the correct checking...)
+     *
      * @param setting the setting to be changed.
      * @param value the value of the setting being changed.
      * @param guild the guild where the setting will be changed.
@@ -320,20 +445,22 @@ public class DatabaseFunctions {
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)");) {
 
-            stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
+            int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
+
+            stmt.setInt(1, shardId);
             stmt.setLong(2, MetricsManager.getSystemMetrics().UPTIME);
             stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
             stmt.setLong(4, MetricsManager.getSystemMetrics().MEMORY_USED);
             stmt.execute();
 
-            stmt2.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
+            stmt2.setInt(1, shardId);
             stmt2.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
             stmt2.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
             stmt2.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
             stmt2.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
             stmt2.execute();
 
-            stmt3.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
+            stmt3.setInt(1, shardId);
             stmt3.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
             stmt3.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
             stmt3.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
@@ -342,7 +469,7 @@ public class DatabaseFunctions {
             stmt3.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
             stmt3.execute();
 
-            stmt4.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
+            stmt4.setInt(1, shardId);
             stmt4.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
             stmt4.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
             stmt4.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
@@ -358,6 +485,7 @@ public class DatabaseFunctions {
 
     /**
      * Updates the database with the latest command.
+     *
      * @param guildId String
      * @param command String
      */
@@ -403,6 +531,7 @@ public class DatabaseFunctions {
 
     /**
      * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
+     *
      * @param guild the guild's id.
      */
     public static void cleanup(String guild) {
@@ -421,6 +550,7 @@ public class DatabaseFunctions {
 
     /**
      * Updates settings from channels that are deleted.
+     *
      * @param channel the channel to clean up.
      */
     public static void cleanupSettings(String setting, String guildId) {

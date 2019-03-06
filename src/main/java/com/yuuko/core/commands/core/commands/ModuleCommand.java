@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class ModuleCommand extends Command {
@@ -27,15 +28,15 @@ public class ModuleCommand extends Command {
             String server = e.getGuild().getId();
 
             // Check if the module even exists.
-            boolean hit = false;
-            for(Module module : Configuration.MODULES) {
-                if(module.getName().equalsIgnoreCase(moduleName)) {
-                    hit = true;
+            boolean valid = false;
+            for(Module moduleObj : Configuration.MODULES) {
+                if(moduleObj.getName().equalsIgnoreCase(moduleName)) {
+                    valid = true;
                     break;
                 }
             }
 
-            if(!hit) {
+            if(!valid) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + moduleName + "_ is not a valid module.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
@@ -52,11 +53,12 @@ public class ModuleCommand extends Command {
             ArrayList<ArrayList<String>> settings = DatabaseFunctions.getModuleSettings(e.getGuild().getId());
 
             EmbedBuilder commandModules = new EmbedBuilder()
-                    .setTitle("Below are the list of bot commands!")
+                    .setTitle("Below are the lists of my enabled/disabled modules!")
                     .setDescription("Each module can be toggled on or off by using the '" + Utils.getServerPrefix(e.getGuild().getId()) + "module <module>' command.")
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
-                    .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
+                    .setTimestamp(Instant.now())
+                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
         }
     }

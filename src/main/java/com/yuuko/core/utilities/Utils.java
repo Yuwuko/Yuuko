@@ -1,6 +1,7 @@
 package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.DatabaseFunctions;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
@@ -157,5 +158,30 @@ public final class Utils {
             }
         }
         return null;
+    }
+
+    /**
+     * Retrieves a command from the command list by name.
+     *
+     * @param name the name of the command to get.
+     * @return Command
+     */
+    public static Command getCommandByName(String name) {
+        for(Command command: Configuration.COMMANDS) {
+            if(command.getName().equals(name)) {
+                return command;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the module name of a module via the class simple name.
+     *
+     * @param module the module class to extract the name from.
+     * @return String
+     */
+    public static String getModuleName(Class<?> module) {
+        return module.getSimpleName().replace("Module", "");
     }
 }

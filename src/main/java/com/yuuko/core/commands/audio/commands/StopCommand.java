@@ -39,6 +39,7 @@ public class StopCommand extends Command {
 
     /**
      * Executes command when everyone leaves the channel the bot is in.
+     *
      * @param e; GenericGuildEvent
      */
     public void onCommand(GenericGuildEvent e) {

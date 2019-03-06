@@ -29,27 +29,29 @@ public class CommandExecutor {
                     return;
                 }
                 module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
-                    if((module.isNSFW() && !Utils.isChannelNSFW(e)) || (command.isNSFW() && !Utils.isChannelNSFW(e))) { // Is the module or command NSFW? If so is the channel /NOT/ NSFW?
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
-                        MessageHandler.sendMessage(e, embed.build());
-                    } else {
-                        if(command.getPermissions() != null && !e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission /NOT/ NULL? If so, does the bot have the permission?
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                    if(command.checkCommandSettings(e)) {
+                        if((module.isNSFW() && ! Utils.isChannelNSFW(e)) || (command.isNSFW() && ! Utils.isChannelNSFW(e))) { // Is the module or command NSFW? If so is the channel /NOT/ NSFW?
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
                             MessageHandler.sendMessage(e, embed.build());
                         } else {
-                            if(command.getPermissions() != null && !e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
-                                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                            if(command.getPermissions() != null && ! e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) { // Is the command permission /NOT/ NULL? If so, does the bot have the permission?
+                                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                                 MessageHandler.sendMessage(e, embed.build());
                             } else {
-                                if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters(), true)) { // Does the command contain the minimum number of parameters?
-                                    try {
-                                        log.trace("Invoking {}#onCommand()", command.getClass().getName());
-                                        command.onCommand(e, cmd);
-                                        MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
-                                    } catch (Exception ex) {
-                                        log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
-                                        e.getMessage().addReaction("❌").queue();
-                                        MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
+                                if(command.getPermissions() != null && ! e.getMember().hasPermission(command.getPermissions()) && ! e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) { // Is the command permission NULL? If so, does the user have the permission?
+                                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                                    MessageHandler.sendMessage(e, embed.build());
+                                } else {
+                                    if(Sanitiser.checkParameters(e, cmd, command.getExpectedParameters(), true)) { // Does the command contain the minimum number of parameters?
+                                        try {
+                                            log.trace("Invoking {}#onCommand()", command.getClass().getName());
+                                            command.onCommand(e, cmd);
+                                            MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
+                                        } catch(Exception ex) {
+                                            log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+                                            e.getMessage().addReaction("❌").queue();
+                                            MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
+                                        }
                                     }
                                 }
                             }

@@ -25,14 +25,14 @@ public class HelpCommand extends Command {
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
-                    .addField("Core", "`about` `help` `module` `commands` `settings` `vote`", false)
+                    .addField("Core", "`about` `help` `module` `command` `settings` `vote` `shards`", false)
                     .addField("Audio", "`play` `pause` `background` `clear` `current` `last` `search` `queue` `loop` `shuffle` `skip` `stop` `seek`", false)
                     .addField("Fun", "`roll` `choose` `spoilerify` `8ball` `flip`", false)
                     .addField("Interaction", "`poke` `hug` `bite` `attack` `angry` `cry` `laugh` `pout` `shrug` `sleep` `tickle` `kiss` `blush` `pet`", false)
-                    .addField("Media", "`kitsu` `osu`", false)
+                    .addField("Media", "`kitsu` `osu` `github`", false)
                     .addField("Moderation", "`ban` `kick` `mute` `nuke`", false)
                     .addField("World", "`linestatus` `weather` `tesco`", false)
-                    .addField("Utility", "`bind` `channel` `guild` `user` `avatar` `roles`", false)
+                    .addField("Utility", "`bind` `channel` `guild` `user` `avatar` `roles` `ping`", false)
                     .addField("NSFW", "`efukt` `neko`", false)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
 

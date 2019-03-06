@@ -2,10 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 05-03-2019_1
+## 06-03-2019_1
++ [+] Added [__command__] command which allows users to disable/enable individual commands either by channel or globally on a server.
 + [+] Added the base of a [__reddit__] command which will enable users to grab the latest post from any subreddit. (Soon)
 + [~] Refactored [__server__] to [__guild__] to reflect how it's officially named.
 + [~] Modified ping command to say pong like every other ping command ever.
++ [~] Fixed a small issue with stop commands being issued by the lonely check.
 
 ## 03-03-2019_1
 + [+] Added [__ping__] command, because it seems like users appreciate small commands as much as larger ones with more information.
