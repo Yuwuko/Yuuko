@@ -6,6 +6,7 @@ import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.commands.SearchCommand;
 import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -91,7 +92,7 @@ public class GenericMessageController {
 
             if(executed) {
                 DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), command[0].toLowerCase());
-                if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
+                if(GuildFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
                     CommandLogSetting.execute(e, executionTime);
                 }
             }
@@ -116,11 +117,11 @@ public class GenericMessageController {
                     new SearchCommand().onCommand(e, input[0]);
                 }
 
-                if(DatabaseFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
                     e.getMessage().delete().queue();
                 }
 
-                if(DatabaseFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
+                if(GuildFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
                     CommandLogSetting.execute(e, (System.nanoTime() - startExecutionNano)/1000000.0);
                 }
             }

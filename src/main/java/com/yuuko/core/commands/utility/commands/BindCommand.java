@@ -4,7 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.UtilityModule;
-import com.yuuko.core.database.ModuleBindFunctions;
+import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
@@ -53,7 +53,7 @@ public class BindCommand extends Command {
 
                 StringBuilder boundChannels = new StringBuilder();
                 for(TextChannel channel : channels) {
-                    ModuleBindFunctions.toggleBind(e.getGuild().getId(), channel.getId(), selectedModule);
+                    BindFunctions.toggleBind(e.getGuild().getId(), channel.getId(), selectedModule);
                     boundChannels.append(channel.getName()).append(", ");
                 }
                 TextUtility.removeLastOccurrence(boundChannels, ", ");
@@ -61,7 +61,7 @@ public class BindCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + selectedModule + "** on **" + boundChannels.toString() + "**.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                final int res = ModuleBindFunctions.toggleBind(e.getGuild().getId(), e.getTextChannel().getId(), selectedModule);
+                final int res = BindFunctions.toggleBind(e.getGuild().getId(), e.getTextChannel().getId(), selectedModule);
 
                 if(res == 0) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + selectedModule + "** to **" + e.getTextChannel().getName() + "**.");
@@ -75,7 +75,7 @@ public class BindCommand extends Command {
             try {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Bound Modules")
-                        .setDescription(ModuleBindFunctions.getGuildBinds(e.getGuild(), "\n"));
+                        .setDescription(BindFunctions.getGuildBinds(e.getGuild(), "\n"));
                 MessageHandler.sendMessage(e, embed.build());
             } catch(Exception ex) {
                 //

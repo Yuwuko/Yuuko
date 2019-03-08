@@ -2,6 +2,7 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
@@ -51,7 +52,7 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        DatabaseFunctions.addNewGuild(e.getGuild().getId(), e.getGuild().getName(), e.getGuild().getRegion().getName());
+        GuildFunctions.addNewGuild(e.getGuild().getId(), e.getGuild().getName(), e.getGuild().getRegion().getName());
 
         try {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)) {
@@ -85,15 +86,15 @@ public class GenericGuildController {
     }
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent e) {
-        DatabaseFunctions.updateGuildName(e.getGuild().getId(), e.getNewName());
+        GuildFunctions.updateGuildName(e.getGuild().getId(), e.getNewName());
     }
 
     private void guildUpdateRegionEvent(GuildUpdateRegionEvent e) {
-        DatabaseFunctions.updateGuildRegion(e.getGuild().getId(), e.getNewRegion().getName());
+        GuildFunctions.updateGuildRegion(e.getGuild().getId(), e.getNewRegion().getName());
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        String channelId = DatabaseFunctions.getGuildSetting("newMember", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
         if(channelId != null) {
             TextChannel channel = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription("Welcome to **" + e.getGuild().getName() + "**, " + e.getMember().getAsMention() + "!");

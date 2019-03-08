@@ -4,7 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.ModuleFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -42,7 +42,7 @@ public class ModuleCommand extends Command {
                 return;
             }
 
-            if(DatabaseFunctions.toggleModule("module" + moduleName, server)) {
+            if(ModuleFunctions.toggleModule("module" + moduleName, server)) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + moduleName + "_ was enabled on this server!");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
@@ -50,7 +50,7 @@ public class ModuleCommand extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            ArrayList<ArrayList<String>> settings = DatabaseFunctions.getModuleSettings(e.getGuild().getId());
+            ArrayList<ArrayList<String>> settings = ModuleFunctions.getModuleSettings(e.getGuild().getId());
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below are the lists of my enabled/disabled modules!")

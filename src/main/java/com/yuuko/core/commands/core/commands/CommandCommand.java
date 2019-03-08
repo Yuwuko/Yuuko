@@ -3,7 +3,7 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.CommandFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Utils;
@@ -39,7 +39,7 @@ public class CommandCommand extends Command {
             boolean valid = false;
 
             if(input.equalsIgnoreCase("reset")) {
-                DatabaseFunctions.resetCommandSettings(e.getGuild().getId());
+                CommandFunctions.resetCommandSettings(e.getGuild().getId());
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Commands Reset").setDescription("All commands have been reset, thus they are all enabled.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
@@ -71,7 +71,7 @@ public class CommandCommand extends Command {
             String commandInput = (commandWords.contains(input)) ? "All commands were " : "`" + input + "` was ";
             String channelInput = (channel == null) ? "on the server!" : "in " + channel.getName() + "!";
 
-            if(DatabaseFunctions.toggleCommand((commandWords.contains(input)) ? "*" : input, e.getGuild().getId(), (channel == null) ? "*" : channel.getId())) {
+            if(CommandFunctions.toggleCommand((commandWords.contains(input)) ? "*" : input, e.getGuild().getId(), (channel == null) ? "*" : channel.getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("Command(s) Enabled").setDescription(commandInput + " enabled " + channelInput);
                 MessageHandler.sendMessage(e, embed.build());
             } else {
@@ -79,7 +79,7 @@ public class CommandCommand extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            ArrayList<String> settings = DatabaseFunctions.getCommandSettings(e.getGuild().getId());
+            ArrayList<String> settings = CommandFunctions.getCommandSettings(e.getGuild().getId());
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below is a list of the disabled commands!")

@@ -11,9 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class ModuleBindFunctions {
+public class BindFunctions {
 
-    private static final Logger log = LoggerFactory.getLogger(ModuleBindFunctions.class);
+    private static final Logger log = LoggerFactory.getLogger(BindFunctions.class);
 
     /**
      * Binds a particular module to a channel.
@@ -49,7 +49,7 @@ public class ModuleBindFunctions {
             return (deleteBindsRecord(guildId, channel, moduleName)) ? 1 : -1;
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ModuleBindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return -1;
         }
     }
@@ -81,7 +81,7 @@ public class ModuleBindFunctions {
             return false;
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ModuleBindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -116,7 +116,7 @@ public class ModuleBindFunctions {
             return string.toString();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ModuleBindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return null;
         }
     }
@@ -155,7 +155,7 @@ public class ModuleBindFunctions {
             return string.toString();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ModuleBindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return null;
         }
     }
@@ -190,7 +190,7 @@ public class ModuleBindFunctions {
             return count < 1;
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ModuleBindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -209,7 +209,7 @@ public class ModuleBindFunctions {
             MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ModuleBindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 }

@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 08-03-2019_1
++ [~] Refactored DatabaseFunctions into CommandFunctions, GuildFunctions and ModuleFunctions respectively to break up the code.
++ [~] Refactored key method names to be more consistent with my usual code style.
+
 ## 06-03-2019_1
 + [+] Added [__command__] command which allows users to disable/enable individual commands either by channel or globally on a server.
 + [+] Added the base of a [__reddit__] command which will enable users to grab the latest post from any subreddit. (Soon)

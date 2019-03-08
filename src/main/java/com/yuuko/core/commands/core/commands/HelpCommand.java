@@ -3,7 +3,7 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
-import com.yuuko.core.database.ModuleBindFunctions;
+import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
@@ -64,7 +64,7 @@ public class HelpCommand extends Command {
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getSimpleName().substring(0, command.getModule().getSimpleName().length() - 6), true)
                         .addField("Required Permissions", commandPermission, true)
-                        .addField("Binds", ModuleBindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
+                        .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
                         .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());

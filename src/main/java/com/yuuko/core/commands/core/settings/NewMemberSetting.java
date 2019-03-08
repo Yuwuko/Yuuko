@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -16,12 +16,12 @@ public class NewMemberSetting {
     private void onCommand(MessageReceivedEvent e) {
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
-            if(DatabaseFunctions.setGuildSettings("newMember", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("newMember", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("New Member").setDescription("The welcome channel has been set to **" + channel.getAsMention() + "**.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            if(DatabaseFunctions.setGuildSettings("newMember", null, e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("newMember", null, e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("New Member").setDescription("The welcome channel has been unset, deactivating the greeting of new members.");
                 MessageHandler.sendMessage(e, embed.build());
             }

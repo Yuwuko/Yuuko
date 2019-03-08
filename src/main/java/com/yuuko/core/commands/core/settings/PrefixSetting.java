@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -18,7 +18,7 @@ public class PrefixSetting {
             return;
         }
 
-        if(DatabaseFunctions.setGuildSettings("prefix", value, e.getGuild().getId())) {
+        if(GuildFunctions.setGuildSettings("prefix", value, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to " + value);
             MessageHandler.sendMessage(e, embed.build());
         }

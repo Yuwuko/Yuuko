@@ -1,7 +1,7 @@
 package com.yuuko.core.commands;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.CommandFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -41,6 +41,10 @@ public abstract class Command {
         return module;
     }
 
+    public String getModuleName() {
+        return Utils.getModuleName(module);
+    }
+
     public int getExpectedParameters() {
         return expectedParameters;
     }
@@ -57,20 +61,19 @@ public abstract class Command {
         return permissions;
     }
 
-    public boolean checkCommandSettings(MessageReceivedEvent e) {
+    public boolean isEnabled(MessageReceivedEvent e) {
         // Executor still checks core/developer, in this case simply return true.
-        String moduleName = Utils.getModuleName(module);
-        if(moduleName.equals("Core") || moduleName.equals("Developer")) {
+        if(getModuleName().equals("Core") || getModuleName().equals("Developer")) {
             return true;
         }
 
         // Checks if the command is globally disabled either global:global, global:local, local:global or local:local.
         String guild = e.getGuild().getId();
         String channel = e.getTextChannel().getId();
-        if(!DatabaseFunctions.checkCommandSettings("*", guild, "*") &&
-           !DatabaseFunctions.checkCommandSettings("*", guild, channel) &&
-           !DatabaseFunctions.checkCommandSettings(name, guild, "*") &&
-           !DatabaseFunctions.checkCommandSettings(name, guild, channel)) {
+        if(!CommandFunctions.isEnabled(guild, "*", "*") &&
+           !CommandFunctions.isEnabled(guild, channel, "*") &&
+           !CommandFunctions.isEnabled(guild, "*", name) &&
+           !CommandFunctions.isEnabled(guild, channel, name)) {
             return true;
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Command Disabled").setDescription("The `" + name + "` command is disabled.");

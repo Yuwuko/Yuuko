@@ -1,8 +1,8 @@
 package com.yuuko.core;
 
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.database.ModuleBindFunctions;
+import com.yuuko.core.database.BindFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -23,13 +23,13 @@ public class CommandExecutor {
             return;
         }
 
-        if(module.checkModuleSettings(e)) { // Is the module enabled?
+        if(module.isEnabled(e)) { // Is the module enabled?
             if(checkBinding(e, module, cmd)) { // Does the command pass the binding checks?
                 if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
                     return;
                 }
                 module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
-                    if(command.checkCommandSettings(e)) {
+                    if(command.isEnabled(e)) { // Is the command enabled on the server?
                         if((module.isNSFW() && ! Utils.isChannelNSFW(e)) || (command.isNSFW() && ! Utils.isChannelNSFW(e))) { // Is the module or command NSFW? If so is the channel /NOT/ NSFW?
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
                             MessageHandler.sendMessage(e, embed.build());
@@ -70,7 +70,7 @@ public class CommandExecutor {
      * @return boolean
      */
     private boolean messageCleanup(MessageReceivedEvent e) {
-        if(DatabaseFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
+        if(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -103,7 +103,7 @@ public class CommandExecutor {
         }
 
         if(!e.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
-            if(DatabaseFunctions.getGuildSetting("djMode", e.getGuild().getId()).equals("1")) {
+            if(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()).equals("1")) {
                 if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
                     if(!command[0].equals("queue") && !command[0].equals("current") && !command[0].equals("last")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
@@ -126,11 +126,11 @@ public class CommandExecutor {
      */
     private boolean checkBinding(MessageReceivedEvent e, Module module, String[] command) {
         try {
-            if(ModuleBindFunctions.checkBind(e.getGuild().getId(), e.getChannel().getId(), module.getName())) {
+            if(BindFunctions.checkBind(e.getGuild().getId(), e.getChannel().getId(), module.getName())) {
                 return true;
             }
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command[0] + "** command is bound to **" + ModuleBindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command[0] + "** command is bound to **" + BindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
             MessageHandler.sendMessage(e, embed.build());
 
             return false;

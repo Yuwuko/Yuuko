@@ -2,7 +2,7 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.commands.core.settings.StarboardSetting;
 import com.yuuko.core.commands.utility.UtilityModule;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.ModuleFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
@@ -28,7 +28,7 @@ public class GenericMessageReactionController {
 
             // Message Pin
             if(e.getReaction().getReactionEmote().getName().equals("📌")) {
-                if(DatabaseFunctions.checkModuleSettings("moduleUtility", e.getGuild().getId())) {
+                if(ModuleFunctions.isEnabled(e.getGuild().getId(), "moduleUtility")) {
                     if(e instanceof MessageReactionAddEvent) {
                         new UtilityModule((MessageReactionAddEvent) e);
                     } else if(e instanceof MessageReactionRemoveEvent) {

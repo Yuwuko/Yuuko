@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -19,7 +19,7 @@ public class SettingExecuteBoolean {
         try {
             String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 
-            if(DatabaseFunctions.setGuildSettings(setting, intValue, e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings(setting, intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(value.toUpperCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(setting.toUpperCase() + " set to TRUE.");
                     MessageHandler.sendMessage(e, embed.build());

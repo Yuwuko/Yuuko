@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.settings;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -32,12 +32,12 @@ public class StarboardSetting {
 
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
-            if(DatabaseFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been set to **" + channel.getAsMention() + "**.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            if(DatabaseFunctions.setGuildSettings("starboard", null, e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("starboard", null, e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been unset, thus deactivating the starboard.");
                 MessageHandler.sendMessage(e, embed.build());
             }
@@ -49,7 +49,7 @@ public class StarboardSetting {
             e.getGuild().getController().createTextChannel("starboard").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
-                if(DatabaseFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
+                if(GuildFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
@@ -64,7 +64,7 @@ public class StarboardSetting {
      * @param e GuildBanEvent
      */
     public static void execute(MessageReactionAddEvent e) {
-        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel starboard = e.getGuild().getTextChannelById(channelId);
             Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();

@@ -3,7 +3,7 @@ package com.yuuko.core.commands.audio.handlers;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.commands.audio.commands.CurrentCommand;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import lavalink.client.player.IPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -67,7 +67,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
             try {
                 player.playTrack(track);
                 MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
-                if(e != null && DatabaseFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
+                if(e != null && GuildFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()).equals("1")) {
                     new CurrentCommand().onCommand(e, null);
                 }
             } catch(Exception ex) {

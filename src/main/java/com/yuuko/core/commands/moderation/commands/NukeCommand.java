@@ -3,7 +3,7 @@ package com.yuuko.core.commands.moderation.commands;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
-import com.yuuko.core.database.ModuleBindFunctions;
+import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -27,7 +27,7 @@ public class NukeCommand extends Command {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
         if(channels.size() > 0 && channels.size() < 11) {
             channels.forEach(channel -> {
-                ModuleBindFunctions.cleanupBinds(channel.getId());
+                BindFunctions.cleanupBinds(channel.getId());
                 channel.createCopy().queue((r) -> channel.delete().queue());
             });
             return;

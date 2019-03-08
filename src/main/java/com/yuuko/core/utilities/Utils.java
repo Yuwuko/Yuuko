@@ -2,7 +2,7 @@ package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
@@ -123,7 +123,7 @@ public final class Utils {
      * @return String
      */
     public static String getServerPrefix(String server) {
-        return DatabaseFunctions.getGuildSetting("prefix", server);
+        return GuildFunctions.getGuildSetting("prefix", server);
     }
 
     /**

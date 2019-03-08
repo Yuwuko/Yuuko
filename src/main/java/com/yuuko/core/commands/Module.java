@@ -1,6 +1,6 @@
 package com.yuuko.core.commands;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.ModuleFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -37,13 +37,13 @@ public abstract class Module {
         return Arrays.asList(commands);
     }
 
-    public boolean checkModuleSettings(MessageReceivedEvent e) {
+    public boolean isEnabled(MessageReceivedEvent e) {
         // Executor still checks core/developer, in this case simply return true.
         if(name.equals("Core") || name.equals("Developer")) {
             return true;
         }
 
-        if(DatabaseFunctions.checkModuleSettings(dbColumnName, e.getGuild().getId())) {
+        if(ModuleFunctions.isEnabled(e.getGuild().getId(), dbColumnName)) {
             return true;
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("The `" + name + "` module is disabled.");

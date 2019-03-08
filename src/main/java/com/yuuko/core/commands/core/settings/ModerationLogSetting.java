@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.settings;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -32,12 +32,12 @@ public class ModerationLogSetting {
 
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
-            if(DatabaseFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been set to " + channel.getAsMention() + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            if(DatabaseFunctions.setGuildSettings("modLog", null, e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("modLog", null, e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been unset, deactivating the log.");
                 MessageHandler.sendMessage(e, embed.build());
             }
@@ -49,7 +49,7 @@ public class ModerationLogSetting {
             e.getGuild().getController().createTextChannel("mod-log").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
-                if(DatabaseFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
+                if(GuildFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
@@ -65,7 +65,7 @@ public class ModerationLogSetting {
      * @param e GuildUnbanEvent
      */
     public static void execute(GuildUnbanEvent e) {
-        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
@@ -86,7 +86,7 @@ public class ModerationLogSetting {
      * @param reason String
      */
     public static void execute(MessageReceivedEvent e, String action, User target, String reason) {
-        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
@@ -107,7 +107,7 @@ public class ModerationLogSetting {
      * @param e MessageReceivedEvent
      */
     public static void execute(MessageReceivedEvent e, int messagesDeleted) {
-        String channelId = DatabaseFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
