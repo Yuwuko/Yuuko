@@ -10,6 +10,7 @@ import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
+import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -117,7 +118,7 @@ public class GenericMessageController {
                     new SearchCommand().onCommand(e, input[0]);
                 }
 
-                if(Boolean.parseBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) {
+                if(TextUtility.convertToBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) {
                     e.getMessage().delete().queue();
                 }
 

@@ -6,6 +6,7 @@ import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
+import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -69,7 +70,7 @@ public class CommandExecutor {
      * @param e MessageReceivedEvent
      */
     private void messageCleanup(MessageReceivedEvent e) {
-        if(Boolean.parseBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) { // Does the server want the command message removed?
+        if(TextUtility.convertToBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -100,7 +101,7 @@ public class CommandExecutor {
         }
 
         if(!e.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
-            if(Boolean.parseBoolean(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()))) {
+            if(TextUtility.convertToBoolean(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()))) {
                 if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
                     if(!command[0].equals("queue") && !command[0].equals("current") && !command[0].equals("last")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");

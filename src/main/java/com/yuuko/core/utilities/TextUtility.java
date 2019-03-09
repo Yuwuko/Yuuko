@@ -43,6 +43,17 @@ public class TextUtility {
     }
 
     /**
+     * Converts a string to a boolean value, essentially just converting 1, true or yes to TRUE and anything else to FALSE.
+     *
+     * @param value value to convert to boolean
+     * @return boolean
+     */
+    public static boolean convertToBoolean(String value) {
+        value = (value == null) ? "false" : value; // Stop null pointer exceptions.
+        return value.equals("1") || value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes");
+    }
+
+    /**
      * Gets current songs timeStamp.
      *
      * @param milliseconds; how many milliseconds of the song has played.
