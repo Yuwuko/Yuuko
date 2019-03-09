@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class CommandCommand extends Command {
 
     public CommandCommand() {
-        super("command", CoreModule.class, 0, new String[]{"-command [command]", "-command reset", "-command [command] [channel]"}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("command", CoreModule.class, 0, new String[]{"-command", "-command reset", "-command [command]", "-command [command] [channel]"}, false, new Permission[]{Permission.MANAGE_SERVER});
     }
 
     @Override

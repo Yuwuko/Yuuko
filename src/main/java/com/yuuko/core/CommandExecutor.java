@@ -28,7 +28,7 @@ public class CommandExecutor {
                 if(module.getName().equals("Audio") && !checkAudio(e, cmd)) { // Is module named Audio? If so, does the user fail any of the checks?
                     return;
                 }
-                module.getCommandsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
+                module.getCommandsAsList().stream().filter(command -> command.getName().equalsIgnoreCase(cmd[0])).findFirst().ifPresent(command -> {
                     if(command.isEnabled(e)) { // Is the command enabled on the server?
                         if((module.isNSFW() && ! Utils.isChannelNSFW(e)) || (command.isNSFW() && ! Utils.isChannelNSFW(e))) { // Is the module or command NSFW? If so is the channel /NOT/ NSFW?
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");

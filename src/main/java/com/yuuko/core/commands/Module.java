@@ -29,12 +29,20 @@ public abstract class Module {
         return dbColumnName;
     }
 
-    public Command[] getCommandsArray() {
+    public Command[] getCommandsAsArray() {
         return commands;
     }
 
-    public List<Command> getCommandsList() {
+    public List<Command> getCommandsAsList() {
         return Arrays.asList(commands);
+    }
+
+    public String getCommandsAsString() {
+        StringBuilder string = new StringBuilder();
+        for(Command command: commands) {
+            string.append("`").append(command.getName()).append("` ");
+        }
+        return string.toString();
     }
 
     public boolean isEnabled(MessageReceivedEvent e) {
