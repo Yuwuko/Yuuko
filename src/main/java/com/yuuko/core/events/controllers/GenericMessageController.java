@@ -32,25 +32,14 @@ public class GenericMessageController {
                 return;
             }
 
-            String message = e.getMessage().getContentRaw().toLowerCase();
-
-            String prefix = Utils.getServerPrefix(e.getGuild().getId());
-            if(message.startsWith(Configuration.GLOBAL_PREFIX) || prefix.equals("")) {
-                prefix = Configuration.GLOBAL_PREFIX;
-            }
-
-            // Ignores messages that consist of just the prefix or starts with the prefix twice.
-            if(message.equalsIgnoreCase(prefix)
-                    || message.startsWith(prefix + prefix)
-                    || message.equals(Configuration.GLOBAL_PREFIX)
-                    || message.startsWith(Configuration.GLOBAL_PREFIX + Configuration.GLOBAL_PREFIX)) {
-                return;
-            }
-
             // Used to help calculate execution time of functions.
             long startExecutionNano = System.nanoTime();
 
-            if(message.startsWith(prefix) || message.startsWith(Configuration.GLOBAL_PREFIX)) {
+            String message = e.getMessage().getContentRaw().toLowerCase();
+
+            // If message starts with server prefix, use it, if it starts with global prefix, use that, else return blank;
+            String prefix = message.startsWith(Utils.getServerPrefix(e.getGuild().getId())) ? Utils.getServerPrefix(e.getGuild().getId()) : message.startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "";
+            if(!prefix.equals("")) {
                 processMessage(e, startExecutionNano, prefix);
                 return;
             }
@@ -68,22 +57,21 @@ public class GenericMessageController {
 
     /**
      * Deals with commands that start with a prefix.
+     *
      * @param e MessageReceivedEvent
      * @param startExecutionNano long
      * @param prefix String
      */
     private void processMessage(MessageReceivedEvent e, long startExecutionNano, String prefix) {
         String[] command = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
-        String cmdPrefix = e.getMessage().getContentRaw().substring(0, prefix.length());
 
         try {
             double executionTime = 0;
             boolean executed = false;
 
-            // Iterate through the command list, if the input matches the effective name (includes invocation)
-            // Get the command commands constructor from the command class. (Much easier than what I did previously)
-            for(Command cmd : Configuration.COMMANDS) {
-                if((cmdPrefix + command[0]).equalsIgnoreCase(cmd.getGlobalName()) || (cmdPrefix + command[0]).equalsIgnoreCase(prefix + cmd.getName())) {
+            // Iterate through the command list, get the command commands constructor from the command class.
+            for(Command cmd: Configuration.COMMANDS) {
+                if(command[0].equalsIgnoreCase(cmd.getName())) {
                     cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class).newInstance(e, command);
                     executionTime = (System.nanoTime() - startExecutionNano)/1000000.0;
                     executed = true;
@@ -105,6 +93,7 @@ public class GenericMessageController {
 
     /**
      * Deals with non-prefixed commands that are a number between 1-10.
+     *
      * @param e MessageReceivedEvent
      * @param startExecutionNano long
      */

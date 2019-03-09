@@ -1,6 +1,5 @@
 package com.yuuko.core.commands;
 
-import com.yuuko.core.Configuration;
 import com.yuuko.core.database.CommandFunctions;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Utils;
@@ -31,10 +30,6 @@ public abstract class Command {
 
     public String getName() {
         return name;
-    }
-
-    public String getGlobalName() {
-        return Configuration.GLOBAL_PREFIX + name;
     }
 
     public Class<?> getModule() {
