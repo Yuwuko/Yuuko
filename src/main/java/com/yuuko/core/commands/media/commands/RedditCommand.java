@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class RedditCommand extends Command {
 
     public RedditCommand() {
-        super("reddit", MediaModule.class, 1, new String[]{"-reddit [subreddit]"}, false, null);
+        super("reddit", MediaModule.class, 1, new String[]{"-reddit <subreddit>"}, false, null);
     }
 
     @Override

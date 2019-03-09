@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class WeatherCommand extends Command {
 
     public WeatherCommand() {
-        super("weather", WorldModule.class, 1, new String[]{"-weather [city]", "-weather [city] [country]"}, false, null);
+        super("weather", WorldModule.class, 1, new String[]{"-weather <city>", "-weather <city> <country>"}, false, null);
     }
 
     @Override

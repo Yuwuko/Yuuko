@@ -19,7 +19,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class BackgroundCommand extends Command {
 
     public BackgroundCommand() {
-        super("background", AudioModule.class, 0, new String[]{"-background", "-background [url]", "-background [term]"}, false, null);
+        super("background", AudioModule.class, 0, new String[]{"-background", "-background <url>", "-background <term>"}, false, null);
     }
 
     @Override

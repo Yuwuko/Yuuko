@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class KitsuCommand extends Command {
 
     public KitsuCommand() {
-        super("kitsu", MediaModule.class, 1, new String[]{"-kitsu [title]", "-kitsu show [title]", "-kitsu character [name]"}, false, null);
+        super("kitsu", MediaModule.class, 1, new String[]{"-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"}, false, null);
     }
 
     @Override

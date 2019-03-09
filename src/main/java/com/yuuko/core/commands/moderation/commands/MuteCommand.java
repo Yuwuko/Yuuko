@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class MuteCommand extends Command {
 
     public MuteCommand() {
-        super("mute", ModerationModule.class, 1, new String[]{"-mute @user", "-mute @user [reason]"}, false, new Permission[]{Permission.VOICE_MUTE_OTHERS});
+        super("mute", ModerationModule.class, 1, new String[]{"-mute @user", "-mute @user <reason>"}, false, new Permission[]{Permission.VOICE_MUTE_OTHERS});
     }
 
     @Override

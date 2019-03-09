@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class UserCommand extends Command {
 
     public UserCommand() {
-        super("user", UtilityModule.class, 1, new String[]{"-user @user", "-user 420682957007880223"}, false, null);
+        super("user", UtilityModule.class, 1, new String[]{"-user @user", "-user <userId>"}, false, null);
     }
 
     @Override

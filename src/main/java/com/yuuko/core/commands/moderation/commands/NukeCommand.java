@@ -19,7 +19,7 @@ import java.util.List;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", ModerationModule.class,1, new String[]{"-nuke [value]", "-nuke #channel"}, false, new Permission[]{Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL});
+        super("nuke", ModerationModule.class,1, new String[]{"-nuke <value>", "-nuke #channel"}, false, new Permission[]{Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL});
     }
 
     @Override

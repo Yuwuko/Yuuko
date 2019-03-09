@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class GithubCommand extends Command {
 
     public GithubCommand() {
-        super("github", MediaModule.class, 2, new String[]{"-github [user] [repository]"}, false, null);
+        super("github", MediaModule.class, 2, new String[]{"-github <user> <repository>"}, false, null);
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.Queue;
 public class ClearCommand extends Command {
 
     public ClearCommand() {
-        super("clear", AudioModule.class, 0, new String[]{"-clear", "-clear 3"}, false, null);
+        super("clear", AudioModule.class, 0, new String[]{"-clear", "-clear <position>"}, false, null);
     }
 
     @Override

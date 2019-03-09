@@ -14,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SeekCommand extends Command {
 
     public SeekCommand() {
-        super("seek", AudioModule.class, 1, new String[]{"-seek [seconds]", "-seek [timestamp]"}, false, null);
+        super("seek", AudioModule.class, 1, new String[]{"-seek <seconds>", "-seek <timestamp>"}, false, null);
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.List;
 public class PlayCommand extends Command {
 
     public PlayCommand() {
-        super("play", AudioModule.class, 0, new String[]{"-play", "-play [url]", "-play [term]"}, false, null);
+        super("play", AudioModule.class, 0, new String[]{"-play", "-play <url>", "-play <term>"}, false, null);
     }
 
     @Override

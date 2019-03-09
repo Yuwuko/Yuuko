@@ -8,7 +8,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SpoilerifyCommand extends Command {
 
     public SpoilerifyCommand() {
-        super("spoilerify", FunModule.class, 1, new String[]{"-spoilerify [string]"}, false, null);
+        super("spoilerify", FunModule.class, 1, new String[]{"-spoilerify <string>"}, false, null);
     }
 
     @Override

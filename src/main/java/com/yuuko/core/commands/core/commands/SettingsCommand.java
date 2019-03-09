@@ -28,7 +28,7 @@ public class SettingsCommand extends Command {
     };
 
     public SettingsCommand() {
-        super("settings", CoreModule.class, 0, new String[]{"-settings", "-settings [setting] [value]"}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("settings", CoreModule.class, 0, new String[]{"-settings", "-settings <setting> <value>"}, false, new Permission[]{Permission.MANAGE_SERVER});
     }
 
     @Override

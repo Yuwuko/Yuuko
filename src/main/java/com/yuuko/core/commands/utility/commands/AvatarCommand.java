@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class AvatarCommand extends Command {
 
     public AvatarCommand() {
-        super("avatar", UtilityModule.class, 1, new String[]{"-avatar @user", "-avatar 420682957007880223"}, false, null);
+        super("avatar", UtilityModule.class, 1, new String[]{"-avatar @user", "-avatar <userId>"}, false, null);
     }
 
     @Override

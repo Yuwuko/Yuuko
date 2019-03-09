@@ -18,7 +18,7 @@ import java.util.List;
 public class BindCommand extends Command {
 
     public BindCommand() {
-        super("bind", UtilityModule.class, 0, new String[]{"-bind [module]", "-bind [module] #channel..."}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("bind", UtilityModule.class, 0, new String[]{"-bind <module>", "-bind <module> #channel..."}, false, new Permission[]{Permission.MANAGE_SERVER});
     }
 
     @Override

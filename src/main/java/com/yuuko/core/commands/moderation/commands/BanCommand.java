@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BanCommand extends Command {
 
     public BanCommand() {
-        super("ban", ModerationModule.class,1, new String[]{"-ban @user", "-ban @user [delDays]", "-ban @user [reason]", "-ban @user [delDays] [reason]"}, false, new Permission[]{Permission.BAN_MEMBERS});
+        super("ban", ModerationModule.class,1, new String[]{"-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"}, false, new Permission[]{Permission.BAN_MEMBERS});
     }
 
     @Override

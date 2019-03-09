@@ -12,7 +12,7 @@ import java.util.Random;
 public class RollCommand extends Command {
 
     public RollCommand() {
-        super("roll", FunModule.class, 1, new String[]{"-roll [number]", "-roll 00"}, false, null);
+        super("roll", FunModule.class, 1, new String[]{"-roll <number>", "-roll 00"}, false, null);
     }
 
     @Override

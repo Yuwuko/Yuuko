@@ -36,7 +36,7 @@ public class EightBallCommand extends Command {
     };
 
     public EightBallCommand() {
-        super("8ball", FunModule.class, 1, new String[]{"-8ball [question]"}, false, null);
+        super("8ball", FunModule.class, 1, new String[]{"-8ball <question>"}, false, null);
     }
 
     @Override

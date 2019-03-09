@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class NekoCommand extends Command {
 
     public NekoCommand() {
-        super("neko", NSFWModule.class, 0, new String[]{"-neko", "-neko [type]"}, true, null);
+        super("neko", NSFWModule.class, 0, new String[]{"-neko", "-neko <type>"}, true, null);
     }
 
     @Override

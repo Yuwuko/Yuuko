@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class ChannelCommand extends Command {
 
     public ChannelCommand() {
-        super("channel", UtilityModule.class, 3, new String[]{"-channel [action] [type] [name]", "-channel [action] [type] [name] [nsfw]"}, false, new Permission[]{Permission.MANAGE_CHANNEL});
+        super("channel", UtilityModule.class, 3, new String[]{"-channel <action> <type> <name>", "-channel <action> <type> <name> <nsfw>"}, false, new Permission[]{Permission.MANAGE_CHANNEL});
     }
 
     @Override

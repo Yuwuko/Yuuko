@@ -15,7 +15,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class OsuCommand extends Command {
 
     public OsuCommand() {
-        super("osu", MediaModule.class, 1, new String[]{"-osu [user]", "-osu [user] [media]"}, false, null);
+        super("osu", MediaModule.class, 1, new String[]{"-osu <user>", "-osu <user> <mode>"}, false, null);
     }
 
     @Override

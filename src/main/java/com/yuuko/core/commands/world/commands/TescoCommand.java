@@ -16,7 +16,7 @@ import java.math.RoundingMode;
 public class TescoCommand extends Command {
 
     public TescoCommand() {
-        super("tesco", WorldModule.class, 1, new String[]{"-tesco [product]"}, false, null);
+        super("tesco", WorldModule.class, 1, new String[]{"-tesco <product>"}, false, null);
     }
 
     @Override

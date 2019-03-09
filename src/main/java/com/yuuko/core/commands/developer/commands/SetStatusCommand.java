@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SetStatusCommand extends Command {
 
     public SetStatusCommand() {
-        super("setstatus", DeveloperModule.class, 1, new String[]{"-setstatus [type] [status]"}, false, null);
+        super("setstatus", DeveloperModule.class, 1, new String[]{"-setstatus <type> <status>"}, false, null);
     }
 
     @Override
