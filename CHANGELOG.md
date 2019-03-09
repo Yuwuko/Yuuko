@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 09-03-2019_1
++ [~] Automated the [__help__] command so it doesn't need to be manually updated again.
++ [~] Changed the formatting for command usages.
++ [~] Made small changes to satisfy good practice and to improve code quality, such as parsing booleans instead of .equals("1");
+
 ## 08-03-2019_1
 + [~] Refactored DatabaseFunctions into CommandFunctions, GuildFunctions and ModuleFunctions respectively to break up the code.
 + [~] Refactored key method names to be more consistent with my usual code style.

@@ -67,19 +67,16 @@ public class CommandExecutor {
      * Removes the message the caused the command to execute if the deleteExecuted setting is toggled to on.
      *
      * @param e MessageReceivedEvent
-     * @return boolean
      */
-    private boolean messageCleanup(MessageReceivedEvent e) {
-        if(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equals("1")) { // Does the server want the command message removed?
+    private void messageCleanup(MessageReceivedEvent e) {
+        if(Boolean.parseBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) { // Does the server want the command message removed?
             if(!e.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use **'@Yuuko settings deleteExecuted false'** to turn it off.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
                 e.getMessage().delete().queue();
             }
-            return true;
         }
-        return false;
     }
 
     /**
@@ -103,7 +100,7 @@ public class CommandExecutor {
         }
 
         if(!e.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
-            if(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()).equals("1")) {
+            if(Boolean.parseBoolean(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()))) {
                 if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
                     if(!command[0].equals("queue") && !command[0].equals("current") && !command[0].equals("last")) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");

@@ -117,7 +117,7 @@ public class GenericMessageController {
                     new SearchCommand().onCommand(e, input[0]);
                 }
 
-                if(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()).equalsIgnoreCase("1")) {
+                if(Boolean.parseBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) {
                     e.getMessage().delete().queue();
                 }
 
