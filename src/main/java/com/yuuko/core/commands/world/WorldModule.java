@@ -3,6 +3,7 @@ package com.yuuko.core.commands.world;
 import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
+import com.yuuko.core.commands.world.commands.CountdownCommand;
 import com.yuuko.core.commands.world.commands.LineStatusCommand;
 import com.yuuko.core.commands.world.commands.TescoCommand;
 import com.yuuko.core.commands.world.commands.WeatherCommand;
@@ -14,7 +15,8 @@ public class WorldModule extends Module {
         super("World", "moduleWorld", false, new Command[]{
                 new LineStatusCommand(),
                 new WeatherCommand(),
-                new TescoCommand()
+                new TescoCommand(),
+                new CountdownCommand()
         });
 
         new CommandExecutor(e,this, command);

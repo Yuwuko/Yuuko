@@ -56,7 +56,7 @@ public class TextUtility {
     /**
      * Gets current songs timeStamp.
      *
-     * @param milliseconds; how many milliseconds of the song has played.
+     * @param milliseconds how many milliseconds of the song has played.
      * @return formatted timeStamp.
      */
     public static String getTimestamp(long milliseconds) {
@@ -71,6 +71,30 @@ public class TextUtility {
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         } else {
             return String.format("%02d:%02d", minutes, seconds);
+        }
+    }
+
+    /**
+     * Gets verbose time string from time in milliseconds.
+     *
+     * @param milliseconds amount of time in milliseconds to convert.
+     * @return formatted time string.
+     */
+    public static String getTimestampVerbose(long milliseconds) {
+        int seconds = (int) (milliseconds / 1000) % 60 ;
+        int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
+        int hours   = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+        int days    = (int) ((milliseconds / (1000 * 60 * 60 * 24)) % 7);
+        int weeks   = (int) ((milliseconds / (1000 * 60 * 60 * 24 * 7)));
+
+        if(weeks > 0) {
+            return String.format("%02d weeks, %02d days, %02d hours, %02d minutes, %02d seconds.", weeks, days, hours, minutes, seconds);
+        } else if(days > 0) {
+            return String.format("%02d days, %02d hours, %02d minutes, %02d seconds.", days, hours, minutes, seconds);
+        } else if(hours > 0) {
+            return String.format("%02d hours, %02d minutes, %02d seconds.", hours, minutes, seconds);
+        } else {
+            return String.format("%02d minutes, %02d seconds.", minutes, seconds);
         }
     }
 

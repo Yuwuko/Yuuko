@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 10-03-2019_1
++ [+] Added [__countdown__] command which allows you to check how long it is until a certain date. `format dd/MM/yyyy`
++ [~] Implemented new sanitiser function which allows date checking.
++ [~] Implemented new text utility which returns a verbose timestamp.
+
 ## 09-03-2019_1
 + [~] Automated the [__help__] command so it doesn't need to be manually updated again.
 + [~] Changed the formatting for command usages.

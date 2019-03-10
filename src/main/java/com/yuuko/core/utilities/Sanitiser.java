@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public final class Sanitiser {
@@ -77,5 +78,43 @@ public final class Sanitiser {
      */
     public static boolean isNumber(String string) {
         return Arrays.stream(string.split("")).allMatch(character -> Character.isDigit(character.charAt(0)));
+    }
+
+    /**
+     * Checks to see if the given date is a valid date of the format dd/MM/yyyy.
+     *
+     * @param string date string.
+     * @return boolean.
+     */
+    public static boolean isDate(String string) {
+        String[] strings = string.split("/");
+
+        if(string.length() < 3) {
+            return false;
+        }
+
+        for(String stringy : strings) {
+            if(!isNumber(stringy)) {
+                return false;
+            }
+        }
+
+        int month = Integer.parseInt(strings[1]);
+
+        if(month <= 12) {
+            if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                return Integer.parseInt(strings[0]) <= 31;
+            } else if(month == 2) {
+                if(LocalDateTime.now().getYear() % 4 != 0) { // Leap Year
+                    return Integer.parseInt(strings[0]) <= 28;
+                } else {
+                    return Integer.parseInt(strings[0]) <= 29;
+                }
+            } else {
+                return Integer.parseInt(strings[0]) <= 30;
+            }
+        } else {
+            return false;
+        }
     }
 }
