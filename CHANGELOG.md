@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 13-03-2019_1
++ [+] Added support for custom welcome messages using the newMember setting.
++ [~] Refactored the command executor to make it easier to read and maintain, being such a core part of functionality.
++ [~] Added TextUtility function to be able to resolve tokenized messages containing the %user% and %guild% tokens.
+
 ## 10-03-2019_1
 + [+] Added [__countdown__] command which allows you to check how long it is until a certain date. `format dd/MM/yyyy`
 + [~] Implemented new sanitiser function which allows date checking.

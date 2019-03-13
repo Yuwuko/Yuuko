@@ -1,5 +1,8 @@
 package com.yuuko.core.utilities;
 
+import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
 public class TextUtility {
 
     /**
@@ -96,6 +99,32 @@ public class TextUtility {
         } else {
             return String.format("%02d minutes, %02d seconds.", minutes, seconds);
         }
+    }
+
+    /**
+     * Takes a String and GuildMemberJoinEvent and resolves tokens within the string.
+     *
+     * @param e GuildMemberJoinEvent
+     * @param message String
+     * @return resolved string
+     */
+    public static String untokenizeString(GuildMemberJoinEvent e, String message) {
+        message = message.replace("%user%", e.getMember().getAsMention());
+        message = message.replace("%guild%", e.getGuild().getName());
+        return message;
+    }
+
+    /**
+     * Takes a String and MessageReceivedEvent and resolves tokens within the string.
+     *
+     * @param e MessageReceivedEvent
+     * @param message String
+     * @return resolved string
+     */
+    public static String untokenizeString(MessageReceivedEvent e, String message) {
+        message = message.replace("%user%", e.getMember().getAsMention());
+        message = message.replace("%guild%", e.getGuild().getName());
+        return message;
     }
 
 }
