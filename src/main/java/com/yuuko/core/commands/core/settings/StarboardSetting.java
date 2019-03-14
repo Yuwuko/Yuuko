@@ -61,10 +61,11 @@ public class StarboardSetting {
 
     /**
      * Executes starboard setting.
-     * @param e GuildBanEvent
+     *
+     * @param e MessageReactionAddEvent
      */
     public static void execute(MessageReactionAddEvent e) {
-        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
         if(channelId != null) {
             TextChannel starboard = e.getGuild().getTextChannelById(channelId);
             Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();

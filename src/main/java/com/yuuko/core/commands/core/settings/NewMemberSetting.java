@@ -21,7 +21,7 @@ public class NewMemberSetting {
 
             // Guarding against invalid inputs.
             if(values.length < 2 || values[1].length() > 255 || values[1].length() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The welcome message cannot be longer than 255, or shorter than 1 characters.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The welcome message cannot be longer than `255`, or shorter than `1` characters.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
