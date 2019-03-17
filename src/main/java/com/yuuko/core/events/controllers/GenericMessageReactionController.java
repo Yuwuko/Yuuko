@@ -4,12 +4,14 @@ import com.yuuko.core.commands.core.settings.StarboardSetting;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.database.ModuleFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GenericMessageReactionController {
+    private static final Logger log = LoggerFactory.getLogger(GenericMessageReactionController.class);
 
     public GenericMessageReactionController(GenericMessageReactionEvent e) {
         if(e instanceof MessageReactionAddEvent || e instanceof MessageReactionRemoveEvent) {
@@ -43,7 +45,7 @@ public class GenericMessageReactionController {
             }
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "processGenericMessageReactionEvent");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

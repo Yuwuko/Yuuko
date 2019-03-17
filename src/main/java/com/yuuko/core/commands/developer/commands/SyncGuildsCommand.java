@@ -21,7 +21,7 @@ public class SyncGuildsCommand extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             }
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, command[0]);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

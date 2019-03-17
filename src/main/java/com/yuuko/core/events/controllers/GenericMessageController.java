@@ -8,14 +8,16 @@ import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtility;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GenericMessageController {
+    private static final Logger log = LoggerFactory.getLogger(GenericMessageController.class);
 
     public GenericMessageController(GenericMessageEvent e) {
         if(e instanceof MessageReceivedEvent) {
@@ -51,7 +53,7 @@ public class GenericMessageController {
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen. (Should they though...)
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "private void messageReceivedEvent(MessageReceivedEvent e)");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -87,7 +89,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "GenericMessageController ~ " + ex.getMessage() + " ~ " +  e.getMessage().getContentRaw());
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -117,7 +119,7 @@ public class GenericMessageController {
             }
 
         } catch (Exception ex) {
-            MessageHandler.sendException(ex, "GenericMessageController (Aux) - " + e.getMessage().getContentRaw());
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

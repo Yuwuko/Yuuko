@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Yuuko {
-
     private static final Logger log = LoggerFactory.getLogger(Yuuko.class);
 
     /**

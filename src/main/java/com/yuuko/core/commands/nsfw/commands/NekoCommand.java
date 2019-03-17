@@ -32,7 +32,7 @@ public class NekoCommand extends Command {
             }
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

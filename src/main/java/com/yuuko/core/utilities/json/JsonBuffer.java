@@ -3,14 +3,15 @@ package com.yuuko.core.utilities.json;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.yuuko.core.utilities.MessageHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
 public class JsonBuffer {
-
+    private static final Logger log = LoggerFactory.getLogger(JsonBuffer.class);
     private String jsonOutput;
 
     public JsonBuffer(String inputUrl, String acceptHeader, String contentTypeHeader, String extraProperty, String extraHeader) {
@@ -40,7 +41,7 @@ public class JsonBuffer {
             jsonOutput = result.toString();
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "public String getAsString() [JsonBuffer]");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -63,7 +64,7 @@ public class JsonBuffer {
         try {
             return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonObject();
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "getAsJsonObject()");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
             return null;
         }
     }
@@ -78,7 +79,7 @@ public class JsonBuffer {
         try {
             return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonArray();
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "getAsJsonArray()");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
             return null;
         }
     }

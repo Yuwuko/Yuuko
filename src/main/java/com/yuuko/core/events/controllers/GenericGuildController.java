@@ -17,8 +17,11 @@ import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.core.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.core.events.guild.update.GuildUpdateRegionEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GenericGuildController {
+    private static final Logger log = LoggerFactory.getLogger(GenericGuildController.class);
 
     public GenericGuildController(GenericGuildEvent e) {
         if(e instanceof GuildJoinEvent) {
@@ -72,7 +75,7 @@ public class GenericGuildController {
                 });
             }
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "GuildJoinEvent -> Initial Message");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
 
         Utils.updateDiscordBotList();

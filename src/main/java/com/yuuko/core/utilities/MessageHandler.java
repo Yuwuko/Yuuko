@@ -1,6 +1,5 @@
 package com.yuuko.core.utilities;
 
-import com.yuuko.core.Configuration;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 public final class MessageHandler {
-
     private static final Logger log = LoggerFactory.getLogger(MessageHandler.class);
 
     /**
@@ -135,25 +133,4 @@ public final class MessageHandler {
         }
     }
 
-    /**
-     * Sends an exception to the support server's exception channel.
-     *
-     * @param ex Exception
-     * @param command String
-     */
-    public static void sendException(Exception ex, String command) {
-        try {
-            MessageChannel channel = Configuration.BOT.getJDA().getTextChannelById(520158641484201994L);
-
-            StringBuilder traceString = new StringBuilder();
-            for(StackTraceElement trace: ex.getStackTrace()) {
-                traceString.append(trace.toString());
-                traceString.append("\n");
-            }
-
-            channel.sendMessage(command + "\n`" + traceString.toString() + "`").queue();
-        } catch(Exception exc) {
-            //
-        }
-    }
 }

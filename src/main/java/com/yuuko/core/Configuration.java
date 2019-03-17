@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Configuration {
+    private static final Logger log = LoggerFactory.getLogger(Configuration.class);
+
     public static final String VERSION = "14-03-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
@@ -42,8 +44,6 @@ public class Configuration {
     public static DiscordBotListAPI BOT_LIST;
     public static String[] STANDARD_STRINGS;
     static AudioManagerManager AUDIO_MANAGER_MANAGER;
-
-    private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
     /**
      * Loads all of the bots configurations.

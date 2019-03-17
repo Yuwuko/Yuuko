@@ -7,13 +7,13 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class NewMemberSetting {
+public class NewMemberSetting extends Setting {
 
     public NewMemberSetting(MessageReceivedEvent e, String value) {
         onCommand(e, value);
     }
 
-    private void onCommand(MessageReceivedEvent e, String value) {
+    protected void onCommand(MessageReceivedEvent e, String value) {
         String[] values = value.split("\\s+", 2);
 
         // If "!settings newMember message"

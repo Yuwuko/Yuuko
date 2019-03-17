@@ -98,7 +98,7 @@ public class PlayCommand extends Command {
                             .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(channel, embed.build());
                 } catch(Exception ex) {
-                    MessageHandler.sendException(ex, "public void trackLoaded(AudioTrack track) [PlayCommand]");
+                    log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
                 }
             }
 
@@ -117,7 +117,7 @@ public class PlayCommand extends Command {
                     new CurrentCommand().onCommand(e, null);
 
                 } catch(Exception ex) {
-                    MessageHandler.sendException(ex, "public void playlistLoaded(AudioPlaylist playlist) [PlayCommand]");
+                    log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
                 }
             }
 

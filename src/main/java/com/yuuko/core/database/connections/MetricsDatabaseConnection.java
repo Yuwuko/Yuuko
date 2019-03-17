@@ -25,7 +25,7 @@ public class MetricsDatabaseConnection {
             connectionPool.setMaxTotal(100);
             connectionPool.setMaxIdle(5);
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

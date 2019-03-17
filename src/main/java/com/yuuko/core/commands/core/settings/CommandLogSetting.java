@@ -13,13 +13,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
 
-public class CommandLogSetting {
+public class CommandLogSetting extends Setting {
 
     public CommandLogSetting(MessageReceivedEvent e, String value) {
         onCommand(e, value);
     }
 
-    private void onCommand(MessageReceivedEvent e, String value) {
+    protected void onCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setup(e);

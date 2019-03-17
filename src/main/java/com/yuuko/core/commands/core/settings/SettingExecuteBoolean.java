@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
-public class SettingExecuteBoolean {
+public class SettingExecuteBoolean extends Setting {
 
     public SettingExecuteBoolean(MessageReceivedEvent e, String setting, String value) {
         if(e != null && setting != null && value != null) {
@@ -15,7 +15,7 @@ public class SettingExecuteBoolean {
         }
     }
 
-    private void onCommand(MessageReceivedEvent e, String setting, String value) {
+    protected void onCommand(MessageReceivedEvent e, String setting, String value) {
         try {
             String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
 
@@ -29,8 +29,12 @@ public class SettingExecuteBoolean {
                 }
             }
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, setting + "[" + value + "]");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
+    @Override
+    protected void onCommand(MessageReceivedEvent e, String command) {
+        //
+    }
 }

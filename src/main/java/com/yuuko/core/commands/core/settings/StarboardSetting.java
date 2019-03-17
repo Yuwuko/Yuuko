@@ -13,13 +13,13 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import java.awt.*;
 import java.time.Instant;
 
-public class StarboardSetting {
+public class StarboardSetting extends Setting {
 
     public StarboardSetting(MessageReceivedEvent e, String value) {
         onCommand(e, value);
     }
 
-    private void onCommand(MessageReceivedEvent e, String value) {
+    protected void onCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setup(e);

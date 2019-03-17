@@ -38,7 +38,7 @@ public class SetStatusCommand extends Command {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");
             MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, e.getMessage().getContentRaw());
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

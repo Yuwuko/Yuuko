@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GenericEventManager extends ListenerAdapter {
-
     private static final Logger log = LoggerFactory.getLogger(GenericEventManager.class);
 
     /**
@@ -23,7 +22,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericGuildController(e);
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -36,7 +35,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericMessageController(e);
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -49,7 +48,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericMessageReactionController(e);
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -62,7 +61,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericGuildVoiceController(e);
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 
@@ -75,7 +74,7 @@ public class GenericEventManager extends ListenerAdapter {
         try {
             new GenericTextChannelController(e);
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

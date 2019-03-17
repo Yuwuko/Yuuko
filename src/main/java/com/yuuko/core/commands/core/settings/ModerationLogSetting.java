@@ -13,13 +13,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 
-public class ModerationLogSetting {
+public class ModerationLogSetting extends Setting {
 
     public ModerationLogSetting(MessageReceivedEvent e, String value) {
         onCommand(e, value);
     }
 
-    private void onCommand(MessageReceivedEvent e, String value) {
+    protected void onCommand(MessageReceivedEvent e, String value) {
         if(value.equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setup(e);

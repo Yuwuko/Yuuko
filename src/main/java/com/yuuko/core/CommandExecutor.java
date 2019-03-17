@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 public class CommandExecutor {
-
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
     private static final String[] disconnectedCommands = new String[]{"play", "search", "background"};

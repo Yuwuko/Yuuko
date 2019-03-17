@@ -38,7 +38,7 @@ public class EfuktCommand extends Command {
             }
 
         } catch(Exception ex) {
-            MessageHandler.sendException(ex, "EfuktCommand");
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 

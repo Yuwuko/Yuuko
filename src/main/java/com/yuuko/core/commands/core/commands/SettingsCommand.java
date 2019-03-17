@@ -90,7 +90,7 @@ public class SettingsCommand extends Command {
             }
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
 
     }

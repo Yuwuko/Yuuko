@@ -39,7 +39,7 @@ public class LastCommand extends Command {
 			}
 
 		} catch(Exception ex) {
-			MessageHandler.sendException(ex, "public void onCommand(MessageReceivedEvent e, String[] command)");
+			log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
 		}
 	}
 
