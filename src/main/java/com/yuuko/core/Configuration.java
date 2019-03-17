@@ -17,10 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
@@ -86,6 +83,8 @@ public class Configuration {
                 Module obj = module.getConstructor(MessageReceivedEvent.class, String[].class).newInstance(null, null);
                 MODULES.add(obj);
             }
+            log.info("Sorting...");
+            MODULES.sort(Comparator.comparing(Object::toString));
             log.info("Loaded " + MODULES.size() + " modules successfully.");
 
             log.info("Loading commands...");
@@ -95,6 +94,8 @@ public class Configuration {
                 Command obj = command.getConstructor().newInstance();
                 COMMANDS.add(obj);
             }
+            log.info("Sorting...");
+            COMMANDS.sort(Comparator.comparing(Object::toString));
             log.info("Loaded " + COMMANDS.size() + " commands successfully.");
 
             log.info("Setting up Lavalink manager...");

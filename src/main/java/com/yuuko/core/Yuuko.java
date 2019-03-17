@@ -57,7 +57,7 @@ public class Yuuko {
         log.info("Shard manager setup; active shards: " + Configuration.SHARD_MANAGER.getShards().size() + ".");
 
         Configuration.BOT = Utils.getSelfUser();
-        Configuration.GLOBAL_PREFIX = "<@" + Configuration.BOT.getId() + "> ";
+        Configuration.GLOBAL_PREFIX = "<@" + Configuration.BOT_ID + "> ";
         MetricsManager.updateDiscordMetrics();
 
         log.info("Setting up bot-list objects...");

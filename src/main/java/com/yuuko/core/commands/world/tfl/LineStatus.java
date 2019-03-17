@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "statusSeverityDescription"
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
-class LineStatus {
+public class LineStatus {
 
     @JsonProperty("reason")
     private String reason;

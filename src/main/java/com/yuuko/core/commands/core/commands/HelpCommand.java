@@ -2,6 +2,7 @@ package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.utilities.MessageHandler;
@@ -26,17 +27,11 @@ public class HelpCommand extends Command {
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
                     .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
-                    .addField(Configuration.MODULES.get(0).getName(), Configuration.MODULES.get(0).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(1).getName(), Configuration.MODULES.get(1).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(2).getName(), Configuration.MODULES.get(2).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(3).getName(), Configuration.MODULES.get(3).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(4).getName(), Configuration.MODULES.get(4).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(5).getName(), Configuration.MODULES.get(5).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(6).getName(), Configuration.MODULES.get(6).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(7).getName(), Configuration.MODULES.get(7).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(8).getName(), Configuration.MODULES.get(8).getCommandsAsString(), false)
-                    .addField(Configuration.MODULES.get(9).getName(), Configuration.MODULES.get(9).getCommandsAsString(), false)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
+
+            for(Module module: Configuration.MODULES) {
+                commandInfo.addField(module.getName(), module.getCommandsAsString(), false);
+            }
 
             if(e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
                 MessageHandler.sendMessage(e, commandInfo.build());

@@ -13,6 +13,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 public class ShardsCommand extends Command {
 
@@ -43,7 +44,7 @@ public class ShardsCommand extends Command {
         StringBuilder nodes = new StringBuilder();
         for(LavalinkSocket socket : Configuration.LAVALINK.getLavalink().getNodes()) {
             nodes.append("**Yuuko-").append(socket.getName())
-                    .append("** - ").append(TextUtility.getTimestamp(socket.getStats().getUptime()))
+                    .append("** - ").append(TextUtility.getTimestamp(Objects.requireNonNull(socket.getStats()).getUptime()))
                     .append("\n").append("System Load: ").append(new BigDecimal((socket.getStats().getSystemLoad()*100)/100.0).setScale(2, RoundingMode.HALF_UP))
                     .append("\n").append("CPU Cores: ").append(socket.getStats().getCpuCores())
                     .append("\n").append("Memory Used: ").append(new BigDecimal(socket.getStats().getMemUsed()/1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")

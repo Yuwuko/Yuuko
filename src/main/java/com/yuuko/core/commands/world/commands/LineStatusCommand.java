@@ -43,21 +43,15 @@ public class LineStatusCommand extends Command {
             if(command.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Tube Line Status")
-                        .addField(lineManager.get(0).getName(), lineManager.get(0).getLineStatusString(), true)
-                        .addField(lineManager.get(1).getName(), lineManager.get(1).getLineStatusString(), true)
-                        .addField(lineManager.get(2).getName(), lineManager.get(2).getLineStatusString(), true)
-                        .addField(lineManager.get(3).getName(), lineManager.get(3).getLineStatusString(), true)
-                        .addField(lineManager.get(4).getName(), lineManager.get(4).getLineStatusString(), true)
-                        .addField(lineManager.get(5).getName(), lineManager.get(5).getLineStatusString(), true)
-                        .addField(lineManager.get(6).getName(), lineManager.get(6).getLineStatusString(), true)
-                        .addField(lineManager.get(7).getName(), lineManager.get(7).getLineStatusString(), true)
-                        .addField(lineManager.get(8).getName(), lineManager.get(8).getLineStatusString(), true)
-                        .addField(lineManager.get(9).getName(), lineManager.get(9).getLineStatusString(), true)
-                        .addField(lineManager.get(10).getName(), lineManager.get(10).getLineStatusString(), true)
-                        .addField("", "", true)
-                        .addField("", reasons.toString(), false)
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+
+                for(LineManager line: lineManager) {
+                    embed.addField(line.getName(), line.getLineStatusString(), true);
+                }
+
+                embed.addField("", "", true);
+                embed.addField("", reasons.toString(), false);
                 MessageHandler.sendMessage(e, embed.build());
 
             } else {
