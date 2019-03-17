@@ -2,6 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 17-03-2019_1
++ [~] Modified structure of settings, making them more like a command or module.
++ [~] Improved the JsonBuffer class to support unlimited extra headers, this required adding a RequestProperty class.
++ [~] Added a send permission check utility to MessageUtilities and every method in MessageHandler to prevent `WRITE_PERMISSION` exceptions.
++ [~] Finished translating MessageHandler.sendException() to log.error();.
++ [-] Removed unnecessary methods from MessageHandler, including sendException since it is now depreciated.
+
 ## 13-03-2019_1
 + [+] Added support for custom welcome messages using the newMember setting.
 + [~] Refactored the command executor to make it easier to read and maintain, being such a core part of functionality.

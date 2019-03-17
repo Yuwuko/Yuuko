@@ -2,8 +2,12 @@ package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
+import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
@@ -105,6 +109,39 @@ public class MessageUtilities {
         ArrayList<Member> mentioned = new ArrayList<>(unmodifiableMentioned);
         mentioned.remove(e.getGuild().getMember(Configuration.BOT));
         return mentioned;
+    }
+
+    /**
+     * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
+
+     * @param guild Guild
+     * @param channel TextChannel
+     * @return boolean
+     */
+    private static boolean hasSendPermission(Guild guild, TextChannel channel) {
+        Member bot = guild.getMemberById(Configuration.BOT_ID);
+        return (bot.hasPermission(Permission.MESSAGE_WRITE) && bot.hasPermission(channel, Permission.MESSAGE_WRITE));
+    }
+
+    /**
+     * Main hasSendPermission flow controller
+     */
+    static boolean hasSendPermission(GenericMessageEvent e) {
+        return hasSendPermission(e.getGuild(), e.getTextChannel());
+    }
+
+    /**
+     * Main hasSendPermission flow controller
+     */
+    static boolean hasSendPermission(GenericMessageEvent e, TextChannel channel) {
+        return hasSendPermission(e.getGuild(), channel);
+    }
+
+    /**
+     * Main hasSendPermission flow controller
+     */
+    static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
+        return hasSendPermission(e.getGuild(), channel);
     }
 
 }

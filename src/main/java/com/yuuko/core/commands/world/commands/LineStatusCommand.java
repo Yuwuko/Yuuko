@@ -26,7 +26,7 @@ public class LineStatusCommand extends Command {
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utils.getApiApplicationId("transportforlondon") + "&app_key=" + Utils.getApiKey("transportforlondon"), "default", "default", null, null).getAsString();
+            String json = new JsonBuffer("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utils.getApiApplicationId("transportforlondon") + "&app_key=" + Utils.getApiKey("transportforlondon"), "default", "default").getAsString();
             ArrayList<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<List<LineManager>>(){});
 
             // Build string for reasons why line doesn't have good service.

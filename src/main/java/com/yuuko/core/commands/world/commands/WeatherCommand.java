@@ -24,7 +24,7 @@ public class WeatherCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
-            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (command[1].replace(" ", "+")) + "&units=metric&APPID=" + Utils.getApiKey("openweathermap"), "default", "default", null, null).getAsJsonObject();
+            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (command[1].replace(" ", "+")) + "&units=metric&APPID=" + Utils.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
 
             if(data == null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");

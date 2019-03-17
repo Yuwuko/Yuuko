@@ -18,7 +18,7 @@ public class NekoCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
-            JsonObject json = new JsonBuffer("https://nekos.life/api/v2/img/" + ((command.length > 1) ? command[1] : "lewd"), "default", "default", null, null).getAsJsonObject();
+            JsonObject json = new JsonBuffer("https://nekos.life/api/v2/img/" + ((command.length > 1) ? command[1] : "lewd"), "default", "default").getAsJsonObject();
 
             if(!json.has("msg")) {
                 EmbedBuilder embed = new EmbedBuilder()

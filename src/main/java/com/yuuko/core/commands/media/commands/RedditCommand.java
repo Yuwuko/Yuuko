@@ -17,7 +17,7 @@ public class RedditCommand extends Command {
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        JsonObject json = new JsonBuffer("https://www.reddit.com/r/" + command[1] + "/new.json?sort=new&limit=1", "default", "default", null, null).getAsJsonObject();
+        JsonObject json = new JsonBuffer("https://www.reddit.com/r/" + command[1] + "/new.json?sort=new&limit=1", "default", "default").getAsJsonObject();
 
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");

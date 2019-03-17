@@ -24,7 +24,7 @@ public class GithubCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         String[] commandParameters = command[1].split("\\s+", 2);
-        JsonObject json = new JsonBuffer("https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utils.getApiKey("github"), "application/vnd.github.v3+json", "application/vnd.github.v3+json", null, null).getAsJsonObject();
+        JsonObject json = new JsonBuffer("https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utils.getApiKey("github"), "application/vnd.github.v3+json", "application/vnd.github.v3+json").getAsJsonObject();
 
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");

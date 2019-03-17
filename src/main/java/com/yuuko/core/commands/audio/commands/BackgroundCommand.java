@@ -13,7 +13,6 @@ import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.TextUtility;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class BackgroundCommand extends Command {
@@ -31,7 +30,7 @@ public class BackgroundCommand extends Command {
             manager.player.setPaused(false);
 
             if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
-                setAndPlay(manager, e.getChannel(), command[1], e);
+                setAndPlay(manager, e, command[1]);
 
             } else {
                 String trackUrl = YouTubeSearchHandler.search(command[1]);
@@ -40,7 +39,7 @@ public class BackgroundCommand extends Command {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    setAndPlay(manager, e.getChannel(), trackUrl, e);
+                    setAndPlay(manager, e, trackUrl);
                 }
             }
         } else {
@@ -53,11 +52,12 @@ public class BackgroundCommand extends Command {
 
     /**
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
+     *
      * @param manager; GuildAudioManager.
-     * @param channel; MessageChannel.
+     * @param e; MessageReceivedEvent.
      * @param url; TrackUrl.
      */
-    private void setAndPlay(GuildAudioManager manager, final MessageChannel channel, String url, MessageReceivedEvent e) {
+    private void setAndPlay(GuildAudioManager manager, MessageReceivedEvent e, String url) {
         final String trackUrl;
 
         if(url.startsWith("<") && url.endsWith(">")) {
@@ -82,26 +82,26 @@ public class BackgroundCommand extends Command {
                         .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
                         .setFooter(Configuration.VERSION, Configuration.BOT.getAvatarUrl());
-                channel.sendMessage(embed.build()).queue();
+                MessageHandler.sendMessage(e, embed.build());
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 // Playlist as background not currently supported but method needed implementation.
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Adding playlists to the background is currently unsupported.");
-                MessageHandler.sendMessage(channel, embed.build());
+                MessageHandler.sendMessage(e, embed.build());
             }
 
             @Override
             public void noMatches() {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No matches found using that parameter.");
-                MessageHandler.sendMessage(channel, embed.build());
+                MessageHandler.sendMessage(e, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + exception.getMessage());
-                MessageHandler.sendMessage(channel, embed.build());
+                MessageHandler.sendMessage(e, embed.build());
             }
         });
     }

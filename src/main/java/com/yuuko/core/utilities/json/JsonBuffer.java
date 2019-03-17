@@ -14,17 +14,19 @@ public class JsonBuffer {
     private static final Logger log = LoggerFactory.getLogger(JsonBuffer.class);
     private String jsonOutput;
 
-    public JsonBuffer(String inputUrl, String acceptHeader, String contentTypeHeader, String extraProperty, String extraHeader) {
+    public JsonBuffer(String inputUrl, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
         try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            String accept = (acceptHeader.equals("default")) ? "application/json" : acceptHeader;
-            String contentType = (contentTypeHeader.equals("default")) ? "application/json" : contentTypeHeader;
+            String accept = (acceptDirective.equals("default")) ? "application/json" : acceptDirective;
+            String contentType = (contentTypeDirective.equals("default")) ? "application/json" : contentTypeDirective;
             HttpsURLConnection conn = (HttpsURLConnection) new URL(inputUrl).openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", accept);
             conn.setRequestProperty("Content-Type", contentType);
 
-            if(extraProperty != null && extraHeader != null) {
-                conn.setRequestProperty(extraProperty, extraHeader);
+            if(extraProperties != null && extraProperties.length > 0) {
+                for(RequestProperty property : extraProperties) {
+                    conn.setRequestProperty(property.getHeader(), property.getDirective());
+                }
             }
 
             if(conn.getResponseCode() != 200) {

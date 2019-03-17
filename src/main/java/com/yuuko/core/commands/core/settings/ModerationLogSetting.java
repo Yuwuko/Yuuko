@@ -73,7 +73,7 @@ public class ModerationLogSetting extends Setting {
                     .addField("User", e.getUser().getName(), true)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(log, embed.build());
+            MessageHandler.sendMessage(e, log, embed.build());
         }
     }
 
@@ -97,7 +97,7 @@ public class ModerationLogSetting extends Setting {
                     .addField("Reason", reason, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
-            MessageHandler.sendMessage(log, embed.build());
+            MessageHandler.sendMessage(e, log, embed.build());
         }
     }
 
@@ -118,7 +118,7 @@ public class ModerationLogSetting extends Setting {
                     .addField("Count", messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
-            MessageHandler.sendMessage(log, embed.build());
+            MessageHandler.sendMessage(e, log, embed.build());
         }
     }
 }

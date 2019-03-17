@@ -18,7 +18,7 @@ public class KitsuCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
-            JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json", null, null).getAsJsonObject();
+            JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + command[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json").getAsJsonObject();
 
             if(json == null || json.getAsJsonArray("data").size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");

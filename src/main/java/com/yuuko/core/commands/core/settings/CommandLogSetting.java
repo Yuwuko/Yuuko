@@ -61,6 +61,7 @@ public class CommandLogSetting extends Setting {
 
     /**
      * Executes the command logging function if it is enabled.
+     *
      * @param e MessageReceivedEvent
      * @param executionTimeMs long
      */
@@ -77,7 +78,7 @@ public class CommandLogSetting extends Setting {
                     .addField("Execution Time", new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(log, embed.build());
+            MessageHandler.sendMessage(e, log, embed.build());
         }
     }
 }

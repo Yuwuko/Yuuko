@@ -71,7 +71,7 @@ public class GenericGuildController {
                             .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
                             .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                             .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
-                    MessageHandler.sendMessage(textChannel, about.build());
+                    MessageHandler.sendMessage(e, textChannel, about.build());
                 });
             }
         } catch(Exception ex) {
@@ -103,11 +103,11 @@ public class GenericGuildController {
             if(message == null) {
                 TextChannel channel = e.getGuild().getTextChannelById(channelId);
                 EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtility.untokenizeString(e, "Welcome to **%guild%**, %user%!"));
-                MessageHandler.sendMessage(channel, member.build());
+                MessageHandler.sendMessage(e, channel, member.build());
             } else {
                 TextChannel channel = e.getGuild().getTextChannelById(channelId);
                 EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtility.untokenizeString(e, message));
-                MessageHandler.sendMessage(channel, member.build());
+                MessageHandler.sendMessage(e, channel, member.build());
             }
         }
 

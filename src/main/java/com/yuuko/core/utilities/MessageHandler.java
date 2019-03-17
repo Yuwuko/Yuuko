@@ -1,7 +1,8 @@
 package com.yuuko.core.utilities;
 
-import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,10 @@ public final class MessageHandler {
      */
     public static void sendMessage(GenericMessageEvent event, String message) {
         try {
-            log.trace("Invoking {}#getTextChannel()#sendMessage(message)#queue()", event.getClass().getName());
-            event.getTextChannel().sendMessage(message).queue();
+            if(MessageUtilities.hasSendPermission(event)) {
+                log.trace("Invoking {}#getTextChannel()#sendMessage(message)#queue()", event.getClass().getName());
+                event.getTextChannel().sendMessage(message).queue();
+            }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
         }
@@ -34,8 +37,10 @@ public final class MessageHandler {
      */
     public static void sendMessage(GenericMessageEvent event, MessageEmbed embed) {
         try {
-            log.trace("Invoking {}#getTextChannel()#sendMessage(embed)#queue()", event.getClass().getName());
-            event.getTextChannel().sendMessage(embed).queue();
+            if(MessageUtilities.hasSendPermission(event)) {
+                log.trace("Invoking {}#getTextChannel()#sendMessage(embed)#queue()", event.getClass().getName());
+                event.getTextChannel().sendMessage(embed).queue();
+            }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
         }
@@ -49,8 +54,10 @@ public final class MessageHandler {
      */
     public static void sendMessage(GenericMessageEvent event, File file) {
         try {
-            log.trace("Invoking {}#getTextChannel()#sendFile(file)#queue()", event.getClass().getName());
-            event.getTextChannel().sendFile(file).queue();
+            if(MessageUtilities.hasSendPermission(event)) {
+                log.trace("Invoking {}#getTextChannel()#sendFile(file)#queue()", event.getClass().getName());
+                event.getTextChannel().sendFile(file).queue();
+            }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
         }
@@ -65,71 +72,48 @@ public final class MessageHandler {
      */
     public static void sendMessage(GenericMessageEvent event, byte[] bytes, String fileName) {
         try {
-            log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-            event.getChannel().sendFile(bytes, fileName).queue();
+            if(MessageUtilities.hasSendPermission(event)) {
+                log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
+                event.getChannel().sendFile(bytes, fileName).queue();
+            }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
     /**
-     * Sends a message via message channel.
+     * Sends an embedded message to a supplied channel.
      *
-     * @param channel MessageChannel
-     * @param message String
-     */
-    public static void sendMessage(MessageChannel channel, String message) {
-        try {
-            log.trace("Invoking {}#sendMessage(message)#queue()", channel.getClass().getName());
-            channel.sendMessage(message).queue();
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", channel.getClass().getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Sends an embedded message via message channel.
-     *
-     * @param channel MessageChannel
+     * @param event GenericMessageEvent
+     * @param channel TextChannel
      * @param embed MessageEmbed
      */
-    public static void sendMessage(MessageChannel channel, MessageEmbed embed) {
+    public static void sendMessage(GenericMessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            log.trace("Invoking {}#sendMessage(embed)#queue()", channel.getClass().getName());
-            channel.sendMessage(embed).queue();
+            if(MessageUtilities.hasSendPermission(event, channel)) {
+                log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
+                channel.sendMessage(embed).queue();
+            }
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", channel.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 
     /**
-     * Sends a file via message channel.
+     * Sends an embedded message to a supplied channel.
      *
-     * @param channel MessageChannel
-     * @param file File
+     * @param event GenericGuildEvent
+     * @param channel TextChannel
+     * @param embed MessageEmbed
      */
-    public static void sendMessage(MessageChannel channel, File file) {
+    public static void sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            log.trace("Invoking {}#sendFile(file)#queue()", channel.getClass().getName());
-            channel.sendFile(file).queue();
+            if(MessageUtilities.hasSendPermission(event, channel)) {
+                log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
+                channel.sendMessage(embed).queue();
+            }
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", channel.getClass().getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Sends a file via message channel.
-     *
-     * @param channel MessageChannel
-     * @param bytes byte[]
-     * @param fileName String
-     */
-    public static void sendMessage(MessageChannel channel, byte[] bytes, String fileName) {
-        try {
-            log.trace("Invoking {}#sendFile(bytes, fileName)#queue()", channel.getClass().getName());
-            channel.sendFile(bytes, fileName).queue();
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", channel.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
         }
     }
 

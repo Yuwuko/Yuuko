@@ -48,7 +48,7 @@ public class OsuCommand extends Command {
                 default: modeString = "unknown";
             }
 
-            JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default", null, null).getAsJsonArray();
+            JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
 
             if(json == null || json.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
