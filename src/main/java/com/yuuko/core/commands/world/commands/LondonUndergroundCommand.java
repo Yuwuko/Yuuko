@@ -16,10 +16,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineStatusCommand extends Command {
+public class LondonUndergroundCommand extends Command {
 
-    public LineStatusCommand() {
-        super("linestatus", WorldModule.class, 0, new String[]{"-linestatus", "-linestatus <min>"}, false, null);
+    public LondonUndergroundCommand() {
+        super("londonunderground", WorldModule.class, 0, new String[]{"-londonunderground", "-londonunderground <min>"}, false, null);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class LineStatusCommand extends Command {
 
             if(command.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Tube Line Status")
+                        .setTitle("London Underground Status")
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
@@ -50,7 +50,7 @@ public class LineStatusCommand extends Command {
                     embed.addField(line.getName(), line.getLineStatusString(), true);
                 }
 
-                embed.addField("", "", true);
+                embed.addBlankField(true);
                 embed.addField("", reasons.toString(), false);
                 MessageHandler.sendMessage(e, embed.build());
 
@@ -63,7 +63,7 @@ public class LineStatusCommand extends Command {
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Tube Line Status (Minified)")
+                        .setTitle("London Underground Status (Minified)")
                         .addField("", reasons.toString(), false)
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());

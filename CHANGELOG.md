@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 18-03-2019_1
++ [~] Refactored [__linestatus__] to [__londonunderground__], although it's longer, it's less ambiguous.
+
 ## 17-03-2019_1
 + [~] Modified structure of settings, making them more like a command or module.
 + [~] Improved the JsonBuffer class to support unlimited extra headers, this required adding a RequestProperty class.

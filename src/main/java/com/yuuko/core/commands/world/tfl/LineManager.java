@@ -47,13 +47,13 @@ public class LineManager {
 
         for(LineStatus line: lineStatuses) {
             if(line.getReason() != null && !previous.equals(name)) {
-                reasons.append(line.getReason()).append("\n\n");
+                reasons.append("**").append(line.getReason()).append("\n\n");
                 previous = name;
             }
         }
         TextUtility.removeLastOccurrence(reasons, "\n\n");
 
-        return reasons.toString().replace("e:", "e**:").replace("E:", "E**:");
+        return reasons.toString().replace(":", "**:");
     }
 
 }
