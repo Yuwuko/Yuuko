@@ -2,7 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 18-03-2019_1
+## 19-03-2019_1
++ [~] Removed listening for numeric values between 1-10 and the word cancel in GenericMessageController and refactored the class.
++ [~] Altered how [__search__] works, you now need to use -search <value> or -search cancel to make the input less confusing.
 + [~] Refactored [__linestatus__] to [__londonunderground__], although it's longer, it's less ambiguous.
 
 ## 17-03-2019_1
