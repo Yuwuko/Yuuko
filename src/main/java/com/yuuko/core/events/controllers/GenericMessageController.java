@@ -23,12 +23,12 @@ public class GenericMessageController {
 
     private void messageReceivedEvent(MessageReceivedEvent e) {
         try {
-            // Increment message counter, regardless of it's author.
-            MetricsManager.getEventMetrics().MESSAGES_PROCESSED.getAndIncrement();
-
             if(e.getAuthor().isBot()) {
+                MetricsManager.getEventMetrics().BOT_MESSAGES_PROCESSED.getAndIncrement();
                 return;
             }
+
+            MetricsManager.getEventMetrics().HUMAN_MESSAGES_PROCESSED.getAndIncrement();
 
             // Used to help calculate execution time of functions.
             long startExecutionNano = System.nanoTime();

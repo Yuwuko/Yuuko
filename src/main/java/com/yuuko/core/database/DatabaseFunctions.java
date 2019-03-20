@@ -20,7 +20,7 @@ public class DatabaseFunctions {
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `messagesProcessed`, `reactsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `botMessagesProcessed`, `humanMessagesProcessed`, `botReactsProcessed`, `humanReactsProcessed`, `messagesSent`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)")) {
 
@@ -33,10 +33,13 @@ public class DatabaseFunctions {
             stmt.execute();
 
             stmt2.setInt(1, shardId);
-            stmt2.setInt(2, MetricsManager.getEventMetrics().MESSAGES_PROCESSED.get());
-            stmt2.setInt(3, MetricsManager.getEventMetrics().REACTS_PROCESSED.get());
-            stmt2.setInt(4, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
-            stmt2.setInt(5, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
+            stmt2.setInt(2, MetricsManager.getEventMetrics().BOT_MESSAGES_PROCESSED.get());
+            stmt2.setInt(3, MetricsManager.getEventMetrics().HUMAN_MESSAGES_PROCESSED.get());
+            stmt2.setInt(4, MetricsManager.getEventMetrics().BOT_REACTS_PROCESSED.get());
+            stmt2.setInt(5, MetricsManager.getEventMetrics().HUMAN_REACTS_PROCESSED.get());
+            stmt2.setInt(6, MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.get());
+            stmt2.setInt(7, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
+            stmt2.setInt(8, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
             stmt2.execute();
 
             stmt3.setInt(1, shardId);

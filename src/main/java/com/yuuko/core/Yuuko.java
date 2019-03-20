@@ -58,7 +58,7 @@ public class Yuuko {
 
         Configuration.BOT = Utils.getSelfUser();
         Configuration.GLOBAL_PREFIX = "<@" + Configuration.BOT_ID + "> ";
-        MetricsManager.updateDiscordMetrics();
+        MetricsManager.getDiscordMetrics().update();
 
         log.info("Setting up bot-list objects...");
         if(Configuration.API_KEYS.containsKey("discordbots")) {

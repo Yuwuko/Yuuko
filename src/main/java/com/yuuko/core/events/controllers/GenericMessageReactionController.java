@@ -21,12 +21,12 @@ public class GenericMessageReactionController {
 
     private void processGenericMessageReactionEvent(GenericMessageReactionEvent e) {
         try {
-            // Increment react counter, regardless of it's author.
-            MetricsManager.getEventMetrics().REACTS_PROCESSED.getAndIncrement();
-
             if(e.getUser().isBot()) {
+                MetricsManager.getEventMetrics().BOT_REACTS_PROCESSED.getAndIncrement();
                 return;
             }
+
+            MetricsManager.getEventMetrics().HUMAN_REACTS_PROCESSED.getAndIncrement();
 
             // Message Pin
             if(e.getReaction().getReactionEmote().getName().equals("📌")) {

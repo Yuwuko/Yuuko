@@ -79,13 +79,13 @@ public class GenericGuildController {
         }
 
         Utils.updateDiscordBotList();
-        MetricsManager.updateDiscordMetrics();
+        MetricsManager.getDiscordMetrics().update();
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         DatabaseFunctions.cleanup(e.getGuild().getId());
         Utils.updateDiscordBotList();
-        MetricsManager.updateDiscordMetrics();
+        MetricsManager.getDiscordMetrics().update();
     }
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent e) {
