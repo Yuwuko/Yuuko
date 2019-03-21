@@ -2,8 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 20-03-2019_1
+## 201-03-2019_1
 + [~] Updated Event Metrics to include more specific data about which types of user is behind each event, also added messages sent metrics.
++ [~] Added new job/task to clear the database of anything over 6 hours old, after 6 hours of being online. (and then every 1 hour);
 
 ## 19-03-2019_1
 + [~] Removed listening for numeric values between 1-10 and the word cancel in GenericMessageController and refactored the class.

@@ -38,4 +38,11 @@ public class DiscordMetrics {
         EMOTE_COUNT = emoteCount;
         ROLE_COUNT = roleCount;
     }
+
+    /**
+     * Updates the bot's currently returned ping.
+     */
+    public void updatePing() {
+        PING.set(Configuration.BOT.getJDA().getPing());
+    }
 }

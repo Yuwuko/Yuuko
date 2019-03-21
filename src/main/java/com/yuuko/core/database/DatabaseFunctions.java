@@ -20,7 +20,7 @@ public class DatabaseFunctions {
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `botMessagesProcessed`, `humanMessagesProcessed`, `botReactsProcessed`, `humanReactsProcessed`, `messagesSent`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `botMessagesProcessed`, `humanMessagesProcessed`, `botReactsProcessed`, `humanReactsProcessed`, `outputsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)")) {
 
@@ -105,6 +105,24 @@ public class DatabaseFunctions {
             stmt5.execute();
 
             MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Truncates anything 6 hours old in the system and discord metrics. Others are kept for total values.
+     */
+    public static void truncateDatabase() {
+        try(Connection conn = MetricsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < UNIX_TIMESTAMP(NOW() - INTERVAL 6 HOUR);");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < UNIX_TIMESTAMP(NOW() - INTERVAL 6 HOUR);")) {
+
+            stmt.execute();
+            stmt2.execute();
+
+            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(3);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

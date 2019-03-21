@@ -9,6 +9,7 @@ import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
+import com.yuuko.core.scheduler.jobs.OneHourlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
@@ -69,6 +70,7 @@ public class Yuuko {
         log.info("Setting up scheduled jobs...");
         ScheduleHandler.registerJob(new FiveSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
+        ScheduleHandler.registerJob(new OneHourlyJob());
 
         log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadConfigStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
     }

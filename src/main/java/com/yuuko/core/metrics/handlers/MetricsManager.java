@@ -1,5 +1,6 @@
 package com.yuuko.core.metrics.handlers;
 
+import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.metrics.DatabaseMetrics;
 import com.yuuko.core.metrics.DiscordMetrics;
 import com.yuuko.core.metrics.EventMetrics;
@@ -15,6 +16,10 @@ public class MetricsManager {
     public static void reset() {
         eventMetrics.reset();
         databaseMetrics.reset();
+    }
+
+    public static void truncate() {
+        DatabaseFunctions.truncateDatabase();
     }
 
     public static DatabaseMetrics getDatabaseMetrics() {
