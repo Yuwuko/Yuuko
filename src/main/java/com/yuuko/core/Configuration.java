@@ -22,7 +22,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "21-03-2019_1";
+    public static final String VERSION = "22-03-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -63,7 +63,7 @@ public class Configuration {
             s.close();
             log.info("Loaded configurations from 'shard_configurations.txt'.");
 
-            Configuration.loadApi();
+            loadApi();
 
             log.info("Setting up settings database connection...");
             new SettingsDatabaseConnection();
@@ -119,7 +119,7 @@ public class Configuration {
     /**
      * Loads api keys from the api key folder. This is done separately so keys can be reloaded live without reloading the whole configuration.
      */
-    public static void loadApi() {
+    public static int loadApi() {
         try {
             File folder = new File("./api/");
             File[] keyFiles = folder.listFiles();
@@ -133,10 +133,14 @@ public class Configuration {
                     c.close();
                 }
                 log.info("Loaded " + keyFiles.length + " API keys.");
+                return keyFiles.length;
             }
+
+            return 0;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+            return -1;
         }
     }
 

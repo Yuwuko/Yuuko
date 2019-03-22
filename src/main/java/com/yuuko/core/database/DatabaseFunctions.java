@@ -122,7 +122,7 @@ public class DatabaseFunctions {
             stmt.execute();
             stmt2.execute();
 
-            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(3);
+            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(2);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

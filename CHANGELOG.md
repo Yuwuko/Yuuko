@@ -2,7 +2,8 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 201-03-2019_1
+## 22-03-2019_1
++ [+] Added [__natgeo__] command to return the top headlines from National Geographic. (cause science and nature are rad)
 + [~] Updated Event Metrics to include more specific data about which types of user is behind each event, also added messages sent metrics.
 + [~] Added new job/task to clear the database of anything over 6 hours old, after 6 hours of being online. (and then every 1 hour);
 

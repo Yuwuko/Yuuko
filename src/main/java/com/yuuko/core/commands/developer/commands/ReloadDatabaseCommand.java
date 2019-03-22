@@ -4,12 +4,14 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.utilities.MessageHandler;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ReloadDatabaseCommand extends Command {
 
     public ReloadDatabaseCommand() {
-        super("redatabase", DeveloperModule.class, 1, new String[]{"-redatabase"}, false, null);
+        super("redb", DeveloperModule.class, 0, new String[]{"-redb"}, false, null);
     }
 
     @Override
@@ -17,6 +19,9 @@ public class ReloadDatabaseCommand extends Command {
         try {
             new MetricsDatabaseConnection();
             new SettingsDatabaseConnection();
+
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded Metrics/Settings databases.");
+            MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
