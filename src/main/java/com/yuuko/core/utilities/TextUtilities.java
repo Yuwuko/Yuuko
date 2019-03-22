@@ -3,6 +3,12 @@ package com.yuuko.core.utilities;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
+
 public final class TextUtilities {
 
     /**
@@ -99,6 +105,40 @@ public final class TextUtilities {
         } else {
             return String.format("%02d minutes, %02d seconds.", minutes, seconds);
         }
+    }
+
+    /**
+     * Formats the given time string into a dd/MM/yyyy string.
+     *
+     * @param time time string to format.
+
+     * @return formatted string.
+     */
+    public static String formatDate(String time) {
+        Instant instant = Instant.parse(time.subSequence(0, time.length()));
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.UK).withZone(ZoneId.systemDefault()).format(instant);
+    }
+
+    /**
+     * Rudimentary formatting for integers. (adding the ,'s)
+
+     * @param integer integer to be formatted.
+     * @return formatted string.
+     */
+    public static String formatInteger(String integer) {
+        String[] splitInt = integer.split("");
+        StringBuilder formattedInt = new StringBuilder();
+        int counter = 0;
+
+        for(int i = splitInt.length-1; i > -1; i--) {
+            if(counter % 3 == 0 && counter != 0) {
+                formattedInt.append(",");
+            }
+            formattedInt.append(splitInt[i]);
+            counter++;
+        }
+
+        return formattedInt.reverse().toString();
     }
 
     /**

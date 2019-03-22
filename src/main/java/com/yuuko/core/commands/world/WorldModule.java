@@ -14,7 +14,8 @@ public class WorldModule extends Module {
                 new WeatherCommand(),
                 new TescoCommand(),
                 new CountdownCommand(),
-                new NationalGeographicCommand()
+                new NationalGeographicCommand(),
+                new UKParliamentPetitionCommand()
         });
 
         new CommandExecutor(e,this, command);

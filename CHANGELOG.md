@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 22-03-2019_1
++ [+] Added [__petition__] command to return UK Parliament petitions by given petition ID.
 + [+] Added [__natgeo__] command to return the top headlines from National Geographic. (cause science and nature are rad)
 + [~] Refactored MessageHandler to core package and out of utilities.
 + [~] Refactored certain utilities from the misc util class to their own DiscordUtilities class.
