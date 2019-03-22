@@ -20,7 +20,7 @@ public class NekoCommand extends Command {
         try {
             JsonObject json = new JsonBuffer("https://nekos.life/api/v2/img/" + ((command.length > 1) ? command[1] : "lewd"), "default", "default").getAsJsonObject();
 
-            if(!json.has("msg")) {
+            if(json != null && !json.has("msg")) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Neko: " + json.get("url").getAsString())
                         .setImage(json.get("url").getAsString())
