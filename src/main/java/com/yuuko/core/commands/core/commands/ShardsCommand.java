@@ -1,10 +1,10 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.LavalinkSocket;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
@@ -39,12 +39,12 @@ public class ShardsCommand extends Command {
                     .append("\n").append("Users: ").append(userCount)
                     .append("\n\n");
         }
-        TextUtility.removeLastOccurrence(shards, "\n\n");
+        TextUtilities.removeLastOccurrence(shards, "\n\n");
 
         StringBuilder nodes = new StringBuilder();
         for(LavalinkSocket socket : Configuration.LAVALINK.getLavalink().getNodes()) {
             nodes.append("**Yuuko-").append(socket.getName())
-                    .append("** - ").append(TextUtility.getTimestamp(Objects.requireNonNull(socket.getStats()).getUptime()))
+                    .append("** - ").append(TextUtilities.getTimestamp(Objects.requireNonNull(socket.getStats()).getUptime()))
                     .append("\n").append("System Load: ").append(new BigDecimal((socket.getStats().getSystemLoad()*100)/100.0).setScale(2, RoundingMode.HALF_UP))
                     .append("\n").append("CPU Cores: ").append(socket.getStats().getCpuCores())
                     .append("\n").append("Memory Used: ").append(new BigDecimal(socket.getStats().getMemUsed()/1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
@@ -52,7 +52,7 @@ public class ShardsCommand extends Command {
                     .append("\n").append("Playing: ").append(socket.getStats().getPlayingPlayers())
                     .append("\n\n");
         }
-        TextUtility.removeLastOccurrence(nodes, "\n\n");
+        TextUtilities.removeLastOccurrence(nodes, "\n\n");
 
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator() + " - Shards", null, Configuration.BOT.getAvatarUrl())

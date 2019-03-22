@@ -3,7 +3,7 @@ package com.yuuko.core.utilities;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class TextUtility {
+public final class TextUtilities {
 
     /**
      * Replaces the last occurrence of a pattern with nothing.

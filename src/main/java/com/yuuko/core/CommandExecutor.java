@@ -5,10 +5,9 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.TextUtility;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.Utilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -46,7 +45,7 @@ public class CommandExecutor {
         }
 
         // Is the command or module NSFW? If they are, is the channel they're being used in /not/ NSFW?
-        if((command.isNSFW() || module.isNSFW()) && !Utils.isChannelNSFW(e)) {
+        if((command.isNSFW() || module.isNSFW()) && !Utilities.isChannelNSFW(e)) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -56,14 +55,14 @@ public class CommandExecutor {
         if(command.getPermissions() != null) {
             // Does the bot have the permission?
             if(!e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utilities.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
             // Does the user have the permission?
             if(!e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utils.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utilities.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -93,7 +92,7 @@ public class CommandExecutor {
      */
     private void messageCleanup(MessageReceivedEvent e) {
         // Does the server want the command message /not/ removed?
-        if(!TextUtility.convertToBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) {
+        if(!TextUtilities.convertToBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) {
             return;
         }
 
@@ -135,7 +134,7 @@ public class CommandExecutor {
         }
 
         // Is DJ mode /not/ on?
-        if(!TextUtility.convertToBoolean(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()))) {
+        if(!TextUtilities.convertToBoolean(GuildFunctions.getGuildSetting("djMode", e.getGuild().getId()))) {
             return true;
         }
 

@@ -2,10 +2,10 @@ package com.yuuko.core.commands.world.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -24,7 +24,7 @@ public class WeatherCommand extends Command {
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
-            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (command[1].replace(" ", "+")) + "&units=metric&APPID=" + Utils.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
+            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (command[1].replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
 
             if(data == null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");

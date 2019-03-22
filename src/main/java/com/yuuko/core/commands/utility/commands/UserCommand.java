@@ -1,11 +1,11 @@
 package com.yuuko.core.commands.utility.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
-import com.yuuko.core.utilities.MessageHandler;
+import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
-import com.yuuko.core.utilities.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -58,7 +58,7 @@ public class UserCommand extends Command {
                 .setTitle("Information about **" + target.getEffectiveName() + "**")
                 .setDescription("**" + target.getEffectiveName() + "** is currently **" + target.getOnlineStatus().name().toLowerCase() + "** " + presence)
                 .setThumbnail(target.getUser().getAvatarUrl())
-                .addField("Username", Utils.getTag(target), true)
+                .addField("Username", DiscordUtilities.getTag(target), true)
                 .addField("User ID", target.getUser().getId(), true)
                 .addField("Account Created", target.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                 .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)

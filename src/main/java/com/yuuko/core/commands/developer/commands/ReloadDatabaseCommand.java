@@ -1,10 +1,10 @@
 package com.yuuko.core.commands.developer.commands;
 
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
-import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

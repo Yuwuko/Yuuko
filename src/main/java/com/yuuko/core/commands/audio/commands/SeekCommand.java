@@ -1,13 +1,13 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.utilities.LavalinkUtilities;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -49,7 +49,7 @@ public class SeekCommand extends Command {
         if(track != null) {
             if(track.isSeekable()) {
                 LavalinkUtilities.getPlayer(e.getGuild()).seekTo((seek < track.getInfo().length) ? seek : track.getInfo().length);
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Seeking").setDescription("The track position has been set to `" + TextUtility.getTimestamp(seek) + "`.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Seeking").setDescription("The track position has been set to `" + TextUtilities.getTimestamp(seek) + "`.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Unseekable").setDescription("Sorry, but this track is currently unseekable.");

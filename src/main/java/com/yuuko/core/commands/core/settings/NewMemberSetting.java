@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.settings;
 
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.GuildFunctions;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;

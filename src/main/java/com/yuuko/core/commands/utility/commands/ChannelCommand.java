@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.utility.commands;
 
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
-import com.yuuko.core.utilities.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;

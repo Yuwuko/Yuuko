@@ -1,9 +1,9 @@
 package com.yuuko.core.commands.moderation.commands;
 
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;

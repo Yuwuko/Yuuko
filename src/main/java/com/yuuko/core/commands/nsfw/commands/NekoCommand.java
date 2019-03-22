@@ -2,9 +2,9 @@ package com.yuuko.core.commands.nsfw.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.nsfw.NSFWModule;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;

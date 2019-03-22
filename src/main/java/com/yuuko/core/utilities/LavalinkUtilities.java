@@ -5,7 +5,7 @@ import lavalink.client.io.Link;
 import lavalink.client.player.LavalinkPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 
-public class LavalinkUtilities {
+public final class LavalinkUtilities {
 
     /**
      * Checks to see if the Lavalink link is the given state.

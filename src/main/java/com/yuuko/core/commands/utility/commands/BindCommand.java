@@ -1,13 +1,13 @@
 package com.yuuko.core.commands.utility.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.database.BindFunctions;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -37,7 +37,7 @@ public class BindCommand extends Command {
             }
 
             if(!present) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utils.getServerPrefix(e.getGuild().getId()) + "commands** command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utilities.getServerPrefix(e.getGuild().getId()) + "commands** command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -56,7 +56,7 @@ public class BindCommand extends Command {
                     BindFunctions.toggleBind(e.getGuild().getId(), channel.getId(), selectedModule);
                     boundChannels.append(channel.getName()).append(", ");
                 }
-                TextUtility.removeLastOccurrence(boundChannels, ", ");
+                TextUtilities.removeLastOccurrence(boundChannels, ", ");
 
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + selectedModule + "** on **" + boundChannels.toString() + "**.");
                 MessageHandler.sendMessage(e, embed.build());

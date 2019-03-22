@@ -2,12 +2,12 @@ package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.utilities.LavalinkUtilities;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -29,7 +29,7 @@ public class CurrentCommand extends Command {
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
                     .setThumbnail(imageUrl)
-                    .addField("Duration", TextUtility.getTimestamp(LavalinkUtilities.getTrackPosition(e.getGuild())) + "/" + TextUtility.getTimestamp(track.getDuration()), true)
+                    .addField("Duration", TextUtilities.getTimestamp(LavalinkUtilities.getTrackPosition(e.getGuild())) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, queuedTrack.build());

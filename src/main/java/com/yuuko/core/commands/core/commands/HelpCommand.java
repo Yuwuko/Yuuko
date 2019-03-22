@@ -1,13 +1,13 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.BindFunctions;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -47,14 +47,14 @@ public class HelpCommand extends Command {
                 if(command.getPermissions() == null) {
                     commandPermission = "None";
                 } else {
-                    commandPermission = Utils.getCommandPermissions(command.getPermissions());
+                    commandPermission = Utilities.getCommandPermissions(command.getPermissions());
                 }
 
                 StringBuilder usages = new StringBuilder();
                 for(String usage: command.getUsage()) {
                     usages.append(usage).append("\n");
                 }
-                TextUtility.removeLastOccurrence(usages, "\n");
+                TextUtilities.removeLastOccurrence(usages, "\n");
 
                 EmbedBuilder embed = new EmbedBuilder()
                         .setThumbnail(Configuration.BOT.getAvatarUrl())

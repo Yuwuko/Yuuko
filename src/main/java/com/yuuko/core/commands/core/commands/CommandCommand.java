@@ -1,12 +1,12 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.CommandFunctions;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.MessageUtilities;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -49,7 +49,7 @@ public class CommandCommand extends Command {
                 // Check if the command even exists.
                 for(Command commandObj : Configuration.COMMANDS) {
                     if(commandObj.getName().equalsIgnoreCase(input)) {
-                        if(Utils.getModuleName(commandObj.getModule()).equals("Core")) {
+                        if(Utilities.getModuleName(commandObj.getModule()).equals("Core")) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Command").setDescription("Sorry, you cannot disable commands from the `Core` module.");
                             MessageHandler.sendMessage(e, embed.build());
                             return;
@@ -83,7 +83,7 @@ public class CommandCommand extends Command {
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below is a list of the disabled commands!")
-                    .setDescription("Each command can be toggled on or off globally by using the `" + Utils.getServerPrefix(e.getGuild().getId()) + "command <command>` command, or to an individual channel by using `" + Utils.getServerPrefix(e.getGuild().getId()) + "command <command> #channel`")
+                    .setDescription("Each command can be toggled on or off globally by using the `" + Utilities.getServerPrefix(e.getGuild().getId()) + "command <command>` command, or to an individual channel by using `" + Utilities.getServerPrefix(e.getGuild().getId()) + "command <command> #channel`")
                     .addField("Disabled Commands (" + settings.size() + ")", settings.toString().replace(",","\n").replaceAll("[\\[\\]]", ""), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());

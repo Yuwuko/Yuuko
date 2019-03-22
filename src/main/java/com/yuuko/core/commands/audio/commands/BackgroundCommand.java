@@ -5,13 +5,13 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -79,7 +79,7 @@ public class BackgroundCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setAuthor(e.getMember().getEffectiveName() + " set the background track!",null, e.getAuthor().getAvatarUrl())
                         .setTitle(track.getInfo().title, trackUrl)
-                        .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
+                        .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
                         .addField("Channel", track.getInfo().author, true)
                         .setFooter(Configuration.VERSION, Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());

@@ -5,14 +5,14 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.utilities.LavalinkUtilities;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -92,7 +92,7 @@ public class PlayCommand extends Command {
                             .setAuthor(e.getMember().getEffectiveName() + " added to the queue!", null, e.getAuthor().getAvatarUrl())
                             .setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(imageUrl)
-                            .addField("Duration", TextUtility.getTimestamp(track.getDuration()), true)
+                            .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
                             .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());

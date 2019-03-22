@@ -3,11 +3,11 @@ package com.yuuko.core.commands.world.commands;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.commands.world.tfl.LineManager;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -26,7 +26,7 @@ public class LondonUndergroundCommand extends Command {
     public void onCommand(MessageReceivedEvent e, String[] command) {
         try {
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new JsonBuffer("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utils.getApiApplicationId("transportforlondon") + "&app_key=" + Utils.getApiKey("transportforlondon"), "default", "default").getAsString();
+            String json = new JsonBuffer("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon"), "default", "default").getAsString();
             ArrayList<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<List<LineManager>>(){});
 
             // Build string for reasons why line doesn't have good service.

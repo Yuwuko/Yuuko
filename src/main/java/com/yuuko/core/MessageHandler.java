@@ -1,6 +1,7 @@
-package com.yuuko.core.utilities;
+package com.yuuko.core;
 
 import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;

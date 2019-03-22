@@ -1,12 +1,12 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -29,10 +29,10 @@ public class AboutCommand extends Command {
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
-                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utils.getServerPrefix(e.getGuild().getId()), true)
+                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utilities.getServerPrefix(e.getGuild().getId()), true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Modules", Configuration.MODULES.size() + "", true)
-                .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
+                .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                 .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
         MessageHandler.sendMessage(e, about.build());
     }

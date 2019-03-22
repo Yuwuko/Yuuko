@@ -11,7 +11,7 @@ import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
 import com.yuuko.core.scheduler.jobs.OneHourlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Game;
@@ -57,14 +57,14 @@ public class Yuuko {
 
         log.info("Shard manager setup; active shards: " + Configuration.SHARD_MANAGER.getShards().size() + ".");
 
-        Configuration.BOT = Utils.getSelfUser();
+        Configuration.BOT = Utilities.getSelfUser();
         Configuration.GLOBAL_PREFIX = "<@" + Configuration.BOT_ID + "> ";
         MetricsManager.getDiscordMetrics().update();
 
         log.info("Setting up bot-list objects...");
         if(Configuration.API_KEYS.containsKey("discordbots")) {
-            Configuration.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getId()).token(Utils.getApiKey("discordbots")).build();
-            Utils.updateDiscordBotList();
+            Configuration.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getId()).token(Utilities.getApiKey("discordbots")).build();
+            Utilities.updateDiscordBotList();
         }
 
         log.info("Setting up scheduled jobs...");

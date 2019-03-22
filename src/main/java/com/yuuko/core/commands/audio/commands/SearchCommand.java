@@ -2,12 +2,12 @@ package com.yuuko.core.commands.audio.commands;
 
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -72,7 +72,7 @@ public class SearchCommand extends Command {
 
             EmbedBuilder presentResults = new EmbedBuilder()
                     .setAuthor("Search results for " + command[1] + ".", null)
-                    .setDescription("Type `" + Utils.getServerPrefix(e.getGuild().getId()) + "search <value>` to play the track of the given value or `" + Utils.getServerPrefix(e.getGuild().getId()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
+                    .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild().getId()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild().getId()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());
 

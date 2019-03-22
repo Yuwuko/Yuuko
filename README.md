@@ -22,7 +22,7 @@ Visit [www.yuuko.info](https://www.yuuko.info) for a full list of commands, and 
 
 <p align="center">
   <a href="https://discord.gg/VsM25fN"><img src="https://discordapp.com/api/guilds/368094427089993729/widget.png?style=banner3" alt="Discord Server"></a>
-  <br>Support: <a href="https://discord.gg/VsM25fN">https://discord.gg/VsM25fN</a>
+  <br>Support server: <a href="https://discord.gg/VsM25fN">https://discord.gg/VsM25fN</a>
 </p>
 
 ---

@@ -1,12 +1,12 @@
 package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.TextUtility;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -68,8 +68,8 @@ public class GenericGuildController {
                             .addField("Version", Configuration.VERSION, true)
                             .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                             .addField("Commands", Configuration.COMMANDS.size() + "", true)
-                            .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utils.getServerPrefix(e.getGuild().getId()) + "`", true)
-                            .addField("Uptime", TextUtility.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
+                            .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utilities.getServerPrefix(e.getGuild().getId()) + "`", true)
+                            .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                             .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
                     MessageHandler.sendMessage(e, textChannel, about.build());
                 });
@@ -78,13 +78,13 @@ public class GenericGuildController {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
 
-        Utils.updateDiscordBotList();
+        Utilities.updateDiscordBotList();
         MetricsManager.getDiscordMetrics().update();
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         DatabaseFunctions.cleanup(e.getGuild().getId());
-        Utils.updateDiscordBotList();
+        Utilities.updateDiscordBotList();
         MetricsManager.getDiscordMetrics().update();
     }
 
@@ -102,11 +102,11 @@ public class GenericGuildController {
             String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
             if(message == null) {
                 TextChannel channel = e.getGuild().getTextChannelById(channelId);
-                EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtility.untokenizeString(e, "Welcome to **%guild%**, %user%!"));
+                EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, "Welcome to **%guild%**, %user%!"));
                 MessageHandler.sendMessage(e, channel, member.build());
             } else {
                 TextChannel channel = e.getGuild().getTextChannelById(channelId);
-                EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtility.untokenizeString(e, message));
+                EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, message));
                 MessageHandler.sendMessage(e, channel, member.build());
             }
         }

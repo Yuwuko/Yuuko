@@ -1,12 +1,12 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.ModuleFunctions;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -54,7 +54,7 @@ public class ModuleCommand extends Command {
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below are the lists of my enabled/disabled modules!")
-                    .setDescription("Each module can be toggled on or off by using the '" + Utils.getServerPrefix(e.getGuild().getId()) + "module <module>' command.")
+                    .setDescription("Each module can be toggled on or off by using the '" + Utilities.getServerPrefix(e.getGuild().getId()) + "module <module>' command.")
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())

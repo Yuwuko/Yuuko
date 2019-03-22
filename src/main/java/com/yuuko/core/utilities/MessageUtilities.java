@@ -1,6 +1,7 @@
 package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -13,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageUtilities {
+public final class MessageUtilities {
 
     /**
      * Returns whether or not a user is mentioned in the message.
@@ -126,21 +127,21 @@ public class MessageUtilities {
     /**
      * Main hasSendPermission flow controller
      */
-    static boolean hasSendPermission(GenericMessageEvent e) {
+    public static boolean hasSendPermission(GenericMessageEvent e) {
         return hasSendPermission(e.getGuild(), e.getTextChannel());
     }
 
     /**
      * Main hasSendPermission flow controller
      */
-    static boolean hasSendPermission(GenericMessageEvent e, TextChannel channel) {
+    public static boolean hasSendPermission(GenericMessageEvent e, TextChannel channel) {
         return hasSendPermission(e.getGuild(), channel);
     }
 
     /**
      * Main hasSendPermission flow controller
      */
-    static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
+    public static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
         return hasSendPermission(e.getGuild(), channel);
     }
 

@@ -3,11 +3,11 @@ package com.yuuko.core.commands.media.commands;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -48,7 +48,7 @@ public class OsuCommand extends Command {
                 default: modeString = "unknown";
             }
 
-            JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utils.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
+            JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
 
             if(json == null || json.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");

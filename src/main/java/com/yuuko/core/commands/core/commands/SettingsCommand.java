@@ -1,11 +1,11 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.commands.core.settings.*;
 import com.yuuko.core.database.GuildFunctions;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -76,15 +76,15 @@ public class SettingsCommand extends Command {
                 EmbedBuilder commandModules = new EmbedBuilder()
                         .setTitle("Settings for **" + e.getGuild().getName() + "**")
                         .setDescription("Settings can be changed by typing **" + settingsList.get(0) + "settings [setting] [value]** where **[setting]** is a value found below and **[value]** is a valid value, with special values like booleans being either **TRUE** or **FALSE** (case insensitive)")
-                            .addField("prefix (String)", "**__" + settingsList.get(0) + "__** - The message prefix used to symbolise a command.", false)
-                            .addField("deleteExecuted (Boolean)", "**__" + settingsList.get(1) + "__** - Deletes the users command string when it is executed.", false)
-                            .addField("nowPlaying (Boolean)", "**__" + settingsList.get(2) + "__** - Sends information of the current track when it changes.", false)
-                            .addField("djMode (Boolean)", "**__" + settingsList.get(3) + "__** - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
-                            .addField("newMember (Mention) | (String)", (settingsList.get(4) != null ? e.getGuild().getTextChannelById(settingsList.get(4)).getAsMention() : "**__Disabled__**") + " - Where Yuuko will greet each new member that joins the server.", false)
-                            .addField("newMember Message", (settingsList.get(5) != null) ? settingsList.get(5) : "No message set. (Default)", false)
-                            .addField("starboard (Mention)", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "**__Disabled__**") + " - Where any messages reacted to with a ⭐ will be sent.", false)
-                            .addField("commandLog (Mention)", (settingsList.get(7) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
-                            .addField("modLog (Mention)", (settingsList.get(8) != null ? e.getGuild().getTextChannelById(settingsList.get(8)).getAsMention() : "**__Disabled__**") + " - Sends moderation events to a defined log channel.", false)
+                            .addField("prefix _(String)_", "**__" + settingsList.get(0) + "__** - The message prefix used to symbolise a command.", false)
+                            .addField("deleteExecuted _(Boolean)_", "**__" + settingsList.get(1) + "__** - Deletes the users command string when it is executed.", false)
+                            .addField("nowPlaying _(Boolean)_", "**__" + settingsList.get(2) + "__** - Sends information of the current track when it changes.", false)
+                            .addField("djMode _(Boolean)_", "**__" + settingsList.get(3) + "__** - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
+                            .addField("newMember _(Channel Mention)_", (settingsList.get(4) != null ? e.getGuild().getTextChannelById(settingsList.get(4)).getAsMention() : "**__Disabled__**") + " - Where Yuuko will greet each new member that joins the server.", false)
+                            .addField("newMember Message _(Raw)_", (settingsList.get(5) != null) ? settingsList.get(5) : "No message set. (Default)", false)
+                            .addField("starboard _(Channel Mention)_", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "**__Disabled__**") + " - Where any messages reacted to with a ⭐ will be sent.", false)
+                            .addField("commandLog _(Channel Mention)_", (settingsList.get(7) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
+                            .addField("modLog _(Channel Mention)_", (settingsList.get(8) != null ? e.getGuild().getTextChannelById(settingsList.get(8)).getAsMention() : "**__Disabled__**") + " - Sends moderation events to a defined log channel.", false)
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, commandModules.build());
             }

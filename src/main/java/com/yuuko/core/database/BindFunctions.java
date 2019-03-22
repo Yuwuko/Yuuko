@@ -2,7 +2,7 @@ package com.yuuko.core.database;
 
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class BindFunctions {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
 
-            moduleName = TextUtility.extractModuleName(moduleName, true, false); // Sometimes the input will be the whole classpath, this removes that junk and returns just the module name.
+            moduleName = TextUtilities.extractModuleName(moduleName, true, false); // Sometimes the input will be the whole classpath, this removes that junk and returns just the module name.
 
             stmt.setString(1, guildId);
             stmt.setString(2, channel);
@@ -65,7 +65,7 @@ public class BindFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
 
-            moduleName = TextUtility.extractModuleName(moduleName, true, false);
+            moduleName = TextUtilities.extractModuleName(moduleName, true, false);
 
             stmt.setString(1, guild);
             stmt.setString(2, channel);
@@ -106,7 +106,7 @@ public class BindFunctions {
             }
 
             if(string.length() > 0) {
-                TextUtility.removeLastOccurrence(string, delimiter);
+                TextUtilities.removeLastOccurrence(string, delimiter);
             } else {
                 string.append("None");
             }
@@ -132,7 +132,7 @@ public class BindFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
 
-            moduleName = TextUtility.extractModuleName(moduleName, true, false);
+            moduleName = TextUtilities.extractModuleName(moduleName, true, false);
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, moduleName);
@@ -145,7 +145,7 @@ public class BindFunctions {
             }
 
             if(string.length() > 0) {
-                TextUtility.removeLastOccurrence(string, delimiter);
+                TextUtilities.removeLastOccurrence(string, delimiter);
             } else {
                 string.append("None");
             }
@@ -171,7 +171,7 @@ public class BindFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
 
-            moduleName = TextUtility.extractModuleName(moduleName, true, false);
+            moduleName = TextUtilities.extractModuleName(moduleName, true, false);
 
             stmt.setString(1, guildId);
             stmt.setString(2, moduleName);

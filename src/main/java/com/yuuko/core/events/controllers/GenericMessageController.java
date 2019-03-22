@@ -6,7 +6,7 @@ import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class GenericMessageController {
             String message = e.getMessage().getContentRaw().toLowerCase();
 
             // If message starts with server prefix, use it, if it starts with global prefix, use that, else it isn't a command.
-            String prefix = message.startsWith(Utils.getServerPrefix(e.getGuild().getId())) ? Utils.getServerPrefix(e.getGuild().getId()) : message.startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "";
+            String prefix = message.startsWith(Utilities.getServerPrefix(e.getGuild().getId())) ? Utilities.getServerPrefix(e.getGuild().getId()) : message.startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "";
             if(!prefix.equals("")) {
                 String[] command = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
 

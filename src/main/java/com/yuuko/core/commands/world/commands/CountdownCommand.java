@@ -1,11 +1,11 @@
 package com.yuuko.core.commands.world.commands;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.utilities.MessageHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.TextUtility;
+import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class CountdownCommand extends Command {
             if(dates.containsKey(command[1])) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Time Until " + command[1].toUpperCase())
-                        .setDescription(TextUtility.getTimestampVerbose(dates.get(command[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(command[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
@@ -57,7 +57,7 @@ public class CountdownCommand extends Command {
 
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Time Until " + command[1])
-                        .setDescription(TextUtility.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(command[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(command[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());

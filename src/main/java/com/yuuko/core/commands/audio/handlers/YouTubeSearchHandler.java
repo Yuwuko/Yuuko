@@ -6,7 +6,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class YouTubeSearchHandler {
 
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
-            search.setKey(Utils.getApiKey("google"));
+            search.setKey(Utilities.getApiKey("google"));
             search.setQ(searchParameter);
             search.setType("video");
             search.setFields("items(id/videoId)");
@@ -60,7 +60,7 @@ public class YouTubeSearchHandler {
             }).setApplicationName("yuuko-204012").build();
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
-            search.setKey(Utils.getApiKey("google"));
+            search.setKey(Utilities.getApiKey("google"));
             search.setQ(command[1]);
             search.setType("video");
             search.setFields("items(id/videoId,snippet/title)");

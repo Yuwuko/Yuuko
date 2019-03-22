@@ -4,10 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.utilities.MessageHandler;
-import com.yuuko.core.utilities.Utils;
+import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -22,7 +22,7 @@ public class NationalGeographicCommand extends Command {
 
     @Override
     public void onCommand(MessageReceivedEvent e, String[] command) {
-        JsonObject json = new JsonBuffer("https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + Utils.getApiKey("newsapi"), "default", "default").getAsJsonObject();
+        JsonObject json = new JsonBuffer("https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + Utilities.getApiKey("newsapi"), "default", "default").getAsJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 
         EmbedBuilder embed = new EmbedBuilder()
