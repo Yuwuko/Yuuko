@@ -36,9 +36,7 @@ public class Yuuko {
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
         long loadConfigStart = System.nanoTime();
 
-        Configuration.load();
-
-        Configuration.SHARD_ID = Integer.parseInt(args[0]);
+        Configuration.load(args);
 
         log.info("Setting up the shard manager...");
         Configuration.SHARD_MANAGER = new DefaultShardManagerBuilder()
@@ -55,7 +53,7 @@ public class Yuuko {
             Thread.sleep(2500);
         }
 
-        log.info("Shard manager setup; active shards: " + Configuration.SHARD_MANAGER.getShards().size() + ".");
+        log.info("Done. Active shards: " + Configuration.SHARD_MANAGER.getShards().size() + ".");
 
         Configuration.BOT = Utilities.getSelfUser();
         Configuration.GLOBAL_PREFIX = "<@" + Configuration.BOT_ID + "> ";
@@ -66,11 +64,13 @@ public class Yuuko {
             Configuration.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getId()).token(Utilities.getApiKey("discordbots")).build();
             Utilities.updateDiscordBotList();
         }
+        log.info("Done.");
 
         log.info("Setting up scheduled jobs...");
         ScheduleHandler.registerJob(new FiveSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());
+        log.info("Done.");
 
         log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadConfigStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
     }

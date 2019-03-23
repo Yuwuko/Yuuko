@@ -90,18 +90,27 @@ public class DatabaseFunctions {
     /**
      * Truncates the metrics database. (This happens when the bot is first loaded.)
      */
-    public static void truncateMetrics() {
+    public static void truncateMetrics(int shard) {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics`");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics`");
-            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics`");
-            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics`");
-            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog`")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE shardId = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics` WHERE shardId = ?");
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE shardId = ?");
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics` WHERE shardId = ?");
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?")) {
 
+            stmt.setInt(1, shard);
             stmt.execute();
+
+            stmt2.setInt(1, shard);
             stmt2.execute();
+
+            stmt3.setInt(1, shard);
             stmt3.execute();
+
+            stmt4.setInt(1, shard);
             stmt4.execute();
+
+            stmt5.setInt(1, shard);
             stmt5.execute();
 
             MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);

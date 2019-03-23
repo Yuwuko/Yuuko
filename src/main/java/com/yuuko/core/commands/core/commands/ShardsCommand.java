@@ -56,7 +56,7 @@ public class ShardsCommand extends Command {
 
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator() + " - Shards", null, Configuration.BOT.getAvatarUrl())
-                .addField("Yuuko", shards.toString(), false)
+                .addField("Yuuko", shards.toString() + "\n\u200b", false)
                 .addField("Lavalink", nodes.toString(), false);
         MessageHandler.sendMessage(e, shardEmbed.build());
     }

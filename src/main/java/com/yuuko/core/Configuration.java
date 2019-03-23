@@ -29,7 +29,7 @@ public class Configuration {
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static int SHARD_COUNT = 0;
-    public static int SHARD_ID = 0;
+    static int[] SHARD_ID = {0};
     public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
@@ -45,8 +45,17 @@ public class Configuration {
     /**
      * Loads all of the bots configurations.
      */
-    static void load() {
+    static void load(String[] args) {
         try {
+            log.info("Registering shard IDs...");
+            int[] shards = new int[args.length];
+            for(int i = 0; i < args.length; i++) {
+                shards[i] = Integer.parseInt(args[i]);
+                log.info("Registered shardId: " + i);
+            }
+            SHARD_ID = shards;
+            log.info("Done.");
+
             log.info("Loading configurations from 'configurations.txt'...");
             BufferedReader c = new BufferedReader(new FileReader("configuration.txt"));
             AUTHOR = c.readLine();
@@ -55,24 +64,30 @@ public class Configuration {
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
             c.close();
-            log.info("Loaded configurations from 'configurations.txt'.");
+            log.info("Done.");
 
             log.info("Loading configurations from 'shard_configurations.txt'...");
             BufferedReader s = new BufferedReader(new FileReader("shard_configuration.txt"));
             SHARD_COUNT = Integer.parseInt(s.readLine());
             s.close();
-            log.info("Loaded configurations from 'shard_configurations.txt'.");
+            log.info("Done.");
 
             loadApi();
 
             log.info("Setting up settings database connection...");
             new SettingsDatabaseConnection();
+            log.info("Done.");
 
             log.info("Setting up metrics database connection...");
             new MetricsDatabaseConnection();
+            log.info("Done.");
 
-            log.info("Truncating metrics database...");
-            DatabaseFunctions.truncateMetrics();
+            log.info("Truncating metrics database... (Shards: " + SHARD_ID.length + ")");
+            for(int id: SHARD_ID) {
+                log.info("Truncating metrics database... (" + (id+1) + "/" + SHARD_ID.length +")");
+                DatabaseFunctions.truncateMetrics(id);
+            }
+            log.info("Done.");
 
             Reflections reflections = new Reflections("com.yuuko.core.commands");
 
@@ -100,9 +115,11 @@ public class Configuration {
 
             log.info("Setting up Lavalink manager...");
             LAVALINK = new LavalinkManager();
+            log.info("Done.");
 
             log.info("Setting up AudioManager manager...");
             AUDIO_MANAGER_MANAGER = new AudioManagerManager();
+            log.info("Done.");
 
             log.info("Setting up standard strings...");
             STANDARD_STRINGS = new String[]{
@@ -110,6 +127,7 @@ public class Configuration {
                     VERSION + " • Requested by ",
                     VERSION + " • Asked by "
             };
+            log.info("Done.");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
