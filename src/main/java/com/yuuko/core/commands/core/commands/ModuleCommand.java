@@ -54,7 +54,7 @@ public class ModuleCommand extends Command {
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below are the lists of my enabled/disabled modules!")
-                    .setDescription("Each module can be toggled on or off by using the '" + Utilities.getServerPrefix(e.getGuild().getId()) + "module <module>' command.")
+                    .setDescription("Each module can be toggled on or off by using the '" + Utilities.getServerPrefix(e.getGuild()) + "module <module>' command.")
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())

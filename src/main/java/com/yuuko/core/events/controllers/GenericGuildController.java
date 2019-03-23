@@ -68,7 +68,7 @@ public class GenericGuildController {
                             .addField("Version", Configuration.VERSION, true)
                             .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                             .addField("Commands", Configuration.COMMANDS.size() + "", true)
-                            .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utilities.getServerPrefix(e.getGuild().getId()) + "`", true)
+                            .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utilities.getServerPrefix(e.getGuild()) + "`", true)
                             .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                             .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
                     MessageHandler.sendMessage(e, textChannel, about.build());

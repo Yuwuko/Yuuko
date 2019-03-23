@@ -5,6 +5,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.GuildFunctions;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.SelfUser;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -47,11 +48,11 @@ public final class Utilities {
     /**
      * Returns the server custom prefix.
      *
-     * @param server the server to retrieve the prefix from
+     * @param guild the server to retrieve the prefix from
      * @return String
      */
-    public static String getServerPrefix(String server) {
-        return GuildFunctions.getGuildSetting("prefix", server);
+    public static String getServerPrefix(Guild guild) {
+        return GuildFunctions.getGuildSetting("prefix", guild.getId());
     }
 
     /**

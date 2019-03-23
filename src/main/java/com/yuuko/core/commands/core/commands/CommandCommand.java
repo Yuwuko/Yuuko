@@ -83,7 +83,7 @@ public class CommandCommand extends Command {
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below is a list of the disabled commands!")
-                    .setDescription("Each command can be toggled on or off globally by using the `" + Utilities.getServerPrefix(e.getGuild().getId()) + "command <command>` command, or to an individual channel by using `" + Utilities.getServerPrefix(e.getGuild().getId()) + "command <command> #channel`")
+                    .setDescription("Each command can be toggled on or off globally by using the `" + Utilities.getServerPrefix(e.getGuild()) + "command <command>` command, or to an individual channel by using `" + Utilities.getServerPrefix(e.getGuild()) + "command <command> #channel`")
                     .addField("Disabled Commands (" + settings.size() + ")", settings.toString().replace(",","\n").replaceAll("[\\[\\]]", ""), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());

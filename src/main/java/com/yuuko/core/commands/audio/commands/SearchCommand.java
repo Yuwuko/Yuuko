@@ -72,7 +72,7 @@ public class SearchCommand extends Command {
 
             EmbedBuilder presentResults = new EmbedBuilder()
                     .setAuthor("Search results for " + command[1] + ".", null)
-                    .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild().getId()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild().getId()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
+                    .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());
 

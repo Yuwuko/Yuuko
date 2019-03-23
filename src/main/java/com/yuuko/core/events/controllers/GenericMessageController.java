@@ -36,7 +36,7 @@ public class GenericMessageController {
             String message = e.getMessage().getContentRaw().toLowerCase();
 
             // If message starts with server prefix, use it, if it starts with global prefix, use that, else it isn't a command.
-            String prefix = message.startsWith(Utilities.getServerPrefix(e.getGuild().getId())) ? Utilities.getServerPrefix(e.getGuild().getId()) : message.startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "";
+            String prefix = message.startsWith(Utilities.getServerPrefix(e.getGuild())) ? Utilities.getServerPrefix(e.getGuild()) : message.startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "";
             if(!prefix.equals("")) {
                 String[] command = e.getMessage().getContentRaw().substring(prefix.length()).split("\\s+", 2);
 

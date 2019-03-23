@@ -29,7 +29,7 @@ public class AboutCommand extends Command {
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
-                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utilities.getServerPrefix(e.getGuild().getId()), true)
+                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utilities.getServerPrefix(e.getGuild()), true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Modules", Configuration.MODULES.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)

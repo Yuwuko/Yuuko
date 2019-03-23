@@ -37,7 +37,7 @@ public class BindCommand extends Command {
             }
 
             if(!present) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utilities.getServerPrefix(e.getGuild().getId()) + "commands** command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "commands** command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
