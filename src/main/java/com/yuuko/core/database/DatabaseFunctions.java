@@ -116,8 +116,8 @@ public class DatabaseFunctions {
      */
     public static void truncateDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < UNIX_TIMESTAMP(NOW() - INTERVAL 6 HOUR);");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < UNIX_TIMESTAMP(NOW() - INTERVAL 6 HOUR);")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
             stmt.execute();
             stmt2.execute();
