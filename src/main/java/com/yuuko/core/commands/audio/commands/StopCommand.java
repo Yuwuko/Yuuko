@@ -43,15 +43,12 @@ public class StopCommand extends Command {
      * @param e; GenericGuildEvent
      */
     public void onCommand(GenericGuildEvent e) {
-        if(!LavalinkUtilities.isState(e.getGuild(), Link.State.NOT_CONNECTED)) {
-            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
-
-            manager.scheduler.queue.clear();
-            manager.scheduler.setBackground(null);
-            manager.scheduler.setLooping(false);
-            manager.player.stopTrack();
-            manager.player.setPaused(false);
-            Configuration.LAVALINK.closeConnection(e.getGuild());
-        }
+        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
+        manager.scheduler.queue.clear();
+        manager.scheduler.setBackground(null);
+        manager.scheduler.setLooping(false);
+        manager.player.stopTrack();
+        manager.player.setPaused(false);
+        Configuration.LAVALINK.closeConnection(e.getGuild());
     }
 }
