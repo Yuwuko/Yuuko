@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.fun.commands.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class FunModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -15,9 +15,9 @@ public class FunModule extends Module {
             new CoinFlipCommand()
     };
 
-    public FunModule(MessageReceivedEvent e, String[] command) {
+    public FunModule(MessageEvent e) {
         super("Fun", "moduleFun", false, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

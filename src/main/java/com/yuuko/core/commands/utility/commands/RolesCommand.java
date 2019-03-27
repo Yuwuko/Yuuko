@@ -4,10 +4,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class RolesCommand extends Command {
 
@@ -16,7 +16,7 @@ public class RolesCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         StringBuilder roles = new StringBuilder();
 
         if(!e.getGuild().getRoleCache().isEmpty()) {

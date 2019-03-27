@@ -2,39 +2,36 @@ package com.yuuko.core.commands.core.settings;
 
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
 public class SettingExecuteBoolean extends Setting {
 
-    public SettingExecuteBoolean(MessageReceivedEvent e, String setting, String value) {
-        if(e != null && setting != null && value != null) {
-            onCommand(e, setting, value);
-        }
+    public SettingExecuteBoolean(MessageEvent e) {
+        onCommand(e);
     }
 
-    protected void onCommand(MessageReceivedEvent e, String setting, String value) {
+    protected void onCommand(MessageEvent e) {
         try {
-            String intValue = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) ? "1" : "0";
+            String[] parameters = e.getCommandParameter().toLowerCase().split("\\s+", 2);
 
-            if(GuildFunctions.setGuildSettings(setting, intValue, e.getGuild().getId())) {
-                if(Boolean.parseBoolean(value.toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(setting.toUpperCase() + " set to TRUE.");
-                    MessageHandler.sendMessage(e, embed.build());
-                } else {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(setting.toUpperCase() + " set to FALSE.");
-                    MessageHandler.sendMessage(e, embed.build());
+            if(parameters.length > 1) {
+                String intValue = (parameters[1].equals("true") || parameters[1].equals("yes")) ? "1" : "0";
+
+                if(GuildFunctions.setGuildSettings(parameters[0], intValue, e.getGuild().getId())) {
+                    if(Boolean.parseBoolean(parameters[1].toUpperCase())) {
+                        EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(parameters[0].toUpperCase() + " set to TRUE.");
+                        MessageHandler.sendMessage(e, embed.build());
+                    } else {
+                        EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(parameters[0].toUpperCase() + " set to FALSE.");
+                        MessageHandler.sendMessage(e, embed.build());
+                    }
                 }
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
-    }
-
-    @Override
-    protected void onCommand(MessageReceivedEvent e, String command) {
-        //
     }
 }

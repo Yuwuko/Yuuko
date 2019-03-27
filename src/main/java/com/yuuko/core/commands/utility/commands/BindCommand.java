@@ -6,12 +6,12 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.database.BindFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class BindCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        if(command.length > 1) {
-            String[] commandParameters = command[1].split("\\s+", 2);
+    public void onCommand(MessageEvent e) {
+        if(e.getCommand().length > 1) {
+            String[] commandParameters = e.getCommandParameter().split("\\s+", 2);
             String selectedModule = "";
 
             boolean present = false;

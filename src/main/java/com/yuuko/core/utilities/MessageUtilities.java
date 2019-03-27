@@ -2,6 +2,7 @@ package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -9,7 +10,6 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,32 +19,32 @@ public final class MessageUtilities {
     /**
      * Returns whether or not a user is mentioned in the message.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return boolean
      */
-    public static boolean checkIfUserMentioned(MessageReceivedEvent e) {
+    public static boolean checkIfUserMentioned(MessageEvent e) {
         return getMutableMembersCollection(e).size() > 0;
     }
 
     /**
      * Returns whether or not a channel is mentioned in the message.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return boolean
      */
-    public static boolean checkIfChannelMentioned(MessageReceivedEvent e) {
+    public static boolean checkIfChannelMentioned(MessageEvent e) {
         return e.getMessage().getMentionedChannels().size() > 0;
     }
 
     /**
      * Returns the first mentioned user from a given message.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return Member
      */
-    public static Member getMentionedMember(MessageReceivedEvent e, String[] commandParameters, boolean feedback) {
-        if(commandParameters != null && commandParameters[0].length() == 18 && Sanitiser.isNumber(commandParameters[0])) {
-            return e.getGuild().getMemberById(commandParameters[0]);
+    public static Member getMentionedMember(MessageEvent e, boolean feedback) {
+        if(e.getCommandParameter() != null && e.getCommandParameter().length() == 18 && Sanitiser.isNumber(e.getCommandParameter())) {
+            return e.getGuild().getMemberById(e.getCommandParameter());
         }
 
         List<Member> mentioned = getMutableMembersCollection(e);
@@ -71,10 +71,10 @@ public final class MessageUtilities {
     /**
      * Returns the first mentioned channel from a given message.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return TextChannel
      */
-    public static TextChannel getFirstMentionedChannel(MessageReceivedEvent e) {
+    public static TextChannel getFirstMentionedChannel(MessageEvent e) {
         List<TextChannel> mentioned = e.getMessage().getMentionedChannels();
         return (mentioned.size() > 0) ? mentioned.get(0) : null;
     }
@@ -82,10 +82,10 @@ public final class MessageUtilities {
     /**
      * Returns a list of mentioned users from a given message.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return List<Member>
      */
-    public static List<Member> getMentionedMembers(MessageReceivedEvent e) {
+    public static List<Member> getMentionedMembers(MessageEvent e) {
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         ArrayList<Member> modifiableMentioned = new ArrayList<>(mentioned);
         modifiableMentioned.remove(e.getGuild().getMember(Configuration.BOT));
@@ -105,7 +105,7 @@ public final class MessageUtilities {
      * @param e MessageReceivedEvent
      * @return List<Member>
      */
-    private static List<Member> getMutableMembersCollection(MessageReceivedEvent e) {
+    private static List<Member> getMutableMembersCollection(MessageEvent e) {
         List<Member> unmodifiableMentioned = e.getMessage().getMentionedMembers();
         ArrayList<Member> mentioned = new ArrayList<>(unmodifiableMentioned);
         mentioned.remove(e.getGuild().getMember(Configuration.BOT));

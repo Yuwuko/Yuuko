@@ -6,8 +6,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 public class YouTubeSearchHandler {
 
     /**
-     * Searches youtube using command[1] and returns the first result.
+     * Searches youtube using e.getCommandParameter() and returns the first result.
      * @return youtube video url.
      */
     public static String search(String searchParameter) {
@@ -51,17 +51,17 @@ public class YouTubeSearchHandler {
     }
 
     /**
-     * Searches youtube using command[1] and returns the first 10 result.
+     * Searches youtube using e.getCommandParameter() and returns the first 10 result.
      * @return youtube video result list.
      */
-    public static List<SearchResult> searchList(MessageReceivedEvent e, String[] command) {
+    public static List<SearchResult> searchList(MessageEvent e) {
         try {
             YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
             }).setApplicationName("yuuko-204012").build();
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
             search.setKey(Utilities.getApiKey("google"));
-            search.setQ(command[1]);
+            search.setQ(e.getCommandParameter());
             search.setType("video");
             search.setFields("items(id/videoId,snippet/title)");
             search.setMaxResults(10L);

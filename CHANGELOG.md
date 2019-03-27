@@ -3,7 +3,10 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 27-03-2019_1
++ [!] Added a subclass class to extend MessageReceivedEvent name MessageEvent allowing for much more powerful manipulation of events.
++ [~] Refactored CommandExecutor, every command, module and relevant utility to work with the new wrapper class.
 + [~] Refactored all module classes to be more memory aware instead of just arbitrarily creating new objects.
++ [~] Fixed [__command__] which was suffering from the after effects of a previous refactor that went unnoticed.
 + [~] Tweaked GenericGuildVoiceController to try and fix a bug which stops audio players from correctly being destroyed.
 
 ## 22-03-2019_1

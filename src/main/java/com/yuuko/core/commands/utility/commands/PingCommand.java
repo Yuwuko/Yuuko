@@ -4,9 +4,9 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 
@@ -17,7 +17,7 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Pong!")
                 .setDescription("Current ping to Discord is " + MetricsManager.getDiscordMetrics().PING + "ms.")

@@ -6,11 +6,11 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class OsuCommand extends Command {
 
@@ -19,9 +19,9 @@ public class OsuCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = command[1].split("\\s+", 2);
+            String[] commandParameters = e.getCommandParameter().split("\\s+", 2);
 
             final int mode;
             if(commandParameters.length > 1) {
@@ -51,7 +51,7 @@ public class OsuCommand extends Command {
             JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
 
             if(json == null || json.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommandParameter() + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

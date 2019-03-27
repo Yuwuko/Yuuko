@@ -3,6 +3,7 @@ package com.yuuko.core.commands.core.settings;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -15,12 +16,14 @@ import java.time.Instant;
 
 public class CommandLogSetting extends Setting {
 
-    public CommandLogSetting(MessageReceivedEvent e, String value) {
-        onCommand(e, value);
+    public CommandLogSetting(MessageEvent e) {
+        onCommand(e);
     }
 
-    protected void onCommand(MessageReceivedEvent e, String value) {
-        if(value.equalsIgnoreCase("setup")) {
+    protected void onCommand(MessageEvent e) {
+        String[] parameters = e.getCommandParameter().split("\\s+", 2);
+
+        if(parameters[1].equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
                 setup(e);
             } else {

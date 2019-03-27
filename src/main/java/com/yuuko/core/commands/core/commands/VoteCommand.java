@@ -4,8 +4,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class VoteCommand extends Command {
 
@@ -14,7 +14,7 @@ public class VoteCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
                 .setDescription(

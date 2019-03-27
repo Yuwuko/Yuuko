@@ -6,10 +6,10 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.ModuleFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.time.Instant;
@@ -22,9 +22,9 @@ public class ModuleCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        if(command.length > 1) {
-            String moduleName = command[1].split("\\s+", 2)[0].toLowerCase();
+    public void onCommand(MessageEvent e) {
+        if(e.getCommand().length > 1) {
+            String moduleName = e.getCommandParameter().split("\\s+", 2)[0].toLowerCase();
             String server = e.getGuild().getId();
 
             // Check if the module even exists.

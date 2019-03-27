@@ -4,8 +4,8 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class SyncGuildsCommand extends Command {
 
@@ -14,7 +14,7 @@ public class SyncGuildsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
             if(GuildFunctions.addGuilds(e)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds added/updated successfully.");

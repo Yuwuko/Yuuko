@@ -5,11 +5,11 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class SeekCommand extends Command {
 
@@ -18,16 +18,16 @@ public class SeekCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         AudioTrack track = AudioManagerManager.getGuildAudioManager(e.getGuild().getId()).player.getPlayingTrack();
 
         int seek;
 
-        if(Sanitiser.isNumber(command[1])) {
-            seek = Integer.parseInt(command[1])*1000;
+        if(Sanitiser.isNumber(e.getCommandParameter())) {
+            seek = Integer.parseInt(e.getCommandParameter())*1000;
         } else {
 
-            String[] timestamp = command[1].split(":", 2);
+            String[] timestamp = e.getCommandParameter().split(":", 2);
             if(timestamp.length == 2) {
                 boolean nan = false;
                 for(String time : timestamp) {

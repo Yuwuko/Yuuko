@@ -11,6 +11,7 @@ import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -22,18 +23,18 @@ public class BackgroundCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
-        if(command.length > 1) {
+        if(e.getCommand().length > 1) {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
-                setAndPlay(manager, e, command[1]);
+            if(e.getCommandParameter().startsWith("https://") || e.getCommandParameter().startsWith("http://")) {
+                setAndPlay(manager, e, e.getCommandParameter());
 
             } else {
-                String trackUrl = YouTubeSearchHandler.search(command[1]);
+                String trackUrl = YouTubeSearchHandler.search(e.getCommandParameter());
 
                 if(trackUrl == null) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");

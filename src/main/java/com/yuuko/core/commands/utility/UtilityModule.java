@@ -4,9 +4,9 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.commands.*;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
@@ -21,9 +21,9 @@ public class UtilityModule extends Module {
             new PingCommand()
     };
 
-    public UtilityModule(MessageReceivedEvent e, String[] command) {
+    public UtilityModule(MessageEvent e) {
         super("Utility", "moduleUtility", false, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
     /**

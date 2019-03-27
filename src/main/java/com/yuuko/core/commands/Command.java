@@ -2,6 +2,7 @@ package com.yuuko.core.commands;
 
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.CommandFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -65,10 +66,10 @@ public abstract class Command {
         // Checks if the command is globally disabled either global:global, global:local, local:global or local:local.
         String guild = e.getGuild().getId();
         String channel = e.getTextChannel().getId();
-        if(!CommandFunctions.isEnabled(guild, "*", "*") &&
-           !CommandFunctions.isEnabled(guild, channel, "*") &&
-           !CommandFunctions.isEnabled(guild, "*", name) &&
-           !CommandFunctions.isEnabled(guild, channel, name)) {
+        if(!CommandFunctions.isDisabled(guild, "*", "*") &&
+           !CommandFunctions.isDisabled(guild, channel, "*") &&
+           !CommandFunctions.isDisabled(guild, "*", name) &&
+           !CommandFunctions.isDisabled(guild, channel, name)) {
             return true;
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Command Disabled").setDescription("The `" + name + "` command is disabled.");
@@ -78,5 +79,5 @@ public abstract class Command {
     }
 
     // Abstract method signature to ensure method is implemented.
-    public abstract void onCommand(MessageReceivedEvent e, String[] command);
+    public abstract void onCommand(MessageEvent e);
 }

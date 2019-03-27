@@ -3,8 +3,8 @@ package com.yuuko.core.commands.interaction.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.interaction.InteractionModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Random;
 
@@ -23,7 +23,7 @@ public class BlushCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** blushes.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
         MessageHandler.sendMessage(e, embed.build());
     }

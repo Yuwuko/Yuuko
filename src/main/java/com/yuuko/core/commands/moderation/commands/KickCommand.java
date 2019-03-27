@@ -3,11 +3,11 @@ package com.yuuko.core.commands.moderation.commands;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class KickCommand extends Command {
 
@@ -16,9 +16,9 @@ public class KickCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s+", 3);
-        Member target = MessageUtilities.getMentionedMember(e, commandParameters, true);
+    public void onCommand(MessageEvent e) {
+        String[] commandParameters = e.getCommandParameter().split("\\s+", 3);
+        Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {
             return;

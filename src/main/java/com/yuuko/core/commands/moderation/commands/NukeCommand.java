@@ -5,12 +5,12 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
 import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.database.BindFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.OffsetDateTime;
 import java.util.Iterator;
@@ -23,7 +23,7 @@ public class NukeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
         if(channels.size() > 0 && channels.size() < 11) {
             channels.forEach(channel -> {
@@ -33,8 +33,8 @@ public class NukeCommand extends Command {
             return;
         }
 
-        if(Sanitiser.isNumber(command[1])) {
-            final int value = Integer.parseInt(command[1]);
+        if(Sanitiser.isNumber(e.getCommandParameter())) {
+            final int value = Integer.parseInt(e.getCommandParameter());
 
             if(value < 2 || value > 100) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");

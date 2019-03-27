@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.commands.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class CoreModule extends Module {
 	private static final Command[] commands = new Command[]{
@@ -17,9 +17,9 @@ public class CoreModule extends Module {
 			new CommandCommand()
 	};
 
-	public CoreModule(MessageReceivedEvent e, String[] command) {
+	public CoreModule(MessageEvent e) {
 		super("Core", null, false, commands);
-		new CommandExecutor(e,this, command);
+		new CommandExecutor(e, this);
 	}
 
 }

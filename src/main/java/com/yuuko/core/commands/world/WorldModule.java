@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.world.commands.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class WorldModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -16,9 +16,9 @@ public class WorldModule extends Module {
             new UKParliamentPetitionCommand()
     };
 
-    public WorldModule(MessageReceivedEvent e, String[] command) {
+    public WorldModule(MessageEvent e) {
         super("World", "moduleWorld", false, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

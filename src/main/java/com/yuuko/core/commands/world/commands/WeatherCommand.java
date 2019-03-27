@@ -5,10 +5,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -22,12 +22,12 @@ public class WeatherCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (command[1].replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
+            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommandParameter().replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
 
             if(data == null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + command[1] + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommandParameter() + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

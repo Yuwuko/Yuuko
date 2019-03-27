@@ -1,9 +1,9 @@
 package com.yuuko.core.utilities;
 
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -13,16 +13,15 @@ public final class Sanitiser {
     /**
      * Checks a command to ensure all parameters are present.
      *
-     * @param command String[]
      * @param expectedParameters int
      * @return boolean
      */
-    public static boolean checkParameters(MessageReceivedEvent e, String[] command, int expectedParameters, boolean feedback) {
+    public static boolean checkParameters(MessageEvent e, int expectedParameters, boolean feedback) {
         if(expectedParameters == 0) {
             return true;
         }
 
-        if(command.length < 2) {
+        if(e.getCommand().length < 2) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **0**.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -31,7 +30,7 @@ public final class Sanitiser {
         }
 
         if(expectedParameters > 1) {
-            String[] commandParameters = command[1].split("\\s+", expectedParameters);
+            String[] commandParameters = e.getCommandParameter().split("\\s+", expectedParameters);
             if(commandParameters.length < expectedParameters) {
                 if(feedback) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");
@@ -51,7 +50,7 @@ public final class Sanitiser {
      * @param member Member
      * @return boolean
      */
-    public static boolean canInteract(MessageReceivedEvent e, Member member, String reason, boolean feedback) {
+    public static boolean canInteract(MessageEvent e, Member member, String reason, boolean feedback) {
         if(!e.getGuild().getSelfMember().canInteract(member)) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Target").setDescription("I cannot interact with that user because they have an equal or a higher role in the hierarchy to me.");

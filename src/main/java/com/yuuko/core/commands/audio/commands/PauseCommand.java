@@ -5,8 +5,8 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PauseCommand extends Command {
 
@@ -15,7 +15,7 @@ public class PauseCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         try {

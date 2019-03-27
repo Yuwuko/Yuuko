@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.commands.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class AudioModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -23,9 +23,9 @@ public class AudioModule extends Module {
             new SeekCommand()
     };
 
-    public AudioModule(MessageReceivedEvent e, String[] command) {
+    public AudioModule(MessageEvent e) {
         super("Audio", "moduleAudio", false, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

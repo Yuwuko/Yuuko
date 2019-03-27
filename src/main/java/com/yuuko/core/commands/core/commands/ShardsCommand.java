@@ -4,11 +4,11 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import lavalink.client.io.LavalinkSocket;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,7 +21,7 @@ public class ShardsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator() + " - Shards", null, Configuration.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())

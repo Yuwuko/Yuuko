@@ -3,9 +3,9 @@ package com.yuuko.core.commands.developer.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class SetStatusCommand extends Command {
 
@@ -14,9 +14,9 @@ public class SetStatusCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = command[1].split("\\s+", 3);
+            String[] commandParameters = e.getCommandParameter().split("\\s+", 3);
 
             switch(commandParameters[0].toLowerCase()) {
                 case "playing":

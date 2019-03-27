@@ -3,9 +3,9 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ChannelCommand extends Command {
 
@@ -14,8 +14,8 @@ public class ChannelCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s+", 3);
+    public void onCommand(MessageEvent e) {
+        String[] commandParameters = e.getCommandParameter().split("\\s+", 3);
         String type = commandParameters[1].toLowerCase();
 
         // Checks the parameters of the command, if the first param is 'add' follow that flow, else if it's 'del' following that flow instead.

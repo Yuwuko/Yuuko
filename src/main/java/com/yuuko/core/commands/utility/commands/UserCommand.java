@@ -4,11 +4,11 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.format.DateTimeFormatter;
 
@@ -19,8 +19,8 @@ public class UserCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        Member target = MessageUtilities.getMentionedMember(e, command, true);
+    public void onCommand(MessageEvent e) {
+        Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {
             return;

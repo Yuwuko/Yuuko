@@ -5,9 +5,9 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.nsfw.NSFWModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class NekoCommand extends Command {
 
@@ -16,9 +16,9 @@ public class NekoCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://nekos.life/api/v2/img/" + ((command.length > 1) ? command[1] : "lewd"), "default", "default").getAsJsonObject();
+            JsonObject json = new JsonBuffer("https://nekos.life/api/v2/img/" + ((e.getCommand().length > 1) ? e.getCommandParameter() : "lewd"), "default", "default").getAsJsonObject();
 
             if(json != null && !json.has("msg")) {
                 EmbedBuilder embed = new EmbedBuilder()

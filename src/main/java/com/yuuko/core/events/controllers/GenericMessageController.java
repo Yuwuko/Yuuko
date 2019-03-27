@@ -5,6 +5,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
@@ -46,7 +47,7 @@ public class GenericMessageController {
                 // Iterate through the command list, get the command commands constructor from the command class.
                 for(Command cmd: Configuration.COMMANDS) {
                     if(command[0].equalsIgnoreCase(cmd.getName())) {
-                        cmd.getModule().getConstructor(MessageReceivedEvent.class, String[].class).newInstance(e, command);
+                        cmd.getModule().getConstructor(MessageEvent.class).newInstance(new MessageEvent(e, command));
                         executionTime = (System.nanoTime() - startExecutionNano)/1000000.0;
                         executed = true;
                         break;

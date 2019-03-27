@@ -6,10 +6,10 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.commands.core.settings.*;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,41 +32,41 @@ public class SettingsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            if(command.length > 1) {
-                String[] commandParameters = command[1].split("\\s+", 2);
+            if(e.getCommand().length > 1) {
+                String[] parameters = e.getCommandParameter().split("\\s+", 2);
 
                 // Check to make sure the command is a valid command.
-                if(!Arrays.asList(settings).contains(commandParameters[0].toLowerCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("_" + commandParameters[1].toUpperCase() + "_ is not a valid setting.");
+                if(!Arrays.asList(settings).contains(parameters[0].toLowerCase())) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("_" + parameters[1].toUpperCase() + "_ is not a valid setting.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
-                if(!Sanitiser.checkParameters(e, command, 2, true)) {
+                if(!Sanitiser.checkParameters(e, 2, true)) {
                     // We expect 0 in the super class to enable vision of all settings, but then check for 2 since that's the minimum used.
                     return;
                 }
 
-                switch(commandParameters[0].toLowerCase()) {
-                    case "prefix": new PrefixSetting(e, commandParameters[1]);
+                switch(parameters[0].toLowerCase()) {
+                    case "prefix": new PrefixSetting(e);
                         return;
-                    case "starboard": new StarboardSetting(e, commandParameters[1]);
+                    case "starboard": new StarboardSetting(e);
                         return;
-                    case "commandlog": new CommandLogSetting(e, commandParameters[1]);
+                    case "commandlog": new CommandLogSetting(e);
                         return;
-                    case "modlog": new ModerationLogSetting(e, commandParameters[1]);
+                    case "modlog": new ModerationLogSetting(e);
                         return;
-                    case "newmember": new NewMemberSetting(e, commandParameters[1]);
+                    case "newmember": new NewMemberSetting(e);
                         return;
                     default:
-                        if(!commandParameters[1].equalsIgnoreCase("true") && !commandParameters[1].equalsIgnoreCase("false")) {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("_" + commandParameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
+                        if(!parameters[1].equalsIgnoreCase("true") && !parameters[1].equalsIgnoreCase("false")) {
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("_" + parameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
                             MessageHandler.sendMessage(e, embed.build());
                             return;
                         }
-                        new SettingExecuteBoolean(e, commandParameters[0].toLowerCase(), commandParameters[1]);
+                        new SettingExecuteBoolean(e);
                 }
 
             } else {

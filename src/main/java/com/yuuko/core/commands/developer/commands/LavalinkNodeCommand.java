@@ -3,7 +3,7 @@ package com.yuuko.core.commands.developer.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 import java.net.URI;
 
@@ -14,9 +14,9 @@ public class LavalinkNodeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = command[1].split("\\s+", 3);
+            String[] commandParameters = e.getCommandParameter().split("\\s+", 3);
             if(commandParameters[0].equals("add")) {
                 Configuration.LAVALINK.getLavalink().addNode(URI.create(commandParameters[1]), commandParameters[2]);
             } else if(commandParameters[0].equals("remove")) {

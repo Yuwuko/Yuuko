@@ -4,8 +4,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.fun.FunModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 import java.util.Random;
@@ -17,8 +17,8 @@ public class ChooseCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        String[] commandParameters = command[1].split("\\s*(,)\\s*");
+    public void onCommand(MessageEvent e) {
+        String[] commandParameters = e.getCommandParameter().split("\\s*(,)\\s*");
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Choose")

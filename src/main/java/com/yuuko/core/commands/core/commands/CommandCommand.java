@@ -5,16 +5,18 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.CommandFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandCommand extends Command {
 
@@ -23,22 +25,17 @@ public class CommandCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        if(command.length > 1) {
-            String input = command[1].split("\\s+", 2)[0].toLowerCase();
+    public void onCommand(MessageEvent e) {
+        if(e.getCommand().length > 1) {
+            String input = e.getCommandParameter().split("\\s+", 2)[0].toLowerCase();
             TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
 
-            ArrayList<String> commandWords = new ArrayList<>();
-            commandWords.add("all");
-            commandWords.add("*");
-            commandWords.add("global");
-            commandWords.add("globally");
-            commandWords.add("everywhere");
-            commandWords.add("anywhere");
+            String[] words = new String[]{"all", "*", "global", "globally", "everywhere", "anywhere"};
+            List<String> commandWords = Arrays.asList(words);
 
             boolean valid = false;
 
-            if(input.equalsIgnoreCase("reset")) {
+            if(input.equals("reset")) {
                 CommandFunctions.resetCommandSettings(e.getGuild().getId());
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Commands Reset").setDescription("All commands have been reset, thus they are all enabled.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -48,7 +45,7 @@ public class CommandCommand extends Command {
             if(!commandWords.contains(input)) {
                 // Check if the command even exists.
                 for(Command commandObj : Configuration.COMMANDS) {
-                    if(commandObj.getName().equalsIgnoreCase(input)) {
+                    if(commandObj.getName().equals(input)) {
                         if(Utilities.getModuleName(commandObj.getModule()).equals("Core")) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Command").setDescription("Sorry, you cannot disable commands from the `Core` module.");
                             MessageHandler.sendMessage(e, embed.build());
@@ -71,7 +68,7 @@ public class CommandCommand extends Command {
             String commandInput = (commandWords.contains(input)) ? "All commands were " : "`" + input + "` was ";
             String channelInput = (channel == null) ? "on the server!" : "in " + channel.getName() + "!";
 
-            if(CommandFunctions.toggleCommand((commandWords.contains(input)) ? "*" : input, e.getGuild().getId(), (channel == null) ? "*" : channel.getId())) {
+            if(CommandFunctions.toggleCommand(e.getGuild().getId(), (channel == null) ? "*" : channel.getId(), (commandWords.contains(input)) ? "*" : input)) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("Command(s) Enabled").setDescription(commandInput + " enabled " + channelInput);
                 MessageHandler.sendMessage(e, embed.build());
             } else {

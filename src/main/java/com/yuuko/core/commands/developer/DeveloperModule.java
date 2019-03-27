@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.developer.commands.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class DeveloperModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -15,14 +15,14 @@ public class DeveloperModule extends Module {
             new ReloadDatabaseCommand()
     };
 
-    public DeveloperModule(MessageReceivedEvent e, String[] command) {
+    public DeveloperModule(MessageEvent e) {
         super("Developer", null, false, commands);
 
         if(e == null || e.getAuthor().getIdLong() != 215161101460045834L) {
             return;
         }
 
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

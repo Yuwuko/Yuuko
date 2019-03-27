@@ -7,10 +7,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 
@@ -21,7 +21,7 @@ public class NationalGeographicCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         JsonObject json = new JsonBuffer("https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + Utilities.getApiKey("newsapi"), "default", "default").getAsJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 

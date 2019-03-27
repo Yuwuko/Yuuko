@@ -7,10 +7,10 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.commands.world.tfl.LineManager;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class LondonUndergroundCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
             // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
             String json = new JsonBuffer("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon"), "default", "default").getAsString();
@@ -40,7 +40,7 @@ public class LondonUndergroundCommand extends Command {
                 }
             }
 
-            if(command.length == 1) {
+            if(e.getCommand().length == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("London Underground Status")
                         .setTimestamp(Instant.now())

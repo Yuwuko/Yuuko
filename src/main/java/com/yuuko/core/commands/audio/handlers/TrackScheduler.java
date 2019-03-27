@@ -4,10 +4,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.commands.audio.commands.CurrentCommand;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.player.IPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -67,9 +67,9 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
         } else {
             try {
                 player.playTrack(track);
-                MessageReceivedEvent e = (MessageReceivedEvent) player.getPlayingTrack().getUserData();
+                MessageEvent e = (MessageEvent) player.getPlayingTrack().getUserData();
                 if(e != null && TextUtilities.convertToBoolean(GuildFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()))) {
-                    new CurrentCommand().onCommand(e, null);
+                    new CurrentCommand().onCommand(e);
                 }
             } catch(Exception ex) {
                 // This exception occurs 99% of the time on repeating tracks.

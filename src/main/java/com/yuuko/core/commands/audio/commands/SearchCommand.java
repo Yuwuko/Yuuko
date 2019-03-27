@@ -6,10 +6,10 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +22,11 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
             // If audioSearchResults contains the authors user ID and the command matches either 1-10 or "cancel".
-            if(audioSearchResults.containsKey(e.getAuthor().getIdLong()) && (command[1].matches("^[0-9]{1,2}$") || command[1].equals("cancel"))) {
-                if(command[1].equalsIgnoreCase("cancel")) {
+            if(audioSearchResults.containsKey(e.getAuthor().getIdLong()) && (e.getCommandParameter().matches("^[0-9]{1,2}$") || e.getCommandParameter().equals("cancel"))) {
+                if(e.getCommandParameter().equalsIgnoreCase("cancel")) {
                     audioSearchResults.remove(e.getAuthor().getIdLong());
 
                     EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
@@ -34,11 +34,11 @@ public class SearchCommand extends Command {
                     return;
                 }
 
-                if(Sanitiser.isNumber(command[1])) {
-                    final int value = Integer.parseInt(command[1]);
+                if(Sanitiser.isNumber(e.getCommandParameter())) {
+                    final int value = Integer.parseInt(e.getCommandParameter());
                     if(value < 11 && value > 0) {
-                        String videoId = audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(command[1]) - 1).getId().getVideoId();
-                        new PlayCommand().onCommand(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                        String videoId = audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(e.getCommandParameter()) - 1).getId().getVideoId();
+                        new PlayCommand().onCommand(new MessageEvent(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId}));
                         audioSearchResults.remove(e.getAuthor().getIdLong());
                         return;
                     } else {
@@ -53,7 +53,7 @@ public class SearchCommand extends Command {
                 }
             }
 
-            List<SearchResult> results = YouTubeSearchHandler.searchList(e, command);
+            List<SearchResult> results = YouTubeSearchHandler.searchList(e);
             StringBuilder resultString = new StringBuilder();
 
             if(results != null) {
@@ -71,7 +71,7 @@ public class SearchCommand extends Command {
             audioSearchResults.put(e.getAuthor().getIdLong(), results);
 
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setAuthor("Search results for " + command[1] + ".", null)
+                    .setAuthor("Search results for " + e.getCommandParameter() + ".", null)
                     .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());

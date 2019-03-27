@@ -6,9 +6,9 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -20,15 +20,15 @@ public class ClearCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
-            if(command.length > 1) {
+            if(e.getCommand().length > 1) {
                 final int clearPos;
 
-                if(Sanitiser.isNumber(command[1])) {
-                    clearPos = Integer.parseInt(command[1]);
+                if(Sanitiser.isNumber(e.getCommandParameter())) {
+                    clearPos = Integer.parseInt(e.getCommandParameter());
                 } else {
                     return;
                 }

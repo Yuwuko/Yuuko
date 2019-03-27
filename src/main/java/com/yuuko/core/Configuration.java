@@ -7,8 +7,8 @@ import com.yuuko.core.commands.audio.handlers.LavalinkManager;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
@@ -95,7 +95,7 @@ public class Configuration {
             Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
             MODULES = new ArrayList<>();
             for(Class<? extends Module> module: modules) {
-                Module obj = module.getConstructor(MessageReceivedEvent.class, String[].class).newInstance(null, null);
+                Module obj = module.getConstructor(MessageEvent.class).newInstance((Object) null);
                 MODULES.add(obj);
             }
             log.info("Sorting...");

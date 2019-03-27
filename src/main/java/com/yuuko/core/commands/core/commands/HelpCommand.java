@@ -6,11 +6,11 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.BindFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class HelpCommand extends Command {
 
@@ -19,9 +19,9 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] cmd) {
+    public void onCommand(MessageEvent e) {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
-        if(cmd.length < 2) {
+        if(e.getCommand().length < 2) {
 
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
@@ -42,7 +42,7 @@ public class HelpCommand extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            Configuration.COMMANDS.stream().filter(command -> command.getName().equalsIgnoreCase(cmd[1])).findFirst().ifPresent(command -> {
+            Configuration.COMMANDS.stream().filter(command -> command.getName().equalsIgnoreCase(e.getCommandParameter())).findFirst().ifPresent(command -> {
                 final String commandPermission;
                 if(command.getPermissions() == null) {
                     commandPermission = "None";

@@ -6,9 +6,9 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LastCommand extends Command {
 
@@ -17,7 +17,7 @@ public class LastCommand extends Command {
 	}
 
 	@Override
-	public void onCommand(MessageReceivedEvent e, String[] command) {
+	public void onCommand(MessageEvent e) {
 		try {
 			AudioTrack track = AudioManagerManager.getGuildAudioManager(e.getGuild().getId()).player.getPlayingTrack();
 

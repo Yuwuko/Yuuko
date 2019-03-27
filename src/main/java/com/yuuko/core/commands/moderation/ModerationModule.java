@@ -7,7 +7,7 @@ import com.yuuko.core.commands.moderation.commands.BanCommand;
 import com.yuuko.core.commands.moderation.commands.KickCommand;
 import com.yuuko.core.commands.moderation.commands.MuteCommand;
 import com.yuuko.core.commands.moderation.commands.NukeCommand;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class ModerationModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -17,9 +17,9 @@ public class ModerationModule extends Module {
             new KickCommand()
     };
 
-    public ModerationModule(MessageReceivedEvent e, String[] command) {
+    public ModerationModule(MessageEvent e) {
         super("Moderation", "moduleModeration", false, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

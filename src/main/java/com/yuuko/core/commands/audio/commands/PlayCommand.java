@@ -11,11 +11,11 @@ import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
@@ -26,14 +26,14 @@ public class PlayCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
         if(!LavalinkUtilities.isState(e.getGuild(), Link.State.CONNECTED)) {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
-        if(command.length == 1) {
+        if(e.getCommand().length == 1) {
             if(manager.player.isPaused()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -44,11 +44,11 @@ public class PlayCommand extends Command {
         } else {
             manager.player.setPaused(false);
 
-            if(command[1].startsWith("https://") || command[1].startsWith("http://")) {
-                loadAndPlay(manager, e, command[1]);
+            if(e.getCommandParameter().startsWith("https://") || e.getCommandParameter().startsWith("http://")) {
+                loadAndPlay(manager, e, e.getCommandParameter());
 
             } else {
-                String trackId = YouTubeSearchHandler.search(command[1]);
+                String trackId = YouTubeSearchHandler.search(e.getCommandParameter());
 
                 if(trackId == null || trackId.equals("")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
@@ -68,7 +68,7 @@ public class PlayCommand extends Command {
      * @param e; MessageReceivedEvent.
      * @param url; TrackUrl.
      */
-    private void loadAndPlay(GuildAudioManager manager, MessageReceivedEvent e, String url) {
+    private void loadAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
         final String trackUrl;
 
         if(url.startsWith("<") && url.endsWith(">")) {
@@ -114,7 +114,7 @@ public class PlayCommand extends Command {
                         manager.scheduler.queue(track);
                     }
 
-                    new CurrentCommand().onCommand(e, null);
+                    new CurrentCommand().onCommand(e);
 
                 } catch(Exception ex) {
                     log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

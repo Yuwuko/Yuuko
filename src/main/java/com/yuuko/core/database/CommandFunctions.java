@@ -55,7 +55,7 @@ public class CommandFunctions {
      * @param command the name of the command.
      * @return (boolean) if the module is active or not.
      */
-    public static boolean isEnabled(String guild, String channel, String command) {
+    public static boolean isDisabled(String guild, String channel, String command) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `command` FROM `CommandBindings` WHERE `guildId` = ? AND `channelId` = ? AND `command` = ?")) {
 
@@ -87,7 +87,7 @@ public class CommandFunctions {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandBindings` (`guildId`, `channelId`, `command`) VALUES (?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND channelId = ? AND command = ?")) {
 
-            if(! isEnabled(command, guild, channel)) {
+            if(!isDisabled(guild, channel, command)) {
                 stmt.setString(1, guild);
                 stmt.setString(2, channel);
                 stmt.setString(3, command);
@@ -101,7 +101,7 @@ public class CommandFunctions {
                 MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
             }
 
-            return ! isEnabled(command, guild, channel); // Returns inverse because command being enabled means that they ARENT found in the database.
+            return !isDisabled(guild, channel, command); // Returns inverse because command being enabled means that they ARENT found in the database.
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

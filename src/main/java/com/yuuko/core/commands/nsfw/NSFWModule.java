@@ -5,7 +5,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.nsfw.commands.EfuktCommand;
 import com.yuuko.core.commands.nsfw.commands.NekoCommand;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class NSFWModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -13,9 +13,9 @@ public class NSFWModule extends Module {
             new NekoCommand()
     };
 
-    public NSFWModule(MessageReceivedEvent e, String[] command) {
+    public NSFWModule(MessageEvent e) {
         super("NSFW", "moduleNSFW", true, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

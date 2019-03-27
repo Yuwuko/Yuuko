@@ -4,6 +4,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
@@ -23,7 +24,7 @@ public class CommandExecutor {
     private static final String[] disconnectedCommands = new String[]{"play", "search", "background"};
     private static final String[] nonDJModeCommands = new String[]{"queue", "current", "last"};
 
-    public CommandExecutor(MessageReceivedEvent e, Module module, String[] cmd) {
+    public CommandExecutor(MessageEvent e, Module module) {
         Command command = null;
 
         // Is the event null?
@@ -32,7 +33,7 @@ public class CommandExecutor {
         }
 
         for(Command comm: module.getCommandsAsList()) {
-            if(comm.getName().equalsIgnoreCase(cmd[0])) {
+            if(comm.getName().equalsIgnoreCase(e.getCommandAction())) {
                 command = comm;
                 break;
             }
@@ -40,7 +41,7 @@ public class CommandExecutor {
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
-        if(command == null || !command.isEnabled(e) || !module.isEnabled(e) || !checkBinding(e, module, cmd) || (module.getName().equals("Audio") && !checkAudio(e, cmd))) {
+        if(command == null || !command.isEnabled(e) || !module.isEnabled(e) || !checkBinding(e, module, e.getCommand()) || (module.getName().equals("Audio") && !checkAudio(e))) {
             return;
         }
 
@@ -69,13 +70,13 @@ public class CommandExecutor {
         }
 
         // Does the command contain the minimum number of parameters?
-        if(!Sanitiser.checkParameters(e, cmd, command.getExpectedParameters(), true)) {
+        if(!Sanitiser.checkParameters(e, command.getExpectedParameters(), true)) {
             return;
         }
 
         try {
             log.trace("Invoking {}#onCommand()", command.getClass().getName());
-            command.onCommand(e, cmd);
+            command.onCommand(e);
             messageCleanup(e);
             MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
         } catch(Exception ex) {
@@ -109,10 +110,9 @@ public class CommandExecutor {
      * Checks various conditions to see if using certain audio commands are appropriate for the context of the user. Also checks the DJ Mode setting.
      *
      * @param e MessageReceivedEvent
-     * @param command String[]
      * @return boolean
      */
-    private boolean checkAudio(MessageReceivedEvent e, String[] command) {
+    private boolean checkAudio(MessageEvent e) {
         // Is the member /not/ in a voice channel?
         if(!e.getMember().getVoiceState().inVoiceChannel()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
@@ -121,7 +121,7 @@ public class CommandExecutor {
         }
 
         // Is Lavalink /not/ connected and does the command require it to be?
-        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !Arrays.asList(disconnectedCommands).contains(command[0])) {
+        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !Arrays.asList(disconnectedCommands).contains(e.getCommandAction())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(e, embed.build());
 
@@ -139,7 +139,7 @@ public class CommandExecutor {
         }
 
         // Does the member /not/ have the DJ role and if not, is the command a DJ mode command?
-        if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !Arrays.asList(nonDJModeCommands).contains(command[0])) {
+        if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !Arrays.asList(nonDJModeCommands).contains(e.getCommandAction())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
             MessageHandler.sendMessage(e, embed.build());
             return false;

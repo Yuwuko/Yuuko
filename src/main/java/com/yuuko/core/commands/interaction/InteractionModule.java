@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.interaction.commands.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class InteractionModule extends Module {
     private static final Command[] commands = new Command[]{
@@ -24,9 +24,9 @@ public class InteractionModule extends Module {
             new BlushCommand()
     };
 
-    public InteractionModule(MessageReceivedEvent e, String[] command) {
+    public InteractionModule(MessageEvent e) {
         super("Interaction", "moduleInteraction", false, commands);
-        new CommandExecutor(e,this, command);
+        new CommandExecutor(e, this);
     }
 
 }

@@ -4,10 +4,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class CountdownCommand extends Command {
             put("halloween", Date.from(Instant.now()).before(new SimpleDateFormat("dd/MM/yyyy").parse("31/10/" + LocalDateTime.now().getYear())) ? new SimpleDateFormat("dd/MM/yyyy").parse("31/10/" + LocalDateTime.now().getYear()) : new SimpleDateFormat("dd/MM/yyyy").parse("31/10/" + (LocalDateTime.now().getYear() + 1)));
             put("newyear", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("31/12/" + LocalDateTime.now().getYear() + " 23:59:59"));
             // Special Dates
-            put("brexit", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("29/03/2019 23:00:00"));
+            put("brexit", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("12/04/2019 23:00:00"));
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", CountdownCommand.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -39,25 +39,25 @@ public class CountdownCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
+    public void onCommand(MessageEvent e) {
         try {
-            if(dates.containsKey(command[1])) {
+            if(dates.containsKey(e.getCommandParameter())) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Time Until " + command[1].toUpperCase())
-                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(command[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setTitle("Time Until " + e.getCommandParameter().toUpperCase())
+                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(e.getCommandParameter()).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                if(!Sanitiser.isDate(command[1])) {
+                if(!Sanitiser.isDate(e.getCommandParameter())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The date that was input is invalid, required format is `dd/MM/yyyy`.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Time Until " + command[1])
-                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(command[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setTitle("Time Until " + e.getCommandParameter())
+                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(e.getCommandParameter()).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());

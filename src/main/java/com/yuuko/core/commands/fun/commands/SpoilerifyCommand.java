@@ -3,7 +3,7 @@ package com.yuuko.core.commands.fun.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.fun.FunModule;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import com.yuuko.core.events.extensions.MessageEvent;
 
 public class SpoilerifyCommand extends Command {
 
@@ -12,8 +12,8 @@ public class SpoilerifyCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent e, String[] command) {
-        String[] characters = command[1].replace("`", "").split("");
+    public void onCommand(MessageEvent e) {
+        String[] characters = e.getCommandParameter().replace("`", "").split("");
         StringBuilder spoiler = new StringBuilder();
 
         spoiler.append("`");
