@@ -22,7 +22,6 @@ public class StopCommand extends Command {
     public void onCommand(MessageReceivedEvent e, String[] command) {
         if(!LavalinkUtilities.isState(e.getGuild(), Link.State.NOT_CONNECTED)) {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
-
             manager.scheduler.queue.clear();
             manager.scheduler.setBackground(null);
             manager.scheduler.setLooping(false);
@@ -40,7 +39,7 @@ public class StopCommand extends Command {
     /**
      * Executes command when everyone leaves the channel the bot is in.
      *
-     * @param e; GenericGuildEvent
+     * @param e GenericGuildEvent
      */
     public void onCommand(GenericGuildEvent e) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());

@@ -11,18 +11,18 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
 public class UtilityModule extends Module {
+    private static final Command[] commands = new Command[]{
+            new UserCommand(),
+            new GuildCommand(),
+            new BindCommand(),
+            new ChannelCommand(),
+            new AvatarCommand(),
+            new RolesCommand(),
+            new PingCommand()
+    };
 
     public UtilityModule(MessageReceivedEvent e, String[] command) {
-        super("Utility", "moduleUtility", false, new Command[]{
-                new UserCommand(),
-                new GuildCommand(),
-                new BindCommand(),
-                new ChannelCommand(),
-                new AvatarCommand(),
-                new RolesCommand(),
-                new PingCommand()
-        });
-
+        super("Utility", "moduleUtility", false, commands);
         new CommandExecutor(e,this, command);
     }
 

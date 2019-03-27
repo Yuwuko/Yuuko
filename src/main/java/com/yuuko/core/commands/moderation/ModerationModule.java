@@ -10,15 +10,15 @@ import com.yuuko.core.commands.moderation.commands.NukeCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ModerationModule extends Module {
+    private static final Command[] commands = new Command[]{
+            new NukeCommand(),
+            new MuteCommand(),
+            new BanCommand(),
+            new KickCommand()
+    };
 
     public ModerationModule(MessageReceivedEvent e, String[] command) {
-        super("Moderation", "moduleModeration", false, new Command[]{
-                new NukeCommand(),
-                new MuteCommand(),
-                new BanCommand(),
-                new KickCommand()
-        });
-
+        super("Moderation", "moduleModeration", false, commands);
         new CommandExecutor(e,this, command);
     }
 

@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 27-03-2019_1
++ [~] Refactored all module classes to be more memory aware instead of just arbitrarily creating new objects.
++ [~] Tweaked GenericGuildVoiceController to try and fix a bug which stops audio players from correctly being destroyed.
+
 ## 22-03-2019_1
 + [+] Added [__petition__] command to return UK Parliament petitions by given petition ID.
 + [+] Added [__natgeo__] command to return the top headlines from National Geographic. (cause science and nature are rad)

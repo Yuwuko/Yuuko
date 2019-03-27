@@ -8,13 +8,13 @@ import com.yuuko.core.commands.nsfw.commands.NekoCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class NSFWModule extends Module {
+    private static final Command[] commands = new Command[]{
+            new EfuktCommand(),
+            new NekoCommand()
+    };
 
     public NSFWModule(MessageReceivedEvent e, String[] command) {
-        super("NSFW", "moduleNSFW", true, new Command[] {
-                new EfuktCommand(),
-                new NekoCommand()
-        });
-
+        super("NSFW", "moduleNSFW", true, commands);
         new CommandExecutor(e,this, command);
     }
 

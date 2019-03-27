@@ -9,15 +9,15 @@ import com.yuuko.core.commands.media.commands.OsuCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class MediaModule extends Module {
+    private static final Command[] commands = new Command[] {
+            new KitsuCommand(),
+            new OsuCommand(),
+            new GithubCommand()
+            //new RedditCommand()
+    };
 
     public MediaModule(MessageReceivedEvent e, String[] command) {
-        super("Media", "moduleMedia", false, new Command[]{
-                new KitsuCommand(),
-                new OsuCommand(),
-                new GithubCommand()
-                //new RedditCommand()
-        });
-
+        super("Media", "moduleMedia", false, commands);
         new CommandExecutor(e,this, command);
     }
 

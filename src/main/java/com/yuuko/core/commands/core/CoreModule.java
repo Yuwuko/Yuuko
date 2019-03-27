@@ -7,18 +7,18 @@ import com.yuuko.core.commands.core.commands.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class CoreModule extends Module {
+	private static final Command[] commands = new Command[]{
+			new AboutCommand(),
+			new SettingsCommand(),
+			new ModuleCommand(),
+			new HelpCommand(),
+			new ShardsCommand(),
+			new VoteCommand(),
+			new CommandCommand()
+	};
 
 	public CoreModule(MessageReceivedEvent e, String[] command) {
-		super("Core", null, false, new Command[]{
-				new AboutCommand(),
-				new SettingsCommand(),
-				new ModuleCommand(),
-				new HelpCommand(),
-				new ShardsCommand(),
-				new VoteCommand(),
-				new CommandCommand()
-		});
-
+		super("Core", null, false, commands);
 		new CommandExecutor(e,this, command);
 	}
 
