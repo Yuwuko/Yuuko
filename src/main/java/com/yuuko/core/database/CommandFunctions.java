@@ -1,7 +1,9 @@
 package com.yuuko.core.database;
 
+import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
+import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +17,45 @@ public class CommandFunctions {
     private static final Logger log = LoggerFactory.getLogger(CommandFunctions.class);
 
     /**
-     * Retrieves all of the command settings for a guild and returns them in an arrayList of an arrayList.
+     * Retrieves the command settings for a guild and particular command and returns them in an arrayList of an arrayList.
      *
      * @param guild the guild id.
-     * @return ArrayList<ArrayList<String>>
+     * @param command the command to get the settings for.
+     * @return ArrayList<String>
+     */
+    public static ArrayList<String> getCommandSetting(Guild guild, Command command) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `CommandBindings` WHERE `guildId` = ? AND `command` = ?")) {
+
+            stmt.setString(1, guild.getId());
+            stmt.setString(2, command.getName());
+            ResultSet rs = stmt.executeQuery();
+
+            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
+
+            ArrayList<String> disabled = new ArrayList<>();
+
+            int hits = 0;
+            while(rs.next()) {
+                String cmd = (rs.getString(3).equals("*")) ? "All" : rs.getString(3);
+                String channel = (rs.getString(2).equals("*")) ? "Global" : rs.getString(2);
+                disabled.add("`" + cmd + "` : " + channel );
+                hits++;
+            }
+
+            return (hits == 0) ? new ArrayList<>() : disabled;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Retrieves all of the command settings for a guild and returns them in an arrayList.
+     *
+     * @param guild the guild id.
+     * @return ArrayList<String>
      */
     public static ArrayList<String> getCommandSettings(String guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
@@ -33,9 +70,9 @@ public class CommandFunctions {
 
             int hits = 0;
             while(rs.next()) {
-                String command = (rs.getString(3).equals("*")) ? "All" : rs.getString(3);
+                String cmd = (rs.getString(3).equals("*")) ? "All" : rs.getString(3);
                 String channel = (rs.getString(2).equals("*")) ? "Global" : rs.getString(2);
-                disabled.add("`" + command + "` : " + channel );
+                disabled.add("`" + cmd + "` : " + channel );
                 hits++;
             }
 
@@ -114,12 +151,20 @@ public class CommandFunctions {
      *
      * @param guild the guild in which the settings are reset.
      */
-    public static void resetCommandSettings(String guild) {
+    public static void resetCommandSettings(Guild guild, String command) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND command = ?")) {
 
-            stmt.setString(1, guild);
-            stmt.execute();
+            if(command == null) {
+                stmt.setString(1, guild.getId());
+                stmt.execute();
+            } else {
+                stmt2.setString(1, guild.getId());
+                stmt2.setString(2, command);
+                stmt2.execute();
+            }
+
             MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
         } catch(Exception ex) {

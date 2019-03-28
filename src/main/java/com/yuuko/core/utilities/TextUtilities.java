@@ -1,7 +1,7 @@
 package com.yuuko.core.utilities;
 
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -22,20 +22,6 @@ public final class TextUtilities {
         int index = stringBuilder.lastIndexOf(pattern);
         if(index > -1) {
             stringBuilder.replace(index, index + 1, "");
-        }
-    }
-
-    /**
-     * Replaces the last occurrence of a pattern with nothing.
-     *
-     * @param stringBuffer StringBuilder
-     * @param pattern String
-     * @return StringBuilder
-     */
-    public static void removeLastOccurrence(StringBuffer stringBuffer, String pattern) {
-        int index = stringBuffer.lastIndexOf(pattern);
-        if(index > -1) {
-            stringBuffer.replace(index, index + 1, "");
         }
     }
 
@@ -157,14 +143,24 @@ public final class TextUtilities {
     /**
      * Takes a String and MessageReceivedEvent and resolves tokens within the string.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @param message String
      * @return resolved string
      */
-    public static String untokenizeString(MessageReceivedEvent e, String message) {
+    public static String untokenizeString(MessageEvent e, String message) {
         message = message.replace("%user%", e.getMember().getAsMention());
         message = message.replace("%guild%", e.getGuild().getName());
         return message;
+    }
+
+    /**
+     * Takes an array.toString(), and converts it to a list of those objects separated by a new line.
+     *
+     * @param array String
+     * @return formattedString
+     */
+    public static String formatArray(String array) {
+        return array.replace(",","\n").replaceAll("[\\[\\]]", "");
     }
 
 }

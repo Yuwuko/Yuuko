@@ -4,6 +4,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 28-03-2019_1
 + [!] Removed dbModuleName field from module superclass, renamed all of the columns in the database, removing the module part. (saves space)
++ [~] Updated [__help__] to show disabled commands as well as modules.
++ [~] Updated [__command__] to allow resetting of individual commands instead of just all of them.
 
 ## 27-03-2019_1
 + [!] Added a subclass class to extend MessageReceivedEvent name MessageEvent allowing for much more powerful manipulation of events.
