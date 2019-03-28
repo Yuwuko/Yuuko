@@ -22,7 +22,7 @@ public class UtilityModule extends Module {
     };
 
     public UtilityModule(MessageEvent e) {
-        super("Utility", "moduleUtility", false, commands);
+        super("Utility", false, commands);
         new CommandExecutor(e, this);
     }
 
@@ -31,7 +31,7 @@ public class UtilityModule extends Module {
      * @param e MessageReactionAddEvent
      */
     public UtilityModule(MessageReactionAddEvent e) {
-        super("Utility", "moduleUtility", false, null);
+        super("Utility", false, null);
 
         if(e.getReaction().getReactionEmote().getName().equals("📌")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
@@ -44,7 +44,7 @@ public class UtilityModule extends Module {
      * @param e MessageReactionRemoveEvent
      */
     public UtilityModule(MessageReactionRemoveEvent e) {
-        super("Utility", "moduleUtility", false, null);
+        super("Utility", false, null);
 
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 

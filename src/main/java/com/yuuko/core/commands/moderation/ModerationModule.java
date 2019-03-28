@@ -18,7 +18,7 @@ public class ModerationModule extends Module {
     };
 
     public ModerationModule(MessageEvent e) {
-        super("Moderation", "moduleModeration", false, commands);
+        super("Moderation", false, commands);
         new CommandExecutor(e, this);
     }
 

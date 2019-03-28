@@ -37,9 +37,9 @@ public class ModuleFunctions {
             if(rs.next()) {
                 for(int i = 2; i < Configuration.MODULES.size(); i++) {
                     if(rs.getBoolean(i)) {
-                        enabled.add(meta.getColumnName(i).substring(6));
+                        enabled.add(meta.getColumnName(i));
                     } else {
-                        disabled.add(meta.getColumnName(i).substring(6));
+                        disabled.add(meta.getColumnName(i));
                     }
                 }
             } else {
@@ -62,12 +62,12 @@ public class ModuleFunctions {
      * Checks to see if a module is active before parsing a command.
      *
      * @param guild the guild id to check against.
-     * @param moduleName the name of the module.
+     * @param module the name of the module.
      * @return (boolean) if the module is active or not.
      */
-    public static boolean isEnabled(String guild, String moduleName) {
+    public static boolean isEnabled(String guild, String module) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `" + moduleName + "` FROM `ModuleSettings` WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + module + "` FROM `ModuleSettings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
@@ -85,20 +85,20 @@ public class ModuleFunctions {
     /**
      * Toggles a module for a guild, returns the new value.
      *
-     * @param moduleIn the module to toggle.
+     * @param module the module to toggle.
      * @param guild the guild in which the module is to be toggled.
      * @return boolean.
      */
-    public static boolean toggleModule(String moduleIn, String guild) {
+    public static boolean toggleModule(String guild, String module) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + moduleIn + "` = NOT `" + moduleIn + "` WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + module + "` = NOT `" + module + "` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
             stmt.execute();
 
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
-            return isEnabled(guild, moduleIn);
+            return isEnabled(guild, module);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

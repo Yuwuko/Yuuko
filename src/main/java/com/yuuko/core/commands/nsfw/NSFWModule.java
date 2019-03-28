@@ -14,7 +14,7 @@ public class NSFWModule extends Module {
     };
 
     public NSFWModule(MessageEvent e) {
-        super("NSFW", "moduleNSFW", true, commands);
+        super("NSFW", true, commands);
         new CommandExecutor(e, this);
     }
 

@@ -16,7 +16,7 @@ public class DeveloperModule extends Module {
     };
 
     public DeveloperModule(MessageEvent e) {
-        super("Developer", null, false, commands);
+        super("Developer", false, commands);
 
         if(e == null || e.getAuthor().getIdLong() != 215161101460045834L) {
             return;

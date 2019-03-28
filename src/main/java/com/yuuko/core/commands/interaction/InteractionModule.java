@@ -25,7 +25,7 @@ public class InteractionModule extends Module {
     };
 
     public InteractionModule(MessageEvent e) {
-        super("Interaction", "moduleInteraction", false, commands);
+        super("Interaction", false, commands);
         new CommandExecutor(e, this);
     }
 

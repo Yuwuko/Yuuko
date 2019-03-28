@@ -18,7 +18,7 @@ public class CoreModule extends Module {
 	};
 
 	public CoreModule(MessageEvent e) {
-		super("Core", null, false, commands);
+		super("Core", false, commands);
 		new CommandExecutor(e, this);
 	}
 

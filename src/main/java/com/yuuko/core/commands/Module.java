@@ -10,23 +10,17 @@ import java.util.List;
 
 public abstract class Module {
     private final String name;
-    private final String dbColumnName;
     private final boolean nsfw;
     private final Command[] commands;
 
-    public Module(String name, String dbColumnName, boolean isNSFW, Command[] commands) {
+    public Module(String name, boolean isNSFW, Command[] commands) {
         this.name = name;
-        this.dbColumnName = dbColumnName;
         this.commands = commands;
         this.nsfw = isNSFW;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getDbColumnName() {
-        return dbColumnName;
     }
 
     public Command[] getCommandsAsArray() {
@@ -51,7 +45,7 @@ public abstract class Module {
             return true;
         }
 
-        if(ModuleFunctions.isEnabled(e.getGuild().getId(), dbColumnName)) {
+        if(ModuleFunctions.isEnabled(e.getGuild().getId(), name)) {
             return true;
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("The `" + name + "` module is disabled.");

@@ -24,29 +24,29 @@ public class ModuleCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         if(e.getCommand().length > 1) {
-            String moduleName = e.getCommandParameter().split("\\s+", 2)[0].toLowerCase();
-            String server = e.getGuild().getId();
+            String module = e.getCommandParameter().split("\\s+", 2)[0].toLowerCase();
+            String guild = e.getGuild().getId();
 
             // Check if the module even exists.
             boolean valid = false;
             for(Module moduleObj : Configuration.MODULES) {
-                if(moduleObj.getName().equalsIgnoreCase(moduleName)) {
+                if(moduleObj.getName().equalsIgnoreCase(module)) {
                     valid = true;
                     break;
                 }
             }
 
             if(!valid) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("_" + moduleName + "_ is not a valid module.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            if(ModuleFunctions.toggleModule("module" + moduleName, server)) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + moduleName + "_ was enabled on this server!");
+            if(ModuleFunctions.toggleModule(guild, module)) {
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + module + "_ was enabled on this server!");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("_" + moduleName + "_ was disabled on this server!");
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("_" + module + "_ was disabled on this server!");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {

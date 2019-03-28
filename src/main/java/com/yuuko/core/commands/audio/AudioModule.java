@@ -24,7 +24,7 @@ public class AudioModule extends Module {
     };
 
     public AudioModule(MessageEvent e) {
-        super("Audio", "moduleAudio", false, commands);
+        super("Audio", false, commands);
         new CommandExecutor(e, this);
     }
 

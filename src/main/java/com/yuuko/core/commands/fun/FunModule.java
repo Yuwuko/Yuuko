@@ -16,7 +16,7 @@ public class FunModule extends Module {
     };
 
     public FunModule(MessageEvent e) {
-        super("Fun", "moduleFun", false, commands);
+        super("Fun", false, commands);
         new CommandExecutor(e, this);
     }
 
