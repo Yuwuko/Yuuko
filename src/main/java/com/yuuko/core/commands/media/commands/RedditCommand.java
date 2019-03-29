@@ -17,10 +17,10 @@ public class RedditCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        JsonObject json = new JsonBuffer("https://www.reddit.com/r/" + e.getCommandParameter() + "/new.json?sort=new&limit=1", "default", "default").getAsJsonObject();
+        JsonObject json = new JsonBuffer("https://www.reddit.com/r/" + e.getCommand()[1] + "/new.json?sort=new&limit=1", "default", "default").getAsJsonObject();
 
         if(json == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommandParameter() + "_** produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

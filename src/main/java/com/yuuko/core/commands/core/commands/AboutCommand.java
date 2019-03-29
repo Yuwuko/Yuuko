@@ -7,7 +7,6 @@ import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
-import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 public class AboutCommand extends Command {
@@ -29,7 +28,7 @@ public class AboutCommand extends Command {
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
                 .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
-                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + Utilities.getServerPrefix(e.getGuild()), true)
+                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + e.getPrefix(), true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Modules", Configuration.MODULES.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)

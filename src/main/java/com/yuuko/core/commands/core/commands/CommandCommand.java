@@ -27,8 +27,8 @@ public class CommandCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        if(e.getCommand().length > 1) {
-            String[] input = e.getCommandParameter().toLowerCase().split("\\s+", 2);
+        if(e.hasParameters()) {
+            String[] input = e.getCommand()[1].toLowerCase().split("\\s+", 2);
             TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
 
             List<String> commandWords = Arrays.asList("all", "*", "global", "globally", "everywhere", "anywhere");

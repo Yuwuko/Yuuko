@@ -23,8 +23,8 @@ public class ModuleCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        if(e.getCommand().length > 1) {
-            String module = e.getCommandParameter().split("\\s+", 2)[0].toLowerCase();
+        if(e.hasParameters()) {
+            String module = e.getCommand()[1].split("\\s+", 2)[0].toLowerCase();
             String guild = e.getGuild().getId();
 
             // Check if the module even exists.

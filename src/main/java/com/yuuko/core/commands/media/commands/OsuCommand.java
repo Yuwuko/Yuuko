@@ -21,7 +21,7 @@ public class OsuCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getCommandParameter().split("\\s+", 2);
+            String[] commandParameters = e.getCommand()[1].split("\\s+", 2);
 
             final int mode;
             if(commandParameters.length > 1) {
@@ -51,7 +51,7 @@ public class OsuCommand extends Command {
             JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
 
             if(json == null || json.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommandParameter() + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

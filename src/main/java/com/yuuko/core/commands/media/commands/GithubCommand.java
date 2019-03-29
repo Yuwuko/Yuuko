@@ -23,11 +23,11 @@ public class GithubCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommandParameter().split("\\s+", 2);
+        String[] commandParameters = e.getCommand()[1].split("\\s+", 2);
         JsonObject json = new JsonBuffer("https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utilities.getApiKey("github"), "application/vnd.github.v3+json", "application/vnd.github.v3+json").getAsJsonObject();
 
         if(json == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommandParameter() + "_** produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

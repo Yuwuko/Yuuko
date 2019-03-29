@@ -21,7 +21,7 @@ public class BanCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommandParameter().split("\\s+", 3);
+        String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {

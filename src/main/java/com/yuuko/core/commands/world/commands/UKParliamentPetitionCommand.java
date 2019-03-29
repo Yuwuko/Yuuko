@@ -24,11 +24,11 @@ public class UKParliamentPetitionCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            if(e.getCommand().length > 1) {
-                JsonObject json = new JsonBuffer("https://petition.parliament.uk/petitions/" + e.getCommandParameter() + ".json", "default", "default").getAsJsonObject();
+            if(e.hasParameters()) {
+                JsonObject json = new JsonBuffer("https://petition.parliament.uk/petitions/" + e.getCommand()[1] + ".json", "default", "default").getAsJsonObject();
 
                 if(json.has("error")) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Petition **_" + e.getCommandParameter() + "_** produced no results.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Petition **_" + e.getCommand()[1] + "_** produced no results.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }

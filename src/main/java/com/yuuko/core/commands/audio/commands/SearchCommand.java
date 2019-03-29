@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SearchCommand extends Command {
-    private static final HashMap<Long, List<SearchResult>> audioSearchResults = new HashMap<>();
+    private static final HashMap<String, List<SearchResult>> audioSearchResults = new HashMap<>();
 
     public SearchCommand() {
         super("search", AudioModule.class, 1, new String[]{"-search <term>", "-search <value>", "-search cancel"}, false, null);
@@ -25,21 +25,23 @@ public class SearchCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             // If audioSearchResults contains the authors user ID and the command matches either 1-10 or "cancel".
-            if(audioSearchResults.containsKey(e.getAuthor().getIdLong()) && (e.getCommandParameter().matches("^[0-9]{1,2}$") || e.getCommandParameter().equals("cancel"))) {
-                if(e.getCommandParameter().equalsIgnoreCase("cancel")) {
-                    audioSearchResults.remove(e.getAuthor().getIdLong());
+            if(audioSearchResults.containsKey(e.getAuthor().getId()) && (e.getCommand()[1].matches("^[0-9]{1,2}$") || e.getCommand()[1].equals("cancel"))) {
+                if(e.getCommand()[1].equalsIgnoreCase("cancel")) {
+                    audioSearchResults.remove(e.getAuthor().getId());
 
                     EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
-                if(Sanitiser.isNumber(e.getCommandParameter())) {
-                    final int value = Integer.parseInt(e.getCommandParameter());
+                if(Sanitiser.isNumber(e.getCommand()[1])) {
+                    final int value = Integer.parseInt(e.getCommand()[1]);
                     if(value < 11 && value > 0) {
-                        String videoId = audioSearchResults.get(e.getAuthor().getIdLong()).get(Integer.parseInt(e.getCommandParameter()) - 1).getId().getVideoId();
-                        new PlayCommand().onCommand(new MessageEvent(e, new String[]{"play", "https://www.youtube.com/watch?v=" + videoId}));
-                        audioSearchResults.remove(e.getAuthor().getIdLong());
+                        String videoId = audioSearchResults.get(e.getAuthor().getId()).get(Integer.parseInt(e.getCommand()[1]) - 1).getId().getVideoId();
+                        MessageEvent event = new MessageEvent(e);
+                        event.setCommand(new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                        new PlayCommand().onCommand(event);
+                        audioSearchResults.remove(e.getAuthor().getId());
                         return;
                     } else {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
@@ -68,10 +70,10 @@ public class SearchCommand extends Command {
                 return;
             }
 
-            audioSearchResults.put(e.getAuthor().getIdLong(), results);
+            audioSearchResults.put(e.getAuthor().getId(), results);
 
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setAuthor("Search results for " + e.getCommandParameter() + ".", null)
+                    .setAuthor("Search results for " + e.getCommand()[1] + ".", null)
                     .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());

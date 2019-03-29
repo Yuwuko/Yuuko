@@ -26,15 +26,15 @@ public class BackgroundCommand extends Command {
     public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
-        if(e.getCommand().length > 1) {
+        if(e.hasParameters()) {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(e.getCommandParameter().startsWith("https://") || e.getCommandParameter().startsWith("http://")) {
-                setAndPlay(manager, e, e.getCommandParameter());
+            if(e.getCommand()[1].startsWith("https://") || e.getCommand()[1].startsWith("http://")) {
+                setAndPlay(manager, e, e.getCommand()[1]);
 
             } else {
-                String trackUrl = YouTubeSearchHandler.search(e.getCommandParameter());
+                String trackUrl = YouTubeSearchHandler.search(e.getCommand()[1]);
 
                 if(trackUrl == null) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");

@@ -33,7 +33,7 @@ public class CommandExecutor {
         }
 
         for(Command comm: module.getCommandsAsList()) {
-            if(comm.getName().equalsIgnoreCase(e.getCommandAction())) {
+            if(comm.getName().equalsIgnoreCase(e.getCommand()[0])) {
                 command = comm;
                 break;
             }
@@ -121,7 +121,7 @@ public class CommandExecutor {
         }
 
         // Is Lavalink /not/ connected and does the command require it to be?
-        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !Arrays.asList(disconnectedCommands).contains(e.getCommandAction())) {
+        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !Arrays.asList(disconnectedCommands).contains(e.getCommand()[0])) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(e, embed.build());
 
@@ -139,7 +139,7 @@ public class CommandExecutor {
         }
 
         // Does the member /not/ have the DJ role and if not, is the command a DJ mode command?
-        if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !Arrays.asList(nonDJModeCommands).contains(e.getCommandAction())) {
+        if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !Arrays.asList(nonDJModeCommands).contains(e.getCommand()[0])) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
             MessageHandler.sendMessage(e, embed.build());
             return false;

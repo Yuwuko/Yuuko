@@ -41,23 +41,23 @@ public class CountdownCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            if(dates.containsKey(e.getCommandParameter())) {
+            if(dates.containsKey(e.getCommand()[1])) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Time Until " + e.getCommandParameter().toUpperCase())
-                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(e.getCommandParameter()).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setTitle("Time Until " + e.getCommand()[1].toUpperCase())
+                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(e.getCommand()[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                if(!Sanitiser.isDate(e.getCommandParameter())) {
+                if(!Sanitiser.isDate(e.getCommand()[1])) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The date that was input is invalid, required format is `dd/MM/yyyy`.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Time Until " + e.getCommandParameter())
-                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(e.getCommandParameter()).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setTitle("Time Until " + e.getCommand()[1])
+                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(e.getCommand()[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());

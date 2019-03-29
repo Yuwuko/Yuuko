@@ -43,8 +43,8 @@ public final class MessageUtilities {
      * @return Member
      */
     public static Member getMentionedMember(MessageEvent e, boolean feedback) {
-        if(e.getCommandParameter() != null && e.getCommandParameter().length() == 18 && Sanitiser.isNumber(e.getCommandParameter())) {
-            return e.getGuild().getMemberById(e.getCommandParameter());
+        if(e.getCommand()[1] != null && e.getCommand()[1].length() == 18 && Sanitiser.isNumber(e.getCommand()[1])) {
+            return e.getGuild().getMemberById(e.getCommand()[1]);
         }
 
         List<Member> mentioned = getMutableMembersCollection(e);

@@ -23,7 +23,7 @@ public class VoteCommand extends Command {
                         "I have chosen not to lock any of my features behind a vote wall, but ask you kindly to vote (up to every 24 hours) for me on your favourite list(s)!"
                 )
                 .addField("discordbots.org", "[link](https://discordbots.org/bot/420682957007880223/vote)", true)
-                .addField("divinediscordbots.com", "[link](https://divinediscordbots.com/bots/420682957007880223/vote)", true)
+                .addField("divinediscordbots.com", "[link](https://divinediscordbots.com/bot/420682957007880223/vote)", true)
                 .addField("discordbotlist.com", "[link](https://discordbotlist.com/bots/420682957007880223/upvote)", true);
         MessageHandler.sendMessage(e, about.build());
     }

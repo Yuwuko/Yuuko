@@ -24,10 +24,10 @@ public class WeatherCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommandParameter().replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
+            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommand()[1].replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
 
             if(data == null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommandParameter() + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

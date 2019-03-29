@@ -44,11 +44,11 @@ public class PlayCommand extends Command {
         } else {
             manager.player.setPaused(false);
 
-            if(e.getCommandParameter().startsWith("https://") || e.getCommandParameter().startsWith("http://")) {
-                loadAndPlay(manager, e, e.getCommandParameter());
+            if(e.getCommand()[1].startsWith("https://") || e.getCommand()[1].startsWith("http://")) {
+                loadAndPlay(manager, e, e.getCommand()[1]);
 
             } else {
-                String trackId = YouTubeSearchHandler.search(e.getCommandParameter());
+                String trackId = YouTubeSearchHandler.search(e.getCommand()[1]);
 
                 if(trackId == null || trackId.equals("")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");

@@ -1,25 +1,40 @@
 package com.yuuko.core.events.extensions;
 
+import com.yuuko.core.Configuration;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class MessageEvent extends MessageReceivedEvent {
 
-    private final String[] command;
+    private String prefix;
+    private String[] command;
 
-    public MessageEvent(MessageReceivedEvent event, String[] command) {
+    public MessageEvent(MessageReceivedEvent event) {
         super(event.getJDA(), event.getResponseNumber(), event.getMessage());
-        this.command = command;
+
+        String message = getMessage().getContentRaw();
+        this.prefix = message.toLowerCase().startsWith(Utilities.getServerPrefix(getGuild())) ? Utilities.getServerPrefix(getGuild()) : (message.toLowerCase().startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "");
+
+        if(!prefix.equals("")) {
+            this.command = message.substring(prefix.length()).split("\\s+", 2);
+        }
+    }
+
+    public String getPrefix() {
+        return prefix;
     }
 
     public String[] getCommand() {
         return command;
     }
 
-    public String getCommandAction() {
-        return command[0];
+    // Only used in very specific scenarios.
+    public void setCommand(String[] command) {
+        this.command = command;
     }
 
-    public String getCommandParameter() {
-        return (command.length > 1) ? command[1] : "";
+    public boolean hasParameters() {
+        return command.length > 1;
     }
+
 }

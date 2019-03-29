@@ -15,7 +15,7 @@ public class ChannelCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommandParameter().split("\\s+", 3);
+        String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
         String type = commandParameters[1].toLowerCase();
 
         // Checks the parameters of the command, if the first param is 'add' follow that flow, else if it's 'del' following that flow instead.

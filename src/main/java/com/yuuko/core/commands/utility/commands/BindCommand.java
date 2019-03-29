@@ -23,8 +23,8 @@ public class BindCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        if(e.getCommand().length > 1) {
-            String[] commandParameters = e.getCommandParameter().split("\\s+", 2);
+        if(e.hasParameters()) {
+            String[] commandParameters = e.getCommand()[1].split("\\s+", 2);
             String selectedModule = "";
 
             boolean present = false;

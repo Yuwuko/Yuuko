@@ -30,7 +30,7 @@ public final class Sanitiser {
         }
 
         if(expectedParameters > 1) {
-            String[] commandParameters = e.getCommandParameter().split("\\s+", expectedParameters);
+            String[] commandParameters = e.getCommand()[1].split("\\s+", expectedParameters);
             if(commandParameters.length < expectedParameters) {
                 if(feedback) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");

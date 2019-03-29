@@ -141,7 +141,7 @@ public final class TextUtilities {
     }
 
     /**
-     * Takes a String and MessageReceivedEvent and resolves tokens within the string.
+     * Takes a String and MessageEvent and resolves tokens within the string.
      *
      * @param e MessageEvent
      * @param message String

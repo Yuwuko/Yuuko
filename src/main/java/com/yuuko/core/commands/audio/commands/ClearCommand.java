@@ -24,11 +24,11 @@ public class ClearCommand extends Command {
         try {
             GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
 
-            if(e.getCommand().length > 1) {
+            if(e.hasParameters()) {
                 final int clearPos;
 
-                if(Sanitiser.isNumber(e.getCommandParameter())) {
-                    clearPos = Integer.parseInt(e.getCommandParameter());
+                if(Sanitiser.isNumber(e.getCommand()[1])) {
+                    clearPos = Integer.parseInt(e.getCommand()[1]);
                 } else {
                     return;
                 }
