@@ -56,7 +56,6 @@ public class ShardsCommand extends Command {
                     .append("\n").append("Memory Used: ").append(new BigDecimal(socket.getStats().getMemUsed()/1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
                     .append("\n").append("Players: ").append(socket.getStats().getPlayers())
                     .append("\n").append("Playing: ").append(socket.getStats().getPlayingPlayers());
-
             shardEmbed.addField("", nodes.toString(), true);
             nodes = new StringBuilder();
         }

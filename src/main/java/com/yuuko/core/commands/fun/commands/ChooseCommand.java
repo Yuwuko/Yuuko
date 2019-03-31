@@ -22,9 +22,10 @@ public class ChooseCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         String[] commandParameters = e.getCommand()[1].split("\\s*(,)\\s*");
+        String choices = (Arrays.asList(commandParameters).toString().length() > 1024) ? Arrays.asList(commandParameters).toString().substring(0, 1021) + "..." : Arrays.asList(commandParameters).toString();
 
         EmbedBuilder embed = new EmbedBuilder()
-                .addField("Choices (" + commandParameters.length + ")", Arrays.asList(commandParameters).toString(), false)
+                .addField("Choices (" + commandParameters.length + ")", choices, false)
                 .addField("Selected", (commandParameters.length > 1) ? commandParameters[new Random().nextInt(commandParameters.length)] : commandParameters[0], true)
                 .addField("Probability", new BigDecimal(100.0/commandParameters.length).setScale(2, RoundingMode.HALF_UP) + "%", true)
                 .setTimestamp(Instant.now())

@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 31-03-2019_1
++ [~] Updated [__choose__] command to better represent a users choice and a basic statistic of that being chosen.
++ [~] Updated dependencies to their latest versions.
+
 ## 28-03-2019_1
 + [!] Removed dbModuleName field from module superclass, renamed all of the columns in the database, removing the module part. (saves space)
 + [~] Updated [__help__] to show disabled commands as well as modules.
