@@ -20,7 +20,7 @@ public class SettingsDatabaseConnection {
             connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
             connectionPool.setUsername(configuration.readLine());
             connectionPool.setPassword(configuration.readLine());
-            connectionPool.setUrl("jdbc:mysql://" + configuration.readLine() + "/" + configuration.readLine() + "?useSSL=true");
+            connectionPool.setUrl("jdbc:mysql://" + configuration.readLine() + "/" + configuration.readLine() + "?useSSL=true&serverTimezone=UTC");
             connectionPool.setInitialSize(10);
             connectionPool.setMaxTotal(100);
             connectionPool.setMaxIdle(5);

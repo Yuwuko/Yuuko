@@ -23,11 +23,10 @@ public class HelpCommand extends Command {
     public void onCommand(MessageEvent e) {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(e.getCommand().length < 2) {
-
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
-                    .addField("Stuck with a command?", "Use `-help <command>` to get usage.", false)
+                    .addField("Stuck with a command?", "Use `" + e.getPrefix() + "help <command>` to get usage.", false)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
 
             for(Module module: Configuration.MODULES) {
@@ -66,7 +65,7 @@ public class HelpCommand extends Command {
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Disabled", (disabled.equals("")) ? "None" : disabled, true)
-                        .addField("Usage", usages.toString(), false)
+                        .addField("Usage", usages.toString().replace("-", e.getPrefix()), false)
                         .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             });

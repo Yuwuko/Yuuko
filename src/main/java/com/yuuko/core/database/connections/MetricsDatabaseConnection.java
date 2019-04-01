@@ -20,7 +20,7 @@ public class MetricsDatabaseConnection {
             connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
             connectionPool.setUsername(configuration.readLine());
             connectionPool.setPassword(configuration.readLine());
-            connectionPool.setUrl("jdbc:mysql://" + configuration.readLine() + "/" + configuration.readLine() + "?useSSL=true");
+            connectionPool.setUrl("jdbc:mysql://" + configuration.readLine() + "/" + configuration.readLine() + "?useSSL=true&serverTimezone=UTC");
             connectionPool.setInitialSize(5);
             connectionPool.setMaxTotal(100);
             connectionPool.setMaxIdle(5);
