@@ -44,15 +44,11 @@ public class HelpCommand extends Command {
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
             Configuration.COMMANDS.stream().filter(command -> command.getName().equalsIgnoreCase(e.getCommand()[1])).findFirst().ifPresent(command -> {
                 final String commandPermission;
-                if(command.getPermissions() == null) {
-                    commandPermission = "None";
-                } else {
-                    commandPermission = Utilities.getCommandPermissions(command.getPermissions());
-                }
+                commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
 
                 StringBuilder usages = new StringBuilder();
                 for(String usage: command.getUsage()) {
-                    usages.append(usage).append("\n");
+                    usages.append(usage.replace("-", e.getPrefix())).append("\n");
                 }
                 TextUtilities.removeLastOccurrence(usages, "\n");
 
@@ -65,7 +61,7 @@ public class HelpCommand extends Command {
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Disabled", (disabled.equals("")) ? "None" : disabled, true)
-                        .addField("Usage", usages.toString().replace("-", e.getPrefix()), false)
+                        .addField("Usage", usages.toString(), false)
                         .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             });

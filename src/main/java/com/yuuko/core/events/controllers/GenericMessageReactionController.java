@@ -30,7 +30,7 @@ public class GenericMessageReactionController {
 
             // Message Pin
             if(e.getReaction().getReactionEmote().getName().equals("📌")) {
-                if(ModuleFunctions.isEnabled(e.getGuild().getId(), "moduleUtility")) {
+                if(ModuleFunctions.isEnabled(e.getGuild().getId(), "utility")) {
                     if(e instanceof MessageReactionAddEvent) {
                         new UtilityModule((MessageReactionAddEvent) e);
                     } else if(e instanceof MessageReactionRemoveEvent) {
