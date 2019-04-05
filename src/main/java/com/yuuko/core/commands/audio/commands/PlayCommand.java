@@ -64,9 +64,9 @@ public class PlayCommand extends Command {
     /**
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
      *
-     * @param manager; GuildAudioManager.
-     * @param e; MessageReceivedEvent.
-     * @param url; TrackUrl.
+     * @param manager GuildAudioManager.
+     * @param e MessageEvent.
+     * @param url TrackUrl.
      */
     private void loadAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
         final String trackUrl;

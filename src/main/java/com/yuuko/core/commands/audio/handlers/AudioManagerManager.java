@@ -37,13 +37,13 @@ public class AudioManagerManager {
      * Finds and sets the guild's handlers manager.
      * @return GuildAudioManager.
      */
-    public static GuildAudioManager getGuildAudioManager(String guildId) {
-        GuildAudioManager manager = managers.get(guildId);
+    public static GuildAudioManager getGuildAudioManager(String guild) {
+        GuildAudioManager manager = managers.get(guild);
 
         if(manager == null) {
             synchronized(AudioManagerManager.getGuildAudioManagers()) {
-                manager = new GuildAudioManager(guildId);
-                addGuildMusicManager(guildId, manager);
+                manager = new GuildAudioManager(guild);
+                addGuildMusicManager(guild, manager);
             }
         }
 
@@ -71,5 +71,13 @@ public class AudioManagerManager {
      */
     public static AudioPlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    /**
+     * Removes a guild audio manager, stopping players from just laying dormant.
+     * @param guild which manager to remove.
+     */
+    public static void removeGuildAudioManager(String guild) {
+        managers.remove(guild);
     }
 }

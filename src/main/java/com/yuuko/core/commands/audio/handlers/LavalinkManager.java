@@ -35,8 +35,12 @@ public class LavalinkManager {
         return lavalink;
     }
 
-    IPlayer createPlayer(String guildId) {
-        return lavalink.getLink(guildId).getPlayer();
+    IPlayer createPlayer(String guild) {
+        return lavalink.getLink(guild).getPlayer();
+    }
+
+    public void resetPlayer(String guild) {
+        lavalink.getLink(guild).resetPlayer();
     }
 
     public void openConnection(VoiceChannel channel) {
