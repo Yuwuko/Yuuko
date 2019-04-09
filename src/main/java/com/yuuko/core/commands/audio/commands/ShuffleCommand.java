@@ -3,7 +3,7 @@ package com.yuuko.core.commands.audio.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
-import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -17,7 +17,7 @@ public class ShuffleCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
 
             if(manager.scheduler.queue.size() > 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Shuffling").setDescription("The queue has been shuffled.");

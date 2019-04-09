@@ -8,7 +8,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
-import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.events.extensions.MessageEvent;
@@ -24,7 +24,7 @@ public class BackgroundCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
 
         if(e.hasParameters()) {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
@@ -67,7 +67,7 @@ public class BackgroundCommand extends Command {
             trackUrl = url;
         }
 
-        AudioManagerManager.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
+        AudioManagerController.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
 
             @Override
             public void trackLoaded(AudioTrack track) {

@@ -2,7 +2,7 @@ package com.yuuko.core;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
@@ -22,7 +22,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "01-04-2019_1";
+    public static final String VERSION = "09-04-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -40,13 +40,28 @@ public class Configuration {
     public static List<Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
     public static String[] STANDARD_STRINGS;
-    static AudioManagerManager AUDIO_MANAGER_MANAGER;
+    static AudioManagerController AUDIO_MANAGER_CONTROLLER;
 
     /**
      * Loads all of the bots configurations.
      */
     static void load(String[] args) {
         try {
+            log.info("Setting up settings database connection...");
+            new SettingsDatabaseConnection();
+            log.info("Done.");
+
+            log.info("Setting up metrics database connection...");
+            new MetricsDatabaseConnection();
+            log.info("Done.");
+
+            log.info("Truncating metrics database... (Shards: " + SHARD_ID.length + ")");
+            for(int id: SHARD_ID) {
+                log.info("Truncating metrics database... (" + (id+1) + "/" + SHARD_ID.length +")");
+                DatabaseFunctions.truncateMetrics(id);
+            }
+            log.info("Done.");
+
             log.info("Registering shard IDs...");
             int[] shards = new int[args.length];
             for(int i = 0; i < args.length; i++) {
@@ -73,21 +88,6 @@ public class Configuration {
             log.info("Done.");
 
             loadApi();
-
-            log.info("Setting up settings database connection...");
-            new SettingsDatabaseConnection();
-            log.info("Done.");
-
-            log.info("Setting up metrics database connection...");
-            new MetricsDatabaseConnection();
-            log.info("Done.");
-
-            log.info("Truncating metrics database... (Shards: " + SHARD_ID.length + ")");
-            for(int id: SHARD_ID) {
-                log.info("Truncating metrics database... (" + (id+1) + "/" + SHARD_ID.length +")");
-                DatabaseFunctions.truncateMetrics(id);
-            }
-            log.info("Done.");
 
             Reflections reflections = new Reflections("com.yuuko.core.commands");
 
@@ -118,7 +118,7 @@ public class Configuration {
             log.info("Done.");
 
             log.info("Setting up AudioManager manager...");
-            AUDIO_MANAGER_MANAGER = new AudioManagerManager();
+            AUDIO_MANAGER_CONTROLLER = new AudioManagerController();
             log.info("Done.");
 
             log.info("Setting up standard strings...");

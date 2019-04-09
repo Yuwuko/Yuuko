@@ -11,7 +11,7 @@ import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 
 import java.util.HashMap;
 
-public class AudioManagerManager {
+public class AudioManagerController {
 
     private static HashMap<String, GuildAudioManager> managers;
     private static AudioPlayerManager playerManager;
@@ -20,7 +20,7 @@ public class AudioManagerManager {
      * Handles full application runtime handlers
      * managers instead of leaving it to the main class.
      */
-    public AudioManagerManager() {
+    public AudioManagerController() {
         managers = new HashMap<>();
         playerManager = new DefaultAudioPlayerManager();
 
@@ -41,7 +41,7 @@ public class AudioManagerManager {
         GuildAudioManager manager = managers.get(guild);
 
         if(manager == null) {
-            synchronized(AudioManagerManager.getGuildAudioManagers()) {
+            synchronized(AudioManagerController.getGuildAudioManagers()) {
                 manager = new GuildAudioManager(guild);
                 addGuildMusicManager(guild, manager);
             }

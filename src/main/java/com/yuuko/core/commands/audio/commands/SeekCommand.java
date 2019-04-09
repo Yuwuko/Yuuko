@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
-import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.Sanitiser;
@@ -19,7 +19,7 @@ public class SeekCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        AudioTrack track = AudioManagerManager.getGuildAudioManager(e.getGuild().getId()).player.getPlayingTrack();
+        AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild().getId()).player.getPlayingTrack();
 
         int seek;
 

@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 09-04-2019_1
++ [~] Refactored AudioManagerManager to AudioManagerController for better naming conventions.
++ [~] Changed the way shards are provisioned to allow dockerisation of the whole process.
+
 ## 31-03-2019_1
 + [~] Updated [__choose__] command to better represent a users choice and a basic statistic of that being chosen.
 + [~] Updated dependencies to their latest versions.

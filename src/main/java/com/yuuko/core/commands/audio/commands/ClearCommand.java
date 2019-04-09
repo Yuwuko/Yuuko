@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
-import com.yuuko.core.commands.audio.handlers.AudioManagerManager;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
@@ -22,7 +22,7 @@ public class ClearCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            GuildAudioManager manager = AudioManagerManager.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
 
             if(e.hasParameters()) {
                 final int clearPos;
