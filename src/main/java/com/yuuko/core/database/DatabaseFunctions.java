@@ -209,4 +209,20 @@ public class DatabaseFunctions {
         }
     }
 
+    /**
+     * Renews the current shard's ID to stop it being removed by the overwatch provisioning program.
+     *
+     * @param shard the shard ID to be renewed.
+     */
+    public static void renewShardId(int shard) {
+        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
+
+            stmt.setInt(2, shard);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
 }

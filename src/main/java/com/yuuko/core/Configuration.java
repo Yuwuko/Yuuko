@@ -30,7 +30,7 @@ public class Configuration {
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static int SHARD_COUNT = 0;
-    static int SHARD_ID = 0;
+    public static int SHARD_ID = 0;
     public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;

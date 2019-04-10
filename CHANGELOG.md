@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 10-04-2019_1
 + [+] Added new database connection class for the automatic provisioning of shards.
++ [+] Added task to renew the shard's ID every 30 seconds to prevent it being cleaned up.
 + [~] Migrated settings database from the main Yuuko application server to the web server where the metrics database is hosted to prevent duplicate databases.
 
 ## 09-04-2019_1
