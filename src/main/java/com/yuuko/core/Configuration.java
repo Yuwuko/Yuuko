@@ -30,7 +30,7 @@ public class Configuration {
     public static String BOT_ID;
     static String BOT_TOKEN;
     public static int SHARD_COUNT = 0;
-    static int[] SHARD_ID = {0};
+    static int SHARD_ID = 0;
     public static String GLOBAL_PREFIX;
     static String STATUS = "@Yuuko help";
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
@@ -46,7 +46,7 @@ public class Configuration {
     /**
      * Loads all of the bots configurations.
      */
-    static void load(String[] args) {
+    static void load() {
         try {
             log.info("Setting up settings database connection...");
             new ProvisioningDatabaseConnection();
@@ -58,22 +58,6 @@ public class Configuration {
 
             log.info("Setting up metrics database connection...");
             new MetricsDatabaseConnection();
-            log.info("Done.");
-
-            log.info("Truncating metrics database... (Shards: " + SHARD_ID.length + ")");
-            for(int id: SHARD_ID) {
-                log.info("Truncating metrics database... (" + (id+1) + "/" + SHARD_ID.length +")");
-                DatabaseFunctions.truncateMetrics(id);
-            }
-            log.info("Done.");
-
-            log.info("Registering shard IDs...");
-            int[] shards = new int[args.length];
-            for(int i = 0; i < args.length; i++) {
-                shards[i] = DatabaseFunctions.provideShardId();
-                log.info("Registered shardId: " + i);
-            }
-            SHARD_ID = shards;
             log.info("Done.");
 
             log.info("Loading configurations from 'configurations.txt'...");
@@ -127,6 +111,14 @@ public class Configuration {
                     VERSION + " • Requested by ",
                     VERSION + " • Asked by "
             };
+            log.info("Done.");
+
+            log.info("Registering shard ID...");
+            SHARD_ID = DatabaseFunctions.provideShardId();
+            log.info("Registered shardId: " + SHARD_ID);
+
+            log.info("Truncating metrics database... (" + SHARD_ID +")");
+            DatabaseFunctions.truncateMetrics(SHARD_ID);
             log.info("Done.");
 
         } catch(Exception ex) {

@@ -36,7 +36,7 @@ public class Yuuko {
     public static void main(String[] args) throws LoginException, IllegalArgumentException, InterruptedException {
         long loadConfigStart = System.nanoTime();
 
-        Configuration.load(args);
+        Configuration.load();
 
         log.info("Setting up the shard manager...");
         Configuration.SHARD_MANAGER = new DefaultShardManagerBuilder()
