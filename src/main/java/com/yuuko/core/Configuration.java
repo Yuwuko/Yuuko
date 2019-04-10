@@ -6,6 +6,7 @@ import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
+import com.yuuko.core.database.connections.ProvisioningDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.entities.User;
@@ -22,7 +23,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "09-04-2019_1";
+    public static final String VERSION = "10-04-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -48,6 +49,10 @@ public class Configuration {
     static void load(String[] args) {
         try {
             log.info("Setting up settings database connection...");
+            new ProvisioningDatabaseConnection();
+            log.info("Done.");
+
+            log.info("Setting up settings database connection...");
             new SettingsDatabaseConnection();
             log.info("Done.");
 
@@ -65,7 +70,7 @@ public class Configuration {
             log.info("Registering shard IDs...");
             int[] shards = new int[args.length];
             for(int i = 0; i < args.length; i++) {
-                shards[i] = Integer.parseInt(args[i]);
+                shards[i] = DatabaseFunctions.provideShardId();
                 log.info("Registered shardId: " + i);
             }
             SHARD_ID = shards;
@@ -78,13 +83,8 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
+            SHARD_COUNT = Integer.parseInt(c.readLine());
             c.close();
-            log.info("Done.");
-
-            log.info("Loading configurations from 'shard_configurations.txt'...");
-            BufferedReader s = new BufferedReader(new FileReader("shard_configuration.txt"));
-            SHARD_COUNT = Integer.parseInt(s.readLine());
-            s.close();
             log.info("Done.");
 
             loadApi();

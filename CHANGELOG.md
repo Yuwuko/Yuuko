@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 10-04-2019_1
++ [+] Added new database connection class for the automatic provisioning of shards.
++ [~] Migrated settings database from the main Yuuko application server to the web server where the metrics database is hosted to prevent duplicate databases.
+
 ## 09-04-2019_1
 + [~] Refactored AudioManagerManager to AudioManagerController for better naming conventions.
 + [~] Changed the way shards are provisioned to allow dockerisation of the whole process.

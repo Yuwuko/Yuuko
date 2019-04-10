@@ -2,6 +2,7 @@ package com.yuuko.core.database;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
+import com.yuuko.core.database.connections.ProvisioningDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class DatabaseFunctions {
 
@@ -174,6 +176,36 @@ public class DatabaseFunctions {
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Queries the provisioning database and supplies the next available shard ID.
+     *
+     * @return the next available shard ID, starting at 0.
+     */
+    public static int provideShardId() {
+        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards` ORDER BY `shardId`");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `Shards`(`shardId`) VALUES(?)")){
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            int shard = 0;
+            while(resultSet.next()) {
+                if(resultSet.getInt(1) == shard) {
+                    shard++;
+                }
+            }
+
+            stmt2.setInt(1, shard);
+            stmt2.execute();
+
+            return shard;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return -1;
         }
     }
 
