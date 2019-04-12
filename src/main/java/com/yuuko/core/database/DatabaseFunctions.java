@@ -216,7 +216,7 @@ public class DatabaseFunctions {
      */
     public static int getShardCount() {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardInformation` ORDER BY `shardId`")){
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardInformation`")){
 
             ResultSet resultSet = stmt.executeQuery();
             if(resultSet.next()) {

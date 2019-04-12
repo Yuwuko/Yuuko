@@ -136,7 +136,7 @@ public class Configuration {
      */
     public static int loadApi() {
         try {
-            File folder = new File("./api/");
+            File folder = new File("config/api/");
             File[] keyFiles = folder.listFiles();
 
             if(keyFiles != null) {
