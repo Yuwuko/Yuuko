@@ -61,7 +61,7 @@ public class Configuration {
             log.info("Done.");
 
             log.info("Loading configurations from 'configurations.txt'...");
-            BufferedReader c = new BufferedReader(new FileReader("configuration.txt"));
+            BufferedReader c = new BufferedReader(new FileReader("config/configuration.txt"));
             AUTHOR = c.readLine();
             AUTHOR_WEBSITE = c.readLine();
             SUPPORT_GUILD = c.readLine();
