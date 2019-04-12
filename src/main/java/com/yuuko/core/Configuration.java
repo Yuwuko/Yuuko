@@ -61,7 +61,7 @@ public class Configuration {
             log.info("Done.");
 
             log.info("Loading configurations from 'configurations.txt'...");
-            BufferedReader c = new BufferedReader(new FileReader("config/configuration.txt"));
+            BufferedReader c = new BufferedReader(new FileReader("./config/configuration.txt"));
             AUTHOR = c.readLine();
             AUTHOR_WEBSITE = c.readLine();
             SUPPORT_GUILD = c.readLine();
@@ -136,7 +136,7 @@ public class Configuration {
      */
     public static int loadApi() {
         try {
-            File folder = new File("config/api/");
+            File folder = new File("./config/api/");
             File[] keyFiles = folder.listFiles();
 
             if(keyFiles != null) {

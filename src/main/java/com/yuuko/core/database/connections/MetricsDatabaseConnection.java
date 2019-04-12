@@ -16,7 +16,7 @@ public class MetricsDatabaseConnection {
     public MetricsDatabaseConnection() {
         try {
             log.trace("Invoking {}", this.getClass().getName());
-            BufferedReader configuration = new BufferedReader(new FileReader("config/metrics_configuration.txt"));
+            BufferedReader configuration = new BufferedReader(new FileReader("./config/metrics_configuration.txt"));
             connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
             connectionPool.setUsername(configuration.readLine());
             connectionPool.setPassword(configuration.readLine());
