@@ -112,7 +112,7 @@ public class Configuration {
             };
             log.info("Done.");
 
-            log.info("Retrieving total shard count..");
+            log.info("Retrieving total shard count...");
             SHARD_COUNT = DatabaseFunctions.getShardCount();
 
             log.info("Pruning expired shards...");

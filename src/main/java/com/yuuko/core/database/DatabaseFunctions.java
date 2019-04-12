@@ -252,7 +252,7 @@ public class DatabaseFunctions {
      * Clears the previsioning database of expired IDs (Older than 35 seconds).
      */
     public static void pruneExpiredShards() {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 35 SECOND)")) {
 
             stmt.execute();
