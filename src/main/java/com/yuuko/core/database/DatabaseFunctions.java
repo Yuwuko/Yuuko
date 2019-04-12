@@ -240,7 +240,7 @@ public class DatabaseFunctions {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
 
-            stmt.setInt(2, shard);
+            stmt.setInt(1, shard);
             stmt.execute();
 
         } catch(Exception ex) {
