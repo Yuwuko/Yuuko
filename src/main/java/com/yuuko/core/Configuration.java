@@ -23,7 +23,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "10-04-2019_1";
+    public static final String VERSION = "12-04-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -67,7 +67,6 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
-            SHARD_COUNT = Integer.parseInt(c.readLine());
             c.close();
             log.info("Done.");
 
@@ -112,6 +111,12 @@ public class Configuration {
                     VERSION + " • Asked by "
             };
             log.info("Done.");
+
+            log.info("Retrieving total shard count..");
+            SHARD_COUNT = DatabaseFunctions.getShardCount();
+
+            log.info("Pruning expired shards...");
+            DatabaseFunctions.pruneExpiredShards();
 
             log.info("Registering shard ID...");
             SHARD_ID = DatabaseFunctions.provideShardId();

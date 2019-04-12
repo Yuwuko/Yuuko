@@ -210,6 +210,28 @@ public class DatabaseFunctions {
     }
 
     /**
+     * Retrieves the total shard count from the database.
+     *
+     * @return the total shard count expected from the database.
+     */
+    public static int getShardCount() {
+        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardInformation` ORDER BY `shardId`")){
+
+            ResultSet resultSet = stmt.executeQuery();
+            if(resultSet.next()) {
+                return resultSet.getInt("ShardCount");
+            } else {
+                return -1;
+            }
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return -1;
+        }
+    }
+
+    /**
      * Renews the current shard's ID to stop it being removed by the overwatch provisioning program.
      *
      * @param shard the shard ID to be renewed.
@@ -219,6 +241,20 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
 
             stmt.setInt(2, shard);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Clears the previsioning database of expired IDs (Older than 35 seconds).
+     */
+    public static void pruneExpiredShards() {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 35 SECOND)")) {
+
             stmt.execute();
 
         } catch(Exception ex) {
