@@ -4,11 +4,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
+import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import lavalink.client.io.LavalinkSocket;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Guild;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,19 +27,11 @@ public class ShardsCommand extends Command {
                 .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
-        for(JDA shard : Configuration.SHARD_MANAGER.getShards()) {
-            int userCount = 0;
-            int channelCount = 0;
-            for(Guild guild: shard.getGuildCache()) {
-                channelCount += guild.getChannels().size();
-                userCount += guild.getMemberCache().size();
-            }
-
-            shards.append("**Yuuko_").append(shard.getShardInfo().getShardId()).append("**")
-                    .append("\n").append("Status: ").append(shard.getStatus())
-                    .append("\n").append("Guilds: ").append(shard.getGuildCache().size())
-                    .append("\n").append("Channels: ").append(channelCount)
-                    .append("\n").append("Users: ").append(userCount);
+        for(String[] shard : DatabaseFunctions.getShardStatistics()) {
+            shards.append("**Yuuko-").append(shard[0]).append("**")
+                    .append("\n").append("Status: ").append(shard[1])
+                    .append("\n").append("Guilds: ").append(shard[2])
+                    .append("\n").append("Users: ").append(shard[3]);
 
             shardEmbed.addField("", shards.toString(), true);
             shards = new StringBuilder();

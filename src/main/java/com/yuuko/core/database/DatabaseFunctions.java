@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class DatabaseFunctions {
 
@@ -228,6 +229,46 @@ public class DatabaseFunctions {
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return -1;
+        }
+    }
+
+    /**
+     * Update shard statistics such as guild count and user count.
+     */
+    public static void updateShardStatistics(int shard, String status, int guilds, int users) {
+        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?  WHERE `shardId` = ?")){
+
+            stmt.setString(1, status);
+            stmt.setInt(2, guilds);
+            stmt.setInt(3, users);
+            stmt.setInt(4, shard);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Retrieves shard statistics from the database.
+     */
+    public static ArrayList<String[]> getShardStatistics() {
+        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards`")){
+
+            ArrayList<String[]> shards = new ArrayList<>();
+
+            ResultSet resultSet = stmt.executeQuery();
+            while(resultSet.next()) {
+                shards.add(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)});
+            }
+
+            return shards;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return new ArrayList<>();
         }
     }
 

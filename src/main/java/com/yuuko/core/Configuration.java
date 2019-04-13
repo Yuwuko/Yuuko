@@ -96,14 +96,6 @@ public class Configuration {
             COMMANDS.sort(Comparator.comparing(Object::toString));
             log.info("Loaded " + COMMANDS.size() + " commands successfully.");
 
-            log.info("Setting up Lavalink manager...");
-            LAVALINK = new LavalinkManager();
-            log.info("Done.");
-
-            log.info("Setting up AudioManager manager...");
-            AUDIO_MANAGER_CONTROLLER = new AudioManagerController();
-            log.info("Done.");
-
             log.info("Setting up standard strings...");
             STANDARD_STRINGS = new String[]{
                     VERSION,
@@ -124,6 +116,14 @@ public class Configuration {
 
             log.info("Truncating metrics database... (" + SHARD_ID +")");
             DatabaseFunctions.truncateMetrics(SHARD_ID);
+            log.info("Done.");
+
+            log.info("Setting up Lavalink manager...");
+            LAVALINK = new LavalinkManager();
+            log.info("Done.");
+
+            log.info("Setting up AudioManager manager...");
+            AUDIO_MANAGER_CONTROLLER = new AudioManagerController();
             log.info("Done.");
 
         } catch(Exception ex) {

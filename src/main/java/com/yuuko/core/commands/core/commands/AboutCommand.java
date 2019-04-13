@@ -27,10 +27,10 @@ public class AboutCommand extends Command {
                 .setThumbnail(Configuration.BOT.getAvatarUrl())
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
+                .addField("Shard", Configuration.SHARD_ID + "", true)
                 .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                 .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + e.getPrefix(), true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
-                .addField("Modules", Configuration.MODULES.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                 .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
         MessageHandler.sendMessage(e, about.build());
