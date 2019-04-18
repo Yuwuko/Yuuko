@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 18-04-2019_1
++ [+] Added lyrics command to enable users to lookup lyrics.
+
 ## 10-04-2019_1
 + [+] Added new database connection class for the automatic provisioning of shards.
 + [+] Added task to renew the shard's ID every 30 seconds to prevent it being cleaned up.

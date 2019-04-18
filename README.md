@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 12-04-2019_1
+# Yuuko 18-04-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -16,7 +16,7 @@ If you want to use the bot on your own server, follow [this](https://discordapp.
 
 ## Commands
 
-Visit [www.yuuko.info](https://www.yuuko.info) for a full list of commands, and a **dashboard** where you can modify guild settings!
+Visit [www.yuuko.info](https://www.yuuko.info) for a full list of commands!
 
 ---
 

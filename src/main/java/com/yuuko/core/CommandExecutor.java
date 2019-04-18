@@ -21,7 +21,8 @@ import java.util.Arrays;
 public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
-    private static final String[] disconnectedCommands = new String[]{"play", "search", "background"};
+    private static final String[] disconnectedCommands = new String[]{"play", "search", "background", "lyrics"};
+    private static final String[] notInVoiceCommands = new String[] {"lyrics", "current", "last", "queue"};
     private static final String[] nonDJModeCommands = new String[]{"queue", "current", "last"};
 
     public CommandExecutor(MessageEvent e, Module module) {
@@ -114,7 +115,7 @@ public class CommandExecutor {
      */
     private boolean checkAudio(MessageEvent e) {
         // Is the member /not/ in a voice channel?
-        if(!e.getMember().getVoiceState().inVoiceChannel()) {
+        if(!e.getMember().getVoiceState().inVoiceChannel() && !Arrays.asList(notInVoiceCommands).contains(e.getCommand()[0])) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
             MessageHandler.sendMessage(e, embed.build());
             return false;
@@ -124,7 +125,6 @@ public class CommandExecutor {
         if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !Arrays.asList(disconnectedCommands).contains(e.getCommand()[0])) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(e, embed.build());
-
             return false;
         }
 

@@ -20,7 +20,8 @@ public class AudioModule extends Module {
             new LastCommand(),
             new ShuffleCommand(),
             new LoopCommand(),
-            new SeekCommand()
+            new SeekCommand(),
+            new LyricsCommand()
     };
 
     public AudioModule(MessageEvent e) {
