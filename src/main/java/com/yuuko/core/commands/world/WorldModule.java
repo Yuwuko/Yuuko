@@ -13,7 +13,8 @@ public class WorldModule extends Module {
             new TescoCommand(),
             new CountdownCommand(),
             new NationalGeographicCommand(),
-            new UKParliamentPetitionCommand()
+            new UKParliamentPetitionCommand(),
+            new UrbanDictionaryCommand()
     };
 
     public WorldModule(MessageEvent e) {

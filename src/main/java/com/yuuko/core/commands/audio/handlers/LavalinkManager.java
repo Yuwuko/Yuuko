@@ -23,7 +23,7 @@ public class LavalinkManager {
         lavalink.setAutoReconnect(true);
 
         try {
-            BufferedReader s = new BufferedReader(new FileReader("config/lavalink_configuration.txt"));
+            BufferedReader s = new BufferedReader(new FileReader("./config/lavalink_configuration.txt"));
             lavalink.addNode(URI.create(s.readLine()), s.readLine());
             s.close();
         } catch(Exception ex) {

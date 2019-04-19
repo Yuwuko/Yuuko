@@ -23,7 +23,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "18-04-2019_1";
+    public static final String VERSION = "19-04-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
