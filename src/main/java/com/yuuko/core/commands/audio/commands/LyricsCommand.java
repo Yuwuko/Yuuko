@@ -53,10 +53,10 @@ public class LyricsCommand extends Command {
             } else {
                 for(int i = 0; i < lyricsArray.length; i++) {
                     EmbedBuilder embed = new EmbedBuilder()
-                            .setAuthor("Lyrics (" + (i+1) + "/" + lyricsArray.length + ")")
-                            .setTitle(data.get("full_title").getAsString())
+                            .setAuthor("Lyrics")
+                            .setTitle(data.get("full_title").getAsString() + " (" + (i+1) + "/" + lyricsArray.length + ")")
                             .setThumbnail(data.get("header_image_url").getAsString())
-                            .setDescription(lyricsArray[0]);
+                            .setDescription(lyricsArray[i]);
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }

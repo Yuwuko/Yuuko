@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 19-04-2019_1
 + [+] Added lyrics command to enable users to lookup lyrics.
 + [+] Added urban dictionary command because it's both free and easy.
++ [~] Fixed some older bugs and dodgy commands.
 
 ## 10-04-2019_1
 + [+] Added new database connection class for the automatic provisioning of shards.
