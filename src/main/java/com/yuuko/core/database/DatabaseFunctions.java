@@ -294,7 +294,7 @@ public class DatabaseFunctions {
      */
     public static void pruneExpiredShards() {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 35 SECOND)")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 31 SECOND)")) {
 
             stmt.execute();
 

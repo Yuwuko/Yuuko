@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21-04-2019_1
++ [~] Updated the shard statistics task to keep more accurate information since that information is displayed on the website.
+
 ## 19-04-2019_1
 + [+] Added lyrics command to enable users to lookup lyrics.
 + [+] Added urban dictionary command because it's both free and easy.
