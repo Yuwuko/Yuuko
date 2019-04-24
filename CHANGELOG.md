@@ -2,8 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 21-04-2019_1
+## 23-04-2019_1
++ [+] Added Test_DivineDiscordBotList integration.
 + [~] Updated the shard statistics task to keep more accurate information since that information is displayed on the website.
++ 
 
 ## 19-04-2019_1
 + [+] Added lyrics command to enable users to lookup lyrics.

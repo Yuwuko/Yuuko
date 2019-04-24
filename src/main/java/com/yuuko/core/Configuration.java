@@ -1,5 +1,6 @@
 package com.yuuko.core;
 
+import com.basketbandit.ddbl.DivineDiscordBotList;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -40,6 +41,7 @@ public class Configuration {
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
+    public static DivineDiscordBotList DIVINE_BOT_LIST;
     public static String[] STANDARD_STRINGS;
     static AudioManagerController AUDIO_MANAGER_CONTROLLER;
 

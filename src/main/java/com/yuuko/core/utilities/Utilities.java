@@ -3,6 +3,7 @@ package com.yuuko.core.utilities;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -19,7 +20,12 @@ public final class Utilities {
      */
     public static void updateDiscordBotList() {
         try {
-            Configuration.BOT_LIST.setStats(Configuration.BOT.getJDA().getShardInfo().getShardId(), Configuration.BOT.getJDA().getShardInfo().getShardTotal(), Math.toIntExact(Configuration.BOT.getJDA().getGuildCache().size()));
+            if(Configuration.BOT_LIST != null) {
+                Configuration.BOT_LIST.setStats(Configuration.BOT.getJDA().getShardInfo().getShardId(), Configuration.BOT.getJDA().getShardInfo().getShardTotal(), MetricsManager.getDiscordMetrics().GUILD_COUNT);
+            }
+            if(Configuration.DIVINE_BOT_LIST != null) {
+                Configuration.DIVINE_BOT_LIST.postStats(MetricsManager.getDiscordMetrics().GUILD_COUNT);
+            }
         } catch(Exception e) {
             e.printStackTrace();
         }

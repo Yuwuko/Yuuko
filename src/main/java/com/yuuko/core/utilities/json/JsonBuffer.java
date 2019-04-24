@@ -16,12 +16,10 @@ public class JsonBuffer {
 
     public JsonBuffer(String inputUrl, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
         try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            String accept = (acceptDirective.equals("default")) ? "application/json" : acceptDirective;
-            String contentType = (contentTypeDirective.equals("default")) ? "application/json" : contentTypeDirective;
             HttpsURLConnection conn = (HttpsURLConnection) new URL(inputUrl).openConnection();
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", accept);
-            conn.setRequestProperty("Content-Type", contentType);
+            conn.setRequestProperty("Accept", (acceptDirective.equals("default")) ? "application/json" : acceptDirective);
+            conn.setRequestProperty("Content-Type", (contentTypeDirective.equals("default")) ? "application/json" : contentTypeDirective);
 
             if(extraProperties != null && extraProperties.length > 0) {
                 for(RequestProperty property : extraProperties) {

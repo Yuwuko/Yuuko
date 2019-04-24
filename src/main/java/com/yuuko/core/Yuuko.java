@@ -4,6 +4,7 @@
 
 package com.yuuko.core;
 
+import com.basketbandit.ddbl.DivineDiscordBotList;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.handlers.MetricsManager;
@@ -62,8 +63,11 @@ public class Yuuko {
         log.info("Setting up bot-list objects...");
         if(Configuration.API_KEYS.containsKey("discordbots")) {
             Configuration.BOT_LIST = new DiscordBotListAPI.Builder().botId(Configuration.BOT.getId()).token(Utilities.getApiKey("discordbots")).build();
-            Utilities.updateDiscordBotList();
         }
+        if(Configuration.API_KEYS.containsKey("divinediscordbots")) {
+            Configuration.DIVINE_BOT_LIST = new DivineDiscordBotList.Builder().botId(Configuration.BOT.getId()).token(Utilities.getApiKey("divinediscordbots")).build();
+        }
+        Utilities.updateDiscordBotList();
         log.info("Done.");
 
         log.info("Setting up scheduled jobs...");
