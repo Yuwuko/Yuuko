@@ -217,7 +217,7 @@ public class DatabaseFunctions {
      */
     public static int getShardCount() {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardInformation`")){
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardConfiguration`")){
 
             ResultSet resultSet = stmt.executeQuery();
             if(resultSet.next()) {
@@ -235,14 +235,16 @@ public class DatabaseFunctions {
     /**
      * Update shard statistics such as guild count and user count.
      */
-    public static void updateShardStatistics(int shard, String status, int guilds, int users) {
+    public static void updateShardStatistics(int shard, String status, int guilds, int users, int channels, int ping) {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?  WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `channels` = ?, `ping` = ?  WHERE `shardId` = ?")){
 
             stmt.setString(1, status);
             stmt.setInt(2, guilds);
             stmt.setInt(3, users);
-            stmt.setInt(4, shard);
+            stmt.setInt(4, channels);
+            stmt.setInt(5, ping);
+            stmt.setInt(6, shard);
             stmt.execute();
 
         } catch(Exception ex) {

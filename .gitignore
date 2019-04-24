@@ -26,15 +26,12 @@ build/
 out/
 
 # Gradle Stuff
+/gradle
 /gradlew
 /gradlew.bat
 
 # Configuration files
-configuration.txt
-metrics_configuration.txt
-settings_configuration.txt
-provisioning_configuration.txt
-lavalink_configuration.txt
+/config
 
 # Other stuff
 
