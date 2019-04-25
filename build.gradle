@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '24-04-2019_1'
+version = '25-04-2019_1'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -45,5 +45,5 @@ dependencies {
     compile 'org.jsoup:jsoup:1.11.3'
     compile 'org.reflections:reflections:0.9.11'
     compile 'com.squareup.okhttp3:okhttp:3.13.1'
-    compile 'com.github.BasketBandit:ddblAPI.java:0.1.0'
+    compile 'com.github.BasketBandit:ddblAPI.java:0.2.0'
 }

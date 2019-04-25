@@ -4,6 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.database.connections.MetricsDatabaseConnection;
 import com.yuuko.core.database.connections.ProvisioningDatabaseConnection;
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -254,16 +255,18 @@ public class DatabaseFunctions {
 
     /**
      * Retrieves shard statistics from the database.
+     *
+     * @return ArrayList<Shard> of shard statistics.
      */
-    public static ArrayList<String[]> getShardStatistics() {
+    public static ArrayList<Shard> getShardStatistics() {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards`")){
 
-            ArrayList<String[]> shards = new ArrayList<>();
+            ArrayList<Shard> shards = new ArrayList<>();
 
             ResultSet resultSet = stmt.executeQuery();
             while(resultSet.next()) {
-                shards.add(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)});
+                shards.add(new Shard(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5), resultSet.getInt(6)));
             }
 
             return shards;

@@ -4,6 +4,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
+import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
@@ -17,6 +19,11 @@ public class AboutCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
+        int totalGuilds = 0;
+        for(Shard shard: DatabaseFunctions.getShardStatistics()) {
+            totalGuilds += shard.getGuildCount();
+        }
+
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
                 .setDescription(
@@ -27,9 +34,10 @@ public class AboutCommand extends Command {
                 .setThumbnail(Configuration.BOT.getAvatarUrl())
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Shard", Configuration.SHARD_ID + "", true)
-                .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                .addField("Shard ID", Configuration.SHARD_ID + "", true)
                 .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + e.getPrefix(), true)
+                .addField("Shard Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                .addField("Total Guilds", totalGuilds + "", true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                 .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);

@@ -5,6 +5,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.extensions.MessageEvent;
 import lavalink.client.io.LavalinkSocket;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -27,11 +28,12 @@ public class ShardsCommand extends Command {
                 .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
-        for(String[] shard : DatabaseFunctions.getShardStatistics()) {
-            shards.append("**Yuuko-").append(shard[0]).append("**")
-                    .append("\n").append("Status: ").append(shard[1])
-                    .append("\n").append("Guilds: ").append(shard[2])
-                    .append("\n").append("Users: ").append(shard[3]);
+        for(Shard shard : DatabaseFunctions.getShardStatistics()) {
+            shards.append("**Yuuko-").append(shard.getId()).append("**")
+                    .append("\n").append("Status: ").append(shard.getStatus())
+                    .append("\n").append("Guilds: ").append(shard.getGuildCount())
+                    .append("\n").append("Users: ").append(shard.getUserCount())
+                    .append("\n").append("Ping: ").append(shard.getPing()).append("ms");
 
             shardEmbed.addField("", shards.toString(), true);
             shards = new StringBuilder();
