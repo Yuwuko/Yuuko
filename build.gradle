@@ -40,7 +40,7 @@ dependencies {
     compile 'org.apache.commons:commons-dbcp2:2.5.0'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
-    compile 'org.slf4j:slf4j-simple:1.7.25'
+    compile 'org.slf4j:slf4j-simple:1.7.26'
     compile 'com.github.DiscordBotList:DBL-Java-Wrapper:2.0.0'
     compile 'org.jsoup:jsoup:1.11.3'
     compile 'org.reflections:reflections:0.9.11'
