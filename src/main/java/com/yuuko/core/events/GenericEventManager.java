@@ -15,6 +15,7 @@ public class GenericEventManager extends ListenerAdapter {
 
     /**
      * Captures and deals with generic guild events.
+     *
      * @param e GenericGuildEvent
      */
     @Override
@@ -28,6 +29,7 @@ public class GenericEventManager extends ListenerAdapter {
 
     /**
      * Captures and deals with generic message events.
+     *
      * @param e -> GenericMessageEvent.
      */
     @Override
@@ -41,6 +43,7 @@ public class GenericEventManager extends ListenerAdapter {
 
     /**
      * Captures and deals generic reaction events.
+     *
      * @param e -> GenericMessageReactionEvent.
      */
     @Override
@@ -54,6 +57,7 @@ public class GenericEventManager extends ListenerAdapter {
 
     /**
      * Captures and deals with generic voice events.
+     *
      * @param e -> GenericGuildVoiceEvent.
      */
     @Override
@@ -67,6 +71,7 @@ public class GenericEventManager extends ListenerAdapter {
 
     /**
      * Captures and deals with generic text-channel events.
+     *
      * @param e -> GenericTextChannelEvent.
      */
     @Override

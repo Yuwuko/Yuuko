@@ -88,7 +88,7 @@ public class CommandExecutor {
     }
 
     /**
-     * Removes the message the caused the command to execute if the deleteExecuted setting is toggled to on.
+     * Removes the message that issued the command if the `deleteExecuted` setting is toggled to `on`.
      *
      * @param e MessageReceivedEvent
      */

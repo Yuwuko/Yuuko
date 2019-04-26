@@ -1,6 +1,6 @@
 package com.yuuko.core;
 
-import com.basketbandit.ddbl.DivineDiscordBotList;
+import com.basketbandit.ddbl.DivineAPI;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -24,7 +24,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "25-04-2019_1";
+    public static final String VERSION = "26-04-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -41,7 +41,7 @@ public class Configuration {
     public static List<Command> COMMANDS;
     public static List<Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
-    public static DivineDiscordBotList DIVINE_BOT_LIST;
+    public static DivineAPI DIVINE_API;
     public static String[] STANDARD_STRINGS;
     static AudioManagerController AUDIO_MANAGER_CONTROLLER;
 

@@ -22,7 +22,8 @@ hs_err_pid*
 .gradle/*
 target/
 build/
-out/
+out/production
+out/test
 
 # Gradle Stuff
 /gradle

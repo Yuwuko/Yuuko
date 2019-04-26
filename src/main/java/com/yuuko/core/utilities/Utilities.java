@@ -23,8 +23,8 @@ public final class Utilities {
             if(Configuration.BOT_LIST != null) {
                 Configuration.BOT_LIST.setStats(Configuration.BOT.getJDA().getShardInfo().getShardId(), Configuration.BOT.getJDA().getShardInfo().getShardTotal(), MetricsManager.getDiscordMetrics().GUILD_COUNT);
             }
-            if(Configuration.DIVINE_BOT_LIST != null && Configuration.DIVINE_BOT_LIST.canPost()) {
-                Configuration.DIVINE_BOT_LIST.postStats(MetricsManager.getDiscordMetrics().GUILD_COUNT);
+            if(Configuration.DIVINE_API != null && Configuration.DIVINE_API.canPost()) {
+                Configuration.DIVINE_API.postStats(MetricsManager.getDiscordMetrics().GUILD_COUNT);
             }
         } catch(Exception e) {
             e.printStackTrace();
