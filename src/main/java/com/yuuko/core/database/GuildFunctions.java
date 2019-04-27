@@ -2,8 +2,8 @@ package com.yuuko.core.database;
 
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +31,12 @@ public class GuildFunctions {
             ResultSet resultSet = stmt.executeQuery();
 
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return resultSet.next();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
+
         return true;
     }
 
@@ -60,6 +60,7 @@ public class GuildFunctions {
                 stmt.execute();
 
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
+                log.info("Guild Synced: " + guildName + "(" + guildId + ")");
             } else {
                 stmt2.setString(1, guildName);
                 stmt2.setString(2, guildRegion);
@@ -80,18 +81,16 @@ public class GuildFunctions {
     /**
      * Adds a new guild to the database and initialises it's settings, or updates current guilds if they already exist on the database.
      *
-     * @param e MessageReceivedEvent.
+     * @param jda JDA object to pull the guild cache from.
      * @return if the add was successful.
      */
-    public static boolean addGuilds(MessageReceivedEvent e) {
+    public static boolean addGuilds(JDA jda) {
         try {
-            SnowflakeCacheView guilds = e.getJDA().getGuildCache();
+            SnowflakeCacheView guilds = jda.getGuildCache();
 
             for(Object guild : guilds) {
                 Guild matchedGuild = (Guild) guild;
-                if(addNewGuild(matchedGuild.getId(), matchedGuild.getName(), matchedGuild.getRegion().getName())) {
-                    log.info("Guild Added: " + matchedGuild.getId());
-                }
+                addNewGuild(matchedGuild.getId(), matchedGuild.getName(), matchedGuild.getRegion().getName());
             }
 
             return true;

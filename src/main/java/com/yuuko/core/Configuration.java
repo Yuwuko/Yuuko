@@ -43,7 +43,6 @@ public class Configuration {
     public static DiscordBotListAPI BOT_LIST;
     public static DivineAPI DIVINE_API;
     public static String[] STANDARD_STRINGS;
-    static AudioManagerController AUDIO_MANAGER_CONTROLLER;
 
     /**
      * Loads all of the bots configurations.
@@ -125,7 +124,7 @@ public class Configuration {
             log.info("Done.");
 
             log.info("Setting up AudioManager manager...");
-            AUDIO_MANAGER_CONTROLLER = new AudioManagerController();
+            new AudioManagerController();
             log.info("Done.");
 
         } catch(Exception ex) {

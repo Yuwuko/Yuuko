@@ -6,6 +6,7 @@ package com.yuuko.core;
 
 import com.basketbandit.ddbl.DivineAPI;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
+import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
@@ -68,6 +69,10 @@ public class Yuuko {
             Configuration.DIVINE_API = new DivineAPI.Builder().botId(Configuration.BOT.getId()).token(Utilities.getApiKey("divinediscordbots")).build();
         }
         Utilities.updateDiscordBotList();
+        log.info("Done.");
+
+        log.info("Syncing guilds with the database...");
+        GuildFunctions.addGuilds(Configuration.BOT.getJDA());
         log.info("Done.");
 
         log.info("Setting up scheduled jobs...");
