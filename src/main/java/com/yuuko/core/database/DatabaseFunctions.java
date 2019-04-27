@@ -238,7 +238,7 @@ public class DatabaseFunctions {
      */
     public static void updateShardStatistics(int shard, String status, int guilds, int users, int channels, int ping) {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `channels` = ?, `ping` = ?  WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `channels` = ?, `ping` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             stmt.setString(1, status);
             stmt.setInt(2, guilds);
@@ -274,23 +274,6 @@ public class DatabaseFunctions {
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return new ArrayList<>();
-        }
-    }
-
-    /**
-     * Renews the current shard's ID to stop it being removed by the overwatch provisioning program.
-     *
-     * @param shard the shard ID to be renewed.
-     */
-    public static void renewShardId(int shard) {
-        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
-
-            stmt.setInt(1, shard);
-            stmt.execute();
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 

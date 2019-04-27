@@ -9,7 +9,7 @@ public class OneHourlyJob extends Job {
     private final TruncateDatabaseTask truncateDatabaseTask = new TruncateDatabaseTask();
 
     public OneHourlyJob() {
-        super(6, 1, TimeUnit.HOURS);
+        super(0, 1, TimeUnit.HOURS);
     }
 
     @Override

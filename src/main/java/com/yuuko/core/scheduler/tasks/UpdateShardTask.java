@@ -7,8 +7,7 @@ import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.scheduler.Task;
 import net.dv8tion.jda.core.JDA;
 
-public class UpdateShardStatisticsTask implements Task {
-
+public class UpdateShardTask implements Task {
     private static JDA shard = Configuration.SHARD_MANAGER.getShardById(Configuration.SHARD_ID);
 
     @Override

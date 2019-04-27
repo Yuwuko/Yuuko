@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 27-04-2019_1
++ [~] Cleaned up the scheduler, combining some tasks and removing others altogether.
+
 ## 24-04-2019_1
 + [+] Added DivineDiscordBotList integration.
 + [~] Updated the shard statistics task to keep more accurate information since there were some discrepancies

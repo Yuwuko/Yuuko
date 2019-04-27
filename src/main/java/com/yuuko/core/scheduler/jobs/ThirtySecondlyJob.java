@@ -1,16 +1,12 @@
 package com.yuuko.core.scheduler.jobs;
 
 import com.yuuko.core.scheduler.Job;
-import com.yuuko.core.scheduler.tasks.RenewShardTask;
-import com.yuuko.core.scheduler.tasks.UpdateMetricsPingTask;
-import com.yuuko.core.scheduler.tasks.UpdateShardStatisticsTask;
+import com.yuuko.core.scheduler.tasks.UpdateShardTask;
 
 import java.util.concurrent.TimeUnit;
 
 public class ThirtySecondlyJob extends Job {
-    private final UpdateMetricsPingTask updateMetricsPingTask = new UpdateMetricsPingTask();
-    private final RenewShardTask renewShardTask = new RenewShardTask();
-    private final UpdateShardStatisticsTask updateShardStatisticsTask = new UpdateShardStatisticsTask();
+    private final UpdateShardTask updateShardTask = new UpdateShardTask();
 
     public ThirtySecondlyJob() {
         super(0, 30, TimeUnit.SECONDS);
@@ -18,6 +14,6 @@ public class ThirtySecondlyJob extends Job {
 
     @Override
     public void run() {
-        handleTask(updateMetricsPingTask, renewShardTask, updateShardStatisticsTask);
+        handleTask(updateShardTask);
     }
 }
