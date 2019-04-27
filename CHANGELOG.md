@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 27-04-2019_1
 + [~] Cleaned up the scheduler, combining some tasks and removing others altogether.
 + [~] Added function to sync the guilds database on startup in case the bot was added to a server in downtime.
++ [~] Migrated from HttpsUrlConnection to OkHttp for all API calls since it is regularly updated, modern and there and JDA already uses it.
 
 ## 24-04-2019_1
 + [+] Added DivineDiscordBotList integration.

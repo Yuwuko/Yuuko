@@ -3,42 +3,35 @@ package com.yuuko.core.utilities.json;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.ByteArrayOutputStream;
-import java.net.URL;
-
 public class JsonBuffer {
     private static final Logger log = LoggerFactory.getLogger(JsonBuffer.class);
+    private static final OkHttpClient client = new OkHttpClient();
     private String jsonOutput;
 
-    public JsonBuffer(String inputUrl, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
-        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            HttpsURLConnection conn = (HttpsURLConnection) new URL(inputUrl).openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", (acceptDirective.equals("default")) ? "application/json" : acceptDirective);
-            conn.setRequestProperty("Content-Type", (contentTypeDirective.equals("default")) ? "application/json" : contentTypeDirective);
-
+    public JsonBuffer(String url, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
+        try {
+            Request.Builder builder = new Request.Builder()
+                    .url(url)
+                    .addHeader("Accept", (acceptDirective.equals("default")) ? "application/json" : acceptDirective)
+                    .addHeader("Content-Type", (contentTypeDirective.equals("default")) ? "application/json" : contentTypeDirective);
             if(extraProperties != null && extraProperties.length > 0) {
                 for(RequestProperty property : extraProperties) {
-                    conn.setRequestProperty(property.getHeader(), property.getDirective());
+                    builder.addHeader(property.getHeader(), property.getDirective());
                 }
             }
+            Response response = client.newCall(builder.build()).execute();
 
-            if(conn.getResponseCode() != 200) {
+            if(response.code() != 200) {
                 return;
             }
 
-            byte[] buffer = new byte[1024];
-            int length;
-
-            while((length = conn.getInputStream().read(buffer)) != -1) {
-                result.write(buffer, 0, length);
-            }
-
-            jsonOutput = result.toString();
+            jsonOutput = response.body().string();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
