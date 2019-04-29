@@ -26,19 +26,12 @@ public class CommandExecutor {
     private static final String[] nonDJModeCommands = new String[]{"queue", "current", "last"};
 
     public CommandExecutor(MessageEvent e, Module module) {
-        Command command = null;
-
         // Is the event null?
         if(e == null) {
             return;
         }
 
-        for(Command comm: module.getCommandsAsList()) {
-            if(comm.getName().equalsIgnoreCase(e.getCommand()[0])) {
-                command = comm;
-                break;
-            }
-        }
+        Command command = module.getCommands().get(e.getCommand()[0]);
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?

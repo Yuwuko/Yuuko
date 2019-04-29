@@ -18,7 +18,7 @@ public class WorldModule extends Module {
     };
 
     public WorldModule(MessageEvent e) {
-        super("World", false, commands);
+        super("world", false, commands);
         new CommandExecutor(e, this);
     }
 

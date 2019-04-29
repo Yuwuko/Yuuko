@@ -17,7 +17,7 @@ public class MediaModule extends Module {
     };
 
     public MediaModule(MessageEvent e) {
-        super("Media", false, commands);
+        super("media", false, commands);
         new CommandExecutor(e, this);
     }
 

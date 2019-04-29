@@ -3,7 +3,6 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.database.BindFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
@@ -24,25 +23,17 @@ public class BindCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String[] commandParameters = e.getCommand()[1].split("\\s+", 2);
-            String selectedModule = "";
+            String[] params = e.getCommand()[1].split("\\s+", 2);
 
-            boolean present = false;
-            for(Module module : Configuration.MODULES) {
-                if(module.getName().equalsIgnoreCase(commandParameters[0])) {
-                    selectedModule = module.getName();
-                    present = true;
-                    break;
-                }
-            }
-
-            if(!present) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + commandParameters[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "commands** command.");
+            if(!Configuration.MODULES.containsKey(params[0])) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "commands** command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            if(commandParameters.length > 1) {
+            String module = Configuration.MODULES.get(params[0]).getName();
+
+            if(params.length > 1) {
                 List<TextChannel> channels = e.getMessage().getMentionedChannels();
 
                 if(channels.size() < 1) {
@@ -53,21 +44,21 @@ public class BindCommand extends Command {
 
                 StringBuilder boundChannels = new StringBuilder();
                 for(TextChannel channel : channels) {
-                    BindFunctions.toggleBind(e.getGuild().getId(), channel.getId(), selectedModule);
+                    BindFunctions.toggleBind(e.getGuild().getId(), channel.getId(), module);
                     boundChannels.append(channel.getName()).append(", ");
                 }
                 TextUtilities.removeLastOccurrence(boundChannels, ", ");
 
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + selectedModule + "** on **" + boundChannels.toString() + "**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + module + "** on **" + boundChannels.toString() + "**.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                final int res = BindFunctions.toggleBind(e.getGuild().getId(), e.getTextChannel().getId(), selectedModule);
+                final int res = BindFunctions.toggleBind(e.getGuild().getId(), e.getTextChannel().getId(), module);
 
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + selectedModule + "** to **" + e.getTextChannel().getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + e.getTextChannel().getName() + "**.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + selectedModule + "** from **" + e.getTextChannel().getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + e.getTextChannel().getName() + "**.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }

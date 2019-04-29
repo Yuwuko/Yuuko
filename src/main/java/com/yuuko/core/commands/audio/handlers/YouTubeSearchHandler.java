@@ -24,7 +24,6 @@ public class YouTubeSearchHandler {
             }).setApplicationName("yuuko-204012").build();
 
             YouTube.Search.List search = youtube.search().list("id,snippet");
-
             search.setKey(Utilities.getApiKey("google"));
             search.setQ(searchParameter);
             search.setType("video");

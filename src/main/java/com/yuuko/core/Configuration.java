@@ -19,12 +19,14 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "27-04-2019_1";
+    public static final String VERSION = "29-04-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -38,8 +40,8 @@ public class Configuration {
     public static LavalinkManager LAVALINK;
     public static net.dv8tion.jda.bot.sharding.ShardManager SHARD_MANAGER;
     public static User BOT;
-    public static List<Command> COMMANDS;
-    public static List<Module> MODULES;
+    public static Map<String, Command> COMMANDS;
+    public static Map<String, Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
     public static DivineAPI DIVINE_API;
     public static String[] STANDARD_STRINGS;
@@ -77,24 +79,20 @@ public class Configuration {
 
             log.info("Loading modules...");
             Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
-            MODULES = new ArrayList<>();
+            MODULES = new HashMap<>();
             for(Class<? extends Module> module: modules) {
                 Module obj = module.getConstructor(MessageEvent.class).newInstance((Object) null);
-                MODULES.add(obj);
+                MODULES.put(obj.getName(), obj);
             }
-            log.info("Sorting...");
-            MODULES.sort(Comparator.comparing(Object::toString));
             log.info("Loaded " + MODULES.size() + " modules successfully.");
 
             log.info("Loading commands...");
             Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
-            COMMANDS = new ArrayList<>();
+            COMMANDS = new HashMap<>();
             for(Class<? extends Command> command: commands) {
                 Command obj = command.getConstructor().newInstance();
-                COMMANDS.add(obj);
+                COMMANDS.put(obj.getName(), obj);
             }
-            log.info("Sorting...");
-            COMMANDS.sort(Comparator.comparing(Object::toString));
             log.info("Loaded " + COMMANDS.size() + " commands successfully.");
 
             log.info("Setting up standard strings...");

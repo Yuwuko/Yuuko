@@ -5,35 +5,33 @@ import com.yuuko.core.database.ModuleFunctions;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Module {
     private final String name;
     private final boolean nsfw;
-    private final Command[] commands;
+    private final Map<String, Command> commands = new HashMap<>();
 
     public Module(String name, boolean isNSFW, Command[] commands) {
         this.name = name;
-        this.commands = commands;
         this.nsfw = isNSFW;
+        for(Command command: commands) {
+            this.commands.put(command.getName(), command);
+        }
     }
 
     public String getName() {
         return name;
     }
 
-    public Command[] getCommandsAsArray() {
+    public Map<String, Command> getCommands() {
         return commands;
-    }
-
-    public List<Command> getCommandsAsList() {
-        return Arrays.asList(commands);
     }
 
     public String getCommandsAsString() {
         StringBuilder string = new StringBuilder();
-        for(Command command: commands) {
+        for(Command command: commands.values()) {
             string.append("`").append(command.getName()).append("` ");
         }
         return string.toString();
@@ -41,7 +39,7 @@ public abstract class Module {
 
     public boolean isEnabled(MessageReceivedEvent e) {
         // Executor still checks core/developer, in this case simply return true.
-        if(name.equals("Core") || name.equals("Developer")) {
+        if(name.equals("core") || name.equals("developer")) {
             return true;
         }
 

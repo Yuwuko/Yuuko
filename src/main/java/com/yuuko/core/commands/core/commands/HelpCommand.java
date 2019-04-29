@@ -29,7 +29,7 @@ public class HelpCommand extends Command {
                     .addField("Stuck with a command?", "Use `" + e.getPrefix() + "help <command>` to get usage.", false)
                     .setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
 
-            for(Module module: Configuration.MODULES) {
+            for(Module module: Configuration.MODULES.values()) {
                 commandInfo.addField(module.getName(), module.getCommandsAsString(), false);
             }
 
@@ -42,7 +42,7 @@ public class HelpCommand extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            Configuration.COMMANDS.stream().filter(command -> command.getName().equalsIgnoreCase(e.getCommand()[1])).findFirst().ifPresent(command -> {
+            Configuration.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getCommand()[1])).findFirst().ifPresent(command -> {
                 final String commandPermission;
                 commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
 

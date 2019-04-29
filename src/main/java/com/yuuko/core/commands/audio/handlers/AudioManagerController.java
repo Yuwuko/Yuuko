@@ -23,7 +23,6 @@ public class AudioManagerController {
     public AudioManagerController() {
         managers = new HashMap<>();
         playerManager = new DefaultAudioPlayerManager();
-
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
         playerManager.registerSourceManager(new SoundCloudAudioSourceManager());
         playerManager.registerSourceManager(new BandcampAudioSourceManager());

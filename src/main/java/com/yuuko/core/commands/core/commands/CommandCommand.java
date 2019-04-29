@@ -45,7 +45,7 @@ public class CommandCommand extends Command {
 
             if(!commandWords.contains(input[0])) {
                 // Check if the command even exists.
-                for(Command commandObj : Configuration.COMMANDS) {
+                for(Command commandObj : Configuration.COMMANDS.values()) {
                     if(commandObj.getName().equals(input[0])) {
                         if(Utilities.getModuleName(commandObj.getModule()).equals("Core")) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Command").setDescription("Sorry, you cannot disable commands from the `Core` module.");

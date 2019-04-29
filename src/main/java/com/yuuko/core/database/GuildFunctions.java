@@ -60,7 +60,7 @@ public class GuildFunctions {
                 stmt.execute();
 
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
-                log.info("Guild Synced: " + guildName + "(" + guildId + ")");
+                log.info("Guild Synced: " + guildName + " (" + guildId + ")");
             } else {
                 stmt2.setString(1, guildName);
                 stmt2.setString(2, guildRegion);

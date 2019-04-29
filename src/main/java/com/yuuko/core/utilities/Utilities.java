@@ -1,7 +1,6 @@
 package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.JDA;
@@ -90,21 +89,6 @@ public final class Utilities {
         for(JDA shard : Configuration.SHARD_MANAGER.getShards()) {
             if(shard.getStatus().equals(JDA.Status.CONNECTED)) {
                 return shard.getSelfUser();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Retrieves a command from the command list by name.
-     *
-     * @param name the name of the command to get.
-     * @return Command
-     */
-    public static Command getCommandByName(String name) {
-        for(Command command: Configuration.COMMANDS) {
-            if(command.getName().equals(name)) {
-                return command;
             }
         }
         return null;

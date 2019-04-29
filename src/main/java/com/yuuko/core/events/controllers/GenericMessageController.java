@@ -38,14 +38,13 @@ public class GenericMessageController {
                 return;
             }
 
-            // Iterate through the command list, get the command commands constructor from the command class.
             boolean executed = false;
-            for(Command command: Configuration.COMMANDS) {
-                if(event.getCommand()[0].equalsIgnoreCase(command.getName())) {
-                    command.getModule().getConstructor(MessageEvent.class).newInstance(event);
-                    executed = true;
-                    break;
-                }
+
+            // Iterate through the command list, get the command commands constructor from the command class.
+            Command command = Configuration.COMMANDS.get(event.getCommand()[0]);
+            if(command != null) {
+                command.getModule().getConstructor(MessageEvent.class).newInstance(event);
+                executed = true;
             }
 
             if(executed) {

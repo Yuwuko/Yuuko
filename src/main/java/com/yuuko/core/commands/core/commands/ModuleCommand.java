@@ -3,7 +3,6 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.ModuleFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
@@ -27,16 +26,7 @@ public class ModuleCommand extends Command {
             String module = e.getCommand()[1].split("\\s+", 2)[0].toLowerCase();
             String guild = e.getGuild().getId();
 
-            // Check if the module even exists.
-            boolean valid = false;
-            for(Module moduleObj : Configuration.MODULES) {
-                if(moduleObj.getName().equalsIgnoreCase(module)) {
-                    valid = true;
-                    break;
-                }
-            }
-
-            if(!valid) {
+            if(!Configuration.MODULES.containsKey(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
