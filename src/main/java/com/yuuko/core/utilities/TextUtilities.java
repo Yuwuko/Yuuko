@@ -26,18 +26,6 @@ public final class TextUtilities {
     }
 
     /**
-     * Extracts the module name from a class path.
-     *
-     * @param string String
-     * @param shortened boolean
-     * @return String
-     */
-    public static String extractModuleName(String string, boolean shortened, boolean lowercase) {
-        String returnString = (shortened) ? string.substring(string.lastIndexOf(".") + 1).replace("Module", "") : string.substring(string.lastIndexOf(".") + 1);
-        return (lowercase) ? returnString.toLowerCase() : returnString;
-    }
-
-    /**
      * Converts a string to a boolean value, essentially just converting 1, true or yes to TRUE and anything else to FALSE.
      *
      * @param value value to convert to boolean

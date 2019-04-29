@@ -55,8 +55,6 @@ public class Yuuko {
             Thread.sleep(2500);
         }
 
-        log.info("Done. Active shards: " + Configuration.SHARD_MANAGER.getShards().size() + ".");
-
         Configuration.BOT = Utilities.getSelfUser();
         Configuration.GLOBAL_PREFIX = "<@" + Configuration.BOT_ID + "> ";
         MetricsManager.getDiscordMetrics().update();
@@ -69,17 +67,14 @@ public class Yuuko {
             Configuration.DIVINE_API = new DivineAPI.Builder().botId(Configuration.BOT.getId()).token(Utilities.getApiKey("divinediscordbots")).build();
         }
         Utilities.updateDiscordBotList();
-        log.info("Done.");
 
         log.info("Syncing guilds with the database...");
         GuildFunctions.addGuilds(Configuration.BOT.getJDA());
-        log.info("Done.");
 
         log.info("Setting up scheduled jobs...");
         ScheduleHandler.registerJob(new FiveSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());
-        log.info("Done.");
 
         log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadConfigStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
     }

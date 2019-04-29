@@ -53,15 +53,12 @@ public class Configuration {
         try {
             log.info("Setting up settings database connection...");
             new ProvisioningDatabaseConnection();
-            log.info("Done.");
 
             log.info("Setting up settings database connection...");
             new SettingsDatabaseConnection();
-            log.info("Done.");
 
             log.info("Setting up metrics database connection...");
             new MetricsDatabaseConnection();
-            log.info("Done.");
 
             log.info("Loading configurations from 'configurations.txt'...");
             BufferedReader c = new BufferedReader(new FileReader("./config/configuration.txt"));
@@ -71,7 +68,6 @@ public class Configuration {
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
             c.close();
-            log.info("Done.");
 
             loadApi();
 
@@ -101,7 +97,6 @@ public class Configuration {
                     VERSION + " • Requested by ",
                     VERSION + " • Asked by "
             };
-            log.info("Done.");
 
             log.info("Retrieving total shard count...");
             SHARD_COUNT = DatabaseFunctions.getShardCount();
@@ -111,19 +106,16 @@ public class Configuration {
 
             log.info("Registering shard ID...");
             SHARD_ID = DatabaseFunctions.provideShardId();
-            log.info("Registered shardId: " + SHARD_ID);
+            log.info("ID: " + SHARD_ID);
 
             log.info("Truncating metrics database... (" + SHARD_ID +")");
             DatabaseFunctions.truncateMetrics(SHARD_ID);
-            log.info("Done.");
 
             log.info("Setting up Lavalink manager...");
             LAVALINK = new LavalinkManager();
-            log.info("Done.");
 
             log.info("Setting up AudioManager manager...");
             new AudioManagerController();
-            log.info("Done.");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);

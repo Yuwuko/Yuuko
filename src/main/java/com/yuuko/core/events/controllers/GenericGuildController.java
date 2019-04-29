@@ -55,7 +55,7 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        GuildFunctions.addNewGuild(e.getGuild().getId(), e.getGuild().getName(), e.getGuild().getRegion().getName());
+        GuildFunctions.addGuild(e.getGuild());
 
         try {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)) {
@@ -78,14 +78,14 @@ public class GenericGuildController {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
 
-        Utilities.updateDiscordBotList();
         MetricsManager.getDiscordMetrics().update();
+        Utilities.updateDiscordBotList();
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         DatabaseFunctions.cleanup(e.getGuild().getId());
-        Utilities.updateDiscordBotList();
         MetricsManager.getDiscordMetrics().update();
+        Utilities.updateDiscordBotList();
     }
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent e) {

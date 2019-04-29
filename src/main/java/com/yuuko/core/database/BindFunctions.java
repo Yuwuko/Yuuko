@@ -19,19 +19,17 @@ public class BindFunctions {
      * Binds a particular module to a channel.
      * @param guildId the idLong of the guild.
      * @param channel the idLong of the channel.
-     * @param moduleName the name of the module.
+     * @param module the name of the module.
      * @return boolean
      */
-    public static int toggleBind(String guildId, String channel, String moduleName) {
+    public static int toggleBind(String guildId, String channel, String module) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
 
-            moduleName = TextUtilities.extractModuleName(moduleName, true, false); // Sometimes the input will be the whole classpath, this removes that junk and returns just the module name.
-
             stmt.setString(1, guildId);
             stmt.setString(2, channel);
-            stmt.setString(3, moduleName);
+            stmt.setString(3, module);
             ResultSet resultSet = stmt.executeQuery();
 
             MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
@@ -39,14 +37,14 @@ public class BindFunctions {
             if(!resultSet.next()) {
                 stmt2.setString(1, guildId);
                 stmt2.setString(2, channel);
-                stmt2.setString(3, moduleName);
+                stmt2.setString(3, module);
                 if(!stmt2.execute()) {
                     MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
                     return 0;
                 }
             }
 
-            return (deleteBindsRecord(guildId, channel, moduleName)) ? 1 : -1;
+            return (deleteBindsRecord(guildId, channel, module)) ? 1 : -1;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -58,18 +56,16 @@ public class BindFunctions {
      * Removes a binding record from the database.
      * @param guild String
      * @param channel String
-     * @param moduleName String
+     * @param module String
      * @return int
      */
-    private static boolean deleteBindsRecord(String guild, String channel, String moduleName) {
+    private static boolean deleteBindsRecord(String guild, String channel, String module) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
 
-            moduleName = TextUtilities.extractModuleName(moduleName, true, false);
-
             stmt.setString(1, guild);
             stmt.setString(2, channel);
-            stmt.setString(3, moduleName);
+            stmt.setString(3, module);
 
             if(!stmt.execute()) {
                 stmt.close();
@@ -124,18 +120,16 @@ public class BindFunctions {
     /**
      * Returns a formatted string of all of the guild's binds, which match a given module.
      * @param guild Guild
-     * @param moduleName String
+     * @param module String
      * @param delimiter String
      * @return String
      */
-    public static String getBindsByModule(Guild guild, String moduleName, String delimiter) {
+    public static String getBindsByModule(Guild guild, String module, String delimiter) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
 
-            moduleName = TextUtilities.extractModuleName(moduleName, true, false);
-
             stmt.setString(1, guild.getId());
-            stmt.setString(2, moduleName);
+            stmt.setString(2, module);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -170,8 +164,6 @@ public class BindFunctions {
     public static boolean checkBind(String guildId, String channelId, String moduleName) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
-
-            moduleName = TextUtilities.extractModuleName(moduleName, true, false);
 
             stmt.setString(1, guildId);
             stmt.setString(2, moduleName);

@@ -4,7 +4,6 @@ import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.utils.cache.SnowflakeCacheView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,15 +42,17 @@ public class GuildFunctions {
     /**
      * Adds a new guild to the database and initialises it's settings.
      *
-     * @param guildId the guild to add.
-     * @param guildName the name of the guild.
-     * @param guildRegion the region of the guild.
+     * @param guild Object of type Guild that is added to the database.
      * @return if the add was successful.
      */
-    public static boolean addNewGuild(String guildId, String guildName, String guildRegion) {
+    public static boolean addGuild(Guild guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ? WHERE `guildId` = ?")) {
+
+            String guildId = guild.getId();
+            String guildName = guild.getName();
+            String guildRegion = guild.getRegion().getName();
 
             if(!exists(guildId)) {
                 stmt.setString(1, guildId);
@@ -86,13 +87,7 @@ public class GuildFunctions {
      */
     public static boolean addGuilds(JDA jda) {
         try {
-            SnowflakeCacheView guilds = jda.getGuildCache();
-
-            for(Object guild : guilds) {
-                Guild matchedGuild = (Guild) guild;
-                addNewGuild(matchedGuild.getId(), matchedGuild.getName(), matchedGuild.getRegion().getName());
-            }
-
+            jda.getGuildCache().forEach(GuildFunctions::addGuild);
             return true;
 
         } catch (Exception ex) {

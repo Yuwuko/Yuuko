@@ -4,6 +4,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 29-04-2019_1
 + [~] Changed internals of how Modules and Commands are stored from List to Map which is much faster in all scenarios tested.
++ [~] Fixed small bug which caused bot lists to be a single event behind the actual state of the bot.
++ [~] Slightly refactored and modified several classes to make them more efficient.
 
 ## 27-04-2019_1
 + [~] Cleaned up the scheduler, combining some tasks and removing others altogether.

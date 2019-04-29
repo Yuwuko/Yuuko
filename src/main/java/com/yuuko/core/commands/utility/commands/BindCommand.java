@@ -23,10 +23,10 @@ public class BindCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String[] params = e.getCommand()[1].split("\\s+", 2);
+            String[] params = e.getCommand()[1].toLowerCase().split("\\s+", 2);
 
             if(!Configuration.MODULES.containsKey(params[0])) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid commands can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "commands** command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "help** command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

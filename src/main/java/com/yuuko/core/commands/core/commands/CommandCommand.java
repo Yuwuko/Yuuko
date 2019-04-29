@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommandCommand extends Command {
+    private static final List<String> commandWords = Arrays.asList("all", "*", "global", "globally", "everywhere", "anywhere");
 
     public CommandCommand() {
         super("command", CoreModule.class, 0, new String[]{"-command", "-command reset", "-command <command>", "-command <command> <channel>", "-command <command> reset"}, false, new Permission[]{Permission.MANAGE_SERVER});
@@ -30,9 +31,6 @@ public class CommandCommand extends Command {
         if(e.hasParameters()) {
             String[] input = e.getCommand()[1].toLowerCase().split("\\s+", 2);
             TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
-
-            List<String> commandWords = Arrays.asList("all", "*", "global", "globally", "everywhere", "anywhere");
-
             boolean valid = false;
 
             // Reset all commands.

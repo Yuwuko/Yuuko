@@ -13,17 +13,20 @@ import java.util.Arrays;
 
 public final class Utilities {
 
-
     /**
      * Updates stats for DiscordBotList
      */
     public static void updateDiscordBotList() {
+        final int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
+        final int shardCount = Configuration.BOT.getJDA().getShardInfo().getShardTotal();
+        final int guildCount = MetricsManager.getDiscordMetrics().GUILD_COUNT;
+
         try {
             if(Configuration.BOT_LIST != null) {
-                Configuration.BOT_LIST.setStats(Configuration.BOT.getJDA().getShardInfo().getShardId(), Configuration.BOT.getJDA().getShardInfo().getShardTotal(), MetricsManager.getDiscordMetrics().GUILD_COUNT);
+                Configuration.BOT_LIST.setStats(shardId, shardCount, guildCount);
             }
             if(Configuration.DIVINE_API != null && Configuration.DIVINE_API.canPost()) {
-                Configuration.DIVINE_API.postStats(MetricsManager.getDiscordMetrics().GUILD_COUNT);
+                Configuration.DIVINE_API.postStats(guildCount, shardCount);
             }
         } catch(Exception e) {
             e.printStackTrace();
