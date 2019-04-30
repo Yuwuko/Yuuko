@@ -33,7 +33,7 @@ public class GuildFunctions {
             return resultSet.next();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
 
         return true;
@@ -48,7 +48,7 @@ public class GuildFunctions {
     public static boolean addGuild(Guild guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ? WHERE `guildId` = ?")) {
+            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ?, `lastSync` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
             String guildId = guild.getId();
             String guildName = guild.getName();
@@ -74,7 +74,7 @@ public class GuildFunctions {
             return true;
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -91,7 +91,7 @@ public class GuildFunctions {
             return true;
 
         } catch (Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -113,7 +113,7 @@ public class GuildFunctions {
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -134,7 +134,7 @@ public class GuildFunctions {
             MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -171,7 +171,7 @@ public class GuildFunctions {
             return settings;
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return new ArrayList<>();
         }
     }
@@ -195,7 +195,7 @@ public class GuildFunctions {
             return resultSet.next() ? resultSet.getString(1) : null;
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return null;
         }
     }
@@ -220,8 +220,49 @@ public class GuildFunctions {
             return !stmt.execute();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
         }
     }
+
+    /**
+     * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
+     *
+     * @param guild the guild's id.
+     */
+    public static void cleanup(String guild) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guild);
+            stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Cleans up any guild's that didn't get synced within 24 hours of the last startup phase.
+     *
+     * @return boolean if the purge was successful.
+     */
+    public static boolean purgeGuilds() {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `lastSync` < DATE_SUB(NOW(), INTERVAL 24 HOUR)")) {
+
+            stmt.execute();
+            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
+
+            return true;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+
 }

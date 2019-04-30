@@ -2,7 +2,6 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
-import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.GuildFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
@@ -83,7 +82,7 @@ public class GenericGuildController {
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
-        DatabaseFunctions.cleanup(e.getGuild().getId());
+        GuildFunctions.cleanup(e.getGuild().getId());
         MetricsManager.getDiscordMetrics().update();
         Utilities.updateDiscordBotList();
     }

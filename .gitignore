@@ -4,7 +4,6 @@
 .mtj.tmp/
 
 # Package Files #
-!gradle-wrapper.jar
 *.war
 *.ear
 

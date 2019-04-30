@@ -19,7 +19,7 @@ import java.util.List;
 public class LondonUndergroundCommand extends Command {
 
     public LondonUndergroundCommand() {
-        super("londonunderground", WorldModule.class, 0, new String[]{"-londonunderground", "-londonunderground <min>"}, false, null);
+        super("underground", WorldModule.class, 0, new String[]{"-underground", "-underground <min>"}, false, null);
     }
 
     @Override

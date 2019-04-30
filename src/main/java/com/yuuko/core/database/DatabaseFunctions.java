@@ -143,25 +143,6 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
-     *
-     * @param guild the guild's id.
-     */
-    public static void cleanup(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?")) {
-
-            stmt.setString(1, guild);
-            stmt.execute();
-
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
      * Updates settings from channels that are deleted.
      *
      * @param setting the setting to cleanup.
