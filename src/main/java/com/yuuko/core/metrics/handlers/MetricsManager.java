@@ -18,8 +18,12 @@ public class MetricsManager {
         databaseMetrics.reset();
     }
 
-    public static void truncate() {
+    public static void truncateDatabase() {
         DatabaseFunctions.truncateDatabase();
+    }
+
+    public static void truncateMetrics(int shard) {
+        DatabaseFunctions.truncateMetrics(shard);
     }
 
     public static DatabaseMetrics getDatabaseMetrics() {

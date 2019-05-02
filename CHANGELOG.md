@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 30-04-2019_1
 + [~] Updated [__syncguilds__] to purge guilds from the database which are failed to sync within 24 hours (indicates redundant data)
 + [~] Refactored [__londonunderground__] to just [__underground__] for pretty obvious reasons. (invocation was too long)
++ [~] Who uses the main class anyway? (moved the remaining config code out of the main class)
 
 ## 29-04-2019_1
 + [~] Changed internals of how Modules and Commands are stored from List to Map which is much faster in all scenarios tested.

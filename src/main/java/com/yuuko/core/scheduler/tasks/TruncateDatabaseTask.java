@@ -7,6 +7,6 @@ public class TruncateDatabaseTask implements Task {
 
     @Override
     public void handle() {
-        MetricsManager.truncate();
+        MetricsManager.truncateDatabase();
     }
 }
