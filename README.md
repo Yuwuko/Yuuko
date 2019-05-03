@@ -12,11 +12,32 @@
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
-If you want to use the bot on your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link.
+If you want Yuuko your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her.
 
 ## Commands
 
-Visit [www.yuuko.info](https://www.yuuko.info) for a full list of commands!
+* **Core** <br>
+`settings` `help` `shards` `module` `about` `vote` `command`
+* **World** <br>
+`natgeo` `urban` `underground` `petition` `weather` `countdown` `tesco`
+* **NSFW** <br>
+`efukt` `neko`
+* **Moderation** <br>
+`nuke` `kick` `mute` `ban`
+* **Interaction** <br>
+`pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet`
+* **Utility** <br>
+`guild` `bind` `ping` `roles` `channel` `avatar` `user`
+* **Developer** <br>
+`setstatus` `reapi` `redb` `lavalink` `syncguilds`
+* **Audio** <br>
+`play` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
+* **Media** <br>
+`osu` `github` `kitsu`
+* **Fun** <br>
+`8ball` `spoilerify` `roll` `choose` `flip`
+
+Visit [www.yuuko.info](https://www.yuuko.info) for a detailed **full** list of commands!
 
 ---
 
