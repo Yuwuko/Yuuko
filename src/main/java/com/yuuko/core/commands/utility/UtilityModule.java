@@ -31,7 +31,7 @@ public class UtilityModule extends Module {
      * @param e MessageReactionAddEvent
      */
     public UtilityModule(MessageReactionAddEvent e) {
-        super("utility", false, null);
+        super("utility", false, new Command[]{});
 
         if(e.getReaction().getReactionEmote().getName().equals("📌")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
@@ -44,7 +44,7 @@ public class UtilityModule extends Module {
      * @param e MessageReactionRemoveEvent
      */
     public UtilityModule(MessageReactionRemoveEvent e) {
-        super("utility", false, null);
+        super("utility", false, new Command[]{});
 
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 
