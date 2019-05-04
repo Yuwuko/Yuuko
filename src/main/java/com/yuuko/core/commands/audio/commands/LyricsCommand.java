@@ -27,6 +27,7 @@ public class LyricsCommand extends Command {
             if(response != 200) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("There were no matches found for **" + e.getCommand()[1] + "**.");
                 MessageHandler.sendMessage(e, embed.build());
+                return;
             }
 
             JsonObject data = json.get("response").getAsJsonObject().get("hits").getAsJsonArray().get(0).getAsJsonObject().get("result").getAsJsonObject();
