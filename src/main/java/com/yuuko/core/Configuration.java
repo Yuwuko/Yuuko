@@ -41,7 +41,7 @@ import java.util.Set;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "04-05-2019_1";
+    public static final String VERSION = "05-05-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -70,8 +70,8 @@ public class Configuration {
 
             initialiseDatabase();
             registerShards();
-            initialiseAudio();
             loadMainConfiguration();
+            initialiseAudio();
             buildShardManager();
             synchronizeDatabase();
             initialiseCommands();
@@ -114,17 +114,6 @@ public class Configuration {
     }
 
     /**
-     * Initialises Lavalink and sets up the AudioManagerController.
-     * Must be done before buildShardManager().
-     */
-    private void initialiseAudio() {
-        LAVALINK = new LavalinkManager();
-        new AudioManagerController();
-
-        log.info("Initialised Lavalink and AudioManagerController.");
-    }
-
-    /**
      * Loads the main configuration file which includes information regarding author, author's website, support guild, the bot's ID and token.
      * Must be done before buildShardManager().
      */
@@ -138,6 +127,17 @@ public class Configuration {
         } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }
+    }
+
+    /**
+     * Initialises Lavalink and sets up the AudioManagerController.
+     * MUST be done before buildShardManager(), MUST be done AFTER loadMainConfiguration().
+     */
+    private void initialiseAudio() {
+        LAVALINK = new LavalinkManager();
+        new AudioManagerController();
+
+        log.info("Initialised Lavalink and AudioManagerController.");
     }
 
     /**
