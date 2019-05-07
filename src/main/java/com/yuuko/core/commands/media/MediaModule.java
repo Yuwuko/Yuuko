@@ -13,7 +13,6 @@ public class MediaModule extends Module {
             new KitsuCommand(),
             new OsuCommand(),
             new GithubCommand()
-            //new RedditCommand()
     };
 
     public MediaModule(MessageEvent e) {

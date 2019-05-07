@@ -19,7 +19,7 @@ public class SettingsCommand extends Command {
     private static final String[] settings = new String[]{
             "prefix",
             "deleteexecuted",
-            "commandlog",
+            "comlog",
             "nowplaying",
             "djmode",
             "newmember",
@@ -54,7 +54,7 @@ public class SettingsCommand extends Command {
                         return;
                     case "starboard": new StarboardSetting(e);
                         return;
-                    case "commandlog": new CommandLogSetting(e);
+                    case "comlog": new CommandLogSetting(e);
                         return;
                     case "modlog": new ModerationLogSetting(e);
                         return;
@@ -83,7 +83,7 @@ public class SettingsCommand extends Command {
                             .addField("newMember _(Channel Mention)_", (settingsList.get(4) != null ? e.getGuild().getTextChannelById(settingsList.get(4)).getAsMention() : "**__Disabled__**") + " - Where Yuuko will greet each new member that joins the server.", false)
                             .addField("newMember Message _(Raw)_", (settingsList.get(5) != null) ? settingsList.get(5) : "No message set. (Default)", false)
                             .addField("starboard _(Channel Mention)_", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "**__Disabled__**") + " - Where any messages reacted to with a ⭐ will be sent.", false)
-                            .addField("commandLog _(Channel Mention)_", (settingsList.get(7) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
+                            .addField("comLog _(Channel Mention)_", (settingsList.get(7) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
                             .addField("modLog _(Channel Mention)_", (settingsList.get(8) != null ? e.getGuild().getTextChannelById(settingsList.get(8)).getAsMention() : "**__Disabled__**") + " - Sends moderation events to a defined log channel.", false)
                         .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, commandModules.build());
