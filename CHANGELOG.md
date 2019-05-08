@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 08-05-2019_1
++ [~] Updated [__urban__] command to present the data in a better less intrusive way.
+
 ## 30-04-2019_1
 + [~] Updated [__syncguilds__] to purge guilds from the database which are failed to sync within 24 hours (indicates redundant data)
 + [~] Refactored [__londonunderground__] to just [__underground__] for pretty obvious reasons. (invocation was too long)
