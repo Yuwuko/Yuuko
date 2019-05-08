@@ -18,7 +18,8 @@ public class UtilityModule extends Module {
             new ChannelCommand(),
             new AvatarCommand(),
             new RolesCommand(),
-            new PingCommand()
+            new PingCommand(),
+            new ReactionRoleCommand()
     };
 
     public UtilityModule(MessageEvent e) {
