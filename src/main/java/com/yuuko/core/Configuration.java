@@ -41,7 +41,7 @@ import java.util.Set;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "08-05-2019_1";
+    public static final String VERSION = "09-05-2019_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;

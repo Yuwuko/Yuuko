@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '08-05-2019_1'
+version = '09-05-2019_1'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 

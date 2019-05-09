@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 08-05-2019_1
+# Yuuko 09-05-2019_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -27,7 +27,7 @@ If you want Yuuko your own server, follow [this](https://discordapp.com/oauth2/a
 * **Interaction** <br>
 `pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet`
 * **Utility** <br>
-`guild` `bind` `ping` `roles` `channel` `avatar` `user`
+`guild` `bind` `ping` `roles` `channel` `avatar` `user` `reactrole`
 * **Developer** <br>
 `setstatus` `reapi` `redb` `lavalink` `syncguilds`
 * **Audio** <br>

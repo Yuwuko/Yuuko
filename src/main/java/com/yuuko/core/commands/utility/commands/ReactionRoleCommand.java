@@ -7,7 +7,9 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.Role;
 
 import java.util.HashMap;
 
@@ -21,9 +23,10 @@ public class ReactionRoleCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        Message selectedMessage;
         final String channelId = e.getTextChannel().getId();
         String[] parameters = e.getCommand()[1].split("\\s+");
+        Message selectedMessage = selectedMessages.get(e.getChannel().getId());
+
 
         if(parameters.length < 2) {
             selectedMessage = e.getTextChannel().getHistoryBefore(e.getTextChannel().getLatestMessageId(), 10).complete().getRetrievedHistory().get(0);
@@ -63,5 +66,11 @@ public class ReactionRoleCommand extends Command {
             return;
         }
 
+        Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : null;
+        Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : null;
+
+        if(emote != null && role != null && selectedMessage != null) {
+            selectedMessage.addReaction(emote).queue();
+        }
     }
 }
