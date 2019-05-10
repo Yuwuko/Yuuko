@@ -2,6 +2,7 @@ package com.yuuko.core.database;
 
 import com.yuuko.core.database.connections.SettingsDatabaseConnection;
 import net.dv8tion.jda.core.entities.Emote;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class ReactionRoleFunctions {
      */
     public static boolean hasReactionRole(Message message, Emote emote) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `message` = ? AND `emote` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
@@ -45,7 +46,7 @@ public class ReactionRoleFunctions {
      */
     public static String selectReactionRole(Message message, Emote emote) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `role` FROM `ReactionRoles` WHERE `message` = ? AND `emote` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
@@ -61,18 +62,20 @@ public class ReactionRoleFunctions {
     /**
      * Adds a reaction role to the database and returns if the operation was successful.
      *
+     * @param guild guild the reaction role is attached to.
      * @param message message the reaction role is attached to.
      * @param emote the emote the reaction role is invoked by.
      * @param role the role that the reaction role will give to the user.
      * @return boolean if the operation was successful.
      */
-    public static boolean addReactionRole(Message message, Emote emote, Role role) {
+    public static boolean addReactionRole(Guild guild, Message message, Emote emote, Role role) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ReactionRoles` (`message`, `emote`, `role`) VALUES (?, ?, ?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ReactionRoles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
 
-            stmt.setString(1, message.getId());
-            stmt.setString(2, emote.getId());
-            stmt.setString(3, role.getId());
+            stmt.setString(1, guild.getId());
+            stmt.setString(2, message.getId());
+            stmt.setString(3, emote.getId());
+            stmt.setString(4, role.getId());
 
             return stmt.execute();
 
@@ -87,16 +90,14 @@ public class ReactionRoleFunctions {
      *
      * @param message message the reaction role is attached to.
      * @param emote the emote the reaction role is invoked by.
-     * @param role the role that the reaction role gives to the user.
      * @return boolean if the operation was successful.
      */
-    public static boolean removeReactionRole(Message message, Emote emote, Role role) {
+    public static boolean removeReactionRole(Message message, Emote emote) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `message` = ? AND `emote` = ? AND `role` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
-            stmt.setString(3, role.getId());
 
             return stmt.execute();
 

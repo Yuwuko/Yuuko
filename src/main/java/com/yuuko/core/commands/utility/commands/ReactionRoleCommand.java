@@ -3,6 +3,7 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
+import com.yuuko.core.database.ReactionRoleFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -23,15 +24,16 @@ public class ReactionRoleCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String channelId = e.getTextChannel().getId();
-        String[] parameters = e.getCommand()[1].split("\\s+");
-        Message selectedMessage = selectedMessages.get(e.getChannel().getId());
+        final String[] parameters = e.getCommand()[1].split("\\s+");
+        final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0);
+        final String action = parameters[0].toLowerCase();
+        Message selectedMessage = selectedMessages.get(e.getAuthor().getId());
 
-
-        if(parameters.length < 2) {
-            selectedMessage = e.getTextChannel().getHistoryBefore(e.getTextChannel().getLatestMessageId(), 10).complete().getRetrievedHistory().get(0);
-            selectedMessages.remove(channelId);
-            selectedMessages.put(channelId, selectedMessage);
+        // Params length less than 2 are considered `select` for latest message.
+        if(parameters.length < 2 && action.equals("select")) {
+            selectedMessage = e.getTextChannel().getHistoryBefore(e.getTextChannel().getLatestMessageId(), 1).complete().getRetrievedHistory().get(0);
+            selectedMessages.remove(e.getAuthor().getId());
+            selectedMessages.put(e.getAuthor().getId(), selectedMessage);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
@@ -41,7 +43,8 @@ public class ReactionRoleCommand extends Command {
             return;
         }
 
-        if(parameters.length < 3) {
+        // Params length less than 3 (but greater than 1) are considered `select` but with given message id.
+        if(parameters.length < 3 && action.equals("select")) {
             if(!Sanitiser.isNumber(parameters[1])) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + parameters[1] + "** isn't a valid message id.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -49,8 +52,8 @@ public class ReactionRoleCommand extends Command {
             }
 
             selectedMessage = e.getTextChannel().getMessageById(parameters[1]).complete();
-            selectedMessages.remove(channelId);
-            selectedMessages.put(channelId, selectedMessage);
+            selectedMessages.remove(e.getAuthor().getId());
+            selectedMessages.put(e.getAuthor().getId(), selectedMessage);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
@@ -60,6 +63,7 @@ public class ReactionRoleCommand extends Command {
             return;
         }
 
+        // Equivalent to a null check for selectedMessage
         if(!selectedMessages.containsKey(e.getChannel().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Selection").setDescription("You need to select a message using `" + e.getPrefix() + "reactrole select`, or `" + e.getPrefix() + "reactrole select <Message ID>` before you can add or remove a reaction role from it.");
             MessageHandler.sendMessage(e, embed.build());
@@ -69,8 +73,51 @@ public class ReactionRoleCommand extends Command {
         Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : null;
         Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : null;
 
-        if(emote != null && role != null && selectedMessage != null) {
-            selectedMessage.addReaction(emote).queue();
+        // Emote null check.
+        if(emote == null) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Emote").setDescription("I couldn't detect any tagged emotes in the command... Doing nothing.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
+
+        // Role null and action check.
+        if(role == null && !action.equals("rem")) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Role").setDescription("I couldn't detect any tagged roles in the command... Doing nothing.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
+
+        // Checks to make sure the emote both exists and is available on the server.
+        if(!e.getGuild().getEmoteCache().asList().contains(emote)) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Emote").setDescription("This emote is unavailable for use in a reaction role. Make sure that you are using emotes from this server.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
+
+        // Checks if the action is not `rem` before making role specific checks.
+        if(!action.equals("rem")) {
+            // Checks if the role exists, is available for use.
+            if(!e.getGuild().getRoleCache().asList().contains(role)) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("This role is unavailable for use in a reaction role. Make sure that you are using roles from this server.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+
+            // Checks if role is lower in the hierarchy than Yuuko's highest role.
+            if(role.getPositionRaw() >= highestSelfRole.getPositionRaw()) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("I cannot assign roles that are higher than or equal to my highest role in the hierarchy.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+        }
+
+        if(action.equals("add")) {
+            final Message finalMessage = selectedMessage;
+            selectedMessage.addReaction(emote).queue(
+                    s -> ReactionRoleFunctions.addReactionRole(e.getGuild(), finalMessage, emote, role),
+                    f -> MessageHandler.sendMessage(e, new EmbedBuilder().setTitle("Error").setDescription("I was unable to add a reaction to the selected message. :(").build()));
+        } else if(action.equals("rem")) {
+            ReactionRoleFunctions.removeReactionRole(selectedMessage, emote);
         }
     }
 }
