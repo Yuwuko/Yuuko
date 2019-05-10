@@ -10,16 +10,17 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.Role;
 
 import java.util.HashMap;
 
 public class ReactionRoleCommand extends Command {
 
-    private static final HashMap<String, Message> selectedMessages = new HashMap<>();
+    private static final HashMap<String, String> selectedMessages = new HashMap<>();
 
     public ReactionRoleCommand() {
-        super("reactrole", UtilityModule.class, 1, new String[]{"-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:> <@role>"}, false, new Permission[]{Permission.MANAGE_ROLES});
+        super("reactrole", UtilityModule.class, 1, new String[]{"-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"}, false, new Permission[]{Permission.MANAGE_ROLES});
     }
 
     @Override
@@ -27,17 +28,17 @@ public class ReactionRoleCommand extends Command {
         final String[] parameters = e.getCommand()[1].split("\\s+");
         final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0);
         final String action = parameters[0].toLowerCase();
-        Message selectedMessage = selectedMessages.get(e.getAuthor().getId());
+        String selectedMessageId = selectedMessages.get(e.getAuthor().getId());
 
         // Params length less than 2 are considered `select` for latest message.
         if(parameters.length < 2 && action.equals("select")) {
-            selectedMessage = e.getTextChannel().getHistoryBefore(e.getTextChannel().getLatestMessageId(), 1).complete().getRetrievedHistory().get(0);
+            selectedMessageId = e.getTextChannel().getHistoryBefore(e.getTextChannel().getLatestMessageId(), 1).complete().getRetrievedHistory().get(0).getId();
             selectedMessages.remove(e.getAuthor().getId());
-            selectedMessages.put(e.getAuthor().getId(), selectedMessage);
+            selectedMessages.put(e.getAuthor().getId(), selectedMessageId);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
-                    .setDescription(selectedMessage.toString() + " has been selected.")
+                    .setDescription(e.getTextChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
                     .addField("Options", e.getPrefix() + "reactrole add <:emote:> <@role>\n" + e.getPrefix() + "reactrole rem <:emote:> <@role>", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -51,27 +52,28 @@ public class ReactionRoleCommand extends Command {
                 return;
             }
 
-            selectedMessage = e.getTextChannel().getMessageById(parameters[1]).complete();
+            selectedMessageId = e.getTextChannel().getMessageById(parameters[1]).complete().getId();
             selectedMessages.remove(e.getAuthor().getId());
-            selectedMessages.put(e.getAuthor().getId(), selectedMessage);
+            selectedMessages.put(e.getAuthor().getId(), selectedMessageId);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
-                    .setDescription(selectedMessage.toString() + " has been selected.")
+                    .setDescription(e.getTextChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
                     .addField("Options", e.getPrefix() + "reactrole add <:emote:> <@role>\n" + e.getPrefix() + "reactrole rem <:emote:> <@role>", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
         // Equivalent to a null check for selectedMessage
-        if(!selectedMessages.containsKey(e.getChannel().getId())) {
+        if(!selectedMessages.containsKey(e.getAuthor().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Selection").setDescription("You need to select a message using `" + e.getPrefix() + "reactrole select`, or `" + e.getPrefix() + "reactrole select <Message ID>` before you can add or remove a reaction role from it.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
-        Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : null;
-        Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : null;
+        final Message finalMessage = e.getTextChannel().getMessageById(selectedMessageId).complete();
+        final Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : e.getGuild().getEmoteById((parameters.length > 1) ? parameters[1] : "0");
+        final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : e.getGuild().getRoleById((parameters.length > 2) ? parameters[2] : "0");
 
         // Emote null check.
         if(emote == null) {
@@ -81,7 +83,7 @@ public class ReactionRoleCommand extends Command {
         }
 
         // Role null and action check.
-        if(role == null && !action.equals("rem")) {
+        if(!action.equals("rem") && role == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Role").setDescription("I couldn't detect any tagged roles in the command... Doing nothing.");
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -112,12 +114,42 @@ public class ReactionRoleCommand extends Command {
         }
 
         if(action.equals("add")) {
-            final Message finalMessage = selectedMessage;
-            selectedMessage.addReaction(emote).queue(
-                    s -> ReactionRoleFunctions.addReactionRole(e.getGuild(), finalMessage, emote, role),
-                    f -> MessageHandler.sendMessage(e, new EmbedBuilder().setTitle("Error").setDescription("I was unable to add a reaction to the selected message. :(").build()));
+            finalMessage.addReaction(emote).queue(
+                    s -> {
+                        if(ReactionRoleFunctions.addReactionRole(e.getGuild(), finalMessage, emote, role)) {
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("I was successfully able to pair emote " + emote.getAsMention() + " to role " + role.getAsMention() + " for message " + finalMessage + ".");
+                            MessageHandler.sendMessage(e, embed.build());
+                        } else {
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Exists").setDescription("A reaction role using this message and emote combination already exists.");
+                            MessageHandler.sendMessage(e, embed.build());
+                        }
+                    },
+                    f -> {
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Error").setDescription("I was unable to add a reaction to the selected message.");
+                        MessageHandler.sendMessage(e, embed.build());
+                    });
         } else if(action.equals("rem")) {
-            ReactionRoleFunctions.removeReactionRole(selectedMessage, emote);
+            if(!ReactionRoleFunctions.hasReactionRole(finalMessage, emote)) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Reaction Role").setDescription("I couldn't find any reaction roles to remove associated with message " + finalMessage + " and emote " + emote.getAsMention() + "... Doing nothing.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+
+            for(MessageReaction messageReaction: finalMessage.getReactions()) {
+                if(messageReaction.getReactionEmote().getEmote().equals(emote)) {
+                    messageReaction.removeReaction().queue(
+                            s -> {
+                                ReactionRoleFunctions.removeReactionRole(finalMessage, emote);
+                                EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("I was successfully able to remove reaction role " + emote.getAsMention() + " from message " + finalMessage + ".");
+                                MessageHandler.sendMessage(e, embed.build());
+                            },
+                            f -> {
+                                EmbedBuilder embed = new EmbedBuilder().setTitle("Error").setDescription("I was unable to remove the reaction from the selected message.");
+                                MessageHandler.sendMessage(e, embed.build());
+                            });
+                    return;
+                }
+            }
         }
     }
 }

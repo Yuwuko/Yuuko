@@ -77,7 +77,11 @@ public class ReactionRoleFunctions {
             stmt.setString(3, emote.getId());
             stmt.setString(4, role.getId());
 
-            return stmt.execute();
+            if(!hasReactionRole(message, emote)) {
+                return !stmt.execute();
+            } else {
+                return false;
+            }
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -92,18 +96,16 @@ public class ReactionRoleFunctions {
      * @param emote the emote the reaction role is invoked by.
      * @return boolean if the operation was successful.
      */
-    public static boolean removeReactionRole(Message message, Emote emote) {
+    public static void removeReactionRole(Message message, Emote emote) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
-
-            return stmt.execute();
+            stmt.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return false;
         }
     }
 }
