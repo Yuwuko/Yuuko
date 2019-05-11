@@ -2,8 +2,14 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 11-05-2019_1
++ [+] Added react role database functions and event hooks.
++ [~] Finished [__reactrole__] command main code and guards.
+
 ## 08-05-2019_1
 + [~] Updated [__urban__] command to present the data in a better less intrusive way.
++ [~] Updated documentation to match the current state of Yuuko.
++ [+] Added base code for the [__reactrole__] command and feature in general.
 
 ## 30-04-2019_1
 + [~] Updated [__syncguilds__] to purge guilds from the database which are failed to sync within 24 hours (indicates redundant data)

@@ -2,6 +2,7 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.commands.core.settings.StarboardSetting;
 import com.yuuko.core.commands.utility.UtilityModule;
+import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
 import com.yuuko.core.database.ModuleFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
@@ -43,6 +44,10 @@ public class GenericMessageReactionController {
             if(e instanceof MessageReactionAddEvent && e.getReactionEmote().getName().equals("⭐")) {
                 StarboardSetting.execute((MessageReactionAddEvent) e);
             }
+
+            // Reaction Role
+            ReactionRoleCommand.processReaction(e);
+
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

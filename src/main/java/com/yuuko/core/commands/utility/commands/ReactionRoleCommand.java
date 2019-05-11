@@ -12,6 +12,9 @@ import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
 import java.util.HashMap;
 
@@ -150,6 +153,31 @@ public class ReactionRoleCommand extends Command {
                     return;
                 }
             }
+        }
+    }
+
+    /**
+     * Processes GenericMessageReaction events to apply or remove roles from users.
+     *
+     * @param e GenericMessageReactionEvent
+     */
+    public static void processReaction(GenericMessageReactionEvent e) {
+        final Emote emote = e.getReactionEmote().getEmote();
+
+        if(e instanceof MessageReactionAddEvent) {
+            e.getTextChannel().getMessageById(e.getMessageId()).queue(message -> {
+                if(ReactionRoleFunctions.hasReactionRole(message, emote)) {
+                    Role role = e.getGuild().getRoleById(ReactionRoleFunctions.selectReactionRole(message, emote));
+                    e.getGuild().getController().addSingleRoleToMember(e.getMember(), role).queue();
+                }
+            });
+        } else if(e instanceof MessageReactionRemoveEvent) {
+            e.getTextChannel().getMessageById(e.getMessageId()).queue(message -> {
+                if(ReactionRoleFunctions.hasReactionRole(message, emote)) {
+                    Role role = e.getGuild().getRoleById(ReactionRoleFunctions.selectReactionRole(message, emote));
+                    e.getGuild().getController().removeSingleRoleFromMember(e.getMember(), role).queue();
+                }
+            });
         }
     }
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class ReactionRoleFunctions {
 
@@ -51,7 +52,12 @@ public class ReactionRoleFunctions {
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
 
-            return stmt.executeQuery().getString(3);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                return rs.getString(1);
+            }
+
+            return null;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
