@@ -166,14 +166,14 @@ public class ReactionRoleCommand extends Command {
 
         if(e instanceof MessageReactionAddEvent) {
             e.getTextChannel().getMessageById(e.getMessageId()).queue(message -> {
-                if(ReactionRoleFunctions.hasReactionRole(message, emote)) {
+                if(message != null && emote != null && ReactionRoleFunctions.hasReactionRole(message, emote)) {
                     Role role = e.getGuild().getRoleById(ReactionRoleFunctions.selectReactionRole(message, emote));
                     e.getGuild().getController().addSingleRoleToMember(e.getMember(), role).queue();
                 }
             });
         } else if(e instanceof MessageReactionRemoveEvent) {
             e.getTextChannel().getMessageById(e.getMessageId()).queue(message -> {
-                if(ReactionRoleFunctions.hasReactionRole(message, emote)) {
+                if(message != null && emote != null && ReactionRoleFunctions.hasReactionRole(message, emote)) {
                     Role role = e.getGuild().getRoleById(ReactionRoleFunctions.selectReactionRole(message, emote));
                     e.getGuild().getController().removeSingleRoleFromMember(e.getMember(), role).queue();
                 }
