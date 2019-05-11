@@ -5,9 +5,11 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.DatabaseFunctions;
 import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.database.ReactionRoleFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
+import net.dv8tion.jda.core.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,8 @@ public class GenericMessageController {
     public GenericMessageController(GenericMessageEvent e) {
         if(e instanceof MessageReceivedEvent) {
             messageReceivedEvent((MessageReceivedEvent)e);
+        } else if(e instanceof MessageDeleteEvent ) {
+            messageDeleteEvent((MessageDeleteEvent)e);
         }
     }
 
@@ -58,6 +62,14 @@ public class GenericMessageController {
             // Do nothing, null pointers happen. (Should they though...)
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        }
+    }
+
+    private void messageDeleteEvent(MessageDeleteEvent e) {
+
+        // Reaction Role
+        if(ReactionRoleFunctions.hasReactionRole(e.getMessageId())) {
+            ReactionRoleFunctions.removeReactionRole(e.getMessageId());
         }
     }
 

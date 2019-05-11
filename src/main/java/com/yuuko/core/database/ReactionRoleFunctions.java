@@ -17,7 +17,7 @@ public class ReactionRoleFunctions {
     private static final Logger log = LoggerFactory.getLogger(ReactionRoleFunctions.class);
 
     /**
-     * Checks if a reaction role exists.
+     * Checks if a reaction role exists for the given emote and message.
      *
      * @param message message the reaction role is attached to.
      * @param emote the emote the reaction role is invoked by.
@@ -29,6 +29,26 @@ public class ReactionRoleFunctions {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
+
+            return stmt.executeQuery().next();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+    /**
+     * Checks if any reaction role for a given message exists.
+     *
+     * @param message message id.
+     * @return boolean if the message has a reaction role.
+     */
+    public static boolean hasReactionRole(String message) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ?")) {
+
+            stmt.setString(1, message);
 
             return stmt.executeQuery().next();
 
@@ -108,6 +128,23 @@ public class ReactionRoleFunctions {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Removes all reaction roles from the given message.
+     *
+     * @param message message id.
+     */
+    public static void removeReactionRole(String message) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ?")) {
+
+            stmt.setString(1, message);
             stmt.execute();
 
         } catch(Exception ex) {
