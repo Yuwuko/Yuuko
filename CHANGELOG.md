@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-05-13_1
++ [!] Switched version formatting to have the most significant number first.
++ [~] Refactored some of the newest code to be less verbose.
++ [~] Added guards for null pointer exceptions where reacts come but the message is somehow null.
+
 ## 11-05-2019_1
 + [+] Added react role database functions and event hooks.
 + [~] Finished [__reactrole__] command main code and guards.

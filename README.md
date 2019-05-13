@@ -8,11 +8,22 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 11-05-2019_1
+# Yuuko 2019-05-13_1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
 If you want Yuuko your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her.
+
+## Key Features
+
+#### Music
+Liven up your Discord server with music from a number of sources including YouTube, Twitch, SoundCloud or any HTTP source of audio such as online radio stations.
+
+#### Reaction Role
+Want your users to be able to select roles simply by reacting ro a message? With the reaction role feature you can assign server roles to reacts on messages... find out how [here](https://www.yuuko.info/tutorials.php)!
+
+#### Interaction
+Have you ever wanted to spice up your chatting experience with interactions. Yuuko has a range of different interaction commands available that allows you to express yourself in more than just words.
 
 ## Commands
 
