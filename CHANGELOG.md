@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-05-14_1
++ [~] Refactored packages for DatabaseConnections and DatabaseFunctions.
++ [~] Updated required permissions for [__reactrole__] to require MESSAGE_HISTORY.
+
 ## 2019-05-13_1
 + [!] Switched version formatting to have the most significant number first.
 + [~] Refactored some of the newest code to be less verbose.

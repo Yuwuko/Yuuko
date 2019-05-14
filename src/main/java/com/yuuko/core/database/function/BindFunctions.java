@@ -1,6 +1,6 @@
-package com.yuuko.core.database;
+package com.yuuko.core.database.function;
 
-import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.entities.Guild;

@@ -3,7 +3,7 @@ package com.yuuko.core.events.controllers;
 import com.yuuko.core.commands.core.settings.StarboardSetting;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
-import com.yuuko.core.database.ModuleFunctions;
+import com.yuuko.core.database.function.ModuleFunctions;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;

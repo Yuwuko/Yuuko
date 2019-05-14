@@ -3,7 +3,7 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
-import com.yuuko.core.database.ReactionRoleFunctions;
+import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -22,7 +22,7 @@ public class ReactionRoleCommand extends Command {
     private static final HashMap<String, String> selectedMessages = new HashMap<>();
 
     public ReactionRoleCommand() {
-        super("reactrole", UtilityModule.class, 1, new String[]{"-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"}, false, new Permission[]{Permission.MANAGE_ROLES});
+        super("reactrole", UtilityModule.class, 1, new String[]{"-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"}, false, new Permission[]{Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY});
     }
 
     @Override

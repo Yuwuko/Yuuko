@@ -1,7 +1,7 @@
 package com.yuuko.core.commands;
 
 import com.yuuko.core.MessageHandler;
-import com.yuuko.core.database.CommandFunctions;
+import com.yuuko.core.database.function.CommandFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;

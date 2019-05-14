@@ -4,7 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;

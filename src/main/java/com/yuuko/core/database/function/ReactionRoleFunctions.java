@@ -1,6 +1,6 @@
-package com.yuuko.core.database;
+package com.yuuko.core.database.function;
 
-import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;

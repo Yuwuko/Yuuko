@@ -6,11 +6,11 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
-import com.yuuko.core.database.DatabaseFunctions;
-import com.yuuko.core.database.GuildFunctions;
-import com.yuuko.core.database.connections.MetricsDatabaseConnection;
-import com.yuuko.core.database.connections.ProvisioningDatabaseConnection;
-import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.MetricsDatabaseConnection;
+import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
+import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.function.DatabaseFunctions;
+import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
@@ -41,7 +41,7 @@ import java.util.Set;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-05-13_1";
+    public static final String VERSION = "2019-05-14_1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -90,7 +90,7 @@ public class Configuration {
     }
 
     /**
-     * Initialises the database connections.
+     * Initialises the database function.
      * Must be done before registerShards().
      */
     private void initialiseDatabase() {

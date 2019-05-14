@@ -1,6 +1,6 @@
 package com.yuuko.core.metrics.handlers;
 
-import com.yuuko.core.database.DatabaseFunctions;
+import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.metrics.DatabaseMetrics;
 import com.yuuko.core.metrics.DiscordMetrics;
 import com.yuuko.core.metrics.EventMetrics;

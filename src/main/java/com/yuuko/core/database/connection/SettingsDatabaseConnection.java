@@ -1,4 +1,4 @@
-package com.yuuko.core.database.connections;
+package com.yuuko.core.database.connection;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
@@ -9,21 +9,21 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ProvisioningDatabaseConnection {
-    private static final Logger log = LoggerFactory.getLogger(ProvisioningDatabaseConnection.class);
+public class SettingsDatabaseConnection {
+    private static final Logger log = LoggerFactory.getLogger(SettingsDatabaseConnection.class);
     private static final BasicDataSource connectionPool = new BasicDataSource();
 
-    public ProvisioningDatabaseConnection() {
+    public SettingsDatabaseConnection() {
         try {
             log.trace("Invoking {}", this.getClass().getName());
-            BufferedReader configuration = new BufferedReader(new FileReader("./config/provisioning_configuration.txt"));
+            BufferedReader configuration = new BufferedReader(new FileReader("./config/settings_configuration.txt"));
             connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
             connectionPool.setUsername(configuration.readLine());
             connectionPool.setPassword(configuration.readLine());
             connectionPool.setUrl("jdbc:mysql://" + configuration.readLine() + "/" + configuration.readLine() + "?useSSL=true&serverTimezone=UTC");
-            connectionPool.setInitialSize(1);
-            connectionPool.setMaxTotal(10);
-            connectionPool.setMaxIdle(2);
+            connectionPool.setInitialSize(10);
+            connectionPool.setMaxTotal(100);
+            connectionPool.setMaxIdle(5);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
@@ -38,4 +38,3 @@ public class ProvisioningDatabaseConnection {
     }
 
 }
-

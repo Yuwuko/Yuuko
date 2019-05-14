@@ -2,8 +2,8 @@ package com.yuuko.core;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.database.BindFunctions;
-import com.yuuko.core.database.GuildFunctions;
+import com.yuuko.core.database.function.BindFunctions;
+import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.Sanitiser;

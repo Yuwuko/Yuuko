@@ -1,9 +1,9 @@
-package com.yuuko.core.database;
+package com.yuuko.core.database.function;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.connections.MetricsDatabaseConnection;
-import com.yuuko.core.database.connections.ProvisioningDatabaseConnection;
-import com.yuuko.core.database.connections.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.MetricsDatabaseConnection;
+import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
+import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import org.slf4j.Logger;
