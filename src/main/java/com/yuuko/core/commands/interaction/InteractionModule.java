@@ -21,7 +21,10 @@ public class InteractionModule extends Module {
             new TickleCommand(),
             new KissCommand(),
             new PetCommand(),
-            new BlushCommand()
+            new BlushCommand(),
+            new DanceCommand(),
+            new PatCommand(),
+            new KillCommand()
     };
 
     public InteractionModule(MessageEvent e) {

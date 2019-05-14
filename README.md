@@ -36,7 +36,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Moderation** <br>
 `nuke` `kick` `mute` `ban`
 * **Interaction** <br>
-`pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet`
+`pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`
 * **Utility** <br>
 `guild` `bind` `ping` `roles` `channel` `avatar` `user` `reactrole`
 * **Developer** <br>

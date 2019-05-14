@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-05-15_1
++ [+] Added [__dance__] interaction command as request by YuukoKanoe#2043
++ [+] Added [__pat__] interaction command as request by YuukoKanoe#2043
++ [+] Added [__kill__] interaction command as request by YuukoKanoe#2043
+
 ## 2019-05-14_1
 + [~] Refactored packages for DatabaseConnections and DatabaseFunctions.
 + [~] Updated required permissions for [__reactrole__] to require MESSAGE_HISTORY.
