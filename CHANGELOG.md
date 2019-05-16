@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-05-16_1
++ [~] Updated [__github__], [__kitsu__] and [__osu__] commands to experiment with new formatting.
++ [~] Added new experimental String formatter to avoid multiple method calls for formatting strings.
++ [~] Updated dependencies and updated code to prevent potential okhttp leaking.
+
 ## 2019-05-15_1
 + [+] Added [__dance__] interaction command as request by YuukoKanoe#2043
 + [+] Added [__pat__] interaction command as request by YuukoKanoe#2043

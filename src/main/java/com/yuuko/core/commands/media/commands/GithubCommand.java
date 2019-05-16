@@ -32,20 +32,28 @@ public class GithubCommand extends Command {
             return;
         }
 
-        String license = (json.get("license").isJsonNull() || json.get("license").getAsJsonObject().get("url").isJsonNull()) ? "" : "_License: [" + json.get("license").getAsJsonObject().get("name").getAsString() + "](" + json.get("license").getAsJsonObject().get("url").getAsString() + ")_";
+        final String license = (json.get("license").isJsonNull() || json.get("license").getAsJsonObject().get("url").isJsonNull()) ? "" : "_License: [" + json.get("license").getAsJsonObject().get("name").getAsString() + "](" + json.get("license").getAsJsonObject().get("url").getAsString() + ")_";
+        final String language = json.get("language").getAsString();
+        final String latestPush = ZonedDateTime.parse(json.get("pushed_at").getAsString()).format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma"));
+        final String stars = "[" + json.get("stargazers_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/stargazers)";
+        final String forks = "[" + json.get("forks_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/network/members)";
+        final String openIssues = "[" + json.get("open_issues_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/issues)";
+        final String pullRequests = "[link](https://github.com/" + json.get("full_name").getAsString() + "/pulls)";
+        final String commits = "[link](https://github.com/" + json.get("full_name").getAsString() + "/commits/" + json.get("default_branch").getAsString() + ")";
+        final String size = new BigDecimal(json.get("size").getAsInt()/1024.0).setScale(2, RoundingMode.HALF_UP) + "MB";
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("GitHub: " + json.get("full_name").getAsString(), json.get("html_url").getAsString())
                 .setThumbnail(json.get("owner").getAsJsonObject().get("avatar_url").getAsString())
                 .setDescription(json.get("description").getAsString() + " " + license)
-                .addField("Language", json.get("language").getAsString(),true)
-                .addField("Latest Push", ZonedDateTime.parse(json.get("pushed_at").getAsString()).format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")),true)
-                .addField("Stars", "[" + json.get("stargazers_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/stargazers)",true)
-                .addField("Forks", "[" + json.get("forks_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/network/members)",true)
-                .addField("Open Issues", "[" + json.get("open_issues_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/issues)",true)
-                .addField("Pull Requests", "[link](https://github.com/" + json.get("full_name").getAsString() + "/pulls)", true)
-                .addField("Commits", "[link](https://github.com/" + json.get("full_name").getAsString() + "/commits/" + json.get("default_branch").getAsString() + ")", true)
-                .addField("Size", new BigDecimal(json.get("size").getAsInt()/1024.0).setScale(2, RoundingMode.HALF_UP) + "MB",true)
+                .addField("Language", language,true)
+                .addField("Latest Push", latestPush,true)
+                .addField("Stars", stars,true)
+                .addField("Forks", forks,true)
+                .addField("Open Issues", openIssues,true)
+                .addField("Pull Requests", pullRequests, true)
+                .addField("Commits", commits, true)
+                .addField("Size", size,true)
                 .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }

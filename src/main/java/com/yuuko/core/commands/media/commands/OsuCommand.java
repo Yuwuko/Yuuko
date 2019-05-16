@@ -6,8 +6,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
+import com.yuuko.core.entity.StringFormatter;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
+import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -64,18 +66,27 @@ public class OsuCommand extends Command {
                 return;
             }
 
+            final String worldRank = new StringFormatter.Builder().string(data.get("pp_rank").getAsString()).formatIntegers().prepend("#").encase("```").build().toString();
+            final String countryRank = new StringFormatter.Builder().string(data.get("pp_country_rank").getAsString()).formatIntegers().build().toString();
+            final String accuracy = new StringFormatter.Builder().string(((data.get("accuracy").getAsDouble() > 0.0) ? (data.get("accuracy").getAsString().length() > 5) ? data.get("accuracy").getAsString().substring(0, 5) : data.get("accuracy").getAsString() : "0")).append("%").build().toString();
+            final String ssRanks = new StringFormatter.Builder().string(data.get("count_rank_ss").getAsString()).formatIntegers().build().toString();
+            final String sshRanks = new StringFormatter.Builder().string(data.get("count_rank_ssh").getAsString()).formatIntegers().build().toString();
+            final String sRanks = new StringFormatter.Builder().string(data.get("count_rank_s").getAsString()).formatIntegers().build().toString();
+            final String shRanks = new StringFormatter.Builder().string(data.get("count_rank_sh").getAsString()).formatIntegers().build().toString();
+            final String aRanks = new StringFormatter.Builder().string(data.get("count_rank_a").getAsString()).formatIntegers().build().toString();
+
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(data.get("username").getAsString() + " (" + data.get("country").getAsString() + ") | " + modeString)
                     .setThumbnail("https://vignette.wikia.nocookie.net/logopedia/images/d/d3/Osu%21Logo_%282015%29.png")
                     .setDescription("Account created **" + data.get("join_date").getAsString() + "**, amassing a total playcount of **" + data.get("playcount").getAsString() + "** over the course of **" + (data.get("total_seconds_played").getAsInt()/60)/60 + "** hours. In that time, also obtaining **" + data.get("pp_raw").getAsString() + "** of that delicious pp.")
-                    .addField("World Rank", "#" + data.get("pp_rank").getAsString(), true)
-                    .addField("Country Rank", "#" + data.get("pp_country_rank").getAsString(), true)
-                    .addField("Accuracy", (data.get("accuracy").getAsDouble() > 0.0) ? (data.get("accuracy").getAsString().length() > 5) ? data.get("accuracy").getAsString().substring(0, 5) + "%" : data.get("accuracy").getAsString() : "0" + "%", true)
-                    .addField("SS Ranks", data.get("count_rank_ss").getAsString(), true)
-                    .addField("SSH Ranks", data.get("count_rank_ssh").getAsString(), true)
-                    .addField("S Ranks", data.get("count_rank_s").getAsString(), true)
-                    .addField("SH Ranks", data.get("count_rank_sh").getAsString(), true)
-                    .addField("A Ranks", data.get("count_rank_a").getAsString(), true)
+                    .addField("World Rank", worldRank, true)
+                    .addField("Country Rank", TextUtilities.backtick(countryRank), true)
+                    .addField("Accuracy", TextUtilities.backtick(accuracy), true)
+                    .addField("SS Ranks", TextUtilities.backtick(ssRanks), true)
+                    .addField("SSH Ranks", TextUtilities.backtick(sshRanks), true)
+                    .addField("S Ranks", TextUtilities.backtick(sRanks), true)
+                    .addField("SH Ranks", TextUtilities.backtick(shRanks), true)
+                    .addField("A Ranks", TextUtilities.backtick(aRanks), true)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 

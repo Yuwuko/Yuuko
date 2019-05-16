@@ -151,4 +151,14 @@ public final class TextUtilities {
         return array.replace(",","\n").replaceAll("[\\[\\]]", "");
     }
 
+    /**
+     * Prepends and appends backticks to a string to reduce code duplication within methods.
+     *
+     * @param string input to backtick
+     * @return backticked string
+     */
+    public static String backtick(String string) {
+        return "```" + string + "```";
+    }
+
 }

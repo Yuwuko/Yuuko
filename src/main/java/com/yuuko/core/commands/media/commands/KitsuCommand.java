@@ -28,19 +28,29 @@ public class KitsuCommand extends Command {
 
             JsonObject data = json.getAsJsonArray("data").get(0).getAsJsonObject().get("attributes").getAsJsonObject(); // It's important to find the item in the array where the data is stored.
 
+            final String ageRating = data.get("ageRating").getAsString() + ": " + data.get("ageRatingGuide").getAsString();
+            final String episodes = data.get("episodeCount").getAsString();
+            final String episodeLength = data.get("episodeLength").getAsString() + " minutes";
+            final String totalLength = data.get("totalLength").getAsInt()/60 + " hours";
+            final String type = data.get("showType").getAsString();
+            final String approvalRating = data.get("averageRating").getAsString() + "%";
+            final String status = data.get("status").getAsString();
+            final String startDate = data.get("startDate").getAsString();
+            final String endDate = data.get("endDate").getAsString();
+
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), (data.get("youtubeVideoId").isJsonNull()) ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").toString())
                     .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
                     .setDescription(data.get("synopsis").getAsString())
-                    .addField("Age Rating", data.get("ageRating").getAsString() + ": " + data.get("ageRatingGuide").getAsString(), true)
-                    .addField("Episodes", data.get("episodeCount").getAsString(), true)
-                    .addField("Episode Length", data.get("episodeLength").getAsString() + " minutes", true)
-                    .addField("Total Length", data.get("totalLength").getAsInt()/60 + " hours", true)
-                    .addField("Type", data.get("showType").getAsString(), true)
-                    .addField("Kitsu Approval Rating", data.get("averageRating").getAsString() + "%", true)
-                    .addField("Status", data.get("status").getAsString(), true)
-                    .addField("Start Date", data.get("startDate").getAsString(), true)
-                    .addField("End Date", data.get("endDate").getAsString(), true)
+                    .addField("Age Rating", ageRating, true)
+                    .addField("Episodes", episodes, true)
+                    .addField("Episode Length", episodeLength, true)
+                    .addField("Total Length", totalLength, true)
+                    .addField("Type", type, true)
+                    .addField("Kitsu Approval Rating", approvalRating, true)
+                    .addField("Status", status, true)
+                    .addField("Start Date", startDate, true)
+                    .addField("End Date", endDate, true)
                     .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
