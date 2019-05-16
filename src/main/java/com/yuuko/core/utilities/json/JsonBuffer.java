@@ -31,7 +31,11 @@ public class JsonBuffer {
                 return;
             }
 
-            jsonOutput = response.body().string();
+            if(response.body() != null) {
+                jsonOutput = response.body().string();
+            }
+
+            response.close();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
