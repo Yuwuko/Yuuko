@@ -1,4 +1,4 @@
-package com.yuuko.core.entity;
+package com.yuuko.core.utilities;
 
 import java.util.Arrays;
 

@@ -2,86 +2,91 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-05-16_1
+##2019-05-18
++ [~] Modified how the [__urban__] command is categorised, making it nsfw.
++ [~] Refactored string formatter into appropriate package.
+
+
+## 2019-05-16
 + [~] Updated [__github__], [__kitsu__] and [__osu__] commands to experiment with new formatting.
 + [~] Added new experimental String formatter to avoid multiple method calls for formatting strings.
 + [~] Updated dependencies and updated code to prevent potential okhttp leaking.
 
-## 2019-05-15_1
+## 2019-05-15
 + [+] Added [__dance__] interaction command as request by YuukoKanoe#2043
 + [+] Added [__pat__] interaction command as request by YuukoKanoe#2043
 + [+] Added [__kill__] interaction command as request by YuukoKanoe#2043
 
-## 2019-05-14_1
+## 2019-05-14
 + [~] Refactored packages for DatabaseConnections and DatabaseFunctions.
 + [~] Updated required permissions for [__reactrole__] to require MESSAGE_HISTORY.
 
-## 2019-05-13_1
+## 2019-05-13
 + [!] Switched version formatting to have the most significant number first.
 + [~] Refactored some of the newest code to be less verbose.
 + [~] Added guards for null pointer exceptions where reacts come but the message is somehow null.
 
-## 11-05-2019_1
+## 11-05-2019
 + [+] Added react role database functions and event hooks.
 + [~] Finished [__reactrole__] command main code and guards.
 
-## 08-05-2019_1
+## 08-05-2019
 + [~] Updated [__urban__] command to present the data in a better less intrusive way.
 + [~] Updated documentation to match the current state of Yuuko.
 + [+] Added base code for the [__reactrole__] command and feature in general.
 
-## 30-04-2019_1
+## 30-04-2019
 + [~] Updated [__syncguilds__] to purge guilds from the database which are failed to sync within 24 hours (indicates redundant data)
 + [~] Refactored [__londonunderground__] to just [__underground__] for pretty obvious reasons. (invocation was too long)
 + [~] Who uses the main class anyway? (moved the remaining config code out of the main class)
 
-## 29-04-2019_1
+## 29-04-2019
 + [~] Changed internals of how Modules and Commands are stored from List to Map which is much faster in all scenarios tested.
 + [~] Fixed small bug which caused bot lists to be a single event behind the actual state of the bot.
 + [~] Slightly refactored and modified several classes to make them more efficient.
 
-## 27-04-2019_1
+## 27-04-2019
 + [~] Cleaned up the scheduler, combining some tasks and removing others altogether.
 + [~] Added function to sync the guilds database on startup in case the bot was added to a server in downtime.
 + [~] Migrated from HttpsUrlConnection to OkHttp for all API calls since it is regularly updated, modern and there and JDA already uses it.
 
-## 24-04-2019_1
+## 24-04-2019
 + [+] Added DivineDiscordBotList integration.
 + [~] Updated the shard statistics task to keep more accurate information since there were some discrepancies
 + [~] Added extra shard information such as channels and ping to increase the quality of the information on the website.
 
-## 19-04-2019_1
+## 19-04-2019
 + [+] Added lyrics command to enable users to lookup lyrics.
 + [+] Added urban dictionary command because it's both free and easy.
 + [~] Fixed some older bugs and dodgy commands.
 
-## 10-04-2019_1
+## 10-04-2019
 + [+] Added new database connection class for the automatic provisioning of shards.
 + [+] Added task to renew the shard's ID every 30 seconds to prevent it being cleaned up.
 + [~] Migrated settings database from the main Yuuko application server to the web server where the metrics database is hosted to prevent duplicate databases.
 
-## 09-04-2019_1
+## 09-04-2019
 + [~] Refactored AudioManagerManager to AudioManagerController for better naming conventions.
 + [~] Changed the way shards are provisioned to allow dockerisation of the whole process.
 
-## 31-03-2019_1
+## 31-03-2019
 + [~] Updated [__choose__] command to better represent a users choice and a basic statistic of that being chosen.
 + [~] Updated dependencies to their latest versions.
 + [~] Updated [__help__] to dynamically show the correct prefix for command usage and other such messages.
 
-## 28-03-2019_1
+## 28-03-2019
 + [!] Removed dbModuleName field from module superclass, renamed all of the columns in the database, removing the module part. (saves space)
 + [~] Updated [__help__] to show disabled commands as well as modules.
 + [~] Updated [__command__] to allow resetting of individual commands instead of just all of them.
 
-## 27-03-2019_1
+## 27-03-2019
 + [!] Added a subclass class to extend MessageReceivedEvent name MessageEvent allowing for much more powerful manipulation of events.
 + [~] Refactored CommandExecutor, every command, module and relevant utility to work with the new wrapper class.
 + [~] Refactored all module classes to be more memory aware instead of just arbitrarily creating new objects.
 + [~] Fixed [__command__] which was suffering from the after effects of a previous refactor that went unnoticed.
 + [~] Tweaked GenericGuildVoiceController to try and fix a bug which stops audio players from correctly being destroyed.
 
-## 22-03-2019_1
+## 22-03-2019
 + [+] Added [__petition__] command to return UK Parliament petitions by given petition ID.
 + [+] Added [__natgeo__] command to return the top headlines from National Geographic. (cause science and nature are rad)
 + [~] Refactored MessageHandler to core package and out of utilities.
@@ -89,45 +94,45 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated Event Metrics to include more specific data about which types of user is behind each event, also added messages sent metrics.
 + [~] Added new job/task to clear the database of anything over 6 hours old, after 6 hours of being online. (and then every 1 hour);
 
-## 19-03-2019_1
+## 19-03-2019
 + [~] Removed listening for numeric values between 1-10 and the word cancel in GenericMessageController and refactored the class.
 + [~] Altered how [__search__] works, you now need to use -search <value> or -search cancel to make the input less confusing.
 + [~] Refactored [__linestatus__] to [__londonunderground__], although it's longer, it's less ambiguous.
 
-## 17-03-2019_1
+## 17-03-2019
 + [~] Modified structure of settings, making them more like a command or module.
 + [~] Improved the JsonBuffer class to support unlimited extra headers, this required adding a RequestProperty class.
 + [~] Added a send permission check utility to MessageUtilities and every method in MessageHandler to prevent `WRITE_PERMISSION` exceptions.
 + [~] Finished translating MessageHandler.sendException() to log.error();.
 + [-] Removed unnecessary methods from MessageHandler, including sendException since it is now depreciated.
 
-## 13-03-2019_1
+## 13-03-2019
 + [+] Added support for custom welcome messages using the newMember setting.
 + [~] Refactored the command executor to make it easier to read and maintain, being such a core part of functionality.
 + [~] Added TextUtility function to be able to resolve tokenized messages containing the %user% and %guild% tokens.
 
-## 10-03-2019_1
+## 10-03-2019
 + [+] Added [__countdown__] command which allows you to check how long it is until a certain date. `format dd/MM/yyyy`
 + [~] Implemented new sanitiser function which allows date checking.
 + [~] Implemented new text utility which returns a verbose timestamp.
 
-## 09-03-2019_1
+## 09-03-2019
 + [~] Automated the [__help__] command so it doesn't need to be manually updated again.
 + [~] Changed the formatting for command usages.
 + [~] Made small changes to satisfy good practice and to improve code quality, such as parsing booleans instead of .equals("1");
 
-## 08-03-2019_1
+## 08-03-2019
 + [~] Refactored DatabaseFunctions into CommandFunctions, GuildFunctions and ModuleFunctions respectively to break up the code.
 + [~] Refactored key method names to be more consistent with my usual code style.
 
-## 06-03-2019_1
+## 06-03-2019
 + [+] Added [__command__] command which allows users to disable/enable individual commands either by channel or globally on a server.
 + [+] Added the base of a [__reddit__] command which will enable users to grab the latest post from any subreddit. (Soon)
 + [~] Refactored [__server__] to [__guild__] to reflect how it's officially named.
 + [~] Modified ping command to say pong like every other ping command ever.
 + [~] Fixed a small issue with stop commands being issued by the lonely check.
 
-## 03-03-2019_1
+## 03-03-2019
 + [+] Added [__ping__] command, because it seems like users appreciate small commands as much as larger ones with more information.
 + [~] Minor refactoring to metrics classes to make things a little more concise.
 
@@ -136,7 +141,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated Lavalink utilities to add quality of life changes.
 + [~] Fixed [__current__] command to actually show correct timestamp.
 
-## 24-02-2019_1
+## 24-02-2019
 + [~] Minor fixes to the spoilerify and eightball commands.
 + [~] Updated dependencies to their latest versions.
 
@@ -146,21 +151,21 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Updated dependencies to their latest versions.
 + [~] Minor refactoring to various commands.
 
-## 16-02-2019_1
+## 16-02-2019
 + [~] Fixed some minor bugs with the recent changes.
 + [~] Altered the new [__roles__] command to give it better guarding in guilds with many, many roles.
 + [~] Updated help command to reflect recent changes.
 
-## 14-02-2019_1
+## 14-02-2019
 + [+] Added [__roles__] command to return a list of the guild's roles to the user.
 + [~] Refactored moderation log setting to be more generic internally.
 
-## 12-02-2019_1
+## 12-02-2019
 + [+] Added [__avatar__] command so users can look at other user's avatars... but bigger.
 + [~] Updated moderation commands to check role hierarchy before trying to do anything.
 + [~] Changed Sanitiser to take an optional parameter to silence feedback from its results.
 
-## 11-02-2019_1
+## 11-02-2019
 + [~] Changed how the [__ban__] command works, it turns out I didn't realise what one of the ban parameters was this whole time.
 + [~] Updated dependencies, namely JDA 3.8.2 and okhttp 3.13.1.
 
@@ -175,32 +180,32 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Finished mod log, hooking nuke, ban, kick and mute instead of relying on JDA events.
 + [~] General refactoring and code maintenance.
 
-## 05-02-2019_1
+## 05-02-2019
 + [+] Added mod log setting, to log bans, unbans, message deletes, etc.
 + [~] Modified command log from the old inline `version` to use embeds instead.
 + [~] Changed timestamp of several commands to use embed timestamp feature instead of formatting own timestamp.
 
-## 02-02-2019_1
+## 02-02-2019
 + [~] Modified the [__ban__], [__kick__] and [__muted__] commands to allow input of ID strings instead of always tagging the user.
 + [~] Fixed small issue with the track scheduler which wouldn't reset the looping status when the player is destroyed and recreated.
 
-## 31-01-2019_1
+## 31-01-2019
 + [+] Added a vote command to show users where they can vote for the bot.
 + [~] Refactored [__embarrassed__] to [__blush__] for fairly obvious reasons.
 + [~] Refactored [__repeat__] command to [__loop__], also changed the functionality to loop the whole queue instead of just the current song.
 + [~] Updated the help command to reflect changes.
 
-## 26-01-2019_1
+## 26-01-2019
 + [~] Fixed a bug that stopped the modules command from working correctly. (just another missed rs.next() *sigh*)
 + [-] Removed the [__modules__] command and combined it with the regular module command to achieve dual functionality.
 
-## 25-01-2019_1
+## 25-01-2019
 + [+] Added [__kiss__], [__pet__], [__embarrassed__] interactions.
 + [+] Added an NSFW tag on a command by command basis instead of just per module.
 + [+] Added Lavalink utilities class to cut down on verbose chained methods.
 + [~] Fixed bug present since 21-01-2019_3 where bot wouldn't leave channel when everyone else has.
 
-## 22-01-2019_1
+## 22-01-2019
 + [+] Added [__lavalink__] command to be able to add/remove lavalink nodes on demand.
 + [~] General fixes, structural improvements and comments.
 
@@ -224,12 +229,12 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Moved all of the connection logic for all database functions into a try with resources structure to ensure the prevention of database lockups. (which happened today somehow)
 + [~] Migrated the GenericEventManager to use the correct logger.
 
-## 17-01-2019_1
+## 17-01-2019
 + [~] Refactored module package to commands to keep the intent of the package clear. (everyone knows what a command is, but maybe not module in this context)
 + [~] Refactored the isChannelNSFW function from the Module super class to the Utils class.
 + [~] Updated dependencies to their latest versions.
 
-## 15-01-2019_1
+## 15-01-2019
 + [~] Modified the [__bind__] command, where giving no parameters will returns a list of binds.
 + [~] Refactored all of the database bind functions from the DatabaseFunctions class into it's own respective class.
 
