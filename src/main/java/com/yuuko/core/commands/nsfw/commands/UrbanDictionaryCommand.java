@@ -1,4 +1,4 @@
-package com.yuuko.core.commands.world.commands;
+package com.yuuko.core.commands.nsfw.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.MessageHandler;
@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 public class UrbanDictionaryCommand extends Command {
 
     public UrbanDictionaryCommand() {
-        super("urban", WorldModule.class, 1, new String[]{"-urban <term>"}, false, null);
+        super("urban", WorldModule.class, 1, new String[]{"-urban <term>"}, true, null);
     }
 
     @Override

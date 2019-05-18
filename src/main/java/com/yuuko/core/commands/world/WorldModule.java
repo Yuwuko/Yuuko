@@ -14,7 +14,6 @@ public class WorldModule extends Module {
             new CountdownCommand(),
             new NationalGeographicCommand(),
             new UKParliamentPetitionCommand(),
-            new UrbanDictionaryCommand()
     };
 
     public WorldModule(MessageEvent e) {
