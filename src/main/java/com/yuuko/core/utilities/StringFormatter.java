@@ -2,7 +2,7 @@ package com.yuuko.core.utilities;
 
 import java.util.Arrays;
 
-public class StringFormatter {
+public final class StringFormatter {
 
     private String string = "";
 
