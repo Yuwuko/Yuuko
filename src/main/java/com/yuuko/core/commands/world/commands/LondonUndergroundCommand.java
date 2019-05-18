@@ -14,12 +14,13 @@ import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LondonUndergroundCommand extends Command {
 
     public LondonUndergroundCommand() {
-        super("underground", WorldModule.class, 0, new String[]{"-underground", "-underground <min>"}, false, null);
+        super("underground", WorldModule.class, 0, Arrays.asList("-underground", "-underground <min>"), false, null);
     }
 
     @Override
@@ -40,11 +41,11 @@ public class LondonUndergroundCommand extends Command {
                 }
             }
 
-            if(e.getCommand().length == 1) {
+            if(e.getCommand().size() == 1) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("London Underground Status")
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
                 for(LineManager line: lineManager) {
                     embed.addField(line.getName(), line.getLineStatusString(), true);
@@ -65,7 +66,7 @@ public class LondonUndergroundCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("London Underground Status (Minified)")
                         .addField("", reasons.toString(), false)
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
                 MessageHandler.sendMessage(e, embed.build());
             }

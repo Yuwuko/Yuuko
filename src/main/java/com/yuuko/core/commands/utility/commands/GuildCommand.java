@@ -10,11 +10,12 @@ import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class GuildCommand extends Command {
 
     public GuildCommand() {
-        super("guild", UtilityModule.class, 0, new String[]{"-guild"}, false, null);
+        super("guild", UtilityModule.class, 0, Arrays.asList("-guild"), false, null);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class GuildCommand extends Command {
                 .addField("Voice Channels", guild.getVoiceChannels().size()+"", true)
                 .addField("Roles", guild.getRoles().size()+"", true)
                 .addField("Emotes", emoteString.toString(), false)
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, commandInfo.build());
     }
 

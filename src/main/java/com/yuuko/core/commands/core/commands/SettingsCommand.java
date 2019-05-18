@@ -13,10 +13,11 @@ import net.dv8tion.jda.core.Permission;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SettingsCommand extends Command {
 
-    private static final String[] settings = new String[]{
+    private static final List<String> settings = Arrays.asList(
             "prefix",
             "deleteexecuted",
             "comlog",
@@ -25,20 +26,20 @@ public class SettingsCommand extends Command {
             "newmember",
             "starboard",
             "modlog"
-    };
+    );
 
     public SettingsCommand() {
-        super("settings", CoreModule.class, 0, new String[]{"-settings", "-settings <setting> <value>"}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("settings", CoreModule.class, 0, Arrays.asList("-settings", "-settings <setting> <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
             if(e.hasParameters()) {
-                String[] parameters = e.getCommand()[1].split("\\s+", 2);
+                String[] parameters = e.getCommand().get(1).split("\\s+", 2);
 
                 // Check to make sure the command is a valid command.
-                if(!Arrays.asList(settings).contains(parameters[0].toLowerCase())) {
+                if(!settings.contains(parameters[0].toLowerCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("_" + parameters[1].toUpperCase() + "_ is not a valid setting.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
@@ -85,7 +86,7 @@ public class SettingsCommand extends Command {
                             .addField("starboard _(Channel Mention)_", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "**__Disabled__**") + " - Where any messages reacted to with a ⭐ will be sent.", false)
                             .addField("comLog _(Channel Mention)_", (settingsList.get(7) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "**__Disabled__**") + " - Sends executed commands to a defined log channel.", false)
                             .addField("modLog _(Channel Mention)_", (settingsList.get(8) != null ? e.getGuild().getTextChannelById(settingsList.get(8)).getAsMention() : "**__Disabled__**") + " - Sends moderation events to a defined log channel.", false)
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, commandModules.build());
             }
 

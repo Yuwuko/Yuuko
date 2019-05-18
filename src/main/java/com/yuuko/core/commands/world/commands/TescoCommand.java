@@ -13,21 +13,22 @@ import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 
 public class TescoCommand extends Command {
 
     public TescoCommand() {
-        super("tesco", WorldModule.class, 1, new String[]{"-tesco <product>"}, false, null);
+        super("tesco", WorldModule.class, 1, Arrays.asList("-tesco <product>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + e.getCommand()[1].replace(" ", "%20") + "&offset=0&limit=1", "default", "default", new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getAsJsonObject();
+            JsonObject json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + e.getCommand().get(1).replace(" ", "%20") + "&offset=0&limit=1", "default", "default", new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getAsJsonObject();
             JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
             if(preData.get("results").getAsJsonArray().size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -42,7 +43,7 @@ public class TescoCommand extends Command {
                     .addField("Weight", new BigDecimal(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
                     .addField("Quantity", data.get("UnitOfSale").getAsString() + "", true)
                     .addField("Department", data.get("superDepartment").getAsString() + " (" + data.get("department").getAsString() + ")", true)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

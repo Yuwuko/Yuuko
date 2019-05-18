@@ -10,10 +10,12 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
 
+import java.util.Arrays;
+
 public class AvatarCommand extends Command {
 
     public AvatarCommand() {
-        super("avatar", UtilityModule.class, 1, new String[]{"-avatar @user", "-avatar <userId>"}, false, null);
+        super("avatar", UtilityModule.class, 1, Arrays.asList("-avatar @user", "-avatar <userId>"), false, null);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class AvatarCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(user.getName() + "#" + user.getDiscriminator() + "'s Avatar")
                 .setImage(user.getEffectiveAvatarUrl() + "?size=256&.gif")
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

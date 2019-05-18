@@ -8,10 +8,12 @@ import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class SkipCommand extends Command {
 
     public SkipCommand() {
-        super("skip", AudioModule.class, 0, new String[]{"-skip"}, false, null);
+        super("skip", AudioModule.class, 0, Arrays.asList("-skip"), false, null);
     }
 
     @Override

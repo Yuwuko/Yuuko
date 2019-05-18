@@ -11,10 +11,12 @@ import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 
+import java.util.Arrays;
+
 public class StopCommand extends Command {
 
     public StopCommand() {
-        super("stop", AudioModule.class, 0, new String[]{"-stop"}, false, null);
+        super("stop", AudioModule.class, 0, Arrays.asList("-stop"), false, null);
     }
 
     @Override

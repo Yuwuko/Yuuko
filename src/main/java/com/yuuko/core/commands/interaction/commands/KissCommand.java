@@ -8,27 +8,29 @@ import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class KissCommand extends Command {
 
-    private static final String[] interactionImage = new String[]{
+    private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/sGVgr74.gif",
             "https://i.imgur.com/TItLfqh.gif",
             "https://i.imgur.com/YbNv10F.gif",
             "https://i.imgur.com/wQjUdnZ.gif",
             "https://i.imgur.com/lmY5soG.gif"
-    };
+    );
 
     public KissCommand() {
-        super("kiss", InteractionModule.class, 1, new String[]{"-kiss @user"}, false, null);
+        super("kiss", InteractionModule.class, 1, Arrays.asList("-kiss @user"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         Member target = MessageUtilities.getMentionedMember(e, true);
         if(target != null) {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** kisses **" + target.getEffectiveName() + "**.").setImage(interactionImage[new Random().nextInt(interactionImage.length -1)]);
+            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** kisses **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(new Random().nextInt(interactionImage.size() -1)));
             MessageHandler.sendMessage(e, embed.build());
         }
     }

@@ -14,21 +14,22 @@ import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 public class UKParliamentPetitionCommand extends Command {
 
     public UKParliamentPetitionCommand() {
-        super("petition", WorldModule.class, 0, new String[]{"-petition <id>"}, false, null);
+        super("petition", WorldModule.class, 0, Arrays.asList("-petition <id>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
             if(e.hasParameters()) {
-                JsonObject json = new JsonBuffer("https://petition.parliament.uk/petitions/" + e.getCommand()[1] + ".json", "default", "default").getAsJsonObject();
+                JsonObject json = new JsonBuffer("https://petition.parliament.uk/petitions/" + e.getCommand().get(1) + ".json", "default", "default").getAsJsonObject();
 
                 if(json.has("error")) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Petition **_" + e.getCommand()[1] + "_** produced no results.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Petition **_" + e.getCommand().get(1) + "_** produced no results.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
@@ -57,7 +58,7 @@ public class UKParliamentPetitionCommand extends Command {
                         .addBlankField(true)
                         .addField("Government Response Summary", governmentResponse, false)
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             } else {
 
@@ -75,7 +76,7 @@ public class UKParliamentPetitionCommand extends Command {
                         .setTitle("UK Parliament Petitions", "https://petition.parliament.uk/petitions")
                         .setDescription("Here is a list of the top ten open petitions, use `" + Utilities.getServerPrefix(e.getGuild()) + "petition <id>` to get more information about a specific petition.")
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
                 int i = 0; // We only need 10 results,
                 for(JsonElement element: data) {

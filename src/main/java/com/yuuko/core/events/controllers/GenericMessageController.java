@@ -45,14 +45,14 @@ public class GenericMessageController {
             boolean executed = false;
 
             // Iterate through the command list, get the command commands constructor from the command class.
-            Command command = Configuration.COMMANDS.get(event.getCommand()[0]);
+            Command command = Configuration.COMMANDS.get(event.getCommand().get(0));
             if(command != null) {
                 command.getModule().getConstructor(MessageEvent.class).newInstance(event);
                 executed = true;
             }
 
             if(executed) {
-                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand()[0].toLowerCase());
+                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0).toLowerCase());
                 if(GuildFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
                     CommandLogSetting.execute(e, (System.nanoTime() - executionStart)/1000000.0);
                 }

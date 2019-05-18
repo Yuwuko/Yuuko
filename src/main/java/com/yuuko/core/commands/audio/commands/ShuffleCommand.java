@@ -8,10 +8,12 @@ import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class ShuffleCommand extends Command {
 
     public ShuffleCommand() {
-        super("shuffle", AudioModule.class, 0, new String[]{"-shuffle"}, false, null);
+        super("shuffle", AudioModule.class, 0, Arrays.asList("-shuffle"), false, null);
     }
 
     @Override

@@ -8,10 +8,12 @@ import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class LoopCommand extends Command {
 
     public LoopCommand() {
-        super("loop", AudioModule.class, 0, new String[]{"-loop"}, false, null);
+        super("loop", AudioModule.class, 0, Arrays.asList("-loop"), false, null);
     }
 
     @Override

@@ -5,7 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ##2019-05-18
 + [~] Modified how the [__urban__] command is categorised, making it nsfw.
 + [~] Refactored string formatter into appropriate package.
-
++ [~] Converted most of the string arrays (modules, commands, permissions) to lists, in most cases being more efficient.
 
 ## 2019-05-16
 + [~] Updated [__github__], [__kitsu__] and [__osu__] commands to experiment with new formatting.

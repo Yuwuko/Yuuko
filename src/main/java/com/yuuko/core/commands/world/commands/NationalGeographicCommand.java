@@ -13,11 +13,12 @@ import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 public class NationalGeographicCommand extends Command {
 
     public NationalGeographicCommand() {
-        super("natgeo", WorldModule.class, 0, new String[]{"-natgeo"}, false, null);
+        super("natgeo", WorldModule.class, 0, Arrays.asList("-natgeo"), false, null);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class NationalGeographicCommand extends Command {
                 .setDescription("Reporting our world daily: original nature and science news from [National Geographic](https://news.nationalgeographic.com). Powered by NewsAPI. \n\u200b")
                 .setThumbnail(articles.get(0).getAsJsonObject().get("urlToImage").getAsString())
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         for(JsonElement article: articles) {
             JsonObject articleAsJsonObject = article.getAsJsonObject();

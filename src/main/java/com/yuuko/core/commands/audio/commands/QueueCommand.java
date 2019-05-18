@@ -11,12 +11,13 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class QueueCommand extends Command {
 
     public QueueCommand() {
-        super("queue", AudioModule.class, 0, new String[]{"-queue"}, false, null);
+        super("queue", AudioModule.class, 0, Arrays.asList("-queue"), false, null);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class QueueCommand extends Command {
                             .setDescription(queue.toString())
                             .addField("In Queue", manager.scheduler.queue.size() + "", true)
                             .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
-                            .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                            .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains **0** tracks.");

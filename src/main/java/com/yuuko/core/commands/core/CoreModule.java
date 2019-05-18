@@ -6,8 +6,11 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.commands.*;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CoreModule extends Module {
-	private static final Command[] commands = new Command[]{
+	private static final List<Command> commands = Arrays.asList(
 			new AboutCommand(),
 			new SettingsCommand(),
 			new ModuleCommand(),
@@ -15,7 +18,7 @@ public class CoreModule extends Module {
 			new ShardsCommand(),
 			new VoteCommand(),
 			new CommandCommand()
-	};
+	);
 
 	public CoreModule(MessageEvent e) {
 		super("core", false, commands);

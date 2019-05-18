@@ -7,10 +7,12 @@ import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class SyncGuildsCommand extends Command {
 
     public SyncGuildsCommand() {
-        super("syncguilds", DeveloperModule.class, 0, new String[]{"-syncguilds"}, false, null);
+        super("syncguilds", DeveloperModule.class, 0, Arrays.asList("-syncguilds"), false, null);
     }
 
     @Override

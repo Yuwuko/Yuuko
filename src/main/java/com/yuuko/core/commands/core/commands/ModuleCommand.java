@@ -13,17 +13,18 @@ import net.dv8tion.jda.core.Permission;
 import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", CoreModule.class, 0, new String[]{"-module <module>"}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("module", CoreModule.class, 0, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String module = e.getCommand()[1].split("\\s+", 2)[0].toLowerCase();
+            String module = e.getCommand().get(1).split("\\s+", 2)[0].toLowerCase();
             String guild = e.getGuild().getId();
 
             if(!Configuration.MODULES.containsKey(module)) {
@@ -48,7 +49,7 @@ public class ModuleCommand extends Command {
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
         }
     }

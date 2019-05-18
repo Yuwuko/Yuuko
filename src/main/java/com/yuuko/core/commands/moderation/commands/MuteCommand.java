@@ -10,15 +10,17 @@ import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 
+import java.util.Arrays;
+
 public class MuteCommand extends Command {
 
     public MuteCommand() {
-        super("mute", ModerationModule.class, 1, new String[]{"-mute @user", "-mute @user <reason>"}, false, new Permission[]{Permission.VOICE_MUTE_OTHERS});
+        super("mute", ModerationModule.class, 1, Arrays.asList("-mute @user", "-mute @user <reason>"), false, Arrays.asList(Permission.VOICE_MUTE_OTHERS));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
+        String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {

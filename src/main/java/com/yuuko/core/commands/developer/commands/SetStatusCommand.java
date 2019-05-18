@@ -7,16 +7,18 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Game;
 
+import java.util.Arrays;
+
 public class SetStatusCommand extends Command {
 
     public SetStatusCommand() {
-        super("setstatus", DeveloperModule.class, 1, new String[]{"-setstatus <type> <status>"}, false, null);
+        super("setstatus", DeveloperModule.class, 1, Arrays.asList("-setstatus <type> <status>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
+            String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
 
             switch(commandParameters[0].toLowerCase()) {
                 case "playing":

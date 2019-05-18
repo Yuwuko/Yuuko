@@ -11,10 +11,12 @@ import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class AboutCommand extends Command {
 
     public AboutCommand() {
-        super("about", CoreModule.class, 0, new String[]{"-about"}, false, null);
+        super("about", CoreModule.class, 0, Arrays.asList("-about"), false, null);
     }
 
     @Override

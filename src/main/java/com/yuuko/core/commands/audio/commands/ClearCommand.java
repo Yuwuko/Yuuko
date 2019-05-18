@@ -10,13 +10,14 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class ClearCommand extends Command {
 
     public ClearCommand() {
-        super("clear", AudioModule.class, 0, new String[]{"-clear", "-clear <position>"}, false, null);
+        super("clear", AudioModule.class, 0, Arrays.asList("-clear", "-clear <position>"), false, null);
     }
 
     @Override
@@ -27,8 +28,8 @@ public class ClearCommand extends Command {
             if(e.hasParameters()) {
                 final int clearPos;
 
-                if(Sanitiser.isNumber(e.getCommand()[1])) {
-                    clearPos = Integer.parseInt(e.getCommand()[1]);
+                if(Sanitiser.isNumber(e.getCommand().get(1))) {
+                    clearPos = Integer.parseInt(e.getCommand().get(1));
                 } else {
                     return;
                 }

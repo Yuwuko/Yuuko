@@ -6,8 +6,11 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.interaction.commands.*;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class InteractionModule extends Module {
-    private static final Command[] commands = new Command[]{
+    private static final List<Command> commands = Arrays.asList(
             new PokeCommand(),
             new HugCommand(),
             new AttackCommand(),
@@ -25,7 +28,7 @@ public class InteractionModule extends Module {
             new DanceCommand(),
             new PatCommand(),
             new KillCommand()
-    };
+    );
 
     public InteractionModule(MessageEvent e) {
         super("interaction", false, commands);

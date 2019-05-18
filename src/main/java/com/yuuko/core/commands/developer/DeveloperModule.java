@@ -6,14 +6,17 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.developer.commands.*;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class DeveloperModule extends Module {
-    private static final Command[] commands = new Command[]{
+    private static final List<Command> commands = Arrays.asList(
             new SetStatusCommand(),
             new SyncGuildsCommand(),
             new ReloadApiCommand(),
             new LavalinkNodeCommand(),
             new ReloadDatabaseCommand()
-    };
+    );
 
     public DeveloperModule(MessageEvent e) {
         super("developer", false, commands);

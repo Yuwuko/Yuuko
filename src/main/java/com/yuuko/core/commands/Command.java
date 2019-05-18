@@ -10,17 +10,22 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class Command {
     private final String name;
     private final Class<?> module;
     private final int expectedParameters;
-    private final String[] usage;
-    private final Permission[] permissions;
+    private final List<String> usage;
+    private final List<Permission> permissions;
     private final boolean nsfw;
 
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
 
-    public Command(String name, Class<?> module, int expectedParameters, String[] usage, boolean nsfw, Permission[] permissions) {
+    private static final List<String> staticModules = Arrays.asList("core", "developer");
+
+    public Command(String name, Class<?> module, int expectedParameters, List<String> usage, boolean nsfw, List<Permission> permissions) {
         this.name = name;
         this.module = module;
         this.expectedParameters = expectedParameters;
@@ -45,7 +50,7 @@ public abstract class Command {
         return expectedParameters;
     }
 
-    public String[] getUsage() {
+    public List<String> getUsage() {
         return usage;
     }
 
@@ -53,13 +58,13 @@ public abstract class Command {
         return nsfw;
     }
 
-    public Permission[] getPermissions() {
+    public List<Permission> getPermissions() {
         return permissions;
     }
 
     public boolean isEnabled(MessageReceivedEvent e) {
         // Executor still checks core/developer, in this case simply return true.
-        if(getModuleName().equals("Core") || getModuleName().equals("Developer")) {
+        if(staticModules.contains(getModuleName())) {
             return true;
         }
 

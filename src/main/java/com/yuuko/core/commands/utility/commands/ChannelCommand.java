@@ -7,15 +7,17 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 
+import java.util.Arrays;
+
 public class ChannelCommand extends Command {
 
     public ChannelCommand() {
-        super("channel", UtilityModule.class, 3, new String[]{"-channel <action> <type> <name>", "-channel <action> <type> <name> <nsfw>"}, false, new Permission[]{Permission.MANAGE_CHANNEL});
+        super("channel", UtilityModule.class, 3, Arrays.asList("-channel <action> <type> <name>", "-channel <action> <type> <name> <nsfw>"), false, Arrays.asList(Permission.MANAGE_CHANNEL));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
+        String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
         String type = commandParameters[1].toLowerCase();
 
         // Checks the parameters of the command, if the first param is 'add' follow that flow, else if it's 'del' following that flow instead.

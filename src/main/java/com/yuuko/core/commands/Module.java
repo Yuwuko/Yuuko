@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Module {
@@ -13,11 +14,13 @@ public abstract class Module {
     private final boolean nsfw;
     private final Map<String, Command> commands = new HashMap<>();
 
-    public Module(String name, boolean isNSFW, Command[] commands) {
+    public Module(String name, boolean isNSFW, List<Command> commands) {
         this.name = name;
         this.nsfw = isNSFW;
-        for(Command command: commands) {
-            this.commands.put(command.getName(), command);
+        if(commands != null) {
+            for(Command command : commands) {
+                this.commands.put(command.getName(), command);
+            }
         }
     }
 

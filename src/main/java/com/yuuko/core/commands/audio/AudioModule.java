@@ -6,8 +6,11 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.commands.*;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class AudioModule extends Module {
-    private static final Command[] commands = new Command[]{
+    private static final List<Command> commands = Arrays.asList(
             new PlayCommand(),
             new PauseCommand(),
             new StopCommand(),
@@ -22,7 +25,7 @@ public class AudioModule extends Module {
             new LoopCommand(),
             new SeekCommand(),
             new LyricsCommand()
-    };
+    );
 
     public AudioModule(MessageEvent e) {
         super("audio", false, commands);

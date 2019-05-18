@@ -11,6 +11,7 @@ import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,15 +19,15 @@ public class SearchCommand extends Command {
     private static final HashMap<String, List<SearchResult>> audioSearchResults = new HashMap<>();
 
     public SearchCommand() {
-        super("search", AudioModule.class, 1, new String[]{"-search <term>", "-search <value>", "-search cancel"}, false, null);
+        super("search", AudioModule.class, 1, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
             // If audioSearchResults contains the authors user ID and the command matches either 1-10 or "cancel".
-            if(audioSearchResults.containsKey(e.getAuthor().getId()) && (e.getCommand()[1].matches("^[0-9]{1,2}$") || e.getCommand()[1].equals("cancel"))) {
-                if(e.getCommand()[1].equalsIgnoreCase("cancel")) {
+            if(audioSearchResults.containsKey(e.getAuthor().getId()) && (e.getCommand().get(1).matches("^[0-9]{1,2}$") || e.getCommand().get(1).equals("cancel"))) {
+                if(e.getCommand().get(1).equalsIgnoreCase("cancel")) {
                     audioSearchResults.remove(e.getAuthor().getId());
 
                     EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
@@ -34,12 +35,12 @@ public class SearchCommand extends Command {
                     return;
                 }
 
-                if(Sanitiser.isNumber(e.getCommand()[1])) {
-                    final int value = Integer.parseInt(e.getCommand()[1]);
+                if(Sanitiser.isNumber(e.getCommand().get(1))) {
+                    final int value = Integer.parseInt(e.getCommand().get(1));
                     if(value < 11 && value > 0) {
-                        String videoId = audioSearchResults.get(e.getAuthor().getId()).get(Integer.parseInt(e.getCommand()[1]) - 1).getId().getVideoId();
+                        String videoId = audioSearchResults.get(e.getAuthor().getId()).get(Integer.parseInt(e.getCommand().get(1)) - 1).getId().getVideoId();
                         MessageEvent event = new MessageEvent(e);
-                        event.setCommand(new String[]{"play", "https://www.youtube.com/watch?v=" + videoId});
+                        event.setCommand(Arrays.asList("play", "https://www.youtube.com/watch?v=" + videoId));
                         new PlayCommand().onCommand(event);
                         audioSearchResults.remove(e.getAuthor().getId());
                         return;
@@ -73,9 +74,9 @@ public class SearchCommand extends Command {
             audioSearchResults.put(e.getAuthor().getId(), results);
 
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setAuthor("Search results for " + e.getCommand()[1] + ".", null)
+                    .setAuthor("Search results for " + e.getCommand().get(1) + ".", null)
                     .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());
 
         } catch(Exception ex) {

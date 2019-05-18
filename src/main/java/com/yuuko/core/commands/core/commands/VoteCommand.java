@@ -7,10 +7,12 @@ import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class VoteCommand extends Command {
 
     public VoteCommand() {
-        super("vote", CoreModule.class, 0, new String[]{"-vote"}, false, null);
+        super("vote", CoreModule.class, 0, Arrays.asList("-vote"), false, null);
     }
 
     @Override

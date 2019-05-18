@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.SelfUser;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.util.Arrays;
+import java.util.List;
 
 public final class Utilities {
 
@@ -69,8 +69,8 @@ public final class Utilities {
      * @param permissions Permission[]
      * @return String
      */
-    public static String getCommandPermissions(Permission[] permissions) {
-        return Arrays.toString(permissions).replace("[", "").replace("]", "");
+    public static String getCommandPermissions(List<Permission> permissions) {
+        return permissions.toString().replace("[", "").replace("]", "");
     }
 
     /**

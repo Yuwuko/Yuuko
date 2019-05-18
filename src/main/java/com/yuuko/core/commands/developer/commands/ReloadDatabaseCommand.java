@@ -8,10 +8,12 @@ import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class ReloadDatabaseCommand extends Command {
 
     public ReloadDatabaseCommand() {
-        super("redb", DeveloperModule.class, 0, new String[]{"-redb"}, false, null);
+        super("redb", DeveloperModule.class, 0, Arrays.asList("-redb"), false, null);
     }
 
     @Override

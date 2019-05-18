@@ -4,10 +4,13 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MessageEvent extends MessageReceivedEvent {
 
     private String prefix;
-    private String[] command;
+    private List<String> command;
 
     public MessageEvent(MessageReceivedEvent event) {
         super(event.getJDA(), event.getResponseNumber(), event.getMessage());
@@ -16,7 +19,7 @@ public class MessageEvent extends MessageReceivedEvent {
         this.prefix = message.toLowerCase().startsWith(Utilities.getServerPrefix(getGuild())) ? Utilities.getServerPrefix(getGuild()) : (message.toLowerCase().startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "");
 
         if(!prefix.equals("")) {
-            this.command = message.substring(prefix.length()).split("\\s+", 2);
+            this.command = Arrays.asList(message.substring(prefix.length()).split("\\s+", 2));
         }
     }
 
@@ -24,17 +27,17 @@ public class MessageEvent extends MessageReceivedEvent {
         return prefix;
     }
 
-    public String[] getCommand() {
+    public List<String> getCommand() {
         return command;
     }
 
     // Only used in very specific scenarios.
-    public void setCommand(String[] command) {
+    public void setCommand(List<String> command) {
         this.command = command;
     }
 
     public boolean hasParameters() {
-        return command.length > 1;
+        return command.size() > 1;
     }
 
 }

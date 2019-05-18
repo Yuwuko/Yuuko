@@ -8,18 +8,20 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class CoinFlipCommand extends Command {
 
-    private static final String[] responses = new String[]{
+    private static final List<String> responses = Arrays.asList(
             "Heads",
             "Tails",
             "Edge"
-    };
+    );
 
     public CoinFlipCommand() {
-        super("flip", FunModule.class, 0, new String[]{"-flip"}, false, null);
+        super("flip", FunModule.class, 0, Arrays.asList("-flip"), false, null);
     }
 
     @Override
@@ -27,9 +29,9 @@ public class CoinFlipCommand extends Command {
         int rng = new Random().nextInt(6000);
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Coin Flip")
-                .setDescription((rng == 0) ? responses[2] : (rng < 3000) ? responses[0] : responses[1])
+                .setDescription((rng == 0) ? responses.get(2) : (rng < 3000) ? responses.get(0) : responses.get(1))
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

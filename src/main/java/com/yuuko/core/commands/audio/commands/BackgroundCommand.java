@@ -16,10 +16,12 @@ import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.Arrays;
+
 public class BackgroundCommand extends Command {
 
     public BackgroundCommand() {
-        super("background", AudioModule.class, 0, new String[]{"-background", "-background <url>", "-background <term>"}, false, null);
+        super("background", AudioModule.class, 0, Arrays.asList("-background", "-background <url>", "-background <term>"), false, null);
     }
 
     @Override
@@ -30,11 +32,11 @@ public class BackgroundCommand extends Command {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
             manager.player.setPaused(false);
 
-            if(e.getCommand()[1].startsWith("https://") || e.getCommand()[1].startsWith("http://")) {
-                setAndPlay(manager, e, e.getCommand()[1]);
+            if(e.getCommand().get(1).startsWith("https://") || e.getCommand().get(1).startsWith("http://")) {
+                setAndPlay(manager, e, e.getCommand().get(1));
 
             } else {
-                String trackUrl = YouTubeSearchHandler.search(e.getCommand()[1]);
+                String trackUrl = YouTubeSearchHandler.search(e.getCommand().get(1));
 
                 if(trackUrl == null) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");

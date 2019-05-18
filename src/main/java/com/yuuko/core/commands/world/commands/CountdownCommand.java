@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -35,31 +36,31 @@ public class CountdownCommand extends Command {
     }};
 
     public CountdownCommand() {
-        super("countdown", WorldModule.class, 1, new String[]{"-countdown <date>", "-countdown <event>"}, false, null);
+        super("countdown", WorldModule.class, 1, Arrays.asList("-countdown <date>", "-countdown <event>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            if(dates.containsKey(e.getCommand()[1])) {
+            if(dates.containsKey(e.getCommand().get(1))) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Time Until " + e.getCommand()[1].toUpperCase())
-                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(e.getCommand()[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setTitle("Time Until " + e.getCommand().get(1).toUpperCase())
+                        .setDescription(TextUtilities.getTimestampVerbose(dates.get(e.getCommand().get(1)).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                if(!Sanitiser.isDate(e.getCommand()[1])) {
+                if(!Sanitiser.isDate(e.getCommand().get(1))) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The date that was input is invalid, required format is `dd/MM/yyyy`.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Time Until " + e.getCommand()[1])
-                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(e.getCommand()[1]).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
+                        .setTitle("Time Until " + e.getCommand().get(1))
+                        .setDescription(TextUtilities.getTimestampVerbose(new SimpleDateFormat("dd/MM/yyyy").parse(e.getCommand().get(1)).toInstant().toEpochMilli() - Instant.now().toEpochMilli()))
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             }
         } catch(Exception ex) {

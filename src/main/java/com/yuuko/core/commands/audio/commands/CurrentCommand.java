@@ -11,10 +11,12 @@ import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class CurrentCommand extends Command {
 
     public CurrentCommand() {
-        super("current", AudioModule.class, 0, new String[]{"-current"}, false, null);
+        super("current", AudioModule.class, 0, Arrays.asList("-current"), false, null);
     }
 
     @Override
@@ -31,7 +33,7 @@ public class CurrentCommand extends Command {
                     .setThumbnail(imageUrl)
                     .addField("Duration", TextUtilities.getTimestamp(LavalinkUtilities.getTrackPosition(e.getGuild())) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, queuedTrack.build());
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a track currently playing.");

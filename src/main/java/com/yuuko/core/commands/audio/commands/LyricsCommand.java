@@ -12,26 +12,29 @@ import com.yuuko.core.utilities.json.RequestProperty;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.jsoup.Jsoup;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class LyricsCommand extends Command {
 
     public LyricsCommand() {
-        super("lyrics", AudioModule.class, 1, new String[]{"-lyrics <song|artist>"}, false, null);
+        super("lyrics", AudioModule.class, 1, Arrays.asList("-lyrics <song|artist>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://api.genius.com/search?q=" + e.getCommand()[1].replace(" ", "%20"), "default", "default", new RequestProperty("Authorization", "Bearer " + Utilities.getApiKey("genius"))).getAsJsonObject();
+            JsonObject json = new JsonBuffer("https://api.genius.com/search?q=" + e.getCommand().get(1).replace(" ", "%20"), "default", "default", new RequestProperty("Authorization", "Bearer " + Utilities.getApiKey("genius"))).getAsJsonObject();
             int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
 
             if(response != 200) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("There were no matches found for **" + e.getCommand()[1] + "**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("There were no matches found for **" + e.getCommand().get(1) + "**.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
             JsonObject data = json.get("response").getAsJsonObject().get("hits").getAsJsonArray().get(0).getAsJsonObject().get("result").getAsJsonObject();
-            String[] lyricsArray = null;
+            List<String> lyricsList = null;
             String lyrics = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics").get(0).text().replace("[", "\n\n[").replace("]", "]\n");
             int noInfo = lyrics.indexOf("\n \n\n");
 
@@ -40,24 +43,24 @@ public class LyricsCommand extends Command {
             }
 
             if(lyrics.length() > 2048) {
-                lyricsArray = new String[]{lyrics.substring(0, 2047), lyrics.substring(2047)};
+                lyricsList = Arrays.asList(lyrics.substring(0, 2047), lyrics.substring(2047));
             }
 
-            if(lyricsArray == null) {
+            if(lyricsList == null) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setAuthor("Lyrics")
                         .setTitle(data.get("full_title").getAsString())
                         .setThumbnail(data.get("header_image_url").getAsString())
                         .setDescription(lyrics)
-                        .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                for(int i = 0; i < lyricsArray.length; i++) {
+                for(int i = 0; i < lyricsList.size() ; i++) {
                     EmbedBuilder embed = new EmbedBuilder()
                             .setAuthor("Lyrics")
-                            .setTitle(data.get("full_title").getAsString() + " (" + (i+1) + "/" + lyricsArray.length + ")")
+                            .setTitle(data.get("full_title").getAsString() + " (" + (i+1) + "/" + lyricsList.size() + ")")
                             .setThumbnail(data.get("header_image_url").getAsString())
-                            .setDescription(lyricsArray[i]);
+                            .setDescription(lyricsList.get(i));
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }

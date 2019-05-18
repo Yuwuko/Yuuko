@@ -10,10 +10,12 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class LastCommand extends Command {
 
 	public LastCommand() {
-		super("last", AudioModule.class, 0, new String[]{"-last"}, false, null);
+		super("last", AudioModule.class, 0, Arrays.asList("-last"), false, null);
 	}
 
 	@Override
@@ -31,7 +33,7 @@ public class LastCommand extends Command {
 						.setThumbnail(imageUrl)
 						.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
 						.addField("Channel", track.getInfo().author, true)
-						.setFooter(Configuration.STANDARD_STRINGS[0], Configuration.BOT.getAvatarUrl());
+						.setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
 				MessageHandler.sendMessage(e, queuedTrack.build());
 			} else {
 				EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");

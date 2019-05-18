@@ -8,14 +8,17 @@ import com.yuuko.core.commands.nsfw.commands.NekoCommand;
 import com.yuuko.core.commands.nsfw.commands.UrbanDictionaryCommand;
 import com.yuuko.core.events.extensions.MessageEvent;
 
-public class NSFWModule extends Module {
-    private static final Command[] commands = new Command[]{
+import java.util.Arrays;
+import java.util.List;
+
+public class NsfwModule extends Module {
+    private static final List<Command> commands = Arrays.asList(
             new EfuktCommand(),
             new NekoCommand(),
             new UrbanDictionaryCommand()
-    };
+    );
 
-    public NSFWModule(MessageEvent e) {
+    public NsfwModule(MessageEvent e) {
         super("nsfw", true, commands);
         new CommandExecutor(e, this);
     }

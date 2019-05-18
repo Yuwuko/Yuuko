@@ -17,13 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
-    private static final String[] disconnectedCommands = new String[]{"play", "search", "background", "lyrics"};
-    private static final String[] notInVoiceCommands = new String[] {"lyrics", "current", "last", "queue"};
-    private static final String[] nonDJModeCommands = new String[]{"queue", "current", "last"};
+    private static final List<String> disconnectedCommands = Arrays.asList("play", "search", "background", "lyrics");
+    private static final List<String> notInVoiceCommands = Arrays.asList("lyrics", "current", "last", "queue");
+    private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last");
 
     public CommandExecutor(MessageEvent e, Module module) {
         // Is the event null?
@@ -31,7 +32,7 @@ public class CommandExecutor {
             return;
         }
 
-        Command command = module.getCommands().get(e.getCommand()[0]);
+        Command command = module.getCommands().get(e.getCommand().get(0));
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
@@ -108,14 +109,14 @@ public class CommandExecutor {
      */
     private boolean checkAudio(MessageEvent e) {
         // Is the member /not/ in a voice channel?
-        if(!e.getMember().getVoiceState().inVoiceChannel() && !Arrays.asList(notInVoiceCommands).contains(e.getCommand()[0])) {
+        if(!e.getMember().getVoiceState().inVoiceChannel() && !notInVoiceCommands.contains(e.getCommand().get(0))) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
             MessageHandler.sendMessage(e, embed.build());
             return false;
         }
 
         // Is Lavalink /not/ connected and does the command require it to be?
-        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !Arrays.asList(disconnectedCommands).contains(e.getCommand()[0])) {
+        if(Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(e.getCommand().get(0))) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(e, embed.build());
             return false;
@@ -132,7 +133,7 @@ public class CommandExecutor {
         }
 
         // Does the member /not/ have the DJ role and if not, is the command a DJ mode command?
-        if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !Arrays.asList(nonDJModeCommands).contains(e.getCommand()[0])) {
+        if(e.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !nonDJModeCommands.contains(e.getCommand().get(0))) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
             MessageHandler.sendMessage(e, embed.build());
             return false;
@@ -148,13 +149,13 @@ public class CommandExecutor {
      * @param module Module
      * @return boolean
      */
-    private boolean checkBinding(MessageReceivedEvent e, Module module, String[] command) {
+    private boolean checkBinding(MessageReceivedEvent e, Module module, List<String> command) {
         try {
             // Does the bind check pass?
             if(BindFunctions.checkBind(e.getGuild().getId(), e.getChannel().getId(), module.getName())) {
                 return true;
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command[0] + "** command is bound to **" + BindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command.get(0) + "** command is bound to **" + BindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
                 MessageHandler.sendMessage(e, embed.build());
                 return false;
             }

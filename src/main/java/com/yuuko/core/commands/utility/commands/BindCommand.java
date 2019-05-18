@@ -12,18 +12,19 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BindCommand extends Command {
 
     public BindCommand() {
-        super("bind", UtilityModule.class, 0, new String[]{"-bind <module>", "-bind <module> #channel..."}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("bind", UtilityModule.class, 0, Arrays.asList("-bind <module>", "-bind <module> #channel..."), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String[] params = e.getCommand()[1].toLowerCase().split("\\s+", 2);
+            String[] params = e.getCommand().get(1).toLowerCase().split("\\s+", 2);
 
             if(!Configuration.MODULES.containsKey(params[0])) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "help** command.");

@@ -13,16 +13,18 @@ import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class OsuCommand extends Command {
 
     public OsuCommand() {
-        super("osu", MediaModule.class, 1, new String[]{"-osu <user>", "-osu <user> <mode>"}, false, null);
+        super("osu", MediaModule.class, 1, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getCommand()[1].split("\\s+", 2);
+            String[] commandParameters = e.getCommand().get(1).split("\\s+", 2);
 
             final int mode;
             if(commandParameters.length > 1) {
@@ -52,7 +54,7 @@ public class OsuCommand extends Command {
             JsonArray json = new JsonBuffer("https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
 
             if(json == null || json.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -66,7 +68,7 @@ public class OsuCommand extends Command {
             }
 
             final String worldRank = new StringFormatter.Builder().string(data.get("pp_rank").getAsString()).formatIntegers().prepend("#").encase("```").build().toString();
-            final String countryRank = new StringFormatter.Builder().string(data.get("pp_country_rank").getAsString()).formatIntegers().encase("```").build().toString();
+            final String countryRank = new StringFormatter.Builder().string(data.get("pp_country_rank").getAsString()).formatIntegers().prepend("#").encase("```").build().toString();
             final String accuracy = new StringFormatter.Builder().string(((data.get("accuracy").getAsDouble() > 0.0) ? (data.get("accuracy").getAsString().length() > 5) ? data.get("accuracy").getAsString().substring(0, 5) : data.get("accuracy").getAsString() : "0")).append("%").encase("```").build().toString();
             final String ssRanks = new StringFormatter.Builder().string(data.get("count_rank_ss").getAsString()).formatIntegers().encase("```").build().toString();
             final String sshRanks = new StringFormatter.Builder().string(data.get("count_rank_ssh").getAsString()).formatIntegers().encase("```").build().toString();
@@ -86,7 +88,7 @@ public class OsuCommand extends Command {
                     .addField("S Ranks", sRanks, true)
                     .addField("SH Ranks", shRanks, true)
                     .addField("A Ranks", aRanks, true)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

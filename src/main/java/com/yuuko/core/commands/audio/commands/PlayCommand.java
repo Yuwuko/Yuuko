@@ -17,12 +17,13 @@ import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayCommand extends Command {
 
     public PlayCommand() {
-        super("play", AudioModule.class, 0, new String[]{"-play", "-play <url>", "-play <term>"}, false, null);
+        super("play", AudioModule.class, 0, Arrays.asList("-play", "-play <url>", "-play <term>"), false, null);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class PlayCommand extends Command {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
-        if(e.getCommand().length == 1) {
+        if(e.getCommand().size() == 1) {
             if(manager.player.isPaused()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -44,11 +45,11 @@ public class PlayCommand extends Command {
         } else {
             manager.player.setPaused(false);
 
-            if(e.getCommand()[1].startsWith("https://") || e.getCommand()[1].startsWith("http://")) {
-                loadAndPlay(manager, e, e.getCommand()[1]);
+            if(e.getCommand().get(1).startsWith("https://") || e.getCommand().get(1).startsWith("http://")) {
+                loadAndPlay(manager, e, e.getCommand().get(1));
 
             } else {
-                String trackId = YouTubeSearchHandler.search(e.getCommand()[1]);
+                String trackId = YouTubeSearchHandler.search(e.getCommand().get(1));
 
                 if(trackId == null || trackId.equals("")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
@@ -95,7 +96,7 @@ public class PlayCommand extends Command {
                             .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.scheduler.queue.size() + "", false)
-                            .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                            .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, embed.build());
                 } catch(Exception ex) {
                     log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

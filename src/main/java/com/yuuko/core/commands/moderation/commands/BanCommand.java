@@ -11,17 +11,18 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BanCommand extends Command {
 
     public BanCommand() {
-        super("ban", ModerationModule.class,1, new String[]{"-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"}, false, new Permission[]{Permission.BAN_MEMBERS});
+        super("ban", ModerationModule.class,1, Arrays.asList("-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"), false, Arrays.asList(Permission.BAN_MEMBERS));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
+        String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {

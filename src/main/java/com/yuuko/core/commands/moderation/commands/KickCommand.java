@@ -9,15 +9,17 @@ import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 
+import java.util.Arrays;
+
 public class KickCommand extends Command {
 
     public KickCommand() {
-        super("kick", ModerationModule.class,1, new String[]{"-kick @user", "-kick @user <reason>"}, false, new Permission[]{Permission.KICK_MEMBERS});
+        super("kick", ModerationModule.class,1, Arrays.asList("-kick @user", "-kick @user <reason>"), false, Arrays.asList(Permission.KICK_MEMBERS));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommand()[1].split("\\s+", 3);
+        String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {

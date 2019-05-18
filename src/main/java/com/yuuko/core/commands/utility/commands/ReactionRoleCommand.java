@@ -15,6 +15,7 @@ import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class ReactionRoleCommand extends Command {
@@ -22,12 +23,12 @@ public class ReactionRoleCommand extends Command {
     private static final HashMap<String, String> selectedMessages = new HashMap<>();
 
     public ReactionRoleCommand() {
-        super("reactrole", UtilityModule.class, 1, new String[]{"-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"}, false, new Permission[]{Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY});
+        super("reactrole", UtilityModule.class, 1, Arrays.asList("-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String[] parameters = e.getCommand()[1].split("\\s+");
+        final String[] parameters = e.getCommand().get(1).split("\\s+");
         final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0);
         final String action = parameters[0].toLowerCase();
         String selectedMessageId = selectedMessages.get(e.getAuthor().getId());

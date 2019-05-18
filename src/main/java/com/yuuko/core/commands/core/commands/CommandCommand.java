@@ -23,13 +23,13 @@ public class CommandCommand extends Command {
     private static final List<String> commandWords = Arrays.asList("all", "*", "global", "globally", "everywhere", "anywhere");
 
     public CommandCommand() {
-        super("command", CoreModule.class, 0, new String[]{"-command", "-command reset", "-command <command>", "-command <command> <channel>", "-command <command> reset"}, false, new Permission[]{Permission.MANAGE_SERVER});
+        super("command", CoreModule.class, 0, Arrays.asList("-command", "-command reset", "-command <command>", "-command <command> <channel>", "-command <command> reset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String[] input = e.getCommand()[1].toLowerCase().split("\\s+", 2);
+            String[] input = e.getCommand().get(1).toLowerCase().split("\\s+", 2);
             TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
             boolean valid = false;
 
@@ -90,7 +90,7 @@ public class CommandCommand extends Command {
                     .setDescription("Each command can be toggled on or off globally by using the `" + Utilities.getServerPrefix(e.getGuild()) + "command <command>` command, or to an individual channel by using `" + Utilities.getServerPrefix(e.getGuild()) + "command <command> #channel`")
                     .addField("Disabled Commands (" + settings.size() + ")", TextUtilities.formatArray(settings.toString()), true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
         }
     }

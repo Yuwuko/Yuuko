@@ -11,10 +11,12 @@ import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class SeekCommand extends Command {
 
     public SeekCommand() {
-        super("seek", AudioModule.class, 1, new String[]{"-seek <seconds>", "-seek <timestamp>"}, false, null);
+        super("seek", AudioModule.class, 1, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
     }
 
     @Override
@@ -23,11 +25,11 @@ public class SeekCommand extends Command {
 
         int seek;
 
-        if(Sanitiser.isNumber(e.getCommand()[1])) {
-            seek = Integer.parseInt(e.getCommand()[1])*1000;
+        if(Sanitiser.isNumber(e.getCommand().get(1))) {
+            seek = Integer.parseInt(e.getCommand().get(1))*1000;
         } else {
 
-            String[] timestamp = e.getCommand()[1].split(":", 2);
+            String[] timestamp = e.getCommand().get(1).split(":", 2);
             if(timestamp.length == 2) {
                 boolean nan = false;
                 for(String time : timestamp) {

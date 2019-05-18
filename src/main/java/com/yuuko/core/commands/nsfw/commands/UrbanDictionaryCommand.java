@@ -3,26 +3,27 @@ package com.yuuko.core.commands.nsfw.commands;
 import com.google.gson.JsonObject;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 
 public class UrbanDictionaryCommand extends Command {
 
     public UrbanDictionaryCommand() {
-        super("urban", WorldModule.class, 1, new String[]{"-urban <term>"}, true, null);
+        super("urban", NsfwModule.class, 1, Arrays.asList("-urban <term>"), true, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        JsonObject json = new JsonBuffer("https://api.urbandictionary.com/v0/define?term=" + e.getCommand()[1].replace(" ", "%20"), "default", "default").getAsJsonObject();
+        JsonObject json = new JsonBuffer("https://api.urbandictionary.com/v0/define?term=" + e.getCommand().get(1).replace(" ", "%20"), "default", "default").getAsJsonObject();
 
         if(json.get("list").getAsJsonArray().size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

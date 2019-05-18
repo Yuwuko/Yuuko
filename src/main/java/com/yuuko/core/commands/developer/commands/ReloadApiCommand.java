@@ -7,10 +7,12 @@ import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class ReloadApiCommand extends Command {
 
     public ReloadApiCommand() {
-        super("reapi", DeveloperModule.class, 0, new String[]{"-reapi"}, false, null);
+        super("reapi", DeveloperModule.class, 0, Arrays.asList("-reapi"), false, null);
     }
 
     @Override

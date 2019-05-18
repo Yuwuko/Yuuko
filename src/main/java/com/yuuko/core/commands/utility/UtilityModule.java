@@ -10,8 +10,11 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class UtilityModule extends Module {
-    private static final Command[] commands = new Command[]{
+    private static final List<Command> commands = Arrays.asList(
             new UserCommand(),
             new GuildCommand(),
             new BindCommand(),
@@ -20,7 +23,7 @@ public class UtilityModule extends Module {
             new RolesCommand(),
             new PingCommand(),
             new ReactionRoleCommand()
-    };
+    );
 
     public UtilityModule(MessageEvent e) {
         super("utility", false, commands);
@@ -32,7 +35,7 @@ public class UtilityModule extends Module {
      * @param e MessageReactionAddEvent
      */
     public UtilityModule(MessageReactionAddEvent e) {
-        super("utility", false, new Command[]{});
+        super("utility", false, null);
 
         if(e.getReaction().getReactionEmote().getName().equals("📌")) {
             Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
@@ -45,7 +48,7 @@ public class UtilityModule extends Module {
      * @param e MessageReactionRemoveEvent
      */
     public UtilityModule(MessageReactionRemoveEvent e) {
-        super("utility", false, new Command[]{});
+        super("utility", false, null);
 
         Message message = e.getTextChannel().getMessageById(e.getMessageId()).complete();
 

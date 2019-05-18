@@ -14,7 +14,7 @@ public class NewMemberSetting extends Setting {
     }
 
     protected void onCommand(MessageEvent e) {
-        String[] parameters = e.getCommand()[1].split("\\s+", 3);
+        String[] parameters = e.getCommand().get(1).split("\\s+", 3);
 
         // If "!settings newMember message"
         if(parameters[1].equalsIgnoreCase("message")) { //

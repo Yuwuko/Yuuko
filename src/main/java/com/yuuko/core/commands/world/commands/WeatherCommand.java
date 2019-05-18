@@ -14,20 +14,21 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class WeatherCommand extends Command {
 
     public WeatherCommand() {
-        super("weather", WorldModule.class, 1, new String[]{"-weather <city>", "-weather <city> <country>"}, false, null);
+        super("weather", WorldModule.class, 1, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommand()[1].replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
+            JsonObject data = new JsonBuffer("https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommand().get(1).replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
 
             if(data == null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -49,7 +50,7 @@ public class WeatherCommand extends Command {
                     .addField("Longitude", data.get("coord").getAsJsonObject().get("lon").getAsString(), true)
                     .addField("Wind Angle", data.get("wind").getAsJsonObject().get("deg").getAsString() + "°", true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

@@ -21,7 +21,7 @@ public class StarboardSetting extends Setting {
     }
 
     protected void onCommand(MessageEvent e) {
-        String[] parameters = e.getCommand()[1].split("\\s+", 2);
+        String[] parameters = e.getCommand().get(1).split("\\s+", 2);
 
         if(parameters[1].equalsIgnoreCase("setup")) {
             if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {

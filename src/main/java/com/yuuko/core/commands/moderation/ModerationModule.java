@@ -9,13 +9,16 @@ import com.yuuko.core.commands.moderation.commands.MuteCommand;
 import com.yuuko.core.commands.moderation.commands.NukeCommand;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ModerationModule extends Module {
-    private static final Command[] commands = new Command[]{
+    private static final List<Command> commands = Arrays.asList(
             new NukeCommand(),
             new MuteCommand(),
             new BanCommand(),
             new KickCommand()
-    };
+    );
 
     public ModerationModule(MessageEvent e) {
         super("moderation", false, commands);

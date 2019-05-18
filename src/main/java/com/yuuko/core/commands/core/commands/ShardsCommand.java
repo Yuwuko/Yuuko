@@ -13,11 +13,12 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
+import java.util.Arrays;
 
 public class ShardsCommand extends Command {
 
     public ShardsCommand() {
-        super("shards", CoreModule.class, 0, new String[]{"-shards"}, false, null);
+        super("shards", CoreModule.class, 0, Arrays.asList("-shards"), false, null);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class ShardsCommand extends Command {
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator() + " - Shards", null, Configuration.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
         for(Shard shard : DatabaseFunctions.getShardStatistics()) {

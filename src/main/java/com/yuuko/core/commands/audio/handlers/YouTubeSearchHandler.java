@@ -15,7 +15,7 @@ import java.util.List;
 public class YouTubeSearchHandler {
 
     /**
-     * Searches youtube using e.getCommand()[1] and returns the first result.
+     * Searches youtube using e.getCommand().get(1) and returns the first result.
      * @return youtube video url.
      */
     public static String search(String searchParameter) {
@@ -50,7 +50,7 @@ public class YouTubeSearchHandler {
     }
 
     /**
-     * Searches youtube using e.getCommand()[1] and returns the first 10 result.
+     * Searches youtube using e.getCommand().get(1) and returns the first 10 result.
      * @return youtube video result list.
      */
     public static List<SearchResult> searchList(MessageEvent e) {
@@ -60,7 +60,7 @@ public class YouTubeSearchHandler {
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
             search.setKey(Utilities.getApiKey("google"));
-            search.setQ(e.getCommand()[1]);
+            search.setQ(e.getCommand().get(1));
             search.setType("video");
             search.setFields("items(id/videoId,snippet/title)");
             search.setMaxResults(10L);

@@ -6,15 +6,18 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.world.commands.*;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class WorldModule extends Module {
-    private static final Command[] commands = new Command[]{
+    private static final List<Command> commands = Arrays.asList(
             new LondonUndergroundCommand(),
             new WeatherCommand(),
             new TescoCommand(),
             new CountdownCommand(),
             new NationalGeographicCommand(),
-            new UKParliamentPetitionCommand(),
-    };
+            new UKParliamentPetitionCommand()
+    );
 
     public WorldModule(MessageEvent e) {
         super("world", false, commands);

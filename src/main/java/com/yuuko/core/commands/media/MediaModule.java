@@ -8,12 +8,15 @@ import com.yuuko.core.commands.media.commands.KitsuCommand;
 import com.yuuko.core.commands.media.commands.OsuCommand;
 import com.yuuko.core.events.extensions.MessageEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MediaModule extends Module {
-    private static final Command[] commands = new Command[] {
+    private static final List<Command> commands = Arrays.asList(
             new KitsuCommand(),
             new OsuCommand(),
             new GithubCommand()
-    };
+    );
 
     public MediaModule(MessageEvent e) {
         super("media", false, commands);

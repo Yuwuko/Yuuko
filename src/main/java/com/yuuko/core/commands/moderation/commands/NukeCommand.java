@@ -13,13 +13,14 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", ModerationModule.class,1, new String[]{"-nuke <value>", "-nuke #channel"}, false, new Permission[]{Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL});
+        super("nuke", ModerationModule.class,1, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL));
     }
 
     @Override
@@ -33,8 +34,8 @@ public class NukeCommand extends Command {
             return;
         }
 
-        if(Sanitiser.isNumber(e.getCommand()[1])) {
-            final int value = Integer.parseInt(e.getCommand()[1]);
+        if(Sanitiser.isNumber(e.getCommand().get(1))) {
+            final int value = Integer.parseInt(e.getCommand().get(1));
 
             if(value < 2 || value > 100) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");

@@ -16,12 +16,12 @@ import java.util.Random;
 public class ChooseCommand extends Command {
 
     public ChooseCommand() {
-        super("choose", FunModule.class, 1, new String[]{"-choose <choice>, <choice>..."}, false, null);
+        super("choose", FunModule.class, 1, Arrays.asList("-choose <choice>, <choice>..."), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommand()[1].split("\\s*(,)\\s*");
+        String[] commandParameters = e.getCommand().get(1).split("\\s*(,)\\s*");
         String choices = (Arrays.asList(commandParameters).toString().length() > 1024) ? Arrays.asList(commandParameters).toString().substring(0, 1021) + "..." : Arrays.asList(commandParameters).toString();
 
         EmbedBuilder embed = new EmbedBuilder()
@@ -29,7 +29,7 @@ public class ChooseCommand extends Command {
                 .addField("Selected", (commandParameters.length > 1) ? commandParameters[new Random().nextInt(commandParameters.length)] : commandParameters[0], true)
                 .addField("Probability", new BigDecimal(100.0/commandParameters.length).setScale(2, RoundingMode.HALF_UP) + "%", true)
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

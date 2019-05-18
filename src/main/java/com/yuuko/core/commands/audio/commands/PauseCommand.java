@@ -8,10 +8,12 @@ import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class PauseCommand extends Command {
 
     public PauseCommand() {
-        super("pause", AudioModule.class, 0, new String[]{"-pause"}, false, null);
+        super("pause", AudioModule.class, 0, Arrays.asList("-pause"), false, null);
     }
 
     @Override

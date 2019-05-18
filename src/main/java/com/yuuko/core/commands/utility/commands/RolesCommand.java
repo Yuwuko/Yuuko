@@ -9,10 +9,12 @@ import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
 
+import java.util.Arrays;
+
 public class RolesCommand extends Command {
 
     public RolesCommand() {
-        super("roles", UtilityModule.class, 0, new String[]{"-roles"}, false, null);
+        super("roles", UtilityModule.class, 0, Arrays.asList("-roles"), false, null);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class RolesCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(e.getGuild().getName() + " Roles")
                 .setDescription(roles.toString())
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

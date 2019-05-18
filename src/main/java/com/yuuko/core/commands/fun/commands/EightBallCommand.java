@@ -8,11 +8,13 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class EightBallCommand extends Command {
 
-    private static final String[] responses = new String[]{
+    private static final List<String> responses = Arrays.asList(
             "It is certain.",
             "It is decidedly so.",
             "Without a doubt.",
@@ -33,22 +35,22 @@ public class EightBallCommand extends Command {
             "My sources say no.",
             "Outlook not so good.",
             "Very doubtful."
-    };
+    );
 
     public EightBallCommand() {
-        super("8ball", FunModule.class, 1, new String[]{"-8ball <question>"}, false, null);
+        super("8ball", FunModule.class, 1, Arrays.asList("-8ball <question>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        String question = e.getCommand()[1];
+        String question = e.getCommand().get(1);
         question += (question.lastIndexOf("?") == question.length()-1) ? "" : "?";
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("8ball, " + question)
-                .setDescription(responses[new Random().nextInt(responses.length -1)])
+                .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS[2] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

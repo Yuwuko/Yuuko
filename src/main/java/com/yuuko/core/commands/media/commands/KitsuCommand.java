@@ -9,19 +9,21 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 
+import java.util.Arrays;
+
 public class KitsuCommand extends Command {
 
     public KitsuCommand() {
-        super("kitsu", MediaModule.class, 1, new String[]{"-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"}, false, null);
+        super("kitsu", MediaModule.class, 1, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + e.getCommand()[1].replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json").getAsJsonObject();
+            JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + e.getCommand().get(1).replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json").getAsJsonObject();
 
             if(json == null || json.getAsJsonArray("data").size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand()[1] + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -51,7 +53,7 @@ public class KitsuCommand extends Command {
                     .addField("Status", status, true)
                     .addField("Start Date", startDate, true)
                     .addField("End Date", endDate, true)
-                    .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

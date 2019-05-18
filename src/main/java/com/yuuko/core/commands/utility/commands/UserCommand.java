@@ -11,11 +11,12 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class UserCommand extends Command {
 
     public UserCommand() {
-        super("user", UtilityModule.class, 1, new String[]{"-user @user", "-user <userId>"}, false, null);
+        super("user", UtilityModule.class, 1, Arrays.asList("-user @user", "-user <userId>"), false, null);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class UserCommand extends Command {
                 .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
-                .setFooter(Configuration.STANDARD_STRINGS[1] + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, commandInfo.build());
     }
 
