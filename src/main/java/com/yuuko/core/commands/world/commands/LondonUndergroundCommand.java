@@ -1,13 +1,17 @@
 package com.yuuko.core.commands.world.commands;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.commands.world.tfl.LineManager;
 import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -75,6 +79,77 @@ public class LondonUndergroundCommand extends Command {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
 
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonPropertyOrder({
+            "name",
+            "lineStatuses"
+    })
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class LineManager {
+
+        @JsonProperty("name")
+        private String name;
+        @JsonProperty("lineStatuses")
+        private List<LineStatus> lineStatuses = new ArrayList<>();
+
+        @JsonProperty("name")
+        public String getName() {
+            return name;
+        }
+
+        @JsonProperty("lineStatuses")
+        String getLineStatusString() {
+            StringBuilder statuses = new StringBuilder();
+
+            for(LineStatus line: lineStatuses) {
+                statuses.append(line.getStatusSeverityDescription()).append("\n");
+            }
+
+            int index = statuses.lastIndexOf("\n");
+            statuses.replace(index, index + 1, "");
+
+            return statuses.toString();
+        }
+
+        String getLineStatusReason() {
+            StringBuilder reasons = new StringBuilder();
+            String previous = "";
+
+            for(LineStatus line: lineStatuses) {
+                if(line.getReason() != null && !previous.equals(name)) {
+                    reasons.append("**").append(line.getReason()).append("\n\n");
+                    previous = name;
+                }
+            }
+            TextUtilities.removeLastOccurrence(reasons, "\n\n");
+
+            return reasons.toString().replace(":", "**:");
+        }
+
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonPropertyOrder({
+            "reason",
+            "statusSeverityDescription"
+    })
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class LineStatus {
+
+        @JsonProperty("reason")
+        private String reason;
+        @JsonProperty("statusSeverityDescription")
+        private String statusSeverityDescription;
+
+        @JsonProperty("reason")
+        String getReason() { return reason; }
+
+        @JsonProperty("statusSeverityDescription")
+        String getStatusSeverityDescription() {
+            return statusSeverityDescription;
+        }
     }
 
 }
