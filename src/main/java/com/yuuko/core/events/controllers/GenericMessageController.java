@@ -27,7 +27,7 @@ public class GenericMessageController {
 
     private void messageReceivedEvent(MessageReceivedEvent e) {
         try {
-            double executionStart = System.nanoTime();
+            final double executionStart = System.nanoTime();
 
             if(e.getAuthor().isBot()) {
                 MetricsManager.getEventMetrics().BOT_MESSAGES_PROCESSED.getAndIncrement();
@@ -52,9 +52,10 @@ public class GenericMessageController {
             }
 
             if(executed) {
-                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0).toLowerCase());
+                final double executionTime = (System.nanoTime() - executionStart)/1000000.0;
+                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0), executionTime);
                 if(GuildFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
-                    CommandLogSetting.execute(e, (System.nanoTime() - executionStart)/1000000.0);
+                    CommandLogSetting.execute(e, executionTime);
                 }
             }
 

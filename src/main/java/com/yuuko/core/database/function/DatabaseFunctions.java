@@ -74,14 +74,16 @@ public class DatabaseFunctions {
      *
      * @param guildId String
      * @param command String
+     * @param executionTime double (milliseconds)
      */
-    public static void updateCommandsLog(String guildId, String command) {
+    public static void updateCommandsLog(String guildId, String command, double executionTime) {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`) VALUES(?, ?, ?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
             stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt.setString(2, guildId);
             stmt.setString(3, command);
+            stmt.setDouble(4, executionTime);
             stmt.execute();
 
             MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();

@@ -2,7 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-##2019-05-18
+## 2019-05-20
++ [~] Added command execution time to metrics for extra stats. (Ooo)
+
+## 2019-05-18
 + [~] Modified how the [__urban__] command is categorised, making it nsfw.
 + [~] Refactored string formatter into appropriate package.
 + [~] Converted most of the string arrays (modules, commands, permissions) to lists, in most cases being more efficient.
