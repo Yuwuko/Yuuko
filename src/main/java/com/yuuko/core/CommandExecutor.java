@@ -12,7 +12,6 @@ import com.yuuko.core.utilities.Utilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +35,12 @@ public class CommandExecutor {
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
-        if(command == null || !command.isEnabled(e) || !module.isEnabled(e) || !checkBinding(e, module, e.getCommand()) || (module.getName().equals("Audio") && !checkAudio(e))) {
+        if(command == null
+                || !command.isEnabled(e)
+                || !module.isEnabled(e)
+                || !checkBinding(e, module)
+                || (module.getName().equals("audio") && !checkAudio(e))
+        ) {
             return;
         }
 
@@ -86,7 +90,7 @@ public class CommandExecutor {
      *
      * @param e MessageReceivedEvent
      */
-    private void messageCleanup(MessageReceivedEvent e) {
+    private void messageCleanup(MessageEvent e) {
         // Does the server want the command message /not/ removed?
         if(!TextUtilities.convertToBoolean(GuildFunctions.getGuildSetting("deleteExecuted", e.getGuild().getId()))) {
             return;
@@ -149,18 +153,18 @@ public class CommandExecutor {
      * @param module Module
      * @return boolean
      */
-    private boolean checkBinding(MessageReceivedEvent e, Module module, List<String> command) {
+    private boolean checkBinding(MessageEvent e, Module module) {
         try {
             // Does the bind check pass?
             if(BindFunctions.checkBind(e.getGuild().getId(), e.getChannel().getId(), module.getName())) {
                 return true;
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command.get(0) + "** command is bound to **" + BindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + e.getCommand().get(0) + "** command is bound to **" + BindFunctions.getBindsByModule(e.getGuild(), module.getName(), ", ") + "**.");
                 MessageHandler.sendMessage(e, embed.build());
                 return false;
             }
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", e.getCommand().getClass().getSimpleName(), ex.getMessage(), ex);
             return true; // Would rather allow commands everywhere than nowhere if bindings broke.
         }
     }

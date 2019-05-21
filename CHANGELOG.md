@@ -4,6 +4,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-05-20
 + [~] Added command execution time to metrics for extra stats. (Ooo)
++ [~] Fixed reoccurring bug involving case sensitivity and commands.
++ [~] Fixed bug which would cause exceptions when using the play command while not in an audio channel.
 
 ## 2019-05-18
 + [~] Modified how the [__urban__] command is categorised, making it nsfw.

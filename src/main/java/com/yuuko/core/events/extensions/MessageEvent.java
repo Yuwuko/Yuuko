@@ -20,6 +20,7 @@ public class MessageEvent extends MessageReceivedEvent {
 
         if(!prefix.equals("")) {
             this.command = Arrays.asList(message.substring(prefix.length()).split("\\s+", 2));
+            this.command.set(0, command.get(0).toLowerCase());
         }
     }
 
