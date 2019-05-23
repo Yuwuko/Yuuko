@@ -28,6 +28,7 @@ public class JsonBuffer {
             Response response = client.newCall(builder.build()).execute();
 
             if(response.code() != 200) {
+                response.close();
                 return;
             }
 

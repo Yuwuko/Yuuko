@@ -29,7 +29,7 @@ public class NukeCommand extends Command {
         if(channels.size() > 0 && channels.size() < 11) {
             channels.forEach(channel -> {
                 BindFunctions.cleanupBinds(channel.getId());
-                channel.createCopy().queue((r) -> channel.delete().queue());
+                channel.createCopy().queue(r -> channel.delete().queue());
             });
             return;
         }
@@ -38,13 +38,13 @@ public class NukeCommand extends Command {
             final int value = Integer.parseInt(e.getCommand().get(1));
 
             if(value < 2 || value > 100) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **99** or a channel, e.g. #general.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
             // Filter out old messages from the mass delete list.
-            e.getTextChannel().getHistory().retrievePast(value).queue(messages -> {
+            e.getTextChannel().getHistory().retrievePast(value+1).queue(messages -> {
                 Iterator<Message> it = messages.iterator();
                 while(it.hasNext()) {
                     Message message = it.next();
@@ -55,7 +55,7 @@ public class NukeCommand extends Command {
                 }
 
                 if(messages.size() > 1) {
-                    e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(messages).queue(s -> {
+                    e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
                         ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
                     });
                 }
