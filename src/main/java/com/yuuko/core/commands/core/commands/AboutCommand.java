@@ -1,5 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
@@ -9,6 +11,7 @@ import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.json.JsonBuffer;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
@@ -24,6 +27,25 @@ public class AboutCommand extends Command {
         int totalGuilds = 0;
         for(Shard shard: DatabaseFunctions.getShardStatistics()) {
             totalGuilds += shard.getGuildCount();
+        }
+
+        // Commit feature first seen used by Senither @AvaIre.
+        JsonArray git = new JsonBuffer("https://api.github.com/repos/Yuuko-oh/Yuuko/commits", "default", "default").getAsJsonArray();
+        StringBuilder latestUpdates = new StringBuilder();
+
+        for(int i = 0; i < 5; i++) {
+            JsonObject obj = git.get(i).getAsJsonObject();
+
+            String sha = obj.get("sha").getAsString();
+            String message = obj.get("commit").getAsJsonObject().get("message").getAsString();
+            String truncatedMessage = (message.length() > 59) ? message.substring(0,56) + "..." : message;
+            String commitString = "[`" + sha.substring(0,7) + "`](https://github.com/Yuuko-oh/Yuuko/commit/" + sha + ") " + truncatedMessage + "\n";
+
+            if((commitString.length() + latestUpdates.length()) < 1024) {
+                latestUpdates.append(commitString);
+            } else {
+                break;
+            }
         }
 
         EmbedBuilder about = new EmbedBuilder()
@@ -42,7 +64,7 @@ public class AboutCommand extends Command {
                 .addField("Total Guilds", totalGuilds + "", true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
+                .addField("Latest Updates", latestUpdates.toString(), false);
         MessageHandler.sendMessage(e, about.build());
     }
 }
