@@ -7,12 +7,14 @@ import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 
 import java.awt.*;
 import java.time.Instant;
+import java.util.List;
 
 public class StarboardSetting extends Setting {
 
@@ -69,9 +71,28 @@ public class StarboardSetting extends Setting {
      */
     public static void execute(MessageReactionAddEvent e) {
         String channelId = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
+
         if(channelId != null) {
             TextChannel starboard = e.getGuild().getTextChannelById(channelId);
             Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();
+
+            List<Message> history = starboard.getIterableHistory().complete();
+            for(Message message: history) {
+                if(message.getContentRaw().contains(starred.getId())) {
+                    for(MessageReaction reaction: starred.getReactions()) {
+                        if(reaction.getReactionEmote().getName().equals("⭐")) {
+                            String content = message.getContentRaw();
+                            int emoteCount = Integer.parseInt(content.substring(content.indexOf("`")+1, content.lastIndexOf("`")));
+
+                            if(emoteCount != reaction.getCount()) {
+                                message.editMessage("`"+ reaction.getCount() +"`⭐ - " + e.getTextChannel().getAsMention() + " <" + starred.getId() + ">" ).queue();
+                                return;
+                            }
+                        }
+                    }
+                    return;
+                }
+            }
 
             EmbedBuilder starredEmbed = new EmbedBuilder()
                     .setColor(Color.ORANGE)
@@ -79,7 +100,7 @@ public class StarboardSetting extends Setting {
                     .setDescription(starred.getContentDisplay())
                     .setImage(starred.getAttachments().size() > 0 ? starred.getAttachments().get(0).getUrl() : null)
                     .setTimestamp(Instant.now());
-            starboard.sendMessage("⭐ - " + e.getTextChannel().getAsMention()).queue((message) -> starboard.sendMessage(starredEmbed.build()).queue());
+            starboard.sendMessage("`1`⭐ - " + e.getTextChannel().getAsMention() + " <" + e.getMessageId() + ">").queue((message) -> starboard.sendMessage(starredEmbed.build()).queue());
         }
     }
 }

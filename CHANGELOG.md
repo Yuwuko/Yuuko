@@ -5,6 +5,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 2019-05-23
 + [~] Modified the about command to include the 5 latest commits from GitHub to show progress.
 + [~] Gave some of the core commands a visual revamp, commands that have been improved are [__about__], [__help__], [__settings__] and [__shards__]
++ [~] Improved the starboard setting to list the number of stars that the message has received.
++ [-] Depreciated the legacy :pinpush: pinning feature for the starboard setting. (they're functionally the same thing)
 
 ## 2019-05-20
 + [~] Added command execution time to metrics for extra stats. (Ooo)
