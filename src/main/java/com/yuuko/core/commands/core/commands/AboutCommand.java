@@ -53,17 +53,17 @@ public class AboutCommand extends Command {
                 .setDescription(
                         Configuration.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html), using [Gradle](https://gradle.org/) for dependencies.  " +
                         "If you would like me in your guild, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) " +
-                        "If I already am, thank you for your continued support!"
+                        "If I already am, thank you for your continued support! \n Use `" + e.getPrefix() + "help` for a list of commands, or `" + e.getPrefix() + "vote` if you wish to vote for " + Configuration.BOT.getName() + "."
                 )
-                .setThumbnail(Configuration.BOT.getAvatarUrl())
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Shard ID", Configuration.SHARD_ID + "", true)
                 .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + e.getPrefix(), true)
-                .addField("Shard Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                .addField("Shard ID", Configuration.SHARD_ID + "", true)
+                .addField("Local Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                 .addField("Total Guilds", totalGuilds + "", true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
+                .addField("Ping", MetricsManager.getDiscordMetrics().PING + "ms",true)
                 .addField("Latest Updates", latestUpdates.toString(), false);
         MessageHandler.sendMessage(e, about.build());
     }

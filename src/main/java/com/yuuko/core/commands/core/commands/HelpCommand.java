@@ -27,8 +27,8 @@ public class HelpCommand extends Command {
         if(e.getCommand().size() < 2) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
-                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! If you want a description of a command you can find it [here](https://www.yuuko.info)!")
-                    .addField("Stuck with a command?", "Use `" + e.getPrefix() + "help <command>` to get usage.", false)
+                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! " +
+                            "If you want the description of a command, to see some cool metrics about me or just some more information you can find it [here](https://www.yuuko.info)! \n Stuck with a command? Use `" + e.getPrefix() + "help <command>` to get the commands usage.")
                     .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
 
             for(Module module: Configuration.MODULES.values()) {

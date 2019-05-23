@@ -30,7 +30,7 @@ public class ShardsCommand extends Command {
 
         StringBuilder shards = new StringBuilder();
         for(Shard shard : DatabaseFunctions.getShardStatistics()) {
-            shards.append("**Yuuko-").append(shard.getId()).append("**")
+            shards.append("**Yuuko #").append(shard.getId()).append("**")
                     .append("\n").append("Status: ").append(shard.getStatus())
                     .append("\n").append("Guilds: ").append(shard.getGuildCount())
                     .append("\n").append("Users: ").append(shard.getUserCount())
@@ -40,18 +40,17 @@ public class ShardsCommand extends Command {
             shards = new StringBuilder();
         }
 
-        shardEmbed.addBlankField(false);
-
         StringBuilder nodes = new StringBuilder();
         for(LavalinkSocket socket : Configuration.LAVALINK.getLavalink().getNodes()) {
-            nodes.append("**Yuuko-").append(socket.getName()).append("**")
-                    .append("\n").append("System Load: ").append(new BigDecimal((socket.getStats().getSystemLoad()*100)/100.0).setScale(2, RoundingMode.HALF_UP))
-                    .append("\n").append("CPU Cores: ").append(socket.getStats().getCpuCores())
-                    .append("\n").append("Memory Used: ").append(new BigDecimal(socket.getStats().getMemUsed()/1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
-                    .append("\n").append("Players: ").append(socket.getStats().getPlayers())
-                    .append("\n").append("Playing: ").append(socket.getStats().getPlayingPlayers());
-            shardEmbed.addField("", nodes.toString(), true);
-            nodes = new StringBuilder();
+            if(socket.getStats() != null) {
+                nodes.append("**Yuuko-").append(socket.getName()).append("**")
+                        .append("\n").append("System Load: ").append(new BigDecimal((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP)).append("%")
+                        .append("\n").append("Memory Used: ").append(new BigDecimal(socket.getStats().getMemUsed() / 1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
+                        .append("\n").append("Players: ").append(socket.getStats().getPlayers())
+                        .append("\n").append("Active: ").append(socket.getStats().getPlayingPlayers());
+                shardEmbed.addField("", nodes.toString(), true);
+                nodes = new StringBuilder();
+            }
         }
 
         MessageHandler.sendMessage(e, shardEmbed.build());
