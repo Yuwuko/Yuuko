@@ -37,7 +37,7 @@ public class NukeCommand extends Command {
         if(Sanitiser.isNumber(e.getCommand().get(1))) {
             final int value = Integer.parseInt(e.getCommand().get(1));
 
-            if(value < 2 || value > 100) {
+            if(value < 2 || value > 99) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **99** or a channel, e.g. #general.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;

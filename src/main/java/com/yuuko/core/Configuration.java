@@ -39,7 +39,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-05-23";
+    public static final String VERSION = "2019-05-26";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -60,7 +60,7 @@ public class Configuration {
     public static List<String> STANDARD_STRINGS;
 
     /**
-     * Loads all of the bots configurations.
+     * Loads all of the bots configurations. (Order DOES matter)
      */
     void load() {
         try {

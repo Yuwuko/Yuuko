@@ -95,7 +95,7 @@ public class StarboardSetting extends Setting {
                     for(MessageReaction reaction: starred.getReactions()) {
                         if(reaction.getReactionEmote().getName().equals("⭐")) {
                             String content = message.getContentRaw();
-                            int emoteCount = Integer.parseInt(content.substring(content.indexOf("`")+1, content.lastIndexOf("`")));
+                            int emoteCount = Integer.parseInt(content.substring(1, content.indexOf("`", 1)));
 
                             if(emoteCount != reaction.getCount()) {
                                 message.editMessage("`"+ reaction.getCount() +"`⭐ - " + e.getTextChannel().getAsMention() + " `<" + starred.getId() + ">`" ).queue();
