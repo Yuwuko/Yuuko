@@ -1,11 +1,11 @@
 package com.yuuko.core;
 
+import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
-import net.dv8tion.jda.core.events.message.GenericMessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +20,12 @@ public final class MessageHandler {
      * @param event GenericMessageEvent
      * @param message String
      */
-    public static void sendMessage(GenericMessageEvent event, String message) {
+    public static void sendMessage(MessageEvent event, String message) {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
-                log.trace("Invoking {}#getTextChannel()#sendMessage(message)#queue()", event.getClass().getName());
+                log.trace("Invoking {}#getChannel()#sendMessage(message)#queue()", event.getClass().getName());
                 MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
-                event.getTextChannel().sendMessage(message).queue();
+                event.getChannel().sendMessage(message).queue();
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
@@ -38,12 +38,12 @@ public final class MessageHandler {
      * @param event GenericMessageEvent
      * @param embed MessageEmbed
      */
-    public static void sendMessage(GenericMessageEvent event, MessageEmbed embed) {
+    public static void sendMessage(MessageEvent event, MessageEmbed embed) {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
-                log.trace("Invoking {}#getTextChannel()#sendMessage(embed)#queue()", event.getClass().getName());
+                log.trace("Invoking {}#getChannel()#sendMessage(embed)#queue()", event.getClass().getName());
                 MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
-                event.getTextChannel().sendMessage(embed).queue();
+                event.getChannel().sendMessage(embed).queue();
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
@@ -56,12 +56,12 @@ public final class MessageHandler {
      * @param event GenericMessageEvent
      * @param file File
      */
-    public static void sendMessage(GenericMessageEvent event, File file) {
+    public static void sendMessage(MessageEvent event, File file) {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
-                log.trace("Invoking {}#getTextChannel()#sendFile(file)#queue()", event.getClass().getName());
+                log.trace("Invoking {}#getChannel()#sendFile(file)#queue()", event.getClass().getName());
                 MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
-                event.getTextChannel().sendFile(file).queue();
+                event.getChannel().sendFile(file).queue();
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
@@ -75,7 +75,7 @@ public final class MessageHandler {
      * @param bytes byte[]
      * @param fileName String
      */
-    public static void sendMessage(GenericMessageEvent event, byte[] bytes, String fileName) {
+    public static void sendMessage(MessageEvent event, byte[] bytes, String fileName) {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
@@ -94,7 +94,7 @@ public final class MessageHandler {
      * @param channel TextChannel
      * @param embed MessageEmbed
      */
-    public static void sendMessage(GenericMessageEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
             if(MessageUtilities.hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());

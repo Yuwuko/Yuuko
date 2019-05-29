@@ -9,7 +9,6 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 
 import java.awt.*;
@@ -52,7 +51,7 @@ public class StarboardSetting extends Setting {
         }
     }
 
-    private void setup(MessageReceivedEvent e) {
+    private void setup(MessageEvent e) {
         try {
             e.getGuild().getController().createTextChannel("starboard").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
@@ -77,7 +76,7 @@ public class StarboardSetting extends Setting {
 
         if(channelId != null) {
             TextChannel starboard = e.getGuild().getTextChannelById(channelId);
-            Message starred = e.getTextChannel().getMessageById(e.getMessageId()).complete();
+            Message starred = e.getChannel().getMessageById(e.getMessageId()).complete();
 
             // Cannot starboard embedded messages.
             if(starred.getEmbeds().size() > 0) {

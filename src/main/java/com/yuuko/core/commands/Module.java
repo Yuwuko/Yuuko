@@ -2,8 +2,8 @@ package com.yuuko.core.commands;
 
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.ModuleFunctions;
+import com.yuuko.core.events.extensions.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +40,7 @@ public abstract class Module {
         return string.toString();
     }
 
-    public boolean isEnabled(MessageReceivedEvent e) {
+    public boolean isEnabled(MessageEvent e) {
         // Executor still checks core/developer, in this case simply return true.
         if(name.equals("core") || name.equals("developer")) {
             return true;

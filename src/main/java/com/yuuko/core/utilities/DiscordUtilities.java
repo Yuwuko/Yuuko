@@ -35,7 +35,7 @@ public final class DiscordUtilities {
      * @param guild Guild
      * @return Role
      */
-    public static Role setupMutedRole(Guild guild) {
+    public static Role getMutedRole(Guild guild) {
         GuildController controller = guild.getController();
         List<TextChannel> channels = guild.getTextChannels();
         List<VoiceChannel> voiceChannels = guild.getVoiceChannels();
@@ -50,31 +50,19 @@ public final class DiscordUtilities {
         }
 
         if(muted == null) {
-            muted = controller.createRole().setName("Muted").setPermissions(Permission.MESSAGE_READ, Permission.MESSAGE_HISTORY, Permission.VOICE_CONNECT).complete();
+            if(!guild.getSelfMember().hasPermission(Permission.MANAGE_ROLES)) {
+                return null;
+            }
+
+            muted = controller.createRole().setName("Muted").complete();
 
             for(TextChannel channel: channels) {
-                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION).complete();
+                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION).queue();
             }
 
             for(VoiceChannel channel: voiceChannels) {
-                channel.createPermissionOverride(muted).setDeny(Permission.VOICE_SPEAK).complete();
+                channel.createPermissionOverride(muted).setDeny(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK).queue();
             }
-
-            for(TextChannel channel: channels) {
-                PermissionOverride override = null;
-
-                for(PermissionOverride channelOverride: channel.getRolePermissionOverrides()) {
-                    if(channelOverride.getRole().equals(muted)) {
-                        override = channelOverride;
-                        break;
-                    }
-                }
-
-                if(override == null) {
-                    channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION, Permission.VOICE_SPEAK, Permission.VOICE_USE_VAD).complete();
-                }
-            }
-
         }
 
         return muted;

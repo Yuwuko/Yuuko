@@ -26,7 +26,7 @@ public class NukeCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
-        if(channels.size() > 0 && channels.size() < 11) {
+        if(channels.size() > 0 && channels.size() < 6) {
             channels.forEach(channel -> {
                 BindFunctions.cleanupBinds(channel.getId());
                 channel.createCopy().queue(r -> channel.delete().queue());
@@ -44,7 +44,7 @@ public class NukeCommand extends Command {
             }
 
             // Filter out old messages from the mass delete list.
-            e.getTextChannel().getHistory().retrievePast(value+1).queue(messages -> {
+            e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
                 Iterator<Message> it = messages.iterator();
                 while(it.hasNext()) {
                     Message message = it.next();
@@ -55,7 +55,7 @@ public class NukeCommand extends Command {
                 }
 
                 if(messages.size() > 1) {
-                    e.getGuild().getTextChannelById(e.getTextChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
+                    e.getGuild().getTextChannelById(e.getChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
                         ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
                     });
                 }

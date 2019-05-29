@@ -4,7 +4,7 @@ import com.yuuko.core.events.controllers.*;
 import net.dv8tion.jda.core.events.channel.text.GenericTextChannelEvent;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
-import net.dv8tion.jda.core.events.message.GenericMessageEvent;
+import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.slf4j.Logger;
@@ -33,9 +33,9 @@ public class GenericEventManager extends ListenerAdapter {
      * @param e -> GenericMessageEvent.
      */
     @Override
-    public void onGenericMessage(GenericMessageEvent e) {
+    public void onGenericGuildMessage(GenericGuildMessageEvent e) {
         try {
-            new GenericMessageController(e);
+            new GenericGuildMessageController(e);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

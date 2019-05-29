@@ -35,7 +35,7 @@ public class ChannelCommand extends Command {
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
-                e.getGuild().getTextChannelsByName(commandParameters[2], true).get(0).delete().queue();
+                e.getGuild().getVoiceChannelsByName(commandParameters[2], true).get(0).delete().queue();
             } else if(type.equals("voice") && commandParameters[2].length() == 18 && Long.parseLong(commandParameters[2]) > 0) {
                 if(e.getGuild().getVoiceChannelsByName(commandParameters[2], true).size() == 0) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("That voice-channel could not be found.");
@@ -44,7 +44,7 @@ public class ChannelCommand extends Command {
                 }
                 e.getGuild().getVoiceChannelsByName(commandParameters[1], true).get(0).delete().queue();
             } else {
-                e.getTextChannel().delete().queue();
+                e.getChannel().delete().queue();
             }
 
         } else {

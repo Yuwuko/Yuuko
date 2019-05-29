@@ -8,24 +8,24 @@ import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.handlers.MetricsManager;
-import net.dv8tion.jda.core.events.message.GenericMessageEvent;
-import net.dv8tion.jda.core.events.message.MessageDeleteEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GenericMessageController {
-    private static final Logger log = LoggerFactory.getLogger(GenericMessageController.class);
+public class GenericGuildMessageController {
+    private static final Logger log = LoggerFactory.getLogger(GenericGuildMessageController.class);
 
-    public GenericMessageController(GenericMessageEvent e) {
-        if(e instanceof MessageReceivedEvent) {
-            messageReceivedEvent((MessageReceivedEvent)e);
-        } else if(e instanceof MessageDeleteEvent ) {
-            messageDeleteEvent((MessageDeleteEvent)e);
+    public GenericGuildMessageController(GenericGuildMessageEvent e) {
+        if(e instanceof GuildMessageReceivedEvent) {
+            guildMessageReceivedEvent((GuildMessageReceivedEvent)e);
+        } else if(e instanceof GuildMessageDeleteEvent) {
+            guildMessageDeleteEvent((GuildMessageDeleteEvent)e);
         }
     }
 
-    private void messageReceivedEvent(MessageReceivedEvent e) {
+    private void guildMessageReceivedEvent(GuildMessageReceivedEvent e) {
         try {
             final double executionStart = System.nanoTime();
 
@@ -54,8 +54,8 @@ public class GenericMessageController {
             if(executed) {
                 final double executionTime = (System.nanoTime() - executionStart)/1000000.0;
                 DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0), executionTime);
-                if(GuildFunctions.getGuildSetting("commandLog", e.getGuild().getId()) != null) {
-                    CommandLogSetting.execute(e, executionTime);
+                if(GuildFunctions.getGuildSetting("comlog", e.getGuild().getId()) != null) {
+                    CommandLogSetting.execute(event, executionTime);
                 }
             }
 
@@ -66,7 +66,7 @@ public class GenericMessageController {
         }
     }
 
-    private void messageDeleteEvent(MessageDeleteEvent e) {
+    private void guildMessageDeleteEvent(GuildMessageDeleteEvent e) {
 
         // Reaction Role
         if(ReactionRoleFunctions.hasReactionRole(e.getMessageId())) {

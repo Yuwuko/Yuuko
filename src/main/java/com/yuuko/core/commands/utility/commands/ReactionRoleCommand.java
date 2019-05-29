@@ -35,13 +35,13 @@ public class ReactionRoleCommand extends Command {
 
         // Params length less than 2 are considered `select` for latest message.
         if(parameters.length < 2 && action.equals("select")) {
-            selectedMessageId = e.getTextChannel().getHistoryBefore(e.getTextChannel().getLatestMessageId(), 1).complete().getRetrievedHistory().get(0).getId();
+            selectedMessageId = e.getChannel().getHistoryBefore(e.getChannel().getLatestMessageId(), 1).complete().getRetrievedHistory().get(0).getId();
             selectedMessages.remove(e.getAuthor().getId());
             selectedMessages.put(e.getAuthor().getId(), selectedMessageId);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
-                    .setDescription(e.getTextChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
+                    .setDescription(e.getChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
                     .addField("Options", e.getPrefix() + "reactrole add <:emote:> <@role>\n" + e.getPrefix() + "reactrole rem <:emote:> <@role>", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -55,13 +55,13 @@ public class ReactionRoleCommand extends Command {
                 return;
             }
 
-            selectedMessageId = e.getTextChannel().getMessageById(parameters[1]).complete().getId();
+            selectedMessageId = e.getChannel().getMessageById(parameters[1]).complete().getId();
             selectedMessages.remove(e.getAuthor().getId());
             selectedMessages.put(e.getAuthor().getId(), selectedMessageId);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
-                    .setDescription(e.getTextChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
+                    .setDescription(e.getChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
                     .addField("Options", e.getPrefix() + "reactrole add <:emote:> <@role>\n" + e.getPrefix() + "reactrole rem <:emote:> <@role>", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -74,7 +74,7 @@ public class ReactionRoleCommand extends Command {
             return;
         }
 
-        final Message finalMessage = e.getTextChannel().getMessageById(selectedMessageId).complete();
+        final Message finalMessage = e.getChannel().getMessageById(selectedMessageId).complete();
         final Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : e.getGuild().getEmoteById((parameters.length > 1) ? parameters[1] : "0");
         final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : e.getGuild().getRoleById((parameters.length > 2) ? parameters[2] : "0");
 
@@ -164,7 +164,7 @@ public class ReactionRoleCommand extends Command {
     public static void processReaction(GenericMessageReactionEvent e) {
         final Emote emote = e.getReactionEmote().getEmote();
 
-        e.getTextChannel().getMessageById(e.getMessageId()).queue(message -> {
+        e.getChannel().getMessageById(e.getMessageId()).queue(message -> {
             if(message == null || emote == null || !ReactionRoleFunctions.hasReactionRole(message, emote)) {
                 return;
             }

@@ -6,7 +6,6 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +61,7 @@ public abstract class Command {
         return permissions;
     }
 
-    public boolean isEnabled(MessageReceivedEvent e) {
+    public boolean isEnabled(MessageEvent e) {
         // Executor still checks core/developer, in this case simply return true.
         if(staticModules.contains(getModuleName())) {
             return true;
@@ -70,7 +69,7 @@ public abstract class Command {
 
         // Checks if the command is globally disabled either global:global, global:local, local:global or local:local.
         String guild = e.getGuild().getId();
-        String channel = e.getTextChannel().getId();
+        String channel = e.getChannel().getId();
         if(!CommandFunctions.isDisabled(guild, "*", "*") &&
            !CommandFunctions.isDisabled(guild, channel, "*") &&
            !CommandFunctions.isDisabled(guild, "*", name) &&

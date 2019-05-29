@@ -61,7 +61,7 @@ public class CommandExecutor {
             }
 
             // Does the user have the permission?
-            if(!e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getTextChannel(), command.getPermissions())) {
+            if(!e.getMember().hasPermission(command.getPermissions()) && !e.getMember().hasPermission(e.getChannel(), command.getPermissions())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utilities.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
@@ -88,7 +88,7 @@ public class CommandExecutor {
     /**
      * Removes the message that issued the command if the `deleteExecuted` setting is toggled to `on`.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      */
     private void messageCleanup(MessageEvent e) {
         // Does the server want the command message /not/ removed?
@@ -108,7 +108,7 @@ public class CommandExecutor {
     /**
      * Checks various conditions to see if using certain audio commands are appropriate for the context of the user. Also checks the DJ Mode setting.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return boolean
      */
     private boolean checkAudio(MessageEvent e) {
@@ -149,7 +149,7 @@ public class CommandExecutor {
     /**
      * Checks channel bindings to see if commands are allowed to be executed there.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @param module Module
      * @return boolean
      */

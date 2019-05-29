@@ -10,6 +10,7 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.message.GenericMessageEvent;
+import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +103,7 @@ public final class MessageUtilities {
     /**
      * Since JDA by default returns unmodifiable collections, we need one that is... (that also removes if the bot is mentioned!)
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @return List<Member>
      */
     private static List<Member> getMutableMembersCollection(MessageEvent e) {
@@ -127,8 +128,8 @@ public final class MessageUtilities {
     /**
      * Main hasSendPermission flow controller
      */
-    public static boolean hasSendPermission(GenericMessageEvent e) {
-        return hasSendPermission(e.getGuild(), e.getTextChannel());
+    public static boolean hasSendPermission(GenericGuildMessageEvent e) {
+        return hasSendPermission(e.getGuild(), e.getChannel());
     }
 
     /**

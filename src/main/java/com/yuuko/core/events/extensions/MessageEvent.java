@@ -2,17 +2,17 @@ package com.yuuko.core.events.extensions;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.utilities.Utilities;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MessageEvent extends MessageReceivedEvent {
+public class MessageEvent extends GuildMessageReceivedEvent {
 
     private String prefix;
     private List<String> command;
 
-    public MessageEvent(MessageReceivedEvent event) {
+    public MessageEvent(GuildMessageReceivedEvent event) {
         super(event.getJDA(), event.getResponseNumber(), event.getMessage());
 
         String message = getMessage().getContentRaw();

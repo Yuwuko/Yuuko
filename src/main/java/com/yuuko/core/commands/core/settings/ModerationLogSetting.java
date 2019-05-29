@@ -10,7 +10,6 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.guild.GuildUnbanEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.time.Instant;
 
@@ -35,24 +34,29 @@ public class ModerationLogSetting extends Setting {
 
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
-            if(GuildFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been set to " + channel.getAsMention() + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            if(GuildFunctions.setGuildSettings("modLog", null, e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("modlog", null, e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been unset, deactivating the log.");
                 MessageHandler.sendMessage(e, embed.build());
             }
         }
     }
 
-    private void setup(MessageReceivedEvent e) {
+    /**
+     * Sets up the mod-log channel.
+     *
+     * @param e MessageEvent
+     */
+    private void setup(MessageEvent e) {
         try {
             e.getGuild().getController().createTextChannel("moderation-log").queue(channel -> {
                 TextChannel textChannel = (TextChannel)channel;
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
-                if(GuildFunctions.setGuildSettings("modLog", channel.getId(), e.getGuild().getId())) {
+                if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
@@ -68,7 +72,7 @@ public class ModerationLogSetting extends Setting {
      * @param e GuildUnbanEvent
      */
     public static void execute(GuildUnbanEvent e) {
-        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
@@ -83,12 +87,12 @@ public class ModerationLogSetting extends Setting {
     /**
      * Logs mute events from the given action command.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @param action String
      * @param target User
      * @param reason String
      */
-    public static void execute(MessageReceivedEvent e, String action, User target, String reason) {
+    public static void execute(MessageEvent e, String action, User target, String reason) {
         String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
@@ -107,9 +111,9 @@ public class ModerationLogSetting extends Setting {
     /**
      * Logs messages deleted using the nuke command.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      */
-    public static void execute(MessageReceivedEvent e, int messagesDeleted) {
+    public static void execute(MessageEvent e, int messagesDeleted) {
         String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
@@ -117,7 +121,7 @@ public class ModerationLogSetting extends Setting {
                     .setTitle("Message Deleted")
                     .setThumbnail(e.getAuthor().getAvatarUrl())
                     .addField("Moderator", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
-                    .addField("Channel", e.getTextChannel().getAsMention(), true)
+                    .addField("Channel", e.getChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
                     .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());

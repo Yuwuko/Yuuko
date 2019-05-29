@@ -14,7 +14,6 @@ import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Arrays;
 
@@ -57,10 +56,10 @@ public class BackgroundCommand extends Command {
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
      *
      * @param manager; GuildAudioManager.
-     * @param e; MessageReceivedEvent.
+     * @param e; MessageEvent.
      * @param url; TrackUrl.
      */
-    private void setAndPlay(GuildAudioManager manager, MessageReceivedEvent e, String url) {
+    private void setAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
         final String trackUrl;
 
         if(url.startsWith("<") && url.endsWith(">")) {

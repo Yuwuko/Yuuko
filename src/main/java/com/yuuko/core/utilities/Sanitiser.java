@@ -46,7 +46,7 @@ public final class Sanitiser {
     /**
      * Checks to see if the command executor can interact with the command target.
      *
-     * @param e MessageReceivedEvent
+     * @param e MessageEvent
      * @param member Member
      * @return boolean
      */

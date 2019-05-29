@@ -45,7 +45,7 @@ public class GuildCommand extends Command {
                 .addField("Region", guild.getRegion().getName(), true)
                 .addField("Users", guild.getMemberCache().size()+"", true)
                 .addField("Text Channels", guild.getTextChannelCache().size()+"", true)
-                .addField("Voice Channels", guild.getVoiceChannels().size()+"", true)
+                .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
                 .addField("Roles", guild.getRoles().size()+"", true)
                 .addField("Emotes", emoteString.toString(), false)
                 .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());

@@ -53,13 +53,13 @@ public class BindCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + module + "** on **" + boundChannels.toString() + "**.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {
-                final int res = BindFunctions.toggleBind(e.getGuild().getId(), e.getTextChannel().getId(), module);
+                final int res = BindFunctions.toggleBind(e.getGuild().getId(), e.getChannel().getId(), module);
 
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + e.getTextChannel().getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + e.getChannel().getName() + "**.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + e.getTextChannel().getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + e.getChannel().getName() + "**.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }
