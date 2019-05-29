@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-05-27'
+version = '2019-05-29'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -38,7 +38,7 @@ dependencies {
     compile 'com.github.FredBoat:Lavalink-Client:8c20d5714c'
     // Bot Lists
     compile 'com.github.DiscordBotList:DBL-Java-Wrapper:2.0.0'
-    compile 'com.github.BasketBandit:ddblAPI.java:0.4.2'
+    compile 'com.github.BasketBandit:ddblAPI.java:0.4.3'
     // External API
     compile 'com.google.apis:google-api-services-youtube:v3-rev212-1.25.0'
     // JSON

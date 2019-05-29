@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-05-29
++ [!] Refactored the core GenericMessageController to GenericGuildMessageController to stop Yuuko listening for private messages.
++ [~] Changed commandlog to comlog on the backend to match with the modlog setting.
++ [~] Updated multiple methods parameters to reflect an old change that didn't previously need modification.
+
 ## 2019-05-23
 + [~] Modified the about command to include the 5 latest commits from GitHub to show progress.
 + [~] Gave some of the core commands a visual revamp, commands that have been improved are [__about__], [__help__], [__settings__] and [__shards__]
