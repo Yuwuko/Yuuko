@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.events.channel.text.GenericTextChannelEvent;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
-import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
+import net.dv8tion.jda.core.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,12 +44,12 @@ public class GenericEventManager extends ListenerAdapter {
     /**
      * Captures and deals generic reaction events.
      *
-     * @param e -> GenericMessageReactionEvent.
+     * @param e -> GenericGuildMessageReactionEvent.
      */
     @Override
-    public void onGenericMessageReaction(GenericMessageReactionEvent e) {
+    public void onGenericGuildMessageReaction(GenericGuildMessageReactionEvent e) {
         try {
-            new GenericMessageReactionController(e);
+            new GenericGuildMessageReactionController(e);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

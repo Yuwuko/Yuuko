@@ -3,7 +3,8 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-05-29
-+ [!] Refactored the core GenericMessageController to GenericGuildMessageController to stop Yuuko listening for private messages.
++ [!] Refactored the core GenericMessageController to GenericGuildMessageController to stop Yuuko listening to non-guild messages.
++ [!] Refactored the core GenericMessageReactionController to GenericGuildReactionController to stop Yuuko listening to non-guild reacts.
 + [~] Changed commandlog to comlog on the backend to match with the modlog setting.
 + [~] Updated multiple methods parameters to reflect an old change that didn't previously need modification.
 

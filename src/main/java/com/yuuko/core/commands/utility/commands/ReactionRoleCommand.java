@@ -12,8 +12,8 @@ import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.guild.react.GenericGuildMessageReactionEvent;
+import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -157,11 +157,11 @@ public class ReactionRoleCommand extends Command {
     }
 
     /**
-     * Processes GenericMessageReaction events to apply or remove roles from users.
+     * Processes GenericGuildMessageReactionEvent events to apply or remove roles from users.
      *
-     * @param e GenericMessageReactionEvent
+     * @param e GenericGuildMessageReactionEvent
      */
-    public static void processReaction(GenericMessageReactionEvent e) {
+    public static void processReaction(GenericGuildMessageReactionEvent e) {
         final Emote emote = e.getReactionEmote().getEmote();
 
         e.getChannel().getMessageById(e.getMessageId()).queue(message -> {
@@ -170,8 +170,7 @@ public class ReactionRoleCommand extends Command {
             }
 
             final Role role = e.getGuild().getRoleById(ReactionRoleFunctions.selectReactionRole(message, emote));
-
-            if(e instanceof MessageReactionAddEvent) {
+            if(e instanceof GuildMessageReactionAddEvent) {
                 e.getGuild().getController().addSingleRoleToMember(e.getMember(), role).queue();
             } else {
                 e.getGuild().getController().removeSingleRoleFromMember(e.getMember(), role).queue();

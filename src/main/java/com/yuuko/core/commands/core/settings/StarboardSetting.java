@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
 
 import java.awt.*;
 import java.time.Instant;
@@ -69,9 +69,9 @@ public class StarboardSetting extends Setting {
     /**
      * Executes starboard setting.
      *
-     * @param e MessageReactionAddEvent
+     * @param e GuildMessageReactionAddEvent
      */
-    public static void execute(MessageReactionAddEvent e) {
+    public static void execute(GuildMessageReactionAddEvent e) {
         String channelId = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
 
         if(channelId != null) {
@@ -97,7 +97,7 @@ public class StarboardSetting extends Setting {
                             int emoteCount = Integer.parseInt(content.substring(1, content.indexOf("`", 1)));
 
                             if(emoteCount != reaction.getCount()) {
-                                message.editMessage("`"+ reaction.getCount() +"`⭐ - " + e.getTextChannel().getAsMention() + " `<" + starred.getId() + ">`" ).queue();
+                                message.editMessage("`"+ reaction.getCount() +"`⭐ - " + e.getChannel().getAsMention() + " `<" + starred.getId() + ">`" ).queue();
                                 return;
                             }
                         }
@@ -110,7 +110,7 @@ public class StarboardSetting extends Setting {
             if(starred.getAttachments().size() > 0) {
                 String attachment = starred.getAttachments().get(0).getProxyUrl();
                 if(fileTypes.contains(attachment.substring(attachment.length()-3))) {
-                    starboard.sendMessage("`1`⭐ - " + e.getTextChannel().getAsMention() + " `<" + e.getMessageId() + ">`").queue(message -> starboard.sendMessage(attachment).queue());
+                    starboard.sendMessage("`1`⭐ - " + e.getChannel().getAsMention() + " `<" + e.getMessageId() + ">`").queue(message -> starboard.sendMessage(attachment).queue());
                     return;
                 }
             }
@@ -121,7 +121,7 @@ public class StarboardSetting extends Setting {
                     .setDescription(starred.getContentDisplay())
                     .setImage(starred.getAttachments().size() > 0 ? starred.getAttachments().get(0).getProxyUrl() : null)
                     .setTimestamp(Instant.now());
-            starboard.sendMessage("`1`⭐ - " + e.getTextChannel().getAsMention() + " `<" + e.getMessageId() + ">`").queue(message -> starboard.sendMessage(starredEmbed.build()).queue());
+            starboard.sendMessage("`1`⭐ - " + e.getChannel().getAsMention() + " `<" + e.getMessageId() + ">`").queue(message -> starboard.sendMessage(starredEmbed.build()).queue());
         }
     }
 }
