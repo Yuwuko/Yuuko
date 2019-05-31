@@ -162,7 +162,7 @@ public class GuildFunctions {
                 settings.add(rs.getString("newMember"));
                 settings.add(rs.getString("newMemberMessage"));
                 settings.add(rs.getString("starboard"));
-                settings.add(rs.getString("commandLog"));
+                settings.add(rs.getString("comLog"));
                 settings.add(rs.getString("modLog"));
             }
 

@@ -25,8 +25,13 @@ public class GenericTextChannelController {
                 return;
             }
 
-            if(channel.equals(GuildFunctions.getGuildSetting("commandLog", channel))) {
-                DatabaseFunctions.cleanupSettings("commandLog", e.getGuild().getId());
+            if(channel.equals(GuildFunctions.getGuildSetting("comlog", channel))) {
+                DatabaseFunctions.cleanupSettings("comlog", e.getGuild().getId());
+                return;
+            }
+
+            if(channel.equals(GuildFunctions.getGuildSetting("modlog", channel))) {
+                DatabaseFunctions.cleanupSettings("modlog", e.getGuild().getId());
                 return;
             }
 
