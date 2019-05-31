@@ -45,7 +45,7 @@ public class NukeCommand extends Command {
             final OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
             e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
                 messages.listIterator().forEachRemaining(message -> {
-                    if(message.getCreationTime().isBefore(past) && message.getTextChannel() != null) {
+                    if(message != null && message.getCreationTime().isBefore(past)) {
                         message.delete().queue();
                     }
                 });
