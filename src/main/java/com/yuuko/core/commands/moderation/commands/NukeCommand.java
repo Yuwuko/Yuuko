@@ -9,12 +9,10 @@ import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class NukeCommand extends Command {
@@ -44,15 +42,13 @@ public class NukeCommand extends Command {
             }
 
             // Filter out old messages from the mass delete list.
+            final OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
             e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
-                Iterator<Message> it = messages.iterator();
-                while(it.hasNext()) {
-                    Message message = it.next();
-                    if(message.getCreationTime().isBefore(OffsetDateTime.now().minusWeeks(2))) {
+                messages.listIterator().forEachRemaining(message -> {
+                    if(message.getCreationTime().isBefore(past) && message.getTextChannel() != null) {
                         message.delete().queue();
-                        it.remove();
                     }
-                }
+                });
 
                 if(messages.size() > 1) {
                     e.getGuild().getTextChannelById(e.getChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
