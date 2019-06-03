@@ -67,19 +67,16 @@ public final class StringFormatter {
 
             for(int i = 0; i < splitStrings.length; i++) {
                 if(isNumber(splitStrings[i])) {
-                    String[] splitInt = splitStrings[i].split("");
+                    char[] splitInt = splitStrings[i].toCharArray();
                     StringBuilder formattedInt = new StringBuilder();
-                    int counter = 0;
-
-                    for(int y = splitInt.length - 1; y > -1; y--) {
-                        if(counter % 3 == 0 && counter != 0) {
+                    for(int x = 0; x < splitInt.length; x++) {
+                        if((splitInt.length - x) % 3 == 0 && x != 0) {
                             formattedInt.append(",");
                         }
-                        formattedInt.append(splitInt[y]);
-                        counter++;
+                        formattedInt.append(splitInt[x]);
                     }
 
-                    formattedSplitStrings[i] = formattedInt.reverse().toString();
+                    formattedSplitStrings[i] = formattedInt.toString();
                 } else {
                     formattedSplitStrings[i] = splitStrings[i];
                 }

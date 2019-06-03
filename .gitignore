@@ -29,9 +29,5 @@ out/test
 /gradlew
 /gradlew.bat
 
-# Configuration files
-/config
-
 # Other stuff
-
-/server-resources
+/lib

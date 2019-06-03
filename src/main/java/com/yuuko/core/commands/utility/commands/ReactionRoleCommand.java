@@ -75,19 +75,19 @@ public class ReactionRoleCommand extends Command {
         }
 
         final Message finalMessage = e.getChannel().getMessageById(selectedMessageId).complete();
-        final Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : e.getGuild().getEmoteById((parameters.length > 1) ? parameters[1] : "0");
+        final Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : null;
         final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : e.getGuild().getRoleById((parameters.length > 2) ? parameters[2] : "0");
 
         // Emote null check.
         if(emote == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Emote").setDescription("I couldn't detect any tagged emotes in the command... Doing nothing.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Emote").setDescription("I couldn't detect any tagged custom emotes in the command...");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
         // Role null and action check.
         if(!action.equals("rem") && role == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Role").setDescription("I couldn't detect any tagged roles in the command... Doing nothing.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Role").setDescription("I couldn't detect any tagged roles in the command...");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
