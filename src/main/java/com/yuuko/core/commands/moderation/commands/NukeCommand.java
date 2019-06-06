@@ -32,35 +32,35 @@ public class NukeCommand extends Command {
             return;
         }
 
-        if(Sanitiser.isNumber(e.getCommand().get(1))) {
-            final int value = Integer.parseInt(e.getCommand().get(1));
+        if(!Sanitiser.isNumber(e.getCommand().get(1))) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **99** or a channel, e.g. #general.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
 
-            if(value < 2 || value > 99) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **99** or a channel, e.g. #general.");
-                MessageHandler.sendMessage(e, embed.build());
-                return;
-            }
+        final int value = Integer.parseInt(e.getCommand().get(1));
 
-            // Filter out old messages from the mass delete list.
-            final OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
-            e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
-                messages.listIterator().forEachRemaining(message -> {
-                    if(message != null && message.getCreationTime().isBefore(past)) {
-                        message.delete().queue();
-                    }
-                });
+        if(value < 2 || value > 99) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **99** or a channel, e.g. #general.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
 
-                if(messages.size() > 1) {
-                    e.getGuild().getTextChannelById(e.getChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
-                        ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
-                    });
+        // Filter out old messages from the mass delete list.
+        final OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
+        e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
+            messages.listIterator().forEachRemaining(message -> {
+                if(message != null && message.getCreationTime().isBefore(past)) {
+                    message.delete().queue();
                 }
             });
 
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel, e.g. **#general**.");
-            MessageHandler.sendMessage(e, embed.build());
-        }
+            if(messages.size() > 1) {
+                e.getGuild().getTextChannelById(e.getChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
+                    ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
+                });
+            }
+        });
     }
 
 }

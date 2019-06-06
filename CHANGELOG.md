@@ -8,6 +8,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Refactored JsonBuffer to RequestHandler since it doesn't necessarily return Json.
 + [~] Refactored Metrics packages to make more sense.
 + [~] Took care of some of the long term warnings IntelliJ was throwing at me.
++ [~] Rewrote the [__efukt__] command after further analysing some html source, appearing to fix a malformed URL bug.
 
 ## 2019-05-29
 + [!] Refactored the core GenericMessageController to GenericGuildMessageController to stop Yuuko listening to non-guild messages.
