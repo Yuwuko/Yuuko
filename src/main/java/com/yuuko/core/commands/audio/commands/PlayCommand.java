@@ -67,7 +67,7 @@ public class PlayCommand extends Command {
      *
      * @param manager GuildAudioManager.
      * @param e MessageEvent.
-     * @param url TrackUrl.
+     * @param url String.
      */
     private void loadAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
         final String trackUrl;
@@ -83,9 +83,6 @@ public class PlayCommand extends Command {
             @Override
             public void trackLoaded(AudioTrack track) {
                 try {
-                    track.setUserData(e);
-                    manager.getScheduler().queue(track);
-
                     String[] uri = track.getInfo().uri.split("=");
                     String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
@@ -98,6 +95,9 @@ public class PlayCommand extends Command {
                             .addField("Position in queue", manager.getScheduler().queue.size() + "", false)
                             .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, embed.build());
+
+                    track.setUserData(e);
+                    manager.getScheduler().queue(track);
                 } catch(Exception ex) {
                     log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
                 }
@@ -114,8 +114,6 @@ public class PlayCommand extends Command {
                         track.setUserData(e);
                         manager.getScheduler().queue(track);
                     }
-
-                    new CurrentCommand().onCommand(e);
 
                 } catch(Exception ex) {
                     log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
