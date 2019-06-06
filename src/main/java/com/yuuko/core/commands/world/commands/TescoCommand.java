@@ -7,7 +7,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.JsonBuffer;
+import com.yuuko.core.utilities.json.RequestHandler;
 import com.yuuko.core.utilities.json.RequestProperty;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -24,7 +24,7 @@ public class TescoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://dev.tescolabs.com/grocery/products/?query=" + e.getCommand().get(1).replace(" ", "%20") + "&offset=0&limit=1", "default", "default", new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getAsJsonObject();
+            JsonObject json = new RequestHandler("https://dev.tescolabs.com/grocery/products/?query=" + e.getCommand().get(1).replace(" ", "%20") + "&offset=0&limit=1", "default", "default", new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getAsJsonObject();
             JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
             if(preData.get("results").getAsJsonArray().size() < 1) {

@@ -5,7 +5,7 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
@@ -26,7 +26,7 @@ public class CommandExecutor {
     private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last");
 
     public CommandExecutor(MessageEvent e, Module module) {
-        // Is the event null?
+        // Is the event null? (Runtime setup for module reflection)
         if(e == null) {
             return;
         }

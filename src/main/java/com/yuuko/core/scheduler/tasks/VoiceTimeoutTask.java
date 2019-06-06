@@ -13,7 +13,9 @@ public class VoiceTimeoutTask implements Task {
 
     @Override
     public void run() {
-        new StopCommand().onCommand(guild);
+        if(guild.getSelfMember().getVoiceState().inVoiceChannel()) {
+            new StopCommand().onCommand(guild);
+        }
     }
 
 }

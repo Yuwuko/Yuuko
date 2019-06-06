@@ -2,7 +2,7 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.commands.core.settings.StarboardSetting;
 import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionRemoveEvent;

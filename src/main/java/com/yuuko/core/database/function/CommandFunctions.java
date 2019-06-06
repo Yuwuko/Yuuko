@@ -2,7 +2,7 @@ package com.yuuko.core.database.function;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,7 +138,7 @@ public class CommandFunctions {
                 MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
             }
 
-            return !isDisabled(guild, channel, command); // Returns inverse because command being enabled means that they ARENT found in the database.
+            return !isDisabled(guild, channel, command); // Returns inverse because command being enabled means that they ARE'NT found in the database.
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

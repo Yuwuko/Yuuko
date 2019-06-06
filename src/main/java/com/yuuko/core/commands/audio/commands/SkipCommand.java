@@ -25,11 +25,8 @@ public class SkipCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
                 MessageHandler.sendMessage(e, embed.build());
 
-                if(manager.getScheduler().hasNextTrack()) {
-                    manager.getScheduler().nextTrack();
-                } else {
-                    manager.getPlayer().stopTrack();
-                }
+                manager.getPlayer().stopTrack();
+                manager.getScheduler().nextTrack();
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There is no current track to skip.");
                 MessageHandler.sendMessage(e, embed.build());

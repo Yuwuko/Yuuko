@@ -5,7 +5,7 @@ import com.yuuko.core.database.connection.MetricsDatabaseConnection;
 import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import com.yuuko.core.entity.Shard;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

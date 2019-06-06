@@ -5,7 +5,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.extensions.MessageEvent;
-import com.yuuko.core.utilities.json.JsonBuffer;
+import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ public class UrbanDictionaryCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        JsonObject json = new JsonBuffer("https://api.urbandictionary.com/v0/define?term=" + e.getCommand().get(1).replace(" ", "%20"), "default", "default").getAsJsonObject();
+        JsonObject json = new RequestHandler("https://api.urbandictionary.com/v0/define?term=" + e.getCommand().get(1).replace(" ", "%20"), "default", "default").getAsJsonObject();
 
         if(json.get("list").getAsJsonArray().size() < 1) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");

@@ -1,7 +1,7 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
@@ -43,9 +43,8 @@ public class GuildFunctions {
      * Adds a new guild to the database and initialises it's settings.
      *
      * @param guild Object of type Guild that is added to the database.
-     * @return if the add was successful.
      */
-    public static boolean addGuild(Guild guild) {
+    public static void addGuild(Guild guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ?, `lastSync` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
@@ -71,11 +70,8 @@ public class GuildFunctions {
                 MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
             }
 
-            return true;
-
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return false;
         }
     }
 

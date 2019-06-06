@@ -1,7 +1,7 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
@@ -17,6 +17,7 @@ public class BindFunctions {
 
     /**
      * Binds a particular module to a channel.
+     *
      * @param guildId the idLong of the guild.
      * @param channel the idLong of the channel.
      * @param module the name of the module.
@@ -54,6 +55,7 @@ public class BindFunctions {
 
     /**
      * Removes a binding record from the database.
+     *
      * @param guild String
      * @param channel String
      * @param module String
@@ -85,6 +87,7 @@ public class BindFunctions {
 
     /**
      * Returns a formatted string of all of the selected guild's binds.
+     *
      * @param guild a guild object.
      * @param delimiter the delimiter used in the returned string.
      * @return String
@@ -119,6 +122,7 @@ public class BindFunctions {
 
     /**
      * Returns a formatted string of all of the guild's binds, which match a given module.
+     *
      * @param guild Guild
      * @param module String
      * @param delimiter String
@@ -156,6 +160,7 @@ public class BindFunctions {
 
     /**
      * Checks to see if a bind for a certain channel/module combination exists.
+     *
      * @param guildId String
      * @param channelId String
      * @param moduleName String
@@ -189,6 +194,7 @@ public class BindFunctions {
 
     /**
      * Removes binding from channels that are deleted.
+     *
      * @param channel the channel to clean up.
      */
     public static void cleanupBinds(String channel) {

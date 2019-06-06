@@ -6,7 +6,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.extensions.MessageEvent;
-import com.yuuko.core.utilities.json.JsonBuffer;
+import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class NekoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://nekos.life/api/v2/img/" + ((e.hasParameters()) ? e.getCommand().get(1) : "lewd"), "default", "default").getAsJsonObject();
+            JsonObject json = new RequestHandler("https://nekos.life/api/v2/img/" + ((e.hasParameters()) ? e.getCommand().get(1) : "lewd"), "default", "default").getAsJsonObject();
 
             if(json != null && !json.has("msg")) {
                 EmbedBuilder embed = new EmbedBuilder()

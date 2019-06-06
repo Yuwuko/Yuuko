@@ -1,10 +1,10 @@
-package com.yuuko.core.metrics.handlers;
+package com.yuuko.core.metrics;
 
 import com.yuuko.core.database.function.DatabaseFunctions;
-import com.yuuko.core.metrics.DatabaseMetrics;
-import com.yuuko.core.metrics.DiscordMetrics;
-import com.yuuko.core.metrics.EventMetrics;
-import com.yuuko.core.metrics.SystemMetrics;
+import com.yuuko.core.metrics.pathway.DatabaseMetrics;
+import com.yuuko.core.metrics.pathway.DiscordMetrics;
+import com.yuuko.core.metrics.pathway.EventMetrics;
+import com.yuuko.core.metrics.pathway.SystemMetrics;
 
 public class MetricsManager {
 

@@ -46,20 +46,17 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
      * Add the next track to queue or play right away if nothing is in the queue.
      * If the queue is empty play the background handlers if it isn't null.
      * @param track The track to play or add to queue.
-     * @return if the queue was successful.
      */
-    public boolean queue(AudioTrack track) {
+    public void queue(AudioTrack track) {
         if(background != null && player.getPlayingTrack() == background) {
             queue.add(track);
             nextTrack();
         } else if(player.getPlayingTrack() != null) {
-            return queue.offer(track);
+            queue.offer(track);
         } else {
             queue.add(track);
             nextTrack();
-            return true;
         }
-        return false;
     }
 
     /**

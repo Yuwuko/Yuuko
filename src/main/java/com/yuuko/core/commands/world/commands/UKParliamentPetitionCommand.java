@@ -10,7 +10,7 @@ import com.yuuko.core.commands.world.WorldModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.JsonBuffer;
+import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
@@ -26,7 +26,7 @@ public class UKParliamentPetitionCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             if(e.hasParameters()) {
-                JsonObject json = new JsonBuffer("https://petition.parliament.uk/petitions/" + e.getCommand().get(1) + ".json", "default", "default").getAsJsonObject();
+                JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions/" + e.getCommand().get(1) + ".json", "default", "default").getAsJsonObject();
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Petition **_" + e.getCommand().get(1) + "_** produced no results.");
@@ -62,7 +62,7 @@ public class UKParliamentPetitionCommand extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             } else {
 
-                JsonObject json = new JsonBuffer("https://petition.parliament.uk/petitions.json", "default", "default").getAsJsonObject();
+                JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json", "default", "default").getAsJsonObject();
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("There was a problem retrieving the main set of petitions.");

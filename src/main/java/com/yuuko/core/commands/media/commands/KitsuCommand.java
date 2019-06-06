@@ -6,7 +6,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.extensions.MessageEvent;
-import com.yuuko.core.utilities.json.JsonBuffer;
+import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class KitsuCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://kitsu.io/api/edge/anime?filter[text]=" + e.getCommand().get(1).replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json").getAsJsonObject();
+            JsonObject json = new RequestHandler("https://kitsu.io/api/edge/anime?filter[text]=" + e.getCommand().get(1).replace(" ", "%20") + "&page[limit]=1", "application/vnd.api+json", "application/vnd.api+json").getAsJsonObject();
 
             if(json == null || json.getAsJsonArray("data").size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");

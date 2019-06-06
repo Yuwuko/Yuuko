@@ -9,12 +9,12 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JsonBuffer {
-    private static final Logger log = LoggerFactory.getLogger(JsonBuffer.class);
+public class RequestHandler {
+    private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
     private static final OkHttpClient client = new OkHttpClient();
-    private String jsonOutput;
+    private String content;
 
-    public JsonBuffer(String url, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
+    public RequestHandler(String url, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
         try {
             Request.Builder builder = new Request.Builder()
                     .url(url)
@@ -33,7 +33,7 @@ public class JsonBuffer {
             }
 
             if(response.body() != null) {
-                jsonOutput = response.body().string();
+                content = response.body().string();
             }
 
             response.close();
@@ -44,23 +44,23 @@ public class JsonBuffer {
     }
 
     /**
-     * Retrieves the json output as a string, does nothing else to it.
+     * Retrieves the content as a string, does nothing else to it.
      *
      * @return String
      */
     public String getAsString() {
-        return jsonOutput;
+        return content;
     }
 
     /**
-     * Retrieves the json output as a JsonObject which can be handled and manipulated with the Google Gson package.
+     * Retrieves the content as a JsonObject which can be handled and manipulated with the Google Gson package.
      *
      * @return JsonObject
      * @throws IllegalStateException IllegalStateException
      */
     public JsonObject getAsJsonObject() throws IllegalStateException {
         try {
-            return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonObject();
+            return (content == null) ? null : new JsonParser().parse(content).getAsJsonObject();
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
             return null;
@@ -68,14 +68,14 @@ public class JsonBuffer {
     }
 
     /**
-     * Retrieves the json output as a JsonArray which can be handled and manipulated with the Google Gson package.
+     * Retrieves the content as a JsonArray which can be handled and manipulated with the Google Gson package.
      *
      * @return JsonArray
      * @throws IllegalStateException IllegalStateException
      */
     public JsonArray getAsJsonArray() throws IllegalStateException {
         try {
-            return (jsonOutput == null) ? null : new JsonParser().parse(jsonOutput).getAsJsonArray();
+            return (content == null) ? null : new JsonParser().parse(content).getAsJsonArray();
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
             return null;

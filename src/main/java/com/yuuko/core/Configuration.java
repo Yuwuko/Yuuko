@@ -13,7 +13,7 @@ import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.events.extensions.MessageEvent;
-import com.yuuko.core.metrics.handlers.MetricsManager;
+import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
 import com.yuuko.core.scheduler.jobs.OneHourlyJob;
@@ -48,7 +48,6 @@ public class Configuration {
     public static int SHARD_COUNT = 0;
     public static int SHARD_ID = 0;
     public static String GLOBAL_PREFIX;
-    static String STATUS = "@Yuuko help";
     public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
     public static LavalinkManager LAVALINK;
     public static net.dv8tion.jda.bot.sharding.ShardManager SHARD_MANAGER;
@@ -148,7 +147,7 @@ public class Configuration {
                     .setToken(BOT_TOKEN)
                     .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())
-                    .setGame(Game.of(Game.GameType.LISTENING, STATUS))
+                    .setGame(Game.of(Game.GameType.LISTENING, "@Yuuko help"))
                     .setShardsTotal(SHARD_COUNT)
                     .setShards(SHARD_ID)
                     .build();
@@ -186,7 +185,7 @@ public class Configuration {
             COMMANDS = new HashMap<>(commands.size());
 
             for(Class<? extends Module> module : modules) {
-                Module obj = module.getConstructor(MessageEvent.class).newInstance((Object) null);
+                Module obj = module.getConstructor(MessageEvent.class).newInstance(new Object[]{null});
                 MODULES.put(obj.getName(), obj);
             }
 

@@ -3,8 +3,11 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-06-06
++ [+] Added an audio timeout feature which will make Yuuko leave an audio channel after 5 minutes of nothing being played.
 + [~] Refactored all of the audio commands to remove some unnecessary method calls.
-+ [~] Added an audio timeout feature which will make Yuuko leave an audio channel after 5 minutes of nothing being played.
++ [~] Refactored JsonBuffer to RequestHandler since it doesn't necessarily return Json.
++ [~] Refactored Metrics packages to make more sense.
++ [~] Took care of some of the long term warnings IntelliJ was throwing at me.
 
 ## 2019-05-29
 + [!] Refactored the core GenericMessageController to GenericGuildMessageController to stop Yuuko listening to non-guild messages.

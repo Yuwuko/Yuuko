@@ -1,4 +1,4 @@
-package com.yuuko.core.metrics;
+package com.yuuko.core.metrics.pathway;
 
 import com.yuuko.core.Configuration;
 import net.dv8tion.jda.core.entities.Guild;

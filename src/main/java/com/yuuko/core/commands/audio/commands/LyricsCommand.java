@@ -7,7 +7,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.JsonBuffer;
+import com.yuuko.core.utilities.json.RequestHandler;
 import com.yuuko.core.utilities.json.RequestProperty;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.jsoup.Jsoup;
@@ -24,7 +24,7 @@ public class LyricsCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject json = new JsonBuffer("https://api.genius.com/search?q=" + e.getCommand().get(1).replace(" ", "%20"), "default", "default", new RequestProperty("Authorization", "Bearer " + Utilities.getApiKey("genius"))).getAsJsonObject();
+            JsonObject json = new RequestHandler("https://api.genius.com/search?q=" + e.getCommand().get(1).replace(" ", "%20"), "default", "default", new RequestProperty("Authorization", "Bearer " + Utilities.getApiKey("genius"))).getAsJsonObject();
             int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
 
             if(response != 200) {

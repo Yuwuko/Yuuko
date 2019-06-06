@@ -1,4 +1,4 @@
-package com.yuuko.core.metrics;
+package com.yuuko.core.metrics.pathway;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
