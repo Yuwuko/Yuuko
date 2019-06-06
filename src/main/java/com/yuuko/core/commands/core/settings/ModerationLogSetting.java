@@ -93,7 +93,7 @@ public class ModerationLogSetting extends Setting {
      * @param reason String
      */
     public static void execute(MessageEvent e, String action, User target, String reason) {
-        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
@@ -114,7 +114,7 @@ public class ModerationLogSetting extends Setting {
      * @param e MessageEvent
      */
     public static void execute(MessageEvent e, int messagesDeleted) {
-        String channelId = GuildFunctions.getGuildSetting("modLog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()

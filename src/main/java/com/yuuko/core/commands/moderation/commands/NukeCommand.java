@@ -18,7 +18,7 @@ import java.util.List;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", ModerationModule.class,1, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL));
+        super("nuke", ModerationModule.class,1, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
     }
 
     @Override
@@ -51,14 +51,14 @@ public class NukeCommand extends Command {
         e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
             messages.listIterator().forEachRemaining(message -> {
                 if(message != null && message.getCreationTime().isBefore(past)) {
-                    message.delete().queue();
+                    message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
                 }
             });
 
             if(messages.size() > 1) {
-                e.getGuild().getTextChannelById(e.getChannel().getId()).deleteMessages(messages.subList(1, messages.size())).queue(s -> {
+                e.getChannel().deleteMessages(messages.subList(1, messages.size())).queue(s -> {
                     ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
-                });
+                }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
             }
         });
     }
