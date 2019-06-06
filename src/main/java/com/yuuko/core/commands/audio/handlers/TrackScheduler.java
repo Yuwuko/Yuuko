@@ -5,24 +5,31 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.commands.audio.commands.CurrentCommand;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.scheduler.ScheduleHandler;
+import com.yuuko.core.scheduler.jobs.VoiceTimeoutJob;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.player.IPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
+import net.dv8tion.jda.core.entities.Guild;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ScheduledFuture;
 
 public class TrackScheduler extends PlayerEventListenerAdapter {
 
+    private Guild guild;
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;
     private boolean looping = false;
     private final IPlayer player;
     public final Queue<AudioTrack> queue;
+    private ScheduledFuture timeout;
 
-    TrackScheduler(IPlayer player) {
+    TrackScheduler(Guild guild, IPlayer player) {
+        this.guild = guild;
         this.player = player;
         this.queue = new LinkedList<>();
     }
@@ -43,12 +50,13 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
      */
     public boolean queue(AudioTrack track) {
         if(background != null && player.getPlayingTrack() == background) {
-            player.playTrack(track);
-
+            queue.add(track);
+            nextTrack();
         } else if(player.getPlayingTrack() != null) {
             return queue.offer(track);
         } else {
-            player.playTrack(track);
+            queue.add(track);
+            nextTrack();
             return true;
         }
         return false;
@@ -58,22 +66,31 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
      * Start the next track when the previous has finished.
      */
     public void nextTrack() {
-        AudioTrack track = queue.poll();
-        if(track == null) {
-            if(background != null) {
-                background = background.makeClone();
-                player.playTrack(background);
-            }
-        } else {
-            try {
+        try {
+            AudioTrack track = queue.poll();
+
+            if(track == null) {
+                if(background != null) {
+                    background = background.makeClone();
+                    player.playTrack(background);
+                }
+
+                timeout = ScheduleHandler.registerUniqueJob(new VoiceTimeoutJob(guild));
+            } else {
+                if(timeout != null) {
+                    timeout.cancel(true);
+                    timeout = null;
+                }
+
                 player.playTrack(track);
                 MessageEvent e = (MessageEvent) player.getPlayingTrack().getUserData();
+
                 if(e != null && TextUtilities.convertToBoolean(GuildFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()))) {
                     new CurrentCommand().onCommand(e);
                 }
-            } catch(Exception ex) {
-                // This exception occurs 99% of the time on repeating tracks.
             }
+        } catch(Exception ex) {
+            // This exception occurs 99% of the time on repeating tracks.
         }
     }
 

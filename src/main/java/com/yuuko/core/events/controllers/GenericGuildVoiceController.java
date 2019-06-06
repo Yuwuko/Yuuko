@@ -18,7 +18,7 @@ public class GenericGuildVoiceController {
         GuildVoiceState voice = e.getGuild().getSelfMember().getVoiceState();
 
         if(voice.inVoiceChannel() && voice.getChannel().getMembers().size() == 1) {
-            new StopCommand().onCommand(e);
+            new StopCommand().onCommand(e.getGuild());
         }
     }
 

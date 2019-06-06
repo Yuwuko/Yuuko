@@ -25,11 +25,11 @@ public class BackgroundCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
         if(e.hasParameters()) {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
-            manager.player.setPaused(false);
+            manager.getPlayer().setPaused(false);
 
             if(e.getCommand().get(1).startsWith("https://") || e.getCommand().get(1).startsWith("http://")) {
                 setAndPlay(manager, e, e.getCommand().get(1));
@@ -48,7 +48,7 @@ public class BackgroundCommand extends Command {
             // If no parameters are given, unset the background track.
             EmbedBuilder embed = new EmbedBuilder().setTitle("Removing").setDescription("The background track has been removed.");
             MessageHandler.sendMessage(e, embed.build());
-            manager.scheduler.setBackground(null);
+            manager.getScheduler().setBackground(null);
         }
     }
 
@@ -72,11 +72,11 @@ public class BackgroundCommand extends Command {
 
             @Override
             public void trackLoaded(AudioTrack track) {
-                if(manager.scheduler.queue.size() == 0) {
-                    manager.scheduler.queue(track);
+                if(manager.getScheduler().queue.size() == 0) {
+                    manager.getScheduler().queue(track);
                 }
 
-                manager.scheduler.setBackground(track);
+                manager.getScheduler().setBackground(track);
 
                 EmbedBuilder embed = new EmbedBuilder()
                         .setAuthor(e.getMember().getEffectiveName() + " set the background track!",null, e.getAuthor().getAvatarUrl())

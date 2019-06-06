@@ -34,7 +34,7 @@ public abstract class Job extends TimerTask {
         for(Task task: tasks) {
             try {
                 log.trace("Invoking {}#handle()", task.getClass().getName());
-                task.handle();
+                task.run();
             } catch(Exception ex) {
                 log.error("An error occurred while running the {} class, message: {}", task.getClass().getSimpleName(), ex.getMessage(), ex);
             }

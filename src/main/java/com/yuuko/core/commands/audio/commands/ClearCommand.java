@@ -23,7 +23,7 @@ public class ClearCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
             if(e.hasParameters()) {
                 final int clearPos;
@@ -35,10 +35,10 @@ public class ClearCommand extends Command {
                 }
 
                 LinkedList<AudioTrack> temp = new LinkedList<>();
-                Queue<AudioTrack> clone = new LinkedList<>(manager.scheduler.queue);
+                Queue<AudioTrack> clone = new LinkedList<>(manager.getScheduler().queue);
 
                 int i = 1;
-                for(int x = 0; x < manager.scheduler.queue.size(); x++) {
+                for(int x = 0; x < manager.getScheduler().queue.size(); x++) {
                     if(i == clearPos) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("**" + clone.remove().getInfo().title + "** has been cleared from the queue.");
                         MessageHandler.sendMessage(e, embed.build());
@@ -48,13 +48,13 @@ public class ClearCommand extends Command {
                         i++;
                     }
                 }
-                manager.scheduler.queue.clear();
-                manager.scheduler.queue.addAll(temp);
+                manager.getScheduler().queue.clear();
+                manager.getScheduler().queue.addAll(temp);
 
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("The queue has been cleared.");
                 MessageHandler.sendMessage(e, embed.build());
-                manager.scheduler.queue.clear();
+                manager.getScheduler().queue.clear();
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

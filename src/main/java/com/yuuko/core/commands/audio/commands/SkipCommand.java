@@ -19,16 +19,16 @@ public class SkipCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-            if(manager.player.getPlayingTrack() != null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.player.getPlayingTrack().getInfo().title);
+            if(manager.getPlayer().getPlayingTrack() != null) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
                 MessageHandler.sendMessage(e, embed.build());
 
-                if(manager.scheduler.hasNextTrack()) {
-                    manager.scheduler.nextTrack();
+                if(manager.getScheduler().hasNextTrack()) {
+                    manager.getScheduler().nextTrack();
                 } else {
-                    manager.player.stopTrack();
+                    manager.getPlayer().stopTrack();
                 }
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There is no current track to skip.");

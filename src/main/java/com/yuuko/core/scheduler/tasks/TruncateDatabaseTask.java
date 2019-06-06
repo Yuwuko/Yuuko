@@ -6,7 +6,7 @@ import com.yuuko.core.scheduler.Task;
 public class TruncateDatabaseTask implements Task {
 
     @Override
-    public void handle() {
+    public void run() {
         MetricsManager.truncateDatabase();
     }
 }

@@ -22,13 +22,13 @@ public class QueueCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
         try {
-            synchronized(manager.scheduler.queue) {
+            synchronized(manager.getScheduler().queue) {
                 StringBuilder queue = new StringBuilder();
                 int trackCount = 0;
-                for(AudioTrack track : manager.scheduler.queue) {
+                for(AudioTrack track : manager.getScheduler().queue) {
                     queue.append("`").append(trackCount+1).append(":` ").append(track.getInfo().title).append(" · (").append(TextUtilities.getTimestamp(track.getInfo().length)).append(") \n");
                     trackCount++;
                     if(trackCount > 9) {
@@ -37,13 +37,13 @@ public class QueueCommand extends Command {
                 }
 
                 final AtomicLong totalDuration = new AtomicLong();
-                manager.scheduler.queue.forEach(audioTrack -> totalDuration.getAndAdd(audioTrack.getDuration()));
+                manager.getScheduler().queue.forEach(audioTrack -> totalDuration.getAndAdd(audioTrack.getDuration()));
 
                 if(trackCount > 0) {
                     EmbedBuilder nextTracks = new EmbedBuilder()
                             .setTitle("Here are the next " + trackCount + " tracks in the queue:")
                             .setDescription(queue.toString())
-                            .addField("In Queue", manager.scheduler.queue.size() + "", true)
+                            .addField("In Queue", manager.getScheduler().queue.size() + "", true)
                             .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
                             .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());

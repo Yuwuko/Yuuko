@@ -8,12 +8,13 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
+import net.dv8tion.jda.core.entities.Guild;
 
 import java.util.HashMap;
 
 public class AudioManagerController {
 
-    private static HashMap<String, GuildAudioManager> managers;
+    private static HashMap<Guild, GuildAudioManager> managers;
     private static AudioPlayerManager playerManager;
 
     /**
@@ -36,7 +37,7 @@ public class AudioManagerController {
      * Finds and sets the guild's handlers manager.
      * @return GuildAudioManager.
      */
-    public static GuildAudioManager getGuildAudioManager(String guild) {
+    public static GuildAudioManager getGuildAudioManager(Guild guild) {
         GuildAudioManager manager = managers.get(guild);
 
         if(manager == null) {
@@ -53,14 +54,14 @@ public class AudioManagerController {
      * Returns full MusicManager HashMap.
      * @return managers.
      */
-    private static HashMap<String, GuildAudioManager> getGuildAudioManagers() {
+    private static HashMap<Guild, GuildAudioManager> getGuildAudioManagers() {
         return managers;
     }
 
     /**
      * Adds to the GuildAudioManager HashMap.
      */
-    private static void addGuildMusicManager(String guild, GuildAudioManager manager) {
+    private static void addGuildMusicManager(Guild guild, GuildAudioManager manager) {
         managers.put(guild, manager);
     }
 
@@ -76,7 +77,7 @@ public class AudioManagerController {
      * Removes a guild audio manager, stopping players from just laying dormant.
      * @param guild which manager to remove.
      */
-    public static void removeGuildAudioManager(String guild) {
+    public static void removeGuildAudioManager(Guild guild) {
         managers.remove(guild);
     }
 }

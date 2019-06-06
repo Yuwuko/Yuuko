@@ -33,11 +33,11 @@ public class LavalinkManager {
         return lavalink;
     }
 
-    IPlayer createPlayer(String guild) {
+    IPlayer createPlayer(Guild guild) {
         return lavalink.getLink(guild).getPlayer();
     }
 
-    public void resetPlayer(String guild) {
+    public void resetPlayer(Guild guild) {
         lavalink.getLink(guild).resetPlayer();
     }
 

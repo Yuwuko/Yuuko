@@ -21,7 +21,7 @@ public class LastCommand extends Command {
 	@Override
 	public void onCommand(MessageEvent e) {
 		try {
-			AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild().getId()).player.getPlayingTrack();
+			AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
 
 			if(track != null) {
 				String[] uri = track.getInfo().uri.split("=");

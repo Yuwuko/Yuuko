@@ -19,12 +19,12 @@ public class ShuffleCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
+            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-            if(manager.scheduler.queue.size() > 1) {
+            if(manager.getScheduler().queue.size() > 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Shuffling").setDescription("The queue has been shuffled.");
                 MessageHandler.sendMessage(e, embed.build());
-                manager.scheduler.shuffle();
+                manager.getScheduler().shuffle();
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There aren't any tracks to shuffle.");
                 MessageHandler.sendMessage(e, embed.build());

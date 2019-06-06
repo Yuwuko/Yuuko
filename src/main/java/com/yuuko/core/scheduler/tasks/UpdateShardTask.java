@@ -11,7 +11,7 @@ public class UpdateShardTask implements Task {
     private static JDA shard = Configuration.SHARD_MANAGER.getShardById(Configuration.SHARD_ID);
 
     @Override
-    public void handle() {
+    public void run() {
         DiscordMetrics metrics = MetricsManager.getDiscordMetrics();
         DatabaseFunctions.updateShardStatistics(Configuration.SHARD_ID, shard.getStatus().name(), metrics.GUILD_COUNT, metrics.USER_COUNT, metrics.CHANNEL_COUNT, (int)metrics.PING.get());
     }

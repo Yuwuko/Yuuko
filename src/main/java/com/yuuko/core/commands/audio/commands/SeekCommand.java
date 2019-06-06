@@ -21,7 +21,7 @@ public class SeekCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild().getId()).player.getPlayingTrack();
+        AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
 
         int seek;
 

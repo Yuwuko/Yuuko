@@ -28,22 +28,22 @@ public class PlayCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild().getId());
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
         if(!LavalinkUtilities.isState(e.getGuild(), Link.State.CONNECTED)) {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
         if(e.getCommand().size() == 1) {
-            if(manager.player.isPaused()) {
+            if(manager.getPlayer().isPaused()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
                 MessageHandler.sendMessage(e, embed.build());
-                manager.player.setPaused(false);
+                manager.getPlayer().setPaused(false);
                 new CurrentCommand();
             }
 
         } else {
-            manager.player.setPaused(false);
+            manager.getPlayer().setPaused(false);
 
             if(e.getCommand().get(1).startsWith("https://") || e.getCommand().get(1).startsWith("http://")) {
                 loadAndPlay(manager, e, e.getCommand().get(1));
@@ -84,7 +84,7 @@ public class PlayCommand extends Command {
             public void trackLoaded(AudioTrack track) {
                 try {
                     track.setUserData(e);
-                    manager.scheduler.queue(track);
+                    manager.getScheduler().queue(track);
 
                     String[] uri = track.getInfo().uri.split("=");
                     String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
@@ -95,7 +95,7 @@ public class PlayCommand extends Command {
                             .setThumbnail(imageUrl)
                             .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
-                            .addField("Position in queue", manager.scheduler.queue.size() + "", false)
+                            .addField("Position in queue", manager.getScheduler().queue.size() + "", false)
                             .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, embed.build());
                 } catch(Exception ex) {
@@ -112,7 +112,7 @@ public class PlayCommand extends Command {
                     List<AudioTrack> tracks = playlist.getTracks();
                     for(AudioTrack track: tracks) {
                         track.setUserData(e);
-                        manager.scheduler.queue(track);
+                        manager.getScheduler().queue(track);
                     }
 
                     new CurrentCommand().onCommand(e);
