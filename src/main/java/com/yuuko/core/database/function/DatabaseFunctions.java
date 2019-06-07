@@ -26,7 +26,7 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `botMessagesProcessed`, `humanMessagesProcessed`, `botReactsProcessed`, `humanReactsProcessed`, `outputsProcessed`, `totalBotMessagesProcessed`, `totalHumanMessagesProcessed`, `totalBotReactsProcessed`, `totalHumanReactsProcessed`, totalOutputsProcessed) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `select`, `insert`, `update`, `delete`, `totalSelects`, `totalInserts`, `totalUpdates`, `totalDeletes`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, selects, inserts, updates, deletes, `totalSelects`, `totalInserts`, `totalUpdates`, `totalDeletes`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
