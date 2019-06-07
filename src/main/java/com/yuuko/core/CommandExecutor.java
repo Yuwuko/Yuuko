@@ -5,7 +5,6 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.extensions.MessageEvent;
-import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
@@ -77,11 +76,9 @@ public class CommandExecutor {
             log.trace("Invoking {}#onCommand()", command.getClass().getName());
             command.onCommand(e);
             messageCleanup(e);
-            MetricsManager.getEventMetrics().COMMANDS_EXECUTED.getAndIncrement();
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
             e.getMessage().addReaction("❌").queue();
-            MetricsManager.getEventMetrics().COMMANDS_FAILED.getAndIncrement();
         }
     }
 

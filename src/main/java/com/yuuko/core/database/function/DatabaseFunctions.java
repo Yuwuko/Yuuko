@@ -24,9 +24,9 @@ public class DatabaseFunctions {
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `botMessagesProcessed`, `humanMessagesProcessed`, `botReactsProcessed`, `humanReactsProcessed`, `outputsProcessed`, `commandsExecuted`, `commandsFailed`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `botMessagesProcessed`, `humanMessagesProcessed`, `botReactsProcessed`, `humanReactsProcessed`, `outputsProcessed`, `totalBotMessagesProcessed`, `totalHumanMessagesProcessed`, `totalBotReactsProcessed`, `totalHumanReactsProcessed`, totalOutputsProcessed) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`) VALUES(?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `select`, `insert`, `update`, `delete`, `totalSelects`, `totalInserts`, `totalUpdates`, `totalDeletes`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -42,8 +42,11 @@ public class DatabaseFunctions {
             stmt2.setInt(4, MetricsManager.getEventMetrics().BOT_REACTS_PROCESSED.get());
             stmt2.setInt(5, MetricsManager.getEventMetrics().HUMAN_REACTS_PROCESSED.get());
             stmt2.setInt(6, MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.get());
-            stmt2.setInt(7, MetricsManager.getEventMetrics().COMMANDS_EXECUTED.get());
-            stmt2.setInt(8, MetricsManager.getEventMetrics().COMMANDS_FAILED.get());
+            stmt2.setInt(7, MetricsManager.getEventMetrics().TOTAL_BOT_MESSAGES_PROCESSED.get());
+            stmt2.setInt(8, MetricsManager.getEventMetrics().TOTAL_HUMAN_MESSAGES_PROCESSED.get());
+            stmt2.setInt(9, MetricsManager.getEventMetrics().TOTAL_BOT_REACTS_PROCESSED.get());
+            stmt2.setInt(10, MetricsManager.getEventMetrics().TOTAL_HUMAN_REACTS_PROCESSED.get());
+            stmt2.setInt(11, MetricsManager.getEventMetrics().TOTAL_OUTPUTS_PROCESSED.get());
             stmt2.execute();
 
             stmt3.setInt(1, shardId);
@@ -60,6 +63,10 @@ public class DatabaseFunctions {
             stmt4.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
             stmt4.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
             stmt4.setInt(5, MetricsManager.getDatabaseMetrics().DELETE.get());
+            stmt4.setInt(6, MetricsManager.getDatabaseMetrics().TOTAL_SELECTS.get());
+            stmt4.setInt(7, MetricsManager.getDatabaseMetrics().TOTAL_INSERTS.get());
+            stmt4.setInt(8, MetricsManager.getDatabaseMetrics().TOTAL_UPDATES.get());
+            stmt4.setInt(9, MetricsManager.getDatabaseMetrics().TOTAL_DELETES.get());
             stmt4.execute();
 
             MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
