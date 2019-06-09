@@ -5,11 +5,11 @@ import com.yuuko.core.scheduler.tasks.UpdateMetricsTask;
 
 import java.util.concurrent.TimeUnit;
 
-public class FiveSecondlyJob extends Job {
+public class FifteenSecondlyJob extends Job {
     private final UpdateMetricsTask updateMetricsTask = new UpdateMetricsTask();
 
-    public FiveSecondlyJob() {
-        super(0, 5, TimeUnit.SECONDS);
+    public FifteenSecondlyJob() {
+        super(0, 15, TimeUnit.SECONDS);
     }
 
     @Override

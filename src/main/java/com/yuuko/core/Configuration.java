@@ -15,7 +15,7 @@ import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.events.extensions.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
-import com.yuuko.core.scheduler.jobs.FiveSecondlyJob;
+import com.yuuko.core.scheduler.jobs.FifteenSecondlyJob;
 import com.yuuko.core.scheduler.jobs.OneHourlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.Utilities;
@@ -39,7 +39,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-06-07";
+    public static final String VERSION = "2019-06-09";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -280,7 +280,7 @@ public class Configuration {
      * Initialises the bot's scheduler which runs tasks at set intervals.
      */
     private void initialiseSchedule() {
-        ScheduleHandler.registerJob(new FiveSecondlyJob());
+        ScheduleHandler.registerJob(new FifteenSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());
 
