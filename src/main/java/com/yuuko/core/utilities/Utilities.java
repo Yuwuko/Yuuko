@@ -2,7 +2,7 @@ package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.function.GuildFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
@@ -36,21 +36,21 @@ public final class Utilities {
     /**
      * Returns an API ApplicationId.
      *
-     * @param name name of the api
+     * @param key name of the api
      * @return String
      */
-    public static String getApiApplicationId(String name) {
-        return Configuration.API_KEYS.get(name).getApplicationId();
+    public static String getApiApplicationId(String key) {
+        return Configuration.API_MANAGER.getApi(key).getApplicationId();
     }
 
     /**
      * Returns an API key.
      *
-     * @param name name of the api
+     * @param key name of the api
      * @return String
      */
-    public static String getApiKey(String name) {
-        return Configuration.API_KEYS.get(name).getKey();
+    public static String getApiKey(String key) {
+        return Configuration.API_MANAGER.getApi(key).getKey();
     }
 
     /**

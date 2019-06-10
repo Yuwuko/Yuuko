@@ -5,9 +5,9 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
@@ -25,7 +25,8 @@ public class WeatherCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            JsonObject data = new RequestHandler("https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommand().get(1).replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap"), "default", "default").getAsJsonObject();
+            final String url = "https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommand().get(1).replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap");
+            JsonObject data = new RequestHandler(url).getJsonObject();
 
             if(data == null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");

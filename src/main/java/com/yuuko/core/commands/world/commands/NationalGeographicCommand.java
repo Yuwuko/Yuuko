@@ -7,9 +7,9 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
@@ -23,7 +23,8 @@ public class NationalGeographicCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        JsonObject json = new RequestHandler("https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + Utilities.getApiKey("newsapi"), "default", "default").getAsJsonObject();
+        final String url = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + Utilities.getApiKey("newsapi");
+        JsonObject json = new RequestHandler(url).getJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 
         EmbedBuilder embed = new EmbedBuilder()

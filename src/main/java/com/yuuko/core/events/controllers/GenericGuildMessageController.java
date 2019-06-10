@@ -6,7 +6,7 @@ import com.yuuko.core.commands.core.settings.CommandLogSetting;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ReactionRoleFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;

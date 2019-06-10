@@ -1,4 +1,4 @@
-package com.yuuko.core.events.extensions;
+package com.yuuko.core.events.entity;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.utilities.Utilities;

@@ -2,6 +2,7 @@ package com.yuuko.core;
 
 import com.basketbandit.ddbl.DivineAPI;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
+import com.yuuko.core.api.ApiManager;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -12,7 +13,7 @@ import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.FifteenSecondlyJob;
@@ -29,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -39,7 +39,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-06-09";
+    public static final String VERSION = "2019-06-10";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -48,7 +48,7 @@ public class Configuration {
     public static int SHARD_COUNT = 0;
     public static int SHARD_ID = 0;
     public static String GLOBAL_PREFIX;
-    public static HashMap<String, ApplicationProgrammingInterface> API_KEYS;
+    public static ApiManager API_MANAGER;
     public static LavalinkManager LAVALINK;
     public static net.dv8tion.jda.bot.sharding.ShardManager SHARD_MANAGER;
     public static User BOT;
@@ -206,27 +206,13 @@ public class Configuration {
      *
      * @return int number of api keys loaded.
      */
-    public static int loadApi() {
+    private static void loadApi() {
         try {
-            File folder = new File("./config/api/");
-            File[] keyFiles = folder.listFiles();
-
-            if(keyFiles != null) {
-                API_KEYS = new HashMap<>(keyFiles.length);
-                for(File key : keyFiles) {
-                    BufferedReader c = new BufferedReader(new FileReader(key));
-                    API_KEYS.put(key.getName(), new ApplicationProgrammingInterface(key.getName(), c.readLine(), c.readLine()));
-                    c.close();
-                }
-                log.info("Loaded " + keyFiles.length + " API keys.");
-                return keyFiles.length;
-            }
-
-            return 0;
+            API_MANAGER = new ApiManager();
+            log.info("Loaded ApiManager.");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
-            return -1;
         }
     }
 
@@ -251,10 +237,10 @@ public class Configuration {
      * Initialises bot list objects and then updates them to match the database.
      */
     private void initialiseBotLists() {
-        if(API_KEYS.containsKey("discordbots")) {
+        if(API_MANAGER.containsKey("discordbots")) {
             BOT_LIST = new DiscordBotListAPI.Builder().botId(BOT.getId()).token(Utilities.getApiKey("discordbots")).build();
         }
-        if(API_KEYS.containsKey("divinediscordbots")) {
+        if(API_MANAGER.containsKey("divinediscordbots")) {
             DIVINE_API = new DivineAPI.Builder().botId(BOT.getId()).token(Utilities.getApiKey("divinediscordbots")).build();
         }
         Utilities.updateDiscordBotList();

@@ -2,9 +2,10 @@ package com.yuuko.core.commands.developer.commands;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.api.ApiManager;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
@@ -18,7 +19,8 @@ public class ReloadApiCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded " + Configuration.loadApi() + " API Keys.");
+            Configuration.API_MANAGER = new ApiManager();
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded ApiManager.");
             MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

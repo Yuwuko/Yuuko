@@ -1,11 +1,11 @@
-package com.yuuko.core;
+package com.yuuko.core.api.entity;
 
-public class ApplicationProgrammingInterface {
+public class Api {
     private final String name;
     private final String applicationId;
     private final String key;
 
-    ApplicationProgrammingInterface(String name, String applicationId, String key) {
+    public Api(String name, String applicationId, String key) {
         this.name = name;
         this.applicationId = applicationId;
         this.key = key;

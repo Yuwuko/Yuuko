@@ -6,7 +6,7 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.media.commands.GithubCommand;
 import com.yuuko.core.commands.media.commands.KitsuCommand;
 import com.yuuko.core.commands.media.commands.OsuCommand;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;

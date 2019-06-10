@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-06-10
++ [~] Updated dependencies to newest possible without breaking other dependencies @JDA && OkHttp
++ [~] Refactored ApplicationProgrammingInterface to simply Api and put it into its own package along with an ApiManager class.
++ [~] Refactored RequestHandler from the utilities package to its own IO package along with RequestProperty
++ [~] Refactored MessageEvent package from extension to entity.
+
 ## 2019-06-06
 + [+] Added an audio timeout feature which will make Yuuko leave an audio channel after 5 minutes of nothing being played.
 + [~] Refactored all of the audio commands to remove some unnecessary method calls.

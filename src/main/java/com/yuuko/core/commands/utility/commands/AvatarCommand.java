@@ -4,7 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;

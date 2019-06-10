@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-06-09'
+version = '2019-06-10'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -45,7 +45,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
     // Web Clients
-    compile 'com.squareup.okhttp3:okhttp:4.0.0-RC1'
+    compile 'com.squareup.okhttp3:okhttp:3.14.2'
     compile 'org.jsoup:jsoup:1.12.1'
     // Database
     compile 'mysql:mysql-connector-java:8.0.16'

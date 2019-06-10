@@ -7,7 +7,7 @@ import com.yuuko.core.commands.moderation.commands.BanCommand;
 import com.yuuko.core.commands.moderation.commands.KickCommand;
 import com.yuuko.core.commands.moderation.commands.MuteCommand;
 import com.yuuko.core.commands.moderation.commands.NukeCommand;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;

@@ -3,7 +3,7 @@ package com.yuuko.core.commands.interaction.commands;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.interaction.InteractionModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;

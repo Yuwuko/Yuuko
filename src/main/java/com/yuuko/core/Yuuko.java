@@ -1,6 +1,6 @@
 // Program: Yuuko (Discord Bot)
 // Programmer: Joshua Mark Hunt
-// Version: 2019-06-09 - JDK 13
+// Version: 2019-06-10 - JDK 13
 
 package com.yuuko.core;
 

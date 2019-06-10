@@ -8,10 +8,10 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.entity.Shard;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class AboutCommand extends Command {
         }
 
         // Commit feature first seen used by Senither @AvaIre.
-        JsonArray git = new RequestHandler("https://api.github.com/repos/Yuuko-oh/Yuuko/commits", "default", "default").getAsJsonArray();
+        JsonArray git = new RequestHandler("https://api.github.com/repos/Yuuko-oh/Yuuko/commits").getJsonArray();
         StringBuilder latestUpdates = new StringBuilder();
 
         for(int i = 0; i < 5; i++) {

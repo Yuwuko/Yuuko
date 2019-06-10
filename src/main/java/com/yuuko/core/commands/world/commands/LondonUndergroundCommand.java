@@ -10,10 +10,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
@@ -30,8 +30,9 @@ public class LondonUndergroundCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            // Buffers JSON from the given URL and the uses ObjectMapper to turn it into usable Java objects.
-            String json = new RequestHandler("https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon"), "default", "default").getAsString();
+            final String url = "https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon");
+            final String json = new RequestHandler(url).getString();
+
             ArrayList<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<List<LineManager>>(){});
 
             // Build string for reasons why line doesn't have good service.

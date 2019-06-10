@@ -6,11 +6,11 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.StringFormatter;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
@@ -51,7 +51,8 @@ public class OsuCommand extends Command {
                 default: modeString = "unknown";
             }
 
-            JsonArray json = new RequestHandler("https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode, "default", "default").getAsJsonArray();
+            final String url = "https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode;
+            final JsonArray json = new RequestHandler(url).getJsonArray();
 
             if(json == null || json.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");

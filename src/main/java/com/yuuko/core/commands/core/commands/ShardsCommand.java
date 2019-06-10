@@ -6,7 +6,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.entity.Shard;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import lavalink.client.io.LavalinkSocket;
 import net.dv8tion.jda.core.EmbedBuilder;
 

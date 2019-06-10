@@ -2,7 +2,7 @@ package com.yuuko.core.commands.core.settings;
 
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.GuildFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;

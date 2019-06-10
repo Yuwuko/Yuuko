@@ -4,7 +4,7 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.fun.commands.*;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;

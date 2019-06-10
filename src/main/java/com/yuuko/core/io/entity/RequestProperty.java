@@ -1,4 +1,4 @@
-package com.yuuko.core.utilities.json;
+package com.yuuko.core.io.entity;
 
 public class RequestProperty {
 
@@ -10,11 +10,11 @@ public class RequestProperty {
         this.directive = directive;
     }
 
-    String getHeader() {
+    public String getHeader() {
         return header;
     }
 
-    String getDirective() {
+    public String getDirective() {
         return directive;
     }
 }

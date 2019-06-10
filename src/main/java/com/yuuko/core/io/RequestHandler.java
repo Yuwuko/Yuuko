@@ -1,8 +1,9 @@
-package com.yuuko.core.utilities.json;
+package com.yuuko.core.io;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.yuuko.core.io.entity.RequestProperty;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -14,17 +15,30 @@ public class RequestHandler {
     private static final OkHttpClient client = new OkHttpClient();
     private String content;
 
-    public RequestHandler(String url, String acceptDirective, String contentTypeDirective, RequestProperty... extraProperties) {
+    private static final String DEFAULT_CONTENT_TYPE = "application/json";
+
+    /**
+     * RequestHandler method which takes a url and optional arguments as request properties.
+     * Providing no request property parameters will cause defaults to be used which are
+     * Accept: application/json && Content-Type: application/json
+     *
+     * @param url String: the url used for the connection
+     * @param requestProperties RequestProperty: the optional request properties with default application/json when none are given.
+     */
+    public RequestHandler(String url, RequestProperty... requestProperties) {
         try {
             Request.Builder builder = new Request.Builder()
-                    .url(url)
-                    .addHeader("Accept", (acceptDirective.equals("default")) ? "application/json" : acceptDirective)
-                    .addHeader("Content-Type", (contentTypeDirective.equals("default")) ? "application/json" : contentTypeDirective);
-            if(extraProperties != null && extraProperties.length > 0) {
-                for(RequestProperty property : extraProperties) {
+                    .url(url);
+
+            if(requestProperties != null && requestProperties.length > 0) {
+                for(RequestProperty property : requestProperties) {
                     builder.addHeader(property.getHeader(), property.getDirective());
                 }
+            } else {
+                   builder.addHeader("Accept", DEFAULT_CONTENT_TYPE)
+                   .addHeader("Content-Type", DEFAULT_CONTENT_TYPE);
             }
+
             Response response = client.newCall(builder.build()).execute();
 
             if(response.code() != 200) {
@@ -48,7 +62,7 @@ public class RequestHandler {
      *
      * @return String
      */
-    public String getAsString() {
+    public String getString() {
         return content;
     }
 
@@ -58,7 +72,7 @@ public class RequestHandler {
      * @return JsonObject
      * @throws IllegalStateException IllegalStateException
      */
-    public JsonObject getAsJsonObject() throws IllegalStateException {
+    public JsonObject getJsonObject() throws IllegalStateException {
         try {
             return (content == null) ? null : new JsonParser().parse(content).getAsJsonObject();
         } catch(Exception ex) {
@@ -73,7 +87,7 @@ public class RequestHandler {
      * @return JsonArray
      * @throws IllegalStateException IllegalStateException
      */
-    public JsonArray getAsJsonArray() throws IllegalStateException {
+    public JsonArray getJsonArray() throws IllegalStateException {
         try {
             return (content == null) ? null : new JsonParser().parse(content).getAsJsonArray();
         } catch(Exception ex) {

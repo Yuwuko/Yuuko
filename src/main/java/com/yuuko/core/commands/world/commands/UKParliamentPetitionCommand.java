@@ -7,16 +7,17 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.world.WorldModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.time.Instant;
 import java.util.Arrays;
 
 public class UKParliamentPetitionCommand extends Command {
+    private static final String BASE_URL = "https://petition.parliament.uk/petitions/";
 
     public UKParliamentPetitionCommand() {
         super("petition", WorldModule.class, 0, Arrays.asList("-petition <id>"), false, null);
@@ -26,7 +27,8 @@ public class UKParliamentPetitionCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             if(e.hasParameters()) {
-                JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions/" + e.getCommand().get(1) + ".json", "default", "default").getAsJsonObject();
+                final String url = BASE_URL + e.getCommand().get(1) + ".json";
+                final JsonObject json = new RequestHandler(url).getJsonObject();
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Petition **_" + e.getCommand().get(1) + "_** produced no results.");
@@ -62,7 +64,7 @@ public class UKParliamentPetitionCommand extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             } else {
 
-                JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json", "default", "default").getAsJsonObject();
+                JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json").getJsonObject();
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("There was a problem retrieving the main set of petitions.");

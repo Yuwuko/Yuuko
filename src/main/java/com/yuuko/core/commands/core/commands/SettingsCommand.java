@@ -6,7 +6,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.commands.core.settings.*;
 import com.yuuko.core.database.function.GuildFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;

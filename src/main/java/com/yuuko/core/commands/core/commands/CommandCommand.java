@@ -5,7 +5,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.CommandFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;

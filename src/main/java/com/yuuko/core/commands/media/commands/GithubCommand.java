@@ -5,9 +5,10 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
+import com.yuuko.core.io.entity.RequestProperty;
 import com.yuuko.core.utilities.Utilities;
-import com.yuuko.core.utilities.json.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.math.BigDecimal;
@@ -25,7 +26,9 @@ public class GithubCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         String[] commandParameters = e.getCommand().get(1).split("\\s+", 2);
-        JsonObject json = new RequestHandler("https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utilities.getApiKey("github"), "application/vnd.github.v3+json", "application/vnd.github.v3+json").getAsJsonObject();
+
+        final String url = "https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utilities.getApiKey("github");
+        final JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.github.v3+json"), new RequestProperty("Content-Type", "application/vnd.github.v3+json")).getJsonObject();
 
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");

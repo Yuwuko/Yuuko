@@ -3,7 +3,7 @@ package com.yuuko.core.commands.developer.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 
 import java.net.URI;
 import java.util.Arrays;

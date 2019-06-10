@@ -7,7 +7,7 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.database.function.CommandFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;

@@ -6,7 +6,7 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.nsfw.commands.EfuktCommand;
 import com.yuuko.core.commands.nsfw.commands.NekoCommand;
 import com.yuuko.core.commands.nsfw.commands.UrbanDictionaryCommand;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;

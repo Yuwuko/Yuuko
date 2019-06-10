@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.yuuko.core.commands.audio.commands.CurrentCommand;
 import com.yuuko.core.database.function.GuildFunctions;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.VoiceTimeoutJob;
 import com.yuuko.core.utilities.TextUtilities;

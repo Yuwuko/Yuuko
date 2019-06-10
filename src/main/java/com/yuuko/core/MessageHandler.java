@@ -1,6 +1,6 @@
 package com.yuuko.core;
 
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.entities.MessageEmbed;

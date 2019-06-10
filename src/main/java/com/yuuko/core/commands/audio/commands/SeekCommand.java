@@ -5,7 +5,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
-import com.yuuko.core.events.extensions.MessageEvent;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
