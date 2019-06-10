@@ -7,6 +7,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Refactored ApplicationProgrammingInterface to simply Api and put it into its own package along with an ApiManager class.
 + [~] Refactored RequestHandler from the utilities package to its own IO package along with RequestProperty
 + [~] Refactored MessageEvent package from extension to entity.
++ [~] Made the [__nuke__] command more forgiving regarding invalid input.
 
 ## 2019-06-06
 + [+] Added an audio timeout feature which will make Yuuko leave an audio channel after 5 minutes of nothing being played.
