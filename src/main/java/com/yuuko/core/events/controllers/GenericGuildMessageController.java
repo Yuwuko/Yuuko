@@ -30,10 +30,10 @@ public class GenericGuildMessageController {
             final double executionStart = System.nanoTime();
 
             if(e.getAuthor().isBot()) {
-                MetricsManager.getEventMetrics().BOT_MESSAGES_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().BOT_MESSAGES.getAndIncrement();
                 return;
             } else {
-                MetricsManager.getEventMetrics().HUMAN_MESSAGES_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().HUMAN_MESSAGES.getAndIncrement();
             }
 
             MessageEvent event = new MessageEvent(e);

@@ -24,7 +24,7 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendMessage(message)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendMessage(message).queue();
             }
         } catch(Exception ex) {
@@ -42,7 +42,7 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendMessage(embed)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -60,7 +60,7 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(file)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendFile(file).queue();
             }
         } catch(Exception ex) {
@@ -79,7 +79,7 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendFile(bytes, fileName).queue();
             }
         } catch(Exception ex) {
@@ -98,7 +98,7 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -117,7 +117,7 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception ex) {

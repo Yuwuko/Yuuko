@@ -21,11 +21,11 @@ public class GenericGuildMessageReactionController {
     private void guildMessageReactionEvent(GenericGuildMessageReactionEvent e) {
         try {
             if(e.getUser().isBot()) {
-                MetricsManager.getEventMetrics().BOT_REACTS_PROCESSED.getAndIncrement();
+                MetricsManager.getEventMetrics().BOT_REACTS.getAndIncrement();
                 return;
             }
 
-            MetricsManager.getEventMetrics().HUMAN_REACTS_PROCESSED.getAndIncrement();
+            MetricsManager.getEventMetrics().HUMAN_REACTS.getAndIncrement();
 
             // Starboard
             if(e instanceof GuildMessageReactionAddEvent && e.getReactionEmote().getName().equals("⭐")) {
