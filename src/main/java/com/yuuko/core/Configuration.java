@@ -16,8 +16,8 @@ import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
-import com.yuuko.core.scheduler.jobs.FifteenSecondlyJob;
 import com.yuuko.core.scheduler.jobs.OneHourlyJob;
+import com.yuuko.core.scheduler.jobs.TenSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
@@ -266,7 +266,7 @@ public class Configuration {
      * Initialises the bot's scheduler which runs tasks at set intervals.
      */
     private void initialiseSchedule() {
-        ScheduleHandler.registerJob(new FifteenSecondlyJob());
+        ScheduleHandler.registerJob(new TenSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());
 
