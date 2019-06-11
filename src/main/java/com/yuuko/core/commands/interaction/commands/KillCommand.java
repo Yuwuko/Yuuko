@@ -15,11 +15,11 @@ import java.util.Random;
 public class KillCommand extends Command {
 
     private static final List<String> interactionImage = Arrays.asList(
-            "https://stop-talking-to.me/yuuko/kill/1.gif",
-            "https://stop-talking-to.me/yuuko/kill/2.gif",
-            "https://stop-talking-to.me/yuuko/kill/3.gif",
-            "https://stop-talking-to.me/yuuko/kill/4.gif",
-            "https://stop-talking-to.me/yuuko/kill/5.gif"
+            "https://i.imgur.com/YGTBd1F.gif",
+            "https://i.imgur.com/3L8lclp.gif",
+            "https://i.imgur.com/3767VAs.gif",
+            "https://i.imgur.com/8tPxaFx.gif",
+            "https://i.imgur.com/Cin043Y.gif"
     );
 
     public KillCommand() {

@@ -15,11 +15,11 @@ import java.util.Random;
 public class PatCommand extends Command {
 
     private static final List<String> interactionImage = Arrays.asList(
-            "https://stop-talking-to.me/yuuko/pat/1.gif",
-            "https://stop-talking-to.me/yuuko/pat/2.gif",
-            "https://stop-talking-to.me/yuuko/pat/3.gif",
-            "https://stop-talking-to.me/yuuko/pat/4.gif",
-            "https://stop-talking-to.me/yuuko/pat/5.gif"
+            "https://i.imgur.com/2lacG7l.gif",
+            "https://i.imgur.com/UWbKpx8.gif",
+            "https://i.imgur.com/4ssddEQ.gif",
+            "https://i.imgur.com/2k0MFIr.gif",
+            "https://i.imgur.com/NNOz81F.gif"
     );
 
     public PatCommand() {

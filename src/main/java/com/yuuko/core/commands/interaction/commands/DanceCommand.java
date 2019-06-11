@@ -15,11 +15,11 @@ import java.util.Random;
 public class DanceCommand extends Command {
 
     private static final List<String> interactionImage = Arrays.asList(
-            "https://stop-talking-to.me/yuuko/dance/1.gif",
-            "https://stop-talking-to.me/yuuko/dance/2.gif",
-            "https://stop-talking-to.me/yuuko/dance/3.gif",
-            "https://stop-talking-to.me/yuuko/dance/4.gif",
-            "https://stop-talking-to.me/yuuko/dance/5.gif"
+            "https://i.imgur.com/TwMOUGe.gif",
+            "https://i.imgur.com/9uzmcJd.gif",
+            "https://i.imgur.com/AgScXfC.gif",
+            "https://i.imgur.com/pBm2v7f.gif",
+            "https://i.imgur.com/KkdPUnz.gif"
     );
 
     public DanceCommand() {
