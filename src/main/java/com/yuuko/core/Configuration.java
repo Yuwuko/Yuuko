@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -185,13 +186,17 @@ public class Configuration {
             COMMANDS = new HashMap<>(commands.size());
 
             for(Class<? extends Module> module : modules) {
-                Module obj = module.getConstructor(MessageEvent.class).newInstance(new Object[]{null});
-                MODULES.put(obj.getName(), obj);
+                if(!Modifier.isAbstract(module.getModifiers())) {
+                    Module obj = module.getConstructor(MessageEvent.class).newInstance(new Object[]{null});
+                    MODULES.put(obj.getName(), obj);
+                }
             }
 
             for(Class<? extends Command> command : commands) {
-                Command obj = command.getConstructor().newInstance();
-                COMMANDS.put(obj.getName(), obj);
+                if(!Modifier.isAbstract(command.getModifiers())) {
+                    Command obj = command.getConstructor().newInstance();
+                    COMMANDS.put(obj.getName(), obj);
+                }
             }
 
             log.info("Loaded " + MODULES.size() + " modules and " + COMMANDS.size() + " commands.");

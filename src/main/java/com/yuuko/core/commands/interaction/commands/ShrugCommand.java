@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
 import com.yuuko.core.MessageHandler;
-import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.commands.interaction.InteractionModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class ShrugCommand extends Command {
+public class ShrugCommand extends InteractionCommand {
 
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/ghlye0C.gif",
@@ -35,7 +35,7 @@ public class ShrugCommand extends Command {
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs.").setImage(interactionImage.get(new Random().nextInt(interactionImage.size() -1)));
+            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs.").setImage(interactionImage.get(random(interactionImage.size())));
             MessageHandler.sendMessage(e, embed.build());
         }
     }
