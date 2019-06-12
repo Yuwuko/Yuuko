@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 2019_06-12
 + [+] Added [__advice__] command using api.adviceslip.com which is quick and easy.
 + [+] Added abstraction to interaction by subclassing Command into InteractionCommand, implementing a LocalThread random function.
++ [+] Added an animal module along with four commands to kick it off, namely [__cat__], [__fox__], [__dog__] and [__bird__]
 + [~] Refactored the whole world module and put it into media since they're quite similar.
 + [-] Removed the [__countdown__] command as it was largely unused and had limited functionality.
  
