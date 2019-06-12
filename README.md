@@ -29,8 +29,8 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 
 * **Core** <br>
 `settings` `help` `shards` `module` `about` `vote` `command`
-* **World** <br>
-
+* **Animal** <br>
+`cat` `fox` `dog` `bird`
 * **NSFW** <br>
 `efukt` `neko` `urban`
 * **Moderation** <br>
