@@ -7,6 +7,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [+] Added abstraction to interaction by subclassing Command into InteractionCommand, implementing a LocalThread random function.
 + [+] Added an animal module along with four commands to kick it off, namely [__cat__], [__fox__], [__dog__] and [__bird__]
 + [~] Refactored the whole world module and put it into media since they're quite similar.
++ [~] Fixed a bug with the [__lyrics__] command which was caused by /extra/ long songs such as Rap God by Eminem.
 + [-] Removed the [__countdown__] command as it was largely unused and had limited functionality.
  
 ## 2019-06-10
