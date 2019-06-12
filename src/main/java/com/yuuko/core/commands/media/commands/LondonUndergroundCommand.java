@@ -1,4 +1,4 @@
-package com.yuuko.core.commands.world.commands;
+package com.yuuko.core.commands.media.commands;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.TextUtilities;
@@ -24,7 +24,7 @@ import java.util.List;
 public class LondonUndergroundCommand extends Command {
 
     public LondonUndergroundCommand() {
-        super("underground", WorldModule.class, 0, Arrays.asList("-underground", "-underground <min>"), false, null);
+        super("underground", MediaModule.class, 0, Arrays.asList("-underground", "-underground <min>"), false, null);
     }
 
     @Override

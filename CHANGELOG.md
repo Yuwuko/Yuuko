@@ -2,9 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019_06-11
+## 2019_06-12
 + [+] Added [__advice__] command using api.adviceslip.com which is quick and easy.
 + [+] Added abstraction to interaction by subclassing Command into InteractionCommand, implementing a LocalThread random function.
++ [~] Refactored the whole world module and put it into media since they're quite similar.
++ [-] Removed the [__countdown__] command as it was largely unused and had limited functionality.
  
 ## 2019-06-10
 + [~] Updated dependencies to newest possible without breaking other dependencies @JDA && OkHttp

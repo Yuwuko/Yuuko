@@ -1,4 +1,4 @@
-package com.yuuko.core.commands.world.commands;
+package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Utilities;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class NationalGeographicCommand extends Command {
 
     public NationalGeographicCommand() {
-        super("natgeo", WorldModule.class, 0, Arrays.asList("-natgeo"), false, null);
+        super("natgeo", MediaModule.class, 0, Arrays.asList("-natgeo"), false, null);
     }
 
     @Override

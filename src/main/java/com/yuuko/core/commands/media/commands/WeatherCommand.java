@@ -1,10 +1,10 @@
-package com.yuuko.core.commands.world.commands;
+package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Utilities;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class WeatherCommand extends Command {
 
     public WeatherCommand() {
-        super("weather", WorldModule.class, 1, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
+        super("weather", MediaModule.class, 1, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
     }
 
     @Override

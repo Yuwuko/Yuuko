@@ -30,7 +30,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Core** <br>
 `settings` `help` `shards` `module` `about` `vote` `command`
 * **World** <br>
-`natgeo` `underground` `petition` `weather` `countdown` `tesco`
+
 * **NSFW** <br>
 `efukt` `neko` `urban`
 * **Moderation** <br>
@@ -44,7 +44,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Audio** <br>
 `play` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
 * **Media** <br>
-`osu` `github` `kitsu`
+`osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco`
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice`
 

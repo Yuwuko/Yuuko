@@ -1,10 +1,10 @@
-package com.yuuko.core.commands.world.commands;
+package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.world.WorldModule;
+import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class TescoCommand extends Command {
 
     public TescoCommand() {
-        super("tesco", WorldModule.class, 1, Arrays.asList("-tesco <product>"), false, null);
+        super("tesco", MediaModule.class, 1, Arrays.asList("-tesco <product>"), false, null);
     }
 
     @Override
