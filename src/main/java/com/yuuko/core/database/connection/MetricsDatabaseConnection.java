@@ -1,37 +1,25 @@
 package com.yuuko.core.database.connection;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class MetricsDatabaseConnection {
     private static final Logger log = LoggerFactory.getLogger(MetricsDatabaseConnection.class);
-    private static final BasicDataSource connectionPool = new BasicDataSource();
+    private static final HikariConfig config = new HikariConfig("./config/hikari/dbmetrics.properties");
+    private static final HikariDataSource connectionPool = new HikariDataSource(config);
 
     public MetricsDatabaseConnection() {
-        try {
-            log.trace("Invoking {}", this.getClass().getName());
-            BufferedReader configuration = new BufferedReader(new FileReader("./config/metrics_configuration.txt"));
-            connectionPool.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            connectionPool.setUsername(configuration.readLine());
-            connectionPool.setPassword(configuration.readLine());
-            connectionPool.setUrl("jdbc:mysql://" + configuration.readLine() + "/" + configuration.readLine() + "?useSSL=true&serverTimezone=UTC");
-            connectionPool.setInitialSize(5);
-            connectionPool.setMaxTotal(100);
-            connectionPool.setMaxIdle(5);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+        log.trace("Invoking {}", this.getClass().getName());
     }
 
     /**
      * Gets the fresh database connection.
-     * @return BasicDataSource.
+     * @return Connection.
      */
     public static Connection getConnection() throws SQLException {
         return connectionPool.getConnection();

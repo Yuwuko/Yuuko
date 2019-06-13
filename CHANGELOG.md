@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019_06_13
++ [!] Migrated from BasicDataSource to HikariDataSource, keeping the same driver.
++ [!] Improved security between all of yuuko's servers, also isolating the database to its own server.
+
 ## 2019_06-12
 + [+] Added [__advice__] command using api.adviceslip.com which is quick and easy.
 + [+] Added abstraction to interaction by subclassing Command into InteractionCommand, implementing a LocalThread random function.
