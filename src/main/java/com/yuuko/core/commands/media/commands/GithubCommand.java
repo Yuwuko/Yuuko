@@ -31,7 +31,7 @@ public class GithubCommand extends Command {
         final JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.github.v3+json"), new RequestProperty("Content-Type", "application/vnd.github.v3+json")).getJsonObject();
 
         if(json == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

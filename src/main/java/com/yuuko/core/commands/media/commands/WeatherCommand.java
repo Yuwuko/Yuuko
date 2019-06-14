@@ -29,7 +29,7 @@ public class WeatherCommand extends Command {
             JsonObject data = new RequestHandler(url).getJsonObject();
 
             if(data == null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

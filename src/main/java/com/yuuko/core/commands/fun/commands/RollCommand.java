@@ -34,7 +34,7 @@ public class RollCommand extends Command {
             num = new Random().nextInt(rollNum) + 1;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("**" + e.getMember().getEffectiveName() + "** rolled a **d" + e.getCommand().get(1) + "** and got **" + num + "**.");
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + e.getCommand().get(1) + "` and got `" + num + "`.");
         MessageHandler.sendMessage(e, embed.build());
     }
 

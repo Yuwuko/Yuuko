@@ -22,7 +22,7 @@ public class LoopCommand extends Command {
 
         manager.getScheduler().setLooping(!manager.getScheduler().isLooping());
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Loop").setDescription("Looping for queue set to **" + manager.getScheduler().isLooping() + "**");
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Loop").setDescription("Looping for queue set to `" + manager.getScheduler().isLooping() + "`");
         MessageHandler.sendMessage(e, embed.build());
     }
 

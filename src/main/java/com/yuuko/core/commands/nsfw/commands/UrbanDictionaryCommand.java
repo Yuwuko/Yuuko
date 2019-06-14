@@ -24,7 +24,7 @@ public class UrbanDictionaryCommand extends Command {
         final JsonObject json = new RequestHandler(url).getJsonObject();
 
         if(json.get("list").getAsJsonArray().size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

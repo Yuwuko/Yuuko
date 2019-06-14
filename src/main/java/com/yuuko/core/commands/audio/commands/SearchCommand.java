@@ -45,12 +45,12 @@ public class SearchCommand extends Command {
                         audioSearchResults.remove(e.getAuthor().getId());
                         return;
                     } else {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
                         MessageHandler.sendMessage(e, embed.build());
                         return;
                     }
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between 1 and 10, or 'cancel'.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }

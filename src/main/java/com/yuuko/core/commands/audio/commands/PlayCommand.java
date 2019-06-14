@@ -106,7 +106,7 @@ public class PlayCommand extends Command {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding **" + playlist.getTracks().size() + "** tracks to queue from playlist: **" + playlist.getName() + "**");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to queue from playlist: `" + playlist.getName() + "`");
                     MessageHandler.sendMessage(e, embed.build());
 
                     List<AudioTrack> tracks = playlist.getTracks();

@@ -30,7 +30,7 @@ public class LyricsCommand extends Command {
             int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
 
             if(response != 200) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("There were no matches found for **" + e.getCommand().get(1) + "**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

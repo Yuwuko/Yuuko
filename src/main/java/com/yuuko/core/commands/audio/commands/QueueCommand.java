@@ -48,7 +48,7 @@ public class QueueCommand extends Command {
                             .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, nextTracks.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains **0** tracks.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains `0` tracks.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }
