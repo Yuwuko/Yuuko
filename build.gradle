@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-06-12'
+version = '2019-06-14'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -42,6 +42,7 @@ dependencies {
     // External API
     compile 'com.google.apis:google-api-services-youtube:v3-rev212-1.25.0'
     // JSON
+    compile 'com.google.code.gson:gson:2.8.5'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
     // Web Clients

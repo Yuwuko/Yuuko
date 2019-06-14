@@ -16,7 +16,8 @@ public class FunModule extends Module {
             new SpoilerifyCommand(),
             new EightBallCommand(),
             new CoinFlipCommand(),
-            new AdviceCommand()
+            new AdviceCommand(),
+            new JokeCommand()
     );
 
     public FunModule(MessageEvent e) {

@@ -46,7 +46,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Media** <br>
 `osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco`
 * **Fun** <br>
-`8ball` `spoilerify` `roll` `choose` `flip` `advice`
+`8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke`
 
 Visit [www.yuuko.info](https://www.yuuko.info) for a detailed **full** list of commands!
 

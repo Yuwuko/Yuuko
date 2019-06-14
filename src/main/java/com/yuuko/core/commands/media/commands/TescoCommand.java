@@ -29,7 +29,7 @@ public class TescoCommand extends Command {
             final JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
             if(preData.get("results").getAsJsonArray().size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for **_" + e.getCommand().get(1) + "_** produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
