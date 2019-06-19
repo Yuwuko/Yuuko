@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class GuildFunctions {
 
@@ -53,16 +54,19 @@ public class GuildFunctions {
             String guildName = guild.getName();
             String guildRegion = guild.getRegion().getName();
 
+            // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
+            String encodedName = Base64.getEncoder().encodeToString(guildName.getBytes());
+
             if(!exists(guildId)) {
                 stmt.setString(1, guildId);
-                stmt.setString(2, guildName);
+                stmt.setString(2, encodedName);
                 stmt.setString(3, guildRegion);
                 stmt.execute();
 
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
-                log.info("Guild Synced: " + guildName + " (" + guildId + ")");
+                log.info("Guild Synced: " + encodedName + " (" + guildId + ")");
             } else {
-                stmt2.setString(1, guildName);
+                stmt2.setString(1, encodedName);
                 stmt2.setString(2, guildRegion);
                 stmt2.setString(3, guildId);
                 stmt2.execute();
@@ -102,7 +106,10 @@ public class GuildFunctions {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ? WHERE `guildId` = ?")) {
 
-            stmt.setString(1, guildName);
+            // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
+            String encodedName = Base64.getEncoder().encodeToString(guildName.getBytes());
+
+            stmt.setString(1, encodedName);
             stmt.setString(2, guildId);
             stmt.execute();
 
