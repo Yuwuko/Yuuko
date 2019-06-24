@@ -14,8 +14,10 @@ import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.core.events.guild.update.GuildUpdateIconEvent;
 import net.dv8tion.jda.core.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.core.events.guild.update.GuildUpdateRegionEvent;
+import net.dv8tion.jda.core.events.guild.update.GuildUpdateSplashEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,16 @@ public class GenericGuildController {
 
         if(e instanceof GuildUpdateRegionEvent) {
             guildUpdateRegionEvent((GuildUpdateRegionEvent) e);
+            return;
+        }
+
+        if(e instanceof GuildUpdateIconEvent) {
+            guildUpdateIconEvent((GuildUpdateIconEvent) e);
+            return;
+        }
+
+        if(e instanceof GuildUpdateSplashEvent) {
+            guildUpdateSplashEvent((GuildUpdateSplashEvent) e);
             return;
         }
 
@@ -110,10 +122,20 @@ public class GenericGuildController {
             }
         }
 
+        GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
         MetricsManager.getDiscordMetrics().USER_COUNT += 1;
     }
 
     private void guildMemberLeaveEvent(GuildMemberLeaveEvent e) {
+        GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
         MetricsManager.getDiscordMetrics().USER_COUNT -= 1;
+    }
+
+    private void guildUpdateIconEvent(GuildUpdateIconEvent e) {
+        GuildFunctions.updateGuildIcon(e.getGuild().getId(), e.getNewIconUrl());
+    }
+
+    private void guildUpdateSplashEvent(GuildUpdateSplashEvent e) {
+        GuildFunctions.updateGuildSplash(e.getGuild().getId(), e.getNewSplashUrl());
     }
 }

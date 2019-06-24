@@ -47,12 +47,15 @@ public class GuildFunctions {
      */
     public static void addGuild(Guild guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`) VALUES (?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ?, `lastSync` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`, `memberCount`) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ?, `memberCount` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastSync` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
             String guildId = guild.getId();
             String guildName = guild.getName();
             String guildRegion = guild.getRegion().getName();
+            long memberCount = guild.getMemberCache().size();
+            String guildIcon = guild.getIconUrl();
+            String guildSplash = guild.getSplashUrl();
 
             // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
             String encodedName = Base64.getEncoder().encodeToString(guildName.getBytes());
@@ -61,6 +64,9 @@ public class GuildFunctions {
                 stmt.setString(1, guildId);
                 stmt.setString(2, encodedName);
                 stmt.setString(3, guildRegion);
+                stmt.setLong(4, memberCount);
+                stmt.setString(5, guildIcon);
+                stmt.setString(6, guildSplash);
                 stmt.execute();
 
                 MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
@@ -68,7 +74,10 @@ public class GuildFunctions {
             } else {
                 stmt2.setString(1, encodedName);
                 stmt2.setString(2, guildRegion);
-                stmt2.setString(3, guildId);
+                stmt2.setLong(3, memberCount);
+                stmt2.setString(4, guildIcon);
+                stmt2.setString(5, guildSplash);
+                stmt2.setString(6, guildId);
                 stmt2.execute();
 
                 MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
@@ -131,6 +140,69 @@ public class GuildFunctions {
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildRegion` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildRegion);
+            stmt.setString(2, guildId);
+            stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Updates a guilds region in the database when it is changed.
+     *
+     * @param guildId String
+     * @param memberCount long
+     */
+    public static void updateMemberCount(String guildId, long memberCount) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `memberCount` = ? WHERE `guildId` = ?")) {
+
+            stmt.setLong(1, memberCount);
+            stmt.setString(2, guildId);
+            stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Updates a guilds region in the database when it is changed.
+     *
+     * @param guildId String
+     * @param guildIcon String (url)
+     */
+    public static void updateGuildIcon(String guildId, String guildIcon) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildIcon` = ? WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guildIcon);
+            stmt.setString(2, guildId);
+            stmt.execute();
+
+            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Updates a guilds region in the database when it is changed.
+     *
+     * @param guildId String
+     * @param guildSplash String
+     */
+    public static void updateGuildSplash(String guildId, String guildSplash) {
+        try(Connection conn = SettingsDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildSplash` = ? WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guildSplash);
             stmt.setString(2, guildId);
             stmt.execute();
 
