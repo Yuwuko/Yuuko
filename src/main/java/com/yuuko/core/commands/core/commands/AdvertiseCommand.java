@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class AdvertiseCommand extends Command {
 
     public AdvertiseCommand() {
-        super("advertise", CoreModule.class, 0, Arrays.asList("-advertise", "-advertise stop"), false, Arrays.asList(Permission.CREATE_INSTANT_INVITE));
+        super("advertise", CoreModule.class, 0, Arrays.asList("-advertise", "-advertise stop"), false, Arrays.asList(Permission.ADMINISTRATOR, Permission.CREATE_INSTANT_INVITE));
     }
 
     @Override
