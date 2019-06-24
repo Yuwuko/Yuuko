@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019_06_24
++ [+] Added [__advertise__] command, allowing servers to advertise on the website.
+
 ## 2019_06_14
 + [!] Migrated from BasicDataSource to HikariDataSource, keeping the same driver.
 + [!] Improved security between all of yuuko's servers, also isolating the database to its own server.

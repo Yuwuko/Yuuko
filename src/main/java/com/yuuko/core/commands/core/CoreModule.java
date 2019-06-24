@@ -17,7 +17,8 @@ public class CoreModule extends Module {
 			new HelpCommand(),
 			new ShardsCommand(),
 			new VoteCommand(),
-			new CommandCommand()
+			new CommandCommand(),
+			new AdvertiseCommand()
 	);
 
 	public CoreModule(MessageEvent e) {
