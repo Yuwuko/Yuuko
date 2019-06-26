@@ -262,7 +262,7 @@ public class Configuration {
                 VERSION + " • Requested by ",
                 VERSION + " • Asked by ",
                 "Requested by "
-    );
+        );
 
         log.info("Initialised static strings.");
     }

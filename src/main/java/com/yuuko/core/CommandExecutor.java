@@ -22,7 +22,7 @@ public class CommandExecutor {
 
     private static final List<String> disconnectedCommands = Arrays.asList("play", "search", "background", "lyrics");
     private static final List<String> notInVoiceCommands = Arrays.asList("lyrics", "current", "last", "queue");
-    private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last");
+    private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last", "lyrics");
 
     public CommandExecutor(MessageEvent e, Module module) {
         // Is the event null? (Runtime setup for module reflection)

@@ -16,6 +16,9 @@ If you want Yuuko your own server, follow [this](https://discordapp.com/oauth2/a
 
 ## Key Features
 
+#### Advertise
+Want to advertise your server or find other public servers with Yuuko? Use the `advertise` command to generate an invite link and show off your server on the landing page of the [website](https://www.yuuko.info).
+
 #### Music
 Liven up your Discord server with music from a number of sources including YouTube, Twitch, SoundCloud or any HTTP source of audio such as online radio stations.
 
