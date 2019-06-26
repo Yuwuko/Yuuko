@@ -47,7 +47,7 @@ public class GuildFunctions {
      */
     public static void addGuild(Guild guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`, `memberCount`) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`, `memberCount`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ?, `memberCount` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastSync` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
             String guildId = guild.getId();
