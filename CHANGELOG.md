@@ -2,11 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019_06_24
+## 2019_06_26
 + [+] Added [__advertise__] command, allowing servers to advertise on the website.
 + [+] Started logging member counts for each server, for use related to the advertise command.
 + [+] Started logging server icons, for use related to the advertise command.
 + [+] Started logging server splash, for use related to the advertise command.
++ [~] Modified the reaction role processor to be more streamlined. (was over-engineered)
 
 ## 2019_06_14
 + [!] Migrated from BasicDataSource to HikariDataSource, keeping the same driver.
