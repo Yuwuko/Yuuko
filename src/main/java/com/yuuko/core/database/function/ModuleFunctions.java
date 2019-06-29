@@ -2,7 +2,6 @@ package com.yuuko.core.database.function;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.MetricsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +48,6 @@ public class ModuleFunctions {
             arrayLists.add(enabled);
             arrayLists.add(disabled);
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return arrayLists;
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -71,8 +68,6 @@ public class ModuleFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             return resultSet.next() && resultSet.getBoolean(1);
 
@@ -95,8 +90,6 @@ public class ModuleFunctions {
 
             stmt.setString(1, guild);
             stmt.execute();
-
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             return isEnabled(guild, module);
 

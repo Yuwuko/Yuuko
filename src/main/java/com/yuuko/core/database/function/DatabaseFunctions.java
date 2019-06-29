@@ -25,8 +25,7 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, botMessages, humanMessages, botReacts, humanReacts, outputs, totalBotMessages, totalHumanMessages, totalBotReacts, totalHumanReacts, totalOutputs) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `DatabaseMetrics`(`shardId`, `selects`, `inserts`, `updates`, `deletes`, `totalSelects`, `totalInserts`, `totalUpdates`, `totalDeletes`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -58,18 +57,6 @@ public class DatabaseFunctions {
             stmt3.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
             stmt3.execute();
 
-            stmt4.setInt(1, shardId);
-            stmt4.setInt(2, MetricsManager.getDatabaseMetrics().SELECT.get());
-            stmt4.setInt(3, MetricsManager.getDatabaseMetrics().INSERT.get());
-            stmt4.setInt(4, MetricsManager.getDatabaseMetrics().UPDATE.get());
-            stmt4.setInt(5, MetricsManager.getDatabaseMetrics().DELETE.get());
-            stmt4.setInt(6, MetricsManager.getDatabaseMetrics().TOTAL_SELECTS.get());
-            stmt4.setInt(7, MetricsManager.getDatabaseMetrics().TOTAL_INSERTS.get());
-            stmt4.setInt(8, MetricsManager.getDatabaseMetrics().TOTAL_UPDATES.get());
-            stmt4.setInt(9, MetricsManager.getDatabaseMetrics().TOTAL_DELETES.get());
-            stmt4.execute();
-
-            MetricsManager.getDatabaseMetrics().INSERT.getAndAdd(4);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -93,7 +80,6 @@ public class DatabaseFunctions {
             stmt.setDouble(4, executionTime);
             stmt.execute();
 
-            MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
 
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -126,7 +112,6 @@ public class DatabaseFunctions {
             stmt5.setInt(1, shard);
             stmt5.execute();
 
-            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(5);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -144,7 +129,6 @@ public class DatabaseFunctions {
             stmt.execute();
             stmt2.execute();
 
-            MetricsManager.getDatabaseMetrics().DELETE.getAndAdd(2);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -163,8 +147,6 @@ public class DatabaseFunctions {
 
             stmt.setString(1, guildId);
             stmt.execute();
-
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

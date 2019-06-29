@@ -1,7 +1,6 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
@@ -29,8 +28,6 @@ public class GuildFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
             return resultSet.next();
 
         } catch(Exception ex) {
@@ -69,7 +66,6 @@ public class GuildFunctions {
                 stmt.setString(6, guildSplash);
                 stmt.execute();
 
-                MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
                 log.info("Guild Synced: " + encodedName + " (" + guildId + ")");
             } else {
                 stmt2.setString(1, encodedName);
@@ -80,7 +76,6 @@ public class GuildFunctions {
                 stmt2.setString(6, guildId);
                 stmt2.execute();
 
-                MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
             }
 
         } catch(Exception ex) {
@@ -122,8 +117,6 @@ public class GuildFunctions {
             stmt.setString(2, guildId);
             stmt.execute();
 
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
-
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -142,8 +135,6 @@ public class GuildFunctions {
             stmt.setString(1, guildRegion);
             stmt.setString(2, guildId);
             stmt.execute();
-
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -164,8 +155,6 @@ public class GuildFunctions {
             stmt.setString(2, guildId);
             stmt.execute();
 
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
-
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -184,8 +173,6 @@ public class GuildFunctions {
             stmt.setString(1, guildIcon);
             stmt.setString(2, guildId);
             stmt.execute();
-
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -206,7 +193,6 @@ public class GuildFunctions {
             stmt.setString(2, guildId);
             stmt.execute();
 
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -241,7 +227,6 @@ public class GuildFunctions {
                 settings.add(rs.getString("modLog"));
             }
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             return settings;
 
@@ -265,8 +250,6 @@ public class GuildFunctions {
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return resultSet.next() ? resultSet.getString(1) : null;
 
         } catch(Exception ex) {
@@ -286,8 +269,6 @@ public class GuildFunctions {
     public static boolean setGuildSettings(String setting, String value, String guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `" + setting + "` = ? WHERE `guildId` = ?")) {
-
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             stmt.setString(1, value);
             stmt.setString(2, guild);
@@ -310,8 +291,6 @@ public class GuildFunctions {
     public static boolean setGuildInvite(String link, String guild) {
         try(Connection conn = SettingsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `inviteLink` = ? WHERE `guildId` = ?")) {
-
-            MetricsManager.getDatabaseMetrics().UPDATE.getAndIncrement();
 
             stmt.setString(1, link);
             stmt.setString(2, guild);
@@ -336,8 +315,6 @@ public class GuildFunctions {
             stmt.setString(1, guild);
             stmt.execute();
 
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
-
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -353,8 +330,6 @@ public class GuildFunctions {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `lastSync` < DATE_SUB(NOW(), INTERVAL 24 HOUR)")) {
 
             stmt.execute();
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
-
             return true;
 
         } catch(Exception ex) {

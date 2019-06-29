@@ -2,7 +2,6 @@ package com.yuuko.core.database.function;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,6 @@ public class CommandFunctions {
             stmt.setString(1, guild.getId());
             stmt.setString(2, command.getName());
             ResultSet rs = stmt.executeQuery();
-
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             ArrayList<String> disabled = new ArrayList<>();
 
@@ -63,8 +60,6 @@ public class CommandFunctions {
 
             stmt.setString(1, guild);
             ResultSet rs = stmt.executeQuery();
-
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             ArrayList<String> disabled = new ArrayList<>();
 
@@ -101,8 +96,6 @@ public class CommandFunctions {
             stmt.setString(3, command);
             ResultSet resultSet = stmt.executeQuery();
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return resultSet.next();
 
         } catch(Exception ex) {
@@ -129,13 +122,11 @@ public class CommandFunctions {
                 stmt.setString(2, channel);
                 stmt.setString(3, command);
                 stmt.execute();
-                MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
             } else {
                 stmt2.setString(1, guild);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, command);
                 stmt2.execute();
-                MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
             }
 
             return !isDisabled(guild, channel, command); // Returns inverse because command being enabled means that they ARE'NT found in the database.
@@ -164,8 +155,6 @@ public class CommandFunctions {
                 stmt2.setString(2, command);
                 stmt2.execute();
             }
-
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

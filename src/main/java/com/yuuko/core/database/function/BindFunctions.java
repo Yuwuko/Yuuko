@@ -1,7 +1,6 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
-import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
@@ -33,14 +32,12 @@ public class BindFunctions {
             stmt.setString(3, module);
             ResultSet resultSet = stmt.executeQuery();
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
 
             if(!resultSet.next()) {
                 stmt2.setString(1, guildId);
                 stmt2.setString(2, channel);
                 stmt2.setString(3, module);
                 if(!stmt2.execute()) {
-                    MetricsManager.getDatabaseMetrics().INSERT.getAndIncrement();
                     return 0;
                 }
             }
@@ -72,7 +69,6 @@ public class BindFunctions {
             if(!stmt.execute()) {
                 stmt.close();
                 conn.close();
-                MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
                 return true;
             }
 
@@ -110,8 +106,6 @@ public class BindFunctions {
                 string.append("None");
             }
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return string.toString();
 
         } catch(Exception ex) {
@@ -148,8 +142,6 @@ public class BindFunctions {
                 string.append("None");
             }
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return string.toString();
 
         } catch(Exception ex) {
@@ -182,8 +174,6 @@ public class BindFunctions {
                 count++;
             }
 
-            MetricsManager.getDatabaseMetrics().SELECT.getAndIncrement();
-
             return count < 1;
 
         } catch(Exception ex) {
@@ -203,8 +193,6 @@ public class BindFunctions {
 
             stmt.setString(1, channel);
             stmt.execute();
-
-            MetricsManager.getDatabaseMetrics().DELETE.getAndIncrement();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);

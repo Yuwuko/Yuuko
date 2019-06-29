@@ -123,12 +123,10 @@ public class GenericGuildController {
         }
 
         GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
-        MetricsManager.getDiscordMetrics().USER_COUNT += 1;
     }
 
     private void guildMemberLeaveEvent(GuildMemberLeaveEvent e) {
         GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
-        MetricsManager.getDiscordMetrics().USER_COUNT -= 1;
     }
 
     private void guildUpdateIconEvent(GuildUpdateIconEvent e) {

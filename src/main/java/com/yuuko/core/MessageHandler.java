@@ -1,7 +1,6 @@
 package com.yuuko.core;
 
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -24,7 +23,6 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendMessage(message)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendMessage(message).queue();
             }
         } catch(Exception ex) {
@@ -42,7 +40,6 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendMessage(embed)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -60,7 +57,6 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(file)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendFile(file).queue();
             }
         } catch(Exception ex) {
@@ -79,7 +75,6 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 event.getChannel().sendFile(bytes, fileName).queue();
             }
         } catch(Exception ex) {
@@ -98,7 +93,6 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -117,7 +111,6 @@ public final class MessageHandler {
         try {
             if(MessageUtilities.hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
-                MetricsManager.getEventMetrics().OUTPUTS.getAndIncrement();
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception ex) {

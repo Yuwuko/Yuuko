@@ -7,7 +7,6 @@ import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -30,10 +29,7 @@ public class GenericGuildMessageController {
             final double executionStart = System.nanoTime();
 
             if(e.getAuthor().isBot()) {
-                MetricsManager.getEventMetrics().BOT_MESSAGES.getAndIncrement();
                 return;
-            } else {
-                MetricsManager.getEventMetrics().HUMAN_MESSAGES.getAndIncrement();
             }
 
             MessageEvent event = new MessageEvent(e);
