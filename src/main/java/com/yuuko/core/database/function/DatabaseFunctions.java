@@ -25,7 +25,7 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, botMessages, humanMessages, botReacts, humanReacts, outputs, totalBotMessages, totalHumanMessages, totalBotReacts, totalHumanReacts, totalOutputs) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `channelCount`, `userCount`, `roleCount`, `emoteCount`) VALUES(?, ?, ?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -51,10 +51,7 @@ public class DatabaseFunctions {
             stmt3.setInt(1, shardId);
             stmt3.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
             stmt3.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
-            stmt3.setInt(4, MetricsManager.getDiscordMetrics().CHANNEL_COUNT);
-            stmt3.setInt(5, MetricsManager.getDiscordMetrics().USER_COUNT);
-            stmt3.setInt(6, MetricsManager.getDiscordMetrics().ROLE_COUNT);
-            stmt3.setInt(7, MetricsManager.getDiscordMetrics().EMOTE_COUNT);
+            stmt3.setInt(4, MetricsManager.getDiscordMetrics().USER_COUNT);
             stmt3.execute();
 
 
@@ -208,16 +205,15 @@ public class DatabaseFunctions {
     /**
      * Update shard statistics such as guild count and user count.
      */
-    public static void updateShardStatistics(int shard, String status, int guilds, int users, int channels, int ping) {
+    public static void updateShardStatistics(int shard, String status, int guilds, int users, int ping) {
         try(Connection conn = ProvisioningDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `channels` = ?, `ping` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `ping` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             stmt.setString(1, status);
             stmt.setInt(2, guilds);
             stmt.setInt(3, users);
-            stmt.setInt(4, channels);
-            stmt.setInt(5, ping);
-            stmt.setInt(6, shard);
+            stmt.setInt(4, ping);
+            stmt.setInt(5, shard);
             stmt.execute();
 
         } catch(Exception ex) {

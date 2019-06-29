@@ -13,6 +13,6 @@ public class UpdateShardTask implements Task {
     @Override
     public void run() {
         DiscordMetrics metrics = MetricsManager.getDiscordMetrics();
-        DatabaseFunctions.updateShardStatistics(Configuration.SHARD_ID, shard.getStatus().name(), metrics.GUILD_COUNT, metrics.USER_COUNT, metrics.CHANNEL_COUNT, (int)metrics.PING.get());
+        DatabaseFunctions.updateShardStatistics(Configuration.SHARD_ID, shard.getStatus().name(), metrics.GUILD_COUNT, metrics.USER_COUNT, (int)metrics.PING.get());
     }
 }
