@@ -79,7 +79,7 @@ public class SettingsCommand extends Command {
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Settings for **" + e.getGuild().getName() + "**")
                     .setDescription("Settings can be changed by typing one of the commands listed below using the specified data type, e.g. `<boolean>` which you would replace with either `true` or `false`.")
-                    .addField(e.getPrefix() + "settings <string>", "**" + settingsList.get(0) + "** - The message prefix used to symbolise a command.", false)
+                    .addField(e.getPrefix() + "prefix <string>", "**" + settingsList.get(0) + "** - The message prefix used to symbolise a command.", false)
                     .addField(e.getPrefix() + "deleteExecuted <boolean>", "**" + settingsList.get(1) + "** - Deletes the users command string when it is executed.", false)
                     .addField(e.getPrefix() + "nowPlaying <boolean>", "**" + settingsList.get(2) + "** - Sends information of the current track when it changes.", false)
                     .addField(e.getPrefix() + "djMode <boolean>", "**" + settingsList.get(3) + "** - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)

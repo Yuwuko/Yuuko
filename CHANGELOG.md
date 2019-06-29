@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019_06_29
++ [+] Added [__logm__] command which allows me to toggle metrics logging at any time.
+
 ## 2019_06_26
 + [+] Added [__advertise__] command, allowing servers to advertise on the website.
 + [+] Started logging member counts for each server, for use related to the advertise command.
