@@ -6,6 +6,9 @@ import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
 import com.yuuko.core.database.connection.SettingsDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
+import com.yuuko.core.metrics.pathway.DiscordMetrics;
+import com.yuuko.core.metrics.pathway.EventMetrics;
+import com.yuuko.core.metrics.pathway.SystemMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +18,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DatabaseFunctions {
-
     private static final Logger log = LoggerFactory.getLogger(DatabaseFunctions.class);
+    private static final EventMetrics event = MetricsManager.getEventMetrics();
+    private static final SystemMetrics system = MetricsManager.getSystemMetrics();
+    private static final DiscordMetrics discord = MetricsManager.getDiscordMetrics();
 
     /**
      * Updates the database with the latest metrics.
@@ -24,34 +29,36 @@ public class DatabaseFunctions {
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, botMessages, humanMessages, botReacts, humanReacts, outputs, totalBotMessages, totalHumanMessages, totalBotReacts, totalHumanReacts, totalOutputs) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
             stmt.setInt(1, shardId);
-            stmt.setLong(2, MetricsManager.getSystemMetrics().UPTIME);
-            stmt.setLong(3, MetricsManager.getSystemMetrics().MEMORY_TOTAL);
-            stmt.setLong(4, MetricsManager.getSystemMetrics().MEMORY_USED);
+            stmt.setLong(2, system.UPTIME);
+            stmt.setLong(3, system.MEMORY_TOTAL);
+            stmt.setLong(4, system.MEMORY_USED);
             stmt.execute();
 
             stmt2.setInt(1, shardId);
-            stmt2.setInt(2, MetricsManager.getEventMetrics().BOT_MESSAGES.get());
-            stmt2.setInt(3, MetricsManager.getEventMetrics().HUMAN_MESSAGES.get());
-            stmt2.setInt(4, MetricsManager.getEventMetrics().BOT_REACTS.get());
-            stmt2.setInt(5, MetricsManager.getEventMetrics().HUMAN_REACTS.get());
-            stmt2.setInt(6, MetricsManager.getEventMetrics().OUTPUTS.get());
-            stmt2.setInt(7, MetricsManager.getEventMetrics().TOTAL_BOT_MESSAGES.get());
-            stmt2.setInt(8, MetricsManager.getEventMetrics().TOTAL_HUMAN_MESSAGES.get());
-            stmt2.setInt(9, MetricsManager.getEventMetrics().TOTAL_BOT_REACTS.get());
-            stmt2.setInt(10, MetricsManager.getEventMetrics().TOTAL_HUMAN_REACTS.get());
-            stmt2.setInt(11, MetricsManager.getEventMetrics().TOTAL_OUTPUTS.get());
+            stmt2.setInt(2, event.GUILD_JOIN_EVENT.get());
+            stmt2.setInt(3, event.GUILD_LEAVE_EVENT.get());
+            stmt2.setInt(4, event.GUILD_MEMBER_JOIN_EVENT.get());
+            stmt2.setInt(5, event.GUILD_MEMBER_LEAVE_EVENT.get());
+            stmt2.setInt(6, event.GUILD_UPDATE_NAME_EVENT.get());
+            stmt2.setInt(7, event.GUILD_UPDATE_REGION_EVENT.get());
+            stmt2.setInt(8, event.GUILD_UPDATE_ICON_EVENT.get());
+            stmt2.setInt(9, event.GUILD_UPDATE_SPLASH_EVENT.get());
+            stmt2.setInt(10, event.GUILD_MESSAGE_RECEIVED_EVENT.get());
+            stmt2.setInt(11, event.GUILD_MESSAGE_DELETE_EVENT.get());
+            stmt2.setInt(12, event.GUILD_MESSAGE_REACTION_ADD_EVENT.get());
+            stmt2.setInt(13, event.GUILD_MESSAGE_REACTION_REMOVE_EVENT.get());
             stmt2.execute();
 
             stmt3.setInt(1, shardId);
-            stmt3.setDouble(2, MetricsManager.getDiscordMetrics().PING.get());
-            stmt3.setInt(3, MetricsManager.getDiscordMetrics().GUILD_COUNT);
-            stmt3.setInt(4, MetricsManager.getDiscordMetrics().USER_COUNT);
+            stmt3.setDouble(2, discord.PING.get());
+            stmt3.setInt(3, discord.GUILD_COUNT);
+            stmt3.setInt(4, discord.USER_COUNT);
             stmt3.execute();
 
 

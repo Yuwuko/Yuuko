@@ -7,6 +7,8 @@ import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.metrics.MetricsManager;
+import com.yuuko.core.metrics.pathway.EventMetrics;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -15,12 +17,18 @@ import org.slf4j.LoggerFactory;
 
 public class GenericGuildMessageController {
     private static final Logger log = LoggerFactory.getLogger(GenericGuildMessageController.class);
+    private static final EventMetrics metrics = MetricsManager.getEventMetrics();
 
     public GenericGuildMessageController(GenericGuildMessageEvent e) {
         if(e instanceof GuildMessageReceivedEvent) {
             guildMessageReceivedEvent((GuildMessageReceivedEvent)e);
-        } else if(e instanceof GuildMessageDeleteEvent) {
+            metrics.GUILD_MESSAGE_RECEIVED_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildMessageDeleteEvent) {
             guildMessageDeleteEvent((GuildMessageDeleteEvent)e);
+            metrics.GUILD_MESSAGE_DELETE_EVENT.getAndIncrement();
         }
     }
 

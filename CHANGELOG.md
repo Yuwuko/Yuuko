@@ -2,8 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019_06_29
+## 2019_06_30
 + [+] Added [__logm__] command which allows me to toggle metrics logging at any time.
++ [~] Fully revamped the tracked event metrics to be more helpful over what kind of event was being triggered. (more generic)
 + [-] Removed database metrics as the metrics system is being simplified greatly.
 + [-] Removed the bloated Discord metrics since I don't care about number of channels, emotes and whatever the third thing was.
 

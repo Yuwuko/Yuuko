@@ -4,6 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
+import com.yuuko.core.metrics.pathway.EventMetrics;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -23,45 +24,55 @@ import org.slf4j.LoggerFactory;
 
 public class GenericGuildController {
     private static final Logger log = LoggerFactory.getLogger(GenericGuildController.class);
+    private static final EventMetrics metrics = MetricsManager.getEventMetrics();
 
     public GenericGuildController(GenericGuildEvent e) {
-        if(e instanceof GuildJoinEvent) {
-            guildJoinEvent((GuildJoinEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildLeaveEvent) {
-            guildLeaveEvent((GuildLeaveEvent)e);
-            return;
-        }
-
-        if(e instanceof GuildUpdateNameEvent) {
-            guildUpdateNameEvent((GuildUpdateNameEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildUpdateRegionEvent) {
-            guildUpdateRegionEvent((GuildUpdateRegionEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildUpdateIconEvent) {
-            guildUpdateIconEvent((GuildUpdateIconEvent) e);
-            return;
-        }
-
-        if(e instanceof GuildUpdateSplashEvent) {
-            guildUpdateSplashEvent((GuildUpdateSplashEvent) e);
-            return;
-        }
 
         if(e instanceof GuildMemberJoinEvent) {
             guildMemberJoinEvent((GuildMemberJoinEvent)e);
+            metrics.GUILD_MEMBER_JOIN_EVENT.getAndIncrement();
             return;
         }
 
         if(e instanceof GuildMemberLeaveEvent) {
             guildMemberLeaveEvent((GuildMemberLeaveEvent)e);
+            metrics.GUILD_MEMBER_LEAVE_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildJoinEvent) {
+            guildJoinEvent((GuildJoinEvent) e);
+            metrics.GUILD_JOIN_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildLeaveEvent) {
+            guildLeaveEvent((GuildLeaveEvent)e);
+            metrics.GUILD_LEAVE_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildUpdateNameEvent) {
+            guildUpdateNameEvent((GuildUpdateNameEvent) e);
+            metrics.GUILD_UPDATE_NAME_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildUpdateRegionEvent) {
+            guildUpdateRegionEvent((GuildUpdateRegionEvent) e);
+            metrics.GUILD_UPDATE_REGION_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildUpdateIconEvent) {
+            guildUpdateIconEvent((GuildUpdateIconEvent) e);
+            metrics.GUILD_UPDATE_ICON_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildUpdateSplashEvent) {
+            guildUpdateSplashEvent((GuildUpdateSplashEvent) e);
+            metrics.GUILD_UPDATE_SPLASH_EVENT.getAndIncrement();
         }
     }
 
@@ -108,6 +119,8 @@ public class GenericGuildController {
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
+        GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
+
         String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
         if(channelId != null) {
             String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
@@ -121,8 +134,6 @@ public class GenericGuildController {
                 MessageHandler.sendMessage(e, channel, member.build());
             }
         }
-
-        GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
     }
 
     private void guildMemberLeaveEvent(GuildMemberLeaveEvent e) {

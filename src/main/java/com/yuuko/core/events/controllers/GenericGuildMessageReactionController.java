@@ -2,6 +2,8 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.commands.core.settings.StarboardSetting;
 import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
+import com.yuuko.core.metrics.MetricsManager;
+import com.yuuko.core.metrics.pathway.EventMetrics;
 import net.dv8tion.jda.core.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionRemoveEvent;
@@ -10,10 +12,18 @@ import org.slf4j.LoggerFactory;
 
 public class GenericGuildMessageReactionController {
     private static final Logger log = LoggerFactory.getLogger(GenericGuildMessageReactionController.class);
+    private static final EventMetrics metrics = MetricsManager.getEventMetrics();
 
     public GenericGuildMessageReactionController(GenericGuildMessageReactionEvent e) {
-        if(e instanceof GuildMessageReactionAddEvent || e instanceof GuildMessageReactionRemoveEvent) {
+        if(e instanceof GuildMessageReactionAddEvent) {
             guildMessageReactionEvent(e);
+            metrics.GUILD_MESSAGE_REACTION_ADD_EVENT.getAndIncrement();
+            return;
+        }
+
+        if(e instanceof GuildMessageReactionRemoveEvent) {
+            guildMessageReactionEvent(e);
+            metrics.GUILD_MESSAGE_REACTION_REMOVE_EVENT.getAndIncrement();
         }
     }
 
