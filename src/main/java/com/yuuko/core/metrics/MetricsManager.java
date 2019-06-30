@@ -6,17 +6,12 @@ import com.yuuko.core.metrics.pathway.EventMetrics;
 import com.yuuko.core.metrics.pathway.SystemMetrics;
 
 public class MetricsManager {
-
     private static final SystemMetrics systemMetrics = new SystemMetrics();
     private static final EventMetrics eventMetrics = new EventMetrics();
     private static final DiscordMetrics discordMetrics = new DiscordMetrics();
 
-    public static void reset() {
-        eventMetrics.reset();
-    }
-
-    public static void truncateDatabase() {
-        DatabaseFunctions.truncateDatabase();
+    public static void pruneMetrics() {
+        DatabaseFunctions.pruneMetrics();
     }
 
     public static void truncateMetrics(int shard) {

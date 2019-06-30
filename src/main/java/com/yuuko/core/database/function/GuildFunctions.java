@@ -1,6 +1,6 @@
 package com.yuuko.core.database.function;
 
-import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class GuildFunctions {
      * @return boolean
      */
     private static boolean exists(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Guilds` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -43,7 +43,7 @@ public class GuildFunctions {
      * @param guild Object of type Guild that is added to the database.
      */
     public static void addGuild(Guild guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`, `guildName`, `guildRegion`, `memberCount`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ?, `guildRegion` = ?, `memberCount` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastSync` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
@@ -107,7 +107,7 @@ public class GuildFunctions {
      * @param guildName String
      */
     public static void updateGuildName(String guildId, String guildName) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildName` = ? WHERE `guildId` = ?")) {
 
             // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
@@ -129,7 +129,7 @@ public class GuildFunctions {
      * @param guildRegion String
      */
     public static void updateGuildRegion(String guildId, String guildRegion) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildRegion` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildRegion);
@@ -148,7 +148,7 @@ public class GuildFunctions {
      * @param memberCount long
      */
     public static void updateMemberCount(String guildId, long memberCount) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `memberCount` = ? WHERE `guildId` = ?")) {
 
             stmt.setLong(1, memberCount);
@@ -167,7 +167,7 @@ public class GuildFunctions {
      * @param guildIcon String (url)
      */
     public static void updateGuildIcon(String guildId, String guildIcon) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildIcon` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildIcon);
@@ -186,7 +186,7 @@ public class GuildFunctions {
      * @param guildSplash String
      */
     public static void updateGuildSplash(String guildId, String guildSplash) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `guildSplash` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildSplash);
@@ -207,7 +207,7 @@ public class GuildFunctions {
      * @return ResultSet
      */
     public static ArrayList<String> getGuildSettings(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `GuildSettings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -244,7 +244,7 @@ public class GuildFunctions {
      * @return String
      */
     public static String getGuildSetting(String setting, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `GuildSettings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -267,7 +267,7 @@ public class GuildFunctions {
      * @return if the set was successful.
      */
     public static boolean setGuildSettings(String setting, String value, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET `" + setting + "` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, value);
@@ -289,7 +289,7 @@ public class GuildFunctions {
      * @return if the set was successful.
      */
     public static boolean setGuildInvite(String link, String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Guilds` SET `inviteLink` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, link);
@@ -309,7 +309,7 @@ public class GuildFunctions {
      * @param guild the guild's id.
      */
     public static void cleanup(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -326,7 +326,7 @@ public class GuildFunctions {
      * @return boolean if the purge was successful.
      */
     public static boolean purgeGuilds() {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Guilds` WHERE `lastSync` < DATE_SUB(NOW(), INTERVAL 24 HOUR)")) {
 
             stmt.execute();

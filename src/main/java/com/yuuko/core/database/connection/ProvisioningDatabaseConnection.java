@@ -19,7 +19,7 @@ public class ProvisioningDatabaseConnection {
 
     /**
      * Gets the fresh database connection.
-     * @return BasicDataSource.
+     * @return Connection.
      */
     public static Connection getConnection() throws SQLException {
         return connectionPool.getConnection();

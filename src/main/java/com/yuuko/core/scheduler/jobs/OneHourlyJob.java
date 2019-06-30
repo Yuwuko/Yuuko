@@ -1,12 +1,12 @@
 package com.yuuko.core.scheduler.jobs;
 
 import com.yuuko.core.scheduler.Job;
-import com.yuuko.core.scheduler.tasks.TruncateDatabaseTask;
+import com.yuuko.core.scheduler.tasks.PruneMetricsTask;
 
 import java.util.concurrent.TimeUnit;
 
 public class OneHourlyJob extends Job {
-    private final TruncateDatabaseTask truncateDatabaseTask = new TruncateDatabaseTask();
+    private final PruneMetricsTask pruneMetricsTask = new PruneMetricsTask();
 
     public OneHourlyJob() {
         super(0, 1, TimeUnit.HOURS);
@@ -14,6 +14,6 @@ public class OneHourlyJob extends Job {
 
     @Override
     public void run() {
-        handleTask(truncateDatabaseTask);
+        handleTask(pruneMetricsTask);
     }
 }

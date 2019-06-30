@@ -15,13 +15,6 @@ public class EventMetrics {
     public final AtomicInteger GUILD_MESSAGE_DELETE_EVENT = new AtomicInteger();
     public final AtomicInteger GUILD_MESSAGE_REACTION_ADD_EVENT = new AtomicInteger();
     public final AtomicInteger GUILD_MESSAGE_REACTION_REMOVE_EVENT = new AtomicInteger();
-
-    /**
-     * Resets all event metrics to 0.
-     */
-    public void reset() {
-
-    }
 }
 
 

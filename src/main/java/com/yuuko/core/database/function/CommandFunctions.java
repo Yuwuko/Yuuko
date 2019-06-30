@@ -1,7 +1,7 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import net.dv8tion.jda.core.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class CommandFunctions {
      * @return ArrayList<String>
      */
     public static ArrayList<String> getCommandSetting(Guild guild, Command command) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `CommandBindings` WHERE `guildId` = ? AND `command` = ?")) {
 
             stmt.setString(1, guild.getId());
@@ -55,7 +55,7 @@ public class CommandFunctions {
      * @return ArrayList<String>
      */
     public static ArrayList<String> getCommandSettings(String guild) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `CommandBindings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -88,7 +88,7 @@ public class CommandFunctions {
      * @return (boolean) if the module is active or not.
      */
     public static boolean isDisabled(String guild, String channel, String command) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `command` FROM `CommandBindings` WHERE `guildId` = ? AND `channelId` = ? AND `command` = ?")) {
 
             stmt.setString(1, guild);
@@ -113,7 +113,7 @@ public class CommandFunctions {
      * @return boolean.
      */
     public static boolean toggleCommand(String guild, String channel, String command) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandBindings` (`guildId`, `channelId`, `command`) VALUES (?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND channelId = ? AND command = ?")) {
 
@@ -143,7 +143,7 @@ public class CommandFunctions {
      * @param guild the guild in which the settings are reset.
      */
     public static void resetCommandSettings(Guild guild, String command) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ?");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND command = ?")) {
 

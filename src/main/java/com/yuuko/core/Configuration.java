@@ -9,7 +9,7 @@ import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
 import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
-import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
@@ -95,7 +95,7 @@ public class Configuration {
      */
     private void initialiseDatabase() {
         new ProvisioningDatabaseConnection();
-        new SettingsDatabaseConnection();
+        new YuukoDatabaseConnection();
         new MetricsDatabaseConnection();
 
         log.info("Initialised database classes.");

@@ -3,7 +3,7 @@ package com.yuuko.core.database.function;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
 import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
-import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
@@ -92,14 +92,15 @@ public class DatabaseFunctions {
 
     /**
      * Truncates the metrics database. (This happens when the bot is first loaded.)
+     *
+     * @param shard int
      */
     public static void truncateMetrics(int shard) {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE shardId = ?");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics` WHERE shardId = ?");
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE shardId = ?");
-            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `DatabaseMetrics` WHERE shardId = ?");
-            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?")) {
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?")) {
 
             stmt.setInt(1, shard);
             stmt.execute();
@@ -113,10 +114,6 @@ public class DatabaseFunctions {
             stmt4.setInt(1, shard);
             stmt4.execute();
 
-            stmt5.setInt(1, shard);
-            stmt5.execute();
-
-
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -125,14 +122,13 @@ public class DatabaseFunctions {
     /**
      * Truncates anything 6 hours old in the system and discord metrics. Others are kept for total values.
      */
-    public static void truncateDatabase() {
+    public static void pruneMetrics() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
             stmt.execute();
             stmt2.execute();
-
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -146,7 +142,7 @@ public class DatabaseFunctions {
      * @param guildId the guild to cleanup.
      */
     public static void cleanupSettings(String setting, String guildId) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET " + setting + " = null WHERE `guildId` = ?")){
 
             stmt.setString(1, guildId);
@@ -241,7 +237,7 @@ public class DatabaseFunctions {
 
             ResultSet resultSet = stmt.executeQuery();
             while(resultSet.next()) {
-                shards.add(new Shard(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5), resultSet.getInt(6)));
+                shards.add(new Shard(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5)));
             }
 
             return shards;

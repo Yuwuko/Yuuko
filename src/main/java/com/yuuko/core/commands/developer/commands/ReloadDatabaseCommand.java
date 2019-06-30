@@ -4,7 +4,7 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
-import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -20,7 +20,7 @@ public class ReloadDatabaseCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             new MetricsDatabaseConnection();
-            new SettingsDatabaseConnection();
+            new YuukoDatabaseConnection();
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded Metrics/Settings databases.");
             MessageHandler.sendMessage(e, embed.build());

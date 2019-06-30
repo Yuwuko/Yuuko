@@ -1,6 +1,6 @@
 package com.yuuko.core.database.function;
 
-import com.yuuko.core.database.connection.SettingsDatabaseConnection;
+import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
@@ -24,7 +24,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the reaction role exists.
      */
     public static boolean hasReactionRole(Message message, Emote emote) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
@@ -46,7 +46,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the reaction role exists.
      */
     public static boolean hasReactionRole(String message, String emote) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message);
@@ -67,7 +67,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the message has a reaction role.
      */
     public static boolean hasReactionRole(String message) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ?")) {
 
             stmt.setString(1, message);
@@ -88,7 +88,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the operation was successful.
      */
     public static String selectReactionRole(Message message, Emote emote) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
@@ -115,7 +115,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the operation was successful.
      */
     public static String selectReactionRole(String message, String emote) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message);
@@ -144,7 +144,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the operation was successful.
      */
     public static boolean addReactionRole(Guild guild, Message message, Emote emote, Role role) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ReactionRoles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
 
             stmt.setString(1, guild.getId());
@@ -172,7 +172,7 @@ public class ReactionRoleFunctions {
      * @return boolean if the operation was successful.
      */
     public static void removeReactionRole(Message message, Emote emote) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
@@ -190,7 +190,7 @@ public class ReactionRoleFunctions {
      * @param message message id.
      */
     public static void removeReactionRole(String message) {
-        try(Connection conn = SettingsDatabaseConnection.getConnection();
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ?")) {
 
             stmt.setString(1, message);

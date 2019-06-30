@@ -34,32 +34,31 @@ public class GenericGuildMessageController {
 
     private void guildMessageReceivedEvent(GuildMessageReceivedEvent e) {
         try {
-            final double executionStart = System.nanoTime();
-
             if(e.getAuthor().isBot()) {
                 return;
             }
 
-            MessageEvent event = new MessageEvent(e);
+            double execTime = System.nanoTime();
+            final MessageEvent event = new MessageEvent(e);
 
             if(event.getPrefix().equals("")) {
                 return;
             }
 
-            boolean executed = false;
+            boolean exec = false;
 
             // Iterate through the command list, get the command commands constructor from the command class.
             Command command = Configuration.COMMANDS.get(event.getCommand().get(0));
             if(command != null) {
                 command.getModule().getConstructor(MessageEvent.class).newInstance(event);
-                executed = true;
+                exec = true;
             }
 
-            if(executed) {
-                final double executionTime = (System.nanoTime() - executionStart)/1000000.0;
-                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0), executionTime);
+            if(exec) {
+                execTime = (System.nanoTime() - execTime)/1000000.0;
+                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0), execTime);
                 if(GuildFunctions.getGuildSetting("comlog", e.getGuild().getId()) != null) {
-                    CommandLogSetting.execute(event, executionTime);
+                    CommandLogSetting.execute(event, execTime);
                 }
             }
 

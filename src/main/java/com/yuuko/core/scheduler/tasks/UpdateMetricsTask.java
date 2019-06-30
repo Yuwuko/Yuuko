@@ -16,6 +16,5 @@ public class UpdateMetricsTask implements Task {
         }
         MetricsManager.getSystemMetrics().update();
         DatabaseFunctions.updateMetricsDatabase();
-        MetricsManager.reset();
     }
 }
