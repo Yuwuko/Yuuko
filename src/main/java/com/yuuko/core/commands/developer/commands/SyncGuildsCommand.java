@@ -18,7 +18,7 @@ public class SyncGuildsCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            if(GuildFunctions.addGuilds(e.getJDA()) && GuildFunctions.purgeGuilds()) {
+            if(GuildFunctions.addGuilds(e.getJDA())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds added/updated/deleted successfully.");
                 MessageHandler.sendMessage(e, embed.build());
             }
