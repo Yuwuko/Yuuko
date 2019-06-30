@@ -46,7 +46,7 @@ public class GuildFunctions {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `GuildData` (`guildId`, `guildName`, `guildRegion`, `guildMembers`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("UPDATE `GuildData` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdate` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
+            PreparedStatement stmt3 = conn.prepareStatement("UPDATE `GuildData` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
             String guildId = guild.getId();
             String guildName = guild.getName();
@@ -127,7 +127,7 @@ public class GuildFunctions {
     }
 
     /**
-     * Updates a guilds region in the database when it is changed.
+     * Update guild region.
      *
      * @param guildId String
      * @param guildRegion String
@@ -146,12 +146,12 @@ public class GuildFunctions {
     }
 
     /**
-     * Updates a guilds region in the database when it is changed.
+     * Update guild member count.
      *
      * @param guildId String
      * @param guildMembers long
      */
-    public static void updateMemberCount(String guildId, long guildMembers) {
+    public static void updateGuildMembers(String guildId, long guildMembers) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildData` SET `guildMembers` = ? WHERE `guildId` = ?")) {
 
@@ -165,7 +165,7 @@ public class GuildFunctions {
     }
 
     /**
-     * Updates a guilds region in the database when it is changed.
+     * Update guild icon url.
      *
      * @param guildId String
      * @param guildIcon String (url)
@@ -184,7 +184,7 @@ public class GuildFunctions {
     }
 
     /**
-     * Updates a guilds region in the database when it is changed.
+     * Update guild splash url.
      *
      * @param guildId String
      * @param guildSplash String

@@ -119,7 +119,7 @@ public class GenericGuildController {
     }
 
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
+        GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
 
         String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
         if(channelId != null) {
@@ -137,7 +137,7 @@ public class GenericGuildController {
     }
 
     private void guildMemberLeaveEvent(GuildMemberLeaveEvent e) {
-        GuildFunctions.updateMemberCount(e.getGuild().getId(), e.getGuild().getMemberCache().size());
+        GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
     }
 
     private void guildUpdateIconEvent(GuildUpdateIconEvent e) {
