@@ -45,15 +45,17 @@ public class GuildFunctions {
     public static void addGuild(Guild guild) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `GuildData` (`guildId`, `guildName`, `guildRegion`, `guildMembers`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("UPDATE `GuildData` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `GuildSettings` (`guildId`) VALUES (?)");
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`guildId`) VALUES (?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `GuildData` (`guildId`, `guildName`, `guildRegion`, `guildMembers`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt5 = conn.prepareStatement("UPDATE `GuildData` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
-            String guildId = guild.getId();
-            String guildName = guild.getName();
-            String guildRegion = guild.getRegion().getName();
-            long guildMembers = guild.getMemberCache().size();
-            String guildIcon = guild.getIconUrl();
-            String guildSplash = guild.getSplashUrl();
+            final String guildId = guild.getId();
+            final String guildName = guild.getName();
+            final String guildRegion = guild.getRegion().getName();
+            final long guildMembers = guild.getMemberCache().size();
+            final String guildIcon = guild.getIconUrl();
+            final String guildSplash = guild.getSplashUrl();
 
             // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
             String encodedName = Base64.getEncoder().encodeToString(guildName.getBytes());
@@ -63,22 +65,28 @@ public class GuildFunctions {
                 stmt.execute();
 
                 stmt2.setString(1, guildId);
-                stmt2.setString(2, encodedName);
-                stmt2.setString(3, guildRegion);
-                stmt2.setLong(4, guildMembers);
-                stmt2.setString(5, guildIcon);
-                stmt2.setString(6, guildSplash);
                 stmt2.execute();
+
+                stmt3.setString(1, guildId);
+                stmt3.execute();
+
+                stmt4.setString(1, guildId);
+                stmt4.setString(2, encodedName);
+                stmt4.setString(3, guildRegion);
+                stmt4.setLong(4, guildMembers);
+                stmt4.setString(5, guildIcon);
+                stmt4.setString(6, guildSplash);
+                stmt4.execute();
 
                 log.info("Guild Synced: " + encodedName + " (" + guildId + ")");
             } else {
-                stmt3.setString(1, encodedName);
-                stmt3.setString(2, guildRegion);
-                stmt3.setLong(3, guildMembers);
-                stmt3.setString(4, guildIcon);
-                stmt3.setString(5, guildSplash);
-                stmt3.setString(6, guildId);
-                stmt3.execute();
+                stmt5.setString(1, encodedName);
+                stmt5.setString(2, guildRegion);
+                stmt5.setLong(3, guildMembers);
+                stmt5.setString(4, guildIcon);
+                stmt5.setString(5, guildSplash);
+                stmt5.setString(6, guildId);
+                stmt5.execute();
 
             }
 

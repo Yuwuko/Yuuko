@@ -16,6 +16,7 @@ import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 public class PlayCommand extends Command {
 
     public PlayCommand() {
-        super("play", AudioModule.class, 0, Arrays.asList("-play", "-play <url>", "-play <term>"), false, null);
+        super("play", AudioModule.class, 0, Arrays.asList("-play", "-play <url>", "-play <term>"), false, Arrays.asList(Permission.VOICE_CONNECT));
     }
 
     @Override
