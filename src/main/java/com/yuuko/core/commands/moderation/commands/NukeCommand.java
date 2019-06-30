@@ -55,7 +55,8 @@ public class NukeCommand extends Command {
                 }
             });
 
-            if(messages.size() > 1) {
+            // Ensures messages size is 3 or greater. (2 + nuke message)
+            if(messages.size() > 2) {
                 e.getChannel().deleteMessages(messages.subList(1, messages.size())).queue(s -> {
                     ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
                 }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
