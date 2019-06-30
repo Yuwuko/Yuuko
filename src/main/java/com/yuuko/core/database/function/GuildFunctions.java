@@ -43,52 +43,38 @@ public class GuildFunctions {
      * @param guild Object of type Guild that is added to the database.
      */
     public static void addGuild(Guild guild) {
+        if(exists(guild.getId())) {
+            updateGuild(guild);
+            return;
+        }
+
         try(Connection conn = YuukoDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `Guilds` (`guildId`) VALUES (?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `GuildSettings` (`guildId`) VALUES (?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `ModuleSettings` (`guildId`) VALUES (?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `GuildData` (`guildId`, `guildName`, `guildRegion`, `guildMembers`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt5 = conn.prepareStatement("UPDATE `GuildData` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
-
-            final String guildId = guild.getId();
-            final String guildName = guild.getName();
-            final String guildRegion = guild.getRegion().getName();
-            final long guildMembers = guild.getMemberCache().size();
-            final String guildIcon = guild.getIconUrl();
-            final String guildSplash = guild.getSplashUrl();
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `GuildData` (`guildId`, `guildName`, `guildRegion`, `guildMembers`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)")) {
 
             // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
-            String encodedName = Base64.getEncoder().encodeToString(guildName.getBytes());
+            String encodedName = Base64.getEncoder().encodeToString(guild.getName().getBytes());
 
-            if(!exists(guildId)) {
-                stmt.setString(1, guildId);
-                stmt.execute();
+            stmt.setString(1, guild.getId());
+            stmt.execute();
 
-                stmt2.setString(1, guildId);
-                stmt2.execute();
+            stmt2.setString(1, guild.getId());
+            stmt2.execute();
 
-                stmt3.setString(1, guildId);
-                stmt3.execute();
+            stmt3.setString(1, guild.getId());
+            stmt3.execute();
 
-                stmt4.setString(1, guildId);
-                stmt4.setString(2, encodedName);
-                stmt4.setString(3, guildRegion);
-                stmt4.setLong(4, guildMembers);
-                stmt4.setString(5, guildIcon);
-                stmt4.setString(6, guildSplash);
-                stmt4.execute();
+            stmt4.setString(1, guild.getId());
+            stmt4.setString(2, encodedName);
+            stmt4.setString(3, guild.getRegion().getName());
+            stmt4.setLong(4, guild.getMemberCache().size());
+            stmt4.setString(5, guild.getIconUrl());
+            stmt4.setString(6, guild.getSplashUrl());
+            stmt4.execute();
 
-                log.info("Guild Synced: " + encodedName + " (" + guildId + ")");
-            } else {
-                stmt5.setString(1, encodedName);
-                stmt5.setString(2, guildRegion);
-                stmt5.setLong(3, guildMembers);
-                stmt5.setString(4, guildIcon);
-                stmt5.setString(5, guildSplash);
-                stmt5.setString(6, guildId);
-                stmt5.execute();
-
-            }
+            log.info("Guild Synced: " + guild.getName() + " (" + guild.getId() + ")");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -109,6 +95,29 @@ public class GuildFunctions {
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
+        }
+    }
+
+    /**
+     * Updates guild data, method only being called on startup of each shard.
+     * @param guild Object of type Guild that is used to update the database.
+     */
+    private static void updateGuild(Guild guild) {
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildData` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
+
+            String encodedName = Base64.getEncoder().encodeToString(guild.getName().getBytes());
+
+            stmt.setString(1, encodedName);
+            stmt.setString(2, guild.getRegion().getName());
+            stmt.setLong(3, guild.getMemberCache().size());
+            stmt.setString(4, guild.getIconUrl());
+            stmt.setString(5, guild.getSplashUrl());
+            stmt.setString(6, guild.getId());
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
