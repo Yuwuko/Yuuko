@@ -1,5 +1,6 @@
 package com.yuuko.core.commands.audio.commands;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
@@ -35,7 +36,14 @@ public class LyricsCommand extends Command {
                 return;
             }
 
-            JsonObject data = json.get("response").getAsJsonObject().get("hits").getAsJsonArray().get(0).getAsJsonObject().get("result").getAsJsonObject();
+            JsonArray hits = json.get("response").getAsJsonObject().get("hits").getAsJsonArray();
+            if(hits.size() < 1) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+
+            JsonObject data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject();
             List<String> lyricsList = new ArrayList<>();
             String lyrics = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics").get(0).text().replace("[", "\n\n[").replace("]", "]\n");
 
