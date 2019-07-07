@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019_07-07
++ [~] Fixed bug with lyrics command returning no data but with headers that imply data.
++ [~] Modified LavaLink node loading to allow virtually unlimited nodes.
++ [~] Refactored command and module classes, adding the previous checks to the command executor.
+
 ## 2019_07-01
 + [+] Added [__logm__] command which allows me to toggle metrics logging at any time.
 + [~] Fully revamped the tracked event metrics to be more helpful over what kind of event was being triggered. (more generic)

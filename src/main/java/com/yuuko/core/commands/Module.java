@@ -1,10 +1,5 @@
 package com.yuuko.core.commands;
 
-import com.yuuko.core.MessageHandler;
-import com.yuuko.core.database.function.ModuleFunctions;
-import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.EmbedBuilder;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,21 +33,6 @@ public abstract class Module {
             string.append("`").append(command.getName()).append("` ");
         }
         return string.toString();
-    }
-
-    public boolean isEnabled(MessageEvent e) {
-        // Executor still checks core/developer, in this case simply return true.
-        if(name.equals("core") || name.equals("developer")) {
-            return true;
-        }
-
-        if(ModuleFunctions.isEnabled(e.getGuild().getId(), name)) {
-            return true;
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("The `" + name + "` module is disabled.");
-            MessageHandler.sendMessage(e, embed.build());
-            return false;
-        }
     }
 
     public boolean isNSFW() {
