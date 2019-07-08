@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ProvisioningDatabaseConnection {
-    private static final Logger log = LoggerFactory.getLogger(ProvisioningDatabaseConnection.class);
-    private static final HikariConfig config = new HikariConfig("./config/hikari/dbprovisioning.properties");
+public class ProvisionDatabaseConnection {
+    private static final Logger log = LoggerFactory.getLogger(ProvisionDatabaseConnection.class);
+    private static final HikariConfig config = new HikariConfig("./config/hikari/dbprovision.properties");
     private static final HikariDataSource connectionPool = new HikariDataSource(config);
 
-    public ProvisioningDatabaseConnection() {
+    public ProvisionDatabaseConnection() {
         log.trace("Invoking {}", this.getClass().getName());
     }
 

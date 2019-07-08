@@ -8,7 +8,7 @@ import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
-import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
+import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -40,7 +40,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-07-07";
+    public static final String VERSION = "2019-07-08";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -94,7 +94,7 @@ public class Configuration {
      * Must be done before registerShards().
      */
     private void initialiseDatabase() {
-        new ProvisioningDatabaseConnection();
+        new ProvisionDatabaseConnection();
         new YuukoDatabaseConnection();
         new MetricsDatabaseConnection();
 

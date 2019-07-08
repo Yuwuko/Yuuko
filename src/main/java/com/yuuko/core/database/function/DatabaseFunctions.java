@@ -2,7 +2,7 @@ package com.yuuko.core.database.function;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
-import com.yuuko.core.database.connection.ProvisioningDatabaseConnection;
+import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
@@ -159,7 +159,7 @@ public class DatabaseFunctions {
      * @return the next available shard ID, starting at 0.
      */
     public static int provideShardId() {
-        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+        try(Connection conn = ProvisionDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards` ORDER BY `shardId`");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `Shards`(`shardId`) VALUES(?)")){
 
@@ -189,7 +189,7 @@ public class DatabaseFunctions {
      * @return the total shard count expected from the database.
      */
     public static int getShardCount() {
-        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+        try(Connection conn = ProvisionDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardConfiguration`")){
 
             ResultSet resultSet = stmt.executeQuery();
@@ -209,7 +209,7 @@ public class DatabaseFunctions {
      * Update shard statistics such as guild count and user count.
      */
     public static void updateShardStatistics(int shard, String status, int guilds, int users, int ping) {
-        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+        try(Connection conn = ProvisionDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `ping` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             stmt.setString(1, status);
@@ -230,7 +230,7 @@ public class DatabaseFunctions {
      * @return ArrayList<Shard> of shard statistics.
      */
     public static ArrayList<Shard> getShardStatistics() {
-        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+        try(Connection conn = ProvisionDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards`")){
 
             ArrayList<Shard> shards = new ArrayList<>();
@@ -252,7 +252,7 @@ public class DatabaseFunctions {
      * Clears the previsioning database of expired IDs (Older than 35 seconds).
      */
     public static void pruneExpiredShards() {
-        try(Connection conn = ProvisioningDatabaseConnection.getConnection();
+        try(Connection conn = ProvisionDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 31 SECOND)")) {
 
             stmt.execute();
