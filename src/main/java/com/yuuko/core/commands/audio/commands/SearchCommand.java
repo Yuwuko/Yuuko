@@ -26,29 +26,27 @@ public class SearchCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             // If audioSearchResults contains the authors user ID and the command matches either 1-10 or "cancel".
-            if(audioSearchResults.containsKey(e.getAuthor().getId()) && (e.getCommand().get(1).matches("^[0-9]{1,2}$") || e.getCommand().get(1).equals("cancel"))) {
-                if(e.getCommand().get(1).equalsIgnoreCase("cancel")) {
+            if(audioSearchResults.containsKey(e.getAuthor().getId()) && (e.getParameters().matches("^[0-9]{1,2}$") || e.getParameters().equals("cancel"))) {
+                if(e.getParameters().equalsIgnoreCase("cancel")) {
                     audioSearchResults.remove(e.getAuthor().getId());
-
                     EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
                 }
 
-                if(Sanitiser.isNumber(e.getCommand().get(1))) {
-                    final int value = Integer.parseInt(e.getCommand().get(1));
-                    if(value < 11 && value > 0) {
-                        String videoId = audioSearchResults.get(e.getAuthor().getId()).get(Integer.parseInt(e.getCommand().get(1)) - 1).getId().getVideoId();
-                        MessageEvent event = new MessageEvent(e);
-                        event.setCommand(Arrays.asList("play", "https://www.youtube.com/watch?v=" + videoId));
-                        new PlayCommand().onCommand(event);
-                        audioSearchResults.remove(e.getAuthor().getId());
-                        return;
-                    } else {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
-                        MessageHandler.sendMessage(e, embed.build());
-                        return;
-                    }
+                if(!Sanitiser.isNumber(e.getParameters())) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
+                    MessageHandler.sendMessage(e, embed.build());
+                    return;
+                }
+
+                final int value = Integer.parseInt(e.getParameters());
+                if(value < 11 && value > 0) {
+                    String videoId = audioSearchResults.get(e.getAuthor().getId()).get(Integer.parseInt(e.getParameters()) - 1).getId().getVideoId();
+                    MessageEvent event = new MessageEvent(e).setCommand(new PlayCommand()).setParameters("https://www.youtube.com/watch?v=" + videoId);
+                    event.getCommand().onCommand(event);
+                    audioSearchResults.remove(e.getAuthor().getId());
+                    return;
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
                     MessageHandler.sendMessage(e, embed.build());
@@ -74,7 +72,7 @@ public class SearchCommand extends Command {
             audioSearchResults.put(e.getAuthor().getId(), results);
 
             EmbedBuilder presentResults = new EmbedBuilder()
-                    .setAuthor("Search results for " + e.getCommand().get(1) + ".", null)
+                    .setAuthor("Search results for " + e.getParameters() + ".", null)
                     .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, presentResults.build());

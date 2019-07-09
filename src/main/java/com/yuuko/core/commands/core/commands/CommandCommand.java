@@ -29,7 +29,7 @@ public class CommandCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String[] input = e.getCommand().get(1).toLowerCase().split("\\s+", 2);
+            String[] input = e.getParameters().toLowerCase().split("\\s+", 2);
             TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
             boolean valid = false;
 

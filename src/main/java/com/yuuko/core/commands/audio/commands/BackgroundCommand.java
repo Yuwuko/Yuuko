@@ -31,11 +31,11 @@ public class BackgroundCommand extends Command {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
             manager.getPlayer().setPaused(false);
 
-            if(e.getCommand().get(1).startsWith("https://") || e.getCommand().get(1).startsWith("http://")) {
-                setAndPlay(manager, e, e.getCommand().get(1));
+            if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
+                setAndPlay(manager, e, e.getParameters());
 
             } else {
-                String trackUrl = YouTubeSearchHandler.search(e.getCommand().get(1));
+                String trackUrl = YouTubeSearchHandler.search(e.getParameters());
 
                 if(trackUrl == null) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");

@@ -22,6 +22,8 @@ public class AnimalModule extends Module {
 
     public AnimalModule(MessageEvent e) {
         super("animal", false, commands);
-        new CommandExecutor(e, this);
+        if(e != null) {
+            new CommandExecutor(e.setModule(this));
+        }
     }
 }

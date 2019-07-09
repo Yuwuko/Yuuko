@@ -25,11 +25,11 @@ public class SeekCommand extends Command {
 
         int seek;
 
-        if(Sanitiser.isNumber(e.getCommand().get(1))) {
-            seek = Integer.parseInt(e.getCommand().get(1))*1000;
+        if(Sanitiser.isNumber(e.getParameters())) {
+            seek = Integer.parseInt(e.getParameters())*1000;
         } else {
 
-            String[] timestamp = e.getCommand().get(1).split(":", 2);
+            String[] timestamp = e.getParameters().split(":", 2);
             if(timestamp.length == 2) {
                 boolean nan = false;
                 for(String time : timestamp) {

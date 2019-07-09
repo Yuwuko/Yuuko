@@ -25,13 +25,13 @@ public class GithubCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getCommand().get(1).split("\\s+", 2);
+        String[] commandParameters = e.getParameters().split("\\s+", 2);
 
         final String url = "https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utilities.getApiKey("github");
         final JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.github.v3+json"), new RequestProperty("Content-Type", "application/vnd.github.v3+json")).getJsonObject();
 
         if(json == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

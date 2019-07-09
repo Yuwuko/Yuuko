@@ -24,12 +24,12 @@ public class TescoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://dev.tescolabs.com/grocery/products/?query=" + e.getCommand().get(1).replace(" ", "%20") + "&offset=0&limit=1";
+            final String url = "https://dev.tescolabs.com/grocery/products/?query=" + e.getParameters().replace(" ", "%20") + "&offset=0&limit=1";
             final JsonObject json = new RequestHandler(url, new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getJsonObject();
             final JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
             if(preData.get("results").getAsJsonArray().size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

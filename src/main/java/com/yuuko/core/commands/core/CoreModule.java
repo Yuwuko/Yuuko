@@ -23,7 +23,9 @@ public class CoreModule extends Module {
 
 	public CoreModule(MessageEvent e) {
 		super("core", false, commands);
-		new CommandExecutor(e, this);
+		if(e != null) {
+			new CommandExecutor(e.setModule(this));
+		}
 	}
 
 }

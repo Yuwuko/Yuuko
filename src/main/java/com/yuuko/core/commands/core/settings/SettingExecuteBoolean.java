@@ -15,7 +15,7 @@ public class SettingExecuteBoolean extends Setting {
 
     protected void onCommand(MessageEvent e) {
         try {
-            String[] parameters = e.getCommand().get(1).toLowerCase().split("\\s+", 2);
+            String[] parameters = e.getParameters().toLowerCase().split("\\s+", 2);
 
             if(parameters.length > 1) {
                 String intValue = (parameters[1].equals("true") || parameters[1].equals("yes")) ? "1" : "0";

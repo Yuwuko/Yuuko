@@ -20,7 +20,9 @@ public class NsfwModule extends Module {
 
     public NsfwModule(MessageEvent e) {
         super("nsfw", true, commands);
-        new CommandExecutor(e, this);
+        if(e != null) {
+            new CommandExecutor(e.setModule(this));
+        }
     }
 
 }

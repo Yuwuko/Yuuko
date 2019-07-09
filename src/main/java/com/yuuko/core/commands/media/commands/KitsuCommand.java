@@ -21,11 +21,11 @@ public class KitsuCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://kitsu.io/api/edge/anime?filter[text]=" + e.getCommand().get(1).replace(" ", "%20") + "&page[limit]=1";
+            final String url = "https://kitsu.io/api/edge/anime?filter[text]=" + e.getParameters().replace(" ", "%20") + "&page[limit]=1";
             JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.api+json"), new RequestProperty("Content-Type","application/vnd.api+json")).getJsonObject();
 
             if(json == null || json.getAsJsonArray("data").size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

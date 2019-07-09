@@ -20,7 +20,7 @@ public class NekoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://nekos.life/api/v2/img/" + ((e.hasParameters()) ? e.getCommand().get(1) : "lewd");
+            final String url = "https://nekos.life/api/v2/img/" + ((e.hasParameters()) ? e.getParameters() : "lewd");
             final JsonObject json = new RequestHandler(url).getJsonObject();
 
             if(json != null && !json.has("msg")) {

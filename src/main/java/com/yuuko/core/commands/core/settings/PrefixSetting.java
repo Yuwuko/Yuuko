@@ -12,7 +12,7 @@ public class PrefixSetting extends Setting {
     }
 
     protected void onCommand(MessageEvent e) {
-        String[] parameters = e.getCommand().get(1).split("\\s+", 2);
+        String[] parameters = e.getParameters().split("\\s+", 2);
 
         if(parameters[1].length() < 1 || parameters[1].length() > 5) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Prefixes have a minimum length of **1** and a maximum length of **5** characters.");

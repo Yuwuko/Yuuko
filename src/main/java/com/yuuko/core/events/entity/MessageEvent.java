@@ -1,44 +1,91 @@
 package com.yuuko.core.events.entity;
 
-import com.yuuko.core.Configuration;
-import com.yuuko.core.utilities.Utilities;
+import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.Module;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class MessageEvent extends GuildMessageReceivedEvent {
 
+    private Module module;
+    private Command command;
     private String prefix;
-    private List<String> command;
+    private String parameters;
 
     public MessageEvent(GuildMessageReceivedEvent event) {
         super(event.getJDA(), event.getResponseNumber(), event.getMessage());
-
-        String message = getMessage().getContentRaw();
-        this.prefix = message.toLowerCase().startsWith(Utilities.getServerPrefix(getGuild())) ? Utilities.getServerPrefix(getGuild()) : (message.toLowerCase().startsWith(Configuration.GLOBAL_PREFIX) ? Configuration.GLOBAL_PREFIX : "");
-
-        if(!prefix.equals("")) {
-            this.command = Arrays.asList(message.substring(prefix.length()).split("\\s+", 2));
-            this.command.set(0, command.get(0).toLowerCase());
-        }
     }
 
     public String getPrefix() {
         return prefix;
     }
 
-    public List<String> getCommand() {
+    public Module getModule() {
+        return module;
+    }
+
+    public Command getCommand() {
         return command;
     }
 
-    // Only used in very specific scenarios.
-    public void setCommand(List<String> command) {
+    public String getParameters() {
+        return parameters;
+    }
+
+    /**
+     * Sets prefix associated with the message event.
+     * Returns MessageEvent object so method can be used as a parameter.
+     *
+     * @param prefix value to assign to prefix field.
+     * @return MessageEvent
+     */
+    public MessageEvent setPrefix(String prefix) {
+        this.prefix = prefix;
+        return this;
+    }
+
+    /**
+     * Sets module associated with the message event.
+     * Returns MessageEvent object so method can be used as a parameter.
+     *
+     * @param module value to assign to module field.
+     * @return MessageEvent
+     */
+    public MessageEvent setModule(Module module) {
+        this.module = module;
+        return this;
+    }
+
+    /**
+     * Sets command associated with the message event.
+     * Returns MessageEvent object so method can be used as a parameter.
+     *
+     * @param command value to assign to command field.
+     * @return MessageEvent
+     */
+    public MessageEvent setCommand(Command command) {
         this.command = command;
+        return this;
     }
 
+    /**
+     * Sets parameters associated with the message event.
+     * Returns MessageEvent object so method can be used as a parameter.
+     *
+     * @param parameters value to assign to parameters field.
+     * @return MessageEvent
+     */
+    public MessageEvent setParameters(String parameters) {
+        this.parameters = parameters;
+        return this;
+    }
+
+    /**
+     * Checks if the event command has parameters by checking if the
+     * parameters field contains a value other than null.
+     *
+     * @return boolean
+     */
     public boolean hasParameters() {
-        return command.size() > 1;
+        return parameters != null;
     }
-
 }

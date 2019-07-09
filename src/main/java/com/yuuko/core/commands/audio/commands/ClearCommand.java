@@ -28,8 +28,8 @@ public class ClearCommand extends Command {
             if(e.hasParameters()) {
                 final int clearPos;
 
-                if(Sanitiser.isNumber(e.getCommand().get(1))) {
-                    clearPos = Integer.parseInt(e.getCommand().get(1));
+                if(Sanitiser.isNumber(e.getParameters())) {
+                    clearPos = Integer.parseInt(e.getParameters());
                 } else {
                     return;
                 }

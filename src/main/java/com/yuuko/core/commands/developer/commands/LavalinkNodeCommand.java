@@ -17,7 +17,7 @@ public class LavalinkNodeCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
+            String[] commandParameters = e.getParameters().split("\\s+", 3);
             if(commandParameters[0].equals("add")) {
                 Configuration.LAVALINK.getLavalink().addNode(URI.create(commandParameters[1]), commandParameters[2]);
             } else if(commandParameters[0].equals("remove")) {

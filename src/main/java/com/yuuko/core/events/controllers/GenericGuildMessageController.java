@@ -9,6 +9,7 @@ import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.EventMetrics;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -38,25 +39,32 @@ public class GenericGuildMessageController {
                 return;
             }
 
-            double execTime = System.nanoTime();
-            final MessageEvent event = new MessageEvent(e);
+            String prefix = Utilities.getServerPrefix(e.getGuild());
+            String message = e.getMessage().getContentRaw();
 
-            if(event.getPrefix().equals("")) {
+            // Uses short-circuiting to set prefix to the variation used in the message.
+            if(!message.startsWith(prefix) && !message.startsWith(prefix = Configuration.GLOBAL_PREFIX)) {
                 return;
             }
 
-            boolean exec = false;
+            double execTime = System.nanoTime();
 
-            // Iterate through the command list, get the command commands constructor from the command class.
-            Command command = Configuration.COMMANDS.get(event.getCommand().get(0));
-            if(command != null) {
-                command.getModule().getConstructor(MessageEvent.class).newInstance(event);
+            final String[] cmd = message.substring(prefix.length()).split("\\s+", 2);
+            final Command command = Configuration.COMMANDS.get(cmd[0].toLowerCase());
+            final String parameters = (cmd.length > 1) ? cmd[1] : null;
+
+            // Creates message event object, setting the event, prefix, command and parameters.
+            final MessageEvent event = new MessageEvent(e).setPrefix(prefix).setCommand(command).setParameters(parameters);
+
+            boolean exec = false;
+            if(event.getCommand() != null) {
+                event.getCommand().getModule().getConstructor(MessageEvent.class).newInstance(event);
                 exec = true;
             }
 
             if(exec) {
                 execTime = (System.nanoTime() - execTime)/1000000.0;
-                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().get(0), execTime);
+                DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().getName(), execTime);
                 if(GuildFunctions.getGuildSetting("comlog", e.getGuild().getId()) != null) {
                     CommandLogSetting.execute(event, execTime);
                 }

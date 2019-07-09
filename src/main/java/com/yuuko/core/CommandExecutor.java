@@ -32,15 +32,15 @@ public class CommandExecutor {
     private Module module;
     private Command command;
 
-    public CommandExecutor(MessageEvent event, Module module) {
+    public CommandExecutor(MessageEvent event) {
         // Is the event null? (Runtime setup for module reflection)
         if(event == null) {
             return;
         }
 
         this.event = event;
-        this.module = module;
-        this.command = module.getCommands().get(event.getCommand().get(0));
+        this.module = event.getModule();
+        this.command = event.getCommand();
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
@@ -78,7 +78,7 @@ public class CommandExecutor {
         }
 
         try {
-            log.trace("Invoking {}#onCommand()", command.getClass().getName());
+            log.trace("Invoking {}#onCommand()", command.getClass().getSimpleName());
             command.onCommand(event);
             messageCleanup();
         } catch(Exception ex) {
@@ -94,14 +94,14 @@ public class CommandExecutor {
      */
     private boolean checkAudio() {
         // Is the member /not/ in a voice channel?
-        if(!event.getMember().getVoiceState().inVoiceChannel() && !notInVoiceCommands.contains(event.getCommand().get(0))) {
+        if(!event.getMember().getVoiceState().inVoiceChannel() && !notInVoiceCommands.contains(event.getCommand().getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
             MessageHandler.sendMessage(event, embed.build());
             return false;
         }
 
         // Is Lavalink /not/ connected and does the command require it to be?
-        if(Configuration.LAVALINK.getLavalink().getLink(event.getGuild()).getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(event.getCommand().get(0))) {
+        if(Configuration.LAVALINK.getLavalink().getLink(event.getGuild()).getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(event, embed.build());
             return false;
@@ -118,7 +118,7 @@ public class CommandExecutor {
         }
 
         // Does the member /not/ have the DJ role and if not, is the command a DJ mode command?
-        if(event.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !nonDJModeCommands.contains(event.getCommand().get(0))) {
+        if(event.getMember().getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !nonDJModeCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
             MessageHandler.sendMessage(event, embed.build());
             return false;
@@ -169,7 +169,7 @@ public class CommandExecutor {
         if(BindFunctions.checkBind(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
             return false;
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + event.getCommand().get(0) + "** command is bound to **" + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + "**.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command.getName() + "** command is bound to **" + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + "**.");
             MessageHandler.sendMessage(event, embed.build());
             return true;
         }

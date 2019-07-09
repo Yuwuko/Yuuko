@@ -28,7 +28,7 @@ public class ReactionRoleCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String[] parameters = e.getCommand().get(1).split("\\s+");
+        final String[] parameters = e.getParameters().split("\\s+");
         final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0);
         final String action = parameters[0].toLowerCase();
         String selectedMessageId = selectedMessages.get(e.getAuthor().getId());

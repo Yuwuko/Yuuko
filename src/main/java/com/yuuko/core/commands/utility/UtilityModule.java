@@ -23,7 +23,9 @@ public class UtilityModule extends Module {
 
     public UtilityModule(MessageEvent e) {
         super("utility", false, commands);
-        new CommandExecutor(e, this);
+        if(e != null) {
+            new CommandExecutor(e.setModule(this));
+        }
     }
 
 }

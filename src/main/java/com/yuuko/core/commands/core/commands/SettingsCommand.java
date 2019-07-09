@@ -36,7 +36,7 @@ public class SettingsCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             if(e.hasParameters()) {
-                String[] parameters = e.getCommand().get(1).split("\\s+", 2);
+                String[] parameters = e.getParameters().split("\\s+", 2);
 
                 // Check to make sure the command is a valid command.
                 if(!settings.contains(parameters[0].toLowerCase())) {

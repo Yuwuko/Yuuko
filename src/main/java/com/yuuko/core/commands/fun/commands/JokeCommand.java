@@ -26,12 +26,12 @@ public class JokeCommand extends Command {
         if(!e.hasParameters()) {
             joke = new RequestHandler(BASE_URL).getJsonObject().get("joke").getAsString();
         } else {
-            JsonObject object = new RequestHandler(BASE_URL + "/search?limit=30&term=" + e.getCommand().get(1).replace(" ", "%20")).getJsonObject();
+            JsonObject object = new RequestHandler(BASE_URL + "/search?limit=30&term=" + e.getParameters().replace(" ", "%20")).getJsonObject();
 
             if(object.getAsJsonArray("results").size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("No Results")
-                        .setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+                        .setDescription("Search for `" + e.getParameters() + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

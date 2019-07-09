@@ -44,29 +44,29 @@ public final class MessageUtilities {
      * @return Member
      */
     public static Member getMentionedMember(MessageEvent e, boolean feedback) {
-        if(e.getCommand().get(1) != null && e.getCommand().get(1).length() == 18 && Sanitiser.isNumber(e.getCommand().get(1))) {
-            return e.getGuild().getMemberById(e.getCommand().get(1));
+        if(e.hasParameters() && e.getParameters().length() == 18 && Sanitiser.isNumber(e.getParameters())) {
+            return e.getGuild().getMemberById(e.getParameters());
         }
 
         List<Member> mentioned = getMutableMembersCollection(e);
 
         if(!e.getMessage().mentionsEveryone()) {
-            if(mentioned.size() > 0) {
-                return mentioned.get(0);
-            } else {
-                if(feedback) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("There were no mentioned users found.");
-                    MessageHandler.sendMessage(e, embed.build());
-                }
-                return null;
-            }
-        } else {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
                 MessageHandler.sendMessage(e, embed.build());
             }
             return null;
         }
+
+        if(mentioned.size() < 1) {
+            if(feedback) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("There were no mentioned users found.");
+                MessageHandler.sendMessage(e, embed.build());
+            }
+            return null;
+        }
+
+        return mentioned.get(0);
     }
 
     /**

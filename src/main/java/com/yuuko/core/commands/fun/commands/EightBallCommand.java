@@ -43,7 +43,7 @@ public class EightBallCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String question = e.getCommand().get(1);
+        String question = e.getParameters();
         question += (question.lastIndexOf("?") == question.length()-1) ? "" : "?";
 
         EmbedBuilder embed = new EmbedBuilder()

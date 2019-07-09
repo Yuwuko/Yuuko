@@ -25,11 +25,11 @@ public class WeatherCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://api.openweathermap.org/data/2.5/weather?q=" + (e.getCommand().get(1).replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap");
+            final String url = "https://api.openweathermap.org/data/2.5/weather?q=" + (e.getParameters().replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap");
             JsonObject data = new RequestHandler(url).getJsonObject();
 
             if(data == null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

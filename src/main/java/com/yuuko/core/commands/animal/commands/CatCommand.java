@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class CatCommand extends Command {
 
     public CatCommand() {
-        super("cat", AnimalModule.class, 0, Arrays.asList("-kitty"), false, null);
+        super("cat", AnimalModule.class, 0, Arrays.asList("-cat"), false, null);
     }
 
     @Override

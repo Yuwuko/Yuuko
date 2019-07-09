@@ -46,20 +46,19 @@ public class LondonUndergroundCommand extends Command {
                 }
             }
 
-            if(e.getCommand().size() == 1) {
+            if(!e.hasParameters()) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("London Underground Status")
                         .setTimestamp(Instant.now())
                         .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
-                for(LineManager line: lineManager) {
+                for(LineManager line : lineManager) {
                     embed.addField(line.getName(), line.getLineStatusString(), true);
                 }
 
                 embed.addBlankField(true);
                 embed.addField("", reasons.toString(), false);
                 MessageHandler.sendMessage(e, embed.build());
-
             } else {
 
                 if(goodServices == 11) {

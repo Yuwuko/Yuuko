@@ -24,7 +24,7 @@ public class ModuleCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         if(e.hasParameters()) {
-            String module = e.getCommand().get(1).split("\\s+", 2)[0].toLowerCase();
+            String module = e.getParameters().split("\\s+", 2)[0].toLowerCase();
             String guild = e.getGuild().getId();
 
             if(!Configuration.MODULES.containsKey(module)) {

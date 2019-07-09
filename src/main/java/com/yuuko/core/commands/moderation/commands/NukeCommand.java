@@ -32,13 +32,13 @@ public class NukeCommand extends Command {
             return;
         }
 
-        if(!Sanitiser.isNumber(e.getCommand().get(1))) {
+        if(!Sanitiser.isNumber(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
 
-        int value = Integer.parseInt(e.getCommand().get(1));
+        int value = Integer.parseInt(e.getParameters());
 
         if(value < 2) {
             value = 2;

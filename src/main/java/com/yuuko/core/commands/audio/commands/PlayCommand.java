@@ -35,7 +35,7 @@ public class PlayCommand extends Command {
             Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
-        if(e.getCommand().size() == 1) {
+        if(!e.hasParameters()) {
             if(manager.getPlayer().isPaused()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -46,17 +46,17 @@ public class PlayCommand extends Command {
         } else {
             manager.getPlayer().setPaused(false);
 
-            if(e.getCommand().get(1).startsWith("https://") || e.getCommand().get(1).startsWith("http://")) {
-                loadAndPlay(manager, e, e.getCommand().get(1));
+            if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
+                loadAndPlay(manager, e);
 
             } else {
-                String trackId = YouTubeSearchHandler.search(e.getCommand().get(1));
+                String trackId = YouTubeSearchHandler.search(e.getParameters());
 
                 if(trackId == null || trackId.equals("")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    loadAndPlay(manager, e, trackId);
+                    loadAndPlay(manager, e.setParameters(trackId));
                 }
             }
         }
@@ -68,15 +68,14 @@ public class PlayCommand extends Command {
      *
      * @param manager GuildAudioManager.
      * @param e MessageEvent.
-     * @param url String.
      */
-    private void loadAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
+    private void loadAndPlay(GuildAudioManager manager, MessageEvent e) {
         final String trackUrl;
 
-        if(url.startsWith("<") && url.endsWith(">")) {
-            trackUrl = url.substring(1, url.length() - 1);
+        if(e.getParameters().startsWith("<") && e.getParameters().endsWith(">")) {
+            trackUrl = e.getParameters().substring(1, e.getParameters().length() - 1);
         } else {
-            trackUrl = url;
+            trackUrl = e.getParameters();
         }
 
         AudioManagerController.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {

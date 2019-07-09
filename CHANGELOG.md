@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019_07-09
++ [~] Modified the MessageEvent object to be able to hold both an object of Module and of Command, effectively compressing parameters.
++ [~] Fixed a couple of smaller superficial mistakes such as the [__cat__] command returning incorrect usage information.
+
 ## 2019_07-08
 + [~] Fixed bug with lyrics command returning no data but with headers that imply data.
 + [~] Modified LavaLink node loading to allow virtually unlimited nodes.

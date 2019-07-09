@@ -22,7 +22,9 @@ public class FunModule extends Module {
 
     public FunModule(MessageEvent e) {
         super("fun", false, commands);
-        new CommandExecutor(e, this);
+        if(e != null) {
+            new CommandExecutor(e.setModule(this));
+        }
     }
 
 }

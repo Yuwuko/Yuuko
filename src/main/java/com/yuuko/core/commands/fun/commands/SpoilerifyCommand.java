@@ -15,7 +15,7 @@ public class SpoilerifyCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] characters = e.getCommand().get(1).replace("`", "").split("");
+        String[] characters = e.getParameters().replace("`", "").split("");
         StringBuilder spoiler = new StringBuilder();
 
         spoiler.append("`");

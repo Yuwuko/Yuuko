@@ -40,7 +40,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-07-08";
+    public static final String VERSION = "2019-07-09";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -187,9 +187,10 @@ public class Configuration {
             MODULES = new HashMap<>(modules.size());
             COMMANDS = new HashMap<>(commands.size());
 
+            final Object[] object = new Object[]{null};
             for(Class<? extends Module> module : modules) {
                 if(!Modifier.isAbstract(module.getModifiers())) {
-                    Module obj = module.getConstructor(MessageEvent.class).newInstance(new Object[]{null});
+                    Module obj = module.getConstructor(MessageEvent.class).newInstance(object);
                     MODULES.put(obj.getName(), obj);
                 }
             }

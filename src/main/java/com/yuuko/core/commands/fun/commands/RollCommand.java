@@ -19,8 +19,8 @@ public class RollCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         int rollNum;
-        if(Sanitiser.isNumber(e.getCommand().get(1))) {
-            rollNum = Integer.parseUnsignedInt(e.getCommand().get(1));
+        if(Sanitiser.isNumber(e.getParameters())) {
+            rollNum = Integer.parseUnsignedInt(e.getParameters());
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input.").setDescription("Input must be a non-negative numeric value.");
             MessageHandler.sendMessage(e, embed.build());
@@ -28,13 +28,13 @@ public class RollCommand extends Command {
         }
 
         int num;
-        if(e.getCommand().get(1).equals("00")) {
+        if(e.getParameters().equals("00")) {
             num = (new Random().nextInt(10) + 1) * 10;
         } else {
             num = new Random().nextInt(rollNum) + 1;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + e.getCommand().get(1) + "` and got `" + num + "`.");
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + e.getParameters() + "` and got `" + num + "`.");
         MessageHandler.sendMessage(e, embed.build());
     }
 

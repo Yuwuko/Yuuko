@@ -18,7 +18,7 @@ public class SetStatusCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getCommand().get(1).split("\\s+", 3);
+            String[] commandParameters = e.getParameters().split("\\s+", 3);
 
             switch(commandParameters[0].toLowerCase()) {
                 case "playing":

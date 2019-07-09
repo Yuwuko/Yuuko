@@ -22,7 +22,9 @@ public class ModerationModule extends Module {
 
     public ModerationModule(MessageEvent e) {
         super("moderation", false, commands);
-        new CommandExecutor(e, this);
+        if(e != null) {
+            new CommandExecutor(e.setModule(this));
+        }
     }
 
 }

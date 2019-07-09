@@ -20,11 +20,11 @@ public class UrbanDictionaryCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String url = "https://api.urbandictionary.com/v0/define?term=" + e.getCommand().get(1).replace(" ", "%20");
+        final String url = "https://api.urbandictionary.com/v0/define?term=" + e.getParameters().replace(" ", "%20");
         final JsonObject json = new RequestHandler(url).getJsonObject();
 
         if(json.get("list").getAsJsonArray().size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }

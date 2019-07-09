@@ -21,7 +21,7 @@ public final class Sanitiser {
             return true;
         }
 
-        if(e.getCommand().size() < 2) {
+        if(!e.hasParameters()) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **0**.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -30,7 +30,7 @@ public final class Sanitiser {
         }
 
         if(expectedParameters > 1) {
-            String[] commandParameters = e.getCommand().get(1).split("\\s+", expectedParameters);
+            String[] commandParameters = e.getParameters().split("\\s+", expectedParameters);
             if(commandParameters.length < expectedParameters) {
                 if(feedback) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");

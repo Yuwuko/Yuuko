@@ -24,7 +24,7 @@ public class OsuCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getCommand().get(1).split("\\s+", 2);
+            String[] commandParameters = e.getParameters().split("\\s+", 2);
 
             final int mode;
             if(commandParameters.length > 1) {
@@ -55,7 +55,7 @@ public class OsuCommand extends Command {
             final JsonArray json = new RequestHandler(url).getJsonArray();
 
             if(json == null || json.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getCommand().get(1) + "` produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

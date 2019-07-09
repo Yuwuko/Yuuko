@@ -24,7 +24,7 @@ public class HelpCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
-        if(e.getCommand().size() < 2) {
+        if(!e.hasParameters()) {
             EmbedBuilder commandInfo = new EmbedBuilder()
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! " +
@@ -44,7 +44,7 @@ public class HelpCommand extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            Configuration.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getCommand().get(1))).findFirst().ifPresent(command -> {
+            Configuration.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
                 final String commandPermission;
                 commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
 

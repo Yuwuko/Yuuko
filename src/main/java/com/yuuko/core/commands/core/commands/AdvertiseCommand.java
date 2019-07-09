@@ -30,7 +30,7 @@ public class AdvertiseCommand extends Command {
             return;
         }
 
-        if(e.getCommand().get(1).equals("stop")) {
+        if(e.getParameters().equals("stop")) {
             GuildFunctions.setGuildInvite(null, e.getGuild().getId());
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Advertise")

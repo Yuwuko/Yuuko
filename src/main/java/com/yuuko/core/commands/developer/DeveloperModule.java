@@ -26,7 +26,7 @@ public class DeveloperModule extends Module {
             return;
         }
 
-        new CommandExecutor(e, this);
+        new CommandExecutor(e.setModule(this));
     }
 
 }

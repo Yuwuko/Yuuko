@@ -32,7 +32,9 @@ public class InteractionModule extends Module {
 
     public InteractionModule(MessageEvent e) {
         super("interaction", false, commands);
-        new CommandExecutor(e, this);
+        if(e != null) {
+            new CommandExecutor(e.setModule(this));
+        }
     }
 
 }
