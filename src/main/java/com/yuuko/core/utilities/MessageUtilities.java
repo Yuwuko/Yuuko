@@ -49,8 +49,7 @@ public final class MessageUtilities {
         }
 
         List<Member> mentioned = getMutableMembersCollection(e);
-
-        if(!e.getMessage().mentionsEveryone()) {
+        if(e.getMessage().mentionsEveryone()) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -67,17 +66,6 @@ public final class MessageUtilities {
         }
 
         return mentioned.get(0);
-    }
-
-    /**
-     * Returns the first mentioned channel from a given message.
-     *
-     * @param e MessageEvent
-     * @return TextChannel
-     */
-    public static TextChannel getFirstMentionedChannel(MessageEvent e) {
-        List<TextChannel> mentioned = e.getMessage().getMentionedChannels();
-        return (mentioned.size() > 0) ? mentioned.get(0) : null;
     }
 
     /**
@@ -112,6 +100,19 @@ public final class MessageUtilities {
         mentioned.remove(e.getGuild().getMember(Configuration.BOT));
         return mentioned;
     }
+
+    /**
+     * Returns the first mentioned channel from a given message.
+     *
+     * @param e MessageEvent
+     * @return TextChannel
+     */
+    public static TextChannel getFirstMentionedChannel(MessageEvent e) {
+        List<TextChannel> mentioned = e.getMessage().getMentionedChannels();
+        return (mentioned.size() > 0) ? mentioned.get(0) : null;
+    }
+
+
 
     /**
      * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
