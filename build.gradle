@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-07-09'
+version = '2019-07-10'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -32,10 +32,10 @@ repositories {
 
 dependencies {
     // Discord API
-    compile 'net.dv8tion:JDA:3.8.3_463'
+    compile 'net.dv8tion:JDA:3.8.3_464'
     compile 'com.sedmelluq:lavaplayer:1.3.17'
     compile 'com.sedmelluq:jda-nas:1.0.6'
-    compile 'com.github.FredBoat:Lavalink-Client:8c20d5714c'
+    compile 'com.github.FredBoat:Lavalink-Client:1446e25'
     // Bot Lists
     compile 'com.github.DiscordBotList:DBL-Java-Wrapper:2.0.0'
     compile 'com.github.BasketBandit:ddblAPI.java:0.4.3'
