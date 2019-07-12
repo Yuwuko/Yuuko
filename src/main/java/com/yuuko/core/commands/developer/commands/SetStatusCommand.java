@@ -4,8 +4,8 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Activity;
 
 import java.util.Arrays;
 
@@ -22,19 +22,19 @@ public class SetStatusCommand extends Command {
 
             switch(commandParameters[0].toLowerCase()) {
                 case "playing":
-                    e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, commandParameters[1]));
+                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, commandParameters[1]));
                     break;
                 case "listening":
-                    e.getJDA().getPresence().setGame(Game.of(Game.GameType.LISTENING, commandParameters[1]));
+                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.LISTENING, commandParameters[1]));
                     break;
                 case "streaming":
-                    e.getJDA().getPresence().setGame(Game.of(Game.GameType.STREAMING, commandParameters[1]));
+                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.STREAMING, commandParameters[1]));
                     break;
                 case "watching":
-                    e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, commandParameters[1]));
+                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, commandParameters[1]));
                     break;
                 default:
-                    e.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, "@Yuuko help"));
+                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
             }
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");

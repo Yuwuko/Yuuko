@@ -5,8 +5,8 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 
 import java.util.Arrays;
 
@@ -21,7 +21,7 @@ public class AdvertiseCommand extends Command {
         if(!e.hasParameters()) {
             e.getMessage().getTextChannel().createInvite().setMaxAge(0).setMaxUses(0).setUnique(false)
                     .queue(s -> {
-                        GuildFunctions.setGuildInvite(s.getURL(), e.getGuild().getId());
+                        GuildFunctions.setGuildInvite(s.getUrl(), e.getGuild().getId());
 
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Advertise")
                                 .setDescription("Server is now being advertised on `www.yuuko.info` using invite code `" + s.getCode() + "`");

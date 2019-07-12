@@ -5,9 +5,9 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Emote;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Emote;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -41,7 +41,7 @@ public class GuildCommand extends Command {
                 .setThumbnail(guild.getIconUrl())
                 .addField("Owner", guild.getOwner().getUser().getName() + "#" + guild.getOwner().getUser().getDiscriminator(), true)
                 .addField("ID", guild.getId(), true)
-                .addField("Created", guild.getCreationTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
+                .addField("Created", guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
                 .addField("Region", guild.getRegion().getName(), true)
                 .addField("Users", guild.getMemberCache().size()+"", true)
                 .addField("Text Channels", guild.getTextChannelCache().size()+"", true)

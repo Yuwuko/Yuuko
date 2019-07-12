@@ -3,8 +3,8 @@ package com.yuuko.core.events.controllers;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
-import net.dv8tion.jda.core.events.channel.text.GenericTextChannelEvent;
-import net.dv8tion.jda.core.events.channel.text.TextChannelDeleteEvent;
+import net.dv8tion.jda.api.events.channel.text.GenericTextChannelEvent;
+import net.dv8tion.jda.api.events.channel.text.TextChannelDeleteEvent;
 
 public class GenericTextChannelController {
 

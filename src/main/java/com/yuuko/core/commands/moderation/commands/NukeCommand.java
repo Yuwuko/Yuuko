@@ -7,9 +7,9 @@ import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public class NukeCommand extends Command {
         final OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
         e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
             messages.listIterator().forEachRemaining(message -> {
-                if(message != null && message.getCreationTime().isBefore(past)) {
+                if(message != null && message.getTimeCreated().isBefore(past)) {
                     message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
                 }
             });

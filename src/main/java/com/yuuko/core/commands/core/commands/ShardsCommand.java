@@ -8,7 +8,7 @@ import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.entity.MessageEvent;
 import lavalink.client.io.LavalinkSocket;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

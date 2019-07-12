@@ -5,9 +5,9 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -53,11 +53,10 @@ public class CommandLogSetting extends Setting {
      */
     private void setup(MessageEvent e) {
         try {
-            e.getGuild().getController().createTextChannel("com-log").queue(channel -> {
-                TextChannel textChannel = (TextChannel)channel;
+            e.getGuild().createTextChannel("com-log").queue(channel -> {
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
                 if(GuildFunctions.setGuildSettings("comlog", channel.getId(), e.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             });

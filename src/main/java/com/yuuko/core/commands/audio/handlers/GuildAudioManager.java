@@ -2,7 +2,7 @@ package com.yuuko.core.commands.audio.handlers;
 
 import com.yuuko.core.Configuration;
 import lavalink.client.player.IPlayer;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 public class GuildAudioManager {
 

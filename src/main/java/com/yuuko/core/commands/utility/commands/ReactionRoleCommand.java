@@ -6,14 +6,14 @@ import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Emote;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.events.message.guild.react.GenericGuildMessageReactionEvent;
-import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Emote;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class ReactionRoleCommand extends Command {
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
-                    .setDescription(e.getChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
+                    .setDescription(e.getChannel().retrieveMessageById(selectedMessageId).complete().toString() + " has been selected.")
                     .addField("Options", e.getPrefix() + "reactrole add <:emote:> <@role>\n" + e.getPrefix() + "reactrole rem <:emote:> <@role>", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -55,13 +55,13 @@ public class ReactionRoleCommand extends Command {
                 return;
             }
 
-            selectedMessageId = e.getChannel().getMessageById(parameters[1]).complete().getId();
+            selectedMessageId = e.getChannel().retrieveMessageById(parameters[1]).complete().getId();
             selectedMessages.remove(e.getAuthor().getId());
             selectedMessages.put(e.getAuthor().getId(), selectedMessageId);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Reaction Role")
-                    .setDescription(e.getChannel().getMessageById(selectedMessageId).complete().toString() + " has been selected.")
+                    .setDescription(e.getChannel().retrieveMessageById(selectedMessageId).complete().toString() + " has been selected.")
                     .addField("Options", e.getPrefix() + "reactrole add <:emote:> <@role>\n" + e.getPrefix() + "reactrole rem <:emote:> <@role>", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
@@ -74,7 +74,7 @@ public class ReactionRoleCommand extends Command {
             return;
         }
 
-        final Message finalMessage = e.getChannel().getMessageById(selectedMessageId).complete();
+        final Message finalMessage = e.getChannel().retrieveMessageById(selectedMessageId).complete();
         final Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : null;
         final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : e.getGuild().getRoleById((parameters.length > 2) ? parameters[2] : "0");
 
@@ -165,15 +165,21 @@ public class ReactionRoleCommand extends Command {
         final String message = e.getMessageId();
         final Emote emote = e.getReactionEmote().getEmote();
 
-        if(message == null || emote == null || !ReactionRoleFunctions.hasReactionRole(message, emote.getId())) {
+        if(!ReactionRoleFunctions.hasReactionRole(message, emote.getId())) {
             return;
         }
 
+        // Warning says argument may be null, but the above check ensures it isn't.
         final Role role = e.getGuild().getRoleById(ReactionRoleFunctions.selectReactionRole(message, emote.getId()));
+
+        if(role == null) {
+            return;
+        }
+
         if(e instanceof GuildMessageReactionAddEvent) {
-            e.getGuild().getController().addSingleRoleToMember(e.getMember(), role).queue();
+            e.getGuild().addRoleToMember(e.getMember(), role).queue();
         } else {
-            e.getGuild().getController().removeSingleRoleFromMember(e.getMember(), role).queue();
+            e.getGuild().removeRoleFromMember(e.getMember(), role).queue();
         }
     }
 }

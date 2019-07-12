@@ -2,7 +2,7 @@ package com.yuuko.core.commands.interaction;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.api.Permission;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

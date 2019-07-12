@@ -6,8 +6,8 @@ import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.util.Arrays;
 
@@ -31,12 +31,12 @@ public class KickCommand extends Command {
         }
 
         if(commandParameters.length < 3) {
-            e.getGuild().getController().kick(target).queue(s -> {
+            e.getGuild().kick(target).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), "None");
             }, f -> e.getMessage().addReaction("❌").queue());
         } else {
-            e.getGuild().getController().kick(target, commandParameters[1]).queue(s -> {
+            e.getGuild().kick(target, commandParameters[1]).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), commandParameters[1]);
             }, f -> e.getMessage().addReaction("❌").queue());

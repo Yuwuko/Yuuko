@@ -6,7 +6,7 @@ import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 

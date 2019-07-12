@@ -2,7 +2,7 @@ package com.yuuko.core.database.function;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

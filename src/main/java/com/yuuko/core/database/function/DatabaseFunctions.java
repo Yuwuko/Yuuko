@@ -30,7 +30,7 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `ping`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?)")) {
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -56,9 +56,10 @@ public class DatabaseFunctions {
             stmt2.execute();
 
             stmt3.setInt(1, shardId);
-            stmt3.setDouble(2, discord.PING.get());
-            stmt3.setInt(3, discord.GUILD_COUNT);
-            stmt3.setInt(4, discord.USER_COUNT);
+            stmt3.setDouble(2, discord.GATEWAY_PING.get());
+            stmt3.setDouble(3, discord.REST_PING.get());
+            stmt3.setInt(4, discord.GUILD_COUNT);
+            stmt3.setInt(5, discord.USER_COUNT);
             stmt3.execute();
 
 
@@ -208,15 +209,16 @@ public class DatabaseFunctions {
     /**
      * Update shard statistics such as guild count and user count.
      */
-    public static void updateShardStatistics(int shard, String status, int guilds, int users, int ping) {
+    public static void updateShardStatistics(int shard, String status, int guilds, int users, int gatewayPing, int restPing) {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `ping` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             stmt.setString(1, status);
             stmt.setInt(2, guilds);
             stmt.setInt(3, users);
-            stmt.setInt(4, ping);
-            stmt.setInt(5, shard);
+            stmt.setInt(4, gatewayPing);
+            stmt.setInt(5, restPing);
+            stmt.setInt(6, shard);
             stmt.execute();
 
         } catch(Exception ex) {

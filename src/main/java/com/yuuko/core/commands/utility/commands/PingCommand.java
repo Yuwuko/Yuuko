@@ -6,7 +6,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class PingCommand extends Command {
     public void onCommand(MessageEvent e) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Pong!")
-                .setDescription("Current ping to Discord is " + MetricsManager.getDiscordMetrics().PING + "ms.")
+                .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics().GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics().REST_PING + "ms.")
                 .setTimestamp(Instant.now())
                 .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());

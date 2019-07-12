@@ -10,7 +10,7 @@ import com.yuuko.core.scheduler.jobs.VoiceTimeoutJob;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.player.IPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.Collections;
 import java.util.LinkedList;

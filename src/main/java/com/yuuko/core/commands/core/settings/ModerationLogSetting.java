@@ -5,11 +5,11 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.guild.GuildUnbanEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.guild.GuildUnbanEvent;
 
 import java.time.Instant;
 
@@ -53,11 +53,10 @@ public class ModerationLogSetting extends Setting {
      */
     private void setup(MessageEvent e) {
         try {
-            e.getGuild().getController().createTextChannel("moderation-log").queue(channel -> {
-                TextChannel textChannel = (TextChannel)channel;
+            e.getGuild().createTextChannel("moderation-log").queue(channel -> {
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             });

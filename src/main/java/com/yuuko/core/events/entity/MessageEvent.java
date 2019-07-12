@@ -2,7 +2,7 @@ package com.yuuko.core.events.entity;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class MessageEvent extends GuildMessageReceivedEvent {
 

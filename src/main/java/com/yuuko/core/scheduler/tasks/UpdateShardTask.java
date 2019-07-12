@@ -5,7 +5,7 @@ import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
 import com.yuuko.core.scheduler.Task;
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.api.JDA;
 
 public class UpdateShardTask implements Task {
     private static JDA shard = Configuration.SHARD_MANAGER.getShardById(Configuration.SHARD_ID);
@@ -13,6 +13,6 @@ public class UpdateShardTask implements Task {
     @Override
     public void run() {
         DiscordMetrics metrics = MetricsManager.getDiscordMetrics();
-        DatabaseFunctions.updateShardStatistics(Configuration.SHARD_ID, shard.getStatus().name(), metrics.GUILD_COUNT, metrics.USER_COUNT, (int)metrics.PING.get());
+        DatabaseFunctions.updateShardStatistics(Configuration.SHARD_ID, shard.getStatus().name(), metrics.GUILD_COUNT, metrics.USER_COUNT, (int)metrics.GATEWAY_PING.get(), (int)metrics.REST_PING.get());
     }
 }

@@ -1,8 +1,7 @@
 package com.yuuko.core.utilities;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.managers.GuildController;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
 
 import java.util.List;
 
@@ -36,7 +35,6 @@ public final class DiscordUtilities {
      * @return Role
      */
     public static Role getMutedRole(Guild guild) {
-        GuildController controller = guild.getController();
         List<TextChannel> channels = guild.getTextChannels();
         List<VoiceChannel> voiceChannels = guild.getVoiceChannels();
         List<Role> roleList = guild.getRoles();
@@ -54,7 +52,7 @@ public final class DiscordUtilities {
                 return null;
             }
 
-            muted = controller.createRole().setName("Muted").complete();
+            muted = guild.createRole().setName("Muted").complete();
 
             for(TextChannel channel: channels) {
                 channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION).queue();

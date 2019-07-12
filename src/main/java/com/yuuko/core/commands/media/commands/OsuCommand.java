@@ -11,7 +11,7 @@ import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.StringFormatter;
 import com.yuuko.core.utilities.Utilities;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 

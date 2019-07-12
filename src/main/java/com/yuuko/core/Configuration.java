@@ -20,10 +20,11 @@ import com.yuuko.core.scheduler.jobs.OneHourlyJob;
 import com.yuuko.core.scheduler.jobs.TenSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
 import com.yuuko.core.utilities.Utilities;
-import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.sharding.ShardManager;
 import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-07-10";
+    public static final String VERSION = "2019-07-13";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -51,8 +52,8 @@ public class Configuration {
     public static String GLOBAL_PREFIX;
     public static ApiManager API_MANAGER;
     public static LavalinkManager LAVALINK;
-    public static net.dv8tion.jda.bot.sharding.ShardManager SHARD_MANAGER;
-    public static User BOT;
+    public static ShardManager SHARD_MANAGER;
+    public static SelfUser BOT;
     public static Map<String, Command> COMMANDS;
     public static Map<String, Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
@@ -150,7 +151,7 @@ public class Configuration {
                     .setToken(BOT_TOKEN)
                     .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())
-                    .setGame(Game.of(Game.GameType.LISTENING, "@Yuuko help"))
+                    .setActivity(Activity.of(Activity.ActivityType.LISTENING, "@Yuuko help"))
                     .setShardsTotal(SHARD_COUNT)
                     .setShards(SHARD_ID)
                     .build();

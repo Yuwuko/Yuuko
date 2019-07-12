@@ -2,9 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-07-12
+## 2019-07-13
 + [!] Migrated from JDAv3 to JDAv4
 + [~] Updated dependencies to match those compatible with JDAv4
++ [~] Split up PING to GATEWAY_PING and REST_PING in light of new changes.
 
 ## 2019-07-09
 + [~] Modified the MessageEvent object to be able to hold both an object of Module and of Command, effectively compressing parameters.

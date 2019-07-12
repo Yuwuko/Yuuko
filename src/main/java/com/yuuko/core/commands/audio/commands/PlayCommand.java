@@ -15,8 +15,8 @@ import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.Link;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 
 import java.util.Arrays;
 import java.util.List;

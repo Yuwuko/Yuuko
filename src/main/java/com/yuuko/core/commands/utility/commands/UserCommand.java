@@ -7,8 +7,8 @@ import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -37,8 +37,8 @@ public class UserCommand extends Command {
         }
 
         String presence = "";
-        if(target.getGame() != null) {
-            switch(target.getGame().getType().name()) {
+        if(target.getActivities().size() > 0) {
+            switch(target.getActivities().get(0).getType().name()) {
                 case "LISTENING": presence = "and is listening to ";
                 break;
                 case "DEFAULT": presence = "and is playing ";
@@ -51,7 +51,15 @@ public class UserCommand extends Command {
             }
 
             if(!presence.equals("")) {
-                presence += (target.getGame().isRich()) ? "**" + target.getGame().getName() + "** ~ **" + target.getGame().asRichPresence().getState() + "** - **" + target.getGame().asRichPresence().getDetails() + "**" : "**" + target.getGame().getName() + "**";
+                presence += (target.getActivities().get(0).isRich()) ? "**"
+                        + target.getActivities().get(0).getName()
+                        + "** ~ **"
+                        + target.getActivities().get(0).asRichPresence().getState()
+                        + "** - **"
+                        + target.getActivities().get(0).asRichPresence().getDetails()
+                        + "**" : "**"
+                        + target.getActivities().get(0).getName()
+                        + "**";
             }
         }
 
@@ -61,8 +69,8 @@ public class UserCommand extends Command {
                 .setThumbnail(target.getUser().getAvatarUrl())
                 .addField("Username", DiscordUtilities.getTag(target), true)
                 .addField("User ID", target.getUser().getId(), true)
-                .addField("Account Created", target.getUser().getCreationTime().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
-                .addField("Joined Server", target.getJoinDate().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
+                .addField("Account Created", target.getUser().getTimeCreated().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
+                .addField("Joined Server", target.getTimeJoined().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
                 .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());

@@ -2,7 +2,7 @@ package com.yuuko.core.scheduler.jobs;
 
 import com.yuuko.core.scheduler.Job;
 import com.yuuko.core.scheduler.tasks.VoiceTimeoutTask;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.concurrent.TimeUnit;
 

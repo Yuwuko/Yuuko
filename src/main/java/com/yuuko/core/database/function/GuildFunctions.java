@@ -1,8 +1,8 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

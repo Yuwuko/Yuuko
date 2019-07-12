@@ -12,7 +12,7 @@ import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 
@@ -63,7 +63,7 @@ public class AboutCommand extends Command {
                 .addField("Total Guilds", totalGuilds + "", true)
                 .addField("Commands", Configuration.COMMANDS.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                .addField("Ping", MetricsManager.getDiscordMetrics().PING + "ms",true)
+                .addField("Ping", MetricsManager.getDiscordMetrics().GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics().REST_PING + "ms)",true)
                 .addField("Latest Updates", latestUpdates.toString(), false);
         MessageHandler.sendMessage(e, about.build());
     }

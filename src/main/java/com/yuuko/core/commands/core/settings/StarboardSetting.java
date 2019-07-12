@@ -4,12 +4,12 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 
 import java.awt.*;
 import java.time.Instant;
@@ -53,11 +53,10 @@ public class StarboardSetting extends Setting {
 
     private void setup(MessageEvent e) {
         try {
-            e.getGuild().getController().createTextChannel("starboard").queue(channel -> {
-                TextChannel textChannel = (TextChannel)channel;
+            e.getGuild().createTextChannel("starboard").queue(channel -> {
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The " + textChannel.getAsMention() + " channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             });
@@ -76,7 +75,13 @@ public class StarboardSetting extends Setting {
 
         if(channelId != null) {
             TextChannel starboard = e.getGuild().getTextChannelById(channelId);
-            Message starred = e.getChannel().getMessageById(e.getMessageId()).complete();
+            Message starred = e.getChannel().retrieveMessageById(e.getMessageId()).complete();
+
+            // If the channel doesn't exist, remove the database record of it existing.
+            if(starboard == null) {
+                GuildFunctions.setGuildSettings("starboard", null, e.getGuild().getId());
+                return;
+            }
 
             // Cannot starboard embedded messages.
             if(starred.getEmbeds().size() > 0) {

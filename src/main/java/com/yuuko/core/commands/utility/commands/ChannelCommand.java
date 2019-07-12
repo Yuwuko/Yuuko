@@ -4,8 +4,8 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 
 import java.util.Arrays;
 
@@ -23,9 +23,9 @@ public class ChannelCommand extends Command {
         // Checks the parameters of the command, if the first param is 'add' follow that flow, else if it's 'del' following that flow instead.
         if(commandParameters[0].equals("add")) {
             if(type.equals("text")) {
-                e.getGuild().getController().createTextChannel(commandParameters[1]).setNSFW(commandParameters.length > 2).queue();
+                e.getGuild().createTextChannel(commandParameters[1]).setNSFW(commandParameters.length > 2).queue();
             } else if(type.equals("voice")) {
-                e.getGuild().getController().createVoiceChannel(commandParameters[1]).queue();
+                e.getGuild().createVoiceChannel(commandParameters[1]).queue();
             }
 
         } else if(commandParameters[0].equals("del")) {

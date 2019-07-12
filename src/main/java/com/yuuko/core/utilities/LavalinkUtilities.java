@@ -3,7 +3,7 @@ package com.yuuko.core.utilities;
 import com.yuuko.core.Configuration;
 import lavalink.client.io.Link;
 import lavalink.client.player.LavalinkPlayer;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 public final class LavalinkUtilities {
 

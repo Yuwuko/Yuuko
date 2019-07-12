@@ -3,8 +3,8 @@ package com.yuuko.core.commands.audio.handlers;
 import com.yuuko.core.Configuration;
 import lavalink.client.io.jda.JdaLavalink;
 import lavalink.client.player.IPlayer;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

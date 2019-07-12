@@ -7,9 +7,9 @@ import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 import java.util.Arrays;
 
@@ -38,12 +38,12 @@ public class MuteCommand extends Command {
         }
 
         if(target.getRoles().stream().noneMatch((role) -> role.getName().equalsIgnoreCase("Muted"))) {
-            e.getGuild().getController().addSingleRoleToMember(target, muted).queue(s -> {
+            e.getGuild().addRoleToMember(target, muted).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Mute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
             }, f -> e.getMessage().addReaction("❌").queue());
         } else {
-            e.getGuild().getController().removeSingleRoleFromMember(target, muted).queue(s -> {
+            e.getGuild().removeRoleFromMember(target, muted).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Unmute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
             }, f -> e.getMessage().addReaction("❌").queue());
