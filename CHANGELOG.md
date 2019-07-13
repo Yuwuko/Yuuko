@@ -2,37 +2,40 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019_07-09
+## 2019-07-09
++ [~] Improved guarding of the [__nuke__] command.
+
+## 2019-07-09
 + [~] Modified the MessageEvent object to be able to hold both an object of Module and of Command, effectively compressing parameters.
 + [~] Fixed a couple of smaller superficial mistakes such as the [__cat__] command returning incorrect usage information.
 
-## 2019_07-08
+## 2019-07-08
 + [~] Fixed bug with lyrics command returning no data but with headers that imply data.
 + [~] Modified LavaLink node loading to allow virtually unlimited nodes.
 + [~] Refactored command and module classes, adding the previous checks to the command executor.
 + [~] Refactored dbProvisioning to just dbProvision to match current naming conventions
 
-## 2019_07-01
+## 2019-07-01
 + [+] Added [__logm__] command which allows me to toggle metrics logging at any time.
 + [~] Fully revamped the tracked event metrics to be more helpful over what kind of event was being triggered. (more generic)
 + [~] Finally fixed another long running bug with the nuke command and how it is currently handled.
 + [-] Removed database metrics as the metrics system is being simplified greatly.
 + [-] Removed the bloated Discord metrics since I don't care about number of channels, emotes and whatever the third thing was.
 
-## 2019_06_26
+## 2019-06-26
 + [+] Added [__advertise__] command, allowing servers to advertise on the website.
 + [+] Started logging member counts for each server, for use related to the advertise command.
 + [+] Started logging server icons, for use related to the advertise command.
 + [+] Started logging server splash, for use related to the advertise command.
 + [~] Modified the reaction role processor to be more streamlined. (was over-engineered)
 
-## 2019_06_14
+## 2019-06-14
 + [!] Migrated from BasicDataSource to HikariDataSource, keeping the same driver.
 + [!] Improved security between all of yuuko's servers, also isolating the database to its own server.
 + [+] Added [__joke__] command which just spams out dad jokes. (essentially free feature)
 + [~] Made embedded error messages more consistent across the board.
 
-## 2019_06-12
+## 2019-06-12
 + [+] Added [__advice__] command using api.adviceslip.com which is quick and easy.
 + [+] Added abstraction to interaction by subclassing Command into InteractionCommand, implementing a LocalThread random function.
 + [+] Added an animal module along with four commands to kick it off, namely [__cat__], [__fox__], [__dog__] and [__bird__]
