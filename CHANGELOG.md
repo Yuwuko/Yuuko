@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-07-09
 + [~] Improved guarding of the [__nuke__] command.
++ [~] Moved [__urban__] command from nsfw module to media since it's a better fit, although it might not bit the final home.
 
 ## 2019-07-09
 + [~] Modified the MessageEvent object to be able to hold both an object of Module and of Command, effectively compressing parameters.

@@ -18,7 +18,8 @@ public class MediaModule extends Module {
             new WeatherCommand(),
             new TescoCommand(),
             new NationalGeographicCommand(),
-            new UKParliamentPetitionCommand()
+            new UKParliamentPetitionCommand(),
+            new UrbanDictionaryCommand()
     );
 
     public MediaModule(MessageEvent e) {

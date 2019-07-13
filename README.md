@@ -35,7 +35,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Animal** <br>
 `cat` `fox` `dog` `bird`
 * **NSFW** <br>
-`efukt` `neko` `urban`
+`efukt` `neko`
 * **Moderation** <br>
 `nuke` `kick` `mute` `ban`
 * **Interaction** <br>
@@ -47,7 +47,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Audio** <br>
 `play` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
 * **Media** <br>
-`osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco`
+`osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco` `urban`
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke`
 

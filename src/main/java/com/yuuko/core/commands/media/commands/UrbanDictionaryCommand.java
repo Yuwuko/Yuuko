@@ -1,4 +1,4 @@
-package com.yuuko.core.commands.nsfw.commands;
+package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.MessageHandler;
