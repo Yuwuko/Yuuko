@@ -17,6 +17,8 @@ import java.util.Arrays;
 
 public class OsuCommand extends Command {
 
+    private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=";
+
     public OsuCommand() {
         super("osu", MediaModule.class, 1, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
     }
@@ -51,7 +53,7 @@ public class OsuCommand extends Command {
                 default: modeString = "unknown";
             }
 
-            final String url = "https://osu.ppy.sh/api/get_user?k=" + Utilities.getApiKey("osu") + "&u=" + commandParameters[0] + "&m=" + mode;
+            final String url = BASE_URL + Utilities.getApiKey("osu") + "&u=" + Sanitiser.scrubString(commandParameters[0], true) + "&m=" + mode;
             final JsonArray json = new RequestHandler(url).getJsonArray();
 
             if(json == null || json.size() < 1) {

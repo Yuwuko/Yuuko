@@ -17,13 +17,15 @@ import java.util.Arrays;
 
 public class NationalGeographicCommand extends Command {
 
+    private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=";
+
     public NationalGeographicCommand() {
         super("natgeo", MediaModule.class, 0, Arrays.asList("-natgeo"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String url = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + Utilities.getApiKey("newsapi");
+        final String url = BASE_URL + Utilities.getApiKey("newsapi");
         JsonObject json = new RequestHandler(url).getJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 

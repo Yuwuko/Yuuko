@@ -84,7 +84,7 @@ public final class Sanitiser {
      * Checks to see if the given date is a valid date of the format dd/MM/yyyy.
      *
      * @param string date string.
-     * @return boolean.
+     * @return boolean
      */
     public static boolean isDate(String string) {
         String[] strings = string.split("/");
@@ -116,5 +116,18 @@ public final class Sanitiser {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Takes a string and removes all special characters and replaces spaces with %20s.
+     * @param string url string.
+     * @param encodeBlank boolean.
+     *
+     * @return String
+     */
+    public static String scrubString(String string, boolean encodeBlank) {
+        string = string.replaceAll("[!@#$%^&*(),.?\":{}|<>]", "");
+
+        return encodeBlank ? string.replace(" ", "%20") : string;
     }
 }

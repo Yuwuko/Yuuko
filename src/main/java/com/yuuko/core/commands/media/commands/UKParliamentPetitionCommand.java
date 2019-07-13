@@ -9,6 +9,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
+import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -17,6 +18,7 @@ import java.time.Instant;
 import java.util.Arrays;
 
 public class UKParliamentPetitionCommand extends Command {
+
     private static final String BASE_URL = "https://petition.parliament.uk/petitions/";
 
     public UKParliamentPetitionCommand() {
@@ -27,7 +29,7 @@ public class UKParliamentPetitionCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             if(e.hasParameters()) {
-                final String url = BASE_URL + e.getParameters() + ".json";
+                final String url = BASE_URL + Sanitiser.scrubString(e.getParameters(), true) + ".json";
                 final JsonObject json = new RequestHandler(url).getJsonObject();
 
                 if(json.has("error")) {

@@ -12,13 +12,15 @@ import java.util.Arrays;
 
 public class FoxCommand extends Command {
 
+    private static final String BASE_URL = "https://randomfox.ca/floof/";
+
     public FoxCommand() {
         super("fox", AnimalModule.class, 0, Arrays.asList("-fox"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonObject object = new RequestHandler("https://randomfox.ca/floof/").getJsonObject();
+        final JsonObject object = new RequestHandler(BASE_URL).getJsonObject();
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Fox")
                 .setImage(object.get("image").getAsString());

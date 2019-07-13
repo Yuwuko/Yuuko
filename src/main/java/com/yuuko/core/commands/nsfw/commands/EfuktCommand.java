@@ -15,6 +15,8 @@ import java.util.Arrays;
 
 public class EfuktCommand extends Command {
 
+    private static final String BASE_URL = "https://efukt.com/random.php";
+
     public EfuktCommand() {
         super("efukt", NsfwModule.class, 0, Arrays.asList("-efukt"), true, null);
     }
@@ -22,7 +24,7 @@ public class EfuktCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            Document doc = Jsoup.connect("https://efukt.com/random.php").get();
+            Document doc = Jsoup.connect(BASE_URL).get();
             Elements meta = doc.getElementsByTag("meta");
 
             String image = "https://i.imgur.com/YXqsEo6.jpg";

@@ -12,13 +12,15 @@ import java.util.Arrays;
 
 public class CatCommand extends Command {
 
+    private static final String BASE_URL = "https://api.thecatapi.com/v1/images/search";
+
     public CatCommand() {
         super("cat", AnimalModule.class, 0, Arrays.asList("-cat"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonObject object = new RequestHandler("https://api.thecatapi.com/v1/images/search").getJsonArray().get(0).getAsJsonObject();
+        final JsonObject object = new RequestHandler(BASE_URL).getJsonArray().get(0).getAsJsonObject();
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Cat")
                 .setImage(object.get("url").getAsString());

@@ -7,11 +7,14 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
+import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
 
 public class NekoCommand extends Command {
+
+    private static final String BASE_URL = "https://nekos.life/api/v2/img/";
 
     public NekoCommand() {
         super("neko", NsfwModule.class, 0, Arrays.asList("-neko", "-neko <type>"), true, null);
@@ -20,7 +23,7 @@ public class NekoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://nekos.life/api/v2/img/" + ((e.hasParameters()) ? e.getParameters() : "lewd");
+            final String url = BASE_URL + ((e.hasParameters()) ? Sanitiser.scrubString(e.getParameters(), true) : "lewd");
             final JsonObject json = new RequestHandler(url).getJsonObject();
 
             if(json != null && !json.has("msg")) {

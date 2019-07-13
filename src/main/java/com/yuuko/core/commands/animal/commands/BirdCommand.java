@@ -11,13 +11,15 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import java.util.Arrays;
 public class BirdCommand extends Command {
 
+    private static final String BASE_URL = "http://shibe.online/api/birds";
+
     public BirdCommand() {
         super("bird", AnimalModule.class, 0, Arrays.asList("-bird"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonArray object = new RequestHandler("http://shibe.online/api/birds").getJsonArray();
+        final JsonArray object = new RequestHandler(BASE_URL).getJsonArray();
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Bird")
                 .setImage(object.get(0).getAsString());

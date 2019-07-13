@@ -8,6 +8,7 @@ import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
+import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -19,6 +20,8 @@ import java.util.Arrays;
 
 public class GithubCommand extends Command {
 
+    private static final String BASE_URL = "https://api.github.com/repos/";
+
     public GithubCommand() {
         super("github", MediaModule.class, 2, Arrays.asList("-github <user> <repository>"), false, null);
     }
@@ -27,7 +30,7 @@ public class GithubCommand extends Command {
     public void onCommand(MessageEvent e) {
         String[] commandParameters = e.getParameters().split("\\s+", 2);
 
-        final String url = "https://api.github.com/repos/" + commandParameters[0] + "/" + commandParameters[1] + "?access_token=" + Utilities.getApiKey("github");
+        final String url = BASE_URL + Sanitiser.scrubString(commandParameters[0], true) + "/" + Sanitiser.scrubString(commandParameters[1], true) + "?access_token=" + Utilities.getApiKey("github");
         final JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.github.v3+json"), new RequestProperty("Content-Type", "application/vnd.github.v3+json")).getJsonObject();
 
         if(json == null) {
