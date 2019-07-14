@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
@@ -18,7 +17,7 @@ public class KitsuCommand extends Command {
     private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
 
     public KitsuCommand() {
-        super("kitsu", MediaModule.class, 1, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
+        super("kitsu", Configuration.MODULES.get("media"), 1, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
     }
 
     @Override

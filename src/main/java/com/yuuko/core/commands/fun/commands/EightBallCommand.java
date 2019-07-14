@@ -3,7 +3,6 @@ package com.yuuko.core.commands.fun.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.fun.FunModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -38,7 +37,7 @@ public class EightBallCommand extends Command {
     );
 
     public EightBallCommand() {
-        super("8ball", FunModule.class, 1, Arrays.asList("-8ball <question>"), false, null);
+        super("8ball", Configuration.MODULES.get("fun"), 1, Arrays.asList("-8ball <question>"), false, null);
     }
 
     @Override

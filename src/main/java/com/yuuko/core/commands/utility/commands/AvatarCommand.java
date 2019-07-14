@@ -3,7 +3,6 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 public class AvatarCommand extends Command {
 
     public AvatarCommand() {
-        super("avatar", UtilityModule.class, 1, Arrays.asList("-avatar @user", "-avatar <userId>"), false, null);
+        super("avatar", Configuration.MODULES.get("utility"), 1, Arrays.asList("-avatar @user", "-avatar <userId>"), false, null);
     }
 
     @Override

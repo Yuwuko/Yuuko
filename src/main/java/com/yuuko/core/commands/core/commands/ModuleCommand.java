@@ -3,7 +3,6 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.ModuleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Utilities;
@@ -18,7 +17,7 @@ import java.util.Arrays;
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", CoreModule.class, 0, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("module", Configuration.MODULES.get("core"), 0, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override

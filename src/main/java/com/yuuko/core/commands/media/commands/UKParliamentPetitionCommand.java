@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -22,7 +21,7 @@ public class UKParliamentPetitionCommand extends Command {
     private static final String BASE_URL = "https://petition.parliament.uk/petitions/";
 
     public UKParliamentPetitionCommand() {
-        super("petition", MediaModule.class, 0, Arrays.asList("-petition <id>"), false, null);
+        super("petition", Configuration.MODULES.get("media"), 0, Arrays.asList("-petition <id>"), false, null);
     }
 
     @Override

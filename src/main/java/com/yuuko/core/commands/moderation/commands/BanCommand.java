@@ -1,9 +1,9 @@
 package com.yuuko.core.commands.moderation.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
-import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BanCommand extends Command {
 
     public BanCommand() {
-        super("ban", ModerationModule.class,1, Arrays.asList("-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"), false, Arrays.asList(Permission.BAN_MEMBERS));
+        super("ban", Configuration.MODULES.get("moderation"),1, Arrays.asList("-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"), false, Arrays.asList(Permission.BAN_MEMBERS));
     }
 
     @Override

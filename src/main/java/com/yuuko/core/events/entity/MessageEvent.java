@@ -6,7 +6,6 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class MessageEvent extends GuildMessageReceivedEvent {
 
-    private Module module;
     private Command command;
     private String prefix;
     private String parameters;
@@ -20,7 +19,7 @@ public class MessageEvent extends GuildMessageReceivedEvent {
     }
 
     public Module getModule() {
-        return module;
+        return command.getModule();
     }
 
     public Command getCommand() {
@@ -40,18 +39,6 @@ public class MessageEvent extends GuildMessageReceivedEvent {
      */
     public MessageEvent setPrefix(String prefix) {
         this.prefix = prefix;
-        return this;
-    }
-
-    /**
-     * Sets module associated with the message event.
-     * Returns MessageEvent object so method can be used as a parameter.
-     *
-     * @param module value to assign to module field.
-     * @return MessageEvent
-     */
-    public MessageEvent setModule(Module module) {
-        this.module = module;
         return this;
     }
 

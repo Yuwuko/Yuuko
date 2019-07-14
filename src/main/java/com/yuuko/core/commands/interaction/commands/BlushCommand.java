@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.interaction.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
-import com.yuuko.core.commands.interaction.InteractionModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -20,7 +20,7 @@ public class BlushCommand extends InteractionCommand {
     );
 
     public BlushCommand() {
-        super("blush", InteractionModule.class, 0, Arrays.asList("-blush"), false, null);
+        super("blush", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-blush"), false, null);
     }
 
     @Override

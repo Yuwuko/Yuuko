@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-07-14
++ [!] Decoupled CommandExecutor from each Module instance, making it much more efficient.
++ [~] Refactored Command class to take objects of type Module instead of unknown classes extending Module.
+
+
 ## 2019-07-13
 + [+] Added new method to the Sanitiser class to scrub strings of special characters.
 + [~] Added static BASE_URL field to most commands where a URL is used every execute.

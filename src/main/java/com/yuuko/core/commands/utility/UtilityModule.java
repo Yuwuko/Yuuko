@@ -1,10 +1,8 @@
 package com.yuuko.core.commands.utility;
 
-import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.commands.*;
-import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,11 +19,8 @@ public class UtilityModule extends Module {
             new ReactionRoleCommand()
     );
 
-    public UtilityModule(MessageEvent e) {
+    public UtilityModule() {
         super("utility", false, commands);
-        if(e != null) {
-            new CommandExecutor(e.setModule(this));
-        }
     }
 
 }

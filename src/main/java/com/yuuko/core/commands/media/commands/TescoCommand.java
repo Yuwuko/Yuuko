@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
@@ -21,7 +20,7 @@ public class TescoCommand extends Command {
     private static final String BASE_URL = "https://dev.tescolabs.com/grocery/products/?query=";
 
     public TescoCommand() {
-        super("tesco", MediaModule.class, 1, Arrays.asList("-tesco <product>"), false, null);
+        super("tesco", Configuration.MODULES.get("media"), 1, Arrays.asList("-tesco <product>"), false, null);
     }
 
     @Override

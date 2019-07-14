@@ -1,9 +1,9 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -18,7 +18,7 @@ public class UrbanDictionaryCommand extends Command {
     private static final String BASE_URL = "https://api.urbandictionary.com/v0/define?term=";
 
     public UrbanDictionaryCommand() {
-        super("urban", NsfwModule.class, 1, Arrays.asList("-urban <term>"), true, null);
+        super("urban", Configuration.MODULES.get("nsfw"), 1, Arrays.asList("-urban <term>"), true, null);
     }
 
     @Override

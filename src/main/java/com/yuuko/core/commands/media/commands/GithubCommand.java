@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
@@ -23,7 +22,7 @@ public class GithubCommand extends Command {
     private static final String BASE_URL = "https://api.github.com/repos/";
 
     public GithubCommand() {
-        super("github", MediaModule.class, 2, Arrays.asList("-github <user> <repository>"), false, null);
+        super("github", Configuration.MODULES.get("media"), 2, Arrays.asList("-github <user> <repository>"), false, null);
     }
 
     @Override

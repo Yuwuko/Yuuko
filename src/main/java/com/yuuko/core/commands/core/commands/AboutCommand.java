@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -19,7 +18,7 @@ import java.util.Arrays;
 public class AboutCommand extends Command {
 
     public AboutCommand() {
-        super("about", CoreModule.class, 0, Arrays.asList("-about"), false, null);
+        super("about", Configuration.MODULES.get("core"), 0, Arrays.asList("-about"), false, null);
     }
 
     @Override

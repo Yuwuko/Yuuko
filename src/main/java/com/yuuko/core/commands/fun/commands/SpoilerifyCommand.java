@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.fun.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.fun.FunModule;
 import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class SpoilerifyCommand extends Command {
 
     public SpoilerifyCommand() {
-        super("spoilerify", FunModule.class, 1, Arrays.asList("-spoilerify <string>"), false, null);
+        super("spoilerify", Configuration.MODULES.get("fun"), 1, Arrays.asList("-spoilerify <string>"), false, null);
     }
 
     @Override

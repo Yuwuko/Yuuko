@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -22,7 +21,7 @@ public class WeatherCommand extends Command {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     public WeatherCommand() {
-        super("weather", MediaModule.class, 1, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
+        super("weather", Configuration.MODULES.get("media"), 1, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
     }
 
     @Override

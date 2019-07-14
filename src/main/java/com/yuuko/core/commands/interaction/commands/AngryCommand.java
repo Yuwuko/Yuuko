@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.interaction.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
-import com.yuuko.core.commands.interaction.InteractionModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -23,7 +23,7 @@ public class AngryCommand extends InteractionCommand {
     );
 
     public AngryCommand() {
-        super("angry", InteractionModule.class, 0, Arrays.asList("-angry", "-angry @user"), false, null);
+        super("angry", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-angry", "-angry @user"), false, null);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
@@ -20,7 +19,7 @@ import java.util.List;
 public class LyricsCommand extends Command {
 
     public LyricsCommand() {
-        super("lyrics", AudioModule.class, 1, Arrays.asList("-lyrics <song|artist>"), false, null);
+        super("lyrics", Configuration.MODULES.get("audio"), 1, Arrays.asList("-lyrics <song|artist>"), false, null);
     }
 
     @Override

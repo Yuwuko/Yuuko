@@ -23,7 +23,6 @@ public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
     private static final List<String> constants = Arrays.asList("core", "developer");
-
     private static final List<String> disconnectedCommands = Arrays.asList("play", "search", "background", "lyrics");
     private static final List<String> notInVoiceCommands = Arrays.asList("lyrics", "current", "last", "queue");
     private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last", "lyrics");
@@ -41,6 +40,12 @@ public class CommandExecutor {
         this.event = event;
         this.module = event.getModule();
         this.command = event.getCommand();
+
+        // Checks to see if the command being executed is a developer command
+        // and if it is, is the person executing said command me?
+        if(module.getName().equals("developer") && event.getMessage().getAuthor().getIdLong() != 215161101460045834L) {
+            return;
+        }
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?

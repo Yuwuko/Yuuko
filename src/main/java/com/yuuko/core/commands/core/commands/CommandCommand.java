@@ -3,7 +3,6 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.CommandFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -23,7 +22,7 @@ public class CommandCommand extends Command {
     private static final List<String> commandWords = Arrays.asList("all", "*", "global", "globally", "everywhere", "anywhere");
 
     public CommandCommand() {
-        super("command", CoreModule.class, 0, Arrays.asList("-command", "-command reset", "-command <command>", "-command <command> <channel>", "-command <command> reset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("command", Configuration.MODULES.get("core"), 0, Arrays.asList("-command", "-command reset", "-command <command>", "-command <command> <channel>", "-command <command> reset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
@@ -45,7 +44,7 @@ public class CommandCommand extends Command {
                 // Check if the command even exists.
                 for(Command commandObj : Configuration.COMMANDS.values()) {
                     if(commandObj.getName().equals(input[0])) {
-                        if(Utilities.getModuleName(commandObj.getModule()).equals("Core")) {
+                        if(commandObj.getModule().getName().equals("core")) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Command").setDescription("Sorry, you cannot disable commands from the `Core` module.");
                             MessageHandler.sendMessage(e, embed.build());
                             return;

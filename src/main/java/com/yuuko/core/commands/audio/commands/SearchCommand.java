@@ -4,7 +4,6 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
@@ -19,7 +18,7 @@ public class SearchCommand extends Command {
     private static final HashMap<String, List<SearchResult>> audioSearchResults = new HashMap<>();
 
     public SearchCommand() {
-        super("search", AudioModule.class, 1, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, null);
+        super("search", Configuration.MODULES.get("audio"), 1, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, null);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.interaction.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
-import com.yuuko.core.commands.interaction.InteractionModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -22,7 +22,7 @@ public class TickleCommand extends InteractionCommand {
     );
 
     public TickleCommand() {
-        super("tickle", InteractionModule.class, 1, Arrays.asList("-tickle @user"), false, null);
+        super("tickle", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-tickle @user"), false, null);
     }
 
     @Override

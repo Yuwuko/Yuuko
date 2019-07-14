@@ -1,9 +1,9 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class SeekCommand extends Command {
 
     public SeekCommand() {
-        super("seek", AudioModule.class, 1, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
+        super("seek", Configuration.MODULES.get("audio"), 1, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
     }
 
     @Override

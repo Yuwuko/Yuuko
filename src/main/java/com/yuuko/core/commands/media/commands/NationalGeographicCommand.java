@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Utilities;
@@ -20,7 +19,7 @@ public class NationalGeographicCommand extends Command {
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=";
 
     public NationalGeographicCommand() {
-        super("natgeo", MediaModule.class, 0, Arrays.asList("-natgeo"), false, null);
+        super("natgeo", Configuration.MODULES.get("media"), 0, Arrays.asList("-natgeo"), false, null);
     }
 
     @Override

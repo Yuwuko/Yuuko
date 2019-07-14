@@ -7,7 +7,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
@@ -20,7 +19,7 @@ import java.util.Arrays;
 public class BackgroundCommand extends Command {
 
     public BackgroundCommand() {
-        super("background", AudioModule.class, 0, Arrays.asList("-background", "-background <url>", "-background <term>"), false, null);
+        super("background", Configuration.MODULES.get("audio"), 0, Arrays.asList("-background", "-background <url>", "-background <term>"), false, null);
     }
 
     @Override

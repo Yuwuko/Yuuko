@@ -3,7 +3,6 @@ package com.yuuko.core.commands.fun.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.fun.FunModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -16,7 +15,7 @@ import java.util.Random;
 public class ChooseCommand extends Command {
 
     public ChooseCommand() {
-        super("choose", FunModule.class, 1, Arrays.asList("-choose <choice>, <choice>..."), false, null);
+        super("choose", Configuration.MODULES.get("fun"), 1, Arrays.asList("-choose <choice>, <choice>..."), false, null);
     }
 
     @Override

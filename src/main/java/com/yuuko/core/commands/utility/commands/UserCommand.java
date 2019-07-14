@@ -3,7 +3,6 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -16,7 +15,7 @@ import java.util.Arrays;
 public class UserCommand extends Command {
 
     public UserCommand() {
-        super("user", UtilityModule.class, 1, Arrays.asList("-user @user", "-user <userId>"), false, null);
+        super("user", Configuration.MODULES.get("utility"), 1, Arrays.asList("-user @user", "-user <userId>"), false, null);
     }
 
     @Override

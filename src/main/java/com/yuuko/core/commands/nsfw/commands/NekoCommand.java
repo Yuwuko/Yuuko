@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -17,7 +16,7 @@ public class NekoCommand extends Command {
     private static final String BASE_URL = "https://nekos.life/api/v2/img/";
 
     public NekoCommand() {
-        super("neko", NsfwModule.class, 0, Arrays.asList("-neko", "-neko <type>"), true, null);
+        super("neko", Configuration.MODULES.get("nsfw"), 0, Arrays.asList("-neko", "-neko <type>"), true, null);
     }
 
     @Override

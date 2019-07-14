@@ -3,7 +3,6 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.commands.core.settings.*;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -29,7 +28,7 @@ public class SettingsCommand extends Command {
     );
 
     public SettingsCommand() {
-        super("settings", CoreModule.class, 0, Arrays.asList("-settings", "-settings <setting> <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("settings", Configuration.MODULES.get("core"), 0, Arrays.asList("-settings", "-settings <setting> <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override

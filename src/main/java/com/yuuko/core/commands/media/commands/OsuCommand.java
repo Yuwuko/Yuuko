@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
@@ -20,7 +19,7 @@ public class OsuCommand extends Command {
     private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=";
 
     public OsuCommand() {
-        super("osu", MediaModule.class, 1, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
+        super("osu", Configuration.MODULES.get("media"), 1, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
     }
 
     @Override

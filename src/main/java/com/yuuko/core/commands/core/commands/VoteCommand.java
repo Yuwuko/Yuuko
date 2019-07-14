@@ -3,7 +3,6 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -12,7 +11,7 @@ import java.util.Arrays;
 public class VoteCommand extends Command {
 
     public VoteCommand() {
-        super("vote", CoreModule.class, 0, Arrays.asList("-vote"), false, null);
+        super("vote", Configuration.MODULES.get("core"), 0, Arrays.asList("-vote"), false, null);
     }
 
     @Override

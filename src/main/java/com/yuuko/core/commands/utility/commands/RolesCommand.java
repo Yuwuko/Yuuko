@@ -3,7 +3,6 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 public class RolesCommand extends Command {
 
     public RolesCommand() {
-        super("roles", UtilityModule.class, 0, Arrays.asList("-roles"), false, null);
+        super("roles", Configuration.MODULES.get("utility"), 0, Arrays.asList("-roles"), false, null);
     }
 
     @Override

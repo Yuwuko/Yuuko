@@ -13,7 +13,6 @@ import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
-import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.OneHourlyJob;
@@ -40,7 +39,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-07-13";
+    public static final String VERSION = "2019-07-14";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -187,10 +186,9 @@ public class Configuration {
             MODULES = new HashMap<>(modules.size());
             COMMANDS = new HashMap<>(commands.size());
 
-            final Object[] object = new Object[]{null};
             for(Class<? extends Module> module : modules) {
                 if(!Modifier.isAbstract(module.getModifiers())) {
-                    Module obj = module.getConstructor(MessageEvent.class).newInstance(object);
+                    Module obj = module.getConstructor().newInstance();
                     MODULES.put(obj.getName(), obj);
                 }
             }

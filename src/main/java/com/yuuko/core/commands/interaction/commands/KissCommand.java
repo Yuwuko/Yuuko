@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.interaction.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
-import com.yuuko.core.commands.interaction.InteractionModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -22,7 +22,7 @@ public class KissCommand extends InteractionCommand {
     );
 
     public KissCommand() {
-        super("kiss", InteractionModule.class, 1, Arrays.asList("-kiss @user"), false, null);
+        super("kiss", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-kiss @user"), false, null);
     }
 
     @Override
