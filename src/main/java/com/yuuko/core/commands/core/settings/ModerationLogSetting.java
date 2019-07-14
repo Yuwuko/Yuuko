@@ -4,6 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -77,7 +78,7 @@ public class ModerationLogSetting extends Setting {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
-                    .addField("User", e.getUser().getName(), true)
+                    .addField("User", DiscordUtilities.getTag(e.getUser()), true)
                     .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(e, log, embed.build());
@@ -99,8 +100,8 @@ public class ModerationLogSetting extends Setting {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(action)
                     .setThumbnail(target.getAvatarUrl())
-                    .addField("User", target.getName() + "#" + target.getDiscriminator(), true)
-                    .addField("Moderator", e.getMessage().getMember().getEffectiveName(), true)
+                    .addField("User", DiscordUtilities.getTag(target), true)
+                    .addField("Moderator", DiscordUtilities.getTag(e.getMember()), true)
                     .addField("Reason", reason, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
@@ -120,7 +121,7 @@ public class ModerationLogSetting extends Setting {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Message Deleted")
                     .setThumbnail(e.getAuthor().getAvatarUrl())
-                    .addField("Moderator", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
+                    .addField("Moderator", DiscordUtilities.getTag(e.getMember()), true)
                     .addField("Channel", e.getChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
