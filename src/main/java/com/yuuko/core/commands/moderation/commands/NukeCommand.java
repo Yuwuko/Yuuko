@@ -1,9 +1,9 @@
 package com.yuuko.core.commands.moderation.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
-import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
@@ -18,7 +18,7 @@ import java.util.List;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", ModerationModule.class,1, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
+        super("nuke", Configuration.MODULES.get("moderation"),1, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
     }
 
     @Override
@@ -32,7 +32,9 @@ public class NukeCommand extends Command {
             return;
         }
 
-        if(!Sanitiser.isNumber(e.getParameters())) {
+        // Checks length of parameters since the command doesn't take a value greater than 3 digits
+        // Also prevents NumberFormatException for parsing the integer later.
+        if(e.getParameters().length() > 3 || !Sanitiser.isNumber(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");
             MessageHandler.sendMessage(e, embed.build());
             return;

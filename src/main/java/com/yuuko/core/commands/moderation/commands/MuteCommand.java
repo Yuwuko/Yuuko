@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.moderation.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.ModerationLogSetting;
-import com.yuuko.core.commands.moderation.ModerationModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class MuteCommand extends Command {
 
     public MuteCommand() {
-        super("mute", ModerationModule.class, 1, Arrays.asList("-mute @user", "-mute @user <reason>"), false, Arrays.asList(Permission.VOICE_MUTE_OTHERS));
+        super("mute", Configuration.MODULES.get("moderation"), 1, Arrays.asList("-mute @user", "-mute @user <reason>"), false, Arrays.asList(Permission.VOICE_MUTE_OTHERS));
     }
 
     @Override

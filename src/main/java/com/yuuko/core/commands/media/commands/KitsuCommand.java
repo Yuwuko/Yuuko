@@ -4,24 +4,26 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
+import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 
 public class KitsuCommand extends Command {
 
+    private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
+
     public KitsuCommand() {
-        super("kitsu", MediaModule.class, 1, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
+        super("kitsu", Configuration.MODULES.get("media"), 1, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://kitsu.io/api/edge/anime?filter[text]=" + e.getParameters().replace(" ", "%20") + "&page[limit]=1";
+            final String url = BASE_URL + Sanitiser.scrubString(e.getParameters(), true) + "&page[limit]=1";
             JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.api+json"), new RequestProperty("Content-Type","application/vnd.api+json")).getJsonObject();
 
             if(json == null || json.getAsJsonArray("data").size() < 1) {

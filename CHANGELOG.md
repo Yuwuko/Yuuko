@@ -2,10 +2,20 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-07-15
++ [!] Decoupled CommandExecutor from each Module instance, making it much more efficient.
++ [~] Refactored Command class to take objects of type Module instead of unknown classes extending Module.
++ [~] Updated to JDA 4.BETA.0_23 from build 22.
+
 ## 2019-07-13
 + [!] Migrated from JDAv3 to JDAv4
 + [~] Updated dependencies to match those compatible with JDAv4
 + [~] Split up PING to GATEWAY_PING and REST_PING in light of new changes.
++ [+] Added new method to the Sanitiser class to scrub strings of special characters.
++ [~] Added static BASE_URL field to most commands where a URL is used every execute.
++ [~] Improved guarding of the [__nuke__] command.
++ [~] Moved [__urban__] command from nsfw module to media since it's a better fit, although it might not bit the final home.
++ [~] Updated dependencies to be the correct versions for JDAv3.
 
 ## 2019-07-09
 + [~] Modified the MessageEvent object to be able to hold both an object of Module and of Command, effectively compressing parameters.

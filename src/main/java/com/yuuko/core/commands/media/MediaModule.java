@@ -1,10 +1,8 @@
 package com.yuuko.core.commands.media;
 
-import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.media.commands.*;
-import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,14 +16,12 @@ public class MediaModule extends Module {
             new WeatherCommand(),
             new TescoCommand(),
             new NationalGeographicCommand(),
-            new UKParliamentPetitionCommand()
+            new UKParliamentPetitionCommand(),
+            new UrbanDictionaryCommand()
     );
 
-    public MediaModule(MessageEvent e) {
+    public MediaModule() {
         super("media", false, commands);
-        if(e != null) {
-            new CommandExecutor(e.setModule(this));
-        }
     }
 
 }

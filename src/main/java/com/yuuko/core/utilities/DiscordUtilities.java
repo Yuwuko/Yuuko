@@ -24,7 +24,7 @@ public final class DiscordUtilities {
      * @param user the user to retrieve
      * @return username#discriminator
      */
-    private static String getTag(User user) {
+    public static String getTag(User user) {
         return user.getName() + "#" + user.getDiscriminator();
     }
 

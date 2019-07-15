@@ -3,7 +3,6 @@ package com.yuuko.core.commands.nsfw.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.jsoup.Jsoup;
@@ -15,14 +14,16 @@ import java.util.Arrays;
 
 public class EfuktCommand extends Command {
 
+    private static final String BASE_URL = "https://efukt.com/random.php";
+
     public EfuktCommand() {
-        super("efukt", NsfwModule.class, 0, Arrays.asList("-efukt"), true, null);
+        super("efukt", Configuration.MODULES.get("nsfw"), 0, Arrays.asList("-efukt"), true, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            Document doc = Jsoup.connect("https://efukt.com/random.php").get();
+            Document doc = Jsoup.connect(BASE_URL).get();
             Elements meta = doc.getElementsByTag("meta");
 
             String image = "https://i.imgur.com/YXqsEo6.jpg";

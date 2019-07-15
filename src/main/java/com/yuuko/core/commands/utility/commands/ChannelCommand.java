@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.utility.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ChannelCommand extends Command {
 
     public ChannelCommand() {
-        super("channel", UtilityModule.class, 3, Arrays.asList("-channel <action> <type> <name>", "-channel <action> <type> <name> <nsfw>"), false, Arrays.asList(Permission.MANAGE_CHANNEL));
+        super("channel", Configuration.MODULES.get("utility"), 3, Arrays.asList("-channel <action> <type> <name>", "-channel <action> <type> <name> <nsfw>"), false, Arrays.asList(Permission.MANAGE_CHANNEL));
     }
 
     @Override

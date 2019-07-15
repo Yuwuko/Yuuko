@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.core.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class AdvertiseCommand extends Command {
 
     public AdvertiseCommand() {
-        super("advertise", CoreModule.class, 0, Arrays.asList("-advertise", "-advertise stop"), false, Arrays.asList(Permission.ADMINISTRATOR, Permission.CREATE_INSTANT_INVITE));
+        super("advertise", Configuration.MODULES.get("core"), 0, Arrays.asList("-advertise", "-advertise stop"), false, Arrays.asList(Permission.ADMINISTRATOR, Permission.CREATE_INSTANT_INVITE));
     }
 
     @Override

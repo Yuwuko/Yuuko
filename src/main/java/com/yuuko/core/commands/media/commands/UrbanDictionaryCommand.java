@@ -1,11 +1,12 @@
-package com.yuuko.core.commands.nsfw.commands;
+package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.nsfw.NsfwModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
+import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.math.BigDecimal;
@@ -14,14 +15,22 @@ import java.util.Arrays;
 
 public class UrbanDictionaryCommand extends Command {
 
+    private static final String BASE_URL = "https://api.urbandictionary.com/v0/define?term=";
+
     public UrbanDictionaryCommand() {
-        super("urban", NsfwModule.class, 1, Arrays.asList("-urban <term>"), true, null);
+        super("urban", Configuration.MODULES.get("media"), 1, Arrays.asList("-urban <term>"), true, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String url = "https://api.urbandictionary.com/v0/define?term=" + e.getParameters().replace(" ", "%20");
+        final String url = BASE_URL + Sanitiser.scrubString(e.getParameters(), true);
         final JsonObject json = new RequestHandler(url).getJsonObject();
+
+        if(json == null) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Something went wrong when trying to execute that request, please try again.");
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
 
         if(json.get("list").getAsJsonArray().size() < 1) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");

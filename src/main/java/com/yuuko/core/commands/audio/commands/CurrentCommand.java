@@ -4,7 +4,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.LavalinkUtilities;
@@ -16,7 +15,7 @@ import java.util.Arrays;
 public class CurrentCommand extends Command {
 
     public CurrentCommand() {
-        super("current", AudioModule.class, 0, Arrays.asList("-current"), false, null);
+        super("current", Configuration.MODULES.get("audio"), 0, Arrays.asList("-current"), false, null);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 public class PingCommand extends Command {
 
     public PingCommand() {
-        super("ping", UtilityModule.class, 0, Arrays.asList("-ping"), false, null);
+        super("ping", Configuration.MODULES.get("utility"), 0, Arrays.asList("-ping"), false, null);
     }
 
     @Override

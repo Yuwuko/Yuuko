@@ -4,7 +4,6 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.api.ApiManager;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -13,7 +12,7 @@ import java.util.Arrays;
 public class ReloadApiCommand extends Command {
 
     public ReloadApiCommand() {
-        super("reapi", DeveloperModule.class, 0, Arrays.asList("-reapi"), false, null);
+        super("reapi", Configuration.MODULES.get("developer"), 0, Arrays.asList("-reapi"), false, null);
     }
 
     @Override

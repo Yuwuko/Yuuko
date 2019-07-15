@@ -1,10 +1,8 @@
 package com.yuuko.core.commands.audio;
 
-import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.commands.*;
-import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,11 +25,8 @@ public class AudioModule extends Module {
             new LyricsCommand()
     );
 
-    public AudioModule(MessageEvent e) {
+    public AudioModule() {
         super("audio", false, commands);
-        if(e != null) {
-            new CommandExecutor(e.setModule(this));
-        }
     }
 
 }

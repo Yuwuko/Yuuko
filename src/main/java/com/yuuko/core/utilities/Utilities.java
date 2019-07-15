@@ -96,14 +96,4 @@ public final class Utilities {
         }
         return null;
     }
-
-    /**
-     * Gets the module name of a module via the class simple name.
-     *
-     * @param module the module class to extract the name from.
-     * @return String
-     */
-    public static String getModuleName(Class<?> module) {
-        return module.getSimpleName().replace("Module", "");
-    }
 }

@@ -4,7 +4,6 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.commands.core.CoreModule;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.database.function.CommandFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -18,7 +17,7 @@ import java.util.Arrays;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", CoreModule.class, 0, Arrays.asList("-help", "-help <command>"), false, null);
+        super("help", Configuration.MODULES.get("core"), 0, Arrays.asList("-help", "-help <command>"), false, null);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class HelpCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setThumbnail(Configuration.BOT.getAvatarUrl())
                         .setTitle("Command help for **_" + command.getName() + "_**")
-                        .addField("Module", command.getModule().getSimpleName().substring(0, command.getModule().getSimpleName().length() - 6), true)
+                        .addField("Module", command.getModule().getName(), true)
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Disabled", (disabled.equals("")) ? "None" : disabled, true)

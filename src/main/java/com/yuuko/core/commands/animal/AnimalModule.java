@@ -1,13 +1,11 @@
 package com.yuuko.core.commands.animal;
 
-import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.animal.commands.BirdCommand;
 import com.yuuko.core.commands.animal.commands.CatCommand;
 import com.yuuko.core.commands.animal.commands.DogCommand;
 import com.yuuko.core.commands.animal.commands.FoxCommand;
-import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,10 +18,7 @@ public class AnimalModule extends Module {
             new BirdCommand()
     );
 
-    public AnimalModule(MessageEvent e) {
+    public AnimalModule() {
         super("animal", false, commands);
-        if(e != null) {
-            new CommandExecutor(e.setModule(this));
-        }
     }
 }

@@ -1,10 +1,8 @@
 package com.yuuko.core.commands.interaction;
 
-import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.interaction.commands.*;
-import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,11 +28,8 @@ public class InteractionModule extends Module {
             new KillCommand()
     );
 
-    public InteractionModule(MessageEvent e) {
+    public InteractionModule() {
         super("interaction", false, commands);
-        if(e != null) {
-            new CommandExecutor(e.setModule(this));
-        }
     }
 
 }

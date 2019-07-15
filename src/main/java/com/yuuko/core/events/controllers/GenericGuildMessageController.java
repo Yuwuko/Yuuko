@@ -1,5 +1,6 @@
 package com.yuuko.core.events.controllers;
 
+import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.settings.CommandLogSetting;
@@ -58,7 +59,7 @@ public class GenericGuildMessageController {
 
             boolean exec = false;
             if(event.getCommand() != null) {
-                event.getCommand().getModule().getConstructor(MessageEvent.class).newInstance(event);
+                new CommandExecutor(event);
                 exec = true;
             }
 

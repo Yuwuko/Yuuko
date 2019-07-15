@@ -1,10 +1,8 @@
 package com.yuuko.core.commands.fun;
 
-import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.fun.commands.*;
-import com.yuuko.core.events.entity.MessageEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +18,8 @@ public class FunModule extends Module {
             new JokeCommand()
     );
 
-    public FunModule(MessageEvent e) {
+    public FunModule() {
         super("fun", false, commands);
-        if(e != null) {
-            new CommandExecutor(e.setModule(this));
-        }
     }
 
 }

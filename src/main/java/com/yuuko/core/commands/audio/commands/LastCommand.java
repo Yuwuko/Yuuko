@@ -4,7 +4,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.AudioModule;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 public class LastCommand extends Command {
 
 	public LastCommand() {
-		super("last", AudioModule.class, 0, Arrays.asList("-last"), false, null);
+		super("last", Configuration.MODULES.get("audio"), 0, Arrays.asList("-last"), false, null);
 	}
 
 	@Override

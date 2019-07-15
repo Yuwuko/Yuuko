@@ -2,7 +2,6 @@ package com.yuuko.core.commands.developer.commands;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.events.entity.MessageEvent;
 
 import java.net.URI;
@@ -11,7 +10,7 @@ import java.util.Arrays;
 public class LavalinkNodeCommand extends Command {
 
     public LavalinkNodeCommand() {
-        super("lavalink", DeveloperModule.class, 2, Arrays.asList("-lavalink <action> <node> <secret>"), false, null);
+        super("lavalink", Configuration.MODULES.get("developer"), 2, Arrays.asList("-lavalink <action> <node> <secret>"), false, null);
     }
 
     @Override

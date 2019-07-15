@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.fun.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.fun.FunModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -13,7 +13,7 @@ import java.util.Random;
 public class RollCommand extends Command {
 
     public RollCommand() {
-        super("roll", FunModule.class, 1, Arrays.asList("-roll <number>", "-roll 00"), false, null);
+        super("roll", Configuration.MODULES.get("fun"), 1, Arrays.asList("-roll <number>", "-roll 00"), false, null);
     }
 
     @Override

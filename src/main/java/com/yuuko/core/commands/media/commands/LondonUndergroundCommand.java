@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.TextUtilities;
@@ -23,14 +22,16 @@ import java.util.List;
 
 public class LondonUndergroundCommand extends Command {
 
+    private static final String BASE_URL = "https://api.tfl.gov.uk/line/mode/tube/status?app_id=";
+
     public LondonUndergroundCommand() {
-        super("underground", MediaModule.class, 0, Arrays.asList("-underground", "-underground <min>"), false, null);
+        super("underground", Configuration.MODULES.get("media"), 0, Arrays.asList("-underground", "-underground <min>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon");
+            final String url = BASE_URL + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon");
             final String json = new RequestHandler(url).getString();
 
             ArrayList<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<List<LineManager>>(){});

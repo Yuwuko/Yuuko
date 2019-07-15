@@ -3,7 +3,6 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.utility.UtilityModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 public class GuildCommand extends Command {
 
     public GuildCommand() {
-        super("guild", UtilityModule.class, 0, Arrays.asList("-guild"), false, null);
+        super("guild", Configuration.MODULES.get("utility"), 0, Arrays.asList("-guild"), false, null);
     }
 
     @Override

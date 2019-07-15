@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.developer.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.developer.DeveloperModule;
 import com.yuuko.core.database.connection.MetricsDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class ReloadDatabaseCommand extends Command {
 
     public ReloadDatabaseCommand() {
-        super("redb", DeveloperModule.class, 0, Arrays.asList("-redb"), false, null);
+        super("redb", Configuration.MODULES.get("developer"), 0, Arrays.asList("-redb"), false, null);
     }
 
     @Override

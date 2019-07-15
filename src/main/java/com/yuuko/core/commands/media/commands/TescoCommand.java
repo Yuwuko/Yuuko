@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.media.MediaModule;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
+import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -17,14 +17,16 @@ import java.util.Arrays;
 
 public class TescoCommand extends Command {
 
+    private static final String BASE_URL = "https://dev.tescolabs.com/grocery/products/?query=";
+
     public TescoCommand() {
-        super("tesco", MediaModule.class, 1, Arrays.asList("-tesco <product>"), false, null);
+        super("tesco", Configuration.MODULES.get("media"), 1, Arrays.asList("-tesco <product>"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = "https://dev.tescolabs.com/grocery/products/?query=" + e.getParameters().replace(" ", "%20") + "&offset=0&limit=1";
+            final String url = BASE_URL + Sanitiser.scrubString(e.getParameters(), true) + "&offset=0&limit=1";
             final JsonObject json = new RequestHandler(url, new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getJsonObject();
             final JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
