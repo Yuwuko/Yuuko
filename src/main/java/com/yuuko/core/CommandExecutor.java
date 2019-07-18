@@ -63,15 +63,15 @@ public class CommandExecutor {
         // Does the command have any permissions?
         if(command.getPermissions() != null) {
             // Does the bot have the permission?
-            if(!event.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the '**" + Utilities.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+            if(!event.getGuild().getSelfMember().hasPermission(command.getPermissions())) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
                 MessageHandler.sendMessage(event, embed.build());
                 return;
             }
 
             // Does the user have the permission?
             if(!event.getMember().hasPermission(command.getPermissions()) && !event.getMember().hasPermission(event.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the '**" + Utilities.getCommandPermissions(command.getPermissions()) + "**' permissions to use that command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
                 MessageHandler.sendMessage(event, embed.build());
                 return;
             }
@@ -174,7 +174,7 @@ public class CommandExecutor {
         if(BindFunctions.checkBind(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
             return false;
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The **" + command.getName() + "** command is bound to **" + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + "**.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to `" + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + "`.");
             MessageHandler.sendMessage(event, embed.build());
             return true;
         }
@@ -190,10 +190,10 @@ public class CommandExecutor {
         }
 
         // Does the bot have permission to remove the message?
-        if(event.getGuild().getMemberById(420682957007880223L).hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
+        if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
             event.getMessage().delete().queue();
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the '**MESSAGE_MANAGE**' permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use `@Yuuko#2525 setting deleteExecuted false`.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use `@Yuuko#2525 setting deleteExecuted false`.");
             MessageHandler.sendMessage(event, embed.build());
         }
     }

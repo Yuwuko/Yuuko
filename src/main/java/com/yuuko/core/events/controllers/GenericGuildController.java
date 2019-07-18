@@ -78,30 +78,25 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         GuildFunctions.addGuild(e.getGuild());
+        MetricsManager.getDiscordMetrics().update();
+        Utilities.updateDiscordBotList();
 
         try {
-            if(e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)) {
-                e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
+            e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
+                final String description = "Automatic setup was successful! Thanks for inviting me to your guild, commands can be found at https://www.yuuko.info or by using the `-help` command! If you have any problems, suggestions, or general feedback, please join the support guild at " + Configuration.SUPPORT_GUILD + " and drop me a line!";
+
+                if(e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)) {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
-                            .setDescription("Automatic setup was successful! Thanks for inviting me to your guild, below is some information about myself. Commands can be found at https://www.yuuko.info or by using the **-help** command! If you have any problems, suggestions, or general feedback, please join the support guild at " + Configuration.SUPPORT_GUILD + " and drop me a line!")
-                            .setThumbnail(Configuration.BOT.getAvatarUrl())
-                            .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
-                            .addField("Version", Configuration.VERSION, true)
-                            .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
-                            .addField("Commands", Configuration.COMMANDS.size() + "", true)
-                            .addField("Prefix", Configuration.GLOBAL_PREFIX + ", `" + Utilities.getServerPrefix(e.getGuild()) + "`", true)
-                            .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                            .addField("Ping", MetricsManager.getDiscordMetrics().PING + "", true);
+                            .setDescription(description);
                     MessageHandler.sendMessage(e, textChannel, about.build());
-                });
-            }
+                } else {
+                    MessageHandler.sendMessage(e, textChannel, description);
+                }
+            });
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
-
-        MetricsManager.getDiscordMetrics().update();
-        Utilities.updateDiscordBotList();
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {

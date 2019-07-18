@@ -73,7 +73,7 @@ public class GenericGuildMessageController {
 
         } catch(NullPointerException ex) {
             // Do nothing, null pointers happen. (Should they though...)
-        } catch (Exception ex) {
+        } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }

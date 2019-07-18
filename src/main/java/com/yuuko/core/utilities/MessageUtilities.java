@@ -4,13 +4,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
-import net.dv8tion.jda.core.events.message.GenericMessageEvent;
-import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,41 +105,6 @@ public final class MessageUtilities {
     public static TextChannel getFirstMentionedChannel(MessageEvent e) {
         List<TextChannel> mentioned = e.getMessage().getMentionedChannels();
         return (mentioned.size() > 0) ? mentioned.get(0) : null;
-    }
-
-
-
-    /**
-     * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
-
-     * @param guild Guild
-     * @param channel TextChannel
-     * @return boolean
-     */
-    private static boolean hasSendPermission(Guild guild, TextChannel channel) {
-        Member bot = guild.getMemberById(Configuration.BOT_ID);
-        return (bot.hasPermission(Permission.MESSAGE_WRITE) && bot.hasPermission(channel, Permission.MESSAGE_WRITE));
-    }
-
-    /**
-     * Main hasSendPermission flow controller
-     */
-    public static boolean hasSendPermission(GenericGuildMessageEvent e) {
-        return hasSendPermission(e.getGuild(), e.getChannel());
-    }
-
-    /**
-     * Main hasSendPermission flow controller
-     */
-    public static boolean hasSendPermission(GenericMessageEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
-    }
-
-    /**
-     * Main hasSendPermission flow controller
-     */
-    public static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
     }
 
 }

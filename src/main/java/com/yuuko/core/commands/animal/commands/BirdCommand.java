@@ -9,6 +9,7 @@ import com.yuuko.core.io.RequestHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.util.Arrays;
+
 public class BirdCommand extends Command {
 
     private static final String BASE_URL = "http://shibe.online/api/birds";
@@ -25,4 +26,5 @@ public class BirdCommand extends Command {
                 .setImage(object.get(0).getAsString());
         MessageHandler.sendMessage(e, embed.build());
     }
+
 }

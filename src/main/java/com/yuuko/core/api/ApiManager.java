@@ -5,12 +5,13 @@ import com.yuuko.core.api.entity.Api;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class ApiManager {
     private HashMap<String, Api> API;
 
-    public ApiManager() throws Exception {
+    public ApiManager() throws IOException {
         File folder = new File("./config/api/");
         File[] keyFiles = folder.listFiles();
 
