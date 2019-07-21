@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-07-18'
+version = '2019-07-21'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -33,7 +33,7 @@ repositories {
 dependencies {
     // Discord API
     compile 'net.dv8tion:JDA:3.8.3_464'
-    compile 'com.sedmelluq:lavaplayer:1.3.17'
+    compile 'com.sedmelluq:lavaplayer:1.3.18'
     compile 'com.sedmelluq:jda-nas:1.0.6'
     compile 'com.github.FredBoat:Lavalink-Client:1446e25'
     // Bot Lists
@@ -44,15 +44,15 @@ dependencies {
     // JSON
     compile 'com.google.code.gson:gson:2.8.5'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9.1'
     // Web Clients
-    compile 'com.squareup.okhttp3:okhttp:3.14.2'
+    compile 'com.squareup.okhttp3:okhttp:4.0.1'
     compile 'org.jsoup:jsoup:1.12.1'
     // Database
     compile 'mysql:mysql-connector-java:8.0.16'
     compile 'com.zaxxer:HikariCP:3.3.1'
     // Logging
-    compile 'org.slf4j:slf4j-simple:1.8.0-beta4'
+    compile 'org.slf4j:slf4j-simple:2.0.0-alpha0'
     // Reflection
     compile 'org.reflections:reflections:0.9.11'
 }
