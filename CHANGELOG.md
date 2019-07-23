@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-07-23
++ [+] Added [__permissions__] command to list the bot's currently granted permissions.
++ [~] Simplified the GitHub command in preparation for an update.
+
 ## 2019-07-18
 + [!] Decoupled CommandExecutor from each Module instance, making it much more efficient.
 + [~] Refactored Command class to take objects of type Module instead of unknown classes extending Module.
