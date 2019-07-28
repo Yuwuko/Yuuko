@@ -127,7 +127,8 @@ public class PlayCommand extends Command {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + exception.getMessage());
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + exception.getMessage())
+                        .setDescription("The most common cause for this error is trying to play age-restricted content. If the problem persists, please contact " + Configuration.AUTHOR + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }
         });

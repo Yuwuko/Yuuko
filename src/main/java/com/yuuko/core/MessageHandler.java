@@ -1,10 +1,13 @@
 package com.yuuko.core;
 
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.utilities.MessageUtilities;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
+import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +24,7 @@ public final class MessageHandler {
      */
     public static void sendMessage(MessageEvent event, String message) {
         try {
-            if(MessageUtilities.hasSendPermission(event)) {
+            if(hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendMessage(message)#queue()", event.getClass().getName());
                 event.getChannel().sendMessage(message).queue();
             }
@@ -38,7 +41,7 @@ public final class MessageHandler {
      */
     public static void sendMessage(MessageEvent event, MessageEmbed embed) {
         try {
-            if(MessageUtilities.hasSendPermission(event)) {
+            if(hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendMessage(embed)#queue()", event.getClass().getName());
                 event.getChannel().sendMessage(embed).queue();
             }
@@ -55,7 +58,7 @@ public final class MessageHandler {
      */
     public static void sendMessage(MessageEvent event, File file) {
         try {
-            if(MessageUtilities.hasSendPermission(event)) {
+            if(hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(file)#queue()", event.getClass().getName());
                 event.getChannel().sendFile(file).queue();
             }
@@ -73,7 +76,7 @@ public final class MessageHandler {
      */
     public static void sendMessage(MessageEvent event, byte[] bytes, String fileName) {
         try {
-            if(MessageUtilities.hasSendPermission(event)) {
+            if(hasSendPermission(event)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
                 event.getChannel().sendFile(bytes, fileName).queue();
             }
@@ -91,7 +94,7 @@ public final class MessageHandler {
      */
     public static void sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            if(MessageUtilities.hasSendPermission(event, channel)) {
+            if(hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
                 channel.sendMessage(embed).queue();
             }
@@ -109,7 +112,7 @@ public final class MessageHandler {
      */
     public static void sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            if(MessageUtilities.hasSendPermission(event, channel)) {
+            if(hasSendPermission(event, channel)) {
                 log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
                 channel.sendMessage(embed).queue();
             }
@@ -118,4 +121,54 @@ public final class MessageHandler {
         }
     }
 
+    /**
+     * Sends a message to the provided channel.
+     *
+     * @param event GenericGuildEvent
+     * @param channel TextChannel
+     * @param message String
+     */
+    public static void sendMessage(GenericGuildEvent event, TextChannel channel, String message) {
+        try {
+            if(hasSendPermission(event, channel)) {
+                log.trace("Invoking {}#sendMessage(message)#queue()", event.getClass().getName());
+                channel.sendMessage(message).queue();
+            }
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
+
+     * @param guild Guild
+     * @param channel TextChannel
+     * @return boolean
+     */
+    private static boolean hasSendPermission(Guild guild, TextChannel channel) {
+        Member bot = guild.getSelfMember();
+        return bot.hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
+    }
+
+    /**
+     * Main hasSendPermission flow controller
+     */
+    private static boolean hasSendPermission(GenericGuildMessageEvent e) {
+        return hasSendPermission(e.getGuild(), e.getChannel());
+    }
+
+    /**
+     * Main hasSendPermission flow controller
+     */
+    private static boolean hasSendPermission(GenericGuildMessageEvent e, TextChannel channel) {
+        return hasSendPermission(e.getGuild(), channel);
+    }
+
+    /**
+     * Main hasSendPermission flow controller
+     */
+    private static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
+        return hasSendPermission(e.getGuild(), channel);
+    }
 }

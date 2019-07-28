@@ -2,10 +2,19 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-07-15
+## 2019-07-28
++ [~] Updated to JDA4.BETA.0_30 from 23.
++ [~] Updated Lavalink Client to `bf6c2ec` from the JDAv4 branch
+
+## 2019-07-23
++ [+] Added [__permissions__] command to list the bot's currently granted permissions.
++ [~] Simplified the GitHub command in preparation for an update.
+
+## 2019-07-18
 + [!] Decoupled CommandExecutor from each Module instance, making it much more efficient.
 + [~] Refactored Command class to take objects of type Module instead of unknown classes extending Module.
 + [~] Updated to JDA 4.BETA.0_23 from build 22.
++ [~] Minor refactoring of CommandExecutor, and MessageHandler classes.
 
 ## 2019-07-13
 + [!] Migrated from JDAv3 to JDAv4

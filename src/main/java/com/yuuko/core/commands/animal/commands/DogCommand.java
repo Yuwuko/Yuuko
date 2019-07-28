@@ -9,6 +9,7 @@ import com.yuuko.core.io.RequestHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
+
 public class DogCommand extends Command {
 
     private static final String BASE_URL = "https://dog.ceo/api/breeds/image/random";

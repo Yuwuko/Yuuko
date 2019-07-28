@@ -6,7 +6,6 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
-import com.yuuko.core.io.entity.RequestProperty;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -30,7 +29,7 @@ public class GithubCommand extends Command {
         String[] commandParameters = e.getParameters().split("\\s+", 2);
 
         final String url = BASE_URL + Sanitiser.scrubString(commandParameters[0], true) + "/" + Sanitiser.scrubString(commandParameters[1], true) + "?access_token=" + Utilities.getApiKey("github");
-        final JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.github.v3+json"), new RequestProperty("Content-Type", "application/vnd.github.v3+json")).getJsonObject();
+        final JsonObject json = new RequestHandler(url).getJsonObject();
 
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");

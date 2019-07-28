@@ -112,39 +112,4 @@ public final class MessageUtilities {
         return (mentioned.size() > 0) ? mentioned.get(0) : null;
     }
 
-
-
-    /**
-     * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
-
-     * @param guild Guild
-     * @param channel TextChannel
-     * @return boolean
-     */
-    private static boolean hasSendPermission(Guild guild, TextChannel channel) {
-        Member bot = guild.getMemberById(Configuration.BOT_ID);
-        return (bot.hasPermission(Permission.MESSAGE_WRITE) && bot.hasPermission(channel, Permission.MESSAGE_WRITE));
-    }
-
-    /**
-     * Main hasSendPermission flow controller
-     */
-    public static boolean hasSendPermission(GenericGuildMessageEvent e) {
-        return hasSendPermission(e.getGuild(), e.getChannel());
-    }
-
-    /**
-     * Main hasSendPermission flow controller
-     */
-    public static boolean hasSendPermission(GenericMessageEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
-    }
-
-    /**
-     * Main hasSendPermission flow controller
-     */
-    public static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
-    }
-
 }
