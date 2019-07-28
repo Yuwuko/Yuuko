@@ -150,6 +150,7 @@ public class Configuration {
                     .setToken(BOT_TOKEN)
                     .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())
+                    .setVoiceDispatchInterceptor(LAVALINK.getLavalink().getVoiceInterceptor())
                     .setActivity(Activity.of(Activity.ActivityType.LISTENING, "@Yuuko help"))
                     .setShardsTotal(SHARD_COUNT)
                     .setShards(SHARD_ID)
