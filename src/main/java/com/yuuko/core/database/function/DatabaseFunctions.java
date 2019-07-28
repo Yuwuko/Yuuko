@@ -216,8 +216,8 @@ public class DatabaseFunctions {
             stmt.setString(1, status);
             stmt.setInt(2, guilds);
             stmt.setInt(3, users);
-            stmt.setInt(4, gatewayPing);
-            stmt.setInt(5, restPing);
+            stmt.setDouble(4, gatewayPing);
+            stmt.setDouble(5, restPing);
             stmt.setInt(6, shard);
             stmt.execute();
 
