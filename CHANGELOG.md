@@ -6,9 +6,10 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Added some minor guarding relating to reaction roles and custom emotes. (debugging)
 + [~] Better cleaning up abandoned audio players if a guild leaves mid track.
 + [~] Updated Lavaplayer to 1.3.19 which fixes breaking changes to the youtube site.
++ [~] Updated other dependencies, such as JDA 4.BETA.0.32 from 30.
 
 ## 2019-07-28
-+ [~] Updated to JDA4.BETA.0_30 from 23.
++ [~] Updated to JDA 4.BETA.0_30 from 23.
 + [~] Updated Lavalink Client to `bf6c2ec` from the JDAv4 branch
 
 ## 2019-07-23

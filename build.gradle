@@ -30,29 +30,40 @@ repositories {
     maven { url = 'https://jitpack.io' }
 }
 
+ext {
+    jdaVer                          = '4.BETA.0_32'
+    lavaplayerVer                   = '1.3.19'
+    jdanasVer                       = '1.1.0'
+    lavalinkClientVer               = 'bf6c2ec'
+    dblJavaWrapperVer               = '2.0.1'
+    ddblAPIjavaVer                  = '0.4.5'
+    googleApiServicesYoutubeVer     = 'v3-rev212-1.25.0'
+    gsonVer                         = '2.8.5'
+    jacksonAnnotationsVer           = '2.9.9'
+    jacsonDatabindVer               = '2.9.9.1'
+    okhttpVer                       = '4.0.1'
+    jsoupVer                        = '1.12.1'
+    mysqlConnectorJavaVer           = '8.0.16'
+    hikaricpVer                     = '3.3.1'
+    slf4jSimpleVer                  = '2.0.0-alpha0'
+    reflectionsVer                  = '0.9.11'
+}
+
 dependencies {
-    // Discord API
-    compile 'net.dv8tion:JDA:4.BETA.0_30'
-    compile 'com.sedmelluq:lavaplayer:1.3.19'
-    compile 'com.sedmelluq:jda-nas:1.1.0'
-    compile 'com.github.FredBoat:Lavalink-Client:bf6c2ec'
-    // Bot Lists
-    compile 'com.github.DiscordBotList:DBL-Java-Wrapper:2.0.0'
-    compile 'com.github.BasketBandit:ddblAPI.java:0.4.5'
-    // External API
-    compile 'com.google.apis:google-api-services-youtube:v3-rev212-1.25.0'
-    // JSON
-    compile 'com.google.code.gson:gson:2.8.5'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9.1'
-    // Web Clients
-    compile 'com.squareup.okhttp3:okhttp:4.0.1'
-    compile 'org.jsoup:jsoup:1.12.1'
-    // Database
-    compile 'mysql:mysql-connector-java:8.0.16'
-    compile 'com.zaxxer:HikariCP:3.3.1'
-    // Logging
-    compile 'org.slf4j:slf4j-simple:2.0.0-alpha0'
-    // Reflection
-    compile 'org.reflections:reflections:0.9.11'
+    compile group: 'net.dv8tion', name: 'JDA', version: jdaVer
+    compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayerVer
+    compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanasVer
+    compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClientVer
+    compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapperVer
+    compile group: 'com.github.BasketBandit', name: 'ddblAPI.java', version: ddblAPIjavaVer
+    compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutubeVer
+    compile group: 'com.google.code.gson', name: 'gson', version: gsonVer
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotationsVer
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacsonDatabindVer
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVer
+    compile group: 'org.jsoup', name: 'jsoup', version: jsoupVer
+    compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVer
+    compile group: 'com.zaxxer', name: 'HikariCP', version: hikaricpVer
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jSimpleVer
+    compile group: 'org.reflections', name: 'reflections', version: reflectionsVer
 }
