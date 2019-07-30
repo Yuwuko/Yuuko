@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-07-30
++ [~] Added some minor guarding relating to reaction roles and custom emotes. (debugging)
++ [~] Better cleaning up abandoned audio players if a guild leaves mid track.
+
 ## 2019-07-28
 + [~] Updated to JDA4.BETA.0_30 from 23.
 + [~] Updated Lavalink Client to `bf6c2ec` from the JDAv4 branch

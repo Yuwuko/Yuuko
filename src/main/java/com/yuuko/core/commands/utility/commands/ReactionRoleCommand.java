@@ -29,7 +29,7 @@ public class ReactionRoleCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         final String[] parameters = e.getParameters().split("\\s+");
-        final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0);
+        final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0); // Role list is ordered from highest to lowest
         final String action = parameters[0].toLowerCase();
         String selectedMessageId = selectedMessages.get(e.getAuthor().getId());
 

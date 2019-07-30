@@ -8,9 +8,9 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 2019-07-28
+# Yuuko 2019-07-30
 
-Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDA](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
+Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
 If you want Yuuko your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her.
 

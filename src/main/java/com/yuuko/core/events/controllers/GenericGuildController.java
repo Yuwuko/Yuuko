@@ -100,6 +100,7 @@ public class GenericGuildController {
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
+        Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).destroy();
         GuildFunctions.cleanup(e.getGuild().getId());
         MetricsManager.getDiscordMetrics().update();
         Utilities.updateDiscordBotList();
