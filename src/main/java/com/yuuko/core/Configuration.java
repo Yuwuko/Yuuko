@@ -57,7 +57,12 @@ public class Configuration {
     public static Map<String, Module> MODULES;
     public static DiscordBotListAPI BOT_LIST;
     public static DivineAPI DIVINE_API;
-    public static List<String> STANDARD_STRINGS;
+
+    public static final List<String> STANDARD_STRINGS = Arrays.asList(VERSION,
+            VERSION + " • Requested by ",
+            VERSION + " • Asked by ",
+            "Requested by "
+    );
 
     public static boolean LOG_METRICS = true;
 
@@ -78,9 +83,8 @@ public class Configuration {
             loadApi();
             initialiseGlobalPrefix();
             initialiseMetrics();
-            initialiseBotLists();
-            initialiseStrings();
             initialiseSchedule();
+            initialiseBotLists();
 
             log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
 
@@ -254,20 +258,6 @@ public class Configuration {
         Utilities.updateDiscordBotList();
 
         log.info("Initialised bot lists.");
-    }
-
-    /**
-     * Initialises static strings used frequently.
-     */
-    private void initialiseStrings() {
-        STANDARD_STRINGS = Arrays.asList(
-                VERSION,
-                VERSION + " • Requested by ",
-                VERSION + " • Asked by ",
-                "Requested by "
-        );
-
-        log.info("Initialised static strings.");
     }
 
     /**

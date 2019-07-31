@@ -36,7 +36,7 @@ ext {
     jdanasVer                       = '1.1.0'
     lavalinkClientVer               = 'bf6c2ec'
     dblJavaWrapperVer               = '2.0.1'
-    ddblAPIjavaVer                  = '0.4.5'
+    ddblAPIjavaVer                  = '0.4.3'
     googleApiServicesYoutubeVer     = 'v3-rev212-1.25.0'
     gsonVer                         = '2.8.5'
     jacksonAnnotationsVer           = '2.9.9'
