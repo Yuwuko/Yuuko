@@ -6,6 +6,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.DatabaseFunctions;
+import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -56,7 +57,7 @@ public class AboutCommand extends Command {
                 )
                 .addField("Author", "[" + Configuration.AUTHOR + "](" + Configuration.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Configuration.VERSION, true)
-                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + e.getPrefix(), true)
+                .addField("Prefix", Configuration.GLOBAL_PREFIX + ", " + GuildFunctions.getGuildSetting("prefix", e.getGuild().getId()), true)
                 .addField("Shard ID", Configuration.SHARD_ID + "", true)
                 .addField("Local Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
                 .addField("Total Guilds", totalGuilds + "", true)

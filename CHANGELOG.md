@@ -5,6 +5,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 2019-07-31
 + [+] Added [__rule34__] command which returns a random image from the rule34 website.
 + [~] Updated MySQL Connector to 8.0.17 from 8.0.16.
++ [!] Swapped the official Lavalink-Client for a custom forked version until the official release is updated.
 
 ## 2019-07-30
 + [~] Added some minor guarding relating to reaction roles and custom emotes. (debugging)

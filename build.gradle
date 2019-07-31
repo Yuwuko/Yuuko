@@ -34,13 +34,14 @@ ext {
     jdaVer                          = '4.BETA.0_32'
     lavaplayerVer                   = '1.3.19'
     jdanasVer                       = '1.1.0'
-    lavalinkClientVer               = 'bf6c2ec'
+    //lavalinkClientVer               = 'bf6c2ec'
+    yuukoLavalinkClientVer          = 'jda4-SNAPSHOT'
     dblJavaWrapperVer               = '2.0.1'
-    ddblAPIjavaVer                  = '0.4.3'
+    ddblAPIjavaVer                  = '0.4.5.1'
     googleApiServicesYoutubeVer     = 'v3-rev212-1.25.0'
     gsonVer                         = '2.8.5'
     jacksonAnnotationsVer           = '2.9.9'
-    jacsonDatabindVer               = '2.9.9.1'
+    jacksonDatabindVer               = '2.9.9.1'
     okhttpVer                       = '4.0.1'
     jsoupVer                        = '1.12.1'
     mysqlConnectorJavaVer           = '8.0.17'
@@ -48,18 +49,18 @@ ext {
     slf4jSimpleVer                  = '2.0.0-alpha0'
     reflectionsVer                  = '0.9.11'
 }
-
 dependencies {
     compile group: 'net.dv8tion', name: 'JDA', version: jdaVer
     compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayerVer
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanasVer
-    compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClientVer
+    //compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClientVer
+    compile group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: yuukoLavalinkClientVer
     compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapperVer
     compile group: 'com.github.BasketBandit', name: 'ddblAPI.java', version: ddblAPIjavaVer
     compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutubeVer
     compile group: 'com.google.code.gson', name: 'gson', version: gsonVer
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotationsVer
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacsonDatabindVer
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDatabindVer
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVer
     compile group: 'org.jsoup', name: 'jsoup', version: jsoupVer
     compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVer
