@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-07-31
++ [+] Added [__rule34__] command which returns a random image from the rule34 website.
+
 ## 2019-07-30
 + [~] Added some minor guarding relating to reaction roles and custom emotes. (debugging)
 + [~] Better cleaning up abandoned audio players if a guild leaves mid track.

@@ -35,7 +35,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Animal** <br>
 `cat` `fox` `dog` `bird`
 * **NSFW** <br>
-`efukt` `neko`
+`efukt` `neko` `rule34`
 * **Moderation** <br>
 `nuke` `kick` `mute` `ban`
 * **Interaction** <br>

@@ -30,7 +30,7 @@ public class EfuktCommand extends Command {
             if(doc.baseUri().startsWith("https://efukt.com/view.gif.php")) {
                 image = doc.getElementsByClass("image_content").attr("src");
             } else {
-                for(Element tag : meta) {
+                for(Element tag: meta) {
                     if(tag.hasAttr("property") && tag.attr("property").equals("og:image")) {
                         image = tag.attr("content");
                     }
@@ -38,7 +38,7 @@ public class EfuktCommand extends Command {
             }
 
             EmbedBuilder efuktPost = new EmbedBuilder()
-                    .setTitle(doc.title())
+                    .setTitle(doc.title().substring(0, doc.title().length() < 256 ? doc.title().length() : 256))
                     .setDescription(doc.baseUri())
                     .setImage(image)
                     .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
