@@ -117,9 +117,9 @@ public class GenericGuildController {
     private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
         GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
 
-        String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
+        final String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
         if(channelId != null) {
-            String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
+            final String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
             if(message == null) {
                 TextChannel channel = e.getGuild().getTextChannelById(channelId);
                 EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, "Welcome to **%guild%**, %user%!"));

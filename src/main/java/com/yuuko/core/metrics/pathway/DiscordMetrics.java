@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class DiscordMetrics {
-
     public int GUILD_COUNT = 0;
     public int USER_COUNT = 0;
     public final AtomicLong GATEWAY_PING = new AtomicLong();
