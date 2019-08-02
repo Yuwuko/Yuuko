@@ -69,7 +69,7 @@ public class Configuration {
     /**
      * Loads all of the bots configurations. (Order DOES matter)
      */
-    void load() {
+    void setup() {
         try {
             long loadStart = System.nanoTime();
 

@@ -6,7 +6,7 @@ package com.yuuko.core;
 public class Yuuko {
 
     public static void main(String[] args) {
-        new Configuration().load();
+        new Configuration().setup();
     }
 
 }

@@ -10,14 +10,14 @@ public class GenericGuildVoiceController {
 
     public GenericGuildVoiceController(GenericGuildVoiceEvent e) {
         if(e instanceof GuildVoiceLeaveEvent || e instanceof GuildVoiceMoveEvent) {
-            voiceChannelLonelyCheck(e);
+            voiceChannelAbandonedCheck(e);
         }
     }
 
-    private void voiceChannelLonelyCheck(GenericGuildVoiceEvent e) {
-        GuildVoiceState voice = e.getGuild().getSelfMember().getVoiceState();
+    private void voiceChannelAbandonedCheck(GenericGuildVoiceEvent e) {
+        GuildVoiceState voiceState = e.getGuild().getSelfMember().getVoiceState();
 
-        if(voice.inVoiceChannel() && voice.getChannel().getMembers().size() == 1) {
+        if(voiceState != null && voiceState.inVoiceChannel() && voiceState.getChannel().getMembers().size() == 1) {
             new StopCommand().onCommand(e.getGuild());
         }
     }

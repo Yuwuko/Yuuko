@@ -10,7 +10,24 @@ import java.util.Arrays;
 
 public final class Sanitiser {
 
+    /**
+     * Checks method that allows for fail-fast before any further database calls are made,
+     * preventing access to the CommandExecutor class where nulls will throw exceptions.
+     *
+     * @param event MessageEvent
+     * @return boolean
+     */
     public static boolean checks(MessageEvent event) {
+        // Is the member null? (this doesn't happen but is a nullable field according to JDA documentation)
+        if(event.getMember() == null) {
+            return false;
+        }
+
+        // Is the module accessed the developer module and is the commander not me?
+        if(event.getModule().getName().equals("developer") && event.getMember().getIdLong() != 215161101460045834L) {
+            return false;
+        }
+
         // Does the command contain the minimum number of parameters?
         if(!meetsParameterMinimum(event, true)) {
             return false;
@@ -20,11 +37,8 @@ public final class Sanitiser {
             return false;
         }
 
-        if(event.getCommand() == null) {
-            return false;
-        }
+        return event.getCommand() != null;
 
-        return event.getMember() != null;
     }
 
     /**
@@ -41,11 +55,7 @@ public final class Sanitiser {
             minimumParameters = override[0];
         }
 
-        if(minimumParameters == 0) {
-            return true;
-        }
-
-        if(!e.hasParameters()) {
+        if(minimumParameters > 0 && !e.hasParameters()) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **0**.");
                 MessageHandler.sendMessage(e, embed.build());

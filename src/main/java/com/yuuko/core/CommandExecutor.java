@@ -45,12 +45,6 @@ public class CommandExecutor {
         this.bot = event.getGuild().getSelfMember();
         this.commander = event.getMember();
 
-        // Checks to see if the command being executed is a developer command
-        // and if it is, is the person executing said command me?
-        if(module.getName().equals("developer") && commander.getIdLong() != 215161101460045834L) {
-            return;
-        }
-
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
         if(command == null || isDisabled() || isBound() || !checkAudio()) {
