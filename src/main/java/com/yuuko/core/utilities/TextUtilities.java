@@ -18,7 +18,7 @@ public final class TextUtilities {
      * @param pattern String
      * @return StringBuilder
      */
-    public static void removeLastOccurrence(StringBuilder stringBuilder, String pattern) {
+    public static void removeLast(StringBuilder stringBuilder, String pattern) {
         int index = stringBuilder.lastIndexOf(pattern);
         if(index > -1) {
             stringBuilder.replace(index, index + 1, "");
@@ -31,7 +31,7 @@ public final class TextUtilities {
      * @param value value to convert to boolean
      * @return boolean
      */
-    public static boolean convertToBoolean(String value) {
+    public static boolean toBoolean(String value) {
         value = (value == null) ? "false" : value; // Stop null pointer exceptions.
         return value.equals("1") || value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes");
     }

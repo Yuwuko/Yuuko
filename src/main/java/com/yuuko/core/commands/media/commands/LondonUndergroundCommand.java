@@ -124,7 +124,7 @@ public class LondonUndergroundCommand extends Command {
                     previous = name;
                 }
             }
-            TextUtilities.removeLastOccurrence(reasons, "\n\n");
+            TextUtilities.removeLast(reasons, "\n\n");
 
             return reasons.toString().replace(":", "**:");
         }

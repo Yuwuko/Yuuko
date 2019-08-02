@@ -15,7 +15,7 @@ public class RequestHandler {
     private static final OkHttpClient client = new OkHttpClient();
     private String content;
 
-    private static final String DEFAULT_CONTENT_TYPE = "application/json";
+    private static final String JSON = "application/json";
 
     /**
      * RequestHandler method which takes a url and optional arguments as request properties.
@@ -35,8 +35,8 @@ public class RequestHandler {
                     builder.addHeader(property.getHeader(), property.getDirective());
                 }
             } else {
-                   builder.addHeader("Accept", DEFAULT_CONTENT_TYPE)
-                   .addHeader("Content-Type", DEFAULT_CONTENT_TYPE);
+                   builder.addHeader("Accept", JSON)
+                   .addHeader("Content-Type", JSON);
             }
 
             Response response = client.newCall(builder.build()).execute();

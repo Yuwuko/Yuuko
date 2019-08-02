@@ -10,30 +10,54 @@ import java.util.Arrays;
 
 public final class Sanitiser {
 
+    public static boolean checks(MessageEvent event) {
+        // Does the command contain the minimum number of parameters?
+        if(!meetsParameterMinimum(event, true)) {
+            return false;
+        }
+
+        if(event.getPrefix() == null) {
+            return false;
+        }
+
+        if(event.getCommand() == null) {
+            return false;
+        }
+
+        return event.getMember() != null;
+    }
+
     /**
      * Checks a command to ensure all parameters are present.
      *
-     * @param expectedParameters int
+     * @param e MessageEvent
+     * @param feedback boolean
      * @return boolean
      */
-    public static boolean checkParameters(MessageEvent e, int expectedParameters, boolean feedback) {
-        if(expectedParameters == 0) {
+    public static boolean meetsParameterMinimum(MessageEvent e, boolean feedback, int... override) {
+        int minimumParameters = e.getCommand().getMinimumParameters();
+
+        if(override != null && override.length > 0) {
+            minimumParameters = override[0];
+        }
+
+        if(minimumParameters == 0) {
             return true;
         }
 
         if(!e.hasParameters()) {
             if(feedback) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **0**.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **0**.");
                 MessageHandler.sendMessage(e, embed.build());
             }
             return false;
         }
 
-        if(expectedParameters > 1) {
-            String[] commandParameters = e.getParameters().split("\\s+", expectedParameters);
-            if(commandParameters.length < expectedParameters) {
+        if(minimumParameters > 1) {
+            String[] commandParameters = e.getParameters().split("\\s+", minimumParameters);
+            if(commandParameters.length < minimumParameters) {
                 if(feedback) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + expectedParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
                 return false;

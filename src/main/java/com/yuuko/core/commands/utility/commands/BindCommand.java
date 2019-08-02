@@ -47,7 +47,7 @@ public class BindCommand extends Command {
                     BindFunctions.toggleBind(e.getGuild().getId(), channel.getId(), module);
                     boundChannels.append(channel.getName()).append(", ");
                 }
-                TextUtilities.removeLastOccurrence(boundChannels, ", ");
+                TextUtilities.removeLast(boundChannels, ", ");
 
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + module + "** on **" + boundChannels.toString() + "**.");
                 MessageHandler.sendMessage(e, embed.build());

@@ -2,7 +2,6 @@ package com.yuuko.core.utilities;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.function.GuildFunctions;
-import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -71,16 +70,6 @@ public final class Utilities {
      */
     public static String getCommandPermissions(List<Permission> permissions) {
         return permissions.toString().replace("[", "").replace("]", "");
-    }
-
-    /**
-     * Checks to see if a text channel is nsfw or not.
-     *
-     * @param e MessageEvent
-     * @return boolean
-     */
-    public static boolean isChannelNSFW(MessageEvent e) {
-        return e.getChannel().isNSFW();
     }
 
     /**

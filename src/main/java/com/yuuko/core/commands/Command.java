@@ -10,17 +10,17 @@ import java.util.List;
 public abstract class Command {
     private final String name;
     private final Module module;
-    private final int expectedParameters;
+    private final int minimumParameters;
     private final List<String> usage;
     private final List<Permission> permissions;
     private final boolean nsfw;
 
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
 
-    public Command(String name, Module module, int expectedParameters, List<String> usage, boolean nsfw, List<Permission> permissions) {
+    public Command(String name, Module module, int minimumParameters, List<String> usage, boolean nsfw, List<Permission> permissions) {
         this.name = name;
         this.module = module;
-        this.expectedParameters = expectedParameters;
+        this.minimumParameters = minimumParameters;
         this.usage = usage;
         this.nsfw = nsfw;
         this.permissions = permissions;
@@ -34,8 +34,8 @@ public abstract class Command {
         return module;
     }
 
-    public int getExpectedParameters() {
-        return expectedParameters;
+    public int getMinimumParameters() {
+        return minimumParameters;
     }
 
     public List<String> getUsage() {
@@ -43,7 +43,7 @@ public abstract class Command {
     }
 
     public boolean isNSFW() {
-        return nsfw;
+        return nsfw || module.isNSFW();
     }
 
     public List<Permission> getPermissions() {

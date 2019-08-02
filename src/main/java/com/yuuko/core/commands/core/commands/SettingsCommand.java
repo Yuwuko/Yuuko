@@ -44,7 +44,7 @@ public class SettingsCommand extends Command {
                     return;
                 }
 
-                if(!Sanitiser.checkParameters(e, 2, true)) {
+                if(!Sanitiser.meetsParameterMinimum(e, true, 2)) {
                     // We expect 0 in the super class to enable vision of all settings, but then check for 2 since that's the minimum used.
                     return;
                 }

@@ -29,7 +29,7 @@ public class RolesCommand extends Command {
                     characterCount += role.getAsMention().length() + 1;
                 }
             }
-            TextUtilities.removeLastOccurrence(roles, "\n");
+            TextUtilities.removeLast(roles, "\n");
         } else {
             roles.append("None Available");
         }

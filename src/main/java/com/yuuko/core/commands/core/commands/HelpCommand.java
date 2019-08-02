@@ -51,7 +51,7 @@ public class HelpCommand extends Command {
                 for(String usage: command.getUsage()) {
                     usages.append(usage.replace("-", e.getPrefix())).append("\n");
                 }
-                TextUtilities.removeLastOccurrence(usages, "\n");
+                TextUtilities.removeLast(usages, "\n");
 
                 String disabled = TextUtilities.formatArray(CommandFunctions.getCommandSetting(e.getGuild(), command).toString());
 

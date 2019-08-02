@@ -3,7 +3,6 @@ package com.yuuko.core;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
@@ -25,7 +24,6 @@ public final class MessageHandler {
     public static void sendMessage(MessageEvent event, String message) {
         try {
             if(hasSendPermission(event)) {
-                log.trace("Invoking {}#getChannel()#sendMessage(message)#queue()", event.getClass().getName());
                 event.getChannel().sendMessage(message).queue();
             }
         } catch(Exception ex) {
@@ -42,7 +40,6 @@ public final class MessageHandler {
     public static void sendMessage(MessageEvent event, MessageEmbed embed) {
         try {
             if(hasSendPermission(event)) {
-                log.trace("Invoking {}#getChannel()#sendMessage(embed)#queue()", event.getClass().getName());
                 event.getChannel().sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -59,7 +56,6 @@ public final class MessageHandler {
     public static void sendMessage(MessageEvent event, File file) {
         try {
             if(hasSendPermission(event)) {
-                log.trace("Invoking {}#getChannel()#sendFile(file)#queue()", event.getClass().getName());
                 event.getChannel().sendFile(file).queue();
             }
         } catch(Exception ex) {
@@ -77,7 +73,6 @@ public final class MessageHandler {
     public static void sendMessage(MessageEvent event, byte[] bytes, String fileName) {
         try {
             if(hasSendPermission(event)) {
-                log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
                 event.getChannel().sendFile(bytes, fileName).queue();
             }
         } catch(Exception ex) {
@@ -95,7 +90,6 @@ public final class MessageHandler {
     public static void sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasSendPermission(event, channel)) {
-                log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -113,7 +107,6 @@ public final class MessageHandler {
     public static void sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasSendPermission(event, channel)) {
-                log.trace("Invoking {}#getChannel()#sendFile(bytes, fileName)#queue()", event.getClass().getName());
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception ex) {
@@ -131,7 +124,6 @@ public final class MessageHandler {
     public static void sendMessage(GenericGuildEvent event, TextChannel channel, String message) {
         try {
             if(hasSendPermission(event, channel)) {
-                log.trace("Invoking {}#sendMessage(message)#queue()", event.getClass().getName());
                 channel.sendMessage(message).queue();
             }
         } catch(Exception ex) {
@@ -147,8 +139,7 @@ public final class MessageHandler {
      * @return boolean
      */
     private static boolean hasSendPermission(Guild guild, TextChannel channel) {
-        Member bot = guild.getSelfMember();
-        return bot.hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
+        return guild.getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
     }
 
     /**

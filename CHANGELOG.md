@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-08-02
++ [~] Moved back over to the official Lavalink-Client release after my PR was merged.
++ [~] Updated to a stable version of ddblAPI.java that I released.
++ [~] Dozens of little optimisations and fail-fasts for both readability and performance.
+
 ## 2019-07-31
 + [+] Added [__rule34__] command which returns a random image from the rule34 website.
 + [~] Updated MySQL Connector to 8.0.17 from 8.0.16.

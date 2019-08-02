@@ -101,7 +101,7 @@ public class BindFunctions {
             }
 
             if(string.length() > 0) {
-                TextUtilities.removeLastOccurrence(string, delimiter);
+                TextUtilities.removeLast(string, delimiter);
             } else {
                 string.append("None");
             }
@@ -137,7 +137,7 @@ public class BindFunctions {
             }
 
             if(string.length() > 0) {
-                TextUtilities.removeLastOccurrence(string, delimiter);
+                TextUtilities.removeLast(string, delimiter);
             } else {
                 string.append("None");
             }
