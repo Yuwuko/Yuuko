@@ -139,7 +139,8 @@ public final class MessageHandler {
      * @return boolean
      */
     private static boolean hasSendPermission(Guild guild, TextChannel channel) {
-        return guild.getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
+        return guild.getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)
+                && guild.getSelfMember().hasPermission(channel, Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
     }
 
     /**

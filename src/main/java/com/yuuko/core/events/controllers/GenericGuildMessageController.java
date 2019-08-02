@@ -44,8 +44,9 @@ public class GenericGuildMessageController {
             String prefix = Utilities.getServerPrefix(e.getGuild());
             final String message = e.getMessage().getContentRaw();
 
-            // Uses short-circuiting to set prefix to the variation used in the message.
-            if(!message.startsWith(prefix) && !message.startsWith(prefix = Configuration.GLOBAL_PREFIX)) {
+            // Checks null because the first few messages before the bot has fully initialised will cause exceptions.
+            // Uses short-circuiting to set prefix to the variation used in the message or return if neither.
+            if(prefix == null || !message.startsWith(prefix) && !message.startsWith(prefix = Configuration.GLOBAL_PREFIX)) {
                 return;
             }
 
