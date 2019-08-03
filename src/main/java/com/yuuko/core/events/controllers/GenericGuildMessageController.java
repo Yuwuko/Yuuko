@@ -73,7 +73,7 @@ public class GenericGuildMessageController {
             }
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}, input: {}", this, ex.getMessage(), e.getMessage().getContentRaw(), ex);
         }
     }
 
