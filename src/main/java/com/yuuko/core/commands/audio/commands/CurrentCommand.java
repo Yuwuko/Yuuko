@@ -5,8 +5,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -20,7 +20,8 @@ public class CurrentCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
+        AudioTrack track = manager.getPlayer().getPlayingTrack();
 
         if(track != null) {
             String[] uri = track.getInfo().uri.split("=");
@@ -30,7 +31,7 @@ public class CurrentCommand extends Command {
                     .setAuthor("Now Playing")
                     .setTitle(track.getInfo().title, track.getInfo().uri)
                     .setThumbnail(imageUrl)
-                    .addField("Duration", TextUtilities.getTimestamp(LavalinkUtilities.getTrackPosition(e.getGuild())) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
+                    .addField("Duration", TextUtilities.getTimestamp(manager.getPlayer().getTrackPosition()) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
                     .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, queuedTrack.build());

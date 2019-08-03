@@ -9,6 +9,7 @@ import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
 import com.yuuko.core.metrics.pathway.EventMetrics;
 import com.yuuko.core.metrics.pathway.SystemMetrics;
+import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,8 +57,8 @@ public class DatabaseFunctions {
             stmt2.execute();
 
             stmt3.setInt(1, shardId);
-            stmt3.setDouble(2, discord.GATEWAY_PING.get());
-            stmt3.setDouble(3, discord.REST_PING.get());
+            stmt3.setInt(2, discord.GATEWAY_PING.get());
+            stmt3.setInt(3, discord.REST_PING.get());
             stmt3.setInt(4, discord.GUILD_COUNT);
             stmt3.setInt(5, discord.USER_COUNT);
             stmt3.execute();
@@ -209,17 +210,20 @@ public class DatabaseFunctions {
     /**
      * Update shard statistics such as guild count and user count.
      */
-    public static void updateShardStatistics(int shard, String status, int guilds, int users, int gatewayPing, int restPing) {
+    public static void updateShardStatistics() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
-            stmt.setString(1, status);
-            stmt.setInt(2, guilds);
-            stmt.setInt(3, users);
-            stmt.setDouble(4, gatewayPing);
-            stmt.setDouble(5, restPing);
-            stmt.setInt(6, shard);
+            JDA shard = Configuration.BOT.getJDA();
+
+            stmt.setString(1, shard.getStatus().name());
+            stmt.setInt(2, discord.GUILD_COUNT);
+            stmt.setInt(3, discord.USER_COUNT);
+            stmt.setInt(4, discord.GATEWAY_PING.get());
+            stmt.setInt(5, discord.REST_PING.get());
+            stmt.setInt(6, shard.getShardInfo().getShardId());
             stmt.execute();
+
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

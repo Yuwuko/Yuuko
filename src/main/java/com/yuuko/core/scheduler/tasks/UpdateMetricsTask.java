@@ -11,8 +11,8 @@ public class UpdateMetricsTask implements Task {
     @Override
     public void run() {
         if(System.currentTimeMillis() - lastUpdated > 29999) {
-            MetricsManager.getDiscordMetrics().GATEWAY_PING.set(Configuration.BOT.getJDA().getGatewayPing());
-            MetricsManager.getDiscordMetrics().REST_PING.set(Configuration.BOT.getJDA().getRestPing().complete());
+            MetricsManager.getDiscordMetrics().GATEWAY_PING.set((int)Configuration.BOT.getJDA().getGatewayPing());
+            MetricsManager.getDiscordMetrics().REST_PING.set(Configuration.BOT.getJDA().getRestPing().complete().intValue());
             lastUpdated = System.currentTimeMillis();
         }
         MetricsManager.getSystemMetrics().update();

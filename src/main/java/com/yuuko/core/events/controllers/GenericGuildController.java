@@ -2,6 +2,7 @@ package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.EventMetrics;
@@ -100,7 +101,7 @@ public class GenericGuildController {
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
-        Configuration.LAVALINK.getLavalink().getLink(e.getGuild()).destroy();
+        AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
         GuildFunctions.cleanup(e.getGuild().getId());
         MetricsManager.getDiscordMetrics().update();
         Utilities.updateDiscordBotList();

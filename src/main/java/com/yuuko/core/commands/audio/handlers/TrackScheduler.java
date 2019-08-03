@@ -9,6 +9,7 @@ import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.VoiceTimeoutJob;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.player.IPlayer;
+import lavalink.client.player.LavalinkPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -24,11 +25,11 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;
     private boolean looping = false;
-    private final IPlayer player;
+    private final LavalinkPlayer player;
     public final Queue<AudioTrack> queue;
     private ScheduledFuture timeout;
 
-    TrackScheduler(Guild guild, IPlayer player) {
+    TrackScheduler(Guild guild, LavalinkPlayer player) {
         this.guild = guild;
         this.player = player;
         this.queue = new LinkedList<>();

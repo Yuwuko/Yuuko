@@ -2,9 +2,6 @@ package com.yuuko.core.commands.audio.handlers;
 
 import com.yuuko.core.Configuration;
 import lavalink.client.io.jda.JdaLavalink;
-import lavalink.client.player.IPlayer;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -35,19 +32,4 @@ public class LavalinkManager {
         return lavalink;
     }
 
-    IPlayer createPlayer(Guild guild) {
-        return lavalink.getLink(guild).getPlayer();
-    }
-
-    public void resetPlayer(Guild guild) {
-        lavalink.getLink(guild).resetPlayer();
-    }
-
-    public void openConnection(VoiceChannel channel) {
-        lavalink.getLink(channel.getGuild()).connect(channel);
-    }
-
-    public void closeConnection(Guild guild) {
-        lavalink.getLink(guild).disconnect();
-    }
 }

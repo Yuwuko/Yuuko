@@ -23,21 +23,18 @@ public final class Sanitiser {
             return false;
         }
 
+        // Checks if command is null at this point because the next checks require that it does.
+        if(event.getCommand() == null) {
+            return false;
+        }
+
         // Is the module accessed the developer module and is the commander not me?
         if(event.getModule().getName().equals("developer") && event.getMember().getIdLong() != 215161101460045834L) {
             return false;
         }
 
         // Does the command contain the minimum number of parameters?
-        if(!meetsParameterMinimum(event, true)) {
-            return false;
-        }
-
-        if(event.getPrefix() == null) {
-            return false;
-        }
-
-        return event.getCommand() != null;
+        return meetsParameterMinimum(event, true);
 
     }
 

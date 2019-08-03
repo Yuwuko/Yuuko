@@ -11,7 +11,6 @@ import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.TextUtilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -30,8 +29,8 @@ public class PlayCommand extends Command {
     public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-        if(!LavalinkUtilities.isState(e.getGuild(), Link.State.CONNECTED)) {
-            Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
+        if(manager.getLink().getState() != Link.State.CONNECTED) {
+            manager.openConnection(e.getMember().getVoiceState().getChannel());
         }
 
         if(!e.hasParameters()) {

@@ -5,8 +5,8 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.utilities.LavalinkUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,7 +21,8 @@ public class SeekCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
+        AudioTrack track = manager.getPlayer().getPlayingTrack();
 
         int seek;
 
@@ -50,7 +51,7 @@ public class SeekCommand extends Command {
 
         if(track != null) {
             if(track.isSeekable()) {
-                LavalinkUtilities.getPlayer(e.getGuild()).seekTo((seek < track.getInfo().length) ? seek : track.getInfo().length);
+                manager.getPlayer().seekTo((seek < track.getInfo().length) ? seek : track.getInfo().length);
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Seeking").setDescription("The track position has been set to `" + TextUtilities.getTimestamp(seek) + "`.");
                 MessageHandler.sendMessage(e, embed.build());
             } else {

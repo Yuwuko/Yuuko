@@ -37,6 +37,7 @@ public class GenericGuildMessageController {
 
     private void guildMessageReceivedEvent(GuildMessageReceivedEvent e) {
         try {
+
             if(e.getAuthor().isBot()) {
                 return;
             }
@@ -55,7 +56,7 @@ public class GenericGuildMessageController {
             final Command command = Configuration.COMMANDS.get(cmd[0].toLowerCase());
 
             // Creates message event object, setting the event, prefix, command and parameters.
-            final MessageEvent event = new MessageEvent(e).setPrefix(prefix).setCommand(command).setParameters(parameters);
+            MessageEvent event = new MessageEvent(e).setPrefix(prefix).setCommand(command).setParameters(parameters);
 
             // fail-fast
             if(!Sanitiser.checks(event)) {

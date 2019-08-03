@@ -40,7 +40,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-08-02";
+    public static final String VERSION = "2019-08-03";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -73,20 +73,68 @@ public class Configuration {
         try {
             long loadStart = System.nanoTime();
 
+            initialiseCommands();
+            loadApi();
             initialiseDatabase();
             registerShards();
             loadMainConfiguration();
             initialiseAudio();
             buildShardManager();
             synchronizeDatabase();
-            initialiseCommands();
-            loadApi();
-            initialiseGlobalPrefix();
             initialiseMetrics();
             initialiseSchedule();
             initialiseBotLists();
 
             log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Initialises both the commands and the modules encapsulating those commands.
+     */
+    private void initialiseCommands() {
+        try {
+            Reflections reflections = new Reflections("com.yuuko.core.commands");
+
+            Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
+            Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
+
+            MODULES = new HashMap<>(modules.size());
+            COMMANDS = new HashMap<>(commands.size());
+
+            for(Class<? extends Module> module : modules) {
+                if(!Modifier.isAbstract(module.getModifiers())) {
+                    Module obj = module.getConstructor().newInstance();
+                    MODULES.put(obj.getName(), obj);
+                }
+            }
+
+            for(Class<? extends Command> command : commands) {
+                if(!Modifier.isAbstract(command.getModifiers())) {
+                    Command obj = command.getConstructor().newInstance();
+                    COMMANDS.put(obj.getName(), obj);
+                }
+            }
+
+            log.info("Loaded " + MODULES.size() + " modules and " + COMMANDS.size() + " commands.");
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Loads api keys from the api key folder.
+     *
+     * @return int number of api keys loaded.
+     */
+    private static void loadApi() {
+        try {
+            API_MANAGER = new ApiManager();
+            log.info("Loaded " + API_MANAGER.size() + " API keys.");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
@@ -128,6 +176,7 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
+            GLOBAL_PREFIX = "<@" + BOT_ID + "> ";
         } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -177,62 +226,6 @@ public class Configuration {
         GuildFunctions.addGuilds(BOT.getJDA());
 
         log.info("Synchronised database with JDA.");
-    }
-
-    /**
-     * Initialises both the commands and the modules encapsulating those commands.
-     */
-    private void initialiseCommands() {
-        try {
-            Reflections reflections = new Reflections("com.yuuko.core.commands");
-
-            Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
-            Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
-
-            MODULES = new HashMap<>(modules.size());
-            COMMANDS = new HashMap<>(commands.size());
-
-            for(Class<? extends Module> module : modules) {
-                if(!Modifier.isAbstract(module.getModifiers())) {
-                    Module obj = module.getConstructor().newInstance();
-                    MODULES.put(obj.getName(), obj);
-                }
-            }
-
-            for(Class<? extends Command> command : commands) {
-                if(!Modifier.isAbstract(command.getModifiers())) {
-                    Command obj = command.getConstructor().newInstance();
-                    COMMANDS.put(obj.getName(), obj);
-                }
-            }
-
-            log.info("Loaded " + MODULES.size() + " modules and " + COMMANDS.size() + " commands.");
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Loads api keys from the api key folder.
-     *
-     * @return int number of api keys loaded.
-     */
-    private static void loadApi() {
-        try {
-            API_MANAGER = new ApiManager();
-            log.info("Loaded ApiManager.");
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Initialises the bot's global command prefix.
-     */
-    private void initialiseGlobalPrefix() {
-        GLOBAL_PREFIX = "<@" + BOT_ID + "> ";
     }
 
     /**

@@ -1,12 +1,16 @@
 package com.yuuko.core.commands.audio.handlers;
 
 import com.yuuko.core.Configuration;
-import lavalink.client.player.IPlayer;
+import lavalink.client.io.jda.JdaLink;
+import lavalink.client.player.LavalinkPlayer;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class GuildAudioManager {
 
-    private final IPlayer player;
+    private final Guild guild;
+    private final JdaLink link;
+    private final LavalinkPlayer player;
     private final TrackScheduler scheduler;
 
     /**
@@ -16,13 +20,36 @@ public class GuildAudioManager {
      * @param guild the guild to create a player for.
      */
     public GuildAudioManager(Guild guild) {
-        this.player = Configuration.LAVALINK.createPlayer(guild);
+        this.guild = guild;
+        this.link = Configuration.LAVALINK.getLavalink().getLink(guild);
+        this.player = link.getPlayer();
         this.scheduler = new TrackScheduler(guild, player);
         this.player.addListener(scheduler);
     }
 
-    public IPlayer getPlayer() {
+    public JdaLink getLink() {
+        return link;
+    }
+
+    public LavalinkPlayer getPlayer() {
         return player;
+    }
+
+    public void resetPlayer(Guild guild) {
+        link.resetPlayer();
+    }
+
+    public void openConnection(VoiceChannel channel) {
+        link.connect(channel);
+    }
+
+    public void closeConnection(Guild guild) {
+        link.disconnect();
+    }
+
+    public void destroy() {
+        link.destroy();
+        AudioManagerController.removeGuildAudioManager(guild);
     }
 
     public TrackScheduler getScheduler() {

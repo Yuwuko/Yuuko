@@ -19,7 +19,7 @@ public class KickCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getParameters().split("\\s+", 3);
+        String[] commandParameters = e.getParameters().split("\\s+", 2);
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {
@@ -30,7 +30,7 @@ public class KickCommand extends Command {
             return;
         }
 
-        if(commandParameters.length < 3) {
+        if(commandParameters.length < 2) {
             e.getGuild().kick(target).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), "None");

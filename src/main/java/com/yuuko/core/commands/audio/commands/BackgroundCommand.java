@@ -27,7 +27,7 @@ public class BackgroundCommand extends Command {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
         if(e.hasParameters()) {
-            Configuration.LAVALINK.openConnection(e.getMember().getVoiceState().getChannel());
+            manager.openConnection(e.getMember().getVoiceState().getChannel());
             manager.getPlayer().setPaused(false);
 
             if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {

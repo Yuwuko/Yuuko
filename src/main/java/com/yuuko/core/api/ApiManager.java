@@ -32,4 +32,8 @@ public class ApiManager {
     public boolean containsKey(String key) {
         return API.containsKey(key);
     }
+
+    public int size() {
+        return API.size();
+    }
 }

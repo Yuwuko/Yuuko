@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-08-03
++ [~] Rewrote the audio management system to make things more predictable.
++ [~] Minor refactoring to several methods and field names.
++ [-] Scrapped plans for an ExceptionMetrics class since other methods are sufficient.
++ [-] Removed LavaLink utilities since they became unnecessary.
+
 ## 2019-08-02
 + [~] Moved back over to the official Lavalink-Client release after my PR was merged.
 + [~] Updated to a stable version of ddblAPI.java that I released.

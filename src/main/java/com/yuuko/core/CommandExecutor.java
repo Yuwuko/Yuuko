@@ -2,6 +2,7 @@ package com.yuuko.core;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
+import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.database.function.CommandFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -103,8 +104,8 @@ public class CommandExecutor {
             return false;
         }
 
-        // Is Lavalink disconnected and does the command require it to be otherwise?
-        if(Configuration.LAVALINK.getLavalink().getLink(event.getGuild()).getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(command.getName())) {
+        // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
+        if(AudioManagerController.getExistingLink(event.getGuild()) != null && AudioManagerController.getGuildAudioManager(event.getGuild()).getLink().getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageHandler.sendMessage(event, embed.build());
             return false;
