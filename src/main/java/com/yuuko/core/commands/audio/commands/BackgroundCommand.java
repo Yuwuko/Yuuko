@@ -26,29 +26,29 @@ public class BackgroundCommand extends Command {
     public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-        if(e.hasParameters()) {
-            manager.openConnection(e.getMember().getVoiceState().getChannel());
-            manager.getPlayer().setPaused(false);
-
-            if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
-                setAndPlay(manager, e, e.getParameters());
-
-            } else {
-                String trackUrl = YouTubeSearchHandler.search(e.getParameters());
-
-                if(trackUrl == null) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
-                    MessageHandler.sendMessage(e, embed.build());
-                } else {
-                    setAndPlay(manager, e, trackUrl);
-                }
-            }
-        } else {
-            // If no parameters are given, unset the background track.
+        if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Removing").setDescription("The background track has been removed.");
             MessageHandler.sendMessage(e, embed.build());
             manager.getScheduler().setBackground(null);
+            return;
         }
+
+        manager.openConnection(e.getMember().getVoiceState().getChannel());
+        manager.getPlayer().setPaused(false);
+
+        if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
+            setAndPlay(manager, e, e.getParameters());
+            return;
+        }
+
+        final String trackId = YouTubeSearchHandler.search(e);
+        if(trackId != null && !trackId.equals("")) {
+            setAndPlay(manager, e, trackId);
+        } else {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
+            MessageHandler.sendMessage(e, embed.build());
+        }
+
     }
 
     /**
@@ -59,13 +59,8 @@ public class BackgroundCommand extends Command {
      * @param url {@link String}
      */
     private void setAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
-        final String trackUrl;
-
-        if(url.startsWith("<") && url.endsWith(">")) {
-            trackUrl = url.substring(1, url.length() - 1);
-        } else {
-            trackUrl = url;
-        }
+        final String param = e.getParameters();
+        final String trackUrl = param.startsWith("<") && param.endsWith(">") ? param.substring(1, param.length() - 1) : param;
 
         AudioManagerController.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
 

@@ -3,7 +3,8 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-08-04
-+ [~] Rewrote some of the documentation used the {@link} tag for easier navigation.
++ [~] Improved some of the documentation used the {@link} tag for easier navigation.
++ [~] Rewrote most of TrackScheduler and un-verbosified the YoutubeSearchHandler amongst other commands.
 
 ## 2019-08-03
 + [~] Rewrote the audio management system to make things more predictable.

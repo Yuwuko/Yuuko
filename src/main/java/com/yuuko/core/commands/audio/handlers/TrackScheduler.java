@@ -37,6 +37,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
     /**
      * Quick check to see if there is a next track or not.
+     *
      * @return boolean
      */
     public boolean hasNextTrack() {
@@ -46,18 +47,17 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     /**
      * Add the next track to queue or play right away if nothing is in the queue.
      * If the queue is empty play the background handlers if it isn't null.
+     *
      * @param track The track to play or add to queue.
      */
     public void queue(AudioTrack track) {
-        if(background != null && player.getPlayingTrack() == background) {
+        if(player.getPlayingTrack() == null || (background != null && player.getPlayingTrack() == background)) {
             queue.add(track);
             nextTrack();
-        } else if(player.getPlayingTrack() != null) {
-            queue.offer(track);
-        } else {
-            queue.add(track);
-            nextTrack();
+            return;
         }
+
+        queue.offer(track);
     }
 
     /**
@@ -71,22 +71,25 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                 if(background != null) {
                     background = background.makeClone();
                     player.playTrack(background);
+                    return;
                 }
 
                 timeout = ScheduleHandler.registerUniqueJob(new VoiceTimeoutJob(guild));
-            } else {
-                if(timeout != null) {
-                    timeout.cancel(true);
-                    timeout = null;
-                }
-
-                player.playTrack(track);
-                MessageEvent e = (MessageEvent) player.getPlayingTrack().getUserData();
-
-                if(e != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()))) {
-                    new CurrentCommand().onCommand(e);
-                }
+                return;
             }
+
+            if(timeout != null) {
+                timeout.cancel(true);
+                timeout = null;
+            }
+
+            player.playTrack(track);
+
+            MessageEvent e = (MessageEvent) player.getPlayingTrack().getUserData();
+            if(e != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()))) {
+                new CurrentCommand().onCommand(e);
+            }
+
         } catch(Exception ex) {
             // This exception occurs 99% of the time on repeating tracks.
         }
@@ -107,9 +110,10 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
             if(looping) {
                 queue.add(track);
                 nextTrack();
-            } else {
-                nextTrack();
+                return;
             }
+
+            nextTrack();
         }
     }
 

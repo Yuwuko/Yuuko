@@ -21,16 +21,15 @@ public class SkipCommand extends Command {
         try {
             GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-            if(manager.getPlayer().getPlayingTrack() != null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
+            if(manager.getPlayer().getPlayingTrack() == null) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("There is no track to skip.");
                 MessageHandler.sendMessage(e, embed.build());
-
-                manager.getPlayer().stopTrack();
-                manager.getScheduler().nextTrack();
-            } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("There is no current track to skip.");
-                MessageHandler.sendMessage(e, embed.build());
+                return;
             }
+
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
+            MessageHandler.sendMessage(e, embed.build());
+            manager.getScheduler().nextTrack();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

@@ -40,25 +40,21 @@ public class PlayCommand extends Command {
                 manager.getPlayer().setPaused(false);
                 new CurrentCommand();
             }
-
-        } else {
-            manager.getPlayer().setPaused(false);
-
-            if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
-                loadAndPlay(manager, e);
-
-            } else {
-                String trackId = YouTubeSearchHandler.search(e.getParameters());
-
-                if(trackId == null || trackId.equals("")) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
-                    MessageHandler.sendMessage(e, embed.build());
-                } else {
-                    loadAndPlay(manager, e.setParameters(trackId));
-                }
-            }
+            return;
         }
 
+        if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
+            loadAndPlay(manager, e);
+            return;
+        }
+
+        final String trackId = YouTubeSearchHandler.search(e);
+        if(trackId != null && !trackId.equals("")) {
+            loadAndPlay(manager, e.setParameters(trackId));
+        } else {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
+            MessageHandler.sendMessage(e, embed.build());
+        }
     }
 
     /**
@@ -68,16 +64,10 @@ public class PlayCommand extends Command {
      * @param e {@link MessageEvent}
      */
     private void loadAndPlay(GuildAudioManager manager, MessageEvent e) {
-        final String trackUrl;
-
-        if(e.getParameters().startsWith("<") && e.getParameters().endsWith(">")) {
-            trackUrl = e.getParameters().substring(1, e.getParameters().length() - 1);
-        } else {
-            trackUrl = e.getParameters();
-        }
+        final String param = e.getParameters();
+        final String trackUrl = param.startsWith("<") && param.endsWith(">") ? param.substring(1, param.length() - 1) : param;
 
         AudioManagerController.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
-
             @Override
             public void trackLoaded(AudioTrack track) {
                 try {
@@ -125,8 +115,8 @@ public class PlayCommand extends Command {
             }
 
             @Override
-            public void loadFailed(FriendlyException exception) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + exception.getMessage())
+            public void loadFailed(FriendlyException ex) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + ex.getMessage())
                         .setDescription("The most common cause for this error is trying to play age-restricted content. If the problem persists, please contact " + Configuration.AUTHOR + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }

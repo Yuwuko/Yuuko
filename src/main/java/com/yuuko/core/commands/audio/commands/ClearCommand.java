@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class ClearCommand extends Command {
 
@@ -25,37 +24,33 @@ public class ClearCommand extends Command {
         try {
             GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-            if(e.hasParameters()) {
-                final int clearPos;
-
-                if(Sanitiser.isNumber(e.getParameters())) {
-                    clearPos = Integer.parseInt(e.getParameters());
-                } else {
-                    return;
-                }
-
-                LinkedList<AudioTrack> temp = new LinkedList<>();
-                Queue<AudioTrack> clone = new LinkedList<>(manager.getScheduler().queue);
-
-                int i = 1;
-                for(int x = 0; x < manager.getScheduler().queue.size(); x++) {
-                    if(i == clearPos) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("`" + clone.remove().getInfo().title + "` has been cleared from the queue.");
-                        MessageHandler.sendMessage(e, embed.build());
-                        i++;
-                    } else {
-                        temp.addLast(clone.remove());
-                        i++;
-                    }
-                }
-                manager.getScheduler().queue.clear();
-                manager.getScheduler().queue.addAll(temp);
-
-            } else {
+            if(!e.hasParameters()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("The queue has been cleared.");
                 MessageHandler.sendMessage(e, embed.build());
                 manager.getScheduler().queue.clear();
+                return;
             }
+
+            if(!Sanitiser.isNumber(e.getParameters())) {
+                return;
+            }
+
+            LinkedList<AudioTrack> temp = new LinkedList<>();
+            final int clearPos = Integer.parseInt(e.getParameters());
+            int i = 0;
+
+            for(AudioTrack track: manager.getScheduler().queue) {
+                if(clearPos == ++i) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("`" + track.getInfo().title + "` has been cleared from the queue.");
+                    MessageHandler.sendMessage(e, embed.build());
+                    continue;
+                }
+                temp.addLast(track);
+            }
+
+            manager.getScheduler().queue.clear();
+            manager.getScheduler().queue.addAll(temp);
+
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
