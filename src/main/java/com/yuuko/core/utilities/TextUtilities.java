@@ -14,9 +14,8 @@ public final class TextUtilities {
     /**
      * Replaces the last occurrence of a pattern with nothing.
      *
-     * @param stringBuilder StringBuilder
+     * @param stringBuilder {@link StringBuilder}
      * @param pattern String
-     * @return StringBuilder
      */
     public static void removeLast(StringBuilder stringBuilder, String pattern) {
         int index = stringBuilder.lastIndexOf(pattern);
@@ -118,7 +117,7 @@ public final class TextUtilities {
     /**
      * Takes a String and GuildMemberJoinEvent and resolves tokens within the string.
      *
-     * @param e GuildMemberJoinEvent
+     * @param e {@link GuildMemberJoinEvent}
      * @param message String
      * @return resolved string
      */
@@ -131,7 +130,7 @@ public final class TextUtilities {
     /**
      * Takes a String and MessageEvent and resolves tokens within the string.
      *
-     * @param e MessageEvent
+     * @param e {@link MessageEvent}
      * @param message String
      * @return resolved string
      */

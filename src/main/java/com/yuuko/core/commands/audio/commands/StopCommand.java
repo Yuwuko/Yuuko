@@ -35,7 +35,7 @@ public class StopCommand extends Command {
     /**
      * Executes command just by feeding the method a guild object.
      *
-     * @param guild Guild
+     * @param guild {@link Guild}
      */
     public void onCommand(Guild guild) {
         AudioManagerController.getGuildAudioManager(guild).destroy();

@@ -11,7 +11,7 @@ public final class DiscordUtilities {
     /**
      * Returns a username and discriminator in format username#discriminator.
      *
-     * @param member the member to retrieve
+     * @param member {@link Member}
      * @return username#discriminator
      */
     public static String getTag(Member member) {
@@ -21,7 +21,7 @@ public final class DiscordUtilities {
     /**
      * Returns a username and discriminator in format username#discriminator.
      *
-     * @param user the user to retrieve
+     * @param user {@link User}
      * @return username#discriminator
      */
     public static String getTag(User user) {
@@ -31,7 +31,7 @@ public final class DiscordUtilities {
     /**
      * Creates the muted role to correctly mute people.
      *
-     * @param guild Guild
+     * @param guild {@link Guild}
      * @return Role
      */
     public static Role getMutedRole(Guild guild) {

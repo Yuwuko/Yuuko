@@ -55,7 +55,7 @@ public final class Utilities {
     /**
      * Returns the server custom prefix.
      *
-     * @param guild the server to retrieve the prefix from
+     * @param guild {@link Guild}
      * @return String
      */
     public static String getServerPrefix(Guild guild) {
@@ -65,7 +65,7 @@ public final class Utilities {
     /**
      * Returns a pretty version of a command's permission array by removing the brackets surrounding them.
      *
-     * @param permissions Permission[]
+     * @param permissions {@link List<Permission>}
      * @return String
      */
     public static String getCommandPermissions(List<Permission> permissions) {
@@ -75,7 +75,7 @@ public final class Utilities {
     /**
      * Returns the specific shard's SelfUser object.
      *
-     * @return SelfUser
+     * @return {@link SelfUser}
      */
     public static SelfUser getSelfUser() {
         for(JDA shard : Configuration.SHARD_MANAGER.getShards()) {

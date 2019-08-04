@@ -10,6 +10,7 @@ import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
@@ -84,15 +85,13 @@ public class GenericGuildController {
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
-                final String description = "Automatic setup was successful! Thanks for inviting me to your guild, commands can be found at https://www.yuuko.info or by using the `-help` command! If you have any problems, suggestions, or general feedback, please join the support guild at " + Configuration.SUPPORT_GUILD + " and drop me a line!";
+                Member bot = e.getGuild().getSelfMember();
 
-                if(e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)) {
+                if(bot.hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE) && bot.hasPermission(textChannel, Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)) {
                     EmbedBuilder about = new EmbedBuilder()
-                            .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
-                            .setDescription(description);
+                            .setAuthor(Configuration.BOT.getAsTag(), null, Configuration.BOT.getAvatarUrl())
+                            .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `=about` to get some general information about me.");
                     MessageHandler.sendMessage(e, textChannel, about.build());
-                } else {
-                    MessageHandler.sendMessage(e, textChannel, description);
                 }
             });
         } catch(Exception ex) {

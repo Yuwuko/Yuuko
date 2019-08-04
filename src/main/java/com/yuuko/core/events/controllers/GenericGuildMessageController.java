@@ -37,7 +37,6 @@ public class GenericGuildMessageController {
 
     private void guildMessageReceivedEvent(GuildMessageReceivedEvent e) {
         try {
-
             if(e.getAuthor().isBot()) {
                 return;
             }

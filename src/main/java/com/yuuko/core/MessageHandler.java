@@ -18,8 +18,8 @@ public final class MessageHandler {
     /**
      * Sends a message, saving those precious bytes.
      *
-     * @param event GenericMessageEvent
-     * @param message String
+     * @param event {@link MessageEvent}
+     * @param message {@link String}
      */
     public static void sendMessage(MessageEvent event, String message) {
         try {
@@ -34,8 +34,8 @@ public final class MessageHandler {
     /**
      * Sends an embedded message.
      *
-     * @param event GenericMessageEvent
-     * @param embed MessageEmbed
+     * @param event {@link MessageEvent}
+     * @param embed {@link MessageEmbed}
      */
     public static void sendMessage(MessageEvent event, MessageEmbed embed) {
         try {
@@ -50,8 +50,8 @@ public final class MessageHandler {
     /**
      * Sends a file via message channel.
      *
-     * @param event GenericMessageEvent
-     * @param file File
+     * @param event {@link MessageEvent}
+     * @param file {@link File}
      */
     public static void sendMessage(MessageEvent event, File file) {
         try {
@@ -66,7 +66,7 @@ public final class MessageHandler {
     /**
      * Sends a file via message channel.
      *
-     * @param event GenericMessageEvent
+     * @param event {@link MessageEvent}
      * @param bytes byte[]
      * @param fileName String
      */
@@ -83,9 +83,9 @@ public final class MessageHandler {
     /**
      * Sends an embedded message to a supplied channel.
      *
-     * @param event GenericMessageEvent
-     * @param channel TextChannel
-     * @param embed MessageEmbed
+     * @param event {@link MessageEvent}
+     * @param channel {@link TextChannel}
+     * @param embed {@link MessageEmbed}
      */
     public static void sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
@@ -100,9 +100,9 @@ public final class MessageHandler {
     /**
      * Sends an embedded message to a supplied channel.
      *
-     * @param event GenericGuildEvent
-     * @param channel TextChannel
-     * @param embed MessageEmbed
+     * @param event {@link GenericGuildEvent}
+     * @param channel {@link TextChannel}
+     * @param embed {@link MessageEmbed}
      */
     public static void sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
@@ -117,9 +117,9 @@ public final class MessageHandler {
     /**
      * Sends a message to the provided channel.
      *
-     * @param event GenericGuildEvent
-     * @param channel TextChannel
-     * @param message String
+     * @param event {@link GenericGuildEvent}
+     * @param channel {@link TextChannel}
+     * @param message {@link String}
      */
     public static void sendMessage(GenericGuildEvent event, TextChannel channel, String message) {
         try {
@@ -134,8 +134,8 @@ public final class MessageHandler {
     /**
      * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
 
-     * @param guild Guild
-     * @param channel TextChannel
+     * @param guild {@link Guild}
+     * @param channel {@link TextChannel}
      * @return boolean
      */
     private static boolean hasSendPermission(Guild guild, TextChannel channel) {

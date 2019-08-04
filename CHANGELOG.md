@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-08-04
++ [~] Rewrote some of the documentation used the {@link} tag for easier navigation.
+
 ## 2019-08-03
 + [~] Rewrote the audio management system to make things more predictable.
 + [~] Minor refactoring to several methods and field names.

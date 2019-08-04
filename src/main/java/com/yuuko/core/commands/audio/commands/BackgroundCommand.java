@@ -54,9 +54,9 @@ public class BackgroundCommand extends Command {
     /**
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
      *
-     * @param manager; GuildAudioManager.
-     * @param e; MessageEvent.
-     * @param url; TrackUrl.
+     * @param manager {@link GuildAudioManager}
+     * @param e {@link MessageEvent}
+     * @param url {@link String}
      */
     private void setAndPlay(GuildAudioManager manager, MessageEvent e, String url) {
         final String trackUrl;

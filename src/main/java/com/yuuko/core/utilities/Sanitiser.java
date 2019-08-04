@@ -14,7 +14,7 @@ public final class Sanitiser {
      * Checks method that allows for fail-fast before any further database calls are made,
      * preventing access to the CommandExecutor class where nulls will throw exceptions.
      *
-     * @param event MessageEvent
+     * @param event {@link MessageEvent}
      * @return boolean
      */
     public static boolean checks(MessageEvent event) {
@@ -41,7 +41,7 @@ public final class Sanitiser {
     /**
      * Checks a command to ensure all parameters are present.
      *
-     * @param e MessageEvent
+     * @param e {@link MessageEvent}
      * @param feedback boolean
      * @return boolean
      */
@@ -77,8 +77,8 @@ public final class Sanitiser {
     /**
      * Checks to see if the command executor can interact with the command target.
      *
-     * @param e MessageEvent
-     * @param member Member
+     * @param e {@link MessageEvent}
+     * @param member {@link Member}
      * @return boolean
      */
     public static boolean canInteract(MessageEvent e, Member member, String reason, boolean feedback) {
@@ -104,7 +104,7 @@ public final class Sanitiser {
     /**
      * Checks to see if a string is a number or not without the whole Integer.parseInt() exception thang.
      *
-     * @param string String
+     * @param string {@link String}
      * @return boolean
      */
     public static boolean isNumber(String string) {
@@ -114,7 +114,7 @@ public final class Sanitiser {
     /**
      * Checks to see if the given date is a valid date of the format dd/MM/yyyy.
      *
-     * @param string date string.
+     * @param string {@link String}
      * @return boolean
      */
     public static boolean isDate(String string) {
@@ -151,7 +151,7 @@ public final class Sanitiser {
 
     /**
      * Takes a string and removes all special characters and replaces spaces with %20s.
-     * @param string url string.
+     * @param string {@link String}
      * @param encodeBlank boolean.
      *
      * @return String
