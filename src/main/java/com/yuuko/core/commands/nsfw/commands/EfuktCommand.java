@@ -4,6 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.io.RequestHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +24,7 @@ public class EfuktCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            Document doc = Jsoup.connect(BASE_URL).get();
+            Document doc = Jsoup.parse(new RequestHandler(BASE_URL).getString());
             Elements meta = doc.getElementsByTag("meta");
 
             String image = "https://i.imgur.com/YXqsEo6.jpg";

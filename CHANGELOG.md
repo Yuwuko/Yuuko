@@ -2,9 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-08-04
+## 2019-08-05
 + [~] Improved some of the documentation used the {@link} tag for easier navigation.
 + [~] Rewrote most of TrackScheduler and un-verbosified the YoutubeSearchHandler amongst other commands.
++ [~] Started using OkHttp to retrieve and Jsoup to parse instead of purely the latter since there is a significant performance increase. (~50% in non-api calls)
 
 ## 2019-08-03
 + [~] Rewrote the audio management system to make things more predictable.

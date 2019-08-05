@@ -29,7 +29,6 @@ public class GenericGuildController {
     private static final EventMetrics metrics = MetricsManager.getEventMetrics();
 
     public GenericGuildController(GenericGuildEvent e) {
-
         if(e instanceof GuildMemberJoinEvent) {
             guildMemberJoinEvent((GuildMemberJoinEvent)e);
             metrics.GUILD_MEMBER_JOIN_EVENT.getAndIncrement();

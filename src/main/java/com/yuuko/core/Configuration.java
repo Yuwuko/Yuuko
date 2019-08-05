@@ -40,7 +40,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-08-04";
+    public static final String VERSION = "2019-08-05";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
