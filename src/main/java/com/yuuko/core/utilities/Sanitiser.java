@@ -156,7 +156,7 @@ public final class Sanitiser {
      *
      * @return String
      */
-    public static String scrubString(String string, boolean encodeBlank) {
+    public static String scrub(String string, boolean encodeBlank) {
         string = string.replaceAll("[!@#$%^&*(),.?\":{}|<>]", "");
 
         return encodeBlank ? string.replace(" ", "%20") : string;

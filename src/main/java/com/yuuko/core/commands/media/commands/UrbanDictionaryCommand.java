@@ -23,7 +23,7 @@ public class UrbanDictionaryCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String url = BASE_URL + Sanitiser.scrubString(e.getParameters(), true);
+        final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true);
         final JsonObject json = new RequestHandler(url).getJsonObject();
 
         if(json == null) {

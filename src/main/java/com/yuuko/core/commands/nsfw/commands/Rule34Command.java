@@ -6,7 +6,6 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -24,7 +23,7 @@ public class Rule34Command extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            Document doc = Jsoup.parse(new RequestHandler(BASE_URL).getString());
+            Document doc = new RequestHandler(BASE_URL).getDocument();
             Elements images = doc.getElementsByTag("img");
 
             String image = "https://i.imgur.com/YXqsEo6.jpg";

@@ -26,7 +26,7 @@ public class TescoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = BASE_URL + Sanitiser.scrubString(e.getParameters(), true) + "&offset=0&limit=1";
+            final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + "&offset=0&limit=1";
             final JsonObject json = new RequestHandler(url, new RequestProperty("Ocp-Apim-Subscription-Key", Utilities.getApiKey("tesco"))).getJsonObject();
             final JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 

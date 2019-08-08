@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-08-08
++ [~] Modified RequestHandler to be able to return Jsoup's Document object
+
 ## 2019-08-05
 + [~] Improved some of the documentation used the {@link} tag for easier navigation.
 + [~] Rewrote most of TrackScheduler and un-verbosified the YoutubeSearchHandler amongst other commands.

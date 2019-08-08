@@ -52,7 +52,7 @@ public class OsuCommand extends Command {
                 default: modeString = "unknown";
             }
 
-            final String url = BASE_URL + Utilities.getApiKey("osu") + "&u=" + Sanitiser.scrubString(commandParameters[0], true) + "&m=" + mode;
+            final String url = BASE_URL + Utilities.getApiKey("osu") + "&u=" + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
             final JsonArray json = new RequestHandler(url).getJsonArray();
 
             if(json == null || json.size() < 1) {

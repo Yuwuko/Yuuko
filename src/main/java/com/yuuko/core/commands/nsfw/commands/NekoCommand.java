@@ -22,7 +22,7 @@ public class NekoCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = BASE_URL + ((e.hasParameters()) ? Sanitiser.scrubString(e.getParameters(), true) : "lewd");
+            final String url = BASE_URL + ((e.hasParameters()) ? Sanitiser.scrub(e.getParameters(), true) : "lewd");
             final JsonObject json = new RequestHandler(url).getJsonObject();
 
             if(json != null && !json.has("msg")) {
