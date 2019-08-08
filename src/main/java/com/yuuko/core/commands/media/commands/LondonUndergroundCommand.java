@@ -34,7 +34,7 @@ public class LondonUndergroundCommand extends Command {
             final String url = BASE_URL + Utilities.getApiApplicationId("transportforlondon") + "&app_key=" + Utilities.getApiKey("transportforlondon");
             final String json = new RequestHandler(url).getString();
 
-            ArrayList<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<List<LineManager>>(){});
+            List<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<>(){});
 
             // Build string for reasons why line doesn't have good service.
             StringBuilder reasons = new StringBuilder();
