@@ -14,7 +14,8 @@ public class DeveloperModule extends Module {
             new ReloadApiCommand(),
             new LavalinkNodeCommand(),
             new ReloadDatabaseCommand(),
-            new LogMetricsCommand()
+            new LogMetricsCommand(),
+            new ShutdownCommand()
     );
 
     public DeveloperModule() {

@@ -2,9 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-08-08
+## 2019-08-09
 + [~] Modified RequestHandler to be able to return Jsoup's Document object
 + [~] Updated JDA to 4.BETA.0.37 from 32 and Jackson to 2.10.0.pr1 from 2.9.9.1
++ [+] Added [__shutdown__] command to allow /proper/ termination of the application and its dependencies.
 
 ## 2019-08-05
 + [~] Improved some of the documentation used the {@link} tag for easier navigation.
