@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-08-14
++ [+] Added audio node metrics to track how many songs are in queue and also how many players/active players there are.
+
 ## 2019-08-13
 + [~] Updated OkHttp to 4.1.0 from 4.0.1.
 + [~] Updated RequestHandler to utilise the new BrotliInterceptor introduced in OkHttp 4.1.0

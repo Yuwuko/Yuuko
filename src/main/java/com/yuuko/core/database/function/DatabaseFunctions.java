@@ -6,6 +6,7 @@ import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
+import com.yuuko.core.metrics.pathway.AudioMetrics;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
 import com.yuuko.core.metrics.pathway.EventMetrics;
 import com.yuuko.core.metrics.pathway.SystemMetrics;
@@ -23,6 +24,7 @@ public class DatabaseFunctions {
     private static final EventMetrics event = MetricsManager.getEventMetrics();
     private static final SystemMetrics system = MetricsManager.getSystemMetrics();
     private static final DiscordMetrics discord = MetricsManager.getDiscordMetrics();
+    private static final AudioMetrics audio = MetricsManager.getAudioMetrics();
 
     /**
      * Updates the database with the latest metrics.
@@ -31,7 +33,8 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `AudioMetrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -57,12 +60,16 @@ public class DatabaseFunctions {
             stmt2.execute();
 
             stmt3.setInt(1, shardId);
-            stmt3.setInt(2, discord.GATEWAY_PING.get());
-            stmt3.setInt(3, discord.REST_PING.get());
-            stmt3.setInt(4, discord.GUILD_COUNT);
-            stmt3.setInt(5, discord.USER_COUNT);
+            stmt3.setDouble(2, discord.GATEWAY_PING.get());
+            stmt3.setDouble(3, discord.REST_PING.get());
+            stmt3.setInt(4, discord.GUILD_COUNT.get());
+            stmt3.setInt(5, discord.USER_COUNT.get());
             stmt3.execute();
 
+            stmt4.setInt(1, audio.PLAYERS_TOTAL.get());
+            stmt4.setInt(2, audio.PLAYERS_ACTIVE.get());
+            stmt4.setInt(3, audio.QUEUE_SIZE.get());
+            stmt4.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -102,7 +109,8 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE shardId = ?");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics` WHERE shardId = ?");
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE shardId = ?");
-            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?")) {
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `AudioMetrics`");
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?")) {
 
             stmt.setInt(1, shard);
             stmt.execute();
@@ -113,8 +121,10 @@ public class DatabaseFunctions {
             stmt3.setInt(1, shard);
             stmt3.execute();
 
-            stmt4.setInt(1, shard);
             stmt4.execute();
+
+            stmt5.setInt(1, shard);
+            stmt5.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -127,10 +137,12 @@ public class DatabaseFunctions {
     public static void pruneMetrics() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `AudioMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
             stmt.execute();
             stmt2.execute();
+            stmt3.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -217,8 +229,8 @@ public class DatabaseFunctions {
             JDA shard = Configuration.BOT.getJDA();
 
             stmt.setString(1, shard.getStatus().name());
-            stmt.setInt(2, discord.GUILD_COUNT);
-            stmt.setInt(3, discord.USER_COUNT);
+            stmt.setInt(2, discord.GUILD_COUNT.get());
+            stmt.setInt(3, discord.USER_COUNT.get());
             stmt.setInt(4, discord.GATEWAY_PING.get());
             stmt.setInt(5, discord.REST_PING.get());
             stmt.setInt(6, shard.getShardInfo().getShardId());

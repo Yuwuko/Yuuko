@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DiscordMetrics {
-    public int GUILD_COUNT = 0;
-    public int USER_COUNT = 0;
+    public final AtomicInteger GUILD_COUNT = new AtomicInteger();
+    public final AtomicInteger USER_COUNT = new AtomicInteger();
     public final AtomicInteger GATEWAY_PING = new AtomicInteger();
     public final AtomicInteger REST_PING = new AtomicInteger();
 
@@ -23,8 +23,9 @@ public class DiscordMetrics {
             userCount += guild.getMemberCache().size();
         }
 
-        USER_COUNT = userCount;
-        GUILD_COUNT = guilds.size();
+        USER_COUNT.set(userCount);
+        GUILD_COUNT.set(guilds.size());
+
     }
 
     /**
