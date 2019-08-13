@@ -6,9 +6,13 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-08-12'
+version = '2019-08-13'
 sourceCompatibility = 1.10
 mainClassName = 'com.yuuko.core.Yuuko'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 jar {
     doFirst {
@@ -32,6 +36,7 @@ repositories {
 
 ext {
     jdaVer                          = '4.0.0_39'
+    //yuukoJdaVer                     = '57b4b3a3ef'
     lavaplayerVer                   = '1.3.20'
     jdanasVer                       = '1.1.0'
     lavalinkClientVer               = '0605139'
@@ -52,6 +57,7 @@ ext {
 
 dependencies {
     compile group: 'net.dv8tion', name: 'JDA', version: jdaVer
+    //compile group: 'com.github.Yuuko-oh', name: 'JDA', version: yuukoJdaVer
     compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayerVer
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanasVer
     compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClientVer
@@ -63,6 +69,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotationsVer
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDatabindVer
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVer
+    compile group: 'com.squareup.okhttp3', name: 'okhttp-brotli', version: okhttpVer
     compile group: 'org.jsoup', name: 'jsoup', version: jsoupVer
     compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVer
     compile group: 'com.zaxxer', name: 'HikariCP', version: hikaricpVer

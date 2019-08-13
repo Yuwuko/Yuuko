@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class MuteCommand extends Command {
 
@@ -37,16 +38,17 @@ public class MuteCommand extends Command {
             return;
         }
 
+        Consumer<Throwable> failure = f -> e.getMessage().addReaction("❌").queue();
         if(target.getRoles().stream().noneMatch((role) -> role.getName().equalsIgnoreCase("Muted"))) {
             e.getGuild().addRoleToMember(target, muted).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Mute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
-            }, f -> e.getMessage().addReaction("❌").queue());
+            }, failure);
         } else {
             e.getGuild().removeRoleFromMember(target, muted).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
                 ModerationLogSetting.execute(e, "Unmute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
-            }, f -> e.getMessage().addReaction("❌").queue());
+            }, failure);
         }
     }
 

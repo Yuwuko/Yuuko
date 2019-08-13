@@ -2,9 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-08-12
-+ [~] Updated JDA to 4.0.0_39 stable from BETA_32.
+## 2019-08-13
 + [~] Updated OkHttp to 4.1.0 from 4.0.1.
++ [~] Updated RequestHandler to utilise the new BrotliInterceptor introduced in OkHttp 4.1.0
++ [~] Updated JDA to 4.0.0_39 stable from BETA_32.
 + [~] Updated Lavaplayer to 1.3.20 from 1.3.19.
 
 ## 2019-08-09
