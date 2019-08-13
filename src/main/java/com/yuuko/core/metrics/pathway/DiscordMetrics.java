@@ -33,6 +33,6 @@ public class DiscordMetrics {
      */
     public void updatePing() {
         GATEWAY_PING.set((int)Configuration.BOT.getJDA().getGatewayPing());
-        REST_PING.set(Configuration.BOT.getJDA().getRestPing().complete().intValue());
+        Configuration.BOT.getJDA().getRestPing().queue(s-> REST_PING.set(s.intValue()), f -> REST_PING.set(0));
     }
 }

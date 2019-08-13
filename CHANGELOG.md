@@ -3,7 +3,8 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-08-14
-+ [+] Added audio node metrics to track how many songs are in queue and also how many players/active players there are.
++ [+] Added AudioMetrics to track how many songs are in queue and also how many players/active players there are.
++ [~] Modified DiscordMetrics to queue instead of complete, may result in 0 values, but prevents timeouts and subsequent exceptions.
 
 ## 2019-08-13
 + [~] Updated OkHttp to 4.1.0 from 4.0.1.
