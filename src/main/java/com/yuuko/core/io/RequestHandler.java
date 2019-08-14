@@ -7,7 +7,6 @@ import com.yuuko.core.io.entity.RequestProperty;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.brotli.BrotliInterceptor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -15,7 +14,8 @@ import org.slf4j.LoggerFactory;
 
 public class RequestHandler {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
-    private static final OkHttpClient client = new OkHttpClient.Builder().addInterceptor(BrotliInterceptor.INSTANCE).build();
+    // new OkHttpClient.Builder().addInterceptor(BrotliInterceptor.INSTANCE) -> figure out why issue (later)
+    private static final OkHttpClient client = new OkHttpClient();
     private String content;
 
     private static final String JSON = "application/json";
