@@ -35,11 +35,11 @@ repositories {
 }
 
 ext {
-    jdaVer                          = '4.0.0_39'
+    jdaVer                          = '4.0.0_42'
     //yuukoJdaVer                     = '57b4b3a3ef'
     lavaplayerVer                   = '1.3.20'
     jdanasVer                       = '1.1.0'
-    lavalinkClientVer               = '0605139'
+    lavalinkClientVer               = '4.0'
     //yuukoLavalinkClientVer          = 'jda4-SNAPSHOT'
     dblJavaWrapperVer               = '2.0.1'
     ddblAPIjavaVer                  = '0.4.4'

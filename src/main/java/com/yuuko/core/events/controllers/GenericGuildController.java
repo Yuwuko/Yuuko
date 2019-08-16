@@ -86,7 +86,8 @@ public class GenericGuildController {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
                 Member bot = e.getGuild().getSelfMember();
 
-                if(bot.hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE) && bot.hasPermission(textChannel, Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)) {
+                Permission[] messagePermissions = new Permission[]{Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS};
+                if(bot.hasPermission(messagePermissions) && bot.hasPermission(textChannel, messagePermissions)) {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Configuration.BOT.getAsTag(), null, Configuration.BOT.getAvatarUrl())
                             .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `=about` to get some general information about me.");
