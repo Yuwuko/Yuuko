@@ -1,6 +1,8 @@
 package com.yuuko.core;
 
 import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.scheduler.ScheduleHandler;
+import com.yuuko.core.scheduler.jobs.MessageDeleteJob;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -125,6 +127,40 @@ public final class MessageHandler {
         try {
             if(hasSendPermission(event, channel)) {
                 channel.sendMessage(message).queue();
+            }
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Sends a message to a supplied channel.
+     *
+     * @param event {@link GenericGuildEvent}
+     * @param channel {@link TextChannel}
+     * @param message {@link MessageEmbed}
+     */
+    public static void sendTempMessage(GenericGuildEvent event, TextChannel channel, String message) {
+        try {
+            if(hasSendPermission(event, channel)) {
+                channel.sendMessage(message).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
+            }
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Sends an embedded message to a supplied channel.
+     *
+     * @param event {@link GenericGuildEvent}
+     * @param channel {@link TextChannel}
+     * @param embed {@link MessageEmbed}
+     */
+    public static void sendTempMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
+        try {
+            if(hasSendPermission(event, channel)) {
+                channel.sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);

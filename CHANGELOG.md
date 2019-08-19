@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-08-19
++ [+] Added new setting which allows welcome messages to be automatically deleted after a minute.
+
 ## 2019-08-16
 + [+] Added AudioMetrics to track how many songs are in queue and also how many players/active players there are.
 + [~] Modified DiscordMetrics to queue instead of complete, may result in 0 values, but prevents timeouts and subsequent exceptions.

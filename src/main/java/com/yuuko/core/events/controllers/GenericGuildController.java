@@ -118,17 +118,21 @@ public class GenericGuildController {
         GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
 
         final String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
-        if(channelId != null) {
-            final String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
-            if(message == null) {
-                TextChannel channel = e.getGuild().getTextChannelById(channelId);
-                EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, "Welcome to **%guild%**, %user%!"));
-                MessageHandler.sendMessage(e, channel, member.build());
-            } else {
-                TextChannel channel = e.getGuild().getTextChannelById(channelId);
-                EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, message));
-                MessageHandler.sendMessage(e, channel, member.build());
-            }
+        if(channelId == null) {
+            return;
+        }
+
+        String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
+        if(message == null) {
+            message = "Welcome to **%guild%**, %user%!";
+        }
+
+        TextChannel channel = e.getGuild().getTextChannelById(channelId);
+        EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, message));
+        if(GuildFunctions.getGuildSettingBoolean("newMemberMessageTemp", e.getGuild().getId())) {
+            MessageHandler.sendTempMessage(e, channel, member.build());
+        } else {
+            MessageHandler.sendMessage(e, channel, member.build());
         }
     }
 

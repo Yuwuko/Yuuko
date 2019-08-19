@@ -49,6 +49,16 @@ public class NewMemberSetting extends Setting {
             return;
         }
 
+        // If "!settings newMember autoremove"
+        if(parameters[1].equalsIgnoreCase("autoremove")) {
+            String flippedPosition = GuildFunctions.getGuildSettingBoolean("newMemberRemoveMessage",  e.getGuild().getId()) ? "0" : "1";
+            if(GuildFunctions.setGuildSettings("newMemberRemoveMessage", flippedPosition, e.getGuild().getId())) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("New Member - Auto Remove Messages").setDescription("Auto remove new member messages has now been set to " + (flippedPosition.equals("1") ? "`true`." : "`false`."));
+                MessageHandler.sendMessage(e, embed.build());
+            }
+            return;
+        }
+
         // If "!settings newMember #Channel"
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {

@@ -279,6 +279,28 @@ public class GuildFunctions {
     }
 
     /**
+     * Returns the boolean value of a single guild settings.
+     *
+     * @param setting the setting to be checked
+     * @param guild the guild to check the setting for
+     * @return boolean
+     */
+    public static boolean getGuildSettingBoolean(String setting, String guild) {
+        try(Connection conn = YuukoDatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + setting + "` FROM `GuildSettings` WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guild);
+            ResultSet resultSet = stmt.executeQuery();
+
+            return resultSet.next() && resultSet.getBoolean(1);
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+    /**
      * Changes a setting value for the given guild setting. (Very dangerous without the correct checking...)
      *
      * @param setting the setting to be changed.
