@@ -12,23 +12,23 @@ import net.dv8tion.jda.api.Permission;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 public class SettingsCommand extends Command {
 
-    private static final List<String> settings = Arrays.asList(
-            "prefix",
-            "deleteexecuted",
-            "comlog",
-            "nowplaying",
-            "djmode",
-            "newmember",
-            "starboard",
-            "modlog"
-    );
+    private static final HashMap<String, Class<? extends Setting>> settings = new HashMap<>();
 
     public SettingsCommand() {
         super("settings", Configuration.MODULES.get("core"), 0, Arrays.asList("-settings", "-settings <setting> <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+
+        settings.put("prefix", PrefixSetting.class);
+        settings.put("starboard", StarboardSetting.class);
+        settings.put("comlog", CommandLogSetting.class);
+        settings.put("modlog", ModerationLogSetting.class);
+        settings.put("newmember", NewMemberSetting.class);
+        settings.put("djmode", SettingExecuteBoolean.class);
+        settings.put("nowplaying", SettingExecuteBoolean.class);
+        settings.put("deleteexecuted", SettingExecuteBoolean.class);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SettingsCommand extends Command {
                 String[] parameters = e.getParameters().split("\\s+", 2);
 
                 // Check to make sure the command is a valid command.
-                if(!settings.contains(parameters[0].toLowerCase())) {
+                if(!settings.containsKey(parameters[0].toLowerCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("`" + parameters[0].toUpperCase() + "` is not a valid setting.");
                     MessageHandler.sendMessage(e, embed.build());
                     return;
@@ -49,26 +49,7 @@ public class SettingsCommand extends Command {
                     return;
                 }
 
-                switch(parameters[0].toLowerCase()) {
-                    case "prefix": new PrefixSetting(e);
-                        return;
-                    case "starboard": new StarboardSetting(e);
-                        return;
-                    case "comlog": new CommandLogSetting(e);
-                        return;
-                    case "modlog": new ModerationLogSetting(e);
-                        return;
-                    case "newmember": new NewMemberSetting(e);
-                        return;
-                    default:
-                        if(!parameters[1].equalsIgnoreCase("true") && !parameters[1].equalsIgnoreCase("false")) {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("_" + parameters[1].toUpperCase() + "_ is not a valid value. (Valid: TRUE, FALSE)");
-                            MessageHandler.sendMessage(e, embed.build());
-                            return;
-                        }
-                        new SettingExecuteBoolean(e);
-                }
-
+                settings.get(parameters[0].toLowerCase()).getConstructor(MessageEvent.class).newInstance(e);
                 return;
             }
 

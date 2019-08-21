@@ -2,8 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-08-19
+## 2019-08-21
 + [+] Added new setting which allows welcome messages to be automatically deleted after a minute.
++ [~] Refactored Settings command to be more "iffy" and to instead use a HashMap.
 
 ## 2019-08-16
 + [+] Added AudioMetrics to track how many songs are in queue and also how many players/active players there are.

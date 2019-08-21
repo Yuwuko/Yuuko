@@ -11,8 +11,8 @@ import static com.yuuko.core.Configuration.LAVALINK;
 
 public class AudioMetrics {
     public final AtomicInteger PLAYERS_TOTAL = new AtomicInteger();
-    public final AtomicInteger  PLAYERS_ACTIVE = new AtomicInteger();
-    public final AtomicInteger  QUEUE_SIZE = new AtomicInteger();
+    public final AtomicInteger PLAYERS_ACTIVE = new AtomicInteger();
+    public final AtomicInteger QUEUE_SIZE = new AtomicInteger();
 
     /**
      * Updates all of the system metrics
