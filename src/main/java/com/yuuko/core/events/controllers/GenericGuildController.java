@@ -129,7 +129,7 @@ public class GenericGuildController {
 
         TextChannel channel = e.getGuild().getTextChannelById(channelId);
         EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, message));
-        if(GuildFunctions.getGuildSettingBoolean("newMemberMessageTemp", e.getGuild().getId())) {
+        if(GuildFunctions.getGuildSettingBoolean("newMemberRemoveMessage", e.getGuild().getId())) {
             MessageHandler.sendTempMessage(e, channel, member.build());
         } else {
             MessageHandler.sendMessage(e, channel, member.build());
