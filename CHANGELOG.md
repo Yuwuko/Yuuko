@@ -1,6 +1,10 @@
 # Changelog
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
+## 2019-08-28
++ [+] Added [__horoscope__] command.
++ [~] Updated dependencies to their latest versions.
++ [~] Fixed setting which had a wrong database value causing incorrectly check if the setting was enabled.
 
 ## 2019-08-21
 + [+] Added new setting which allows welcome messages to be automatically deleted after a minute.

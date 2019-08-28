@@ -15,7 +15,8 @@ public class FunModule extends Module {
             new EightBallCommand(),
             new CoinFlipCommand(),
             new AdviceCommand(),
-            new JokeCommand()
+            new JokeCommand(),
+            new HoroscopeCommand()
     );
 
     public FunModule() {
