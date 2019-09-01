@@ -1,6 +1,13 @@
 # Changelog
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
+
+## 2019-09-01
++ [!] Setup the groundwork for a new Waifu module to add a bit more fun to the bot.
++ [+] Added [__mywaifu__] command.
++ [+] Added [__waifubuy__] command.
++ [+] Added [__waifustats__] command.
+
 ## 2019-08-28
 + [+] Added [__horoscope__] command.
 + [~] Updated dependencies to their latest versions.
