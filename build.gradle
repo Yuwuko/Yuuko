@@ -6,8 +6,8 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-09-02'
-sourceCompatibility = 1.10
+version = '2019-09-07'
+sourceCompatibility = 1.12
 mainClassName = 'com.yuuko.core.Yuuko'
 
 tasks.withType(JavaCompile) {
@@ -35,44 +35,40 @@ repositories {
 }
 
 ext {
-    jdaVer                          = '4.0.0_45'
-    //yuukoJdaVer                     = '57b4b3a3ef'
-    lavaplayerVer                   = '1.3.20'
-    jdanasVer                       = '1.1.0'
-    lavalinkClientVer               = '4.0'
-    //yuukoLavalinkClientVer          = 'jda4-SNAPSHOT'
-    dblJavaWrapperVer               = '2.0.1'
-    ddblAPIjavaVer                  = '0.4.4'
-    googleApiServicesYoutubeVer     = 'v3-rev212-1.25.0'
-    gsonVer                         = '2.8.5'
-    jacksonAnnotationsVer           = '2.10.0.pr1'
-    jacksonDatabindVer              = '2.10.0.pr1'
-    okhttpVer                       = '4.1.0'
-    jsoupVer                        = '1.12.1'
-    mysqlConnectorJavaVer           = '8.0.17'
-    hikaricpVer                     = '3.3.1'
-    slf4jSimpleVer                  = '2.0.0-alpha0'
-    reflectionsVer                  = '0.9.11'
+    jda                          = '4.0.0_46'
+    lavaplayer                   = '1.3.20'
+    jdanas                       = '1.1.0'
+    lavalinkClient               = '4.0'
+    dblJavaWrapper               = '2.0.1'
+    ddblAPIjava                  = '0.4.4'
+    googleApiServicesYoutube     = 'v3-rev212-1.25.0'
+    gson                         = '2.8.5'
+    jacksonAnnotations           = '2.10.0.pr2'
+    jacksonDatabind              = '2.10.0.pr2'
+    okhttp                       = '4.1.1'
+    jsoup                        = '1.12.1'
+    mysqlConnectorJava           = '8.0.17'
+    hikaricp                     = '3.3.1'
+    slf4jSimple                  = '2.0.0-alpha0'
+    reflections8                 = '0.11.6'
 }
 
 dependencies {
-    compile group: 'net.dv8tion', name: 'JDA', version: jdaVer
-    //compile group: 'com.github.Yuuko-oh', name: 'JDA', version: yuukoJdaVer
-    compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayerVer
-    compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanasVer
-    compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClientVer
-    //compile group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: yuukoLavalinkClientVer
-    compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapperVer
-    compile group: 'com.github.BasketBandit', name: 'ddblAPI.java', version: ddblAPIjavaVer
-    compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutubeVer
-    compile group: 'com.google.code.gson', name: 'gson', version: gsonVer
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotationsVer
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDatabindVer
-    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVer
-    compile group: 'com.squareup.okhttp3', name: 'okhttp-brotli', version: okhttpVer
-    compile group: 'org.jsoup', name: 'jsoup', version: jsoupVer
-    compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVer
-    compile group: 'com.zaxxer', name: 'HikariCP', version: hikaricpVer
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jSimpleVer
-    compile group: 'org.reflections', name: 'reflections', version: reflectionsVer
+    compile group: 'net.dv8tion', name: 'JDA', version: jda
+    compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer
+    compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
+    compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClient
+    compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
+    compile group: 'com.github.BasketBandit', name: 'ddblAPI.java', version: ddblAPIjava
+    compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutube
+    compile group: 'com.google.code.gson', name: 'gson', version: gson
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotations
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDatabind
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp
+    compile group: 'com.squareup.okhttp3', name: 'okhttp-brotli', version: okhttp
+    compile group: 'org.jsoup', name: 'jsoup', version: jsoup
+    compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJava
+    compile group: 'com.zaxxer', name: 'HikariCP', version: hikaricp
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jSimple
+    compile group: 'net.oneandone.reflections8', name: 'reflections8', version: reflections8
 }

@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09=07
++ [!] Swapped out the Reflections package to the forked/maintained Reflections8 which depreciates the use of Guava.
++ [~] Updated dependencies, notably, Jackson to 2.10.0.pr2 and OkHttp to 4.1.1.
+
 ## 2019-08-28
 + [+] Added [__horoscope__] command.
 + [~] Updated dependencies to their latest versions.
