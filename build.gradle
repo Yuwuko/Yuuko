@@ -35,9 +35,9 @@ repositories {
 }
 
 ext {
-    jda                          = '4.0.0_46'
+    //jda                          = '4.0.0_46'
     jdaOkHttp4                   = '-SNAPSHOT'
-    lavaplayer                   = '1.3.20'
+    lavaplayer                   = '1.3.21'
     jdanas                       = '1.1.0'
     lavalinkClient               = '4.0'
     dblJavaWrapper               = '2.0.1'
