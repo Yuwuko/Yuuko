@@ -10,7 +10,7 @@ public class MessageDeleteJob extends Job {
     private final MessageDeleteTask messageDeleteTask;
 
     public MessageDeleteJob(Message message) {
-        super(0, 1, TimeUnit.MINUTES);
+        super(1, 0, TimeUnit.MINUTES);
         this.messageDeleteTask = new MessageDeleteTask(message);
     }
 

@@ -4,7 +4,9 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-09-10
 + [!] Switched to a self-maintained experimental version of JDA, migrating it to OkHttp 4.
-+ [-] Removed unused Brotli dependency
++ [~] Fixed MessageDeleteJob to actually work instead of just removing messages immediately.
++ [~] Updated build.gradle to use Java 12 on JitPack. (hopefully)
++ [-] Removed unused Brotli dependency.
 
 ## 2019-09-07
 + [!] Swapped out the Reflections package to the forked/maintained Reflections8 which depreciates the use of Guava.

@@ -10,8 +10,13 @@ version = '2019-09-10'
 sourceCompatibility = 1.12
 mainClassName = 'com.yuuko.core.Yuuko'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).each {
     options.encoding = 'UTF-8'
+    it.options.compilerArgs.add('--enable-preview')
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 jar {
