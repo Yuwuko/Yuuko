@@ -2,7 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-09=07
+## 2019-09-10
++ [!] Switched to a self-maintained experimental version of JDA, migrating it to OkHttp 4.
++ [-] Removed unused Brotli dependency
+
+## 2019-09-07
 + [!] Swapped out the Reflections package to the forked/maintained Reflections8 which depreciates the use of Guava.
 + [~] Updated dependencies, notably, Jackson to 2.10.0.pr2 and OkHttp to 4.1.1.
 
