@@ -6,17 +6,12 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-09-10'
+version = '2019-09-11'
 sourceCompatibility = 1.12
 mainClassName = 'com.yuuko.core.Yuuko'
 
-tasks.withType(JavaCompile).each {
+tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-    it.options.compilerArgs.add('--enable-preview')
-}
-
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 jar {
@@ -42,7 +37,7 @@ repositories {
 ext {
     //jda                          = '4.0.0_46'
     jdaOkHttp4                   = '-SNAPSHOT'
-    lavaplayer                   = '1.3.21'
+    lavaplayer                   = '1.3.22'
     jdanas                       = '1.1.0'
     lavalinkClient               = '4.0'
     dblJavaWrapper               = '2.0.1'
