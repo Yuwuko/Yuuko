@@ -90,7 +90,7 @@ public class GenericGuildController {
                 if(bot.hasPermission(messagePermissions) && bot.hasPermission(textChannel, messagePermissions)) {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Configuration.BOT.getAsTag(), null, Configuration.BOT.getAvatarUrl())
-                            .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `=about` to get some general information about me.");
+                            .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `-about` to get some general information about me.");
                     MessageHandler.sendMessage(e, textChannel, about.build());
                 }
             });

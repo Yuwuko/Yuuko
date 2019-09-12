@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-09-11'
+version = '2019-09-12'
 sourceCompatibility = 1.12
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -46,7 +46,7 @@ ext {
     gson                         = '2.8.5'
     jacksonAnnotations           = '2.10.0.pr2'
     jacksonDatabind              = '2.10.0.pr2'
-    okhttp                       = '4.1.1'
+    okhttp                       = '4.2.0'
     jsoup                        = '1.12.1'
     mysqlConnectorJava           = '8.0.17'
     hikaricp                     = '3.3.1'

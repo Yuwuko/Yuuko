@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09-12
++ [~] Updated dependencies, OkHttp 4.2.0, Lavaplayer 1.3.22
++ [~] Fixed minor dialogue error which may have caused confusion with new users of the bot.
++ [~] Modified MessageHandler to hopefully squash the context exceptions that keep being thrown related to permission.
+
 ## 2019-09-10
 + [!] Switched to a self-maintained experimental version of JDA, migrating it to OkHttp 4.
 + [~] Fixed MessageDeleteJob to actually work instead of just removing messages immediately.
