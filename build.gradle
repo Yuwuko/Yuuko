@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-09-12'
+version = '2019-09-15'
 sourceCompatibility = 1.12
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -41,7 +41,7 @@ ext {
     jdanas                       = '1.1.0'
     lavalinkClient               = '4.0'
     dblJavaWrapper               = '2.0.1'
-    ddblAPIjava                  = '0.4.4'
+    ddblAPIjava                  = '0.4.5-okhttp4'
     googleApiServicesYoutube     = 'v3-rev212-1.25.0'
     gson                         = '2.8.5'
     jacksonAnnotations           = '2.10.0.pr2'
