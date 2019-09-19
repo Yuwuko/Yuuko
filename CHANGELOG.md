@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09-19
++ [~] Modified permissions for the [__play__], [__search__] and [__background__] commands.
++ [~] Modified the CommandExecutor to specifically check audio channels for permission overrides before trying to connect.
+
 ## 2019-09-12
 + [~] Updated dependencies, OkHttp 4.2.0, Lavaplayer 1.3.22
 + [~] Fixed minor dialogue error which may have caused confusion with new users of the bot.

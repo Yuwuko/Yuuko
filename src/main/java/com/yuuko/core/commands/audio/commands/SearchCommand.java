@@ -9,6 +9,7 @@ import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class SearchCommand extends Command {
     private static final HashMap<String, List<SearchResult>> audioSearchResults = new HashMap<>();
 
     public SearchCommand() {
-        super("search", Configuration.MODULES.get("audio"), 1, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, null);
+        super("search", Configuration.MODULES.get("audio"), 1, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

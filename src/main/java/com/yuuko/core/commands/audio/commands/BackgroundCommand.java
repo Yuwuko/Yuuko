@@ -13,13 +13,14 @@ import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 
 import java.util.Arrays;
 
 public class BackgroundCommand extends Command {
 
     public BackgroundCommand() {
-        super("background", Configuration.MODULES.get("audio"), 0, Arrays.asList("-background", "-background <url>", "-background <term>"), false, null);
+        super("background", Configuration.MODULES.get("audio"), 0, Arrays.asList("-background", "-background <url>", "-background <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

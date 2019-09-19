@@ -13,18 +13,21 @@ import com.yuuko.core.utilities.Utilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
     private static final List<String> constants = Arrays.asList("core", "developer");
     private static final List<String> disconnectedCommands = Arrays.asList("play", "search", "background", "lyrics");
+    private static final List<String> requireConnectSpeak = Arrays.asList("play", "search", "background");
     private static final List<String> notInVoiceCommands = Arrays.asList("lyrics", "current", "last", "queue");
     private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last", "lyrics");
 
@@ -97,9 +100,18 @@ public class CommandExecutor {
             return true;
         }
 
+        final GuildVoiceState commanderVoiceState = Objects.requireNonNull(commander.getVoiceState());
+
         // Is the member not in a voice channel?
-        if(commander.getVoiceState() != null && !commander.getVoiceState().inVoiceChannel() && !notInVoiceCommands.contains(event.getCommand().getName())) {
+        if(!commanderVoiceState.inVoiceChannel() && !notInVoiceCommands.contains(event.getCommand().getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
+            MessageHandler.sendMessage(event, embed.build());
+            return false;
+        }
+
+        // Does the bot have permissions to connect to the voice channel? (this check isn't done in normal command execution)
+        if(commanderVoiceState.inVoiceChannel() && requireConnectSpeak.contains(event.getCommand().getName()) && !bot.hasPermission(commanderVoiceState.getChannel(), command.getPermissions())) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I don't have the required permissions to do this, make sure I have the `"+ command.getPermissions().toString() +"` permissions and try again!");
             MessageHandler.sendMessage(event, embed.build());
             return false;
         }
