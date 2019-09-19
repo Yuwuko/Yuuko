@@ -14,47 +14,27 @@ import org.slf4j.LoggerFactory;
 
 public class RequestHandler {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
-    // new OkHttpClient.Builder().addInterceptor(BrotliInterceptor.INSTANCE) -> figure out why issue (later)
     private static final OkHttpClient client = new OkHttpClient();
     private String content;
 
-    private static final String JSON = "application/json";
-
     /**
      * RequestHandler method which takes a url and optional arguments as request properties.
-     * Providing no request property parameters will cause defaults to be used which are
-     * Accept: application/json && Content-Type: application/json
      *
      * @param url String: the url used for the connection
      * @param requestProperties RequestProperty: the optional request properties with default application/json when none are given.
      */
     public RequestHandler(String url, RequestProperty... requestProperties) {
-        try {
-            Request.Builder builder = new Request.Builder()
-                    .url(url);
+        Request.Builder builder = new Request.Builder()
+                .url(url);
 
-            if(requestProperties != null && requestProperties.length > 0) {
-                for(RequestProperty property : requestProperties) {
-                    builder.addHeader(property.getHeader(), property.getDirective());
-                }
-            } else {
-                   builder.addHeader("Accept", JSON)
-                   .addHeader("Content-Type", JSON);
+        for(RequestProperty property : requestProperties) {
+            builder.addHeader(property.getHeader(), property.getDirective());
+        }
+
+        try(Response response = client.newCall(builder.build()).execute()) {
+            if(response.code() == 200) {
+                this.content = response.body().string();
             }
-
-            Response response = client.newCall(builder.build()).execute();
-
-            if(response.code() != 200) {
-                response.close();
-                return;
-            }
-
-            if(response.body() != null) {
-                content = response.body().string();
-            }
-
-            response.close();
-
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
