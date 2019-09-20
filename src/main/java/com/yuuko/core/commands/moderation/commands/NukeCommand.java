@@ -9,11 +9,14 @@ import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class NukeCommand extends Command {
 
@@ -41,25 +44,22 @@ public class NukeCommand extends Command {
         }
 
         int value = Integer.parseInt(e.getParameters());
+        value = value < 2 ? 2 : Math.min(value, 99);
 
-        if(value < 2) {
-            value = 2;
-        } else if(value > 99) {
-            value = 99;
-        }
-
-        // Filter out old messages from the mass delete list.
-        final OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
         e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
-            messages.listIterator().forEachRemaining(message -> {
-                if(message != null && message.getTimeCreated().isBefore(past)) {
-                    message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
-                }
+            // Beautiful solution using Collectors.partitionBy() to generate 2 lists based on a boolean comparison.
+            OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
+            Map<Boolean, List<Message>> sortedMessages = messages.stream().collect(Collectors.partitioningBy(message -> message.getTimeCreated().isBefore(past)));
+
+            List<Message> oldMessages = sortedMessages.get(true);
+            oldMessages.listIterator().forEachRemaining(message -> {
+                message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
             });
 
-            // Ensures messages size is 3 or greater. (2 + nuke message)
-            if(messages.size() > 2) {
-                e.getChannel().deleteMessages(messages.subList(1, messages.size())).queue(s -> {
+            // Mass deletion requires a list of at least size 2, I chose 3 to encompass the invocating command also.
+            List<Message> newMessages = sortedMessages.get(false);
+            if(newMessages.size() > 2) {
+                e.getChannel().deleteMessages(newMessages.subList(1, newMessages.size())).queue(s -> {
                     ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
                 }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
             }

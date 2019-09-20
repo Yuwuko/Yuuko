@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09-20
++ [~] Refined RequestHandler to be more compact without some unnecessary verbositys.
++ [~] Replaced the filtering portion of the [__nuke__] command with a much more elegant solution.
+
 ## 2019-09-19
 + [~] Modified permissions for the [__play__], [__search__] and [__background__] commands.
 + [~] Modified the CommandExecutor to specifically check audio channels for permission overrides before trying to connect.
