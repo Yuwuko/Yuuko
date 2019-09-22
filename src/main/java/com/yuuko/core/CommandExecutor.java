@@ -25,7 +25,7 @@ import java.util.Objects;
 public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
-    private static final List<String> constants = Arrays.asList("core", "developer");
+    private static final List<String> constants = Arrays.asList("core", "developer", "setting");
     private static final List<String> disconnectedCommands = Arrays.asList("play", "search", "background", "lyrics");
     private static final List<String> requireConnectSpeak = Arrays.asList("play", "search", "background");
     private static final List<String> notInVoiceCommands = Arrays.asList("lyrics", "current", "last", "queue");

@@ -34,7 +34,7 @@ public class CommandCommand extends Command {
 
             if(Configuration.LOCKED_MODULES.contains(input[0])) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Command")
-                        .setDescription("Commands from the `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be disabled.");
+                        .setDescription("Commands from the `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }

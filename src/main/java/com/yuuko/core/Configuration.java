@@ -55,7 +55,7 @@ public class Configuration {
     public static SelfUser BOT;
     public static Map<String, Command> COMMANDS;
     public static Map<String, Module> MODULES;
-    public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting");
+    public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting", "developer");
     public static DiscordBotListAPI BOT_LIST;
     public static DivineAPI DIVINE_API;
 

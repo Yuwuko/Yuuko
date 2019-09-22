@@ -35,7 +35,7 @@ public class ModuleCommand extends Command {
             // Prevents locked modules from being disabled (would throw exception anyway)
             if(Configuration.LOCKED_MODULES.contains(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
-                        .setDescription("The `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be disabled.");
+                        .setDescription("The `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
