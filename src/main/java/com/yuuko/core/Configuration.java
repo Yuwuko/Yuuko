@@ -40,7 +40,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "2019-09-20";
+    public static final String VERSION = "2019-09-22";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -55,6 +55,7 @@ public class Configuration {
     public static SelfUser BOT;
     public static Map<String, Command> COMMANDS;
     public static Map<String, Module> MODULES;
+    public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting");
     public static DiscordBotListAPI BOT_LIST;
     public static DivineAPI DIVINE_API;
 

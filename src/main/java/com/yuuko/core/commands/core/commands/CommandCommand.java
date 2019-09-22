@@ -32,6 +32,13 @@ public class CommandCommand extends Command {
             TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
             boolean valid = false;
 
+            if(Configuration.LOCKED_MODULES.contains(input[0])) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Command")
+                        .setDescription("Commands from the `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be disabled.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+
             // Reset all commands.
             if(input[0].equals("reset")) {
                 CommandFunctions.resetCommandSettings(e.getGuild(), null);

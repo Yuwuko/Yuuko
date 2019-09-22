@@ -32,6 +32,14 @@ public class ModuleCommand extends Command {
                 return;
             }
 
+            // Prevents locked modules from being disabled (would throw exception anyway)
+            if(Configuration.LOCKED_MODULES.contains(module)) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
+                        .setDescription("The `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be disabled.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
+
             if(ModuleFunctions.toggleModule(guild, module)) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + module + "_ was enabled on this server!");
                 MessageHandler.sendMessage(e, embed.build());
