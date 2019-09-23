@@ -1,6 +1,6 @@
 package com.yuuko.core.events.controllers;
 
-import com.yuuko.core.commands.core.settings.StarboardSetting;
+import com.yuuko.core.commands.setting.commands.StarboardSetting;
 import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.EventMetrics;

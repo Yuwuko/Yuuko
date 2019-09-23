@@ -8,11 +8,11 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 2019-09-22
+# Yuuko 2019-09-23
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
-If you want Yuuko your own server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her.
+If you want Yuuko on your server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her.
 
 ## Key Features
 
@@ -50,6 +50,8 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 `osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco` `urban`
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
+* **Setting** <br>
+`prefix` `starboard`
 
 Visit [www.yuuko.info](https://www.yuuko.info) for a detailed **full** list of commands!
 

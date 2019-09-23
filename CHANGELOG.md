@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09-23
++ [!] Started moving settings from Settings command to their own command category.
++ [~] Migrated the [__prefix__] command to the setting category.
++ [~] Migrated the [__starboard__] command and gave it an update.
+
 ## 2019-09-20
 + [~] Refined RequestHandler to be more compact without some unnecessary verbositys.
 + [~] Replaced the filtering portion of the [__nuke__] command with a much more elegant solution.
