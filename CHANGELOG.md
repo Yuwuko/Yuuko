@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-09-24
 + [~] Updated jackson dependency to .pr3.
++ [~] Migrated the [__modlog__] and [__comlog__] commands to the new category.
 
 ## 2019-09-23
 + [!] Started moving settings from Settings command to their own command category.

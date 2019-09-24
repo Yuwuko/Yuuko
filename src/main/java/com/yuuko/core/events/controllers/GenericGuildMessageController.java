@@ -3,7 +3,7 @@ package com.yuuko.core.events.controllers;
 import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.settings.CommandLogSetting;
+import com.yuuko.core.commands.setting.commands.CommandLogSetting;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ReactionRoleFunctions;

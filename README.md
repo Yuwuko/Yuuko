@@ -23,7 +23,7 @@ Want to advertise your server or find other public servers with Yuuko? Use the `
 Liven up your Discord server with music from a number of sources including YouTube, Twitch, SoundCloud or any HTTP source of audio such as online radio stations.
 
 #### Reaction Role
-Want your users to be able to select roles simply by reacting ro a message? With the reaction role feature you can assign server roles to reacts on messages... find out how [here](https://www.yuuko.info/tutorials.php)!
+Want your users to be able to select roles simply by reacting to a message? With the reaction role feature you can assign server roles to reacts on messages... find out how [here](https://www.yuuko.info/tutorials.php)!
 
 #### Interaction
 Have you ever wanted to spice up your chatting experience with interactions. Yuuko has a range of different interaction commands available that allows you to express yourself in more than just words.

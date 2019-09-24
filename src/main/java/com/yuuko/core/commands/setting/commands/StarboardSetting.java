@@ -22,15 +22,15 @@ public class StarboardSetting extends Command {
     private static final List<String> fileTypes = Arrays.asList("mp4", "mov", "avi");
 
     public StarboardSetting() {
-        super("starboard", Configuration.MODULES.get("setting"), 0, Arrays.asList("-starboard setup", "-starboard <channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
+        super("starboard", Configuration.MODULES.get("setting"), 0, Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
     }
 
     public void onCommand(MessageEvent e) {
         if(!e.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
-            String starboardStatus = (channel == null) ? "There is currently no starboard set." : "The starboard is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();
+            String status = (channel == null) ? "There is currently no starboard set." : "The starboard is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription(starboardStatus)
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription(status)
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
             MessageHandler.sendMessage(e, embed.build());
             return;
