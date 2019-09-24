@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09-24
++ [~] Updated jackson dependency to .pr3.
+
 ## 2019-09-23
 + [!] Started moving settings from Settings command to their own command category.
 + [~] Migrated the [__prefix__] command to the setting category.
