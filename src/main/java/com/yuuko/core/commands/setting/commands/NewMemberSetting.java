@@ -1,19 +1,37 @@
-package com.yuuko.core.commands.core.settings;
+package com.yuuko.core.commands.setting.commands;
 
+import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-public class NewMemberSetting extends Setting {
+import java.util.Arrays;
 
-    public NewMemberSetting(MessageEvent e) {
-        onCommand(e);
+public class NewMemberSetting extends Command {
+
+    public NewMemberSetting() {
+        super("newmember", Configuration.MODULES.get("setting"), 0, Arrays.asList("-newmember", "-newmember <message>", "-newmember reset", "-newmember unset", "-newmember <#channel>", "-newmember autoremove"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    protected void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) {
+        if(!e.hasParameters()) {
+            String channel = GuildFunctions.getGuildSetting("newmember", e.getGuild().getId());
+            String status = (channel == null) ? "There is currently no new member channel set." : "The moderation new member channel is currently " + e.getGuild().getTextChannelById(channel).getAsMention();
+            String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
+
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription(status)
+                    .addField("Message", (message == null) ? "Welcome to **%guild%**, %user%!" : message, false)
+                    .addField("Auto Remove", GuildFunctions.getGuildSettingBoolean("newMemberRemoveMessage",  e.getGuild().getId()) ? "True" : "False", true)
+                    .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", false);
+            MessageHandler.sendMessage(e, embed.build());
+            return;
+        }
+
         String[] parameters = e.getParameters().split("\\s+", 3);
 
         // If "!settings newMember message"
@@ -68,5 +86,4 @@ public class NewMemberSetting extends Setting {
             }
         }
     }
-
 }
