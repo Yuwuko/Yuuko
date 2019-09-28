@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-09-28
++ [~] Migrated all of the boolean-based settings such as [__djmode__] and [__deleteexecuted__].
+
 ## 2019-09-24
 + [~] Updated jackson dependency to .pr3.
 + [~] Migrated the [__modlog__] and [__comlog__] commands to the new category.
