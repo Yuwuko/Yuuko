@@ -31,7 +31,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 ## Commands
 
 * **Core** <br>
-`settings` `help` `shards` `module` `about` `vote` `command` `advertise` `permissions`
+`help` `shards` `module` `about` `vote` `command` `advertise` `permissions`
 * **Animal** <br>
 `cat` `fox` `dog` `bird`
 * **NSFW** <br>
@@ -51,7 +51,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
 * **Setting** <br>
-`prefix` `starboard`
+`settings` `prefix` `starboard` `comlog` `modlog` `djmode` `deleteexecuted` `nowplaying` `newmember`
 
 Visit [www.yuuko.info](https://www.yuuko.info) for a detailed **full** list of commands!
 
