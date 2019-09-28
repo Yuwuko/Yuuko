@@ -8,6 +8,7 @@ import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class NowPlayingSetting extends Command {
     public void onCommand(MessageEvent e) {
         try {
             if(!e.hasParameters()) {
-                String status = "The `NowPlaying` setting determines whether tracks are announced when they start.";
+                String status = "The `nowPlaying` setting determines whether tracks are announced when they start.";
 
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Now Playing").setDescription(status)
-                        .addField("State", "Audio track `NowPlaying` is currently set to " + GuildFunctions.getGuildSetting("nowplaying", e.getGuild().getId()) + "", true)
+                        .addField("State", "`nowPlaying` is currently set to `" + (GuildFunctions.getGuildSetting("nowplaying", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
                         .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
                 MessageHandler.sendMessage(e, embed.build());
                 return;
@@ -45,10 +46,10 @@ public class NowPlayingSetting extends Command {
 
             if(GuildFunctions.setGuildSettings("nowplaying", intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(e.getParameters().toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("NowPlaying set to TRUE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`nowPlaying` set to `TRUE`.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("NowPlaying set to FALSE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`nowPlaying` set to `FALSE`.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }

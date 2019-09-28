@@ -8,6 +8,7 @@ import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class DjModeSetting extends Command {
                 String status = "The `djMode` setting determines whether audio commands are locked to people who posses the `DJ` role.";
 
                 EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode").setDescription(status)
-                        .addField("State", "DJ Mode is currently set to " + GuildFunctions.getGuildSetting("djmode", e.getGuild().getId()) + "", true)
+                        .addField("State", "DJ Mode is currently set to `" + (GuildFunctions.getGuildSetting("djmode", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
                         .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
                 MessageHandler.sendMessage(e, embed.build());
                 return;
@@ -45,10 +46,10 @@ public class DjModeSetting extends Command {
 
             if(GuildFunctions.setGuildSettings("djmode", intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(e.getParameters().toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode set to TRUE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`djMode` set to `TRUE`.");
                     MessageHandler.sendMessage(e, embed.build());
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode set to FALSE.");
+                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`djMode` set to `FALSE`.");
                     MessageHandler.sendMessage(e, embed.build());
                 }
             }

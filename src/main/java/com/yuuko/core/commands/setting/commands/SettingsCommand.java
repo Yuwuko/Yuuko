@@ -3,18 +3,14 @@ package com.yuuko.core.commands.setting.commands;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.core.settings.Setting;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class SettingsCommand extends Command {
-
-    private static final HashMap<String, Class<? extends Setting>> settings = new HashMap<>();
 
     public SettingsCommand() {
         super("settings", Configuration.MODULES.get("setting"), 0, Arrays.asList("-settings"), false, null);
