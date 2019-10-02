@@ -2,8 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-09-28
+## 2019-10-02
++ [!] Working on other projects so updates may be slower than usual.
 + [~] Migrated all of the boolean-based settings such as [__djmode__] and [__deleteexecuted__].
++ [~] Bumped dependencies to their latest versions.
 
 ## 2019-09-24
 + [~] Updated jackson dependency to .pr3.
