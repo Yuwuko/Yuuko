@@ -1,14 +1,14 @@
-![Status](https://discordbots.org/api/widget/status/420682957007880223.svg)
-![Servers](https://discordbots.org/api/widget/servers/420682957007880223.svg)
-![Servers](https://discordbots.org/api/widget/upvotes/420682957007880223.svg)
-![Library](https://discordbots.org/api/widget/lib/420682957007880223.svg)
+![Status](https://top.gg/api/widget/status/420682957007880223.svg)
+![Servers](https://top.gg/api/widget/servers/420682957007880223.svg)
+![Servers](https://top.gg/api/widget/upvotes/420682957007880223.svg)
+![Library](https://top.gg/api/widget/lib/420682957007880223.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/Yuuko-oh/yuuko/badge)](https://www.codefactor.io/repository/github/yuuko-oh/yuuko)
 [![GitHub release](https://img.shields.io/github/release/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko)
 [![GitHub stars](https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 2019-10-10
+# Yuuko 2019-10-13
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
