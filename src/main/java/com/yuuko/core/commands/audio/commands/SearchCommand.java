@@ -54,7 +54,7 @@ public class SearchCommand extends Command {
                 }
             }
 
-            List<SearchResult> results = YouTubeSearchHandler.searchList(e);
+            List<SearchResult> results = YouTubeSearchHandler.search(e);
             StringBuilder resultString = new StringBuilder();
 
             if(results != null) {

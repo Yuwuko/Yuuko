@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-10-16
++ [+] Added a very-basic search cache for audio commands save on the api quota.
++ [~] Rewrote YoutubeSearchHandler, removing the 1 item search function. (since it has no impact on quota)
++ [~] Updated dependencies (multiple times).
++ [~] Updated README to reflect external changes.
+
 ## 2019-10-02
 + [!] Working on other projects so updates may be slower than usual.
 + [~] Migrated all of the boolean-based settings such as [__djmode__] and [__deleteexecuted__].

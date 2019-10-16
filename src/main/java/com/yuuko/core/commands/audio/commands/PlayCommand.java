@@ -1,5 +1,6 @@
 package com.yuuko.core.commands.audio.commands;
 
+import com.google.api.services.youtube.model.SearchResult;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
@@ -48,13 +49,16 @@ public class PlayCommand extends Command {
             return;
         }
 
-        final String trackId = YouTubeSearchHandler.search(e);
-        if(trackId != null && !trackId.equals("")) {
-            loadAndPlay(manager, e.setParameters(trackId));
-        } else {
+        List<SearchResult> results = YouTubeSearchHandler.search(e);
+
+        if(results == null || results.get(0).getId().getVideoId().equals("")) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
             MessageHandler.sendMessage(e, embed.build());
+            return;
         }
+
+        String trackId = "https://www.youtube.com/watch?v=" + results.get(0).getId().getVideoId();
+        loadAndPlay(manager, e.setParameters(trackId));
     }
 
     /**
