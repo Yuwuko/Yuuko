@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 2019-10-16
++ [!] Changed LavaLink-Client to a custom implementation.
 + [+] Added a very-basic search cache for audio commands save on the api quota.
 + [~] Rewrote YoutubeSearchHandler, removing the 1 item search function. (since it has no impact on quota)
 + [~] Updated dependencies (multiple times).
