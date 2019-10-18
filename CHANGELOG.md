@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 2019-10-18
++ [+] Added cache metrics to check performance of new feature.
+
 ## 2019-10-16
 + [!] Changed LavaLink-Client to a custom implementation.
 + [+] Added a very-basic search cache for audio commands save on the api quota.
