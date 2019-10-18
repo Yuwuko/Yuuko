@@ -6,10 +6,7 @@ import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
-import com.yuuko.core.metrics.pathway.AudioMetrics;
-import com.yuuko.core.metrics.pathway.DiscordMetrics;
-import com.yuuko.core.metrics.pathway.EventMetrics;
-import com.yuuko.core.metrics.pathway.SystemMetrics;
+import com.yuuko.core.metrics.pathway.*;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +22,7 @@ public class DatabaseFunctions {
     private static final SystemMetrics system = MetricsManager.getSystemMetrics();
     private static final DiscordMetrics discord = MetricsManager.getDiscordMetrics();
     private static final AudioMetrics audio = MetricsManager.getAudioMetrics();
+    private static final CacheMetrics cache = MetricsManager.getCacheMetrics();
 
     /**
      * Updates the database with the latest metrics.
@@ -34,7 +32,8 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `AudioMetrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)")) {
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `AudioMetrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
+            PreparedStatement stmt5 = conn.prepareStatement("INSERT INTO `CacheMetrics`(`trackIdMatch`) VALUES(?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -70,6 +69,9 @@ public class DatabaseFunctions {
             stmt4.setInt(2, audio.PLAYERS_ACTIVE.get());
             stmt4.setInt(3, audio.QUEUE_SIZE.get());
             stmt4.execute();
+
+            stmt5.setInt(1, cache.TRACK_ID_CACHE.get());
+            stmt5.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -138,7 +140,8 @@ public class DatabaseFunctions {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `AudioMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `AudioMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `CacheMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
             stmt.execute();
             stmt2.execute();

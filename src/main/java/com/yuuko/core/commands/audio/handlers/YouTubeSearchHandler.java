@@ -8,6 +8,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ public class YouTubeSearchHandler {
 
                 searchResponse = search.execute();
                 searchCache.put(e.getParameters(), searchResponse);
+            } else {
+                MetricsManager.getCacheMetrics().TRACK_ID_CACHE.getAndIncrement();
             }
 
             return searchResponse.getItems();

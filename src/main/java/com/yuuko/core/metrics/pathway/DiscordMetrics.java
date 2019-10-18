@@ -25,7 +25,6 @@ public class DiscordMetrics {
 
         USER_COUNT.set(userCount);
         GUILD_COUNT.set(guilds.size());
-
     }
 
     /**

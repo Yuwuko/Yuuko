@@ -1,16 +1,14 @@
 package com.yuuko.core.metrics;
 
 import com.yuuko.core.database.function.DatabaseFunctions;
-import com.yuuko.core.metrics.pathway.AudioMetrics;
-import com.yuuko.core.metrics.pathway.DiscordMetrics;
-import com.yuuko.core.metrics.pathway.EventMetrics;
-import com.yuuko.core.metrics.pathway.SystemMetrics;
+import com.yuuko.core.metrics.pathway.*;
 
 public class MetricsManager {
     private static final SystemMetrics systemMetrics = new SystemMetrics();
     private static final EventMetrics eventMetrics = new EventMetrics();
     private static final DiscordMetrics discordMetrics = new DiscordMetrics();
     private static final AudioMetrics audioMetrics = new AudioMetrics();
+    private static final CacheMetrics cacheMetrics = new CacheMetrics();
 
     public static void pruneMetrics() {
         DatabaseFunctions.pruneMetrics();
@@ -32,6 +30,10 @@ public class MetricsManager {
 
     public static SystemMetrics getSystemMetrics() {
         return systemMetrics;
+    }
+
+    public static CacheMetrics getCacheMetrics() {
+        return cacheMetrics;
     }
 
 }
