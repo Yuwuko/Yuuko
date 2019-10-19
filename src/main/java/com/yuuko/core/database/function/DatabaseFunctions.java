@@ -33,7 +33,7 @@ public class DatabaseFunctions {
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `AudioMetrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
-            PreparedStatement stmt5 = conn.prepareStatement("INSERT INTO `CacheMetrics`(`trackIdMatch`) VALUES(?)")) {
+            PreparedStatement stmt5 = conn.prepareStatement("INSERT INTO `CacheMetrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -70,7 +70,8 @@ public class DatabaseFunctions {
             stmt4.setInt(3, audio.QUEUE_SIZE.get());
             stmt4.execute();
 
-            stmt5.setInt(1, cache.TRACK_ID_CACHE.get());
+            stmt5.setInt(1, cache.TRACK_ID_CACHE_HITS.get());
+            stmt5.setInt(2, cache.TRACK_ID_CACHE_SIZE.get());
             stmt5.execute();
 
         } catch(Exception ex) {

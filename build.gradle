@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-version = '2019-10-18'
+project.version = '201910r3'
 sourceCompatibility = 1.11
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -20,7 +20,8 @@ jar {
             if(!configurations.compile.isEmpty()) {
                 attributes(
                         'Class-Path': configurations.compile.collect { it.toURI().toString() }.join(' '),
-                        'Main-Class': mainClassName
+                        'Main-Class': mainClassName,
+                        'Implementation-Version': project.version
                 )
             }
         }

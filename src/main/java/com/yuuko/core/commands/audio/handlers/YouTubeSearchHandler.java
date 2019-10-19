@@ -44,7 +44,7 @@ public class YouTubeSearchHandler {
                 searchResponse = search.execute();
                 searchCache.put(e.getParameters(), searchResponse);
             } else {
-                MetricsManager.getCacheMetrics().TRACK_ID_CACHE.getAndIncrement();
+                MetricsManager.getCacheMetrics().TRACK_ID_CACHE_HITS.getAndIncrement();
             }
 
             return searchResponse.getItems();
@@ -60,5 +60,9 @@ public class YouTubeSearchHandler {
             log.error("There was an IO error: " + cx.getCause());
             return null;
         }
+    }
+
+    public static HashMap<String, SearchListResponse> getSearchCache() {
+        return searchCache;
     }
 }

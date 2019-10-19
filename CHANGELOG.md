@@ -2,8 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 2019-10-18
-+ [+] Added cache metrics to check performance of new feature.
+## 201910r3
++ [!] Changed version control for the last time. (hopefully)
++ [+] Added cache metrics to check performance of new feature. (yyyymm[revision]n)
 
 ## 2019-10-16
 + [!] Changed LavaLink-Client to a custom implementation.
