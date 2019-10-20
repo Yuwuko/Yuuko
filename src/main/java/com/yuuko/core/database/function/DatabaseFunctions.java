@@ -96,7 +96,6 @@ public class DatabaseFunctions {
             stmt.setDouble(4, executionTime);
             stmt.execute();
 
-
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -113,7 +112,8 @@ public class DatabaseFunctions {
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics` WHERE shardId = ?");
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE shardId = ?");
             PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `AudioMetrics`");
-            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?")) {
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?");
+            PreparedStatement stmt6 = conn.prepareStatement("DELETE FROM `CacheMetrics`")) {
 
             stmt.setInt(1, shard);
             stmt.execute();
@@ -128,6 +128,8 @@ public class DatabaseFunctions {
 
             stmt5.setInt(1, shard);
             stmt5.execute();
+
+            stmt6.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -147,6 +149,7 @@ public class DatabaseFunctions {
             stmt.execute();
             stmt2.execute();
             stmt3.execute();
+            stmt4.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);

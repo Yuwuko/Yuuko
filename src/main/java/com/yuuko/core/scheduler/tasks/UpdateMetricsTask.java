@@ -15,6 +15,7 @@ public class UpdateMetricsTask implements Task {
         }
         MetricsManager.getSystemMetrics().update();
         MetricsManager.getAudioMetrics().update();
+        MetricsManager.getCacheMetrics().update();
         DatabaseFunctions.updateMetricsDatabase();
     }
 }
