@@ -36,8 +36,8 @@ repositories {
 }
 
 ext {
-    jdaOkHttp4                   = '1906fd91a3'
-    lavalinkClient               = '84b6ca9c20'
+    jdaOkHttp4                   = 'f998ace14e'
+    lavalinkClient               = 'ab8d27d93b'
     lavaplayer                   = '1.3.22.pbjtest3'
     jdanas                       = '1.1.0'
     dblJavaWrapper               = '2.0.1'
