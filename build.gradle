@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-project.version = '201910r3'
+project.version = '201910r4'
 sourceCompatibility = 1.11
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -46,16 +46,15 @@ ext {
     gson                         = '2.8.6'
     jacksonAnnotations           = '2.10.0'
     jacksonDatabind              = '2.10.0'
-    okhttp                       = '4.2.1'
+    okhttp                       = '4.2.2'
     jsoup                        = '1.12.1'
-    mysqlConnectorJava           = '8.0.17'
+    mysqlConnectorJava           = '8.0.18'
     hikaricp                     = '3.4.1'
     slf4jSimple                  = '2.0.0-alpha1'
     reflections8                 = '0.11.6'
 }
 
 dependencies {
-    //compile group: 'net.dv8tion', name: 'JDA', version: jda
     compile group: 'com.github.Yuuko-Oh', name: 'JDA-OkHttp4', version: jdaOkHttp4
     compile group: 'com.github.Yuuko-Oh', name: 'Lavalink-Client', version: lavalinkClient
     compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer
