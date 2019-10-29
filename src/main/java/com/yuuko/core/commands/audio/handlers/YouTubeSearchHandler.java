@@ -38,7 +38,7 @@ public class YouTubeSearchHandler {
                         .setKey(Utilities.getApiKey("google"))
                         .setQ(e.getParameters())
                         .setType("video")
-                        .setFields("items(id/videoId)")
+                        .setFields("items(id/videoId,snippet/title)")
                         .setMaxResults(10L);
 
                 searchResponse = search.execute();
