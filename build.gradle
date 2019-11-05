@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-project.version = '201910r5'
+project.version = '201911r1'
 sourceCompatibility = 1.11
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -36,8 +36,8 @@ repositories {
 }
 
 ext {
-    jdaOkHttp4                   = 'f998ace14e'
-    lavalinkClient               = 'ab8d27d93b'
+    jdaOkHttp4                   = 'ee4c931f7f'
+    lavalinkClient               = '5b2ad6cf0e'
     //lavaplayer                   = '1.3.22.pbjtest3'
     lavaplayer2                  = 'ed466aa'
     jdanas                       = '1.1.0'
