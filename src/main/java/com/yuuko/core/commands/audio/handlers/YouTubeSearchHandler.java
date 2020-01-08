@@ -65,4 +65,8 @@ public class YouTubeSearchHandler {
     public static HashMap<String, SearchListResponse> getSearchCache() {
         return searchCache;
     }
+
+    public static void clearSearchCache() {
+        searchCache.clear();
+    }
 }
