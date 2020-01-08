@@ -74,6 +74,10 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                     return;
                 }
 
+                if(player.getPlayingTrack() != null) {
+                    player.stopTrack();
+                }
+
                 timeout = ScheduleHandler.registerUniqueJob(new VoiceTimeoutJob(guild));
                 return;
             }
