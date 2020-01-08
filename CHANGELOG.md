@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202001r1
++ [!] HAPPY NEW YEAR!
++ [~] Updated lots of older dependencies! (yay!)
++ [~] Fixed issue with tracks not stopping it skip command is used with nothing in the queue.
+
 ## 201910r3
 + [!] Changed version control for the last time. (hopefully)
 + [+] Added cache metrics to check performance of new feature. (yyyymm[revision]n)

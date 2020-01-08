@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-project.version = '201912r1'
+project.version = '202001r1'
 sourceCompatibility = 1.11
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -36,17 +36,17 @@ repositories {
 }
 
 ext {
-    jdaOkHttp4                   = '122faebf02'
-    lavalinkClient               = '32720a6e40'
-    lavaplayer                   = '1.3.32'
+    jdaOkHttp4                   = 'b471e1b8f1'
+    lavalinkClient               = '4c3cd0d6a0'
+    lavaplayer                   = '1.3.33'
     jdanas                       = '1.1.0'
     dblJavaWrapper               = '2.0.1'
-    ddblAPIjava                  = '0.4.6-okhttp4'
+    ddblAPIjava                  = 'okhttp4-SNAPSHOT'
     googleApiServicesYoutube     = 'v3-rev212-1.25.0'
     gson                         = '2.8.6'
     jacksonAnnotations           = '2.10.1'
     jacksonDatabind              = '2.10.1'
-    okhttp                       = '4.2.2'
+    okhttp                       = '4.3.1'
     jsoup                        = '1.12.1'
     mysqlConnectorJava           = '8.0.18'
     hikaricp                     = '3.4.1'
