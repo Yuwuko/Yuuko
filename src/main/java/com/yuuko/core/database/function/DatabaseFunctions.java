@@ -29,11 +29,11 @@ public class DatabaseFunctions {
      */
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `SystemMetrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `EventMetrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `DiscordMetrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `AudioMetrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
-            PreparedStatement stmt5 = conn.prepareStatement("INSERT INTO `CacheMetrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `system_metrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `event_metrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
+            PreparedStatement stmt5 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -86,9 +86,9 @@ public class DatabaseFunctions {
      * @param command String
      * @param executionTime double (milliseconds)
      */
-    public static void updateCommandsLog(String guildId, String command, double executionTime) {
+    public static void updateCommandLog(String guildId, String command, double executionTime) {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandsLog`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `command_log`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
             stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
             stmt.setString(2, guildId);
@@ -108,12 +108,12 @@ public class DatabaseFunctions {
      */
     public static void truncateMetrics(int shard) {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE shardId = ?");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `EventMetrics` WHERE shardId = ?");
-            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE shardId = ?");
-            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `AudioMetrics`");
-            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `CommandsLog` WHERE shardId = ?");
-            PreparedStatement stmt6 = conn.prepareStatement("DELETE FROM `CacheMetrics`")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE shardId = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `event_metrics` WHERE shardId = ?");
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE shardId = ?");
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `audio_metrics`");
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `command_log` WHERE shardId = ?");
+            PreparedStatement stmt6 = conn.prepareStatement("DELETE FROM `cache_metrics`")) {
 
             stmt.setInt(1, shard);
             stmt.execute();
@@ -141,10 +141,10 @@ public class DatabaseFunctions {
      */
     public static void pruneMetrics() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `SystemMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `DiscordMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `AudioMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `CacheMetrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `audio_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `cache_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
             stmt.execute();
             stmt2.execute();
@@ -164,7 +164,7 @@ public class DatabaseFunctions {
      */
     public static void cleanupSettings(String setting, String guildId) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `GuildSettings` SET " + setting + " = null WHERE `guildId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_settings` SET " + setting + " = null WHERE `guildId` = ?")){
 
             stmt.setString(1, guildId);
             stmt.execute();
@@ -181,8 +181,8 @@ public class DatabaseFunctions {
      */
     public static int provideShardId() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards` ORDER BY `shardId`");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `Shards`(`shardId`) VALUES(?)")){
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shards` ORDER BY `shardId`");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `shards`(`shardId`) VALUES(?)")){
 
             ResultSet resultSet = stmt.executeQuery();
 

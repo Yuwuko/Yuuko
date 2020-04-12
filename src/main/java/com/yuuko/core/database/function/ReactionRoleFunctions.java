@@ -25,7 +25,7 @@ public class ReactionRoleFunctions {
      */
     public static boolean hasReactionRole(Message message, Emote emote) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
@@ -47,7 +47,7 @@ public class ReactionRoleFunctions {
      */
     public static boolean hasReactionRole(String message, String emote) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message);
             stmt.setString(2, emote);
@@ -68,7 +68,7 @@ public class ReactionRoleFunctions {
      */
     public static boolean hasReactionRole(String message) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ReactionRoles` WHERE `messageId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `reaction_roles` WHERE `messageId` = ?")) {
 
             stmt.setString(1, message);
 
@@ -89,7 +89,7 @@ public class ReactionRoleFunctions {
      */
     public static String selectReactionRole(Message message, Emote emote) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
@@ -116,7 +116,7 @@ public class ReactionRoleFunctions {
      */
     public static String selectReactionRole(String message, String emote) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message);
             stmt.setString(2, emote);
@@ -145,7 +145,7 @@ public class ReactionRoleFunctions {
      */
     public static boolean addReactionRole(Guild guild, Message message, Emote emote, Role role) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `ReactionRoles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `reaction_roles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, message.getId());
@@ -173,7 +173,7 @@ public class ReactionRoleFunctions {
      */
     public static void removeReactionRole(Message message, Emote emote) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
             stmt.setString(2, emote.getId());
@@ -191,7 +191,7 @@ public class ReactionRoleFunctions {
      */
     public static void removeReactionRole(String message) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ReactionRoles` WHERE `messageId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ?")) {
 
             stmt.setString(1, message);
             stmt.execute();

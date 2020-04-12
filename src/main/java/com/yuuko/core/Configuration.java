@@ -18,6 +18,7 @@ import com.yuuko.core.scheduler.ScheduleHandler;
 import com.yuuko.core.scheduler.jobs.OneHourlyJob;
 import com.yuuko.core.scheduler.jobs.TenSecondlyJob;
 import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
+import com.yuuko.core.scheduler.jobs.TwelveHourlyJob;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
@@ -261,6 +262,7 @@ public class Configuration {
         ScheduleHandler.registerJob(new TenSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());
+        ScheduleHandler.registerJob(new TwelveHourlyJob());
 
         log.info("Initialised scheduler.");
     }

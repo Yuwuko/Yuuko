@@ -66,7 +66,7 @@ public class GenericGuildMessageController {
             new CommandExecutor(event);
             execTime = (System.nanoTime() - execTime)/1000000.0;
 
-            DatabaseFunctions.updateCommandsLog(e.getGuild().getId(), event.getCommand().getName(), execTime);
+            DatabaseFunctions.updateCommandLog(e.getGuild().getId(), event.getCommand().getName(), execTime);
             if(GuildFunctions.getGuildSetting("comlog", e.getGuild().getId()) != null) {
                 CommandLogSetting.execute(event, execTime);
             }

@@ -24,8 +24,8 @@ public class BindFunctions {
      */
     public static int toggleBind(String guildId, String channel, String module) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `ModuleBindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `module_bindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
 
             stmt.setString(1, guildId);
             stmt.setString(2, channel);
@@ -60,7 +60,7 @@ public class BindFunctions {
      */
     private static boolean deleteBindsRecord(String guild, String channel, String module) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
 
             stmt.setString(1, guild);
             stmt.setString(2, channel);
@@ -90,7 +90,7 @@ public class BindFunctions {
      */
     public static String getGuildBinds(Guild guild, String delimiter) {
         try(Connection connection = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? ORDER BY `channelId` ASC")) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? ORDER BY `channelId` ASC")) {
 
             stmt.setString(1, guild.getId());
             ResultSet rs = stmt.executeQuery();
@@ -124,7 +124,7 @@ public class BindFunctions {
      */
     public static String getBindsByModule(Guild guild, String module, String delimiter) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, module);
@@ -160,7 +160,7 @@ public class BindFunctions {
      */
     public static boolean checkBind(String guildId, String channelId, String moduleName) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleBindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
 
             stmt.setString(1, guildId);
             stmt.setString(2, moduleName);
@@ -189,7 +189,7 @@ public class BindFunctions {
      */
     public static void cleanupBinds(String channel) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `ModuleBindings` WHERE `channelId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?")) {
 
             stmt.setString(1, channel);
             stmt.execute();

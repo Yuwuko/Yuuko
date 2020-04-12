@@ -24,7 +24,7 @@ public class CommandFunctions {
      */
     public static ArrayList<String> getCommandSetting(Guild guild, Command command) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `CommandBindings` WHERE `guildId` = ? AND `command` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `command_bindings` WHERE `guildId` = ? AND `command` = ?")) {
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, command.getName());
@@ -56,7 +56,7 @@ public class CommandFunctions {
      */
     public static ArrayList<String> getCommandSettings(String guild) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `CommandBindings` WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `command_bindings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
             ResultSet rs = stmt.executeQuery();
@@ -89,7 +89,7 @@ public class CommandFunctions {
      */
     public static boolean isDisabled(String guild, String channel, String command) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `command` FROM `CommandBindings` WHERE `guildId` = ? AND `channelId` = ? AND `command` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT `command` FROM `command_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `command` = ?")) {
 
             stmt.setString(1, guild);
             stmt.setString(2, channel);
@@ -114,8 +114,8 @@ public class CommandFunctions {
      */
     public static boolean toggleCommand(String guild, String channel, String command) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `CommandBindings` (`guildId`, `channelId`, `command`) VALUES (?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND channelId = ? AND command = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `command_bindings` (`guildId`, `channelId`, `command`) VALUES (?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `command_bindings` WHERE guildId = ? AND channelId = ? AND command = ?")) {
 
             if(!isDisabled(guild, channel, command)) {
                 stmt.setString(1, guild);
@@ -144,8 +144,8 @@ public class CommandFunctions {
      */
     public static void resetCommandSettings(Guild guild, String command) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ?");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `CommandBindings` WHERE guildId = ? AND command = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `command_bindings` WHERE guildId = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `command_bindings` WHERE guildId = ? AND command = ?")) {
 
             if(command == null) {
                 stmt.setString(1, guild.getId());

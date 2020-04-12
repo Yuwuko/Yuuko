@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 202001r1
+# Yuuko 202004r1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -41,7 +41,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Interaction** <br>
 `pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`
 * **Utility** <br>
-`guild` `bind` `ping` `roles` `channel` `avatar` `user` `reactrole`
+`guild` `bind` `ping` `roles` `avatar` `user` `reactrole`
 * **Developer** <br>
 `setstatus` `reapi` `redb` `lavalink` `syncguilds`
 * **Audio** <br>

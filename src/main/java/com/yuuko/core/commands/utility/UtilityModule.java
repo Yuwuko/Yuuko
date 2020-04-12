@@ -12,7 +12,6 @@ public class UtilityModule extends Module {
             new UserCommand(),
             new GuildCommand(),
             new BindCommand(),
-            new ChannelCommand(),
             new AvatarCommand(),
             new RolesCommand(),
             new PingCommand(),

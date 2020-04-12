@@ -23,7 +23,7 @@ public class ModuleFunctions {
      */
     public static ArrayList<ArrayList<String>> getModuleSettings(String guild) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ModuleSettings` WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_settings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
             ResultSet rs = stmt.executeQuery();
@@ -64,7 +64,7 @@ public class ModuleFunctions {
      */
     public static boolean isEnabled(String guild, String module) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `" + module + "` FROM `ModuleSettings` WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT `" + module + "` FROM `module_settings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
@@ -86,7 +86,7 @@ public class ModuleFunctions {
      */
     public static boolean toggleModule(String guild, String module) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `ModuleSettings` SET `" + module + "` = NOT `" + module + "` WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `module_settings` SET `" + module + "` = NOT `" + module + "` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
             stmt.execute();
