@@ -324,28 +324,6 @@ public class GuildFunctions {
     }
 
     /**
-     * Set the guild invite link to allow advertising.
-     *
-     * @param link invite url to be advertised.
-     * @param guild the guild attached to the link.
-     * @return if the set was successful.
-     */
-    public static boolean setGuildInvite(String link, String guild) {
-        try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `inviteLink` = ? WHERE `guildId` = ?")) {
-
-            stmt.setString(1, link);
-            stmt.setString(2, guild);
-
-            return !stmt.execute();
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return false;
-        }
-    }
-
-    /**
      * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
      *
      * @param guild the guild's id.
@@ -380,6 +358,5 @@ public class GuildFunctions {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
-
 
 }
