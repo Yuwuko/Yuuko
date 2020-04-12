@@ -31,7 +31,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 ## Commands
 
 * **Core** <br>
-`help` `shards` `module` `about` `vote` `command` `advertise` `permissions`
+`help` `shards` `module` `about` `vote` `command` `permissions`
 * **Animal** <br>
 `cat` `fox` `dog` `bird`
 * **NSFW** <br>

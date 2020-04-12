@@ -17,7 +17,6 @@ public class CoreModule extends Module {
 			new ShardsCommand(),
 			new VoteCommand(),
 			new CommandCommand(),
-			new AdvertiseCommand(),
 			new PermissionsCommand()
 	);
 
