@@ -211,7 +211,7 @@ public class DatabaseFunctions {
      */
     public static int getShardCount() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `ShardConfiguration`")){
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shard_configuration`")){
 
             ResultSet resultSet = stmt.executeQuery();
             if(resultSet.next()) {
@@ -231,7 +231,7 @@ public class DatabaseFunctions {
      */
     public static void updateShardStatistics() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `Shards` SET `status` = ?, `guilds` = ?, `users` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `users` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             JDA shard = Configuration.BOT.getJDA();
 
@@ -256,7 +256,7 @@ public class DatabaseFunctions {
      */
     public static ArrayList<Shard> getShardStatistics() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `Shards`")){
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shards`")){
 
             ArrayList<Shard> shards = new ArrayList<>();
 
@@ -278,7 +278,7 @@ public class DatabaseFunctions {
      */
     public static void pruneExpiredShards() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 31 SECOND)")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 31 SECOND)")) {
 
             stmt.execute();
 
