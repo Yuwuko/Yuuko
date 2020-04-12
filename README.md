@@ -16,9 +16,6 @@ If you want Yuuko on your server, follow [this](https://discordapp.com/oauth2/au
 
 ## Key Features
 
-#### Advertise
-Want to advertise your server or find other public servers with Yuuko? Use the `advertise` command to generate an invite link and show off your server on the landing page of the [website](https://www.yuuko.info).
-
 #### Music
 Liven up your Discord server with music from a number of sources including YouTube, Twitch, SoundCloud or any HTTP source of audio such as online radio stations.
 
@@ -52,8 +49,6 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
 * **Setting** <br>
 `settings` `prefix` `starboard` `comlog` `modlog` `djmode` `deleteexecuted` `nowplaying` `newmember`
-
-Visit [www.yuuko.info](https://www.yuuko.info) for a detailed **full** list of commands!
 
 ---
 

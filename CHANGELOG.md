@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202004r1
++ [!] Sorry the bot was down for so long, a mixture of funding and motivation brought the project to an end, but now it's back :) (Also Happy Easter!)
++ [~] Updated all dependencies
++ [-] Removed [__channel__] command
++ [-] Removed [__advertise__] command
+
 ## 202001r1
 + [!] HAPPY NEW YEAR!
 + [~] Updated lots of older dependencies! (yay!)
