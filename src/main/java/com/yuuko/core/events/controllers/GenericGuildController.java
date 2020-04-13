@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateIconEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateRegionEvent;
@@ -35,8 +35,8 @@ public class GenericGuildController {
             return;
         }
 
-        if(e instanceof GuildMemberLeaveEvent) {
-            guildMemberLeaveEvent((GuildMemberLeaveEvent)e);
+        if(e instanceof GuildMemberRemoveEvent) {
+            guildMemberRemoveEvent((GuildMemberRemoveEvent)e);
             metrics.GUILD_MEMBER_LEAVE_EVENT.getAndIncrement();
             return;
         }
@@ -136,7 +136,7 @@ public class GenericGuildController {
         }
     }
 
-    private void guildMemberLeaveEvent(GuildMemberLeaveEvent e) {
+    private void guildMemberRemoveEvent(GuildMemberRemoveEvent e) {
         GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
     }
 

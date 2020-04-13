@@ -9,7 +9,7 @@ import java.net.URI;
 
 public class LavalinkManager {
 
-    private JdaLavalink lavalink;
+    private final JdaLavalink lavalink;
 
     public LavalinkManager() {
         lavalink = new JdaLavalink(

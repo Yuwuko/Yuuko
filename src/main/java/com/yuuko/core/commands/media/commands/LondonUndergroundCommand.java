@@ -93,7 +93,7 @@ public class LondonUndergroundCommand extends Command {
         @JsonProperty("name")
         private String name;
         @JsonProperty("lineStatuses")
-        private List<LineStatus> lineStatuses = new ArrayList<>();
+        private final List<LineStatus> lineStatuses = new ArrayList<>();
 
         @JsonProperty("name")
         public String getName() {

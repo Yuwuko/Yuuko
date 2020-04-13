@@ -23,6 +23,7 @@ import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import org.discordbots.api.client.DiscordBotListAPI;
@@ -41,7 +42,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "202001r1";
+    public static final String VERSION = "202004r1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -87,7 +88,7 @@ public class Configuration {
             initialiseSchedule();
             initialiseBotLists();
 
-            log.info("Loading complete... time taken: " + (new BigDecimal((System.nanoTime() - loadStart)/1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
+            log.info("Loading complete... time taken: " + (BigDecimal.valueOf((System.nanoTime() - loadStart) / 1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
@@ -201,7 +202,15 @@ public class Configuration {
      */
     private void buildShardManager() {
         try {
-            SHARD_MANAGER = new DefaultShardManagerBuilder()
+            SHARD_MANAGER = DefaultShardManagerBuilder.create(
+                    GatewayIntent.GUILD_MEMBERS,
+                    GatewayIntent.GUILD_BANS,
+                    GatewayIntent.GUILD_EMOJIS,
+                    GatewayIntent.GUILD_MESSAGES,
+                    GatewayIntent.GUILD_MESSAGE_REACTIONS,
+                    GatewayIntent.GUILD_VOICE_STATES,
+                    GatewayIntent.GUILD_PRESENCES
+            )
                     .setToken(BOT_TOKEN)
                     .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())

@@ -56,7 +56,7 @@ public class NukeCommand extends Command {
                 message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
             });
 
-            // Mass deletion requires a list of at least size 2, I chose 3 to encompass the invocating command also.
+            // Mass deletion requires a list of at least size 2, I chose 3 to encompass the invoking command also.
             List<Message> newMessages = sortedMessages.get(false);
             if(newMessages.size() > 2) {
                 e.getChannel().deleteMessages(newMessages.subList(1, newMessages.size())).queue(s -> {

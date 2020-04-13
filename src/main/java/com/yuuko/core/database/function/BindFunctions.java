@@ -90,7 +90,7 @@ public class BindFunctions {
      */
     public static String getGuildBinds(Guild guild, String delimiter) {
         try(Connection connection = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? ORDER BY `channelId` ASC")) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? ORDER BY `channelId`")) {
 
             stmt.setString(1, guild.getId());
             ResultSet rs = stmt.executeQuery();

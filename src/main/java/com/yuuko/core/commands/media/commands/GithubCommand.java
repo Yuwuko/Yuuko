@@ -45,7 +45,7 @@ public class GithubCommand extends Command {
         final String openIssues = "[" + json.get("open_issues_count").getAsString() + "](https://github.com/" + json.get("full_name").getAsString() + "/issues)";
         final String pullRequests = "[link](https://github.com/" + json.get("full_name").getAsString() + "/pulls)";
         final String commits = "[link](https://github.com/" + json.get("full_name").getAsString() + "/commits/" + json.get("default_branch").getAsString() + ")";
-        final String size = new BigDecimal(json.get("size").getAsInt()/1024.0).setScale(2, RoundingMode.HALF_UP) + "MB";
+        final String size = BigDecimal.valueOf(json.get("size").getAsInt() / 1024.0).setScale(2, RoundingMode.HALF_UP) + "MB";
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("GitHub: " + json.get("full_name").getAsString(), json.get("html_url").getAsString())

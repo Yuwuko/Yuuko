@@ -21,7 +21,7 @@ import java.util.concurrent.ScheduledFuture;
 
 public class TrackScheduler extends PlayerEventListenerAdapter {
 
-    private Guild guild;
+    private final Guild guild;
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;
     private boolean looping = false;

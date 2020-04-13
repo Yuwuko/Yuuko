@@ -43,8 +43,8 @@ public class ShardsCommand extends Command {
         for(LavalinkSocket socket : Configuration.LAVALINK.getLavalink().getNodes()) {
             if(socket.getStats() != null) {
                 nodes.append("**Yuuko-").append(socket.getName()).append("**")
-                        .append("\n").append("System Load: ").append(new BigDecimal((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP)).append("%")
-                        .append("\n").append("Memory Used: ").append(new BigDecimal(socket.getStats().getMemUsed() / 1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
+                        .append("\n").append("System Load: ").append(BigDecimal.valueOf((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP)).append("%")
+                        .append("\n").append("Memory Used: ").append(BigDecimal.valueOf(socket.getStats().getMemUsed() / 1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
                         .append("\n").append("Players: ").append(socket.getStats().getPlayers())
                         .append("\n").append("Active: ").append(socket.getStats().getPlayingPlayers());
                 shardEmbed.addField("", nodes.toString(), true);

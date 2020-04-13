@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ public class GenericEventManager extends ListenerAdapter {
      * @param e GenericGuildEvent
      */
     @Override
-    public void onGenericGuild(GenericGuildEvent e) {
+    public void onGenericGuild(@NotNull GenericGuildEvent e) {
         try {
             new GenericGuildController(e);
         } catch(Exception ex) {
@@ -33,7 +34,7 @@ public class GenericEventManager extends ListenerAdapter {
      * @param e -> GenericMessageEvent.
      */
     @Override
-    public void onGenericGuildMessage(GenericGuildMessageEvent e) {
+    public void onGenericGuildMessage(@NotNull GenericGuildMessageEvent e) {
         try {
             new GenericGuildMessageController(e);
         } catch(Exception ex) {
@@ -47,7 +48,7 @@ public class GenericEventManager extends ListenerAdapter {
      * @param e -> GenericGuildMessageReactionEvent.
      */
     @Override
-    public void onGenericGuildMessageReaction(GenericGuildMessageReactionEvent e) {
+    public void onGenericGuildMessageReaction(@NotNull GenericGuildMessageReactionEvent e) {
         try {
             new GenericGuildMessageReactionController(e);
         } catch(Exception ex) {
@@ -61,7 +62,7 @@ public class GenericEventManager extends ListenerAdapter {
      * @param e -> GenericGuildVoiceEvent.
      */
     @Override
-    public void onGenericGuildVoice(GenericGuildVoiceEvent e) {
+    public void onGenericGuildVoice(@NotNull GenericGuildVoiceEvent e) {
         try {
             new GenericGuildVoiceController(e);
         } catch(Exception ex) {
@@ -75,7 +76,7 @@ public class GenericEventManager extends ListenerAdapter {
      * @param e -> GenericTextChannelEvent.
      */
     @Override
-    public void onGenericTextChannel(GenericTextChannelEvent e) {
+    public void onGenericTextChannel(@NotNull GenericTextChannelEvent e) {
         try {
             new GenericTextChannelController(e);
         } catch(Exception ex) {

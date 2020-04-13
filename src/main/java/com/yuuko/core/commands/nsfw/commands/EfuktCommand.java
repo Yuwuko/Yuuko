@@ -38,7 +38,7 @@ public class EfuktCommand extends Command {
             }
 
             EmbedBuilder efuktPost = new EmbedBuilder()
-                    .setTitle(doc.title().substring(0, doc.title().length() < 256 ? doc.title().length() : 256))
+                    .setTitle(doc.title().substring(0, Math.min(doc.title().length(), 256)))
                     .setDescription(doc.baseUri())
                     .setImage(image)
                     .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
