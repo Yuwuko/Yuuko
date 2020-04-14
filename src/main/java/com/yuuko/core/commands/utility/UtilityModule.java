@@ -11,7 +11,6 @@ public class UtilityModule extends Module {
     private static final List<Command> commands = Arrays.asList(
             new UserCommand(),
             new GuildCommand(),
-            new BindCommand(),
             new AvatarCommand(),
             new RolesCommand(),
             new PingCommand(),
@@ -21,5 +20,4 @@ public class UtilityModule extends Module {
     public UtilityModule() {
         super("utility", false, commands);
     }
-
 }

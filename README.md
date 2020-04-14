@@ -28,7 +28,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 ## Commands
 
 * **Core** <br>
-`help` `shards` `module` `about` `vote` `command` `permissions`
+`help` `shards` `module` `about` `vote` `permissions` `bind`
 * **Animal** <br>
 `cat` `fox` `dog` `bird`
 * **NSFW** <br>
@@ -38,7 +38,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Interaction** <br>
 `pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`
 * **Utility** <br>
-`guild` `bind` `ping` `roles` `avatar` `user` `reactrole`
+`guild` `ping` `roles` `avatar` `user` `reactrole`
 * **Developer** <br>
 `setstatus` `reapi` `redb` `lavalink` `syncguilds`
 * **Audio** <br>

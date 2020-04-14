@@ -13,15 +13,14 @@ public class CoreModule extends Module {
 			new AboutCommand(),
 			new SettingsCommand(),
 			new ModuleCommand(),
+			new BindCommand(),
 			new HelpCommand(),
 			new ShardsCommand(),
 			new VoteCommand(),
-			new CommandCommand(),
 			new PermissionsCommand()
 	);
 
 	public CoreModule() {
 		super("core", false, commands);
 	}
-
 }
