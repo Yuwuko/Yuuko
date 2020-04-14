@@ -124,7 +124,7 @@ public class BindFunctions {
      */
     public static String getBindsByModule(Guild guild, String module, String delimiter) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE (`guildId` = ? AND `moduleName` = ?) OR `moduleName` = '*'")) {
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, module);
@@ -139,7 +139,7 @@ public class BindFunctions {
             if(string.length() > 0) {
                 TextUtilities.removeLast(string, delimiter);
             } else {
-                string.append("None");
+                string.append("`None`");
             }
 
             return string.toString();
@@ -160,7 +160,7 @@ public class BindFunctions {
      */
     public static boolean checkBind(String guildId, String channelId, String moduleName) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? AND `moduleName` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE (`guildId` = ? AND `moduleName` = ?) OR `moduleName` = '*'")) {
 
             stmt.setString(1, guildId);
             stmt.setString(2, moduleName);

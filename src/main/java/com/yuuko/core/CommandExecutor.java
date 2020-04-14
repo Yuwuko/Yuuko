@@ -4,7 +4,6 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.database.function.BindFunctions;
-import com.yuuko.core.database.function.CommandFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ModuleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -156,18 +155,6 @@ public class CommandExecutor {
             return true;
         }
 
-        // Checks if the command is disabled.
-        final String guild = event.getGuild().getId();
-        final String channel = event.getChannel().getId();
-        if(CommandFunctions.isDisabled(guild, "*", "*") ||
-                CommandFunctions.isDisabled(guild, channel, "*") ||
-                CommandFunctions.isDisabled(guild, "*", command.getName()) ||
-                CommandFunctions.isDisabled(guild, channel, command.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Disabled").setDescription("The `" + command.getName() + "` command is disabled.");
-            MessageHandler.sendMessage(event, embed.build());
-            return true;
-        }
-
         return false;
     }
 
@@ -180,7 +167,7 @@ public class CommandExecutor {
         if(BindFunctions.checkBind(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
             return false;
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to `" + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + "`.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
             MessageHandler.sendMessage(event, embed.build());
             return true;
         }

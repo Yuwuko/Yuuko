@@ -2,11 +2,16 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202004r2
++ [-] Removed [__command__] command.
++ [~] Improved [__bind__] command to allow binding of all modules at once.
++ [~] Moved [__bind__] command from utility module to core.
+
 ## 202004r1
 + [!] Sorry the bot was down for so long, a mixture of funding and motivation brought the project to an end, but now it's back :) (Also Happy Easter!)
-+ [~] Updated all dependencies
-+ [-] Removed [__channel__] command
-+ [-] Removed [__advertise__] command
++ [~] Updated all dependencies.
++ [-] Removed [__channel__] command.
++ [-] Removed [__advertise__] command.
 
 ## 202001r1
 + [!] HAPPY NEW YEAR!

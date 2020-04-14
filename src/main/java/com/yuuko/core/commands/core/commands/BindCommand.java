@@ -1,4 +1,4 @@
-package com.yuuko.core.commands.utility.commands;
+package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
@@ -17,7 +17,7 @@ import java.util.List;
 public class BindCommand extends Command {
 
     public BindCommand() {
-        super("bind", Configuration.MODULES.get("utility"), 0, Arrays.asList("-bind <module>", "-bind <module> #channel..."), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("bind", Configuration.MODULES.get("core"), 0, Arrays.asList("-bind <module>", "-bind <module> #channel..."), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
@@ -25,13 +25,13 @@ public class BindCommand extends Command {
         if(e.hasParameters()) {
             String[] params = e.getParameters().toLowerCase().split("\\s+", 2);
 
-            if(!Configuration.MODULES.containsKey(params[0])) {
+            if(!params[0].equals("*") && !Configuration.MODULES.containsKey(params[0])) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "help** command.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
-            String module = Configuration.MODULES.get(params[0]).getName();
+            String module = params[0].equals("*") ? "*" : Configuration.MODULES.get(params[0]).getName();
 
             if(params.length > 1) {
                 List<TextChannel> channels = e.getMessage().getMentionedChannels();

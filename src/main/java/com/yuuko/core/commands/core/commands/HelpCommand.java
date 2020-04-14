@@ -5,7 +5,6 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.database.function.BindFunctions;
-import com.yuuko.core.database.function.CommandFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
@@ -53,15 +52,12 @@ public class HelpCommand extends Command {
                 }
                 TextUtilities.removeLast(usages, "\n");
 
-                String disabled = TextUtilities.formatArray(CommandFunctions.getCommandSetting(e.getGuild(), command).toString());
-
                 EmbedBuilder embed = new EmbedBuilder()
                         .setThumbnail(Configuration.BOT.getAvatarUrl())
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getName(), true)
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
-                        .addField("Disabled", (disabled.equals("")) ? "None" : disabled, true)
                         .addField("Usage", usages.toString(), false)
                         .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
