@@ -34,7 +34,7 @@ public class ModuleFunctions {
             ArrayList<String> disabled = new ArrayList<>();
 
             if(rs.next()) {
-                for(int i = 2; i < Configuration.MODULES.size(); i++) {
+                for(int i = 2; i < Configuration.MODULES.size() - 1; i++) {
                     if(rs.getBoolean(i)) {
                         enabled.add(meta.getColumnName(i));
                     } else {
