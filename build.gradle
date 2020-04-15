@@ -41,7 +41,7 @@ ext {
     lavaplayer                   = '1.3.46'
     jdanas                       = '1.1.0'
     dblJavaWrapper               = '2.0.1'
-    ddblAPIjava                  = 'okhttp4-SNAPSHOT'
+    ddblAPIjava                  = '0.4.8'
     googleApiServicesYoutube     = 'v3-rev222-1.25.0'
     gson                         = '2.8.6'
     jacksonAnnotations           = '2.10.2'
