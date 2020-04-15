@@ -20,21 +20,12 @@ public class SetStatusCommand extends Command {
         try {
             String[] commandParameters = e.getParameters().split("\\s+", 3);
 
-            switch(commandParameters[0].toLowerCase()) {
-                case "playing":
-                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, commandParameters[1]));
-                    break;
-                case "listening":
-                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.LISTENING, commandParameters[1]));
-                    break;
-                case "streaming":
-                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.STREAMING, commandParameters[1]));
-                    break;
-                case "watching":
-                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, commandParameters[1]));
-                    break;
-                default:
-                    e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
+            switch (commandParameters[0].toLowerCase()) {
+                case "playing" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, commandParameters[1]));
+                case "listening" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.LISTENING, commandParameters[1]));
+                case "streaming" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.STREAMING, commandParameters[1]));
+                case "watching" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, commandParameters[1]));
+                default -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
             }
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");

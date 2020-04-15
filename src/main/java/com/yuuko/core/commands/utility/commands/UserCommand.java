@@ -37,17 +37,13 @@ public class UserCommand extends Command {
 
         String presence = "";
         if(target.getActivities().size() > 0) {
-            switch(target.getActivities().get(0).getType().name()) {
-                case "LISTENING": presence = "and is listening to ";
-                break;
-                case "DEFAULT": presence = "and is playing ";
-                break;
-                case "STREAMING": presence = "and is streaming ";
-                break;
-                case "WATCHING": presence = "and is watching ";
-                break;
-                default: presence = "";
-            }
+            presence = switch (target.getActivities().get(0).getType().name()) {
+                case "LISTENING" -> "and is listening to ";
+                case "DEFAULT" -> "and is playing ";
+                case "STREAMING" -> "and is streaming ";
+                case "WATCHING" -> "and is watching ";
+                default -> "";
+            };
 
             if(!presence.equals("")) {
                 presence += (target.getActivities().get(0).isRich()) ? "**"

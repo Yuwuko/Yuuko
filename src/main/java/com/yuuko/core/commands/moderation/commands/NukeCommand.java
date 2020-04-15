@@ -52,9 +52,7 @@ public class NukeCommand extends Command {
             Map<Boolean, List<Message>> sortedMessages = messages.stream().collect(Collectors.partitioningBy(message -> message.getTimeCreated().isBefore(past)));
 
             List<Message> oldMessages = sortedMessages.get(true);
-            oldMessages.listIterator().forEachRemaining(message -> {
-                message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
-            });
+            oldMessages.listIterator().forEachRemaining(message -> message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f)));
 
             // Mass deletion requires a list of at least size 2, I chose 3 to encompass the invoking command also.
             List<Message> newMessages = sortedMessages.get(false);

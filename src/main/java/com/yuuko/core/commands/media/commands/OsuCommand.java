@@ -39,18 +39,13 @@ public class OsuCommand extends Command {
                 mode = 0;
             }
 
-            String modeString;
-            switch(mode) {
-                case 0: modeString = "osu!";
-                    break;
-                case 1: modeString = "taiko";
-                    break;
-                case 2: modeString = "catch the beat";
-                    break;
-                case 3: modeString = "osu!mania";
-                    break;
-                default: modeString = "unknown";
-            }
+            String modeString = switch (mode) {
+                case 0 -> "osu!";
+                case 1 -> "taiko";
+                case 2 -> "catch the beat";
+                case 3 -> "osu!mania";
+                default -> "unknown";
+            };
 
             final String url = BASE_URL + Utilities.getApiKey("osu") + "&u=" + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
             final JsonArray json = new RequestHandler(url).getJsonArray();

@@ -6,6 +6,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [-] Removed [__command__] command.
 + [~] Improved [__bind__] command to allow binding of all modules at once.
 + [~] Moved [__bind__] command from utility module to core.
++ [~] General code improvements, e.g. upgrading old switch statements to new Java14 enhanced variants.
 
 ## 202004r1
 + [!] Sorry the bot was down for so long, a mixture of funding and motivation brought the project to an end, but now it's back :) (Also Happy Easter!)
@@ -16,7 +17,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 202001r1
 + [!] HAPPY NEW YEAR!
 + [~] Updated lots of older dependencies! (yay!)
-+ [~] Fixed issue with tracks not stopping it skip command is used with nothing in the queue.
++ [~] Fixed issue with tracks not stopping when skip command is used with nothing in the queue.
 
 ## 201910r3
 + [!] Changed version control for the last time. (hopefully)
