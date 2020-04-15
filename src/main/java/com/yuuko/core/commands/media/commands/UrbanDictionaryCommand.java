@@ -47,7 +47,7 @@ public class UrbanDictionaryCommand extends Command {
                 .setTitle(data.get("word").getAsString(), data.get("permalink").getAsString())
                 .setDescription(data.get("definition").getAsString().replace("[", "").replace("]", ""))
                 .addField("Example", data.get("example").getAsString().replace("[", "").replace("]", ""), false)
-                .setFooter("\uD83D\uDC4D " + data.get("thumbs_up").getAsString() + " \uD83D\uDC4E " + data.get("thumbs_down").getAsString() + " \uD83D\uDCCC " + BigDecimal.valueOf((thumbsUp / (thumbsUp + thumbsDown)) * 100).setScale(2, RoundingMode.HALF_UP) + "%", null);
+                .setFooter("👍 " + data.get("thumbs_up").getAsString() + " 👎 " + data.get("thumbs_down").getAsString() + " 📌 " + BigDecimal.valueOf((thumbsUp / (thumbsUp + thumbsDown)) * 100).setScale(2, RoundingMode.HALF_UP) + "%", null);
         MessageHandler.sendMessage(e, embed.build());
     }
 
