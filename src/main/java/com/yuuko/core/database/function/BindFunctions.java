@@ -128,6 +128,7 @@ public class BindFunctions {
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, module);
+            stmt.setString(3, guild.getId());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -164,6 +165,7 @@ public class BindFunctions {
 
             stmt.setString(1, guildId);
             stmt.setString(2, moduleName);
+            stmt.setString(3, guildId);
 
             ResultSet rs = stmt.executeQuery();
             int count = 0;
