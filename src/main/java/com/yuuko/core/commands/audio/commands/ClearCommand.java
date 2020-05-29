@@ -37,10 +37,10 @@ public class ClearCommand extends Command {
 
             LinkedList<AudioTrack> temp = new LinkedList<>();
             final int clearPos = Integer.parseInt(e.getParameters());
-            int i = 0;
+            int i = 1;
 
             for(AudioTrack track: manager.getScheduler().queue) {
-                if(clearPos == ++i) {
+                if(clearPos == i++) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("`" + track.getInfo().title + "` has been cleared from the queue.");
                     MessageHandler.sendMessage(e, embed.build());
                     continue;
