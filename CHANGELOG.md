@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202006r1
++ [~] Improve [__clear__] command usability.
++ [~] Update dependencies.
+
 ## 202004r2
 + [-] Removed [__command__] command.
 + [~] Improved [__bind__] command to allow binding of all modules at once.
