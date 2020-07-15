@@ -24,9 +24,6 @@ public final class Utilities {
             if(Configuration.BOT_LIST != null) {
                 Configuration.BOT_LIST.setStats(shardId, shardCount, guildCount);
             }
-            if(Configuration.DIVINE_API != null && Configuration.DIVINE_API.canPost()) {
-                Configuration.DIVINE_API.postStats(guildCount, shardCount);
-            }
         } catch(Exception e) {
             e.printStackTrace();
         }

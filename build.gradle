@@ -60,7 +60,6 @@ dependencies {
     compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
     compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
-    compile group: 'com.github.BasketBandit', name: 'ddblAPI.java', version: ddblAPIjava
     compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutube
     compile group: 'com.google.code.gson', name: 'gson', version: gson
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotations

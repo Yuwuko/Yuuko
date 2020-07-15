@@ -1,6 +1,5 @@
 package com.yuuko.core;
 
-import com.basketbandit.ddbl.DivineAPI;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import com.yuuko.core.api.ApiManager;
 import com.yuuko.core.commands.Command;
@@ -59,7 +58,6 @@ public class Configuration {
     public static Map<String, Module> MODULES;
     public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting", "developer");
     public static DiscordBotListAPI BOT_LIST;
-    public static DivineAPI DIVINE_API;
 
     public static final List<String> STANDARD_STRINGS = Arrays.asList(VERSION,
             VERSION + " • Requested by ",
@@ -255,9 +253,6 @@ public class Configuration {
     private void initialiseBotLists() {
         if(API_MANAGER.containsKey("discordbots")) {
             BOT_LIST = new DiscordBotListAPI.Builder().botId(BOT.getId()).token(Utilities.getApiKey("discordbots")).build();
-        }
-        if(API_MANAGER.containsKey("divinediscordbots")) {
-            DIVINE_API = new DivineAPI.Builder().botId(BOT.getId()).token(Utilities.getApiKey("divinediscordbots")).build();
         }
         Utilities.updateDiscordBotList();
 
