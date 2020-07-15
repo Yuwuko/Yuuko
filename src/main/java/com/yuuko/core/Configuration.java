@@ -42,7 +42,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "202006r1";
+    public static final String VERSION = "202007r1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -221,7 +221,7 @@ public class Configuration {
                     .build();
 
             while(!isConstructed()) {
-                Thread.sleep(250);
+                Thread.sleep(100);
             }
 
             BOT = Utilities.getSelfUser();

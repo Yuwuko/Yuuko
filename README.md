@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 202006r1
+# Yuuko 202007r1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -42,7 +42,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Developer** <br>
 `setstatus` `reapi` `redb` `lavalink` `syncguilds`
 * **Audio** <br>
-`play` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
+`play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
 * **Media** <br>
 `osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco` `urban`
 * **Fun** <br>

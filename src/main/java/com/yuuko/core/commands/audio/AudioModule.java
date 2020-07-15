@@ -10,6 +10,7 @@ import java.util.List;
 public class AudioModule extends Module {
     private static final List<Command> commands = Arrays.asList(
             new PlayCommand(),
+            new PlayNextCommand(),
             new PauseCommand(),
             new StopCommand(),
             new SearchCommand(),
