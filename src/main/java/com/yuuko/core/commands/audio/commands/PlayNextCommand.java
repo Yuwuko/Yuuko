@@ -18,9 +18,9 @@ import lavalink.client.io.Link;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
 
 public class PlayNextCommand extends Command {
 
@@ -81,19 +81,19 @@ public class PlayNextCommand extends Command {
                     String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
 
                     EmbedBuilder embed = new EmbedBuilder()
-                            .setAuthor(e.getMember().getEffectiveName() + " added to the queue!", null, e.getAuthor().getAvatarUrl())
+                            .setAuthor(e.getMember().getEffectiveName() + " added to the front of the queue!", null, e.getAuthor().getAvatarUrl())
                             .setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(imageUrl)
                             .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
-                            .addField("Position in queue", manager.getScheduler().queue.size() + "", false)
+                            .addField("Position in queue", "0", false)
                             .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                     MessageHandler.sendMessage(e, embed.build());
 
                     track.setUserData(e);
 
                     TrackScheduler trackScheduler = manager.getScheduler();
-                    Queue<AudioTrack> tempQueue = trackScheduler.queue;
+                    ArrayList<AudioTrack> tempQueue = new ArrayList<>(trackScheduler.queue);
                     trackScheduler.queue.clear();
                     trackScheduler.queue(track);
                     trackScheduler.queue.addAll(tempQueue);
@@ -105,11 +105,11 @@ public class PlayNextCommand extends Command {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to queue from playlist: `" + playlist.getName() + "`");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to the front of the queue from playlist: `" + playlist.getName() + "`");
                     MessageHandler.sendMessage(e, embed.build());
 
                     TrackScheduler trackScheduler = manager.getScheduler();
-                    Queue<AudioTrack> tempQueue = trackScheduler.queue;
+                    ArrayList<AudioTrack> tempQueue = new ArrayList<>(trackScheduler.queue);
                     trackScheduler.queue.clear();
 
                     List<AudioTrack> tracks = playlist.getTracks();
