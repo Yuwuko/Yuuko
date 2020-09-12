@@ -2,9 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202009r1
++ [~] Updated help command to remove mention of a website.
++ [~] Updated dependencies.
+
 ## 202007r1
 + [+] Added [__playnext__] command which allows users to add a song/playlist to the front of the current queue.
-+ [+] Updated dependencies - JDA, OkHttp, Jackson, Lavaplayer, MYSQLConnector.
++ [~] Updated dependencies - JDA, OkHttp, Jackson, Lavaplayer, MYSQLConnector.
 + [-] Removed DivineDiscordBots from vote command and removed integration.
 
 ## 202006r1
