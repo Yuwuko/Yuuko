@@ -6,7 +6,10 @@ import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
 import com.yuuko.core.database.connection.YuukoDatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
-import com.yuuko.core.metrics.pathway.*;
+import com.yuuko.core.metrics.pathway.AudioMetrics;
+import com.yuuko.core.metrics.pathway.CacheMetrics;
+import com.yuuko.core.metrics.pathway.DiscordMetrics;
+import com.yuuko.core.metrics.pathway.SystemMetrics;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +21,6 @@ import java.util.ArrayList;
 
 public class DatabaseFunctions {
     private static final Logger log = LoggerFactory.getLogger(DatabaseFunctions.class);
-    private static final EventMetrics event = MetricsManager.getEventMetrics();
     private static final SystemMetrics system = MetricsManager.getSystemMetrics();
     private static final DiscordMetrics discord = MetricsManager.getDiscordMetrics();
     private static final AudioMetrics audio = MetricsManager.getAudioMetrics();
@@ -42,21 +44,6 @@ public class DatabaseFunctions {
             stmt.setLong(3, system.MEMORY_TOTAL);
             stmt.setLong(4, system.MEMORY_USED);
             stmt.execute();
-
-            stmt2.setInt(1, shardId);
-            stmt2.setInt(2, event.GUILD_JOIN_EVENT.get());
-            stmt2.setInt(3, event.GUILD_LEAVE_EVENT.get());
-            stmt2.setInt(4, event.GUILD_MEMBER_JOIN_EVENT.get());
-            stmt2.setInt(5, event.GUILD_MEMBER_LEAVE_EVENT.get());
-            stmt2.setInt(6, event.GUILD_UPDATE_NAME_EVENT.get());
-            stmt2.setInt(7, event.GUILD_UPDATE_REGION_EVENT.get());
-            stmt2.setInt(8, event.GUILD_UPDATE_ICON_EVENT.get());
-            stmt2.setInt(9, event.GUILD_UPDATE_SPLASH_EVENT.get());
-            stmt2.setInt(10, event.GUILD_MESSAGE_RECEIVED_EVENT.get());
-            stmt2.setInt(11, event.GUILD_MESSAGE_DELETE_EVENT.get());
-            stmt2.setInt(12, event.GUILD_MESSAGE_REACTION_ADD_EVENT.get());
-            stmt2.setInt(13, event.GUILD_MESSAGE_REACTION_REMOVE_EVENT.get());
-            stmt2.execute();
 
             stmt3.setInt(1, shardId);
             stmt3.setDouble(2, discord.GATEWAY_PING.get());
