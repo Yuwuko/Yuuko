@@ -32,10 +32,9 @@ public class DatabaseFunctions {
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `system_metrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `event_metrics`(`shardId`, `guildJoinEvent`, `guildLeaveEvent`, `guildMemberJoinEvent`, `guildMemberLeaveEvent`, `guildUpdateNameEvent`, `guildUpdateRegionEvent`, `guildUpdateIconEvent`, `guildUpdateSplashEvent`, `guildMessageReceivedEvent`, `guildMessageDeleteEvent`, `guildMessageReactionAddEvent`, `guildMessageReactionRemoveEvent`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
-            PreparedStatement stmt5 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
             int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
 
@@ -45,21 +44,21 @@ public class DatabaseFunctions {
             stmt.setLong(4, system.MEMORY_USED);
             stmt.execute();
 
-            stmt3.setInt(1, shardId);
-            stmt3.setDouble(2, discord.GATEWAY_PING.get());
-            stmt3.setDouble(3, discord.REST_PING.get());
-            stmt3.setInt(4, discord.GUILD_COUNT.get());
-            stmt3.setInt(5, discord.USER_COUNT.get());
+            stmt2.setInt(1, shardId);
+            stmt2.setDouble(2, discord.GATEWAY_PING.get());
+            stmt2.setDouble(3, discord.REST_PING.get());
+            stmt2.setInt(4, discord.GUILD_COUNT.get());
+            stmt2.setInt(5, discord.USER_COUNT.get());
+            stmt2.execute();
+
+            stmt3.setInt(1, audio.PLAYERS_TOTAL.get());
+            stmt3.setInt(2, audio.PLAYERS_ACTIVE.get());
+            stmt3.setInt(3, audio.QUEUE_SIZE.get());
             stmt3.execute();
 
-            stmt4.setInt(1, audio.PLAYERS_TOTAL.get());
-            stmt4.setInt(2, audio.PLAYERS_ACTIVE.get());
-            stmt4.setInt(3, audio.QUEUE_SIZE.get());
+            stmt4.setInt(1, cache.TRACK_ID_CACHE_HITS.get());
+            stmt4.setInt(2, cache.TRACK_ID_CACHE_SIZE.get());
             stmt4.execute();
-
-            stmt5.setInt(1, cache.TRACK_ID_CACHE_HITS.get());
-            stmt5.setInt(2, cache.TRACK_ID_CACHE_SIZE.get());
-            stmt5.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -96,11 +95,10 @@ public class DatabaseFunctions {
     public static void truncateMetrics(int shard) {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE shardId = ?");
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `event_metrics` WHERE shardId = ?");
-            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE shardId = ?");
-            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `audio_metrics`");
-            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `command_log` WHERE shardId = ?");
-            PreparedStatement stmt6 = conn.prepareStatement("DELETE FROM `cache_metrics`")) {
+            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE shardId = ?");
+            PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `audio_metrics`");
+            PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `command_log` WHERE shardId = ?");
+            PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `cache_metrics`")) {
 
             stmt.setInt(1, shard);
             stmt.execute();
@@ -108,15 +106,12 @@ public class DatabaseFunctions {
             stmt2.setInt(1, shard);
             stmt2.execute();
 
-            stmt3.setInt(1, shard);
             stmt3.execute();
 
+            stmt4.setInt(1, shard);
             stmt4.execute();
 
-            stmt5.setInt(1, shard);
             stmt5.execute();
-
-            stmt6.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
