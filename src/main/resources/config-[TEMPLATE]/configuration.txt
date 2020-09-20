@@ -1,0 +1,5 @@
+author
+author website
+help server url
+bot-id
+bot-token

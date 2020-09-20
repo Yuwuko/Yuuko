@@ -1,0 +1,2 @@
+ws://ipaddress:socket
+password
