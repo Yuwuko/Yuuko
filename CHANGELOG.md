@@ -2,10 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202009r2
++ [~] Updated dependencies
+
 ## 202009r1
 + [~] Updated help command to remove mention of a website.
 + [~] Updated dependencies.
-+ [-] Removed event metric logging. Nothing was being done with the data.
++ [-] Removed the event metric logging.
 
 ## 202007r1
 + [+] Added [__playnext__] command which allows users to add a song/playlist to the front of the current queue.
