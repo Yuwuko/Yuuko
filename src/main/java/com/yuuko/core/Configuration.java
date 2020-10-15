@@ -201,13 +201,13 @@ public class Configuration {
     private void buildShardManager() {
         try {
             SHARD_MANAGER = DefaultShardManagerBuilder.create(
-                    GatewayIntent.GUILD_MEMBERS,
+                    //GatewayIntent.GUILD_MEMBERS,
                     GatewayIntent.GUILD_BANS,
                     GatewayIntent.GUILD_EMOJIS,
                     GatewayIntent.GUILD_MESSAGES,
                     GatewayIntent.GUILD_MESSAGE_REACTIONS,
-                    GatewayIntent.GUILD_VOICE_STATES,
-                    GatewayIntent.GUILD_PRESENCES
+                    GatewayIntent.GUILD_VOICE_STATES//,
+                    //GatewayIntent.GUILD_PRESENCES
             )
                     .setToken(BOT_TOKEN)
                     .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
