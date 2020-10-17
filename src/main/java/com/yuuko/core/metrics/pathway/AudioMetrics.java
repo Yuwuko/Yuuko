@@ -25,8 +25,10 @@ public class AudioMetrics {
         for(LavalinkSocket node: LAVALINK.getLavalink().getNodes()) {
             if(node.isOpen()) {
                 RemoteStats stats = node.getStats();
-                PLAYERS_TOTAL.getAndAdd(stats.getPlayers());
-                PLAYERS_ACTIVE.getAndAdd(stats.getPlayingPlayers());
+                if(stats != null) {
+                    PLAYERS_TOTAL.getAndAdd(stats.getPlayers());
+                    PLAYERS_ACTIVE.getAndAdd(stats.getPlayingPlayers());
+                }
             }
         }
 
