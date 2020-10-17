@@ -5,17 +5,13 @@ import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
-import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateIconEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateRegionEvent;
@@ -27,16 +23,6 @@ public class GenericGuildController {
     private static final Logger log = LoggerFactory.getLogger(GenericGuildController.class);
 
     public GenericGuildController(GenericGuildEvent e) {
-        if(e instanceof GuildMemberJoinEvent) {
-            guildMemberJoinEvent((GuildMemberJoinEvent)e);
-            return;
-        }
-
-        if(e instanceof GuildMemberRemoveEvent) {
-            guildMemberRemoveEvent((GuildMemberRemoveEvent)e);
-            return;
-        }
-
         if(e instanceof GuildJoinEvent) {
             guildJoinEvent((GuildJoinEvent) e);
             return;
@@ -102,32 +88,6 @@ public class GenericGuildController {
 
     private void guildUpdateRegionEvent(GuildUpdateRegionEvent e) {
         GuildFunctions.updateGuildRegion(e.getGuild().getId(), e.getNewRegion().getName());
-    }
-
-    private void guildMemberJoinEvent(GuildMemberJoinEvent e) {
-        GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
-
-        final String channelId = GuildFunctions.getGuildSetting("newMember", e.getGuild().getId());
-        if(channelId == null) {
-            return;
-        }
-
-        String message = GuildFunctions.getGuildSetting("newMemberMessage", e.getGuild().getId());
-        if(message == null) {
-            message = "Welcome to **%guild%**, %user%!";
-        }
-
-        TextChannel channel = e.getGuild().getTextChannelById(channelId);
-        EmbedBuilder member = new EmbedBuilder().setTitle("New Member").setDescription(TextUtilities.untokenizeString(e, message));
-        if(GuildFunctions.getGuildSettingBoolean("newMemberRemoveMessage", e.getGuild().getId())) {
-            MessageHandler.sendTempMessage(e, channel, member.build());
-        } else {
-            MessageHandler.sendMessage(e, channel, member.build());
-        }
-    }
-
-    private void guildMemberRemoveEvent(GuildMemberRemoveEvent e) {
-        GuildFunctions.updateGuildMembers(e.getGuild().getId(), e.getGuild().getMemberCache().size());
     }
 
     private void guildUpdateIconEvent(GuildUpdateIconEvent e) {
