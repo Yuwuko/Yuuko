@@ -48,7 +48,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
 * **Setting** <br>
-`settings` `prefix` `starboard` `comlog` `modlog` `djmode` `deleteexecuted` `nowplaying` `newmember`
+`settings` `prefix` `starboard` `comlog` `modlog` `djmode` `deleteexecuted` `nowplaying`
 
 ---
 

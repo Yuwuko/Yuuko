@@ -13,7 +13,6 @@ public class SettingModule extends Module {
             new StarboardSetting(),
             new CommandLogSetting(),
             new ModerationLogSetting(),
-            new NewMemberSetting(),
             new DjModeSetting(),
             new NowPlayingSetting(),
             new DeleteExecutedSetting()
