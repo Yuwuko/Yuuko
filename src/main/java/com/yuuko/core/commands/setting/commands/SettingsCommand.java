@@ -27,9 +27,9 @@ public class SettingsCommand extends Command {
                 .addField(e.getPrefix() + "deleteExecuted <boolean>", "`" + settingsList.get(1) + "` - Deletes the users command string when it is executed.", false)
                 .addField(e.getPrefix() + "nowPlaying <boolean>", "`" + settingsList.get(2) + "` - Sends information of the current track when it changes.", false)
                 .addField(e.getPrefix() + "djMode <boolean>", "`" + settingsList.get(3) + "` - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
-                .addField(e.getPrefix() + "starboard <#channel>", (settingsList.get(4) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "`Disabled`") + " - Where any messages reacted to with a ⭐ will be sent.", false)
-                .addField(e.getPrefix() + "comLog <#channel>", (settingsList.get(5) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "`Disabled`") + " - Sends executed commands to a defined log channel.", false)
-                .addField(e.getPrefix() + "modLog <#channel>", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(8)).getAsMention() : "`Disabled`") + " - Sends moderation events to a defined log channel.", false)
+                .addField(e.getPrefix() + "starboard <#channel>", (settingsList.get(4) != null ? e.getGuild().getTextChannelById(settingsList.get(4)).getAsMention() : "`Disabled`") + " - Where any messages reacted to with a ⭐ will be sent.", false)
+                .addField(e.getPrefix() + "comLog <#channel>", (settingsList.get(5) != null ? e.getGuild().getTextChannelById(settingsList.get(5)).getAsMention() : "`Disabled`") + " - Sends executed commands to a defined log channel.", false)
+                .addField(e.getPrefix() + "modLog <#channel>", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "`Disabled`") + " - Sends moderation events to a defined log channel.", false)
                 .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, commandModules.build());
     }
