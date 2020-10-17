@@ -46,12 +46,11 @@ public class SearchCommand extends Command {
                     MessageEvent event = new MessageEvent(e).setCommand(new PlayCommand()).setParameters("https://www.youtube.com/watch?v=" + videoId);
                     event.getCommand().onCommand(event);
                     audioSearchResults.remove(e.getAuthor().getId());
-                    return;
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
                     MessageHandler.sendMessage(e, embed.build());
-                    return;
                 }
+                return;
             }
 
             List<SearchResult> results = YouTubeSearchHandler.search(e);

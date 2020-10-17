@@ -35,7 +35,6 @@ public final class Sanitiser {
 
         // Does the command contain the minimum number of parameters?
         return meetsParameterMinimum(event, true);
-
     }
 
     /**

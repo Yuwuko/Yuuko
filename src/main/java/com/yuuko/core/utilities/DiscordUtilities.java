@@ -7,7 +7,6 @@ import java.util.List;
 
 public final class DiscordUtilities {
 
-
     /**
      * Returns a username and discriminator in format username#discriminator.
      *
