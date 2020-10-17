@@ -32,7 +32,7 @@ public class DatabaseFunctions {
     public static void updateMetricsDatabase() {
         try(Connection conn = MetricsDatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `system_metrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `userCount`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
@@ -48,7 +48,6 @@ public class DatabaseFunctions {
             stmt2.setDouble(2, discord.GATEWAY_PING.get());
             stmt2.setDouble(3, discord.REST_PING.get());
             stmt2.setInt(4, discord.GUILD_COUNT.get());
-            stmt2.setInt(5, discord.USER_COUNT.get());
             stmt2.execute();
 
             stmt3.setInt(1, audio.PLAYERS_TOTAL.get());
@@ -209,20 +208,19 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Update shard statistics such as guild count and user count.
+     * Update shard statistics such as guild count.
      */
     public static void updateShardStatistics() {
         try(Connection conn = ProvisionDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `users` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             JDA shard = Configuration.BOT.getJDA();
 
             stmt.setString(1, shard.getStatus().name());
             stmt.setInt(2, discord.GUILD_COUNT.get());
-            stmt.setInt(3, discord.USER_COUNT.get());
-            stmt.setInt(4, discord.GATEWAY_PING.get());
-            stmt.setInt(5, discord.REST_PING.get());
-            stmt.setInt(6, shard.getShardInfo().getShardId());
+            stmt.setInt(3, discord.GATEWAY_PING.get());
+            stmt.setInt(4, discord.REST_PING.get());
+            stmt.setInt(5, shard.getShardInfo().getShardId());
             stmt.execute();
 
 

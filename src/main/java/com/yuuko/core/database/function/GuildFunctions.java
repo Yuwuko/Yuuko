@@ -52,7 +52,7 @@ public class GuildFunctions {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `guilds` (`guildId`) VALUES (?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `guilds_settings` (`guildId`) VALUES (?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `module_settings` (`guildId`) VALUES (?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildMembers`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?)")) {
 
             // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
             String encodedName = Base64.getEncoder().encodeToString(guild.getName().getBytes());
@@ -69,9 +69,8 @@ public class GuildFunctions {
             stmt4.setString(1, guild.getId());
             stmt4.setString(2, encodedName);
             stmt4.setString(3, guild.getRegion().getName());
-            stmt4.setLong(4, guild.getMemberCache().size());
-            stmt4.setString(5, guild.getIconUrl());
-            stmt4.setString(6, guild.getSplashUrl());
+            stmt4.setString(4, guild.getIconUrl());
+            stmt4.setString(5, guild.getSplashUrl());
             stmt4.execute();
 
             log.info("Guild Synced: " + guild.getName() + " (" + guild.getId() + ")");
@@ -104,16 +103,15 @@ public class GuildFunctions {
      */
     private static void updateGuild(Guild guild) {
         try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildName` = ?, `guildRegion` = ?, `guildMembers` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildName` = ?, `guildRegion` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
 
             String encodedName = Base64.getEncoder().encodeToString(guild.getName().getBytes());
 
             stmt.setString(1, encodedName);
             stmt.setString(2, guild.getRegion().getName());
-            stmt.setLong(3, guild.getMemberCache().size());
-            stmt.setString(4, guild.getIconUrl());
-            stmt.setString(5, guild.getSplashUrl());
-            stmt.setString(6, guild.getId());
+            stmt.setString(3, guild.getIconUrl());
+            stmt.setString(4, guild.getSplashUrl());
+            stmt.setString(5, guild.getId());
             stmt.execute();
 
         } catch(Exception ex) {
@@ -154,25 +152,6 @@ public class GuildFunctions {
             PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildRegion` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildRegion);
-            stmt.setString(2, guildId);
-            stmt.execute();
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Update guild member count.
-     *
-     * @param guildId String
-     * @param guildMembers long
-     */
-    public static void updateGuildMembers(String guildId, long guildMembers) {
-        try(Connection conn = YuukoDatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildMembers` = ? WHERE `guildId` = ?")) {
-
-            stmt.setLong(1, guildMembers);
             stmt.setString(2, guildId);
             stmt.execute();
 
@@ -235,7 +214,6 @@ public class GuildFunctions {
             ResultSet rs = stmt.executeQuery();
 
             ArrayList<String> settings = new ArrayList<>();
-
             while(rs.next()) {
                 settings.add(rs.getString("prefix"));
                 settings.add(rs.getBoolean("deleteExecuted") ? "Enabled" : "Disabled");
