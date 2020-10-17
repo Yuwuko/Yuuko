@@ -42,7 +42,7 @@ public class GuildCommand extends Command {
                 .addField("ID", guild.getId(), true)
                 .addField("Created", guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
                 .addField("Region", guild.getRegion().getName(), true)
-                .addField("Users", guild.getMemberCache().size()+"", true)
+                .addField("Users", "Unknown (Missing Intent)", true)
                 .addField("Text Channels", guild.getTextChannelCache().size()+"", true)
                 .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
                 .addField("Roles", guild.getRoles().size()+"", true)
