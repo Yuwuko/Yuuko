@@ -20,7 +20,6 @@ import java.util.Queue;
 import java.util.concurrent.ScheduledFuture;
 
 public class TrackScheduler extends PlayerEventListenerAdapter {
-
     private final Guild guild;
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;

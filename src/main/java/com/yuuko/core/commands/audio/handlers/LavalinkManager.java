@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.net.URI;
 
 public class LavalinkManager {
-
     private final JdaLavalink lavalink;
 
     public LavalinkManager() {

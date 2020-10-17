@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import java.util.HashMap;
 
 public class AudioManagerController {
-
     private static HashMap<Guild, GuildAudioManager> managers;
     private static AudioPlayerManager playerManager;
 

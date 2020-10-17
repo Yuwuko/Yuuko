@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class GuildAudioManager {
-
     private final Guild guild;
     private final JdaLink link;
     private final LavalinkPlayer player;
