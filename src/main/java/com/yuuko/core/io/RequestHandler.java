@@ -27,6 +27,14 @@ public class RequestHandler {
         Request.Builder builder = new Request.Builder()
                 .url(url);
 
+        // if request properties is length 0, ask for json by default
+        if(requestProperties.length == 0) {
+            requestProperties = new RequestProperty[]{
+                    new RequestProperty("Accept", "application/json"),
+                    new RequestProperty("Content-Type","application/json")
+            };
+        }
+
         for(RequestProperty property : requestProperties) {
             builder.addHeader(property.getHeader(), property.getDirective());
         }
