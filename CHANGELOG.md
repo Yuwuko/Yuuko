@@ -2,8 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
-## 202009r2
-+ [~] Updated dependencies
+## 202010r1
++ [!] Remove/Patch code the uses privileged intents.
++ [~] Updated dependencies.
 
 ## 202009r1
 + [~] Updated help command to remove mention of a website.
