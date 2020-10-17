@@ -25,6 +25,7 @@ import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections8.Reflections;
 import org.slf4j.Logger;
@@ -201,15 +202,14 @@ public class Configuration {
     private void buildShardManager() {
         try {
             SHARD_MANAGER = DefaultShardManagerBuilder.create(
-                    //GatewayIntent.GUILD_MEMBERS,
                     GatewayIntent.GUILD_BANS,
                     GatewayIntent.GUILD_EMOJIS,
                     GatewayIntent.GUILD_MESSAGES,
                     GatewayIntent.GUILD_MESSAGE_REACTIONS,
-                    GatewayIntent.GUILD_VOICE_STATES//,
-                    //GatewayIntent.GUILD_PRESENCES
+                    GatewayIntent.GUILD_VOICE_STATES
             )
                     .setToken(BOT_TOKEN)
+                    .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS)
                     .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())
                     .setVoiceDispatchInterceptor(LAVALINK.getLavalink().getVoiceInterceptor())

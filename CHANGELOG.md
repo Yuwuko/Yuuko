@@ -3,10 +3,11 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202010r1
-+ [!] Remove/Patch code the uses privileged intents. +1
-+ [!] Removed references to guild members in database.
-+ [-] Removed [__newmember__] and related commands.
++ [!] Remove/Patch code the uses privileged intents. +2
++ [!] Removed references to guild members in the database.
++ [~] Fixed numerous bugs. (forgot to note them)
 + [~] Updated dependencies.
++ [-] Removed [__newmember__] and related commands.
 
 ## 202009r1
 + [~] Updated help command to remove mention of a website.
