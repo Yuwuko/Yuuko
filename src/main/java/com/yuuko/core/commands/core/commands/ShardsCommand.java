@@ -32,7 +32,6 @@ public class ShardsCommand extends Command {
             shards.append("**Yuuko #").append(shard.getId()).append("**")
                     .append("\n").append("Status: ").append(shard.getStatus())
                     .append("\n").append("Guilds: ").append(shard.getGuildCount())
-                    .append("\n").append("Users: ").append(shard.getUserCount())
                     .append("\n").append("Ping: ").append(shard.getPing()).append("ms");
 
             shardEmbed.addField("", shards.toString(), true);

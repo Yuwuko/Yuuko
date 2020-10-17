@@ -242,7 +242,7 @@ public class DatabaseFunctions {
 
             ResultSet resultSet = stmt.executeQuery();
             while(resultSet.next()) {
-                shards.add(new Shard(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5)));
+                shards.add(new Shard(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(4), resultSet.getInt(5)));
             }
 
             return shards;
