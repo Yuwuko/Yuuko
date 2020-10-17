@@ -31,11 +31,6 @@ public class GenericTextChannelController {
 
         if(channel.equals(GuildFunctions.getGuildSetting("modlog", channel))) {
             DatabaseFunctions.cleanupSettings("modlog", e.getGuild().getId());
-            return;
-        }
-
-        if(channel.equals(GuildFunctions.getGuildSetting("newMember", channel))) {
-            DatabaseFunctions.cleanupSettings("newMember", e.getGuild().getId());
         }
     }
 }
