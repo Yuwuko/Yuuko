@@ -37,7 +37,7 @@ repositories {
 
 ext {
     jda                          = '4.2.0_209'
-    lavalinkClient               = '6ccbeb1'
+    lavalinkClient               = '568cf8fe66'
     lavaplayer                   = 'bce82c7'
     jdanas                       = '1.1.0'
     dblJavaWrapper               = '2.0.1'
@@ -57,7 +57,7 @@ ext {
 
 dependencies {
     compile group: 'net.dv8tion', name: 'JDA', version: jda
-    compile group: 'com.github.FredBoat', name: 'Lavalink-Client', version: lavalinkClient
+    compile group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: lavalinkClient
     compile group: 'com.github.Devoxin', name: 'lavaplayer', version: lavaplayer
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
     compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
