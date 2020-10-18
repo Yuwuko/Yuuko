@@ -1,7 +1,9 @@
 <configuration>
+    <conversionRule conversionWord="higherlight" converterClass="com.yuuko.core.utilities.logback.HighlightingCompositeConverter"/>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%d{HH:mm:ss.SSS}] %red([%thread]) [%highlight(%level)] %logger{50} - %highlight(%msg) %n</pattern>
+            <pattern>[%gray%d{HH:mm:ss.SSS}] %green([%thread]) [%higherlight(%level)] %logger{50} - %higherlight(%msg) %n</pattern>
         </encoder>
     </appender>
     <root level="info">
