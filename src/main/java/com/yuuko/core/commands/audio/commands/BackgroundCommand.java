@@ -45,8 +45,7 @@ public class BackgroundCommand extends Command {
         }
 
         List<SearchResult> results = YouTubeSearchHandler.search(e);
-
-        if(results == null || results.get(0).getId().getVideoId().equals("")) {
+        if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
             MessageHandler.sendMessage(e, embed.build());
             return;

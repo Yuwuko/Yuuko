@@ -24,7 +24,6 @@ public class GuildCommand extends Command {
 
         if(!guild.getEmoteCache().isEmpty()) {
             int characterCount = 0;
-
             for(Emote emote : guild.getEmoteCache()) {
                 if(characterCount + emote.getAsMention().length() + 1 < 1024) {
                     emoteString.append(emote.getAsMention()).append(" ");
@@ -35,20 +34,22 @@ public class GuildCommand extends Command {
             emoteString.append("None Available");
         }
 
-        EmbedBuilder commandInfo = new EmbedBuilder()
-                .setTitle("Guild information for: " + guild.getName(), null)
-                .setThumbnail(guild.getIconUrl())
-                .addField("Owner", guild.getOwner().getUser().getName() + "#" + guild.getOwner().getUser().getDiscriminator(), true)
-                .addField("ID", guild.getId(), true)
-                .addField("Created", guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
-                .addField("Region", guild.getRegion().getName(), true)
-                .addField("Users", "Unknown (Missing Intent)", true)
-                .addField("Text Channels", guild.getTextChannelCache().size()+"", true)
-                .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
-                .addField("Roles", guild.getRoles().size()+"", true)
-                .addField("Emotes", emoteString.toString(), false)
-                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, commandInfo.build());
+        guild.retrieveOwner().queue(s -> {
+            EmbedBuilder commandInfo = new EmbedBuilder()
+                    .setTitle("Guild information for: " + guild.getName(), null)
+                    .setThumbnail(guild.getIconUrl())
+                    .addField("Owner", s.getUser().getName() + "#" + s.getUser().getDiscriminator(), true)
+                    .addField("ID", guild.getId(), true)
+                    .addField("Created", guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
+                    .addField("Region", guild.getRegion().getName(), true)
+                    .addField("Users", "Unknown (Missing Intent)", true)
+                    .addField("Text Channels", guild.getTextChannelCache().size()+"", true)
+                    .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
+                    .addField("Roles", guild.getRoles().size()+"", true)
+                    .addField("Emotes", emoteString.toString(), false)
+                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl());
+            MessageHandler.sendMessage(e, commandInfo.build());
+        });
     }
 
 }
