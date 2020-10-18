@@ -98,6 +98,11 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
         }
     }
 
+    @Override
+    public void onTrackStart(IPlayer player, AudioTrack track) {
+        super.onTrackStart(player, track);
+    }
+
     /**
      * What to do when the current track ends.
      * @param player IPlayer.
@@ -118,6 +123,16 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
             nextTrack();
         }
+    }
+
+    @Override
+    public void onPlayerPause(IPlayer player) {
+        super.onPlayerPause(player);
+    }
+
+    @Override
+    public void onPlayerResume(IPlayer player) {
+        super.onPlayerResume(player);
     }
 
     @Override
