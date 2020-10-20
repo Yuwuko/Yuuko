@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class YuukoDatabaseConnection {
-    private static final Logger log = LoggerFactory.getLogger(YuukoDatabaseConnection.class);
+public class DatabaseConnection {
+    private static final Logger log = LoggerFactory.getLogger(DatabaseConnection.class);
     private static final HikariConfig config = new HikariConfig("./config/hikari/dbyuuko.properties");
     private static final HikariDataSource connectionPool = new HikariDataSource(config);
 
-    public YuukoDatabaseConnection() {
+    public DatabaseConnection() {
         log.trace("Invoking {}", this.getClass().getName());
     }
 

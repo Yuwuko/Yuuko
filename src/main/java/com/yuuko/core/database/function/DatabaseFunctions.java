@@ -1,9 +1,7 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.connection.MetricsDatabaseConnection;
-import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
-import com.yuuko.core.database.connection.YuukoDatabaseConnection;
+import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.AudioMetrics;
@@ -30,7 +28,7 @@ public class DatabaseFunctions {
      * Updates the database with the latest metrics.
      */
     public static void updateMetricsDatabase() {
-        try(Connection conn = MetricsDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `system_metrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`) VALUES(?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
@@ -72,7 +70,7 @@ public class DatabaseFunctions {
      * @param executionTime double (milliseconds)
      */
     public static void updateCommandLog(String guildId, String command, double executionTime) {
-        try(Connection conn = MetricsDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `command_log`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
             stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
@@ -92,7 +90,7 @@ public class DatabaseFunctions {
      * @param shard int
      */
     public static void truncateMetrics(int shard) {
-        try(Connection conn = MetricsDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE shardId = ?");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE shardId = ?");
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `audio_metrics`");
@@ -121,7 +119,7 @@ public class DatabaseFunctions {
      * Truncates anything 6 hours old in the system and discord metrics. Others are kept for total values.
      */
     public static void pruneMetrics() {
-        try(Connection conn = MetricsDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
             PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `audio_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
@@ -144,7 +142,7 @@ public class DatabaseFunctions {
      * @param guildId the guild to cleanup.
      */
     public static void cleanupSettings(String setting, String guildId) {
-        try(Connection conn = YuukoDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_settings` SET " + setting + " = null WHERE `guildId` = ?")){
 
             stmt.setString(1, guildId);
@@ -161,7 +159,7 @@ public class DatabaseFunctions {
      * @return the next available shard ID, starting at 0.
      */
     public static int provideShardId() {
-        try(Connection conn = ProvisionDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shards` ORDER BY `shardId`");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `shards`(`shardId`) VALUES(?)")){
 
@@ -191,7 +189,7 @@ public class DatabaseFunctions {
      * @return the total shard count expected from the database.
      */
     public static int getShardCount() {
-        try(Connection conn = ProvisionDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shard_configuration`")){
 
             ResultSet resultSet = stmt.executeQuery();
@@ -211,7 +209,7 @@ public class DatabaseFunctions {
      * Update shard statistics such as guild count.
      */
     public static void updateShardStatistics() {
-        try(Connection conn = ProvisionDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
             JDA shard = Configuration.BOT.getJDA();
@@ -235,7 +233,7 @@ public class DatabaseFunctions {
      * @return ArrayList<Shard> of shard statistics.
      */
     public static ArrayList<Shard> getShardStatistics() {
-        try(Connection conn = ProvisionDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shards`")){
 
             ArrayList<Shard> shards = new ArrayList<>();
@@ -257,7 +255,7 @@ public class DatabaseFunctions {
      * Clears the previsioning database of expired IDs (Older than 35 seconds).
      */
     public static void pruneExpiredShards() {
-        try(Connection conn = ProvisionDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 31 SECOND)")) {
 
             stmt.execute();

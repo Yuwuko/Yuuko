@@ -6,9 +6,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
-import com.yuuko.core.database.connection.MetricsDatabaseConnection;
-import com.yuuko.core.database.connection.ProvisionDatabaseConnection;
-import com.yuuko.core.database.connection.YuukoDatabaseConnection;
+import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
@@ -148,11 +146,9 @@ public class Configuration {
      * Must be done before registerShards().
      */
     private void initialiseDatabase() {
-        new ProvisionDatabaseConnection();
-        new YuukoDatabaseConnection();
-        new MetricsDatabaseConnection();
+        new DatabaseConnection();
 
-        log.info("Initialised database classes.");
+        log.info("Initialised database.");
     }
 
     /**

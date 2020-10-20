@@ -1,7 +1,7 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.Configuration;
-import com.yuuko.core.database.connection.YuukoDatabaseConnection;
+import com.yuuko.core.database.connection.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class ModuleFunctions {
      * @return ArrayList<ArrayList<String>>
      */
     public static ArrayList<ArrayList<String>> getModuleSettings(String guild) {
-        try(Connection conn = YuukoDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_settings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -63,7 +63,7 @@ public class ModuleFunctions {
      * @return (boolean) if the module is active or not.
      */
     public static boolean isEnabled(String guild, String module) {
-        try(Connection conn = YuukoDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT `" + module + "` FROM `module_settings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
@@ -85,7 +85,7 @@ public class ModuleFunctions {
      * @return boolean.
      */
     public static boolean toggleModule(String guild, String module) {
-        try(Connection conn = YuukoDatabaseConnection.getConnection();
+        try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `module_settings` SET `" + module + "` = NOT `" + module + "` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guild);
