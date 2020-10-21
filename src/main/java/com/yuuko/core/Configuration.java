@@ -234,7 +234,7 @@ public class Configuration {
     }
 
     /**
-     * Initialises Discord metrics right away instead of waiting for the scheduler.
+     * Initialises metrics right away instead of waiting for the scheduler.
      */
     private void initialiseMetrics() {
         MetricsManager.truncateMetrics(SHARD_ID);
@@ -244,7 +244,7 @@ public class Configuration {
     }
 
     /**
-     * Initialises bot list objects and then updates them to match the database.
+     * Initialises bot-list objects and then updates them to match the database.
      */
     private void initialiseBotLists() {
         if(API_MANAGER.containsKey("discordbots")) {
@@ -256,7 +256,7 @@ public class Configuration {
     }
 
     /**
-     * Initialises the bot's scheduler which runs tasks at set intervals.
+     * Initialises scheduler which runs tasks at set intervals.
      */
     private void initialiseSchedule() {
         ScheduleHandler.registerJob(new TenSecondlyJob());
