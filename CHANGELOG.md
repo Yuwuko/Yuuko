@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202010r2
++ [~] Nerfed [__nuke__] to reduce channel deletion abuse.
+
 ## 202010r1
 + [!] Remove/Patch code the uses privileged intents. +2
 + [!] Removed references to guild members in the database.
