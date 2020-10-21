@@ -27,18 +27,17 @@ public class NukeCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
-        if(channels.size() > 0 && channels.size() < 6) {
-            channels.forEach(channel -> {
-                BindFunctions.cleanupBinds(channel.getId());
-                channel.createCopy().queue(r -> channel.delete().queue());
-            });
+        if(channels.size() > 0) {
+            TextChannel channel = channels.get(0);
+            BindFunctions.cleanupBinds(channel.getId());
+            channel.createCopy().queue(r -> channel.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f)));
             return;
         }
 
         // Checks length of parameters since the command doesn't take a value greater than 3 digits
         // Also prevents NumberFormatException for parsing the integer later.
         if(e.getParameters().length() > 3 || !Sanitiser.isNumber(e.getParameters())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a channel, e.g. #general.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel. e.g. #general");
             MessageHandler.sendMessage(e, embed.build());
             return;
         }
@@ -47,20 +46,19 @@ public class NukeCommand extends Command {
         value = value < 2 ? 2 : Math.min(value, 99);
 
         e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
-            // Beautiful solution using Collectors.partitionBy() to generate 2 lists based on a boolean comparison.
+            // Use Collectors.partitionBy() to generate 2 lists based on a boolean comparison of date.
             OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
             Map<Boolean, List<Message>> sortedMessages = messages.stream().collect(Collectors.partitioningBy(message -> message.getTimeCreated().isBefore(past)));
 
-            List<Message> oldMessages = sortedMessages.get(true);
-            oldMessages.listIterator().forEachRemaining(message -> message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f)));
-
-            // Mass deletion requires a list of at least size 2, I chose 3 to encompass the invoking command also.
-            List<Message> newMessages = sortedMessages.get(false);
-            if(newMessages.size() > 2) {
-                e.getChannel().deleteMessages(newMessages.subList(1, newMessages.size())).queue(s -> {
+            // Removes messages that are valid for mass-deletion. (providing there are more than 2)
+            if(sortedMessages.get(false).size() > 2) {
+                e.getChannel().deleteMessages(sortedMessages.get(false).subList(1, sortedMessages.get(false).size())).queue(s -> {
                     ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
                 }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
             }
+
+            // Removes messages that are too old to be mass-deleted.
+            sortedMessages.get(true).listIterator().forEachRemaining(message -> message.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f)));
         });
     }
 
