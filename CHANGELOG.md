@@ -2,8 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202011r1
++ [~] Updated [__nuke__] to check if channel is of type news.
++ [~] Simplified database cleanup on message/channel delete.
+
 ## 202010r2
 + [~] Nerfed [__nuke__] to reduce channel deletion abuse.
++ [~] Updated dependencies.
 
 ## 202010r1
 + [!] Remove/Patch code the uses privileged intents. +2

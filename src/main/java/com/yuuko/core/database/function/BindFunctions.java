@@ -184,16 +184,25 @@ public class BindFunctions {
     }
 
     /**
-     * Removes binding from channels that are deleted.
+     * Removes all references of channels that are deleted.
      *
-     * @param channel the channel to clean up.
+     * @param channel String id of the channel referenced
      */
-    public static void cleanupBinds(String channel) {
+    public static void cleanupReferences(String channel) {
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `guild_settings` SET `starboard` = null WHERE 'starboard' = ?");
+            PreparedStatement stmt3 = conn.prepareStatement("UPDATE `guild_settings` SET `comLog` = null WHERE 'comLog' = ?");
+            PreparedStatement stmt4 = conn.prepareStatement("UPDATE `guild_settings` SET `modLog` = null WHERE 'modLog' = ?")) {
 
             stmt.setString(1, channel);
             stmt.execute();
+            stmt2.setString(2, channel);
+            stmt2.execute();
+            stmt3.setString(3, channel);
+            stmt3.execute();
+            stmt4.setString(4, channel);
+            stmt4.execute();
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);

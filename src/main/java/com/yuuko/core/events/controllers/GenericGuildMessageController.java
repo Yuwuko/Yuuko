@@ -5,7 +5,6 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.CommandLogSetting;
 import com.yuuko.core.database.function.DatabaseFunctions;
-import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
@@ -62,9 +61,7 @@ public class GenericGuildMessageController {
             execTime = (System.nanoTime() - execTime)/1000000.0;
 
             DatabaseFunctions.updateCommandLog(e.getGuild().getId(), event.getCommand().getName(), execTime);
-            if(GuildFunctions.getGuildSetting("comlog", e.getGuild().getId()) != null) {
-                CommandLogSetting.execute(event, execTime);
-            }
+            CommandLogSetting.execute(event, execTime);
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}, input: {}", this, ex.getMessage(), e.getMessage().getContentRaw(), ex);
@@ -72,10 +69,7 @@ public class GenericGuildMessageController {
     }
 
     private void guildMessageDeleteEvent(GuildMessageDeleteEvent e) {
-        // Reaction Role
-        if(ReactionRoleFunctions.hasReactionRole(e.getMessageId())) {
-            ReactionRoleFunctions.removeReactionRole(e.getMessageId());
-        }
+        ReactionRoleFunctions.removeReactionRole(e.getMessageId());
     }
 
 }
