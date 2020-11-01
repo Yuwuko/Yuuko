@@ -36,7 +36,7 @@ repositories {
 }
 
 ext {
-    jda                          = '4.2.0_209'
+    jda                          = '4.2.0_214'
     lavalinkClient               = '382c6f4571'
     lavaplayer                   = '1.3.55'
     jdanas                       = '1.1.0'
