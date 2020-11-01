@@ -4,7 +4,6 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.ModerationLogSetting;
-import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -29,8 +28,13 @@ public class NukeCommand extends Command {
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
         if(channels.size() > 0) {
             TextChannel channel = channels.get(0);
-            BindFunctions.cleanupBinds(channel.getId());
-            channel.createCopy().queue(r -> channel.delete().queue(s -> {}, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f)));
+            if(!channel.isNews()) {
+                channel.createCopy().queue(r -> channel.delete().queue(s -> {
+                }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f)));
+            } else {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("Channels marked as **news** cannot be nuked in this way.");
+                MessageHandler.sendMessage(e, embed.build());
+            }
             return;
         }
 
