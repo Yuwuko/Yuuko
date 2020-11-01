@@ -37,11 +37,10 @@ repositories {
 
 ext {
     jda                          = '4.2.0_209'
-    lavalinkClient               = '568cf8fe66'
-    lavaplayer                   = 'bce82c7'
+    lavalinkClient               = '382c6f4571'
+    lavaplayer                   = '1.3.55'
     jdanas                       = '1.1.0'
     dblJavaWrapper               = '2.0.1'
-    ddblAPIjava                  = '0.4.8'
     googleApiServicesYoutube     = 'v3-rev222-1.25.0'
     gson                         = '2.8.6'
     jacksonAnnotations           = '2.12.0-rc1'
@@ -58,7 +57,7 @@ ext {
 dependencies {
     compile group: 'net.dv8tion', name: 'JDA', version: jda
     compile group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: lavalinkClient
-    compile group: 'com.github.Devoxin', name: 'lavaplayer', version: lavaplayer
+    compile group: 'com.github.sedmelluq', name: 'lavaplayer', version: lavaplayer
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
     compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
     compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutube
