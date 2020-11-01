@@ -31,8 +31,9 @@ public class YouTubeSearchHandler {
             SearchListResponse searchResponse = searchCache.getOrDefault(e.getParameters(), null);
 
             if(searchResponse == null) {
-                YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {
-                }).setApplicationName("yuuko-204012").build();
+                YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {})
+                        .setApplicationName("yuuko-discord")
+                        .build();
 
                 YouTube.Search.List search = youtube.search().list("id,snippet")
                         .setKey(Utilities.getApiKey("google"))
@@ -55,11 +56,11 @@ public class YouTubeSearchHandler {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Service Error: " + ex.getDetails().getCode())
                     .setDescription(ex.getDetails().getMessage());
             MessageHandler.sendMessage(e, embed.build());
-            return null;
         } catch (IOException cx) {
             log.error("There was an IO error: " + cx.getCause());
-            return null;
         }
+
+        return null;
     }
 
     public static HashMap<String, SearchListResponse> getSearchCache() {
