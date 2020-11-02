@@ -191,9 +191,9 @@ public class BindFunctions {
     public static void cleanupReferences(String channel) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?");
-            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `guild_settings` SET `starboard` = null WHERE 'starboard' = ?");
-            PreparedStatement stmt3 = conn.prepareStatement("UPDATE `guild_settings` SET `comLog` = null WHERE 'comLog' = ?");
-            PreparedStatement stmt4 = conn.prepareStatement("UPDATE `guild_settings` SET `modLog` = null WHERE 'modLog' = ?")) {
+            PreparedStatement stmt2 = conn.prepareStatement("UPDATE `guilds_settings` SET `starboard` = null WHERE 'starboard' = ?");
+            PreparedStatement stmt3 = conn.prepareStatement("UPDATE `guilds_settings` SET `comLog` = null WHERE 'comLog' = ?");
+            PreparedStatement stmt4 = conn.prepareStatement("UPDATE `guilds_settings` SET `modLog` = null WHERE 'modLog' = ?")) {
 
             stmt.setString(1, channel);
             stmt.execute();

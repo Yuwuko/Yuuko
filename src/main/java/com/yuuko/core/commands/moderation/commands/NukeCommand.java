@@ -58,7 +58,7 @@ public class NukeCommand extends Command {
             if(sortedMessages.get(false).size() > 2) {
                 e.getChannel().deleteMessages(sortedMessages.get(false).subList(1, sortedMessages.get(false).size())).queue(s -> {
                     ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
-                }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage(), f));
+                }, f -> log.warn("An error occurred while running the {} class, message: {}", this.getClass().getSimpleName(), f.getMessage()));
             }
 
             // Removes messages that are too old to be mass-deleted.
