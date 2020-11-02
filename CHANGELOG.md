@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202011r1
++ [!] Implemented cooldown for [__nuke__] default of 5 seconds.
 + [~] Updated [__nuke__] to check if channel is of type news.
 + [~] Simplified database cleanup on message/channel delete.
 
