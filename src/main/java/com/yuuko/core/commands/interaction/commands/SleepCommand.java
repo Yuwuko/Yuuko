@@ -20,7 +20,7 @@ public class SleepCommand extends InteractionCommand {
     );
 
     public SleepCommand() {
-        super("sleep", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-sleep"), false, null);
+        super("sleep", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-sleep"), false, null);
     }
 
     @Override

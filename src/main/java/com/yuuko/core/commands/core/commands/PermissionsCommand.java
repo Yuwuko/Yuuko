@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class PermissionsCommand extends Command {
 
     public PermissionsCommand() {
-        super("permissions", Configuration.MODULES.get("core"), 0, Arrays.asList("-permissions"), false, null);
+        super("permissions", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-permissions"), false, null);
     }
 
     @Override

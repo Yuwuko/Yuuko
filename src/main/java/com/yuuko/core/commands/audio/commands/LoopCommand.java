@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class LoopCommand extends Command {
 
     public LoopCommand() {
-        super("loop", Configuration.MODULES.get("audio"), 0, Arrays.asList("-loop"), false, null);
+        super("loop", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-loop"), false, null);
     }
 
     @Override

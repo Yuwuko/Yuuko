@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PauseCommand extends Command {
 
     public PauseCommand() {
-        super("pause", Configuration.MODULES.get("audio"), 0, Arrays.asList("-pause"), false, null);
+        super("pause", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-pause"), false, null);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class EfuktCommand extends Command {
     private static final String BASE_URL = "https://efukt.com/random.php";
 
     public EfuktCommand() {
-        super("efukt", Configuration.MODULES.get("nsfw"), 0, Arrays.asList("-efukt"), true, null);
+        super("efukt", Configuration.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-efukt"), true, null);
     }
 
     @Override

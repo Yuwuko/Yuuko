@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PrefixSetting extends Command {
 
     public PrefixSetting() {
-        super("prefix", Configuration.MODULES.get("setting"), 1, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("prefix", Configuration.MODULES.get("setting"), 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {

@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class AvatarCommand extends Command {
 
     public AvatarCommand() {
-        super("avatar", Configuration.MODULES.get("utility"), 1, Arrays.asList("-avatar @user", "-avatar <userId>"), false, null);
+        super("avatar", Configuration.MODULES.get("utility"), 1, -1L, Arrays.asList("-avatar @user", "-avatar <userId>"), false, null);
     }
 
     @Override

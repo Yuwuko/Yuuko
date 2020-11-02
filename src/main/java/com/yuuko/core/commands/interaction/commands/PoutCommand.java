@@ -23,7 +23,7 @@ public class PoutCommand extends InteractionCommand {
     );
 
     public PoutCommand() {
-        super("pout", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-pout", "-pout @user"), false, null);
+        super("pout", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-pout", "-pout @user"), false, null);
     }
 
     @Override

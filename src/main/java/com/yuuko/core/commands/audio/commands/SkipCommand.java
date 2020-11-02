@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class SkipCommand extends Command {
 
     public SkipCommand() {
-        super("skip", Configuration.MODULES.get("audio"), 0, Arrays.asList("-skip"), false, null);
+        super("skip", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-skip"), false, null);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class CryCommand extends InteractionCommand {
     );
 
     public CryCommand() {
-        super("cry", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-cry"), false, null);
+        super("cry", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-cry"), false, null);
     }
 
     @Override

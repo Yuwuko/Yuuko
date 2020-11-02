@@ -29,7 +29,7 @@ public class HoroscopeCommand extends Command {
     );
 
     public HoroscopeCommand() {
-        super("horoscope", Configuration.MODULES.get("fun"), 1, Arrays.asList("-horoscope <sign>"), false, null);
+        super("horoscope", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-horoscope <sign>"), false, null);
     }
 
     @Override

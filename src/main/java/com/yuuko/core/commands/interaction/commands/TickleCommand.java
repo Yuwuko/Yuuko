@@ -22,7 +22,7 @@ public class TickleCommand extends InteractionCommand {
     );
 
     public TickleCommand() {
-        super("tickle", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-tickle @user"), false, null);
+        super("tickle", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-tickle @user"), false, null);
     }
 
     @Override

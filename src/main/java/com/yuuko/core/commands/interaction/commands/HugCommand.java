@@ -22,7 +22,7 @@ public class HugCommand extends InteractionCommand {
     );
 
     public HugCommand() {
-        super("hug", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-hug @user"), false, null);
+        super("hug", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-hug @user"), false, null);
     }
 
     @Override

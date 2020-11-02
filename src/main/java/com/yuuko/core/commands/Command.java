@@ -14,21 +14,23 @@ public abstract class Command {
     private final String name;
     private final Module module;
     private final int minimumParameters;
+    private final long cooldownDurationMilliseconds;
+    private final HashMap<String, Long> cooldown;
     private final List<String> usage;
     private final List<Permission> permissions;
     private final boolean nsfw;
-    private final HashMap<String, Long> cooldowns;
 
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
 
-    public Command(String name, Module module, int minimumParameters, List<String> usage, boolean nsfw, List<Permission> permissions) {
+    public Command(String name, Module module, int minimumParameters, long cooldownDurationMilliseconds, List<String> usage, boolean nsfw, List<Permission> permissions) {
         this.name = name;
         this.module = module;
         this.minimumParameters = minimumParameters;
+        this.cooldownDurationMilliseconds = cooldownDurationMilliseconds;
+        this.cooldown = new HashMap<>();
         this.usage = usage;
         this.nsfw = nsfw;
         this.permissions = permissions;
-        this.cooldowns = new HashMap<>();
     }
 
     public String getName() {
@@ -57,22 +59,26 @@ public abstract class Command {
 
     // Rate limiting only works in this context since commands are singleton objects.
     // If command objects were generated dynamically rate limiting would have to be handled externally.
-    public boolean checkCooldown(MessageEvent e, long cooldownMilliseconds) {
-        final String guildId = e.getGuild().getId();
+    public boolean checkCooldown(MessageEvent e) {
+        // Commands with no cooldown will be set to a duration of -1.
+        if(cooldownDurationMilliseconds == -1) {
+            return true;
+        }
 
-        if(cooldowns.containsKey(guildId)) {
-            long timeRemaining = cooldownMilliseconds - (System.currentTimeMillis() - cooldowns.get(guildId));
+        final String guildId = e.getGuild().getId();
+        if(cooldown.containsKey(guildId)) {
+            long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldown.get(guildId));
 
             if(timeRemaining > 0) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + e.getCommand().getName() + "** command again.");
                 MessageHandler.sendMessage(e, embed.build());
                 return false;
             } else {
-                cooldowns.replace(guildId, System.currentTimeMillis());
+                cooldown.replace(guildId, System.currentTimeMillis());
                 return true;
             }
         } else {
-            cooldowns.put(guildId, System.currentTimeMillis());
+            cooldown.put(guildId, System.currentTimeMillis());
             return true;
         }
     }

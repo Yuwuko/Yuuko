@@ -10,8 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class InteractionCommand extends Command {
 
-    public InteractionCommand(String name, Module module, int expectedParameters, List<String> usage, boolean nsfw, List<Permission> permissions) {
-        super(name, module, expectedParameters, usage, nsfw, permissions);
+    public InteractionCommand(String name, Module module, int expectedParameters, long cooldownDuration, List<String> usage, boolean nsfw, List<Permission> permissions) {
+        super(name, module, expectedParameters, cooldownDuration, usage, nsfw, permissions);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class FoxCommand extends Command {
     private static final String BASE_URL = "https://randomfox.ca/floof/";
 
     public FoxCommand() {
-        super("fox", Configuration.MODULES.get("animal"), 0, Arrays.asList("-fox"), false, null);
+        super("fox", Configuration.MODULES.get("animal"), 0, -1L, Arrays.asList("-fox"), false, null);
     }
 
     @Override

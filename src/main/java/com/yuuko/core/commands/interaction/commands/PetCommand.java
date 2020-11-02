@@ -22,7 +22,7 @@ public class PetCommand extends InteractionCommand {
     );
 
     public PetCommand() {
-        super("pet", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-pet @user"), false, null);
+        super("pet", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-pet @user"), false, null);
     }
 
     @Override

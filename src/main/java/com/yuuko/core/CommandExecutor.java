@@ -50,7 +50,8 @@ public class CommandExecutor {
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
-        if(command == null || isDisabled() || isBound() || !checkAudio()) {
+        // Is the command on cooldown?
+        if(command == null || isDisabled() || isBound() || !checkAudio() || !command.checkCooldown(event)) {
             return;
         }
 

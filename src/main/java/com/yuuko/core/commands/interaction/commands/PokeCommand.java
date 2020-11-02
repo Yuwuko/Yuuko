@@ -22,7 +22,7 @@ public class PokeCommand extends InteractionCommand {
     );
 
     public PokeCommand() {
-        super("poke", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-poke @user"), false, null);
+        super("poke", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-poke @user"), false, null);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class BirdCommand extends Command {
     private static final String BASE_URL = "http://shibe.online/api/birds";
 
     public BirdCommand() {
-        super("bird", Configuration.MODULES.get("animal"), 0, Arrays.asList("-bird"), false, null);
+        super("bird", Configuration.MODULES.get("animal"), 0, -1L, Arrays.asList("-bird"), false, null);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class OsuCommand extends Command {
     private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=";
 
     public OsuCommand() {
-        super("osu", Configuration.MODULES.get("media"), 1, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
+        super("osu", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
     }
 
     @Override

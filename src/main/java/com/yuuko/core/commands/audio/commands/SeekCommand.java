@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class SeekCommand extends Command {
 
     public SeekCommand() {
-        super("seek", Configuration.MODULES.get("audio"), 1, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
+        super("seek", Configuration.MODULES.get("audio"), 1, -1L, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
     }
 
     @Override

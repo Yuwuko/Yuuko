@@ -13,7 +13,7 @@ import java.util.Random;
 public class RollCommand extends Command {
 
     public RollCommand() {
-        super("roll", Configuration.MODULES.get("fun"), 1, Arrays.asList("-roll <number>", "-roll 00"), false, null);
+        super("roll", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-roll <number>", "-roll 00"), false, null);
     }
 
     @Override

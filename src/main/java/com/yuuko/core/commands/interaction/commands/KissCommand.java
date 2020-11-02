@@ -22,7 +22,7 @@ public class KissCommand extends InteractionCommand {
     );
 
     public KissCommand() {
-        super("kiss", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-kiss @user"), false, null);
+        super("kiss", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-kiss @user"), false, null);
     }
 
     @Override

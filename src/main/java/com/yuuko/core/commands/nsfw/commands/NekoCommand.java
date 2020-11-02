@@ -16,7 +16,7 @@ public class NekoCommand extends Command {
     private static final String BASE_URL = "https://nekos.life/api/v2/img/";
 
     public NekoCommand() {
-        super("neko", Configuration.MODULES.get("nsfw"), 0, Arrays.asList("-neko", "-neko <type>"), true, null);
+        super("neko", Configuration.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-neko", "-neko <type>"), true, null);
     }
 
     @Override

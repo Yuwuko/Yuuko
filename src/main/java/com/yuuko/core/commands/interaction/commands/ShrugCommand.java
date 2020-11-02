@@ -23,7 +23,7 @@ public class ShrugCommand extends InteractionCommand {
     );
 
     public ShrugCommand() {
-        super("shrug", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-shrug", "-shrug @user"), false, null);
+        super("shrug", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-shrug", "-shrug @user"), false, null);
     }
 
     @Override

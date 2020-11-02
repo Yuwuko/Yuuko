@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 public class MuteCommand extends Command {
 
     public MuteCommand() {
-        super("mute", Configuration.MODULES.get("moderation"), 1, Arrays.asList("-mute @user", "-mute @user <reason>"), false, Arrays.asList(Permission.VOICE_MUTE_OTHERS));
+        super("mute", Configuration.MODULES.get("moderation"), 1, -1L, Arrays.asList("-mute @user", "-mute @user <reason>"), false, Arrays.asList(Permission.VOICE_MUTE_OTHERS));
     }
 
     @Override

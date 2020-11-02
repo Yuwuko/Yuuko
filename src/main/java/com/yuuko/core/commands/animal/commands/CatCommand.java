@@ -15,7 +15,7 @@ public class CatCommand extends Command {
     private static final String BASE_URL = "https://api.thecatapi.com/v1/images/search";
 
     public CatCommand() {
-        super("cat", Configuration.MODULES.get("animal"), 0, Arrays.asList("-cat"), false, null);
+        super("cat", Configuration.MODULES.get("animal"), 0, -1L, Arrays.asList("-cat"), false, null);
     }
 
     @Override

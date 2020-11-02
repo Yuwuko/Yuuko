@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class LogMetricsCommand extends Command {
 
     public LogMetricsCommand() {
-        super("logm", Configuration.MODULES.get("developer"), 0, Arrays.asList("-logm"), false, null);
+        super("logm", Configuration.MODULES.get("developer"), 0, -1L, Arrays.asList("-logm"), false, null);
     }
 
     @Override

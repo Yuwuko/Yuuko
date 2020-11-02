@@ -21,7 +21,7 @@ public class NowPlayingSetting extends Command {
     );
 
     public NowPlayingSetting() {
-        super("nowplaying", Configuration.MODULES.get("setting"), 0, Arrays.asList("-nowplaying", "-nowplaying <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("nowplaying", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-nowplaying", "-nowplaying <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {

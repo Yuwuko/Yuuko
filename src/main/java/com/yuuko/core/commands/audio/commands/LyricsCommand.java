@@ -19,7 +19,7 @@ import java.util.List;
 public class LyricsCommand extends Command {
 
     public LyricsCommand() {
-        super("lyrics", Configuration.MODULES.get("audio"), 1, Arrays.asList("-lyrics <song|artist>"), false, null);
+        super("lyrics", Configuration.MODULES.get("audio"), 1, -1L, Arrays.asList("-lyrics <song|artist>"), false, null);
     }
 
     @Override

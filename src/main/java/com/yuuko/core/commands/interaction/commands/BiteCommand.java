@@ -22,7 +22,7 @@ public class BiteCommand extends InteractionCommand {
     );
 
     public BiteCommand() {
-        super("bite", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-bite @user"), false, null);
+        super("bite", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-bite @user"), false, null);
     }
 
     @Override

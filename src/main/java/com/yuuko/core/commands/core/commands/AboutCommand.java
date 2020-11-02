@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class AboutCommand extends Command {
 
     public AboutCommand() {
-        super("about", Configuration.MODULES.get("core"), 0, Arrays.asList("-about"), false, null);
+        super("about", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-about"), false, null);
     }
 
     @Override

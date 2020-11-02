@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class SettingsCommand extends Command {
 
     public SettingsCommand() {
-        super("settings", Configuration.MODULES.get("setting"), 0, Arrays.asList("-settings"), false, null);
+        super("settings", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-settings"), false, null);
     }
 
     @Override

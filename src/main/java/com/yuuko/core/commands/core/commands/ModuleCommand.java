@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", Configuration.MODULES.get("core"), 0, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("module", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override

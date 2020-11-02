@@ -17,7 +17,7 @@ public class KitsuCommand extends Command {
     private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
 
     public KitsuCommand() {
-        super("kitsu", Configuration.MODULES.get("media"), 1, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
+        super("kitsu", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
     }
 
     @Override

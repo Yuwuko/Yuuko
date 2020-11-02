@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class RolesCommand extends Command {
 
     public RolesCommand() {
-        super("roles", Configuration.MODULES.get("utility"), 0, Arrays.asList("-roles"), false, null);
+        super("roles", Configuration.MODULES.get("utility"), 0, -1L, Arrays.asList("-roles"), false, null);
     }
 
     @Override

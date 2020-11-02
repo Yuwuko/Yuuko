@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class ClearCommand extends Command {
 
     public ClearCommand() {
-        super("clear", Configuration.MODULES.get("audio"), 0, Arrays.asList("-clear", "-clear <position>"), false, null);
+        super("clear", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-clear", "-clear <position>"), false, null);
     }
 
     @Override

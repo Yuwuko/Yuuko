@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class SyncGuildsCommand extends Command {
 
     public SyncGuildsCommand() {
-        super("syncguilds", Configuration.MODULES.get("developer"), 0, Arrays.asList("-syncguilds"), false, null);
+        super("syncguilds", Configuration.MODULES.get("developer"), 0, -1L, Arrays.asList("-syncguilds"), false, null);
     }
 
     @Override

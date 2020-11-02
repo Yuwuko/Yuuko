@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class CommandLogSetting extends Command {
 
     public CommandLogSetting() {
-        super("comlog", Configuration.MODULES.get("setting"), 0, Arrays.asList("-comlog", "-comlog setup", "-comlog <#channel>", "-comlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("comlog", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-comlog", "-comlog setup", "-comlog <#channel>", "-comlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {

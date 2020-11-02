@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ReloadApiCommand extends Command {
 
     public ReloadApiCommand() {
-        super("reapi", Configuration.MODULES.get("developer"), 0, Arrays.asList("-reapi"), false, null);
+        super("reapi", Configuration.MODULES.get("developer"), 0, -1L, Arrays.asList("-reapi"), false, null);
     }
 
     @Override

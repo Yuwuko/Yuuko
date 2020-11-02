@@ -22,7 +22,7 @@ public class AttackCommand extends InteractionCommand {
     );
 
     public AttackCommand() {
-        super("attack", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-attack @user"), false, null);
+        super("attack", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-attack @user"), false, null);
     }
 
     @Override

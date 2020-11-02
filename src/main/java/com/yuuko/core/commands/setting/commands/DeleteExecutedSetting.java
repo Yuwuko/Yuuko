@@ -21,7 +21,7 @@ public class DeleteExecutedSetting extends Command {
     );
 
     public DeleteExecutedSetting() {
-        super("deleteexecuted", Configuration.MODULES.get("setting"), 0, Arrays.asList("-deleteexecuted", "-deleteexecuted <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("deleteexecuted", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-deleteexecuted", "-deleteexecuted <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {

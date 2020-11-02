@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class ShutdownCommand extends Command {
 
     public ShutdownCommand() {
-        super("shutdown", Configuration.MODULES.get("developer"), 1, Arrays.asList("-shutdown"), false, null);
+        super("shutdown", Configuration.MODULES.get("developer"), 1, -1L, Arrays.asList("-shutdown"), false, null);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class BlushCommand extends InteractionCommand {
     );
 
     public BlushCommand() {
-        super("blush", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-blush"), false, null);
+        super("blush", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-blush"), false, null);
     }
 
     @Override

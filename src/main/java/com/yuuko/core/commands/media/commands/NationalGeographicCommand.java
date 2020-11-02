@@ -19,7 +19,7 @@ public class NationalGeographicCommand extends Command {
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=";
 
     public NationalGeographicCommand() {
-        super("natgeo", Configuration.MODULES.get("media"), 0, Arrays.asList("-natgeo"), false, null);
+        super("natgeo", Configuration.MODULES.get("media"), 0, -1L, Arrays.asList("-natgeo"), false, null);
     }
 
     @Override

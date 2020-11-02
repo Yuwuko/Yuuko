@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class AdviceCommand extends Command {
 
     public AdviceCommand() {
-        super("advice", Configuration.MODULES.get("fun"), 0, Arrays.asList("-advice"), false, null);
+        super("advice", Configuration.MODULES.get("fun"), 0, -1L, Arrays.asList("-advice"), false, null);
     }
 
     @Override

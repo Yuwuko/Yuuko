@@ -22,7 +22,7 @@ public class PatCommand extends InteractionCommand {
     );
 
     public PatCommand() {
-        super("pat", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-pat @user"), false, null);
+        super("pat", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-pat @user"), false, null);
     }
 
     @Override

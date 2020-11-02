@@ -25,7 +25,7 @@ import java.util.List;
 public class PlayNextCommand extends Command {
 
     public PlayNextCommand() {
-        super("playnext", Configuration.MODULES.get("audio"), 0, Arrays.asList("-playnext", "-playnext <url>", "-playnext <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("playnext", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-playnext", "-playnext <url>", "-playnext <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

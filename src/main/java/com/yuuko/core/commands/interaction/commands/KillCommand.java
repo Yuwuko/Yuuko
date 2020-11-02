@@ -22,7 +22,7 @@ public class KillCommand extends InteractionCommand {
     );
 
     public KillCommand() {
-        super("kill", Configuration.MODULES.get("interaction"), 1, Arrays.asList("-kill @user"), false, null);
+        super("kill", Configuration.MODULES.get("interaction"), 1, 1L, Arrays.asList("-kill @user"), false, null);
     }
 
     @Override

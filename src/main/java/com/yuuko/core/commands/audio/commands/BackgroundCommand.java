@@ -22,7 +22,7 @@ import java.util.List;
 public class BackgroundCommand extends Command {
 
     public BackgroundCommand() {
-        super("background", Configuration.MODULES.get("audio"), 0, Arrays.asList("-background", "-background <url>", "-background <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("background", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-background", "-background <url>", "-background <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

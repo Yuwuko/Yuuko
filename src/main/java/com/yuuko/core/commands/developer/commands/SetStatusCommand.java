@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class SetStatusCommand extends Command {
 
     public SetStatusCommand() {
-        super("setstatus", Configuration.MODULES.get("developer"), 1, Arrays.asList("-setstatus <type> <status>"), false, null);
+        super("setstatus", Configuration.MODULES.get("developer"), 1, -1L, Arrays.asList("-setstatus <type> <status>"), false, null);
     }
 
     @Override

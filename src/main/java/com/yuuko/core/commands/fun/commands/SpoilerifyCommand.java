@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class SpoilerifyCommand extends Command {
 
     public SpoilerifyCommand() {
-        super("spoilerify", Configuration.MODULES.get("fun"), 1, Arrays.asList("-spoilerify <string>"), false, null);
+        super("spoilerify", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-spoilerify <string>"), false, null);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class StopCommand extends Command {
 
     public StopCommand() {
-        super("stop", Configuration.MODULES.get("audio"), 0, Arrays.asList("-stop"), false, null);
+        super("stop", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-stop"), false, null);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class LaughCommand extends InteractionCommand {
     );
 
     public LaughCommand() {
-        super("laugh", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-laugh", "-laugh @user"), false, null);
+        super("laugh", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-laugh", "-laugh @user"), false, null);
     }
 
     @Override

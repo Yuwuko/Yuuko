@@ -18,7 +18,7 @@ public class UrbanDictionaryCommand extends Command {
     private static final String BASE_URL = "https://api.urbandictionary.com/v0/define?term=";
 
     public UrbanDictionaryCommand() {
-        super("urban", Configuration.MODULES.get("media"), 1, Arrays.asList("-urban <term>"), true, null);
+        super("urban", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-urban <term>"), true, null);
     }
 
     @Override

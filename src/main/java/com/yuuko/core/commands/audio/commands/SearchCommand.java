@@ -19,7 +19,7 @@ public class SearchCommand extends Command {
     private static final HashMap<String, List<SearchResult>> audioSearchResults = new HashMap<>();
 
     public SearchCommand() {
-        super("search", Configuration.MODULES.get("audio"), 1, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("search", Configuration.MODULES.get("audio"), 1, -1L, Arrays.asList("-search <term>", "-search <value>", "-search cancel"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

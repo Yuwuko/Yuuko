@@ -20,7 +20,7 @@ public class CoinFlipCommand extends Command {
     );
 
     public CoinFlipCommand() {
-        super("flip", Configuration.MODULES.get("fun"), 0, Arrays.asList("-flip"), false, null);
+        super("flip", Configuration.MODULES.get("fun"), 0, -1L, Arrays.asList("-flip"), false, null);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class DanceCommand extends InteractionCommand {
     );
 
     public DanceCommand() {
-        super("dance", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-dance", "-dance @user"), false, null);
+        super("dance", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-dance", "-dance @user"), false, null);
     }
 
     @Override

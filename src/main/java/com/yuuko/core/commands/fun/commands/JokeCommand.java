@@ -16,7 +16,7 @@ public class JokeCommand extends Command {
     private static final String BASE_URL = "https://icanhazdadjoke.com/";
 
     public JokeCommand() {
-        super("joke", Configuration.MODULES.get("fun"), 0, Arrays.asList("-joke", "-joke <term>"), false, null);
+        super("joke", Configuration.MODULES.get("fun"), 0, 1L, Arrays.asList("-joke", "-joke <term>"), false, null);
     }
 
     @Override

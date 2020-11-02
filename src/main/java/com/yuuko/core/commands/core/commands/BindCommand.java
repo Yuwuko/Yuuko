@@ -17,7 +17,7 @@ import java.util.List;
 public class BindCommand extends Command {
 
     public BindCommand() {
-        super("bind", Configuration.MODULES.get("core"), 0, Arrays.asList("-bind <module>", "-bind <module> #channel..."), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("bind", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-bind <module>", "-bind <module> #channel..."), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override

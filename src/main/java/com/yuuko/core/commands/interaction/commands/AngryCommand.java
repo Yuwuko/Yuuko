@@ -23,7 +23,7 @@ public class AngryCommand extends InteractionCommand {
     );
 
     public AngryCommand() {
-        super("angry", Configuration.MODULES.get("interaction"), 0, Arrays.asList("-angry", "-angry @user"), false, null);
+        super("angry", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-angry", "-angry @user"), false, null);
     }
 
     @Override

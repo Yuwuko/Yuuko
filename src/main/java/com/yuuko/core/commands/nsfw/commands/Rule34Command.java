@@ -17,7 +17,7 @@ public class Rule34Command extends Command {
     private static final String BASE_URL = "https://rule34.xxx/index.php?page=post&s=random";
 
     public Rule34Command() {
-        super("rule34", Configuration.MODULES.get("nsfw"), 0, Arrays.asList("-rule34"), true, null);
+        super("rule34", Configuration.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-rule34"), true, null);
     }
 
     @Override

@@ -20,16 +20,11 @@ import java.util.stream.Collectors;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", Configuration.MODULES.get("moderation"),1, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
+        super("nuke", Configuration.MODULES.get("moderation"),1, 5000L, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        // Manual rate limiting for nuke - default 5 seconds.
-        if(!checkCooldown(e, 5000L)) {
-            return;
-        }
-
         List<TextChannel> channels = e.getMessage().getMentionedChannels();
         if(channels.size() > 0) {
             TextChannel channel = channels.get(0);

@@ -15,7 +15,7 @@ import java.util.Random;
 public class ChooseCommand extends Command {
 
     public ChooseCommand() {
-        super("choose", Configuration.MODULES.get("fun"), 1, Arrays.asList("-choose <choice>, <choice>..."), false, null);
+        super("choose", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-choose <choice>, <choice>..."), false, null);
     }
 
     @Override

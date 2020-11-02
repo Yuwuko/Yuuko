@@ -37,7 +37,7 @@ public class EightBallCommand extends Command {
     );
 
     public EightBallCommand() {
-        super("8ball", Configuration.MODULES.get("fun"), 1, Arrays.asList("-8ball <question>"), false, null);
+        super("8ball", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-8ball <question>"), false, null);
     }
 
     @Override

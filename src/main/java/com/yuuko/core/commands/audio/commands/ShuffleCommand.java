@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class ShuffleCommand extends Command {
 
     public ShuffleCommand() {
-        super("shuffle", Configuration.MODULES.get("audio"), 0, Arrays.asList("-shuffle"), false, null);
+        super("shuffle", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-shuffle"), false, null);
     }
 
     @Override

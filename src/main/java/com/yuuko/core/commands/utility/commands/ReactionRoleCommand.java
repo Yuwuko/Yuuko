@@ -29,7 +29,7 @@ public class ReactionRoleCommand extends Command {
     private Message message;
 
     public ReactionRoleCommand() {
-        super("reactrole", Configuration.MODULES.get("utility"), 1, Arrays.asList("-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
+        super("reactrole", Configuration.MODULES.get("utility"), 1, -1L, Arrays.asList("-reactrole select", "-reactrole select <Message ID>", "-reactrole add <:emote:> <@role>", "-reactrole rem <:emote:>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
     }
 
     @Override

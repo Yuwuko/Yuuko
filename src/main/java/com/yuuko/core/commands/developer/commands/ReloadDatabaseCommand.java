@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ReloadDatabaseCommand extends Command {
 
     public ReloadDatabaseCommand() {
-        super("redb", Configuration.MODULES.get("developer"), 0, Arrays.asList("-redb"), false, null);
+        super("redb", Configuration.MODULES.get("developer"), 0, -1L, Arrays.asList("-redb"), false, null);
     }
 
     @Override

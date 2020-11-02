@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class ModerationLogSetting extends Command {
 
     public ModerationLogSetting() {
-        super("modlog", Configuration.MODULES.get("setting"), 0, Arrays.asList("-modlog", "-modlog setup", "-modlog <#channel>", "-modlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("modlog", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-modlog", "-modlog setup", "-modlog <#channel>", "-modlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {
