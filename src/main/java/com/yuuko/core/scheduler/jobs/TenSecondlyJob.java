@@ -1,6 +1,5 @@
 package com.yuuko.core.scheduler.jobs;
 
-import com.yuuko.core.Configuration;
 import com.yuuko.core.scheduler.Job;
 import com.yuuko.core.scheduler.tasks.UpdateMetricsTask;
 
@@ -15,8 +14,6 @@ public class TenSecondlyJob extends Job {
 
     @Override
     public void run() {
-        if(Configuration.LOG_METRICS) {
-            handleTask(updateMetricsTask);
-        }
+        handleTask(updateMetricsTask);
     }
 }
