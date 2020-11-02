@@ -197,11 +197,11 @@ public class BindFunctions {
 
             stmt.setString(1, channel);
             stmt.execute();
-            stmt2.setString(2, channel);
+            stmt2.setString(1, channel);
             stmt2.execute();
-            stmt3.setString(3, channel);
+            stmt3.setString(1, channel);
             stmt3.execute();
-            stmt4.setString(4, channel);
+            stmt4.setString(1, channel);
             stmt4.execute();
 
         } catch(Exception ex) {
