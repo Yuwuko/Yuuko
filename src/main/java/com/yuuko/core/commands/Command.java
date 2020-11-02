@@ -15,7 +15,7 @@ public abstract class Command {
     private final Module module;
     private final int minimumParameters;
     private final long cooldownDurationMilliseconds;
-    private final HashMap<String, Long> cooldown;
+    private final HashMap<String, Long> cooldownsList;
     private final List<String> usage;
     private final List<Permission> permissions;
     private final boolean nsfw;
@@ -27,7 +27,7 @@ public abstract class Command {
         this.module = module;
         this.minimumParameters = minimumParameters;
         this.cooldownDurationMilliseconds = cooldownDurationMilliseconds;
-        this.cooldown = new HashMap<>();
+        this.cooldownsList = new HashMap<>();
         this.usage = usage;
         this.nsfw = nsfw;
         this.permissions = permissions;
@@ -66,21 +66,31 @@ public abstract class Command {
         }
 
         final String guildId = e.getGuild().getId();
-        if(cooldown.containsKey(guildId)) {
-            long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldown.get(guildId));
+        if(cooldownsList.containsKey(guildId)) {
+            long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(guildId));
 
             if(timeRemaining > 0) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + e.getCommand().getName() + "** command again.");
                 MessageHandler.sendMessage(e, embed.build());
                 return false;
             } else {
-                cooldown.replace(guildId, System.currentTimeMillis());
+                cooldownsList.replace(guildId, System.currentTimeMillis());
                 return true;
             }
         } else {
-            cooldown.put(guildId, System.currentTimeMillis());
+            cooldownsList.put(guildId, System.currentTimeMillis());
             return true;
         }
+    }
+
+    // I want a method to be able to purge lists on demand - reducing memory usage in a predictable way.
+    public void clearCooldowns() {
+        cooldownsList.keySet().forEach(key -> {
+            long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(key));
+            if(timeRemaining <= 0) {
+                cooldownsList.remove(key);
+            }
+        });
     }
 
     // Abstract method signature to ensure method is implemented.
