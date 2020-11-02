@@ -85,12 +85,15 @@ public abstract class Command {
 
     // I want a method to be able to purge lists on demand - reducing memory usage in a predictable way.
     public void clearCooldowns() {
+        HashMap<String, Long> cooldownsTempList = new HashMap<>();
         cooldownsList.keySet().forEach(key -> {
             long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(key));
-            if(timeRemaining <= 0) {
-                cooldownsList.remove(key);
+            if(timeRemaining > 0) {
+                cooldownsTempList.put(key, cooldownsList.get(key));
             }
         });
+        cooldownsList.clear();
+        cooldownsList.putAll(cooldownsTempList);
     }
 
     // Abstract method signature to ensure method is implemented.
