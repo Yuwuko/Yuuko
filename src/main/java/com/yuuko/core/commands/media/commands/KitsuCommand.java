@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.Arrays;
 
 public class KitsuCommand extends Command {
-
     private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
 
     public KitsuCommand() {

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Random;
 
 public class ShrugCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/ghlye0C.gif",
             "https://i.imgur.com/nUacE87.gif",

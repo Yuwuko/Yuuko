@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LondonUndergroundCommand extends Command {
-
     private static final String BASE_URL = "https://api.tfl.gov.uk/line/mode/tube/status?app_id=";
 
     public LondonUndergroundCommand() {

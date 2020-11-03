@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TickleCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/lapBsXk.gif",
             "https://i.imgur.com/LNk70yS.gif",

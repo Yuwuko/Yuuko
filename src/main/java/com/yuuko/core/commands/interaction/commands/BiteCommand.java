@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BiteCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/8jGdNWU.gif",
             "https://i.imgur.com/wcBbh3R.gif",

@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BlushCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/I3apoUB.gif",
             "https://i.imgur.com/0lfLa2Z.gif",

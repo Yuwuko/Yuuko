@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.Arrays;
 
 public class OsuCommand extends Command {
-
     private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=";
 
     public OsuCommand() {

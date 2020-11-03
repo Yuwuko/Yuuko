@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HugCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/wOmoeF8.gif",
             "https://i.imgur.com/ntqYLGl.gif",

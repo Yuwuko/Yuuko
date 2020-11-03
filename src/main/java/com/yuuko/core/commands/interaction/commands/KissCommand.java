@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class KissCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/sGVgr74.gif",
             "https://i.imgur.com/TItLfqh.gif",

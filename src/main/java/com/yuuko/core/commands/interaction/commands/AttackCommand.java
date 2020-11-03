@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AttackCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/jRrzvo9.gif",
             "https://i.imgur.com/CVyED1B.gif",

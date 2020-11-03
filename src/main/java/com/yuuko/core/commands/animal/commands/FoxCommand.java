@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.Arrays;
 
 public class FoxCommand extends Command {
-
     private static final String BASE_URL = "https://randomfox.ca/floof/";
 
     public FoxCommand() {

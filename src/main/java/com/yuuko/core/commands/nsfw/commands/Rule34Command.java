@@ -13,7 +13,6 @@ import org.jsoup.select.Elements;
 import java.util.Arrays;
 
 public class Rule34Command extends Command {
-
     private static final String BASE_URL = "https://rule34.xxx/index.php?page=post&s=random";
 
     public Rule34Command() {

@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LaughCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/SGboaP0.gif",
             "https://i.imgur.com/S0m2mfm.gif",

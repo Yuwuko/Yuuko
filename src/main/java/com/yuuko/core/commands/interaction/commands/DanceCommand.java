@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DanceCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/TwMOUGe.gif",
             "https://i.imgur.com/9uzmcJd.gif",

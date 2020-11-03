@@ -13,7 +13,6 @@ import org.jsoup.select.Elements;
 import java.util.Arrays;
 
 public class EfuktCommand extends Command {
-
     private static final String BASE_URL = "https://efukt.com/random.php";
 
     public EfuktCommand() {

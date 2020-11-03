@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SleepCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/W5SEYT6.gif",
             "https://i.imgur.com/7AOboGB.gif",

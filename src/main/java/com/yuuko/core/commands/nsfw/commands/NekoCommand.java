@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.Arrays;
 
 public class NekoCommand extends Command {
-
     private static final String BASE_URL = "https://nekos.life/api/v2/img/";
 
     public NekoCommand() {

@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class GithubCommand extends Command {
-
     private static final String BASE_URL = "https://api.github.com/repos/";
 
     public GithubCommand() {

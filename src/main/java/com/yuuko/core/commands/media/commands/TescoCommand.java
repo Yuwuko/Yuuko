@@ -16,7 +16,6 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class TescoCommand extends Command {
-
     private static final String BASE_URL = "https://dev.tescolabs.com/grocery/products/?query=";
 
     public TescoCommand() {

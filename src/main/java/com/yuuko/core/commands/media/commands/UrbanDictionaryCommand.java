@@ -14,7 +14,6 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class UrbanDictionaryCommand extends Command {
-
     private static final String BASE_URL = "https://api.urbandictionary.com/v0/define?term=";
 
     public UrbanDictionaryCommand() {

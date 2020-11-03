@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PokeCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/7l5duGX.gif",
             "https://i.imgur.com/CYxJyxQ.gif",

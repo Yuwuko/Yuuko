@@ -15,7 +15,6 @@ import java.time.Instant;
 import java.util.Arrays;
 
 public class NationalGeographicCommand extends Command {
-
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=";
 
     public NationalGeographicCommand() {

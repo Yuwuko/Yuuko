@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.Arrays;
 
 public class CatCommand extends Command {
-
     private static final String BASE_URL = "https://api.thecatapi.com/v1/images/search";
 
     public CatCommand() {

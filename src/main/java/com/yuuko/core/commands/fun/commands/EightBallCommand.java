@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 
 public class EightBallCommand extends Command {
-
     private static final List<String> responses = Arrays.asList(
             "It is certain.",
             "It is decidedly so.",

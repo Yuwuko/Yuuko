@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class WeatherCommand extends Command {
-
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     public WeatherCommand() {

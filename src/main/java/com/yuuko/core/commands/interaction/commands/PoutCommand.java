@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Random;
 
 public class PoutCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/WdQgoDb.gif",
             "https://i.imgur.com/FgsaLup.gif",

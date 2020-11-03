@@ -17,7 +17,6 @@ import java.time.Instant;
 import java.util.Arrays;
 
 public class UKParliamentPetitionCommand extends Command {
-
     private static final String BASE_URL = "https://petition.parliament.uk/petitions/";
 
     public UKParliamentPetitionCommand() {

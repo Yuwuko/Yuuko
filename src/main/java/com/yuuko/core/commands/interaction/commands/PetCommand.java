@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PetCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/4ssddEQ.gif",
             "https://i.imgur.com/UWbKpx8.gif",

@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PatCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/2lacG7l.gif",
             "https://i.imgur.com/UWbKpx8.gif",

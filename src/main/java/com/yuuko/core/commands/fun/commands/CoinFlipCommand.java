@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 
 public class CoinFlipCommand extends Command {
-
     private static final List<String> responses = Arrays.asList(
             "Heads",
             "Tails",

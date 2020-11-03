@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Random;
 
 public class AngryCommand extends InteractionCommand {
-
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/BLGBP1f.gif",
             "https://i.imgur.com/fWh43XO.gif",
