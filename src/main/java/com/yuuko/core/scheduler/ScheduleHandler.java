@@ -14,7 +14,7 @@ public class ScheduleHandler {
         tasks.add(schedulerService.scheduleAtFixedRate(job, job.getDelay(), job.getPeriod(), job.getUnit()));
     }
 
-    public static ScheduledFuture registerUniqueJob(Job job) {
+    public static ScheduledFuture<?> registerUniqueJob(Job job) {
         return schedulerService.schedule(job, job.getDelay(), job.getUnit());
     }
 
