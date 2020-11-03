@@ -1,8 +1,10 @@
 package com.yuuko.core.metrics.pathway;
 
+import com.yuuko.core.metrics.Metric;
+
 import java.lang.management.ManagementFactory;
 
-public class SystemMetrics {
+public class SystemMetrics implements Metric {
     public long UPTIME = 0;
     public long MEMORY_TOTAL = 0;
     public long MEMORY_USED = 0;

@@ -1,12 +1,13 @@
 package com.yuuko.core.metrics.pathway;
 
 import com.yuuko.core.Configuration;
+import com.yuuko.core.metrics.Metric;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DiscordMetrics {
+public class DiscordMetrics implements Metric {
     public final AtomicInteger GUILD_COUNT = new AtomicInteger();
     public final AtomicInteger GATEWAY_PING = new AtomicInteger();
     public final AtomicInteger REST_PING = new AtomicInteger();
@@ -20,7 +21,7 @@ public class DiscordMetrics {
     }
 
     /**
-     * Updates the bot's currently returned ping.
+     * Update gateway and rest ping.
      */
     public void updatePing() {
         GATEWAY_PING.set((int)Configuration.BOT.getJDA().getGatewayPing());

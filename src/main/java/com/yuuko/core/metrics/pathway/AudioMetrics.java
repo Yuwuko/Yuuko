@@ -2,6 +2,7 @@ package com.yuuko.core.metrics.pathway;
 
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
+import com.yuuko.core.metrics.Metric;
 import lavalink.client.io.LavalinkSocket;
 import lavalink.client.io.RemoteStats;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.yuuko.core.Configuration.LAVALINK;
 
-public class AudioMetrics {
+public class AudioMetrics implements Metric {
     public final AtomicInteger PLAYERS_TOTAL = new AtomicInteger();
     public final AtomicInteger PLAYERS_ACTIVE = new AtomicInteger();
     public final AtomicInteger QUEUE_SIZE = new AtomicInteger();
