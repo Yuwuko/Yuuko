@@ -62,7 +62,7 @@ public class NukeCommand extends Command {
             }
 
             // Removes messages that are too old to be mass-deleted.
-            sortedMessages.get(true).listIterator().forEachRemaining(message -> message.delete().queue());
+            sortedMessages.get(true).iterator().forEachRemaining(message -> message.delete().queue());
         });
     }
 
