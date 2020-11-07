@@ -6,7 +6,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ApiManager {
     private HashMap<String, Api> API;
@@ -31,6 +33,10 @@ public class ApiManager {
 
     public boolean containsKey(String key) {
         return API.containsKey(key);
+    }
+
+    public List<String> getNames() {
+        return new ArrayList<>(API.keySet());
     }
 
     public int size() {
