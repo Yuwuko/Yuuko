@@ -6,7 +6,6 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.LavalinkManager;
-import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
@@ -40,7 +39,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "202011r1";
+    public static final String VERSION = "202011r2";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -75,17 +74,16 @@ public class Configuration {
 
             initialiseCommands();
             loadApi();
-            initialiseDatabase();
             registerShards();
             loadMainConfiguration();
             initialiseAudio();
             buildShardManager();
-            synchronizeDatabase();
+            verifyDatabase();
             initialiseMetrics();
             initialiseSchedule();
             initialiseBotLists();
 
-            log.info("Loading complete... time taken: " + (BigDecimal.valueOf((System.nanoTime() - loadStart) / 1000000000.0).setScale(2, RoundingMode.HALF_UP)) + " seconds.");
+            log.info("Loading complete... time taken: {} seconds.", (BigDecimal.valueOf((System.nanoTime() - loadStart) / 1000000000.0).setScale(2, RoundingMode.HALF_UP)));
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
@@ -119,7 +117,7 @@ public class Configuration {
                 }
             }
 
-            log.info("Loaded " + MODULES.size() + " modules and " + COMMANDS.size() + " commands.");
+            log.info("Loaded {} modules, containing {} commands.", MODULES.size(), COMMANDS.size());
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
@@ -134,21 +132,10 @@ public class Configuration {
     private static void loadApi() {
         try {
             API_MANAGER = new ApiManager();
-            log.info("Loaded " + API_MANAGER.size() + " API keys.");
-
+            log.info("Loaded {} API keys - {}", API_MANAGER.size(), API_MANAGER.getNames().toString());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }
-    }
-
-    /**
-     * Initialises the database function.
-     * Must be done before registerShards().
-     */
-    private void initialiseDatabase() {
-        new DatabaseConnection();
-
-        log.info("Initialised database.");
     }
 
     /**
@@ -159,8 +146,7 @@ public class Configuration {
         DatabaseFunctions.pruneExpiredShards();
         SHARD_COUNT = DatabaseFunctions.getShardCount();
         SHARD_ID = DatabaseFunctions.provideShardId();
-
-        log.info("Shard ID: " + SHARD_ID + ", Total Shards: " + SHARD_COUNT + ".");
+        log.info("Shard ID: {}, Total Shards: {}.", SHARD_ID, SHARD_COUNT);
     }
 
     /**
@@ -181,14 +167,13 @@ public class Configuration {
     }
 
     /**
-     * Initialises Lavalink and sets up the AudioManagerController.
+     * Initialises Lavalink.
      * MUST be done before buildShardManager(), MUST be done AFTER loadMainConfiguration().
      */
     private void initialiseAudio() {
+        AudioManagerController.registerSourceManagers();
         LAVALINK = new LavalinkManager();
-        new AudioManagerController();
-
-        log.info("Initialised Lavalink and AudioManagerController.");
+        log.info("Initialised Lavalink.");
     }
 
     /**
@@ -227,10 +212,9 @@ public class Configuration {
     /**
      * Synchronizes the database, adding any guilds that added the bot while it was offline.
      */
-    private void synchronizeDatabase() {
-        GuildFunctions.addGuilds(BOT.getJDA());
-
-        log.info("Synchronised database with JDA.");
+    private void verifyDatabase() {
+        BOT.getJDA().getGuildCache().forEach(GuildFunctions::verifyIntegrity);
+        log.info("Database integrity verified with JDA.");
     }
 
     /**
