@@ -54,7 +54,7 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        GuildFunctions.addGuild(e.getGuild());
+        GuildFunctions.addOrUpdateGuild(e.getGuild());
         MetricsManager.getDiscordMetrics().update();
         Utilities.updateDiscordBotList();
 
