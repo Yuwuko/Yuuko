@@ -11,12 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class BindFunctions {
-
     private static final Logger log = LoggerFactory.getLogger(BindFunctions.class);
 
     /**
      * Binds a particular module to a channel.
-     *
      * @param guildId the idLong of the guild.
      * @param channel the idLong of the channel.
      * @param module the name of the module.
@@ -41,7 +39,7 @@ public class BindFunctions {
                 }
             }
 
-            return (deleteBindsRecord(guildId, channel, module)) ? 1 : -1;
+            return (clearBind(guildId, channel, module)) ? 1 : -1;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -50,39 +48,7 @@ public class BindFunctions {
     }
 
     /**
-     * Removes a binding record from the database.
-     *
-     * @param guild String
-     * @param channel String
-     * @param module String
-     * @return int
-     */
-    private static boolean deleteBindsRecord(String guild, String channel, String module) {
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
-
-            stmt.setString(1, guild);
-            stmt.setString(2, channel);
-            stmt.setString(3, module);
-
-            if(!stmt.execute()) {
-                stmt.close();
-                conn.close();
-                return true;
-            }
-
-            return false;
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return false;
-        }
-    }
-
-
-    /**
      * Returns a formatted string of all of the selected guild's binds.
-     *
      * @param guild a guild object.
      * @param delimiter the delimiter used in the returned string.
      * @return String
@@ -115,7 +81,6 @@ public class BindFunctions {
 
     /**
      * Returns a formatted string of all of the guild's binds, which match a given module.
-     *
      * @param guild Guild
      * @param module String
      * @param delimiter String
@@ -133,7 +98,7 @@ public class BindFunctions {
 
             StringBuilder string = new StringBuilder();
             while(rs.next()) {
-                string.append(guild.getTextChannelCache().getElementById(rs.getString(2)).getAsMention()).append(delimiter);
+                string.append(guild.getTextChannelCache().getElementById(rs.getString("channelId")).getAsMention()).append(delimiter);
             }
 
             if(string.length() > 0) {
@@ -152,7 +117,6 @@ public class BindFunctions {
 
     /**
      * Checks to see if a bind for a certain channel/module combination exists.
-     *
      * @param guildId String
      * @param channelId String
      * @param moduleName String
@@ -184,8 +148,75 @@ public class BindFunctions {
     }
 
     /**
+     * Verifies all binds, removing any that are no longer valid.
+     * @param guild {@link Guild} object
+     */
+    public static void verifyBinds(Guild guild) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guild.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                String channelId = rs.getString("channelId");
+                if(guild.getTextChannelCache().getElementById(channelId) == null) {
+                    clearBindByChannel(channelId);
+                }
+            }
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Clears a module bind.
+     * @param guild String
+     * @param channel String
+     * @param module String
+     * @return boolean
+     */
+    private static boolean clearBind(String guild, String channel, String module) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
+
+            stmt.setString(1, guild);
+            stmt.setString(2, channel);
+            stmt.setString(3, module);
+
+            if(!stmt.execute()) {
+                stmt.close();
+                conn.close();
+                return true;
+            }
+
+            return false;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+    /**
+     * Clears all binds that are connected to a specific channelId
+     * @param channelId channelId string.
+     */
+    private static void clearBindByChannel(String channelId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?")) {
+
+            stmt.setString(1, channelId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", BindFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Removes all references of channels that are deleted.
-     *
      * @param channel String id of the channel referenced
      */
     public static void cleanupReferences(String channel) {
