@@ -26,7 +26,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     private boolean looping = false;
     private final LavalinkPlayer player;
     public final Queue<AudioTrack> queue;
-    private ScheduledFuture timeout;
+    private ScheduledFuture<?> timeout;
 
     TrackScheduler(Guild guild, LavalinkPlayer player) {
         this.guild = guild;
@@ -117,10 +117,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
         if(endReason.mayStartNext) {
             if(looping) {
                 queue.add(track);
-                nextTrack();
-                return;
             }
-
             nextTrack();
         }
     }

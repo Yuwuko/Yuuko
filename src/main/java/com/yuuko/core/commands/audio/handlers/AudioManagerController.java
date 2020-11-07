@@ -14,17 +14,14 @@ import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
-public class AudioManagerController {
-    private static HashMap<Guild, GuildAudioManager> managers;
-    private static AudioPlayerManager playerManager;
+public final class AudioManagerController {
+    private final static HashMap<Guild, GuildAudioManager> managers = new HashMap<>();
+    private final static AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     /**
-     * Handles full application runtime handlers
-     * managers instead of leaving it to the main class.
+     * Register source managers
      */
-    public AudioManagerController() {
-        managers = new HashMap<>();
-        playerManager = new DefaultAudioPlayerManager();
+    public static void registerSourceManagers() {
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
         playerManager.registerSourceManager(SoundCloudAudioSourceManager.createDefault());
         playerManager.registerSourceManager(new BandcampAudioSourceManager());
