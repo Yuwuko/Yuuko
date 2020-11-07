@@ -64,7 +64,6 @@ public class DatabaseFunctions {
 
     /**
      * Updates the database with the latest command.
-     *
      * @param guildId String
      * @param command String
      * @param executionTime double (milliseconds)
@@ -86,7 +85,6 @@ public class DatabaseFunctions {
 
     /**
      * Truncates the metrics database. (This happens when the bot is first loaded.)
-     *
      * @param shard int
      */
     public static void truncateMetrics(int shard) {
@@ -137,7 +135,6 @@ public class DatabaseFunctions {
 
     /**
      * Updates settings from channels that are deleted.
-     *
      * @param setting the setting to cleanup.
      * @param guildId the guild to cleanup.
      */
@@ -155,7 +152,6 @@ public class DatabaseFunctions {
 
     /**
      * Queries the provisioning database and supplies the next available shard ID.
-     *
      * @return the next available shard ID, starting at 0.
      */
     public static int provideShardId() {
@@ -185,7 +181,6 @@ public class DatabaseFunctions {
 
     /**
      * Retrieves the total shard count from the database.
-     *
      * @return the total shard count expected from the database.
      */
     public static int getShardCount() {
@@ -229,7 +224,6 @@ public class DatabaseFunctions {
 
     /**
      * Retrieves shard statistics from the database.
-     *
      * @return ArrayList<Shard> of shard statistics.
      */
     public static ArrayList<Shard> getShardStatistics() {

@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class ReactionRoleFunctions {
-
     private static final Logger log = LoggerFactory.getLogger(ReactionRoleFunctions.class);
 
     /**

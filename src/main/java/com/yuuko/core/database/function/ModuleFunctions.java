@@ -12,7 +12,6 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 
 public class ModuleFunctions {
-
     private static final Logger log = LoggerFactory.getLogger(ModuleFunctions.class);
 
     /**
