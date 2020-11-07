@@ -13,7 +13,6 @@ public class DeveloperModule extends Module {
             new SyncGuildsCommand(),
             new ReloadApiCommand(),
             new LavalinkNodeCommand(),
-            new ReloadDatabaseCommand(),
             new LogMetricsCommand(),
             new ShutdownCommand()
     );

@@ -18,10 +18,9 @@ public class SyncGuildsCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            if(GuildFunctions.addGuilds(e.getJDA())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds added/updated/deleted successfully.");
-                MessageHandler.sendMessage(e, embed.build());
-            }
+            e.getJDA().getGuildCache().forEach(GuildFunctions::verifyIntegrity);
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds updated.");
+            MessageHandler.sendMessage(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
