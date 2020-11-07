@@ -8,17 +8,13 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public final class DatabaseConnection {
     private static final Logger log = LoggerFactory.getLogger(DatabaseConnection.class);
     private static final HikariConfig config = new HikariConfig("./config/hikari/dbyuuko.properties");
     private static final HikariDataSource connectionPool = new HikariDataSource(config);
 
-    public DatabaseConnection() {
-        log.trace("Invoking {}", this.getClass().getName());
-    }
-
     /**
-     * Gets the fresh database connection.
+     * Get a fresh database connection.
      * @return Connection.
      */
     public static Connection getConnection() throws SQLException {
