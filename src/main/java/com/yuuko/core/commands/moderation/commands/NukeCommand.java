@@ -29,7 +29,7 @@ public class NukeCommand extends Command {
         if(channels.size() > 0) {
             TextChannel channel = channels.get(0);
             if(!channel.isNews()) {
-                channel.createCopy().queue(r -> channel.delete().queue());
+                channel.createCopy().queue(r -> channel.delete().queue(s -> {}, f -> {}));
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("Channels marked as **news** cannot be nuked in this way.");
                 MessageHandler.sendMessage(e, embed.build());
@@ -57,11 +57,11 @@ public class NukeCommand extends Command {
             if(sortedMessages.get(false).size() > 2) {
                 e.getChannel().deleteMessages(sortedMessages.get(false).subList(1, sortedMessages.get(false).size())).queue(s -> {
                     ModerationLogSetting.execute(e, messages.size()); // Attempt to add event to moderation log.
-                });
+                }, f -> {});
             }
 
             // Removes messages that are too old to be mass-deleted.
-            sortedMessages.get(true).iterator().forEachRemaining(message -> message.delete().queue());
+            sortedMessages.get(true).iterator().forEachRemaining(message -> message.delete().queue(s -> {}, f -> {}));
         });
     }
 
