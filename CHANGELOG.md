@@ -2,6 +2,14 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202011r2
++ [~] Starting optimising SQL queries - reducing overall number.
++ [~] Small changes to configuration both formatting and logic.
++ [~] Small changes to AudioManagerController and TrackScheduler.
++ [~] Added new internal function to ApiManager
++ [~] Variety of small bug fixes.
++ [-] Removed [__redb__] command as it was unnecessary.
+
 ## 202011r1
 + [!] Implemented system wide cooldown system, with [__nuke__] getting a default of 5 seconds.
 + [~] Updated [__nuke__] to check if channel is of type news.

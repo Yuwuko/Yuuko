@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-project.version = '202011r1'
+project.version = '202011r2'
 sourceCompatibility = 1.14
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -37,8 +37,8 @@ repositories {
 
 ext {
     jda                          = '4.2.0_214'
-    lavalinkClient               = '382c6f4571'
-    lavaplayer                   = '1.3.55'
+    lavalinkClient               = 'ab1a15193d'
+    lavaplayer                   = '1.3.59'
     jdanas                       = '1.1.0'
     dblJavaWrapper               = '2.0.1'
     googleApiServicesYoutube     = 'v3-rev222-1.25.0'
@@ -57,7 +57,7 @@ ext {
 dependencies {
     compile group: 'net.dv8tion', name: 'JDA', version: jda
     compile group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: lavalinkClient
-    compile group: 'com.github.sedmelluq', name: 'lavaplayer', version: lavaplayer
+    compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
     compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
     compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutube
