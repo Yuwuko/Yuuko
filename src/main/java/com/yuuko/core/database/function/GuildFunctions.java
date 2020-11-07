@@ -1,7 +1,6 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.DatabaseConnection;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +12,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 public class GuildFunctions {
-
     private static final Logger log = LoggerFactory.getLogger(GuildFunctions.class);
 
     /**
      * Small method that checks if a guild exists on the database.
-     *
      * @param guild the guild to check.
      * @return boolean
      */
@@ -38,42 +35,33 @@ public class GuildFunctions {
     }
 
     /**
-     * Adds a new guild to the database and initialises it's settings.
-     *
-     * @param guild Object of type Guild that is added to the database.
+     * Adds or updates a guild to/on the database.
+     * @param guild {@link Guild} that is added/updated to/on the database.
      */
-    public static void addGuild(Guild guild) {
-        if(exists(guild.getId())) {
-            updateGuild(guild);
-            return;
-        }
-
+    public static void addOrUpdateGuild(Guild guild) {
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `guilds` (`guildId`) VALUES (?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `guilds_settings` (`guildId`) VALUES (?)");
-            PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `module_settings` (`guildId`) VALUES (?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?)")) {
-
-            // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
-            String encodedName = Base64.getEncoder().encodeToString(guild.getName().getBytes());
+            PreparedStatement stmt = conn.prepareStatement("INSERT IGNORE INTO `guilds` (`guildId`) VALUES (?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `guildName` = VALUES(`guildName`), `guildRegion` = VALUES(`guildRegion`), `guildIcon` = VALUES(`guildIcon`), `guildSplash` = VALUES(`guildSplash`), `lastUpdated` = CURRENT_TIMESTAMP");
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT IGNORE INTO `guilds_settings` (`guildId`) VALUES (?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `module_settings` (`guildId`) VALUES (?)")) {
 
             stmt.setString(1, guild.getId());
-            stmt.execute();
+            if(stmt.execute()) {
+                log.info("Guild added: " + guild.getName() + " (" + guild.getId() + ")");
+            }
 
             stmt2.setString(1, guild.getId());
+            stmt2.setString(2, Base64.getEncoder().encodeToString(guild.getName().getBytes())); // Encodes all server names to base64 to prevent special characters messing things up. (obv not for encryption)
+            stmt2.setString(3, guild.getRegion().getName());
+            stmt2.setString(4, guild.getIconUrl());
+            stmt2.setString(5, guild.getSplashUrl());
             stmt2.execute();
 
             stmt3.setString(1, guild.getId());
             stmt3.execute();
 
             stmt4.setString(1, guild.getId());
-            stmt4.setString(2, encodedName);
-            stmt4.setString(3, guild.getRegion().getName());
-            stmt4.setString(4, guild.getIconUrl());
-            stmt4.setString(5, guild.getSplashUrl());
             stmt4.execute();
-
-            log.info("Guild Synced: " + guild.getName() + " (" + guild.getId() + ")");
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -82,46 +70,21 @@ public class GuildFunctions {
 
     /**
      * Adds a new guild to the database and initialises it's settings, or updates current guilds if they already exist on the database.
-     *
-     * @param jda JDA object to pull the guild cache from.
+     * @param guild {@link Guild} object to verify.
      * @return if the add was successful.
      */
-    public static boolean addGuilds(JDA jda) {
+    public static void verifyIntegrity(Guild guild) {
         try {
-            jda.getGuildCache().forEach(GuildFunctions::addGuild);
-            return true;
+            GuildFunctions.addOrUpdateGuild(guild);
+            BindFunctions.verifyBinds(guild);
 
         } catch (Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return false;
-        }
-    }
-
-    /**
-     * Updates guild data, method only being called on startup of each shard.
-     * @param guild Object of type Guild that is used to update the database.
-     */
-    private static void updateGuild(Guild guild) {
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildName` = ?, `guildRegion` = ?, `guildIcon` = ?, `guildSplash` = ?, `lastUpdated` = CURRENT_TIMESTAMP WHERE `guildId` = ?")) {
-
-            String encodedName = Base64.getEncoder().encodeToString(guild.getName().getBytes());
-
-            stmt.setString(1, encodedName);
-            stmt.setString(2, guild.getRegion().getName());
-            stmt.setString(3, guild.getIconUrl());
-            stmt.setString(4, guild.getSplashUrl());
-            stmt.setString(5, guild.getId());
-            stmt.execute();
-
-        } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
     /**
      * Updates a guilds name in the database when it is changed.
-     *
      * @param guildId String
      * @param guildName String
      */
@@ -143,7 +106,6 @@ public class GuildFunctions {
 
     /**
      * Update guild region.
-     *
      * @param guildId String
      * @param guildRegion String
      */
@@ -162,7 +124,6 @@ public class GuildFunctions {
 
     /**
      * Update guild icon url.
-     *
      * @param guildId String
      * @param guildIcon String (url)
      */
@@ -181,7 +142,6 @@ public class GuildFunctions {
 
     /**
      * Update guild splash url.
-     *
      * @param guildId String
      * @param guildSplash String
      */
@@ -202,7 +162,6 @@ public class GuildFunctions {
     /**
      * Returns all of the guild settings for the given guild.
      * ** Doesn't close connection or resultset is lost **
-     *
      * @param guildId the guild to get the settings for.
      * @return ResultSet
      */
@@ -234,7 +193,6 @@ public class GuildFunctions {
 
     /**
      * Returns the value of a single guild settings.
-     *
      * @param setting the setting to be checked
      * @param guild the guild to check the setting for
      * @return String
@@ -256,7 +214,6 @@ public class GuildFunctions {
 
     /**
      * Returns the boolean value of a single guild settings.
-     *
      * @param setting the setting to be checked
      * @param guild the guild to check the setting for
      * @return boolean
@@ -278,7 +235,6 @@ public class GuildFunctions {
 
     /**
      * Changes a setting value for the given guild setting. (Very dangerous without the correct checking...)
-     *
      * @param setting the setting to be changed.
      * @param value the value of the setting being changed.
      * @param guild the guild where the setting will be changed.
@@ -301,7 +257,6 @@ public class GuildFunctions {
 
     /**
      * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
-     *
      * @param guild the guild's id.
      */
     public static void cleanup(String guild) {
@@ -318,7 +273,6 @@ public class GuildFunctions {
 
     /**
      * Cleans up any guild's that didn't get synced within 24 hours of the last startup phase.
-     *
      * @return boolean if the purge was successful.
      */
     public static void purgeGuilds() {
