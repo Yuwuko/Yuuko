@@ -160,7 +160,7 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
-            GLOBAL_PREFIX = "<!@" + BOT_ID + "> ";
+            GLOBAL_PREFIX = "<@" + BOT_ID + "> ";
 
             log.info("Global prefix has been set to: {}", GLOBAL_PREFIX);
         } catch(IOException ex) {
