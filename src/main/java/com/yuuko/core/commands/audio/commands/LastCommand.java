@@ -7,6 +7,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
+import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
@@ -23,13 +24,10 @@ public class LastCommand extends Command {
 			AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
 
 			if(track != null) {
-				String[] uri = track.getInfo().uri.split("=");
-				String imageUrl = (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
-
 				EmbedBuilder queuedTrack = new EmbedBuilder()
 						.setAuthor("Last track")
 						.setTitle(track.getInfo().title, track.getInfo().uri)
-						.setThumbnail(imageUrl)
+						.setThumbnail(Utilities.getAudioTrackImage(track))
 						.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
 						.addField("Channel", track.getInfo().author, true)
 						.setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());

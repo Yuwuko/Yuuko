@@ -1,5 +1,6 @@
 package com.yuuko.core.utilities;
 
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Configuration;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
@@ -31,7 +32,6 @@ public final class Utilities {
 
     /**
      * Returns an API ApplicationId.
-     *
      * @param key name of the api
      * @return String
      */
@@ -41,7 +41,6 @@ public final class Utilities {
 
     /**
      * Returns an API key.
-     *
      * @param key name of the api
      * @return String
      */
@@ -51,7 +50,6 @@ public final class Utilities {
 
     /**
      * Returns the server custom prefix.
-     *
      * @param guild {@link Guild}
      * @return String
      */
@@ -61,7 +59,6 @@ public final class Utilities {
 
     /**
      * Returns a pretty version of a command's permission array by removing the brackets surrounding them.
-     *
      * @param permissions {@link List<Permission>}
      * @return String
      */
@@ -71,7 +68,6 @@ public final class Utilities {
 
     /**
      * Returns the specific shard's SelfUser object.
-     *
      * @return {@link SelfUser}
      */
     public static SelfUser getSelfUser() {
@@ -81,5 +77,15 @@ public final class Utilities {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns YouTube image url or placeholder if it doesn't exist
+     * @param track {@link AudioTrack}
+     * @return string image url
+     */
+    public static String getAudioTrackImage(AudioTrack track) {
+        String[] uri = track.getInfo().uri.split("=");
+        return (uri.length > 1) ? "https://img.youtube.com/vi/" + uri[1] + "/1.jpg" : "https://i.imgur.com/bCNQlm6.jpg";
     }
 }

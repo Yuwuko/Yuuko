@@ -39,7 +39,7 @@ import java.util.*;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String VERSION = "202011r2";
+    public static final String VERSION = "202011r3";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -160,7 +160,9 @@ public class Configuration {
             SUPPORT_GUILD = c.readLine();
             BOT_ID = c.readLine();
             BOT_TOKEN = c.readLine();
-            GLOBAL_PREFIX = "<@" + BOT_ID + "> ";
+            GLOBAL_PREFIX = "<!@" + BOT_ID + "> ";
+
+            log.info("Global prefix has been set to: {}", GLOBAL_PREFIX);
         } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }

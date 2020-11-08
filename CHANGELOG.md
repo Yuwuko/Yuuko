@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202011r3
++ [~] Rewritten most of the minor audio commands, making them easier to read and largely more concise.
+
 ## 202011r2
 + [~] Starting optimising SQL queries - reducing overall number.
 + [~] Small changes to configuration both formatting and logic.

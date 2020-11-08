@@ -4,9 +4,7 @@ import com.yuuko.core.Configuration;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
-import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
-import lavalink.client.io.Link;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -20,15 +18,10 @@ public class StopCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
-
-        if(manager.getLink().getState() != Link.State.NOT_CONNECTED) {
-            AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
-
-            if(e.getCommand() != null) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
-                MessageHandler.sendMessage(e, embed.build());
-            }
+        AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
+        if(e.getCommand() != null) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
+            MessageHandler.sendMessage(e, embed.build());
         }
     }
 
@@ -40,4 +33,5 @@ public class StopCommand extends Command {
     public void onCommand(Guild guild) {
         AudioManagerController.getGuildAudioManager(guild).destroy();
     }
+
 }

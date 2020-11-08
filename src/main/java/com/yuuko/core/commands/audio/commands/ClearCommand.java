@@ -22,12 +22,10 @@ public class ClearCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
-
             if(!e.hasParameters()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("The queue has been cleared.");
                 MessageHandler.sendMessage(e, embed.build());
-                manager.getScheduler().queue.clear();
+                AudioManagerController.getGuildAudioManager(e.getGuild()).getScheduler().queue.clear();
                 return;
             }
 
@@ -35,6 +33,7 @@ public class ClearCommand extends Command {
                 return;
             }
 
+            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
             LinkedList<AudioTrack> temp = new LinkedList<>();
             final int clearPos = Integer.parseInt(e.getParameters());
             int i = 0;

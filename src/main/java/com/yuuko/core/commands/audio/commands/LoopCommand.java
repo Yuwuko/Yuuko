@@ -20,10 +20,9 @@ public class LoopCommand extends Command {
     public void onCommand(MessageEvent e) {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
-        manager.getScheduler().setLooping(!manager.getScheduler().isLooping());
-
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Loop").setDescription("Looping for queue set to `" + manager.getScheduler().isLooping() + "`");
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Loop").setDescription("Looping for queue set to `" + !manager.getScheduler().isLooping() + "`");
         MessageHandler.sendMessage(e, embed.build());
+        manager.getScheduler().setLooping(!manager.getScheduler().isLooping());
     }
 
 }
