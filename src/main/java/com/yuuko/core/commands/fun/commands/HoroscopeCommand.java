@@ -49,7 +49,6 @@ public class HoroscopeCommand extends Command {
         }
 
         final JsonObject object = new RequestHandler(BASE_URL + selectedSign).getJsonObject();
-
         EmbedBuilder embed = new EmbedBuilder().setTitle("Horoscope - " + selectedSign + " - " + object.get("date").getAsString())
                 .setDescription(object.get("horoscope").getAsString());
         MessageHandler.sendMessage(e, embed.build());

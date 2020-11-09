@@ -15,17 +15,11 @@ public class SpoilerifyCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] characters = e.getParameters().replace("`", "").split("");
         StringBuilder spoiler = new StringBuilder();
-
-        spoiler.append("`");
-        for(String character: characters) {
-            spoiler.append("||");
-            spoiler.append(character);
-            spoiler.append("||");
+        for(char character: e.getParameters().toCharArray()) {
+            spoiler.append("||").append(character).append("||");
         }
-        spoiler.append("`");
 
-        MessageHandler.sendMessage(e, spoiler.toString());
+        MessageHandler.sendMessage(e, "`" + spoiler.toString() + "`");
     }
 }

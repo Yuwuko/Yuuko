@@ -43,8 +43,7 @@ public class HelpCommand extends Command {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
             Configuration.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
-                final String commandPermission;
-                commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
+                final String commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
 
                 StringBuilder usages = new StringBuilder();
                 for(String usage: command.getUsage()) {

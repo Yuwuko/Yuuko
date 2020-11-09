@@ -24,10 +24,10 @@ public class CoinFlipCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        int rng = new Random().nextInt(6000);
+        final int rng = new Random().nextInt(10000);
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Coin Flip")
-                .setDescription((rng == 0) ? responses.get(2) : (rng < 3000) ? responses.get(0) : responses.get(1))
+                .setDescription((rng == 0) ? responses.get(2) : (rng < 5000) ? responses.get(0) : responses.get(1))
                 .setTimestamp(Instant.now())
                 .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());

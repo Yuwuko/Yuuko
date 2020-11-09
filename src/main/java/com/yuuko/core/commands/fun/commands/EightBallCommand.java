@@ -41,11 +41,8 @@ public class EightBallCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String question = e.getParameters();
-        question += (question.lastIndexOf("?") == question.length()-1) ? "" : "?";
-
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("8ball, " + question)
+                .setTitle("8ball, " + (e.getParameters() + (e.getParameters().endsWith("?") ? "" : "?")))
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
                 .setFooter(Configuration.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
