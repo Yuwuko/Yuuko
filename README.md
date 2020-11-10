@@ -1,3 +1,5 @@
+![Yuuko Banner](https://i.imgur.com/3Aihicb.jpg)
+
 ![Status](https://top.gg/api/widget/status/420682957007880223.svg)
 ![Servers](https://top.gg/api/widget/servers/420682957007880223.svg)
 ![Servers](https://top.gg/api/widget/upvotes/420682957007880223.svg)
