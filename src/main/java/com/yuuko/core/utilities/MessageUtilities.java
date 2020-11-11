@@ -19,7 +19,7 @@ public final class MessageUtilities {
      * @return boolean
      */
     public static boolean checkIfUserMentioned(MessageEvent e) {
-        return getMutableMembersCollection(e).size() > 0;
+        return e.getMessage().getMentionedMembers().size() > 0;
     }
 
     /**

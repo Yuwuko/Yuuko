@@ -32,5 +32,4 @@ public class HugCommand extends InteractionCommand {
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

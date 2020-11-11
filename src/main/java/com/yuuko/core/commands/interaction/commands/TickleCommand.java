@@ -32,5 +32,4 @@ public class TickleCommand extends InteractionCommand {
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

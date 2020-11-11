@@ -32,5 +32,4 @@ public class PetCommand extends InteractionCommand {
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

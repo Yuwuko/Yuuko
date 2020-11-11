@@ -32,10 +32,10 @@ public class PoutCommand extends InteractionCommand {
                 EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts at **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
                 MessageHandler.sendMessage(e, embed.build());
             }
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts.").setImage(interactionImage.get(getRandom(interactionImage.size())));
-            MessageHandler.sendMessage(e, embed.build());
+            return;
         }
-    }
 
+        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts.").setImage(interactionImage.get(getRandom(interactionImage.size())));
+        MessageHandler.sendMessage(e, embed.build());
+    }
 }

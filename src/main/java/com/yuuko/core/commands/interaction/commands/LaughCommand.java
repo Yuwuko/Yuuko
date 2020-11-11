@@ -32,10 +32,10 @@ public class LaughCommand extends InteractionCommand {
                 EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** laughs at **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
                 MessageHandler.sendMessage(e, embed.build());
             }
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** laughs.").setImage(interactionImage.get(getRandom(interactionImage.size())));
-            MessageHandler.sendMessage(e, embed.build());
+            return;
         }
-    }
 
+        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** laughs.").setImage(interactionImage.get(getRandom(interactionImage.size())));
+        MessageHandler.sendMessage(e, embed.build());
+    }
 }

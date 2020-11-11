@@ -32,5 +32,4 @@ public class BiteCommand extends InteractionCommand {
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

@@ -32,5 +32,4 @@ public class PokeCommand extends InteractionCommand {
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

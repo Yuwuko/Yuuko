@@ -32,5 +32,4 @@ public class AttackCommand extends InteractionCommand {
             MessageHandler.sendMessage(e, embed.build());
         }
     }
-
 }

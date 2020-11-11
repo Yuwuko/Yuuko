@@ -32,10 +32,10 @@ public class ShrugCommand extends InteractionCommand {
                 EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs at **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
                 MessageHandler.sendMessage(e, embed.build());
             }
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs.").setImage(interactionImage.get(getRandom(interactionImage.size())));
-            MessageHandler.sendMessage(e, embed.build());
+            return;
         }
-    }
 
+        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs.").setImage(interactionImage.get(getRandom(interactionImage.size())));
+        MessageHandler.sendMessage(e, embed.build());
+    }
 }
