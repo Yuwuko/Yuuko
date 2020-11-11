@@ -17,7 +17,7 @@ public abstract class InteractionCommand extends Command {
     @Override
     public abstract void onCommand(MessageEvent e);
 
-    public int random(int bound) {
+    public int getRandom(int bound) {
         return ThreadLocalRandom.current().nextInt(bound);
     }
 }

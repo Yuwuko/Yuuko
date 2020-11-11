@@ -24,7 +24,7 @@ public class CryCommand extends InteractionCommand {
 
     @Override
     public void onCommand(MessageEvent e) {
-        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** cries.").setImage(interactionImage.get(random(interactionImage.size())));
+        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** cries.").setImage(interactionImage.get(getRandom(interactionImage.size())));
         MessageHandler.sendMessage(e, embed.build());
     }
 

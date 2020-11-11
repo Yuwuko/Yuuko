@@ -28,7 +28,7 @@ public class AttackCommand extends InteractionCommand {
     public void onCommand(MessageEvent e) {
         Member target = MessageUtilities.getMentionedMember(e, true);
         if(target != null) {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** attacks **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(random(interactionImage.size())));
+            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** attacks **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
             MessageHandler.sendMessage(e, embed.build());
         }
     }

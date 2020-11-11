@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.entities.Member;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class PoutCommand extends InteractionCommand {
     private static final List<String> interactionImage = Arrays.asList(
@@ -30,11 +29,11 @@ public class PoutCommand extends InteractionCommand {
         if(MessageUtilities.checkIfUserMentioned(e)) {
             Member target = MessageUtilities.getMentionedMember(e, true);
             if(target != null) {
-                EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts at **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(new Random().nextInt(interactionImage.size() - 1)));
+                EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts at **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
                 MessageHandler.sendMessage(e, embed.build());
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts.").setImage(interactionImage.get(random(interactionImage.size())));
+            EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** pouts.").setImage(interactionImage.get(getRandom(interactionImage.size())));
             MessageHandler.sendMessage(e, embed.build());
         }
     }

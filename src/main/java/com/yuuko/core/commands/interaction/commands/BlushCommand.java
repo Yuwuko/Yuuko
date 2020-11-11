@@ -24,7 +24,8 @@ public class BlushCommand extends InteractionCommand {
 
     @Override
     public void onCommand(MessageEvent e) {
-        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** blushes.").setImage(interactionImage.get(random(interactionImage.size())));
+        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** blushes.").setImage(interactionImage.get(getRandom(interactionImage.size())));
         MessageHandler.sendMessage(e, embed.build());
     }
+
 }
