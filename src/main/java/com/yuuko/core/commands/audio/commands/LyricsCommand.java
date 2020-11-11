@@ -11,6 +11,7 @@ import com.yuuko.core.io.entity.RequestProperty;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,18 +44,23 @@ public class LyricsCommand extends Command {
             }
 
             JsonObject data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject();
-            List<String> lyricsList = new ArrayList<>();
-            String lyrics = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics").get(0).text().replace("[", "\n\n[").replace("]", "]\n");
+            Elements elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics");
+            if(elements.size() < 1) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+                MessageHandler.sendMessage(e, embed.build());
+                return;
+            }
 
-            int noInfo = lyrics.indexOf("\n \n\n");
-            if(noInfo > -1) {
+            String lyrics = elements.get(0).text().replace("[", "\n\n[").replace("]", "]\n");
+            if(lyrics.contains("\n \n\n")) {
                 lyrics = lyrics.substring(lyrics.indexOf("\n \n\n"));
             }
 
+            List<String> lyricsList = new ArrayList<>();
             if(lyrics.length() > 2048) {
                 int index = 0;
                 while(index < lyrics.length()) {
-                    lyricsList.add(lyrics.substring(index, Math.min(index + 2048,lyrics.length())));
+                    lyricsList.add(lyrics.substring(index, Math.min(index + 2048, lyrics.length())));
                     index += 2048;
                 }
             }
@@ -81,7 +87,6 @@ public class LyricsCommand extends Command {
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
-
     }
 
 }
