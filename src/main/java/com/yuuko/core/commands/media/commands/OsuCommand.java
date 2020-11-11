@@ -26,25 +26,20 @@ public class OsuCommand extends Command {
         try {
             String[] commandParameters = e.getParameters().split("\\s+", 2);
 
-            final int mode;
-            if(commandParameters.length > 1) {
-                if(Sanitiser.isNumber(commandParameters[1])) {
-                    final int tmp = Integer.parseInt(commandParameters[1]);
-                    mode = (tmp < 4 && tmp > -1) ? tmp : 0;
-                } else {
-                    mode = 0;
-                }
-            } else {
-                mode = 0;
+            int mode = 0;
+            if(commandParameters.length > 1 && Sanitiser.isNumber(commandParameters[1])) {
+                mode = Integer.parseInt(commandParameters[1]);
             }
 
-            String modeString = switch (mode) {
+            String modeString = switch(mode) {
                 case 0 -> "osu!";
                 case 1 -> "taiko";
                 case 2 -> "catch the beat";
                 case 3 -> "osu!mania";
                 default -> "unknown";
             };
+
+            mode = modeString.equals("unknown") ? 0 : mode;
 
             final String url = BASE_URL + Utilities.getApiKey("osu") + "&u=" + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
             final JsonArray json = new RequestHandler(url).getJsonArray();
