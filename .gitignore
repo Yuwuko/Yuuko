@@ -26,3 +26,5 @@ out/test
 
 # Other stuff
 /lib
+/config
+/config-prod
