@@ -31,24 +31,6 @@ public final class Utilities {
     }
 
     /**
-     * Returns an API ApplicationId.
-     * @param key name of the api
-     * @return String
-     */
-    public static String getApiApplicationId(String key) {
-        return Config.API_MANAGER.getApi(key).getApplicationId();
-    }
-
-    /**
-     * Returns an API key.
-     * @param key name of the api
-     * @return String
-     */
-    public static String getApiKey(String key) {
-        return Config.API_MANAGER.getApi(key).getKey();
-    }
-
-    /**
      * Returns the server custom prefix.
      * @param guild {@link Guild}
      * @return String
