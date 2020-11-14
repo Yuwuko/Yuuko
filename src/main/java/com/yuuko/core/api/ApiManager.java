@@ -11,19 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ApiManager {
-    private HashMap<String, Api> API;
+    private final HashMap<String, Api> API = new HashMap<>();
 
     public ApiManager() throws IOException {
-        File folder = new File("./config/api/");
-        File[] keyFiles = folder.listFiles();
-
-        if(keyFiles != null) {
-            API = new HashMap<>(keyFiles.length);
-            for(File key : keyFiles) {
-                BufferedReader c = new BufferedReader(new FileReader(key));
-                API.put(key.getName(), new Api(key.getName(), c.readLine(), c.readLine()));
-                c.close();
-            }
+        for(File key : new File("./config/api/").listFiles()) {
+            BufferedReader c = new BufferedReader(new FileReader(key));
+            API.put(key.getName(), new Api(key.getName(), c.readLine(), c.readLine()));
+            c.close();
         }
     }
 
