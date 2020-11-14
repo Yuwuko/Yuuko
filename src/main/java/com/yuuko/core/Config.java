@@ -38,7 +38,7 @@ import java.util.*;
 public class Config {
     private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    public static final String VERSION = "202011r3";
+    public static final String VERSION = "202011r4";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -74,7 +74,7 @@ public class Config {
             initialiseCommands();
             loadApi();
             registerShards();
-            loadMainConfiguration();
+            loadConfiguration();
             initialiseAudio();
             buildShardManager();
             verifyDatabase();
@@ -220,7 +220,7 @@ public class Config {
      * Loads the main configuration file which includes information regarding author, author's website, support guild, the bot's ID and token.
      * Must be done before buildShardManager().
      */
-    private void loadMainConfiguration() {
+    private void loadConfiguration() {
         try(InputStream inputStream = new FileInputStream(new File("./config/config.yaml"))) {
             Map<String, String> config = new Yaml().load(inputStream);
             AUTHOR = config.get("author");

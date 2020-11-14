@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202011r4
++ [!] Change source compatability from Java 14 to Java 15.
++ [!] Update configuration system, moving from crude txt to yaml implementation.
++ [~] Update dependencies.
+
 ## 202011r3
 + [~] Rewritten most of the minor audio commands, making them easier to read and largely more concise.
 + [~] Refactored [__play__], [__playnext__], and [__background__] to remove large parts of audio load logic.
