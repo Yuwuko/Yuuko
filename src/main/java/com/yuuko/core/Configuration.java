@@ -27,10 +27,9 @@ import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections8.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -71,7 +70,7 @@ public class Configuration {
     void setup() {
         try {
             long loadStart = System.nanoTime();
-
+            fileSetup();
             initialiseCommands();
             loadApi();
             registerShards();
@@ -87,6 +86,74 @@ public class Configuration {
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Creates and initialises configuration files if they are missing.
+     */
+    private void fileSetup() {
+        try {
+            boolean needToEdit = new File("./config").mkdirs();
+            new File("./config/api").mkdirs();
+            new File("./config/hikari").mkdirs();
+
+            if(new File("./config/config.yaml").createNewFile()) {
+                log.info("Created configuration file: ./config/config.yaml");
+                try(FileWriter w = new FileWriter(new File("./config/config.yaml"))) {
+                    w.write(
+                            "author: \"\"" + System.lineSeparator() +
+                                    "website: \"\"" + System.lineSeparator() +
+                                    "support: \"\"" + System.lineSeparator() +
+                                    "bot_id: \"\"" + System.lineSeparator() +
+                                    "bot_token: \"\""
+                    );
+                    log.info("Setup configuration file: ./config/config.yaml");
+                }
+            }
+
+            if(new File("./config/hikari/db.properties").createNewFile()) {
+                log.info("Created configuration file: ./config/hikari/db.properties");
+                try(FileWriter w = new FileWriter(new File("./config/hikari/db.properties"))) {
+                    w.write(
+                            "driverClassName=com.mysql.cj.jdbc.Driver" + System.lineSeparator() +
+                            "jdbcUrl=jdbc:mysql://ip:port/YourDbName?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
+                            "dataSource.user=" + System.lineSeparator() +
+                            "dataSource.password=" + System.lineSeparator() +
+                            "dataSource.cachePrepStmts=true" + System.lineSeparator() +
+                            "dataSource.prepStmtCacheSize=250" + System.lineSeparator() +
+                            "dataSource.prepStmtCacheSqlLimit=2048" + System.lineSeparator() +
+                            "dataSource.useServerPrepStmts=true" + System.lineSeparator() +
+                            "dataSource.useLocalSessionState=true" + System.lineSeparator() +
+                            "dataSource.rewriteBatchedStatements=true" + System.lineSeparator() +
+                            "dataSource.cacheResultSetMetadata=true" + System.lineSeparator() +
+                            "dataSource.cacheServerConfiguration=true" + System.lineSeparator() +
+                            "dataSource.elideSetAutoCommits=true" + System.lineSeparator() +
+                            "dataSource.maintainTimeStats=false"
+                    );
+                    log.info("Setup configuration file: ./config/hikari/db.properties.");
+                }
+            }
+
+            if(new File("./config/lavalink.yaml").createNewFile()) {
+                log.info("Created configuration file: ./config/lavalink.yaml");
+                try(FileWriter w = new FileWriter(new File("./config/lavalink.yaml"))) {
+                    w.write(
+                            "# add nodes below as necessary, using format:" + System.lineSeparator() +
+                            "#" + System.lineSeparator() +
+                            "# ---" + System.lineSeparator() +
+                            "# address: \"ws://ip:port\"" + System.lineSeparator() +
+                            "# password: \"password\""
+                    );
+                    log.info("Setup configuration file: ./config/lavalink.yaml");
+                }
+            }
+
+            if(needToEdit) {
+                System.exit(0);
+            }
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -154,15 +221,14 @@ public class Configuration {
      * Must be done before buildShardManager().
      */
     private void loadMainConfiguration() {
-        try(BufferedReader c = new BufferedReader(new FileReader("./config/configuration.txt"))) {
-            AUTHOR = c.readLine();
-            AUTHOR_WEBSITE = c.readLine();
-            SUPPORT_GUILD = c.readLine();
-            BOT_ID = c.readLine();
-            BOT_TOKEN = c.readLine();
+        try(InputStream inputStream = new FileInputStream(new File("./config/config.yaml"))) {
+            Map<String, String> config = new Yaml().load(inputStream);
+            AUTHOR = config.get("author");
+            AUTHOR_WEBSITE = config.get("website");
+            SUPPORT_GUILD = config.get("support");
+            BOT_ID = config.get("bot_id");
+            BOT_TOKEN = config.get("bot_token");
             GLOBAL_PREFIX = "<@!" + BOT_ID + "> ";
-
-            log.info("Global prefix has been set to: {}", GLOBAL_PREFIX);
         } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
         }

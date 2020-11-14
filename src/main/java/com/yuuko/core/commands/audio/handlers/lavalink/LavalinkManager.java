@@ -25,8 +25,7 @@ public class LavalinkManager {
         lavalink.setAutoReconnect(true);
 
         try(InputStream inputStream = new FileInputStream(new File("./config/lavalink.yaml"))) {
-            Yaml yaml = new Yaml(new Constructor(LavalinkNode.class));
-            for(Object object : yaml.loadAll(inputStream)) {
+            for(Object object : new Yaml(new Constructor(LavalinkNode.class)).loadAll(inputStream)) {
                 LavalinkNode node = (LavalinkNode) object;
                 lavalink.addNode(node.getURI(), node.getPassword());
             }
