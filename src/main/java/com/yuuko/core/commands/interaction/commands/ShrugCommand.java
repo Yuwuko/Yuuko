@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,7 +21,7 @@ public class ShrugCommand extends InteractionCommand {
     );
 
     public ShrugCommand() {
-        super("shrug", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-shrug", "-shrug @user"), false, null);
+        super("shrug", Config.MODULES.get("interaction"), 0, -1L, Arrays.asList("-shrug", "-shrug @user"), false, null);
     }
 
     @Override

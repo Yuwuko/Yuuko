@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.setting.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -22,7 +22,7 @@ public class StarboardSetting extends Command {
     private static final List<String> fileTypes = Arrays.asList("mp4", "mov", "avi");
 
     public StarboardSetting() {
-        super("starboard", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
+        super("starboard", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
     }
 
     public void onCommand(MessageEvent e) {

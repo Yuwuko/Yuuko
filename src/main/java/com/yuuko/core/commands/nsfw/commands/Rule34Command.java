@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.nsfw.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -16,7 +16,7 @@ public class Rule34Command extends Command {
     private static final String BASE_URL = "https://rule34.xxx/index.php?page=post&s=random";
 
     public Rule34Command() {
-        super("rule34", Configuration.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-rule34"), true, null);
+        super("rule34", Config.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-rule34"), true, null);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Rule34Command extends Command {
             EmbedBuilder efuktPost = new EmbedBuilder()
                     .setTitle("Rule 34" + (!characterString.toString().equals("") ? characterString.substring(0, characterString.length() - 2) : ""))
                     .setImage(image)
-                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, efuktPost.build());
 
         } catch(Exception ex) {

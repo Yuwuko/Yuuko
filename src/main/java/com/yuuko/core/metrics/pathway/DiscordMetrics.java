@@ -1,6 +1,6 @@
 package com.yuuko.core.metrics.pathway;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.metrics.Metric;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -16,7 +16,7 @@ public class DiscordMetrics implements Metric {
      * Updates the Discord Metrics to current values.
      */
     public void update() {
-        List<Guild> guilds = Configuration.BOT.getJDA().getGuildCache().asList();
+        List<Guild> guilds = Config.BOT.getJDA().getGuildCache().asList();
         GUILD_COUNT.set(guilds.size());
     }
 
@@ -24,7 +24,7 @@ public class DiscordMetrics implements Metric {
      * Update gateway and rest ping.
      */
     public void updatePing() {
-        GATEWAY_PING.set((int)Configuration.BOT.getJDA().getGatewayPing());
-        Configuration.BOT.getJDA().getRestPing().queue(s-> REST_PING.set(s.intValue()), f -> REST_PING.set(0));
+        GATEWAY_PING.set((int) Config.BOT.getJDA().getGatewayPing());
+        Config.BOT.getJDA().getRestPing().queue(s-> REST_PING.set(s.intValue()), f -> REST_PING.set(0));
     }
 }

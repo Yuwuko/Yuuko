@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
@@ -46,7 +46,7 @@ public class AudioLoadHandler {
                             .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
                             .addField("Channel", track.getInfo().author, true)
                             .addField("Position in queue", manager.getScheduler().queue.size() + "", false)
-                            .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
+                            .setFooter(Config.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
                     switch(type) {
                         case PLAY -> embed.setAuthor(e.getAuthor().getAsTag() + " added to the queue!", null, e.getAuthor().getAvatarUrl());
@@ -130,7 +130,7 @@ public class AudioLoadHandler {
             @Override
             public void loadFailed(FriendlyException ex) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + ex.getMessage())
-                        .setDescription("The most common cause for this error is trying to play age-restricted content. If the problem persists, please contact " + Configuration.AUTHOR + ".");
+                        .setDescription("The most common cause for this error is trying to play age-restricted content. If the problem persists, please contact " + Config.AUTHOR + ".");
                 MessageHandler.sendMessage(e, embed.build());
             }
         });

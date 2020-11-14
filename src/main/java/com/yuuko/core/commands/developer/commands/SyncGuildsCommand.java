@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.developer.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class SyncGuildsCommand extends Command {
 
     public SyncGuildsCommand() {
-        super("syncguilds", Configuration.MODULES.get("developer"), 0, -1L, Arrays.asList("-syncguilds"), false, null);
+        super("syncguilds", Config.MODULES.get("developer"), 0, -1L, Arrays.asList("-syncguilds"), false, null);
     }
 
     @Override

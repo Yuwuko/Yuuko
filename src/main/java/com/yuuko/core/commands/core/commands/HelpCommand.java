@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-help", "-help <command>"), false, null);
+        super("help", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-help", "-help <command>"), false, null);
     }
 
     @Override
@@ -27,13 +27,13 @@ public class HelpCommand extends Command {
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! " +
                             "\n Stuck with a command? Use `" + e.getPrefix() + "help <command>` to get the commands usage.")
-                    .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
 
-            for(Module module: Configuration.MODULES.values()) {
+            for(Module module: Config.MODULES.values()) {
                 commandInfo.addField(module.getName(), module.getCommandsAsString(), false);
             }
 
-            if(e.getGuild().getMemberById(Configuration.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
+            if(e.getGuild().getMemberById(Config.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
                 MessageHandler.sendMessage(e, commandInfo.build());
             } else {
                 e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
@@ -42,7 +42,7 @@ public class HelpCommand extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            Configuration.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
+            Config.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
                 final String commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
 
                 StringBuilder usages = new StringBuilder();
@@ -52,13 +52,13 @@ public class HelpCommand extends Command {
                 TextUtilities.removeLast(usages, "\n");
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setThumbnail(Configuration.BOT.getAvatarUrl())
+                        .setThumbnail(Config.BOT.getAvatarUrl())
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getName(), true)
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
-                        .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
+                        .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             });
         }

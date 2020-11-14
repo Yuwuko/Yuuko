@@ -3,7 +3,7 @@ package com.yuuko.core.commands.media.commands;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -20,7 +20,7 @@ public class UKParliamentPetitionCommand extends Command {
     private static final String BASE_URL = "https://petition.parliament.uk/petitions/";
 
     public UKParliamentPetitionCommand() {
-        super("petition", Configuration.MODULES.get("media"), 0, -1L, Arrays.asList("-petition <id>"), false, null);
+        super("petition", Config.MODULES.get("media"), 0, -1L, Arrays.asList("-petition <id>"), false, null);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UKParliamentPetitionCommand extends Command {
                         .addBlankField(true)
                         .addField("Government Response Summary", governmentResponse, false)
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, embed.build());
             } else {
 
@@ -78,7 +78,7 @@ public class UKParliamentPetitionCommand extends Command {
                         .setTitle("UK Parliament Petitions", "https://petition.parliament.uk/petitions")
                         .setDescription("Here is a list of the top ten open petitions, use `" + Utilities.getServerPrefix(e.getGuild()) + "petition <id>` to get more information about a specific petition.")
                         .setTimestamp(Instant.now())
-                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
                 int i = 0; // We only need 10 results,
                 for(JsonElement element: data) {

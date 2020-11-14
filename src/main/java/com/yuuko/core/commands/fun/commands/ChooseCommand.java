@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.fun.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -15,7 +15,7 @@ import java.util.Random;
 public class ChooseCommand extends Command {
 
     public ChooseCommand() {
-        super("choose", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-choose <choice>, <choice>..."), false, null);
+        super("choose", Config.MODULES.get("fun"), 1, -1L, Arrays.asList("-choose <choice>, <choice>..."), false, null);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ChooseCommand extends Command {
                 .addField("Selected", (commandParameters.length > 1) ? commandParameters[new Random().nextInt(commandParameters.length)] : commandParameters[0], true)
                 .addField("Probability", new BigDecimal(100.0/commandParameters.length).setScale(2, RoundingMode.HALF_UP) + "%", true)
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

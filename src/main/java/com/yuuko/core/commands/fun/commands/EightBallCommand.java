@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.fun.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -36,7 +36,7 @@ public class EightBallCommand extends Command {
     );
 
     public EightBallCommand() {
-        super("8ball", Configuration.MODULES.get("fun"), 1, -1L, Arrays.asList("-8ball <question>"), false, null);
+        super("8ball", Config.MODULES.get("fun"), 1, -1L, Arrays.asList("-8ball <question>"), false, null);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class EightBallCommand extends Command {
                 .setTitle("8ball, " + (e.getParameters() + (e.getParameters().endsWith("?") ? "" : "?")))
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Config.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

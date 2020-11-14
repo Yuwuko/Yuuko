@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,7 +21,7 @@ public class KissCommand extends InteractionCommand {
     );
 
     public KissCommand() {
-        super("kiss", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-kiss @user"), false, null);
+        super("kiss", Config.MODULES.get("interaction"), 1, -1L, Arrays.asList("-kiss @user"), false, null);
     }
 
     @Override

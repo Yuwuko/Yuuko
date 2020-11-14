@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,7 +21,7 @@ public class AttackCommand extends InteractionCommand {
     );
 
     public AttackCommand() {
-        super("attack", Configuration.MODULES.get("interaction"), 1, -1L, Arrays.asList("-attack @user"), false, null);
+        super("attack", Config.MODULES.get("interaction"), 1, -1L, Arrays.asList("-attack @user"), false, null);
     }
 
     @Override

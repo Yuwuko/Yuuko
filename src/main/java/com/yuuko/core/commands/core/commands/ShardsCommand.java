@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.DatabaseFunctions;
@@ -17,15 +17,15 @@ import java.util.Arrays;
 public class ShardsCommand extends Command {
 
     public ShardsCommand() {
-        super("shards", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-shards"), false, null);
+        super("shards", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-shards"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         EmbedBuilder shardEmbed = new EmbedBuilder()
-                .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator() + " - Shards", null, Configuration.BOT.getAvatarUrl())
+                .setAuthor(Config.BOT.getName() + "#" + Config.BOT.getDiscriminator() + " - Shards", null, Config.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
         for(Shard shard : DatabaseFunctions.getShardStatistics()) {
@@ -39,7 +39,7 @@ public class ShardsCommand extends Command {
         }
 
         StringBuilder nodes = new StringBuilder();
-        for(LavalinkSocket socket : Configuration.LAVALINK.getLavalink().getNodes()) {
+        for(LavalinkSocket socket : Config.LAVALINK.getLavalink().getNodes()) {
             if(socket.getStats() != null) {
                 nodes.append("**Yuuko-").append(socket.getName()).append("**")
                         .append("\n").append("System Load: ").append(BigDecimal.valueOf((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP)).append("%")

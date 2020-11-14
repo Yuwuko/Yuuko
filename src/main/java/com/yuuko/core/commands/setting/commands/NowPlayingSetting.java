@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.setting.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -21,7 +21,7 @@ public class NowPlayingSetting extends Command {
     );
 
     public NowPlayingSetting() {
-        super("nowplaying", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-nowplaying", "-nowplaying <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("nowplaying", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-nowplaying", "-nowplaying <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {

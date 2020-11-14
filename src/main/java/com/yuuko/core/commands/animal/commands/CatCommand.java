@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.animal.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -14,7 +14,7 @@ public class CatCommand extends Command {
     private static final String BASE_URL = "https://api.thecatapi.com/v1/images/search";
 
     public CatCommand() {
-        super("cat", Configuration.MODULES.get("animal"), 0, -1L, Arrays.asList("-cat"), false, null);
+        super("cat", Config.MODULES.get("animal"), 0, -1L, Arrays.asList("-cat"), false, null);
     }
 
     @Override

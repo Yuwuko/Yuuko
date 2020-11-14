@@ -1,7 +1,7 @@
 package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.CommandExecutor;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.CommandLogSetting;
 import com.yuuko.core.database.function.DatabaseFunctions;
@@ -40,13 +40,13 @@ public class GenericGuildMessageController {
 
             // Checks null because the first few messages before the bot has fully initialised will cause exceptions.
             // Uses short-circuiting to set prefix to the variation used in the message or return if neither.
-            if(prefix == null || !message.startsWith(prefix) && !message.startsWith(prefix = Configuration.GLOBAL_PREFIX)) {
+            if(prefix == null || !message.startsWith(prefix) && !message.startsWith(prefix = Config.GLOBAL_PREFIX)) {
                 return;
             }
 
             final String[] cmd = message.substring(prefix.length()).split("\\s+", 2);
             final String parameters = (cmd.length > 1) ? cmd[1] : null;
-            final Command command = Configuration.COMMANDS.get(cmd[0].toLowerCase());
+            final Command command = Config.COMMANDS.get(cmd[0].toLowerCase());
 
             // Creates message event object, setting the event, prefix, command and parameters.
             MessageEvent event = new MessageEvent(e).setPrefix(prefix).setCommand(command).setParameters(parameters);

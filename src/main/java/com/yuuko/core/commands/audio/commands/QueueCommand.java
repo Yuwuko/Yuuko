@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class QueueCommand extends Command {
 
     public QueueCommand() {
-        super("queue", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-queue"), false, null);
+        super("queue", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-queue"), false, null);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class QueueCommand extends Command {
                         .addField("Queue Length", manager.getScheduler().queue.size() + "", true)
                         .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
                         .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
-                        .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                        .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
                 MessageHandler.sendMessage(e, nextTracks.build());
             }
         } catch(Exception ex) {

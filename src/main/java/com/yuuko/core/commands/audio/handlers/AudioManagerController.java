@@ -8,7 +8,7 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -89,6 +89,6 @@ public final class AudioManagerController {
      * @return {@link Link}
      */
     public static Link getExistingLink(Guild guild) {
-        return Configuration.LAVALINK.getLavalink().getExistingLink(guild.getId());
+        return Config.LAVALINK.getLavalink().getExistingLink(guild.getId());
     }
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.google.api.services.youtube.model.SearchResult;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioLoadHandler;
@@ -18,7 +18,7 @@ import java.util.List;
 public class PlayCommand extends Command {
 
     public PlayCommand() {
-        super("play", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-play", "-play <url>", "-play <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("play", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-play", "-play <url>", "-play <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

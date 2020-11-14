@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -16,7 +16,7 @@ public class KitsuCommand extends Command {
     private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
 
     public KitsuCommand() {
-        super("kitsu", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
+        super("kitsu", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-kitsu <title>", "-kitsu show <title>", "-kitsu character <name>"), false, null);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class KitsuCommand extends Command {
                     .addField("Status", status, true)
                     .addField("Start Date", startDate, true)
                     .addField("End Date", endDate, true)
-                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

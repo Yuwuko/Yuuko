@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -11,13 +11,13 @@ import java.util.Arrays;
 public class VoteCommand extends Command {
 
     public VoteCommand() {
-        super("vote", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-vote"), false, null);
+        super("vote", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-vote"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) {
         EmbedBuilder about = new EmbedBuilder()
-                .setAuthor(Configuration.BOT.getName() + "#" + Configuration.BOT.getDiscriminator(), null, Configuration.BOT.getAvatarUrl())
+                .setAuthor(Config.BOT.getName() + "#" + Config.BOT.getDiscriminator(), null, Config.BOT.getAvatarUrl())
                 .setDescription(
                         "To help with growth, I am listed on some of the popular Discord bot lists, here you can find links on where to vote for me. " +
                         "Voting is an important part of this growth because with more votes comes more exposure and thus more people who will use me. " +

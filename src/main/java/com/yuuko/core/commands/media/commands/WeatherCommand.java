@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -20,7 +20,7 @@ public class WeatherCommand extends Command {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     public WeatherCommand() {
-        super("weather", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
+        super("weather", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class WeatherCommand extends Command {
                     .addField("Longitude", data.get("coord").getAsJsonObject().get("lon").getAsString(), true)
                     .addField("Wind Angle", data.get("wind").getAsJsonObject().get("deg").getAsString() + "°", true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

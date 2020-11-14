@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.animal.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -14,7 +14,7 @@ public class FoxCommand extends Command {
     private static final String BASE_URL = "https://randomfox.ca/floof/";
 
     public FoxCommand() {
-        super("fox", Configuration.MODULES.get("animal"), 0, -1L, Arrays.asList("-fox"), false, null);
+        super("fox", Config.MODULES.get("animal"), 0, -1L, Arrays.asList("-fox"), false, null);
     }
 
     @Override

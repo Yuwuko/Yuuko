@@ -1,6 +1,6 @@
 package com.yuuko.core.database.function;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class ModuleFunctions {
             ArrayList<String> disabled = new ArrayList<>();
 
             if(rs.next()) {
-                for(int i = 2; i < Configuration.MODULES.size() - 1; i++) {
+                for(int i = 2; i < Config.MODULES.size() - 1; i++) {
                     if(rs.getBoolean(i)) {
                         enabled.add(meta.getColumnName(i));
                     } else {

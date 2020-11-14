@@ -1,6 +1,6 @@
 package com.yuuko.core.utilities;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -72,7 +72,7 @@ public final class MessageUtilities {
     public static List<Member> getMentionedMembers(MessageEvent e) {
         List<Member> mentioned = e.getMessage().getMentionedMembers();
         ArrayList<Member> modifiableMentioned = new ArrayList<>(mentioned);
-        modifiableMentioned.remove(e.getGuild().getMember(Configuration.BOT));
+        modifiableMentioned.remove(e.getGuild().getMember(Config.BOT));
 
         if(!e.getMessage().mentionsEveryone()) {
             return modifiableMentioned;
@@ -92,7 +92,7 @@ public final class MessageUtilities {
     private static List<Member> getMutableMembersCollection(MessageEvent e) {
         List<Member> unmodifiableMentioned = e.getMessage().getMentionedMembers();
         ArrayList<Member> mentioned = new ArrayList<>(unmodifiableMentioned);
-        mentioned.remove(e.getGuild().getMember(Configuration.BOT));
+        mentioned.remove(e.getGuild().getMember(Config.BOT));
         return mentioned;
     }
 

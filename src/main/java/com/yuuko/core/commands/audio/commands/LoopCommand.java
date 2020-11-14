@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class LoopCommand extends Command {
 
     public LoopCommand() {
-        super("loop", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-loop"), false, null);
+        super("loop", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-loop"), false, null);
     }
 
     @Override

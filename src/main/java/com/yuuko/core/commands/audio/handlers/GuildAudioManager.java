@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.handlers;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import lavalink.client.io.jda.JdaLink;
 import lavalink.client.player.LavalinkPlayer;
 import net.dv8tion.jda.api.entities.Guild;
@@ -20,7 +20,7 @@ public class GuildAudioManager {
      */
     public GuildAudioManager(Guild guild) {
         this.guild = guild;
-        this.link = Configuration.LAVALINK.getLavalink().getLink(guild);
+        this.link = Config.LAVALINK.getLavalink().getLink(guild);
         this.player = link.getPlayer();
         this.scheduler = new TrackScheduler(guild, player);
         this.player.addListener(scheduler);

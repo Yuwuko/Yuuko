@@ -1,6 +1,6 @@
 package com.yuuko.core.events.controllers;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -65,7 +65,7 @@ public class GenericGuildController {
                 Permission[] messagePermissions = new Permission[]{Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS};
                 if(bot.hasPermission(messagePermissions) && bot.hasPermission(textChannel, messagePermissions)) {
                     EmbedBuilder about = new EmbedBuilder()
-                            .setAuthor(Configuration.BOT.getAsTag(), null, Configuration.BOT.getAvatarUrl())
+                            .setAuthor(Config.BOT.getAsTag(), null, Config.BOT.getAvatarUrl())
                             .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `-about` to get some general information about me.");
                     MessageHandler.sendMessage(e, textChannel, about.build());
                 }

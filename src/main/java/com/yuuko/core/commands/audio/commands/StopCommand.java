@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class StopCommand extends Command {
 
     public StopCommand() {
-        super("stop", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-stop"), false, null);
+        super("stop", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-stop"), false, null);
     }
 
     @Override

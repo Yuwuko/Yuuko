@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.setting.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class ModerationLogSetting extends Command {
 
     public ModerationLogSetting() {
-        super("modlog", Configuration.MODULES.get("setting"), 0, -1L, Arrays.asList("-modlog", "-modlog setup", "-modlog <#channel>", "-modlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("modlog", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-modlog", "-modlog setup", "-modlog <#channel>", "-modlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {
@@ -77,7 +77,7 @@ public class ModerationLogSetting extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
                     .addField("User", DiscordUtilities.getTag(e.getUser()), true)
-                    .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl())
+                    .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageHandler.sendMessage(e, log, embed.build());
         }
@@ -102,7 +102,7 @@ public class ModerationLogSetting extends Command {
                     .addField("Moderator", DiscordUtilities.getTag(e.getMember()), true)
                     .addField("Reason", reason, false)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, log, embed.build());
         }
     }
@@ -123,7 +123,7 @@ public class ModerationLogSetting extends Command {
                     .addField("Channel", e.getChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
             MessageHandler.sendMessage(e, log, embed.build());
         }
     }

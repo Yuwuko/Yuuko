@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.setting.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PrefixSetting extends Command {
 
     public PrefixSetting() {
-        super("prefix", Configuration.MODULES.get("setting"), 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("prefix", Config.MODULES.get("setting"), 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) {

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class CurrentCommand extends Command {
 
     public CurrentCommand() {
-        super("current", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-current"), false, null);
+        super("current", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-current"), false, null);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CurrentCommand extends Command {
                     .setThumbnail(Utilities.getAudioTrackImage(track))
                     .addField("Duration", TextUtilities.getTimestamp(manager.getPlayer().getTrackPosition()) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
                     .addField("Channel", track.getInfo().author, true)
-                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, queuedTrack.build());
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a track currently playing.");

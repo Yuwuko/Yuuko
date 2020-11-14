@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.animal.commands;
 
 import com.google.gson.JsonArray;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -14,7 +14,7 @@ public class BirdCommand extends Command {
     private static final String BASE_URL = "http://shibe.online/api/birds";
 
     public BirdCommand() {
-        super("bird", Configuration.MODULES.get("animal"), 0, -1L, Arrays.asList("-bird"), false, null);
+        super("bird", Config.MODULES.get("animal"), 0, -1L, Arrays.asList("-bird"), false, null);
     }
 
     @Override

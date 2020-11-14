@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class LastCommand extends Command {
 
 	public LastCommand() {
-		super("last", Configuration.MODULES.get("audio"), 0, -1L, Arrays.asList("-last"), false, null);
+		super("last", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-last"), false, null);
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class LastCommand extends Command {
 						.setThumbnail(Utilities.getAudioTrackImage(track))
 						.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
 						.addField("Channel", track.getInfo().author, true)
-						.setFooter(Configuration.STANDARD_STRINGS.get(0), Configuration.BOT.getAvatarUrl());
+						.setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
 				MessageHandler.sendMessage(e, queuedTrack.build());
 			} else {
 				EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");

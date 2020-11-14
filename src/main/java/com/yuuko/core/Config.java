@@ -35,8 +35,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
-public class Configuration {
-    private static final Logger log = LoggerFactory.getLogger(Configuration.class);
+public class Config {
+    private static final Logger log = LoggerFactory.getLogger(Config.class);
 
     public static final String VERSION = "202011r3";
     public static String AUTHOR;
@@ -85,7 +85,7 @@ public class Configuration {
             log.info("Loading complete... time taken: {} seconds.", (BigDecimal.valueOf((System.nanoTime() - loadStart) / 1000000000.0).setScale(2, RoundingMode.HALF_UP)));
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -103,10 +103,10 @@ public class Configuration {
                 try(FileWriter w = new FileWriter(new File("./config/config.yaml"))) {
                     w.write(
                             "author: \"\"" + System.lineSeparator() +
-                                    "website: \"\"" + System.lineSeparator() +
-                                    "support: \"\"" + System.lineSeparator() +
-                                    "bot_id: \"\"" + System.lineSeparator() +
-                                    "bot_token: \"\""
+                            "website: \"\"" + System.lineSeparator() +
+                            "support: \"\"" + System.lineSeparator() +
+                            "bot_id: \"\"" + System.lineSeparator() +
+                            "bot_token: \"\""
                     );
                     log.info("Setup configuration file: ./config/config.yaml");
                 }
@@ -153,7 +153,7 @@ public class Configuration {
                 System.exit(0);
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -187,7 +187,7 @@ public class Configuration {
             log.info("Loaded {} modules, containing {} commands.", MODULES.size(), COMMANDS.size());
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -201,7 +201,7 @@ public class Configuration {
             API_MANAGER = new ApiManager();
             log.info("Loaded {} API keys - {}", API_MANAGER.size(), API_MANAGER.getNames().toString());
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -230,7 +230,7 @@ public class Configuration {
             BOT_TOKEN = config.get("bot_token");
             GLOBAL_PREFIX = "<@!" + BOT_ID + "> ";
         } catch(IOException ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
@@ -273,7 +273,7 @@ public class Configuration {
 
             BOT = Utilities.getSelfUser();
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Configuration.class.getSimpleName(), ex.getMessage(), ex);
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 

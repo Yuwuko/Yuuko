@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -19,7 +19,7 @@ public class CryCommand extends InteractionCommand {
     );
 
     public CryCommand() {
-        super("cry", Configuration.MODULES.get("interaction"), 0, -1L, Arrays.asList("-cry"), false, null);
+        super("cry", Config.MODULES.get("interaction"), 0, -1L, Arrays.asList("-cry"), false, null);
     }
 
     @Override

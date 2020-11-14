@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -20,7 +20,7 @@ public class GithubCommand extends Command {
     private static final String BASE_URL = "https://api.github.com/repos/";
 
     public GithubCommand() {
-        super("github", Configuration.MODULES.get("media"), 2, -1L, Arrays.asList("-github <user> <repository>"), false, null);
+        super("github", Config.MODULES.get("media"), 2, -1L, Arrays.asList("-github <user> <repository>"), false, null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class GithubCommand extends Command {
                 .addField("Pull Requests", pullRequests, true)
                 .addField("Commits", commits, true)
                 .addField("Size", size,true)
-                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
     }
 }

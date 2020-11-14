@@ -2,7 +2,7 @@ package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -18,7 +18,7 @@ public class OsuCommand extends Command {
     private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=";
 
     public OsuCommand() {
-        super("osu", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
+        super("osu", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class OsuCommand extends Command {
                     .addField("S Ranks", sRanks, true)
                     .addField("SH Ranks", shRanks, true)
                     .addField("A Ranks", aRanks, true)
-                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, embed.build());
 
         } catch(Exception ex) {

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -17,7 +17,7 @@ public class UrbanDictionaryCommand extends Command {
     private static final String BASE_URL = "https://api.urbandictionary.com/v0/define?term=";
 
     public UrbanDictionaryCommand() {
-        super("urban", Configuration.MODULES.get("media"), 1, -1L, Arrays.asList("-urban <term>"), true, null);
+        super("urban", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-urban <term>"), true, null);
     }
 
     @Override

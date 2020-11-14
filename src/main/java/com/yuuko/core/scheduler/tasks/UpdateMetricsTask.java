@@ -1,6 +1,6 @@
 package com.yuuko.core.scheduler.tasks;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.Task;
@@ -10,7 +10,7 @@ public class UpdateMetricsTask implements Task {
 
     @Override
     public void run() {
-        if(Configuration.LOG_METRICS) {
+        if(Config.LOG_METRICS) {
             if(System.currentTimeMillis() - lastUpdated > 29999) {
                 lastUpdated = System.currentTimeMillis();
                 MetricsManager.getDiscordMetrics().updatePing();

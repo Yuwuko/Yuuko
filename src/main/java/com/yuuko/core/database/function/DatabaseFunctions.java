@@ -1,6 +1,6 @@
 package com.yuuko.core.database.function;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
@@ -34,7 +34,7 @@ public class DatabaseFunctions {
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
-            int shardId = Configuration.BOT.getJDA().getShardInfo().getShardId();
+            int shardId = Config.BOT.getJDA().getShardInfo().getShardId();
 
             stmt.setInt(1, shardId);
             stmt.setLong(2, system.UPTIME);
@@ -72,7 +72,7 @@ public class DatabaseFunctions {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `command_log`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
-            stmt.setInt(1, Configuration.BOT.getJDA().getShardInfo().getShardId());
+            stmt.setInt(1, Config.BOT.getJDA().getShardInfo().getShardId());
             stmt.setString(2, guildId);
             stmt.setString(3, command);
             stmt.setDouble(4, executionTime);
@@ -207,7 +207,7 @@ public class DatabaseFunctions {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
-            JDA shard = Configuration.BOT.getJDA();
+            JDA shard = Config.BOT.getJDA();
 
             stmt.setString(1, shard.getStatus().name());
             stmt.setInt(2, discord.GUILD_COUNT.get());

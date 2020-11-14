@@ -1,7 +1,7 @@
 package com.yuuko.core.utilities;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.api.JDA;
@@ -17,13 +17,13 @@ public final class Utilities {
      * Updates stats for DiscordBotList
      */
     public static void updateDiscordBotList() {
-        final int shardId = Configuration.SHARD_ID;
-        final int shardCount = Configuration.SHARD_COUNT;
+        final int shardId = Config.SHARD_ID;
+        final int shardCount = Config.SHARD_COUNT;
         final int guildCount = MetricsManager.getDiscordMetrics().GUILD_COUNT.get();
 
         try {
-            if(Configuration.BOT_LIST != null) {
-                Configuration.BOT_LIST.setStats(shardId, shardCount, guildCount);
+            if(Config.BOT_LIST != null) {
+                Config.BOT_LIST.setStats(shardId, shardCount, guildCount);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public final class Utilities {
      * @return String
      */
     public static String getApiApplicationId(String key) {
-        return Configuration.API_MANAGER.getApi(key).getApplicationId();
+        return Config.API_MANAGER.getApi(key).getApplicationId();
     }
 
     /**
@@ -45,7 +45,7 @@ public final class Utilities {
      * @return String
      */
     public static String getApiKey(String key) {
-        return Configuration.API_MANAGER.getApi(key).getKey();
+        return Config.API_MANAGER.getApi(key).getKey();
     }
 
     /**
@@ -71,7 +71,7 @@ public final class Utilities {
      * @return {@link SelfUser}
      */
     public static SelfUser getSelfUser() {
-        for(JDA shard : Configuration.SHARD_MANAGER.getShards()) {
+        for(JDA shard : Config.SHARD_MANAGER.getShards()) {
             if(shard.getStatus().equals(JDA.Status.CONNECTED)) {
                 return shard.getSelfUser();
             }

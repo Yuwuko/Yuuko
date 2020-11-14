@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.ModuleFunctions;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", Configuration.MODULES.get("core"), 0, -1L, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("module", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
@@ -26,16 +26,16 @@ public class ModuleCommand extends Command {
             String module = e.getParameters().split("\\s+", 2)[0].toLowerCase();
             String guild = e.getGuild().getId();
 
-            if(!Configuration.MODULES.containsKey(module)) {
+            if(!Config.MODULES.containsKey(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
 
             // Prevents locked modules from being disabled (would throw exception anyway)
-            if(Configuration.LOCKED_MODULES.contains(module)) {
+            if(Config.LOCKED_MODULES.contains(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
-                        .setDescription("The `" + Configuration.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
+                        .setDescription("The `" + Config.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
                 MessageHandler.sendMessage(e, embed.build());
                 return;
             }
@@ -56,7 +56,7 @@ public class ModuleCommand extends Command {
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageHandler.sendMessage(e, commandModules.build());
         }
     }

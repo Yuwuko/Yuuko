@@ -3,7 +3,7 @@ package com.yuuko.core.commands.media.commands;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.yuuko.core.Configuration;
+import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -18,7 +18,7 @@ public class NationalGeographicCommand extends Command {
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=";
 
     public NationalGeographicCommand() {
-        super("natgeo", Configuration.MODULES.get("media"), 0, -1L, Arrays.asList("-natgeo"), false, null);
+        super("natgeo", Config.MODULES.get("media"), 0, -1L, Arrays.asList("-natgeo"), false, null);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class NationalGeographicCommand extends Command {
                 .setDescription("Reporting our world daily: original nature and science news from [National Geographic](https://news.nationalgeographic.com). Powered by NewsAPI. \n\u200b")
                 .setThumbnail(articles.get(0).getAsJsonObject().get("urlToImage").getAsString())
                 .setTimestamp(Instant.now())
-                .setFooter(Configuration.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         for(JsonElement article: articles) {
             JsonObject articleAsJsonObject = article.getAsJsonObject();

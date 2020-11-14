@@ -8,7 +8,7 @@ import lavalink.client.io.RemoteStats;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.yuuko.core.Configuration.LAVALINK;
+import static com.yuuko.core.Config.LAVALINK;
 
 public class AudioMetrics implements Metric {
     public final AtomicInteger PLAYERS_TOTAL = new AtomicInteger();
