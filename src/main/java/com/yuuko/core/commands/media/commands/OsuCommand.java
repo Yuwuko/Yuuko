@@ -4,18 +4,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.StringFormatter;
-import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 
 public class OsuCommand extends Command {
-    private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=";
+    private static final Api api = Config.API_MANAGER.getApi("osu");
+    private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=" + api.getKey() + "&u=";
 
     public OsuCommand() {
         super("osu", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null);
@@ -41,7 +42,7 @@ public class OsuCommand extends Command {
 
             mode = modeString.equals("unknown") ? 0 : mode;
 
-            final String url = BASE_URL + Utilities.getApiKey("osu") + "&u=" + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
+            final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
             final JsonArray json = new RequestHandler(url).getJsonArray();
 
             if(json == null || json.size() < 1) {

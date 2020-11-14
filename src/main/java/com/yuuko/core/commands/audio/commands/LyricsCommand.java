@@ -4,11 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.io.entity.RequestProperty;
-import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LyricsCommand extends Command {
+    private static final Api api = Config.API_MANAGER.getApi("genius");
 
     public LyricsCommand() {
         super("lyrics", Config.MODULES.get("audio"), 1, -1L, Arrays.asList("-lyrics <song|artist>"), false, null);
@@ -27,7 +28,7 @@ public class LyricsCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             final String url = "https://api.genius.com/search?q=" + e.getParameters().replace(" ", "%20");
-            final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "Bearer " + Utilities.getApiKey("genius"))).getJsonObject();
+            final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "Bearer " + api.getKey())).getJsonObject();
             int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
 
             if(response != 200) {

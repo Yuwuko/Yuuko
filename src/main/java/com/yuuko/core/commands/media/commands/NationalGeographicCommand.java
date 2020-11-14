@@ -5,17 +5,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
-import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.time.Instant;
 import java.util.Arrays;
 
 public class NationalGeographicCommand extends Command {
-    private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=";
+    private static final Api api = Config.API_MANAGER.getApi("newsapi");
+    private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?sources=national-geographic&apiKey=" + api.getKey();
 
     public NationalGeographicCommand() {
         super("natgeo", Config.MODULES.get("media"), 0, -1L, Arrays.asList("-natgeo"), false, null);
@@ -23,8 +24,7 @@ public class NationalGeographicCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String url = BASE_URL + Utilities.getApiKey("newsapi");
-        JsonObject json = new RequestHandler(url).getJsonObject();
+        JsonObject json = new RequestHandler(BASE_URL).getJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 
         EmbedBuilder embed = new EmbedBuilder()
@@ -36,7 +36,6 @@ public class NationalGeographicCommand extends Command {
 
         for(JsonElement article: articles) {
             JsonObject articleAsJsonObject = article.getAsJsonObject();
-
             String title = (!articleAsJsonObject.get("title").isJsonNull()) ? articleAsJsonObject.get("title").getAsString(): "Unknown";
             String author = (!articleAsJsonObject.get("author").isJsonNull()) ? "_" + articleAsJsonObject.get("author").getAsString() + "_" : "_Unknown_";
             String description;

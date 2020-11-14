@@ -55,7 +55,6 @@ public class Config {
     public static Map<String, Module> MODULES;
     public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting", "developer");
     public static DiscordBotListAPI BOT_LIST;
-
     public static final List<String> STANDARD_STRINGS = Arrays.asList(VERSION,
             VERSION + " • Requested by ",
             VERSION + " • Asked by ",
@@ -70,17 +69,17 @@ public class Config {
     void setup() {
         try {
             long loadStart = System.nanoTime();
-            fileSetup();
-            initialiseCommands();
-            loadApi();
+            setupFiles();
+            setupApi();
+            setupCommands();
             registerShards();
             loadConfiguration();
-            initialiseAudio();
+            setupAudio();
             buildShardManager();
             verifyDatabase();
-            initialiseMetrics();
-            initialiseSchedule();
-            initialiseBotLists();
+            setupMetrics();
+            setupScheduler();
+            setupBotLists();
 
             log.info("Loading complete... time taken: {} seconds.", (BigDecimal.valueOf((System.nanoTime() - loadStart) / 1000000000.0).setScale(2, RoundingMode.HALF_UP)));
 
@@ -92,7 +91,7 @@ public class Config {
     /**
      * Creates and initialises configuration files if they are missing.
      */
-    private void fileSetup() {
+    private void setupFiles() {
         try {
             boolean needToEdit = new File("./config").mkdirs();
             new File("./config/api").mkdirs();
@@ -158,9 +157,21 @@ public class Config {
     }
 
     /**
+     * Loads api keys from the api key folder.
+     */
+    private static void setupApi() {
+        try {
+            API_MANAGER = new ApiManager();
+            log.info("Loaded {} API keys - {}", API_MANAGER.size(), API_MANAGER.getNames().toString());
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Initialises both the commands and the modules encapsulating those commands.
      */
-    private void initialiseCommands() {
+    private void setupCommands() {
         try {
             Reflections reflections = new Reflections("com.yuuko.core.commands");
 
@@ -186,20 +197,6 @@ public class Config {
 
             log.info("Loaded {} modules, containing {} commands.", MODULES.size(), COMMANDS.size());
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Loads api keys from the api key folder.
-     *
-     * @return int number of api keys loaded.
-     */
-    private static void loadApi() {
-        try {
-            API_MANAGER = new ApiManager();
-            log.info("Loaded {} API keys - {}", API_MANAGER.size(), API_MANAGER.getNames().toString());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
@@ -238,7 +235,7 @@ public class Config {
      * Initialises Lavalink.
      * MUST be done before buildShardManager(), MUST be done AFTER loadMainConfiguration().
      */
-    private void initialiseAudio() {
+    private void setupAudio() {
         AudioManagerController.registerSourceManagers();
         LAVALINK = new LavalinkManager();
         log.info("Initialised Lavalink.");
@@ -288,7 +285,7 @@ public class Config {
     /**
      * Initialises metrics right away instead of waiting for the scheduler.
      */
-    private void initialiseMetrics() {
+    private void setupMetrics() {
         MetricsManager.truncateMetrics(SHARD_ID);
         MetricsManager.getDiscordMetrics().update();
 
@@ -298,9 +295,9 @@ public class Config {
     /**
      * Initialises bot-list objects and then updates them to match the database.
      */
-    private void initialiseBotLists() {
+    private void setupBotLists() {
         if(API_MANAGER.containsKey("discordbots")) {
-            BOT_LIST = new DiscordBotListAPI.Builder().botId(BOT.getId()).token(Utilities.getApiKey("discordbots")).build();
+            BOT_LIST = new DiscordBotListAPI.Builder().botId(BOT.getId()).token(API_MANAGER.getApi("discordbots").getKey()).build();
         }
         Utilities.updateDiscordBotList();
 
@@ -310,7 +307,7 @@ public class Config {
     /**
      * Initialises scheduler which runs tasks at set intervals.
      */
-    private void initialiseSchedule() {
+    private void setupScheduler() {
         ScheduleHandler.registerJob(new TenSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());

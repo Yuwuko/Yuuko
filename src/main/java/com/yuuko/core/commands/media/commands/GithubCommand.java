@@ -3,11 +3,11 @@ package com.yuuko.core.commands.media.commands;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.math.BigDecimal;
@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class GithubCommand extends Command {
+    private static final Api api = Config.API_MANAGER.getApi("github");
     private static final String BASE_URL = "https://api.github.com/repos/";
 
     public GithubCommand() {
@@ -27,7 +28,7 @@ public class GithubCommand extends Command {
     public void onCommand(MessageEvent e) {
         String[] commandParameters = e.getParameters().split("\\s+", 2);
 
-        final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "/" + Sanitiser.scrub(commandParameters[1], true) + "?access_token=" + Utilities.getApiKey("github");
+        final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "/" + Sanitiser.scrub(commandParameters[1], true) + "?access_token=" + api.getKey();
         final JsonObject json = new RequestHandler(url).getJsonObject();
 
         if(json == null) {

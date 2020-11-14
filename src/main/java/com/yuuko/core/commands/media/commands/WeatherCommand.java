@@ -3,11 +3,11 @@ package com.yuuko.core.commands.media.commands;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
+import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
 import com.yuuko.core.utilities.Sanitiser;
-import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.time.Instant;
@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class WeatherCommand extends Command {
+    private static final Api api = Config.API_MANAGER.getApi("openweathermap");
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     public WeatherCommand() {
@@ -26,7 +27,7 @@ public class WeatherCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            final String url = BASE_URL + (Sanitiser.scrub(e.getParameters(), false).replace(" ", "+")) + "&units=metric&APPID=" + Utilities.getApiKey("openweathermap");
+            final String url = BASE_URL + (Sanitiser.scrub(e.getParameters(), false).replace(" ", "+")) + "&units=metric&APPID=" + api.getKey();
             JsonObject data = new RequestHandler(url).getJsonObject();
 
             if(data == null) {
