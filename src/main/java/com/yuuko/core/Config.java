@@ -175,7 +175,7 @@ public class Config {
     /**
      * Loads api keys from the api key folder.
      */
-    private static void setupApi() {
+    private void setupApi() {
         try {
             API_MANAGER = new ApiManager();
             log.info("Loaded {} API keys - {}", API_MANAGER.size(), API_MANAGER.getNames().toString());

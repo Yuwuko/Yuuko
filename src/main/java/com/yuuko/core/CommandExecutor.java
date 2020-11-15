@@ -135,7 +135,7 @@ public class CommandExecutor {
             return true;
         }
 
-        // Is DJ mode on, if yes, does the member lack the DJ role and if not, is the command a DJ mode command?
+        // Is DJ mode on, if yes does the member lack the DJ role, and if not is the command a DJ mode command?
         if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("djMode", event.getGuild().getId())) && commander.getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !nonDJModeCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
             MessageHandler.sendMessage(event, embed.build());

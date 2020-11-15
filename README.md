@@ -31,24 +31,34 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 
 * **Core** <br>
 `help` `shards` `module` `about` `vote` `permissions` `bind`
+
 * **Animal** <br>
 `cat` `fox` `dog` `bird`
+
 * **NSFW** <br>
 `efukt` `neko` `rule34`
+
 * **Moderation** <br>
 `nuke` `kick` `mute` `ban`
+
 * **Interaction** <br>
 `pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`
+
 * **Utility** <br>
 `guild` `ping` `roles` `avatar` `user` `reactrole`
+
 * **Developer** <br>
 `setstatus` `reloadapi` `lavalink` `syncguilds` `shutdown` `logmetrics`
+
 * **Audio** <br>
 `play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
+
 * **Media** <br>
 `osu` `github` `kitsu` `natgeo` `underground` `petition` `weather` `tesco` `urban`
+
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
+
 * **Setting** <br>
 `settings` `prefix` `starboard` `comlog` `modlog` `djmode` `delexecuted` `nowplaying`
 

@@ -3,7 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202011r4
-+ [!] Change source compatability from Java 14 to Java 15.
++ [!] Change source compatibility from Java 14 to Java 15.
 + [!] Upgraded to Gradle 6.7
 + [!] Updated configuration system, moving from crude txt to yaml implementation.
 + [!] Updated all api systems to use yaml implementation.
