@@ -7,15 +7,16 @@ import com.yuuko.core.commands.animal.commands.CatCommand;
 import com.yuuko.core.commands.animal.commands.DogCommand;
 import com.yuuko.core.commands.animal.commands.FoxCommand;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 public class AnimalModule extends Module {
-    private static final List<Command> commands = Arrays.asList(
-            new CatCommand(),
-            new FoxCommand(),
-            new DogCommand(),
-            new BirdCommand()
+    private static final Map<String, Class<? extends Command>> commands = Map.ofEntries(
+            entry("cat", CatCommand.class),
+            entry("fox", FoxCommand.class),
+            entry("dog", DogCommand.class),
+            entry("bird", BirdCommand.class)
     );
 
     public AnimalModule() {

@@ -7,15 +7,16 @@ import com.yuuko.core.commands.moderation.commands.KickCommand;
 import com.yuuko.core.commands.moderation.commands.MuteCommand;
 import com.yuuko.core.commands.moderation.commands.NukeCommand;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 public class ModerationModule extends Module {
-    private static final List<Command> commands = Arrays.asList(
-            new NukeCommand(),
-            new MuteCommand(),
-            new BanCommand(),
-            new KickCommand()
+    private static final Map<String, Class<? extends Command>> commands = Map.ofEntries(
+            entry("nuke", NukeCommand.class),
+            entry("mute", MuteCommand.class),
+            entry("ban", BanCommand.class),
+            entry("kick", KickCommand.class)
     );
 
     public ModerationModule() {

@@ -4,17 +4,18 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.utility.commands.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 public class UtilityModule extends Module {
-    private static final List<Command> commands = Arrays.asList(
-            new UserCommand(),
-            new GuildCommand(),
-            new AvatarCommand(),
-            new RolesCommand(),
-            new PingCommand(),
-            new ReactionRoleCommand()
+    private static final Map<String, Class<? extends Command>> commands = Map.ofEntries(
+            entry("user", UserCommand.class),
+            entry("guild", GuildCommand.class),
+            entry("avatar", AvatarCommand.class),
+            entry("roles", RolesCommand.class),
+            entry("ping", PingCommand.class),
+            entry("reactrole", ReactionRoleCommand.class)
     );
 
     public UtilityModule() {

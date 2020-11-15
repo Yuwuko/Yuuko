@@ -188,12 +188,16 @@ public class Config {
                 }
             }
 
-            for(Class<? extends Command> command : commands) {
-                if(!Modifier.isAbstract(command.getModifiers())) {
-                    Command obj = command.getConstructor().newInstance();
-                    COMMANDS.put(obj.getName(), obj);
-                }
-            }
+            MODULES.values().forEach(m -> {
+                m.getCommands().forEach(c -> {
+                    try {
+                        Command command = c.getConstructor().newInstance();
+                        COMMANDS.put(command.getName(), command);
+                    } catch(Exception e) {
+                        log.error("There was an error loading commands, message: {}", e.getMessage(), e);
+                    }
+                });
+            });
 
             log.info("Loaded {} modules, containing {} commands.", MODULES.size(), COMMANDS.size());
 
