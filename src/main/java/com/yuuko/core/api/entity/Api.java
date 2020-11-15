@@ -1,14 +1,18 @@
 package com.yuuko.core.api.entity;
 
 public class Api {
-    private final String name;
-    private final String applicationId;
-    private final String key;
+    private String name;
+    private String applicationId;
+    private String apiKey;
+
+    public Api() {
+
+    }
 
     public Api(String name, String applicationId, String key) {
         this.name = name;
         this.applicationId = applicationId;
-        this.key = key;
+        this.apiKey = key;
     }
 
     public String getName() {
@@ -20,7 +24,19 @@ public class Api {
     }
 
     public String getKey() {
-        return key;
+        return apiKey;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public boolean isAvailable() {
