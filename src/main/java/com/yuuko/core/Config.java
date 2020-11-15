@@ -98,7 +98,7 @@ public class Config {
             new File("./config/hikari").mkdirs();
 
             if(new File("./config/config.yaml").createNewFile()) {
-                log.info("Created configuration file: ./config/config.yaml");
+                log.warn("Created configuration file: ./config/config.yaml");
                 try(FileWriter w = new FileWriter(new File("./config/config.yaml"))) {
                     w.write(
                             "author: \"\"" + System.lineSeparator() +
@@ -107,12 +107,11 @@ public class Config {
                             "bot_id: \"\"" + System.lineSeparator() +
                             "bot_token: \"\""
                     );
-                    log.info("Setup configuration file: ./config/config.yaml");
                 }
             }
 
             if(new File("./config/hikari/db.properties").createNewFile()) {
-                log.info("Created configuration file: ./config/hikari/db.properties");
+                log.warn("Created configuration file: ./config/hikari/db.properties");
                 try(FileWriter w = new FileWriter(new File("./config/hikari/db.properties"))) {
                     w.write(
                             "driverClassName=com.mysql.cj.jdbc.Driver" + System.lineSeparator() +
@@ -130,12 +129,11 @@ public class Config {
                             "dataSource.elideSetAutoCommits=true" + System.lineSeparator() +
                             "dataSource.maintainTimeStats=false"
                     );
-                    log.info("Setup configuration file: ./config/hikari/db.properties.");
                 }
             }
 
             if(new File("./config/lavalink.yaml").createNewFile()) {
-                log.info("Created configuration file: ./config/lavalink.yaml");
+                log.warn("Created configuration file: ./config/lavalink.yaml");
                 try(FileWriter w = new FileWriter(new File("./config/lavalink.yaml"))) {
                     w.write(
                             "# add nodes below as necessary, using format:" + System.lineSeparator() +
@@ -144,9 +142,27 @@ public class Config {
                             "# address: \"ws://ip:port\"" + System.lineSeparator() +
                             "# password: \"password\""
                     );
-                    log.info("Setup configuration file: ./config/lavalink.yaml");
                 }
             }
+
+            List<String> apiList = Arrays.asList("discordbots", "genius", "github", "google", "newsapi", "openweathermap", "osu", "tesco", "transportforlondon");
+            apiList.forEach(api -> {
+                try {
+                    if(new File("./config/api/" + api + ".yaml").createNewFile()) {
+                        log.warn("Created configuration file: ./config/api/{}.yaml", api);
+                        try(FileWriter w = new FileWriter(new File("./config/api/" + api + ".yaml"))) {
+                            w.write(
+                                    "!!com.yuuko.core.api.entity.Api" + System.lineSeparator() +
+                                    "name: \"" + api + "\"" + System.lineSeparator() +
+                                    "applicationId: \"\"" + System.lineSeparator() +
+                                    "apiKey: \"\""
+                            );
+                        }
+                    }
+                } catch(IOException e) {
+                    log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), e.getMessage(), e);
+                }
+            });
 
             if(needToEdit) {
                 System.exit(0);

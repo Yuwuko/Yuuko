@@ -40,6 +40,6 @@ public class Api {
     }
 
     public boolean isAvailable() {
-        return !name.equals("");
+        return !apiKey.equals("");
     }
 }
