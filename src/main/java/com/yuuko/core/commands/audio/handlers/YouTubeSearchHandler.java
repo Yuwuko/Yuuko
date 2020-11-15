@@ -29,6 +29,12 @@ public class YouTubeSearchHandler {
      * @return youtube video url.
      */
     public static List<SearchResult> search(MessageEvent e) {
+        if(!api.isAvailable()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Google API key missing, unable to use YouTube search features.");
+            MessageHandler.sendMessage(e, embed.build());
+            return null;
+        }
+
         try {
             SearchListResponse searchResponse = searchCache.getOrDefault(e.getParameters(), null);
 
