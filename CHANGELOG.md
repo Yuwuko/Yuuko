@@ -4,10 +4,14 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202011r4
 + [!] Change source compatability from Java 14 to Java 15.
++ [!] Upgraded to Gradle 6.7
 + [!] Updated configuration system, moving from crude txt to yaml implementation.
++ [!] Updated all api systems to use yaml implementation.
++ [!] Added setup methods to create any missing API/Config files on startup. (step towards self-hostable release)
 + [~] Updated dependencies.
 + [~] Added utility method to Api class for automatic command disabling.
 + [~] Rewrote how modules store commands to prevent every command from being initialised twice on setup.
++ [~] Implemented check for lavalink nodes to prevent bot from joining if none are available.
 
 ## 202011r3
 + [~] Rewritten most of the minor audio commands, making them easier to read and largely more concise.
@@ -49,7 +53,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202006r1
 + [~] Improve [__clear__] command usability.
-+ [~] Update dependencies.
++ [~] Updated dependencies.
 
 ## 202004r2
 + [-] Removed [__command__] command.
@@ -71,7 +75,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 ## 201910r3
 + [!] Changed version control for the last time. (hopefully)
 + [+] Added cache metrics to check performance of new feature. (yyyymm[revision]n)
-+ [~] Update dependencies (as always!)
++ [~] Updated dependencies (as always!)
 
 ## 2019-10-16
 + [!] Changed LavaLink-Client to a custom implementation.

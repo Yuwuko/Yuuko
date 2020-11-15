@@ -42,7 +42,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Utility** <br>
 `guild` `ping` `roles` `avatar` `user` `reactrole`
 * **Developer** <br>
-`setstatus` `reapi` `lavalink` `syncguilds`
+`setstatus` `reloadapi` `lavalink` `syncguilds` `shutdown` `logmetrics`
 * **Audio** <br>
 `play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
 * **Media** <br>
@@ -50,7 +50,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 * **Fun** <br>
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
 * **Setting** <br>
-`settings` `prefix` `starboard` `comlog` `modlog` `djmode` `deleteexecuted` `nowplaying`
+`settings` `prefix` `starboard` `comlog` `modlog` `djmode` `delexecuted` `nowplaying`
 
 ---
 
