@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class Command {
+    protected static final Logger log = LoggerFactory.getLogger(Command.class);
+
     private final String name;
     private final Module module;
     private final int minimumParameters;
@@ -19,10 +21,9 @@ public abstract class Command {
     private final List<String> usage;
     private final List<Permission> permissions;
     private final boolean nsfw;
+    private boolean enabled = true;
 
-    protected static final Logger log = LoggerFactory.getLogger(Command.class);
-
-    public Command(String name, Module module, int minimumParameters, long cooldownDurationMilliseconds, List<String> usage, boolean nsfw, List<Permission> permissions) {
+    public Command(String name, Module module, int minimumParameters, long cooldownDurationMilliseconds, List<String> usage, boolean nsfw, List<Permission> permissions, boolean... commandEnabled) {
         this.name = name;
         this.module = module;
         this.minimumParameters = minimumParameters;
@@ -31,6 +32,13 @@ public abstract class Command {
         this.usage = usage;
         this.nsfw = nsfw;
         this.permissions = permissions;
+
+        if(commandEnabled.length > 0) {
+            enabled = commandEnabled[0];
+            if(!enabled) {
+                log.warn("{} command has been disabled due to missing API information.", name.toUpperCase());
+            }
+        }
     }
 
     public String getName() {
@@ -57,9 +65,19 @@ public abstract class Command {
         return permissions;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    // allows commands to be toggled off globally.
+    public void setEnabled(boolean state) {
+        enabled = state;
+        log.warn("{} command has been {}.", name, state ? "enabled" : "disabled");
+    }
+
     // Rate limiting only works in this context since commands are singleton objects.
     // If command objects were generated dynamically rate limiting would have to be handled externally.
-    public boolean checkCooldown(MessageEvent e) {
+    public boolean isCooling(MessageEvent e) {
         // Commands with no cooldown will be set to a duration of -1.
         if(cooldownDurationMilliseconds == -1) {
             return true;
