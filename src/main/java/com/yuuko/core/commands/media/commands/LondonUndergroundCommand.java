@@ -25,7 +25,7 @@ public class LondonUndergroundCommand extends Command {
     private static final String BASE_URL = "https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + api.getApplicationId() + "&app_key=" + api.getKey();
 
     public LondonUndergroundCommand() {
-        super("underground", Config.MODULES.get("media"), 0, -1L, Arrays.asList("-underground", "-underground <min>"), false, null, !api.isAvailable());
+        super("underground", Config.MODULES.get("media"), 0, -1L, Arrays.asList("-underground", "-underground <min>"), false, null, api.isAvailable());
     }
 
     @Override

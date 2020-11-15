@@ -21,7 +21,7 @@ public class LyricsCommand extends Command {
     private static final Api api = Config.API_MANAGER.getApi("genius");
 
     public LyricsCommand() {
-        super("lyrics", Config.MODULES.get("audio"), 1, -1L, Arrays.asList("-lyrics <song|artist>"), false, null, !api.isAvailable());
+        super("lyrics", Config.MODULES.get("audio"), 1, -1L, Arrays.asList("-lyrics <song|artist>"), false, null, api.isAvailable());
     }
 
     @Override
