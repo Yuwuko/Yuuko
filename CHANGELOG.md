@@ -4,8 +4,10 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202011r4
 + [!] Change source compatability from Java 14 to Java 15.
-+ [!] Update configuration system, moving from crude txt to yaml implementation.
-+ [~] Update dependencies.
++ [!] Updated configuration system, moving from crude txt to yaml implementation.
++ [~] Updated dependencies.
++ [~] Added utility method to Api class for automatic command disabling.
++ [~] Rewrote how modules store commands to prevent every command from being initialised twice on setup.
 
 ## 202011r3
 + [~] Rewritten most of the minor audio commands, making them easier to read and largely more concise.

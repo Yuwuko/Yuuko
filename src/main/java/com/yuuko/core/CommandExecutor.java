@@ -51,7 +51,7 @@ public class CommandExecutor {
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
         // Is the command on cooldown?
-        if(command == null || isDisabled() || isBound() || !checkAudio() || !command.checkCooldown(event)) {
+        if(command == null || !isEnabled() || isBound() || !isValidAudio() || !command.isCooling(event)) {
             return;
         }
 
@@ -94,7 +94,7 @@ public class CommandExecutor {
      *
      * @return boolean
      */
-    private boolean checkAudio() {
+    private boolean isValidAudio() {
         // If the module isn't the audio module, pass it through.
         if(!module.getName().equals("audio")) {
             return true;
@@ -102,15 +102,22 @@ public class CommandExecutor {
 
         final GuildVoiceState commanderVoiceState = Objects.requireNonNull(commander.getVoiceState());
 
+        // Are there any nodes available?
+        if(Config.LAVALINK.getLavalink().getNodes().size() < 1 && requireConnectSpeak.contains(command.getName())) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("There are no Lavalink nodes available to handle your request.");
+            MessageHandler.sendMessage(event, embed.build());
+            return false;
+        }
+
         // Is the member not in a voice channel?
-        if(!commanderVoiceState.inVoiceChannel() && !notInVoiceCommands.contains(event.getCommand().getName())) {
+        if(!commanderVoiceState.inVoiceChannel() && !notInVoiceCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
             MessageHandler.sendMessage(event, embed.build());
             return false;
         }
 
         // Does the bot have permissions to connect to the voice channel? (this check isn't done in normal command execution)
-        if(commanderVoiceState.inVoiceChannel() && requireConnectSpeak.contains(event.getCommand().getName()) && !bot.hasPermission(commanderVoiceState.getChannel(), command.getPermissions())) {
+        if(commanderVoiceState.inVoiceChannel() && requireConnectSpeak.contains(command.getName()) && !bot.hasPermission(commanderVoiceState.getChannel(), command.getPermissions())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I don't have the required permissions to do this, make sure I have the `"+ command.getPermissions().toString() +"` permissions and try again!");
             MessageHandler.sendMessage(event, embed.build());
             return false;
@@ -143,20 +150,26 @@ public class CommandExecutor {
      *
      * @return boolean
      */
-    private boolean isDisabled() {
+    private boolean isEnabled() {
         // Executor still checks core/developer, in this case simply return false.
         if(constants.contains(module.getName())) {
-            return false;
+            return true;
         }
 
         // Checks if the module is disabled.
         if(!ModuleFunctions.isEnabled(event.getGuild().getId(), module.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("The `" + module.getName() + "` module is disabled.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("`" + module.getName() + "` module is disabled.");
             MessageHandler.sendMessage(event, embed.build());
-            return true;
+            return false;
         }
 
-        return false;
+        if(!command.isEnabled()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Disabled").setDescription("`" + command.getName() + "` command is disabled.");
+            MessageHandler.sendMessage(event, embed.build());
+            return false;
+        }
+
+        return true;
     }
 
     /**
