@@ -22,7 +22,7 @@ public class ApiManager {
     }
 
     public Api getApi(String key) {
-        return API.get(key);
+        return API.getOrDefault(key, new Api("", "", ""));
     }
 
     public boolean containsKey(String key) {

@@ -22,4 +22,8 @@ public class Api {
     public String getKey() {
         return key;
     }
+
+    public boolean isAvailable() {
+        return !name.equals("");
+    }
 }
