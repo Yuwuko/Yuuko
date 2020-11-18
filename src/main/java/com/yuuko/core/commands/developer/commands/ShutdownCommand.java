@@ -3,7 +3,7 @@ package com.yuuko.core.commands.developer.commands;
 import com.yuuko.core.Config;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
-import lavalink.client.io.jda.JdaLink;
+import lavalink.client.io.Link;
 
 import java.util.Arrays;
 
@@ -15,9 +15,7 @@ public class ShutdownCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        for(JdaLink link: Config.LAVALINK.getLavalink().getLinks()) {
-            link.destroy();
-        }
+        Config.LAVALINK.getLavalink().getLinks().forEach(Link::destroy);
         Config.SHARD_MANAGER.shutdown();
         System.exit(0);
     }
