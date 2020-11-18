@@ -70,10 +70,10 @@ public class Config {
         try {
             long loadStart = System.nanoTime();
             setupFiles();
+            loadConfiguration();
+            registerShards();
             setupApi();
             setupCommands();
-            registerShards();
-            loadConfiguration();
             setupAudio();
             buildShardManager();
             verifyDatabase();
@@ -96,6 +96,7 @@ public class Config {
             boolean needToEdit = new File("./config").mkdirs();
             new File("./config/api").mkdirs();
             new File("./config/hikari").mkdirs();
+            new File("./data").mkdirs();
 
             if(new File("./config/config.yaml").createNewFile()) {
                 log.warn("Created configuration file: ./config/config.yaml");
@@ -105,17 +106,18 @@ public class Config {
                             "website: \"\"" + System.lineSeparator() +
                             "support: \"\"" + System.lineSeparator() +
                             "bot_id: \"\"" + System.lineSeparator() +
-                            "bot_token: \"\""
+                            "bot_token: \"\"" + System.lineSeparator() +
+                            "shards: \"1\""
                     );
                 }
             }
 
-            if(new File("./config/hikari/db.properties").createNewFile()) {
-                log.warn("Created configuration file: ./config/hikari/db.properties");
-                try(FileWriter w = new FileWriter(new File("./config/hikari/db.properties"))) {
+            if(new File("./config/hikari/externaldb.properties").createNewFile()) {
+                log.warn("Created configuration file: ./config/hikari/externaldb.properties");
+                try(FileWriter w = new FileWriter(new File("./config/hikari/externaldb.properties"))) {
                     w.write(
                             "driverClassName=com.mysql.cj.jdbc.Driver" + System.lineSeparator() +
-                            "jdbcUrl=jdbc:mysql://ip:port/YourDbName?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
+                            "jdbcUrl=jdbc:mysql://localhost/dbname?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
                             "dataSource.user=" + System.lineSeparator() +
                             "dataSource.password=" + System.lineSeparator() +
                             "dataSource.cachePrepStmts=true" + System.lineSeparator() +
@@ -173,6 +175,35 @@ public class Config {
     }
 
     /**
+     * Loads the main configuration file which includes information regarding author, author's website, support guild, the bot's ID and token.
+     * Must be done before buildShardManager().
+     */
+    private void loadConfiguration() {
+        try(InputStream inputStream = new FileInputStream(new File("./config/config.yaml"))) {
+            Map<String, String> config = new Yaml().load(inputStream);
+            AUTHOR = config.get("author");
+            AUTHOR_WEBSITE = config.get("website");
+            SUPPORT_GUILD = config.get("support");
+            BOT_ID = config.get("bot_id");
+            BOT_TOKEN = config.get("bot_token");
+            SHARD_COUNT = Integer.parseInt(config.get("shards"));
+            GLOBAL_PREFIX = "<@!" + BOT_ID + "> ";
+        } catch(IOException ex) {
+            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Prunes any expired shards, sets both total shard count and shard ID.
+     * Must be done before initialiseAudio().
+     */
+    private void registerShards() {
+        DatabaseFunctions.pruneExpiredShards();
+        SHARD_ID = DatabaseFunctions.provideShardId();
+        log.info("Shard ID: {}, Total Shards: {}.", SHARD_ID, SHARD_COUNT);
+    }
+
+    /**
      * Loads api keys from the api key folder.
      */
     private void setupApi() {
@@ -218,35 +249,6 @@ public class Config {
             log.info("Loaded {} modules, containing {} commands.", MODULES.size(), COMMANDS.size());
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Prunes any expired shards, sets both total shard count and shard ID.
-     * Must be done before initialiseAudio().
-     */
-    private void registerShards() {
-        DatabaseFunctions.pruneExpiredShards();
-        SHARD_COUNT = DatabaseFunctions.getShardCount();
-        SHARD_ID = DatabaseFunctions.provideShardId();
-        log.info("Shard ID: {}, Total Shards: {}.", SHARD_ID, SHARD_COUNT);
-    }
-
-    /**
-     * Loads the main configuration file which includes information regarding author, author's website, support guild, the bot's ID and token.
-     * Must be done before buildShardManager().
-     */
-    private void loadConfiguration() {
-        try(InputStream inputStream = new FileInputStream(new File("./config/config.yaml"))) {
-            Map<String, String> config = new Yaml().load(inputStream);
-            AUTHOR = config.get("author");
-            AUTHOR_WEBSITE = config.get("website");
-            SUPPORT_GUILD = config.get("support");
-            BOT_ID = config.get("bot_id");
-            BOT_TOKEN = config.get("bot_token");
-            GLOBAL_PREFIX = "<@!" + BOT_ID + "> ";
-        } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
