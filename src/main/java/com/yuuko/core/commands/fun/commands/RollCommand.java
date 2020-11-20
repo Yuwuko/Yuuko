@@ -8,7 +8,7 @@ import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RollCommand extends Command {
 
@@ -24,7 +24,8 @@ public class RollCommand extends Command {
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + e.getParameters() + "` and got `" + new Random().nextInt(Integer.parseUnsignedInt(e.getParameters())) + 1 + "`.");
+        int roll = Math.max(1, Integer.parseInt(e.getParameters()));
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + roll + "` and got `" + (ThreadLocalRandom.current().nextInt(roll) + 1) + "`.");
         MessageHandler.sendMessage(e, embed.build());
     }
 
