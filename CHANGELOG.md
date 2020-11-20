@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202011r5
++ [~] Rewrite ReactionRoleCommand.
++ [~] Modified Database connection to help with self-host.
++ [~] Various bug fixes. (roll command, mute roles bug)
+
 ## 202011r4
 + [!] Change source compatibility from Java 14 to Java 15.
 + [!] Upgraded to Gradle 6.7
