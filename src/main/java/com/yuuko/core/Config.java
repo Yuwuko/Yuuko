@@ -6,6 +6,7 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.lavalink.LavalinkManager;
+import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.GenericEventManager;
@@ -38,7 +39,7 @@ import java.util.*;
 public class Config {
     private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    public static final String VERSION = "202011r4";
+    public static final String VERSION = "202011r5";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -70,6 +71,7 @@ public class Config {
         try {
             long loadStart = System.nanoTime();
             setupFiles();
+            setupDatabase();
             loadConfiguration();
             registerShards();
             setupApi();
@@ -103,11 +105,11 @@ public class Config {
                 try(FileWriter w = new FileWriter(new File("./config/config.yaml"))) {
                     w.write(
                             "author: \"\"" + System.lineSeparator() +
-                            "website: \"\"" + System.lineSeparator() +
-                            "support: \"\"" + System.lineSeparator() +
-                            "bot_id: \"\"" + System.lineSeparator() +
-                            "bot_token: \"\"" + System.lineSeparator() +
-                            "shards: \"1\""
+                                    "website: \"\"" + System.lineSeparator() +
+                                    "support: \"\"" + System.lineSeparator() +
+                                    "bot_id: \"\"" + System.lineSeparator() +
+                                    "bot_token: \"\"" + System.lineSeparator() +
+                                    "shards: \"1\""
                     );
                 }
             }
@@ -117,19 +119,19 @@ public class Config {
                 try(FileWriter w = new FileWriter(new File("./config/hikari/externaldb.properties"))) {
                     w.write(
                             "driverClassName=com.mysql.cj.jdbc.Driver" + System.lineSeparator() +
-                            "jdbcUrl=jdbc:mysql://localhost/dbname?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
-                            "dataSource.user=" + System.lineSeparator() +
-                            "dataSource.password=" + System.lineSeparator() +
-                            "dataSource.cachePrepStmts=true" + System.lineSeparator() +
-                            "dataSource.prepStmtCacheSize=250" + System.lineSeparator() +
-                            "dataSource.prepStmtCacheSqlLimit=2048" + System.lineSeparator() +
-                            "dataSource.useServerPrepStmts=true" + System.lineSeparator() +
-                            "dataSource.useLocalSessionState=true" + System.lineSeparator() +
-                            "dataSource.rewriteBatchedStatements=true" + System.lineSeparator() +
-                            "dataSource.cacheResultSetMetadata=true" + System.lineSeparator() +
-                            "dataSource.cacheServerConfiguration=true" + System.lineSeparator() +
-                            "dataSource.elideSetAutoCommits=true" + System.lineSeparator() +
-                            "dataSource.maintainTimeStats=false"
+                                    "jdbcUrl=jdbc:mysql://localhost/dbname?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
+                                    "dataSource.user=" + System.lineSeparator() +
+                                    "dataSource.password=" + System.lineSeparator() +
+                                    "dataSource.cachePrepStmts=true" + System.lineSeparator() +
+                                    "dataSource.prepStmtCacheSize=250" + System.lineSeparator() +
+                                    "dataSource.prepStmtCacheSqlLimit=2048" + System.lineSeparator() +
+                                    "dataSource.useServerPrepStmts=true" + System.lineSeparator() +
+                                    "dataSource.useLocalSessionState=true" + System.lineSeparator() +
+                                    "dataSource.rewriteBatchedStatements=true" + System.lineSeparator() +
+                                    "dataSource.cacheResultSetMetadata=true" + System.lineSeparator() +
+                                    "dataSource.cacheServerConfiguration=true" + System.lineSeparator() +
+                                    "dataSource.elideSetAutoCommits=true" + System.lineSeparator() +
+                                    "dataSource.maintainTimeStats=false"
                     );
                 }
             }
@@ -139,10 +141,10 @@ public class Config {
                 try(FileWriter w = new FileWriter(new File("./config/lavalink.yaml"))) {
                     w.write(
                             "# add nodes below as necessary, using format:" + System.lineSeparator() +
-                            "#" + System.lineSeparator() +
-                            "# ---" + System.lineSeparator() +
-                            "# address: \"ws://ip:port\"" + System.lineSeparator() +
-                            "# password: \"password\""
+                                    "#" + System.lineSeparator() +
+                                    "# ---" + System.lineSeparator() +
+                                    "# address: \"ws://ip:port\"" + System.lineSeparator() +
+                                    "# password: \"password\""
                     );
                 }
             }
@@ -155,9 +157,9 @@ public class Config {
                         try(FileWriter w = new FileWriter(new File("./config/api/" + api + ".yaml"))) {
                             w.write(
                                     "!!com.yuuko.core.api.entity.Api" + System.lineSeparator() +
-                                    "name: \"" + api + "\"" + System.lineSeparator() +
-                                    "applicationId: \"\"" + System.lineSeparator() +
-                                    "apiKey: \"\""
+                                            "name: \"" + api + "\"" + System.lineSeparator() +
+                                            "applicationId: \"\"" + System.lineSeparator() +
+                                            "apiKey: \"\""
                             );
                         }
                     }
@@ -172,6 +174,13 @@ public class Config {
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), e.getMessage(), e);
         }
+    }
+
+    /**
+     * Sets up database from properties file. Also handles backup and internal/external usage.
+     */
+    private void setupDatabase() {
+        DatabaseConnection.setupDatabase();
     }
 
     /**
