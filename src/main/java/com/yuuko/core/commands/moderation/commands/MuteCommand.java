@@ -22,7 +22,7 @@ public class MuteCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        String[] commandParameters = e.getParameters().split("\\s+", 3);
+        String[] params = e.getParameters().split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {
@@ -33,7 +33,7 @@ public class MuteCommand extends Command {
             return;
         }
 
-        Role muted = DiscordUtilities.getMutedRole(e.getGuild());
+        Role muted = DiscordUtilities.getOrSetupMutedRole(e.getGuild());
         if(muted == null) {
             return;
         }
@@ -42,12 +42,12 @@ public class MuteCommand extends Command {
         if(target.getRoles().stream().noneMatch((role) -> role.getName().equalsIgnoreCase("Muted"))) {
             e.getGuild().addRoleToMember(target, muted).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(e, "Mute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
+                ModerationLogSetting.execute(e, "Mute", target.getUser(), (params.length < 2) ? "None" : params[1]);
             }, failure);
         } else {
             e.getGuild().removeRoleFromMember(target, muted).queue(s -> {
                 e.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(e, "Unmute", target.getUser(), (commandParameters.length < 2) ? "None" : commandParameters[1]);
+                ModerationLogSetting.execute(e, "Unmute", target.getUser(), (params.length < 2) ? "None" : params[1]);
             }, failure);
         }
     }

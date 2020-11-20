@@ -33,33 +33,27 @@ public final class DiscordUtilities {
      * @param guild {@link Guild}
      * @return Role
      */
-    public static Role getMutedRole(Guild guild) {
+    public static Role getOrSetupMutedRole(Guild guild) {
         List<TextChannel> channels = guild.getTextChannels();
         List<VoiceChannel> voiceChannels = guild.getVoiceChannels();
-        List<Role> roleList = guild.getRoles();
-        Role muted = null;
 
-        for(Role role: roleList) {
+        for(Role role: guild.getRoles()) {
             if(role.getName().equals("Muted")) {
-                muted = role;
-                break;
+                return role;
             }
         }
 
-        if(muted == null) {
-            if(!guild.getSelfMember().hasPermission(Permission.MANAGE_ROLES)) {
-                return null;
-            }
+        // max number of roles in guild is 250
+        if(!guild.getSelfMember().hasPermission(Permission.MANAGE_ROLES) || guild.getRoleCache().size() == 250) {
+            return null;
+        }
 
-            muted = guild.createRole().setName("Muted").complete();
-
-            for(TextChannel channel: channels) {
-                channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION).queue();
-            }
-
-            for(VoiceChannel channel: voiceChannels) {
-                channel.createPermissionOverride(muted).setDeny(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK).queue();
-            }
+        Role muted = guild.createRole().setName("Muted").complete();
+        for(TextChannel channel: channels) {
+            channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION).queue();
+        }
+        for(VoiceChannel channel: voiceChannels) {
+            channel.createPermissionOverride(muted).setDeny(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK).queue();
         }
 
         return muted;
