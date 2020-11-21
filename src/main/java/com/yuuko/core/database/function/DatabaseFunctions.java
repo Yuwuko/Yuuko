@@ -159,11 +159,13 @@ public class DatabaseFunctions {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shards` ORDER BY `shardId`");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `shards`(`shardId`) VALUES(?)")){
 
+            // prune expired shards now for extra assurance - in case UpdateShardsTask is between runs.
+            pruneExpiredShards();
             ResultSet resultSet = stmt.executeQuery();
 
             int shard = 0;
             while(resultSet.next()) {
-                if(resultSet.getInt(1) == shard) {
+                if(resultSet.getInt("shardId") == shard) {
                     shard++;
                 }
             }
@@ -180,34 +182,13 @@ public class DatabaseFunctions {
     }
 
     /**
-     * Retrieves the total shard count from the database.
-     * @return the total shard count expected from the database.
-     */
-    public static int getShardCount() {
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `shard_configuration`")){
-
-            ResultSet resultSet = stmt.executeQuery();
-            if(resultSet.next()) {
-                return resultSet.getInt("ShardCount");
-            } else {
-                return -1;
-            }
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
      * Update shard statistics such as guild count.
      */
     public static void updateShardStatistics() {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
-            JDA shard = Config.BOT.getJDA();
+            final JDA shard = Config.BOT.getJDA();
 
             stmt.setString(1, shard.getStatus().name());
             stmt.setInt(2, discord.GUILD_COUNT.get());
@@ -215,7 +196,6 @@ public class DatabaseFunctions {
             stmt.setInt(4, discord.REST_PING.get());
             stmt.setInt(5, shard.getShardInfo().getShardId());
             stmt.execute();
-
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -234,7 +214,7 @@ public class DatabaseFunctions {
 
             ResultSet resultSet = stmt.executeQuery();
             while(resultSet.next()) {
-                shards.add(new Shard(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(4), resultSet.getInt(5)));
+                shards.add(new Shard(resultSet.getInt("shardId"), resultSet.getString("status"), resultSet.getInt("guilds"), resultSet.getInt("gatewayPing"), resultSet.getInt("restPing")));
             }
 
             return shards;
@@ -250,7 +230,7 @@ public class DatabaseFunctions {
      */
     public static void pruneExpiredShards() {
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 31 SECOND)")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 35 SECOND) OR `status` = `SHUTTING_DOWN` OR `status = `SHUTDOWN")) {
 
             stmt.execute();
 

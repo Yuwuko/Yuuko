@@ -4,13 +4,15 @@ public class Shard {
     private final int id;
     private final String status;
     private final int guildCount;
-    private final int ping;
+    private final int gatewayPing;
+    private final int restPing;
 
-    public Shard(int id, String status, int guilds, int ping) {
+    public Shard(int id, String status, int guilds, int gatewayPing, int restPing) {
         this.id = id;
         this.status = status;
         this.guildCount = guilds;
-        this.ping = ping;
+        this.gatewayPing = gatewayPing;
+        this.restPing = restPing;
     }
 
     public int getId() {
@@ -25,7 +27,11 @@ public class Shard {
         return guildCount;
     }
 
-    public int getPing() {
-        return ping;
+    public int getGatewayPing() {
+        return gatewayPing;
+    }
+
+    public int getRestPing() {
+        return restPing;
     }
 }
