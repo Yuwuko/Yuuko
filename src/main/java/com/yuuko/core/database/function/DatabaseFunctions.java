@@ -230,7 +230,7 @@ public class DatabaseFunctions {
      */
     public static void pruneExpiredShards() {
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 35 SECOND) OR `status` = `SHUTTING_DOWN` OR `status = `SHUTDOWN")) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `shards` WHERE `shardAssigned` < DATE_SUB(NOW(), INTERVAL 35 SECOND) OR (`status` = 'SHUTTING_DOWN') OR (`status` = 'SHUTDOWN')")) {
 
             stmt.execute();
 
