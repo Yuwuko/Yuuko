@@ -12,8 +12,8 @@ public class Yuuko {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             Config.LAVALINK.getLavalink().getLinks().forEach(Link::destroy);
-            Config.SHARD_MANAGER.shutdown(Config.SHARD_ID);
-            DatabaseFunctions.updateShardStatistics();
+            Config.SHARD_MANAGER.shutdown();
+            Config.SHARD_IDS.forEach(DatabaseFunctions::updateShardShutdown);
         }));
     }
 }
