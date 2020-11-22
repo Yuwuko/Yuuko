@@ -2,6 +2,12 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202011r6
++ [!] Major update of several commands/systems to enable sharding. (Metrics/Database)
++ [+] Added [__restart__] command to allow shards to restart if they have been shutdown.
++ [~] Several refactors/simplifications of commands, unrelated to sharding.
++ [~] Updated included sql file to reflect database changes.
+
 ## 202011r5
 + [~] Rewrite ReactionRoleCommand.
 + [~] Modified Database connection to help with self-host.

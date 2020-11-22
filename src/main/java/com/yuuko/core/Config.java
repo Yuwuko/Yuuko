@@ -39,7 +39,7 @@ import java.util.*;
 public class Config {
     private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    public static final String VERSION = "202011r5";
+    public static final String VERSION = "202011r6";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
