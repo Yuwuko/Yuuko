@@ -16,10 +16,9 @@ public final class Utilities {
     /**
      * Updates stats for DiscordBotList
      */
-    public static void updateDiscordBotList() {
-        final int shardId = Config.SHARD_ID;
-        final int shardCount = Config.SHARD_COUNT;
-        final int guildCount = MetricsManager.getDiscordMetrics().GUILD_COUNT.get();
+    public static void updateDiscordBotList(int shardId) {
+        final int shardCount = Config.SHARDS_TOTAL;
+        final int guildCount = MetricsManager.getDiscordMetrics(shardId).GUILD_COUNT.get();
 
         try {
             if(Config.BOT_LIST != null) {

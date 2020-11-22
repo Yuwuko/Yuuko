@@ -45,8 +45,9 @@ public class Config {
     public static String SUPPORT_GUILD;
     public static String BOT_ID;
     private static String BOT_TOKEN;
-    public static int SHARD_COUNT = 0;
-    public static int SHARD_ID = 0;
+    public static int SHARDS_TOTAL = 0;
+    public static int SHARDS_INSTANCE = 0;
+    public static List<Integer> SHARD_IDS = new ArrayList<>();
     public static String GLOBAL_PREFIX;
     public static ApiManager API_MANAGER;
     public static LavalinkManager LAVALINK;
@@ -119,7 +120,7 @@ public class Config {
                 try(FileWriter w = new FileWriter(new File("./config/hikari/externaldb.properties"))) {
                     w.write(
                             "driverClassName=com.mysql.cj.jdbc.Driver" + System.lineSeparator() +
-                                    "jdbcUrl=jdbc:mysql://localhost/dbname?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
+                                    "jdbcUrl=jdbc:mysql://localhost/dbyuuko?useSSL=true&serverTimezone=UTC" + System.lineSeparator() +
                                     "dataSource.user=" + System.lineSeparator() +
                                     "dataSource.password=" + System.lineSeparator() +
                                     "dataSource.cachePrepStmts=true" + System.lineSeparator() +
@@ -195,7 +196,8 @@ public class Config {
             SUPPORT_GUILD = config.get("support");
             BOT_ID = config.get("bot_id");
             BOT_TOKEN = config.get("bot_token");
-            SHARD_COUNT = Integer.parseInt(config.get("shards"));
+            SHARDS_INSTANCE = Integer.parseInt(config.get("shards_instance"));
+            SHARDS_TOTAL = Integer.parseInt(config.get("shards_total"));
             GLOBAL_PREFIX = "<@!" + BOT_ID + "> ";
         } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Config.class.getSimpleName(), ex.getMessage(), ex);
@@ -208,8 +210,10 @@ public class Config {
      */
     private void registerShards() {
         DatabaseFunctions.pruneExpiredShards();
-        SHARD_ID = DatabaseFunctions.provideShardId();
-        log.info("Shard ID: {}, Total Shards: {}.", SHARD_ID, SHARD_COUNT);
+        for(int i = 0; i < SHARDS_INSTANCE; i++) {
+            SHARD_IDS.add(DatabaseFunctions.provideShardId());
+        }
+        log.info("Shard ID: {}, Total Shards: {}.", SHARD_IDS, SHARDS_TOTAL);
     }
 
     /**
@@ -291,8 +295,8 @@ public class Config {
                     .setAudioSendFactory(new NativeAudioSendFactory())
                     .setVoiceDispatchInterceptor(LAVALINK.getLavalink().getVoiceInterceptor())
                     .setActivity(Activity.of(Activity.ActivityType.LISTENING, "@Yuuko help"))
-                    .setShardsTotal(SHARD_COUNT)
-                    .setShards(SHARD_ID)
+                    .setShardsTotal(SHARDS_TOTAL)
+                    .setShards(SHARD_IDS)
                     .build();
 
             while(!isConstructed()) {
@@ -309,7 +313,7 @@ public class Config {
      * Synchronizes the database, adding any guilds that added the bot while it was offline.
      */
     private void verifyDatabase() {
-        BOT.getJDA().getGuildCache().forEach(GuildFunctions::verifyIntegrity);
+        SHARD_MANAGER.getShards().forEach(shard -> shard.getGuildCache().forEach(GuildFunctions::verifyIntegrity));
         log.info("Database integrity verified with JDA.");
     }
 
@@ -317,9 +321,12 @@ public class Config {
      * Initialises metrics right away instead of waiting for the scheduler.
      */
     private void setupMetrics() {
-        MetricsManager.truncateMetrics(SHARD_ID);
-        MetricsManager.getDiscordMetrics().update();
+        new MetricsManager(SHARD_IDS.size());
 
+        SHARD_IDS.forEach(shardId -> {
+            MetricsManager.truncateMetrics(shardId);
+            MetricsManager.getDiscordMetrics(shardId).update();
+        });
         log.info("Initialised metrics.");
     }
 
@@ -330,8 +337,6 @@ public class Config {
         if(API_MANAGER.containsKey("discordbots")) {
             BOT_LIST = new DiscordBotListAPI.Builder().botId(BOT.getId()).token(API_MANAGER.getApi("discordbots").getKey()).build();
         }
-        Utilities.updateDiscordBotList();
-
         log.info("Initialised bot lists.");
     }
 

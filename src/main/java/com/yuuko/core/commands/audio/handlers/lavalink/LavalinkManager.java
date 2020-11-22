@@ -19,7 +19,7 @@ public class LavalinkManager {
     public LavalinkManager() {
         lavalink = new JdaLavalink(
                 Config.BOT_ID,
-                Config.SHARD_COUNT,
+                Config.SHARDS_TOTAL,
                 shardId -> Config.SHARD_MANAGER.getShardById(shardId)
         );
         lavalink.setAutoReconnect(true);
