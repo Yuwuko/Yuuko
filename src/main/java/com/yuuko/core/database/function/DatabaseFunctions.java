@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class DatabaseFunctions {
     private static final Logger log = LoggerFactory.getLogger(DatabaseFunctions.class);
     private static final SystemMetrics system = MetricsManager.getSystemMetrics();
-    private static final DiscordMetrics discord = MetricsManager.getDiscordMetrics();
+    private static final ArrayList<DiscordMetrics> discord = MetricsManager.getDiscordMetricsList();
     private static final AudioMetrics audio = MetricsManager.getAudioMetrics();
     private static final CacheMetrics cache = MetricsManager.getCacheMetrics();
 
@@ -35,18 +35,23 @@ public class DatabaseFunctions {
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
             int shardId = Config.BOT.getJDA().getShardInfo().getShardId();
+            Config.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
+                try {
+                    stmt.setInt(1, shard.getShardInfo().getShardId());
+                    stmt.setLong(2, system.UPTIME);
+                    stmt.setLong(3, system.MEMORY_TOTAL);
+                    stmt.setLong(4, system.MEMORY_USED);
+                    stmt.execute();
 
-            stmt.setInt(1, shardId);
-            stmt.setLong(2, system.UPTIME);
-            stmt.setLong(3, system.MEMORY_TOTAL);
-            stmt.setLong(4, system.MEMORY_USED);
-            stmt.execute();
-
-            stmt2.setInt(1, shardId);
-            stmt2.setDouble(2, discord.GATEWAY_PING.get());
-            stmt2.setDouble(3, discord.REST_PING.get());
-            stmt2.setInt(4, discord.GUILD_COUNT.get());
-            stmt2.execute();
+                    stmt2.setInt(1, shard.getShardInfo().getShardId());
+                    stmt2.setDouble(2, discord.get(shard.getShardInfo().getShardId()).GATEWAY_PING.get());
+                    stmt2.setDouble(3, discord.get(shard.getShardInfo().getShardId()).REST_PING.get());
+                    stmt2.setInt(4, discord.get(shard.getShardInfo().getShardId()).GUILD_COUNT.get());
+                    stmt2.execute();
+                } catch(Exception e) {
+                    log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), e.getMessage(), e);
+                }
+            });
 
             stmt3.setInt(1, audio.PLAYERS_TOTAL.get());
             stmt3.setInt(2, audio.PLAYERS_ACTIVE.get());
@@ -85,9 +90,9 @@ public class DatabaseFunctions {
 
     /**
      * Truncates the metrics database. (This happens when the bot is first loaded.)
-     * @param shard int
+     * @param shardId int
      */
-    public static void truncateMetrics(int shard) {
+    public static void truncateMetrics(int shardId) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE shardId = ?");
             PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE shardId = ?");
@@ -95,15 +100,15 @@ public class DatabaseFunctions {
             PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `command_log` WHERE shardId = ?");
             PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM `cache_metrics`")) {
 
-            stmt.setInt(1, shard);
+            stmt.setInt(1, shardId);
             stmt.execute();
 
-            stmt2.setInt(1, shard);
+            stmt2.setInt(1, shardId);
             stmt2.execute();
 
             stmt3.execute();
 
-            stmt4.setInt(1, shard);
+            stmt4.setInt(1, shardId);
             stmt4.execute();
 
             stmt5.execute();
@@ -184,16 +189,14 @@ public class DatabaseFunctions {
     /**
      * Update shard statistics such as guild count.
      */
-    public static void updateShardStatistics() {
+    public static void updateShardStatistics(JDA shard) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP  WHERE `shardId` = ?")){
 
-            final JDA shard = Config.BOT.getJDA();
-
             stmt.setString(1, shard.getStatus().name());
-            stmt.setInt(2, discord.GUILD_COUNT.get());
-            stmt.setInt(3, discord.GATEWAY_PING.get());
-            stmt.setInt(4, discord.REST_PING.get());
+            stmt.setInt(2, discord.get(shard.getShardInfo().getShardId()).GUILD_COUNT.get());
+            stmt.setInt(3, discord.get(shard.getShardInfo().getShardId()).GATEWAY_PING.get());
+            stmt.setInt(4, discord.get(shard.getShardInfo().getShardId()).REST_PING.get());
             stmt.setInt(5, shard.getShardInfo().getShardId());
             stmt.execute();
 
