@@ -17,22 +17,16 @@ public class SetStatusCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            String[] commandParameters = e.getParameters().split("\\s+", 3);
-
-            switch (commandParameters[0].toLowerCase()) {
-                case "playing" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, commandParameters[1]));
-                case "listening" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.LISTENING, commandParameters[1]));
-                case "streaming" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.STREAMING, commandParameters[1]));
-                case "watching" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, commandParameters[1]));
-                default -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
-            }
-
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");
-            MessageHandler.sendMessage(e, embed.build());
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        String[] params = e.getParameters().split("\\s+", 3);
+        switch (params[0].toLowerCase()) {
+            case "playing" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, params[1]));
+            case "listening" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.LISTENING, params[1]));
+            case "streaming" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.STREAMING, params[1]));
+            case "watching" -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, params[1]));
+            default -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
         }
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");
+        MessageHandler.sendMessage(e, embed.build());
     }
 
 }
