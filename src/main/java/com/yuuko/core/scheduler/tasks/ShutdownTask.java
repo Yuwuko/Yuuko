@@ -10,7 +10,7 @@ public class ShutdownTask implements Task {
         Config.SHARD_MANAGER.getShards().forEach(shard -> {
             if(DatabaseFunctions.hasShutdownSignal(shard.getShardInfo().getShardId())) {
                 log.warn("Shutdown signal detected for shard {}, shutting down...", shard.getShardInfo().getShardId());
-                shard.shutdown();
+                Config.SHARD_MANAGER.shutdown(shard.getShardInfo().getShardId());
                 DatabaseFunctions.cancelShutdownSignal(shard.getShardInfo().getShardId());
                 DatabaseFunctions.updateShardStatistics(shard);
             }
