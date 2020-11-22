@@ -1,5 +1,3 @@
-create schema if not exists dbyuuko;
-
 create table if not exists dbyuuko.audio_metrics
 (
     players int(3) null,
@@ -127,11 +125,13 @@ create table if not exists dbyuuko.reaction_roles
 
 create table if not exists dbyuuko.shards
 (
-    shardId int(3) not null,
+    shardId int not null,
     status varchar(32) default 'unknown' not null,
     guilds int default 0 not null,
     gatewayPing double(11,1) default 0.0 not null,
     restPing double(11,1) default 0.0 not null,
+    restartSignal tinyint default 0 not null,
+    shutdownSignal tinyint default 0 not null,
     shardAssigned timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
     constraint shardId
         unique (shardId)
