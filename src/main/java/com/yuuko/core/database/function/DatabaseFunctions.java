@@ -3,6 +3,7 @@ package com.yuuko.core.database.function;
 import com.yuuko.core.Config;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.entity.Shard;
+import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.metrics.pathway.AudioMetrics;
 import com.yuuko.core.metrics.pathway.CacheMetrics;
@@ -69,17 +70,16 @@ public class DatabaseFunctions {
 
     /**
      * Updates the database with the latest command.
-     * @param guildId String
-     * @param command String
+     * @param e {@link MessageEvent}
      * @param executionTime double (milliseconds)
      */
-    public static void updateCommandLog(String guildId, String command, double executionTime) {
+    public static void updateCommandLog(MessageEvent e, double executionTime) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `command_log`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
-            stmt.setInt(1, Config.BOT.getJDA().getShardInfo().getShardId());
-            stmt.setString(2, guildId);
-            stmt.setString(3, command);
+            stmt.setInt(1, e.getShardId());
+            stmt.setString(2, e.getGuild().getId());
+            stmt.setString(3, e.getCommand().getName());
             stmt.setDouble(4, executionTime);
             stmt.execute();
 
