@@ -34,15 +34,15 @@ public class DatabaseFunctions {
             PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
-            int shardId = Config.BOT.getJDA().getShardInfo().getShardId();
+            // system metrics will is the same for every shard on an instance - for this reason we only update it once (per instance instead of per shard)
+            stmt.setInt(1, Config.BOT.getJDA().getShardInfo().getShardId());
+            stmt.setLong(2, system.UPTIME);
+            stmt.setLong(3, system.MEMORY_TOTAL);
+            stmt.setLong(4, system.MEMORY_USED);
+            stmt.execute();
+
             Config.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
                 try {
-                    stmt.setInt(1, shard.getShardInfo().getShardId());
-                    stmt.setLong(2, system.UPTIME);
-                    stmt.setLong(3, system.MEMORY_TOTAL);
-                    stmt.setLong(4, system.MEMORY_USED);
-                    stmt.execute();
-
                     stmt2.setInt(1, shard.getShardInfo().getShardId());
                     stmt2.setDouble(2, discord.get(shard.getShardInfo().getShardId()).GATEWAY_PING.get());
                     stmt2.setDouble(3, discord.get(shard.getShardInfo().getShardId()).REST_PING.get());
@@ -206,6 +206,44 @@ public class DatabaseFunctions {
     }
 
     /**
+     * Update shard status to `RESTARTING` on given shard.
+     */
+    public static void updateShardRestart(int shard) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
+
+            stmt.setString(1, "STARTING");
+            stmt.setInt(2, 0);
+            stmt.setInt(3, 0);
+            stmt.setInt(4, 0);
+            stmt.setInt(5, shard);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Update shard status to `SHUTDOWN` on given shard.
+     */
+    public static void updateShardShutdown(int shard) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = '1970-01-01 00:00:01' WHERE `shardId` = ?")){
+
+            stmt.setString(1, "SHUTDOWN");
+            stmt.setInt(2, 0);
+            stmt.setInt(3, 0);
+            stmt.setInt(4, 0);
+            stmt.setInt(5, shard);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Retrieves shard statistics from the database.
      * @return ArrayList<Shard> of shard statistics.
      */
@@ -288,6 +326,62 @@ public class DatabaseFunctions {
 
             if(rs.next()) {
                 return rs.getBoolean("shutdownSignal");
+            }
+
+            return false;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
+
+    /**
+     * Set shard signal value to 1 (restart)
+     * @param shardId int
+     */
+    public static void triggerRestartSignal(int shardId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `restartSignal` = 1 WHERE `shardId` = ?")) {
+
+            stmt.setInt(1, shardId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Set shard signal value to 0
+     * @param shardId int
+     */
+    public static void cancelRestartSignal(int shardId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `restartSignal` = 0 WHERE `shardId` = ?")) {
+
+            stmt.setInt(1, shardId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Returns state of restart signal for given shard.
+     * @param shardId int
+     * @return boolean
+     */
+    public static boolean hasRestartSignal(int shardId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `restartSignal` FROM `shards` WHERE `shardId` = ?")) {
+
+            stmt.setInt(1, shardId);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                return rs.getBoolean("restartSignal");
             }
 
             return false;
