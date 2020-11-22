@@ -6,11 +6,19 @@ import com.yuuko.core.metrics.pathway.CacheMetrics;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
 import com.yuuko.core.metrics.pathway.SystemMetrics;
 
+import java.util.ArrayList;
+
 public class MetricsManager {
     private static final SystemMetrics systemMetrics = new SystemMetrics();
-    private static final DiscordMetrics discordMetrics = new DiscordMetrics();
+    private static final ArrayList<DiscordMetrics> discordMetrics = new ArrayList<>();
     private static final AudioMetrics audioMetrics = new AudioMetrics();
     private static final CacheMetrics cacheMetrics = new CacheMetrics();
+
+    public MetricsManager(int shards) {
+        for(int i = 0; i < shards; i++) {
+            discordMetrics.add(new DiscordMetrics(i));
+        }
+    }
 
     public static void pruneMetrics() {
         DatabaseFunctions.pruneMetrics();
@@ -22,7 +30,11 @@ public class MetricsManager {
 
     public static AudioMetrics getAudioMetrics() { return audioMetrics; }
 
-    public static DiscordMetrics getDiscordMetrics() {
+    public static DiscordMetrics getDiscordMetrics(int shardId) {
+        return discordMetrics.get(shardId);
+    }
+
+    public static ArrayList<DiscordMetrics> getDiscordMetricsList() {
         return discordMetrics;
     }
 
