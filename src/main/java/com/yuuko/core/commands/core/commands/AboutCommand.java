@@ -14,8 +14,6 @@ import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class AboutCommand extends Command {
@@ -60,12 +58,12 @@ public class AboutCommand extends Command {
                 .addField("Author", "[" + Config.AUTHOR + "](" + Config.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Config.VERSION, true)
                 .addField("Prefix", Config.GLOBAL_PREFIX + ", " + GuildFunctions.getGuildSetting("prefix", e.getGuild().getId()), true)
-                .addField("Shard ID", Config.SHARD_ID + "", true)
-                .addField("Guilds", MetricsManager.getDiscordMetrics().GUILD_COUNT + "", true)
+                .addField("Shard ID", e.getShardId() + "", true)
+                .addField("Shard Guilds", MetricsManager.getDiscordMetrics(e.getShardId()).GUILD_COUNT + "", true)
+                .addField("Total Guilds", totalGuilds + "", true)
                 .addField("Commands", Config.COMMANDS.size() + "", true)
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                .addField("Ping", MetricsManager.getDiscordMetrics().GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics().REST_PING + "ms)",true)
-                .addField("Memory Usage", BigDecimal.valueOf((MetricsManager.getSystemMetrics().MEMORY_USED / MetricsManager.getSystemMetrics().MEMORY_TOTAL) * 100).setScale(2, RoundingMode.HALF_UP) + "%", true)
+                .addField("Ping", MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms)",true)
                 .addField("Latest Updates", latestUpdates.toString(), false);
         MessageHandler.sendMessage(e, about.build());
     }

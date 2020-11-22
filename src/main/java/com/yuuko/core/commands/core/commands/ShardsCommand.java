@@ -34,7 +34,6 @@ public class ShardsCommand extends Command {
                     .append("\n").append("Guilds: ").append(shard.getGuildCount())
                     .append("\n").append("Gateway Ping: ").append(shard.getGatewayPing()).append("ms")
                     .append("\n").append("Rest Ping: ").append(shard.getRestPing()).append("ms");
-
             shardEmbed.addField("", shards.toString(), true);
             shards = new StringBuilder();
         }

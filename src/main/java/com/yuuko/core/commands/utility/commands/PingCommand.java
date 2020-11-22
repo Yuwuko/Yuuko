@@ -20,7 +20,7 @@ public class PingCommand extends Command {
     public void onCommand(MessageEvent e) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Pong!")
-                .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics().GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics().REST_PING + "ms.")
+                .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms.")
                 .setTimestamp(Instant.now())
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageHandler.sendMessage(e, embed.build());
