@@ -210,13 +210,9 @@ public class DatabaseFunctions {
      */
     public static void updateShardRestart(int shard) {
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = 'RESTARTING', `guilds` = 0, `gatewayPing` = 0, `restPing` = 0, `shardAssigned` = CURRENT_TIMESTAMP WHERE `shardId` = ?")){
 
-            stmt.setString(1, "STARTING");
-            stmt.setInt(2, 0);
-            stmt.setInt(3, 0);
-            stmt.setInt(4, 0);
-            stmt.setInt(5, shard);
+            stmt.setInt(1, shard);
             stmt.execute();
 
         } catch(Exception ex) {
@@ -229,13 +225,9 @@ public class DatabaseFunctions {
      */
     public static void updateShardShutdown(int shard) {
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = ?, `guilds` = ?, `gatewayPing` = ?, `restPing` = ?, `shardAssigned` = '1970-01-01 00:00:01' WHERE `shardId` = ?")){
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `status` = 'SHUTDOWN', `guilds` = 0, `gatewayPing` = 0, `restPing` = 0, `shardAssigned` = '1970-01-01 00:00:01' WHERE `shardId` = ?")){
 
-            stmt.setString(1, "SHUTDOWN");
-            stmt.setInt(2, 0);
-            stmt.setInt(3, 0);
-            stmt.setInt(4, 0);
-            stmt.setInt(5, shard);
+            stmt.setInt(1, shard);
             stmt.execute();
 
         } catch(Exception ex) {
