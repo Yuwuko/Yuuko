@@ -241,4 +241,60 @@ public class DatabaseFunctions {
             log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
+
+    /**
+     * Set shard signal value to 1 (shutdown)
+     * @param shardId int
+     */
+    public static void triggerShutdownSignal(int shardId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `shutdownSignal` = 1 WHERE `shardId` = ?")) {
+
+            stmt.setInt(1, shardId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Set shard signal value to 0
+     * @param shardId int
+     */
+    public static void cancelShutdownSignal(int shardId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `shards` SET `shutdownSignal` = 0 WHERE `shardId` = ?")) {
+
+            stmt.setInt(1, shardId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Returns state of shutdown signal for given shard.
+     * @param shardId int
+     * @return boolean
+     */
+    public static boolean hasShutdownSignal(int shardId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `shutdownSignal` FROM `shards` WHERE `shardId` = ?")) {
+
+            stmt.setInt(1, shardId);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                return rs.getBoolean("shutdownSignal");
+            }
+
+            return false;
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return false;
+        }
+    }
 }
