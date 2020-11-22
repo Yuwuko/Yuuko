@@ -15,7 +15,8 @@ public class DeveloperModule extends Module {
             entry("reloadapi", ReloadApiCommand.class),
             entry("lavalink", LavalinkNodeCommand.class),
             entry("logmetrics", LogMetricsCommand.class),
-            entry("shutdown", ShutdownCommand.class)
+            entry("shutdown", ShutdownCommand.class),
+            entry("restart", RestartCommand.class)
     );
 
     public DeveloperModule() {
