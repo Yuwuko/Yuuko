@@ -60,7 +60,7 @@ public class GenericGuildMessageController {
             new CommandExecutor(event);
             execTime = (System.nanoTime() - execTime)/1000000.0;
 
-            DatabaseFunctions.updateCommandLog(e.getGuild().getId(), event.getCommand().getName(), execTime);
+            DatabaseFunctions.updateCommandLog(event, execTime);
             CommandLogSetting.execute(event, execTime);
 
         } catch(Exception ex) {

@@ -55,8 +55,8 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent e) {
         GuildFunctions.addOrUpdateGuild(e.getGuild());
-        MetricsManager.getDiscordMetrics().update();
-        Utilities.updateDiscordBotList();
+        MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
+        Utilities.updateDiscordBotList(e.getJDA().getShardInfo().getShardId());
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
@@ -78,8 +78,8 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent e) {
         AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
         GuildFunctions.cleanup(e.getGuild().getId());
-        MetricsManager.getDiscordMetrics().update();
-        Utilities.updateDiscordBotList();
+        MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
+        Utilities.updateDiscordBotList(e.getJDA().getShardInfo().getShardId());
     }
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent e) {

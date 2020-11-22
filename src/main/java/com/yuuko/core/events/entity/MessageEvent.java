@@ -5,7 +5,6 @@ import com.yuuko.core.commands.Module;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class MessageEvent extends GuildMessageReceivedEvent {
-
     private Command command;
     private String prefix;
     private String parameters;
@@ -28,6 +27,10 @@ public class MessageEvent extends GuildMessageReceivedEvent {
 
     public String getParameters() {
         return parameters;
+    }
+
+    public int getShardId() {
+        return getJDA().getShardInfo().getShardId();
     }
 
     /**
