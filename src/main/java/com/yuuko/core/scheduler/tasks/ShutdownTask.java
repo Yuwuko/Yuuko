@@ -7,12 +7,13 @@ import com.yuuko.core.scheduler.Task;
 public class ShutdownTask implements Task {
     @Override
     public void run() {
-        Config.SHARD_MANAGER.getShards().forEach(shard -> {
-            if(DatabaseFunctions.hasShutdownSignal(shard.getShardInfo().getShardId())) {
-                log.warn("Shutdown signal detected for shard {}, shutting down...", shard.getShardInfo().getShardId());
-                Config.SHARD_MANAGER.shutdown(shard.getShardInfo().getShardId());
-                DatabaseFunctions.cancelShutdownSignal(shard.getShardInfo().getShardId());
-                DatabaseFunctions.updateShardStatistics(shard);
+        // Use shard SHARD_IDS here because JDA removes JDA instance from SHARD_MANAGER after it has shutdown.
+        Config.SHARD_IDS.forEach(shard -> {
+            if(DatabaseFunctions.hasShutdownSignal(shard)) {
+                log.warn("Shutdown signal detected for shard {}, shutting down...", shard);
+                Config.SHARD_MANAGER.shutdown(shard);
+                DatabaseFunctions.cancelShutdownSignal(shard);
+                DatabaseFunctions.updateShardShutdown(shard);
             }
         });
     }

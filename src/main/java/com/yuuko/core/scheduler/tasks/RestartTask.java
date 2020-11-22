@@ -7,12 +7,13 @@ import com.yuuko.core.scheduler.Task;
 public class RestartTask implements Task {
     @Override
     public void run() {
-        Config.SHARD_MANAGER.getShards().forEach(shard -> {
-            if(DatabaseFunctions.hasRestartSignal(shard.getShardInfo().getShardId())) {
-                log.warn("Restart signal detected for shard {}, restarting...", shard.getShardInfo().getShardId());
-                Config.SHARD_MANAGER.restart(shard.getShardInfo().getShardId());
-                DatabaseFunctions.cancelRestartSignal(shard.getShardInfo().getShardId());
-                DatabaseFunctions.updateShardStatistics(shard);
+        // Use shard SHARD_IDS here because JDA removes JDA instance from SHARD_MANAGER after it has shutdown.
+        Config.SHARD_IDS.forEach(shard -> {
+            if(DatabaseFunctions.hasRestartSignal(shard)) {
+                log.warn("Restart signal detected for shard {}, restarting...", shard);
+                Config.SHARD_MANAGER.restart(shard);
+                DatabaseFunctions.cancelRestartSignal(shard);
+                DatabaseFunctions.updateShardRestart(shard);
             }
         });
     }

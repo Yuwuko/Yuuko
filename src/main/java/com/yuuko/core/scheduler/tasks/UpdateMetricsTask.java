@@ -13,7 +13,9 @@ public class UpdateMetricsTask implements Task {
         if(Config.LOG_METRICS) {
             if(System.currentTimeMillis() - lastUpdated > 29999) {
                 lastUpdated = System.currentTimeMillis();
-                MetricsManager.getDiscordMetrics().updatePing();
+                Config.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
+                    MetricsManager.getDiscordMetrics(shard.getShardInfo().getShardId()).updatePing();
+                });
             }
             MetricsManager.getSystemMetrics().update();
             MetricsManager.getAudioMetrics().update();
