@@ -3,9 +3,9 @@ package com.yuuko.core;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
-import com.yuuko.core.database.function.BindFunctions;
+import com.yuuko.core.commands.core.commands.BindCommand;
+import com.yuuko.core.commands.core.commands.ModuleCommand;
 import com.yuuko.core.database.function.GuildFunctions;
-import com.yuuko.core.database.function.ModuleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
@@ -157,7 +157,7 @@ public class CommandExecutor {
         }
 
         // Checks if the module is disabled.
-        if(!ModuleFunctions.isEnabled(event.getGuild().getId(), module.getName())) {
+        if(!ModuleCommand.DatabaseInterface.isEnabled(event.getGuild().getId(), module.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("`" + module.getName() + "` module is disabled.");
             MessageHandler.reply(event, embed.build());
             return false;
@@ -178,10 +178,10 @@ public class CommandExecutor {
      * @return boolean
      */
     private boolean isBound() {
-        if(BindFunctions.checkBind(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
+        if(BindCommand.DatabaseInterface.checkBind(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
             return false;
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindFunctions.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindCommand.DatabaseInterface.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
             MessageHandler.reply(event, embed.build());
             return true;
         }
