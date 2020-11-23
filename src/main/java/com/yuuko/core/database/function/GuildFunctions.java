@@ -1,5 +1,6 @@
 package com.yuuko.core.database.function;
 
+import com.yuuko.core.commands.core.commands.BindCommand;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import net.dv8tion.jda.api.entities.Guild;
 import org.slf4j.Logger;
@@ -76,7 +77,7 @@ public class GuildFunctions {
     public static void verifyIntegrity(Guild guild) {
         try {
             GuildFunctions.addOrUpdateGuild(guild);
-            BindFunctions.verifyBinds(guild);
+            BindCommand.DatabaseInterface.verifyBinds(guild);
 
         } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);

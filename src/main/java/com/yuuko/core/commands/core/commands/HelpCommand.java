@@ -4,7 +4,6 @@ import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.database.function.BindFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
@@ -56,7 +55,7 @@ public class HelpCommand extends Command {
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getName(), true)
                         .addField("Required Permissions", commandPermission, true)
-                        .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
+                        .addField("Binds", BindCommand.DatabaseInterface.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
                         .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
                 MessageHandler.reply(e, embed.build());
