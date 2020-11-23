@@ -220,15 +220,15 @@ public class ReactionRoleCommand extends Command {
         }
 
         /**
-         * Removes all reaction roles from the given message.
+         * Removes all reaction roles from the given messageId.
          *
-         * @param message message id.
+         * @param messageId messageId.
          */
-        public static void removeReactionRole(String message) {
+        public static void removeReactionRole(String messageId) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ?")) {
 
-                stmt.setString(1, message);
+                stmt.setString(1, messageId);
                 stmt.execute();
 
             } catch(Exception ex) {
@@ -237,7 +237,7 @@ public class ReactionRoleCommand extends Command {
         }
 
         /**
-         * Removes all reaction roles from the given message.
+         * Removes all reaction roles from the given emote.
          *
          * @param e {@link Emote}.
          */
@@ -246,6 +246,23 @@ public class ReactionRoleCommand extends Command {
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `emoteId` = ?")) {
 
                 stmt.setString(1, e.getName() + ":" + e.getId());
+                stmt.execute();
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            }
+        }
+
+        /**
+         * Removes all reaction roles from the given role.
+         *
+         * @param e {@link Role}.
+         */
+        public static void removeReactionRole(Role e) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `roleId` = ?")) {
+
+                stmt.setString(1, e.getId());
                 stmt.execute();
 
             } catch(Exception ex) {

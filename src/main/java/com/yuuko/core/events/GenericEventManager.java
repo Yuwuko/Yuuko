@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
+import net.dv8tion.jda.api.events.role.GenericRoleEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -89,6 +90,15 @@ public class GenericEventManager extends ListenerAdapter {
     public void onGenericEmote(@NotNull GenericEmoteEvent e) {
         try {
             new GenericEmoteEventController(e);
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public void onGenericRole(@NotNull GenericRoleEvent e) {
+        try {
+            new GenericRoleEventController(e);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
