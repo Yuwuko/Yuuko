@@ -4,7 +4,6 @@ import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.DatabaseConnection;
-import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -146,7 +145,7 @@ public class ReactionRoleCommand extends Command {
                 return null;
 
             } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
                 return null;
             }
         }
@@ -172,7 +171,7 @@ public class ReactionRoleCommand extends Command {
                 return !stmt.execute();
 
             } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
                 return false;
             }
         }
@@ -193,7 +192,7 @@ public class ReactionRoleCommand extends Command {
                 stmt.execute();
 
             } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
             }
         }
 
@@ -209,7 +208,7 @@ public class ReactionRoleCommand extends Command {
                 stmt.execute();
 
             } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
             }
         }
     }
