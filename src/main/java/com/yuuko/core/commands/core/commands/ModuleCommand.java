@@ -57,7 +57,7 @@ public class ModuleCommand extends Command {
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, commandModules.build());
+            MessageHandler.reply(e, commandModules.build());
         }
     }
 

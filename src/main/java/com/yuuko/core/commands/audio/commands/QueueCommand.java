@@ -44,14 +44,14 @@ public class QueueCommand extends Command {
                     totalDuration.getAndAdd(audioTrack.getDuration());
                 });
 
-                EmbedBuilder nextTracks = new EmbedBuilder()
+                EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Here are the next " + count.get() + " tracks in the queue:")
                         .setDescription(queue.toString())
                         .addField("Queue Length", manager.getScheduler().queue.size() + "", true)
                         .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
                         .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-                MessageHandler.sendMessage(e, nextTracks.build());
+                MessageHandler.reply(e, embed.build());
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

@@ -20,7 +20,7 @@ public class SettingsCommand extends Command {
     public void onCommand(MessageEvent e) {
         // Embed displaying all of the current settings for the server, giving information about each setting.
         ArrayList<String> settingsList = GuildFunctions.getGuildSettings(e.getGuild().getId());
-        EmbedBuilder commandModules = new EmbedBuilder()
+        EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Settings for `" + e.getGuild().getName() + "`")
                 .setDescription("Settings can be changed by typing one of the commands listed below using the specified data type, e.g. `<boolean>` which you would replace with either `true` or `false`.")
                 .addField(e.getPrefix() + "prefix <string>", "`" + settingsList.get(0) + "` - The message prefix used to symbolise a command.", false)
@@ -31,7 +31,7 @@ public class SettingsCommand extends Command {
                 .addField(e.getPrefix() + "comLog <#channel>", (settingsList.get(5) != null ? e.getGuild().getTextChannelById(settingsList.get(5)).getAsMention() : "`Disabled`") + " - Sends executed commands to a defined log channel.", false)
                 .addField(e.getPrefix() + "modLog <#channel>", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "`Disabled`") + " - Sends moderation events to a defined log channel.", false)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, commandModules.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

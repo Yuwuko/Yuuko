@@ -36,12 +36,12 @@ public class EfuktCommand extends Command {
                 }
             }
 
-            EmbedBuilder efuktPost = new EmbedBuilder()
+            EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(doc.title().substring(0, Math.min(doc.title().length(), 256)))
                     .setDescription(doc.baseUri())
                     .setImage(image)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, efuktPost.build());
+            MessageHandler.reply(e, embed.build());
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

@@ -70,12 +70,11 @@ public class SearchCommand extends Command {
 
             audioSearchResults.put(e.getAuthor().getId(), results);
 
-            EmbedBuilder presentResults = new EmbedBuilder()
+            EmbedBuilder embed = new EmbedBuilder()
                     .setAuthor("Search results for " + e.getParameters() + ".", null)
                     .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, presentResults.build());
-
+            MessageHandler.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

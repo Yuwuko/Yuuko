@@ -90,7 +90,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
             MessageEvent e = (MessageEvent) player.getPlayingTrack().getUserData();
             if(e != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("nowPlaying", e.getGuild().getId()))) {
-                new CurrentCommand().onCommand(e);
+                new CurrentCommand().onCommand(e.setParameters("no-reply"));
             }
 
         } catch(Exception ex) {

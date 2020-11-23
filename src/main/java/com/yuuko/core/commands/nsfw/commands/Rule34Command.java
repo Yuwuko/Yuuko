@@ -45,11 +45,11 @@ public class Rule34Command extends Command {
                 }
             }
 
-            EmbedBuilder efuktPost = new EmbedBuilder()
+            EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Rule 34" + (!characterString.toString().equals("") ? characterString.substring(0, characterString.length() - 2) : ""))
                     .setImage(image)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, efuktPost.build());
+            MessageHandler.reply(e, embed.build());
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

@@ -58,7 +58,7 @@ public class UserCommand extends Command {
             }
         }
 
-        EmbedBuilder commandInfo = new EmbedBuilder()
+        EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Information about **" + target.getEffectiveName() + "**")
                 .setDescription("**" + target.getEffectiveName() + "** is currently **" + target.getOnlineStatus().name().toLowerCase() + "** " + presence)
                 .setThumbnail(target.getUser().getAvatarUrl())
@@ -69,7 +69,7 @@ public class UserCommand extends Command {
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, commandInfo.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

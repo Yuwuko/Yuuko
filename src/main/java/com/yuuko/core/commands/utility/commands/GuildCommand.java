@@ -35,7 +35,7 @@ public class GuildCommand extends Command {
         }
 
         guild.retrieveOwner().queue(s -> {
-            EmbedBuilder commandInfo = new EmbedBuilder()
+            EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Guild information for: " + guild.getName(), null)
                     .setThumbnail(guild.getIconUrl())
                     .addField("Owner", s.getUser().getName() + "#" + s.getUser().getDiscriminator(), true)
@@ -48,7 +48,7 @@ public class GuildCommand extends Command {
                     .addField("Roles", guild.getRoles().size()+"", true)
                     .addField("Emotes", emoteString.toString(), false)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, commandInfo.build());
+            MessageHandler.reply(e, embed.build());
         });
     }
 

@@ -34,7 +34,7 @@ public class HelpCommand extends Command {
             }
 
             if(e.getGuild().getMemberById(Config.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
-                MessageHandler.sendMessage(e, commandInfo.build());
+                MessageHandler.reply(e, commandInfo.build());
             } else {
                 e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
             }

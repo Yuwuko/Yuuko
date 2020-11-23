@@ -20,6 +20,6 @@ public class SpoilerifyCommand extends Command {
             spoiler.append("||").append(character).append("||");
         }
 
-        MessageHandler.sendMessage(e, "`" + spoiler.toString() + "`");
+        MessageHandler.reply(e, "`" + spoiler.toString() + "`");
     }
 }
