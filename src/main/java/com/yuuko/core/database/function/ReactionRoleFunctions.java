@@ -1,7 +1,6 @@
 package com.yuuko.core.database.function;
 
 import com.yuuko.core.database.connection.DatabaseConnection;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
@@ -49,13 +48,13 @@ public class ReactionRoleFunctions {
      * @param role the role that the reaction role will give to the user.
      * @return boolean if the operation was successful.
      */
-    public static boolean addReactionRole(Guild guild, String message, Emote emote, Role role) {
+    public static boolean addReactionRole(Guild guild, String message, String emote, Role role) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `reaction_roles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
 
             stmt.setString(1, guild.getId());
             stmt.setString(2, message);
-            stmt.setString(3, emote.getId());
+            stmt.setString(3, emote);
             stmt.setString(4, role.getId());
 
             return !stmt.execute();
@@ -72,12 +71,12 @@ public class ReactionRoleFunctions {
      * @param emote the emote the reaction role is invoked by.
      * @return boolean if the operation was successful.
      */
-    public static void removeReactionRole(Message message, Emote emote) {
+    public static void removeReactionRole(Message message, String emote) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
             stmt.setString(1, message.getId());
-            stmt.setString(2, emote.getId());
+            stmt.setString(2, emote);
             stmt.execute();
 
         } catch(Exception ex) {

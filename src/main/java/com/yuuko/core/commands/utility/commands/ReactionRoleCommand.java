@@ -7,7 +7,6 @@ import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
@@ -17,40 +16,36 @@ import java.util.Arrays;
 public class ReactionRoleCommand extends Command {
 
     public ReactionRoleCommand() {
-        super("reactrole", Config.MODULES.get("utility"), 1, -1L, Arrays.asList("-reactrole <message_id> clear", "-reactrole <message_id> <:emote:>", "-reactrole <message_id> <:emote:> <@role>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
+        super("reactrole", Config.MODULES.get("utility"), 2, -1L, Arrays.asList("-reactrole <message_id> clear", "-reactrole <message_id> <:emote:>", "-reactrole <message_id> <:emote:> <@role>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
     }
 
     @Override
     public void onCommand(MessageEvent e) {
-        final String[] parameters = e.getParameters().split("\\s+");
+        final String[] params = e.getParameters().split("\\s+");
         final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0); // Role list is ordered from highest to lowest
         final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : null;
-        final Emote emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0) : null;
+        final String emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0).getName() + ":" + e.getMessage().getEmotes().get(0).getId() : params[1];
 
-        if(parameters[0].length() < 18) {
+        if(params[0].length() < 18) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Message").setDescription("Input did not match any known message id.");
             MessageHandler.reply(e, embed.build());
             return;
         }
 
         // removes all react roles from message
-        if(parameters[1].equals("clear")) {
+        if(params[1].equalsIgnoreCase("clear")) {
             ReactionRoleFunctions.removeReactionRole(e.getMessage().getId());
-        }
-
-        if(emote == null) {
-            // error
             return;
         }
 
         // uses consumer .queue() instead of .complete() since .complete() will throw an exception rather than return null :)))
-        e.getChannel().retrieveMessageById(parameters[0]).queue(message -> {
+        e.getChannel().retrieveMessageById(params[0]).queue(message -> {
             if(role == null) {
-                message.getReactions().stream().filter(m -> m.getReactionEmote().getEmote().equals(emote)).forEach(reaction -> {
+                message.getReactions().stream().filter(m -> m.getReactionEmote().getAsReactionCode().equals(emote)).forEach(reaction -> {
                     reaction.removeReaction().queue(
                             s -> {
                                 ReactionRoleFunctions.removeReactionRole(message, emote);
-                                EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote.getAsMention() + " from message " + message + ".");
+                                EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote + " from message " + message + ".");
                                 MessageHandler.reply(e, embed.build());
                             },
                             f -> {
@@ -78,7 +73,7 @@ public class ReactionRoleCommand extends Command {
             message.addReaction(emote).queue(
                     s -> {
                         if(ReactionRoleFunctions.addReactionRole(e.getGuild(), message.getId(), emote, role)) {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote.getAsMention() + " to role " + role.getAsMention() + " for message " + message + ".");
+                            EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote + " to role " + role.getAsMention() + " for message " + message + ".");
                             MessageHandler.reply(e, embed.build());
                         } else {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Already Exists").setDescription("A reaction role using this message and emote combination already exists.");
@@ -101,8 +96,8 @@ public class ReactionRoleCommand extends Command {
      */
     public static void processReaction(GenericGuildMessageReactionEvent e) {
         final String message = e.getMessageId();
-        final Emote emote = e.getReactionEmote().getEmote();
-        final String roleId = ReactionRoleFunctions.selectReactionRole(message, emote.getId());
+        final String emote = e.getReactionEmote().getAsReactionCode();
+        final String roleId = ReactionRoleFunctions.selectReactionRole(message, emote);
 
         if(roleId == null) {
             return;

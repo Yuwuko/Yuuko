@@ -113,7 +113,7 @@ create table if not exists dbyuuko.reaction_roles
 (
     guildId varchar(18) not null,
     messageId varchar(18) not null,
-    emoteId varchar(18) not null,
+    emoteId varchar(64) not null,
     roleId varchar(18) not null,
     constraint message
         unique (messageId, emoteId),
