@@ -7,6 +7,7 @@ import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
@@ -127,7 +128,7 @@ public class ReactionRoleCommand extends Command {
          * Selects a reaction role to the respective database table and returns if the operation was successful. (String)
          *
          * @param message message the reaction role is attached to.
-         * @param emote   the emote the reaction role is invoked by.
+         * @param emote emote the reaction role is invoked by.
          * @return boolean if the operation was successful.
          */
         public static String selectReactionRole(String message, String emote) {
@@ -153,10 +154,10 @@ public class ReactionRoleCommand extends Command {
         /**
          * Adds a reaction role to the database and returns if the operation was successful.
          *
-         * @param guild   guild the reaction role is attached to.
+         * @param guild {@link Guild} the reaction role is attached to.
          * @param message message the reaction role is attached to.
-         * @param emote   the emote the reaction role is invoked by.
-         * @param role    the role that the reaction role will give to the user.
+         * @param emote the emote the reaction role is invoked by.
+         * @param role {@link Role} that the reaction role will give to the user.
          * @return boolean if the operation was successful.
          */
         public static boolean addReactionRole(Guild guild, String message, String emote, Role role) {
@@ -177,10 +178,32 @@ public class ReactionRoleCommand extends Command {
         }
 
         /**
+         * Updates a reaction role emote name.
+         *
+         * @param guild {@link Guild}
+         * @param oldEmote string of old emote name.
+         * @param newEmote string of new emote name.
+         */
+        public static void updateReactionRole(Guild guild, String oldEmote, String newEmote) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("UPDATE `reaction_roles` SET `emoteId` = ? WHERE `guildId` = ? AND `emoteId` = ?")) {
+
+                stmt.setString(1, newEmote);
+                stmt.setString(2, guild.getId());
+                stmt.setString(3, oldEmote);
+
+                stmt.execute();
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            }
+        }
+
+        /**
          * Removes a reaction role from the database and returns if the operation was successful.
          *
-         * @param message message the reaction role is attached to.
-         * @param emote   the emote the reaction role is invoked by.
+         * @param message {@link Message} the reaction role is attached to.
+         * @param emote the emote the reaction role is invoked by.
          * @return boolean if the operation was successful.
          */
         public static void removeReactionRole(Message message, String emote) {
@@ -198,6 +221,7 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Removes all reaction roles from the given message.
+         *
          * @param message message id.
          */
         public static void removeReactionRole(String message) {
@@ -205,6 +229,23 @@ public class ReactionRoleCommand extends Command {
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ?")) {
 
                 stmt.setString(1, message);
+                stmt.execute();
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            }
+        }
+
+        /**
+         * Removes all reaction roles from the given message.
+         *
+         * @param e {@link Emote}.
+         */
+        public static void removeReactionRole(Emote e) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `emoteId` = ?")) {
+
+                stmt.setString(1, e.getName() + ":" + e.getId());
                 stmt.execute();
 
             } catch(Exception ex) {

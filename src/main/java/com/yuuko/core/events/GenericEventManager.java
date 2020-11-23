@@ -2,6 +2,7 @@ package com.yuuko.core.events;
 
 import com.yuuko.core.events.controllers.*;
 import net.dv8tion.jda.api.events.channel.text.GenericTextChannelEvent;
+import net.dv8tion.jda.api.events.emote.GenericEmoteEvent;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
@@ -84,4 +85,12 @@ public class GenericEventManager extends ListenerAdapter {
         }
     }
 
+    @Override
+    public void onGenericEmote(@NotNull GenericEmoteEvent e) {
+        try {
+            new GenericEmoteEventController(e);
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        }
+    }
 }
