@@ -35,9 +35,6 @@ public class GenericGuildMessageReactionController {
 
             // Reaction Role
             ReactionRoleCommand.processReaction(e);
-
-        } catch(IllegalStateException il) {
-            //TODO: Figure out why custom emoji's can't be found.
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

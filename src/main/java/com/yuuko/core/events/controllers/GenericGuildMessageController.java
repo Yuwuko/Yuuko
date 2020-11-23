@@ -4,8 +4,8 @@ import com.yuuko.core.CommandExecutor;
 import com.yuuko.core.Config;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.CommandLogSetting;
+import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
 import com.yuuko.core.database.function.DatabaseFunctions;
-import com.yuuko.core.database.function.ReactionRoleFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
@@ -69,7 +69,7 @@ public class GenericGuildMessageController {
     }
 
     private void guildMessageDeleteEvent(GuildMessageDeleteEvent e) {
-        ReactionRoleFunctions.removeReactionRole(e.getMessageId());
+        ReactionRoleCommand.DatabaseInterface.removeReactionRole(e.getMessageId());
     }
 
 }

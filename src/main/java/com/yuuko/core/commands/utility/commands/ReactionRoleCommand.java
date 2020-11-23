@@ -3,14 +3,20 @@ package com.yuuko.core.commands.utility.commands;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.database.function.ReactionRoleFunctions;
+import com.yuuko.core.database.connection.DatabaseConnection;
+import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Arrays;
 
 public class ReactionRoleCommand extends Command {
@@ -34,7 +40,7 @@ public class ReactionRoleCommand extends Command {
 
         // removes all react roles from message
         if(params[1].equalsIgnoreCase("clear")) {
-            ReactionRoleFunctions.removeReactionRole(e.getMessage().getId());
+            DatabaseInterface.removeReactionRole(e.getMessage().getId());
             return;
         }
 
@@ -44,7 +50,7 @@ public class ReactionRoleCommand extends Command {
                 message.getReactions().stream().filter(m -> m.getReactionEmote().getAsReactionCode().equals(emote)).forEach(reaction -> {
                     reaction.removeReaction().queue(
                             s -> {
-                                ReactionRoleFunctions.removeReactionRole(message, emote);
+                                DatabaseInterface.removeReactionRole(message, emote);
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote + " from message " + message + ".");
                                 MessageHandler.reply(e, embed.build());
                             },
@@ -72,7 +78,7 @@ public class ReactionRoleCommand extends Command {
 
             message.addReaction(emote).queue(
                     s -> {
-                        if(ReactionRoleFunctions.addReactionRole(e.getGuild(), message.getId(), emote, role)) {
+                        if(DatabaseInterface.addReactionRole(e.getGuild(), message.getId(), emote, role)) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote + " to role " + role.getAsMention() + " for message " + message + ".");
                             MessageHandler.reply(e, embed.build());
                         } else {
@@ -92,12 +98,13 @@ public class ReactionRoleCommand extends Command {
 
     /**
      * Process GenericGuildMessageReactionEvent events to apply or remove roles from users.
+     *
      * @param e GenericGuildMessageReactionEvent
      */
     public static void processReaction(GenericGuildMessageReactionEvent e) {
         final String message = e.getMessageId();
         final String emote = e.getReactionEmote().getAsReactionCode();
-        final String roleId = ReactionRoleFunctions.selectReactionRole(message, emote);
+        final String roleId = DatabaseInterface.selectReactionRole(message, emote);
 
         if(roleId == null) {
             return;
@@ -113,6 +120,97 @@ public class ReactionRoleCommand extends Command {
             e.getGuild().addRoleToMember(e.getMember(), role).queue();
         } else {
             e.getGuild().removeRoleFromMember(e.getMember(), role).queue();
+        }
+    }
+
+    public static class DatabaseInterface {
+        /**
+         * Selects a reaction role to the respective database table and returns if the operation was successful. (String)
+         *
+         * @param message message the reaction role is attached to.
+         * @param emote   the emote the reaction role is invoked by.
+         * @return boolean if the operation was successful.
+         */
+        public static String selectReactionRole(String message, String emote) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+
+                stmt.setString(1, message);
+                stmt.setString(2, emote);
+
+                ResultSet rs = stmt.executeQuery();
+                if(rs.next()) {
+                    return rs.getString(1);
+                }
+
+                return null;
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                return null;
+            }
+        }
+
+        /**
+         * Adds a reaction role to the database and returns if the operation was successful.
+         *
+         * @param guild   guild the reaction role is attached to.
+         * @param message message the reaction role is attached to.
+         * @param emote   the emote the reaction role is invoked by.
+         * @param role    the role that the reaction role will give to the user.
+         * @return boolean if the operation was successful.
+         */
+        public static boolean addReactionRole(Guild guild, String message, String emote, Role role) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `reaction_roles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
+
+                stmt.setString(1, guild.getId());
+                stmt.setString(2, message);
+                stmt.setString(3, emote);
+                stmt.setString(4, role.getId());
+
+                return !stmt.execute();
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                return false;
+            }
+        }
+
+        /**
+         * Removes a reaction role from the database and returns if the operation was successful.
+         *
+         * @param message message the reaction role is attached to.
+         * @param emote   the emote the reaction role is invoked by.
+         * @return boolean if the operation was successful.
+         */
+        public static void removeReactionRole(Message message, String emote) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+
+                stmt.setString(1, message.getId());
+                stmt.setString(2, emote);
+                stmt.execute();
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            }
+        }
+
+        /**
+         * Removes all reaction roles from the given message.
+         * @param message message id.
+         */
+        public static void removeReactionRole(String message) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ?")) {
+
+                stmt.setString(1, message);
+                stmt.execute();
+
+            } catch(Exception ex) {
+                log.error("An error occurred while running the {} class, message: {}", DatabaseFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            }
         }
     }
 }
