@@ -32,7 +32,7 @@ public class NukeCommand extends Command {
                 channel.createCopy().queue(r -> channel.delete().queue(s -> {}, f -> {}));
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("Channels marked as **news** cannot be nuked in this way.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return;
         }
@@ -41,7 +41,7 @@ public class NukeCommand extends Command {
         // Also prevents NumberFormatException for parsing the integer later.
         if(e.getParameters().length() > 3 || !Sanitiser.isNumber(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel. e.g. #general");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 

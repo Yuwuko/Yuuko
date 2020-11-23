@@ -24,7 +24,7 @@ public class ClearCommand extends Command {
         try {
             if(!e.hasParameters()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("The queue has been cleared.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 AudioManagerController.getGuildAudioManager(e.getGuild()).getScheduler().queue.clear();
                 return;
             }
@@ -42,7 +42,7 @@ public class ClearCommand extends Command {
                 if(clearPos - 1 == i++) {
                     // clearPos - 1 so we can clear the 0th item in queue
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("`" + track.getInfo().title + "` has been cleared from the queue.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     continue;
                 }
                 temp.addLast(track);

@@ -23,12 +23,12 @@ public class SkipCommand extends Command {
 
             if(manager.getPlayer().getPlayingTrack() == null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There is no track to skip.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             manager.getScheduler().nextTrack();
 
         } catch(Exception ex) {

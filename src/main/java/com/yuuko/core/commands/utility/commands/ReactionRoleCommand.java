@@ -29,7 +29,7 @@ public class ReactionRoleCommand extends Command {
 
         if(parameters[0].length() < 18) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Message").setDescription("Input did not match any known message id.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -51,11 +51,11 @@ public class ReactionRoleCommand extends Command {
                             s -> {
                                 ReactionRoleFunctions.removeReactionRole(message, emote);
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote.getAsMention() + " from message " + message + ".");
-                                MessageHandler.sendMessage(e, embed.build());
+                                MessageHandler.reply(e, embed.build());
                             },
                             f -> {
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to remove the reaction from the selected message.");
-                                MessageHandler.sendMessage(e, embed.build());
+                                MessageHandler.reply(e, embed.build());
                             });
                 });
                 return;
@@ -64,14 +64,14 @@ public class ReactionRoleCommand extends Command {
             // check if the role exists, is available for use.
             if(!e.getGuild().getRoleCache().asList().contains(role)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("This role is unavailable for use in a reaction role. Make sure that you are using roles from this server.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             // checks if role is lower in the hierarchy than bots highest role.
             if(role.getPositionRaw() >= highestSelfRole.getPositionRaw()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("I cannot assign roles that are higher than or equal to my highest role in the hierarchy.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -79,19 +79,19 @@ public class ReactionRoleCommand extends Command {
                     s -> {
                         if(ReactionRoleFunctions.addReactionRole(e.getGuild(), message.getId(), emote, role)) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote.getAsMention() + " to role " + role.getAsMention() + " for message " + message + ".");
-                            MessageHandler.sendMessage(e, embed.build());
+                            MessageHandler.reply(e, embed.build());
                         } else {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Already Exists").setDescription("A reaction role using this message and emote combination already exists.");
-                            MessageHandler.sendMessage(e, embed.build());
+                            MessageHandler.reply(e, embed.build());
                         }},
                     f -> {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to add a reaction to the selected message.");
-                        MessageHandler.sendMessage(e, embed.build());
+                        MessageHandler.reply(e, embed.build());
                     });
 
         }, failure -> {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to find message with given id, either deleted or isn't in this channel.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         });
     }
 

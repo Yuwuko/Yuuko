@@ -19,7 +19,7 @@ public class LogMetricsCommand extends Command {
         try {
             Config.LOG_METRICS = !Config.LOG_METRICS;
             EmbedBuilder embed = new EmbedBuilder().setTitle("Logging Metrics").setDescription("Now " + Config.LOG_METRICS + ".");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

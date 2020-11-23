@@ -21,7 +21,7 @@ public class StopCommand extends Command {
         AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
         if(e.getCommand() != null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         }
     }
 

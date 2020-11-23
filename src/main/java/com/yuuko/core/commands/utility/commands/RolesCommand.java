@@ -38,6 +38,6 @@ public class RolesCommand extends Command {
                 .setTitle(e.getGuild().getName() + " Roles")
                 .setDescription(roles.toString())
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 }

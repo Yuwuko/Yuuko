@@ -32,7 +32,7 @@ public class WeatherCommand extends Command {
 
             if(data == null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -54,8 +54,7 @@ public class WeatherCommand extends Command {
                     .addField("Wind Angle", data.get("wind").getAsJsonObject().get("deg").getAsString() + "°", true)
                     .setTimestamp(Instant.now())
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, embed.build());
-
+            MessageHandler.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

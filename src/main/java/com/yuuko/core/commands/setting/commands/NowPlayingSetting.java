@@ -32,13 +32,13 @@ public class NowPlayingSetting extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Now Playing").setDescription(status)
                         .addField("State", "`nowPlaying` is currently set to `" + (GuildFunctions.getGuildSetting("nowplaying", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
                         .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             if(!booleanValues.contains(e.getParameters())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + e.getParameters().toUpperCase() + "_ is not valid. (Valid: TRUE, FALSE)");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -47,10 +47,10 @@ public class NowPlayingSetting extends Command {
             if(GuildFunctions.setGuildSettings("nowplaying", intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(e.getParameters().toUpperCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`nowPlaying` set to `TRUE`.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`nowPlaying` set to `FALSE`.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
             }
         } catch(Exception ex) {

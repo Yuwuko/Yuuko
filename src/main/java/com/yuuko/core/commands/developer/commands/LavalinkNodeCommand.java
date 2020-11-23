@@ -16,11 +16,11 @@ public class LavalinkNodeCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         try {
-            String[] commandParameters = e.getParameters().split("\\s+", 3);
-            if(commandParameters[0].equals("add")) {
-                Config.LAVALINK.getLavalink().addNode(URI.create(commandParameters[1]), commandParameters[2]);
-            } else if(commandParameters[0].equals("remove")) {
-                Config.LAVALINK.getLavalink().removeNode(Integer.parseInt(commandParameters[1]));
+            String[] params = e.getParameters().split("\\s+", 3);
+            if(params[0].equals("add")) {
+                Config.LAVALINK.getLavalink().addNode(URI.create(params[1]), params[2]);
+            } else if(params[0].equals("remove")) {
+                Config.LAVALINK.getLavalink().removeNode(Integer.parseInt(params[1]));
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

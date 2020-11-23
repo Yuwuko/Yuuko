@@ -20,13 +20,13 @@ public class RollCommand extends Command {
     public void onCommand(MessageEvent e) {
         if(!Sanitiser.isNumber(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input.").setDescription("Input must be a non-negative numeric value.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
         int roll = Math.max(1, Integer.parseInt(e.getParameters()));
         EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + roll + "` and got `" + (ThreadLocalRandom.current().nextInt(roll) + 1) + "`.");
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

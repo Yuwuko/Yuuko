@@ -34,7 +34,7 @@ public class LastCommand extends Command {
 				MessageHandler.sendMessage(e, queuedTrack.build());
 			} else {
 				EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");
-				MessageHandler.sendMessage(e, embed.build());
+				MessageHandler.reply(e, embed.build());
 			}
 
 		} catch(Exception ex) {

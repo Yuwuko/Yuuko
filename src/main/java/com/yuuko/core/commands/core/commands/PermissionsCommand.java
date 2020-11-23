@@ -21,6 +21,6 @@ public class PermissionsCommand extends Command {
         EmbedBuilder about = new EmbedBuilder().setTitle("Permissions")
                 .setDescription("One of the most common reasons for commands not to work is lack of required permissions. Below are all of the permissions that I current have.")
                 .addField("Granted", permissions, true);
-        MessageHandler.sendMessage(e, about.build());
+        MessageHandler.reply(e, about.build());
     }
 }

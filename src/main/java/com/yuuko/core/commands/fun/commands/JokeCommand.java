@@ -32,7 +32,7 @@ public class JokeCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("No Results")
                         .setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -42,7 +42,7 @@ public class JokeCommand extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder().setDescription(joke);
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

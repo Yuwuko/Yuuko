@@ -54,7 +54,7 @@ public class AudioLoadHandler {
                         case BACKGROUND -> embed.setAuthor(e.getAuthor().getAsTag() + " set the background track!",null, e.getAuthor().getAvatarUrl());
                         default -> embed.setAuthor(e.getAuthor().getAsTag() + " did something!",null, e.getAuthor().getAvatarUrl());
                     }
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
 
 
                     if(type == Playback.PLAY) {
@@ -86,7 +86,7 @@ public class AudioLoadHandler {
                 try {
                     if(type == Playback.PLAY) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to queue from playlist: `" + playlist.getName() + "`");
-                        MessageHandler.sendMessage(e, embed.build());
+                        MessageHandler.reply(e, embed.build());
 
                         List<AudioTrack> tracks = playlist.getTracks();
                         for(AudioTrack track : tracks) {
@@ -98,7 +98,7 @@ public class AudioLoadHandler {
 
                     if(type == Playback.PLAYNEXT) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to the front of the queue from playlist: `" + playlist.getName() + "`");
-                        MessageHandler.sendMessage(e, embed.build());
+                        MessageHandler.reply(e, embed.build());
 
                         ArrayList<AudioTrack> tempQueue = new ArrayList<>(manager.getScheduler().queue);
                         manager.getScheduler().queue.clear();
@@ -113,7 +113,7 @@ public class AudioLoadHandler {
 
                     if(type == Playback.BACKGROUND) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Playlist as background currently not supported!");
-                        MessageHandler.sendMessage(e, embed.build());
+                        MessageHandler.reply(e, embed.build());
                     }
 
                 } catch(Exception ex) {
@@ -124,14 +124,14 @@ public class AudioLoadHandler {
             @Override
             public void noMatches() {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No matches found using that parameter.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException ex) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + ex.getMessage())
                         .setDescription("The most common cause for this error is trying to play age-restricted content. If the problem persists, please contact " + Config.AUTHOR + ".");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
         });
     }

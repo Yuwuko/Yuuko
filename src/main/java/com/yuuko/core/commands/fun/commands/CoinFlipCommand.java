@@ -30,6 +30,6 @@ public class CoinFlipCommand extends Command {
                 .setDescription((rng == 0) ? responses.get(2) : (rng < 5000) ? responses.get(0) : responses.get(1))
                 .setTimestamp(Instant.now())
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 }

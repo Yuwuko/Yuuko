@@ -33,14 +33,14 @@ public class LyricsCommand extends Command {
 
             if(response != 200) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             JsonArray hits = json.get("response").getAsJsonObject().get("hits").getAsJsonArray();
             if(hits.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -48,7 +48,7 @@ public class LyricsCommand extends Command {
             Elements elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics");
             if(elements.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -73,7 +73,7 @@ public class LyricsCommand extends Command {
                         .setThumbnail(data.get("header_image_url").getAsString())
                         .setDescription(lyrics)
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             } else {
                 for(int i = 0; i < lyricsList.size(); i++) {
                     EmbedBuilder embed = new EmbedBuilder()
@@ -81,7 +81,7 @@ public class LyricsCommand extends Command {
                             .setTitle(data.get("full_title").getAsString() + " (" + (i+1) + "/" + lyricsList.size() + ")")
                             .setThumbnail(data.get("header_image_url").getAsString())
                             .setDescription(lyricsList.get(i));
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
             }
 

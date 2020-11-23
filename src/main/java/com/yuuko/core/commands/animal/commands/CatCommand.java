@@ -23,7 +23,7 @@ public class CatCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Cat")
                 .setImage(object.get("url").getAsString());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

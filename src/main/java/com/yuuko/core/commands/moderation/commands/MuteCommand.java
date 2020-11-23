@@ -1,12 +1,14 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.Config;
+import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -41,12 +43,14 @@ public class MuteCommand extends Command {
         Consumer<Throwable> failure = f -> e.getMessage().addReaction("❌").queue();
         if(target.getRoles().stream().noneMatch((role) -> role.getName().equalsIgnoreCase("Muted"))) {
             e.getGuild().addRoleToMember(target, muted).queue(s -> {
-                e.getMessage().addReaction("✅").queue();
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Mute").setDescription(target.getEffectiveName() + " has been successfully muted.");
+                MessageHandler.reply(e, embed.build());
                 ModerationLogSetting.execute(e, "Mute", target.getUser(), (params.length < 2) ? "None" : params[1]);
             }, failure);
         } else {
             e.getGuild().removeRoleFromMember(target, muted).queue(s -> {
-                e.getMessage().addReaction("✅").queue();
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription(target.getEffectiveName() + " has been successfully unmuted.");
+                MessageHandler.reply(e, embed.build());
                 ModerationLogSetting.execute(e, "Unmute", target.getUser(), (params.length < 2) ? "None" : params[1]);
             }, failure);
         }

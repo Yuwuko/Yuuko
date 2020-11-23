@@ -32,13 +32,13 @@ public class DjModeSetting extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode").setDescription(status)
                         .addField("State", "DJ Mode is currently set to `" + (GuildFunctions.getGuildSetting("djmode", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
                         .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             if(!booleanValues.contains(e.getParameters())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + e.getParameters().toUpperCase() + "_ is not valid. (Valid: TRUE, FALSE)");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -47,10 +47,10 @@ public class DjModeSetting extends Command {
             if(GuildFunctions.setGuildSettings("djmode", intValue, e.getGuild().getId())) {
                 if(Boolean.parseBoolean(e.getParameters().toUpperCase())) {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`djMode` set to `TRUE`.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`djMode` set to `FALSE`.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
             }
         } catch(Exception ex) {

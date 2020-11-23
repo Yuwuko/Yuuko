@@ -29,7 +29,7 @@ public class ShutdownCommand extends Command {
         if(Sanitiser.isNumber(e.getParameters())) {
             DatabaseFunctions.triggerShutdownSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shard: " + e.getParameters());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -39,7 +39,7 @@ public class ShutdownCommand extends Command {
                 DatabaseFunctions.triggerShutdownSignal(i);
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -49,7 +49,7 @@ public class ShutdownCommand extends Command {
                 DatabaseFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         }
     }
 

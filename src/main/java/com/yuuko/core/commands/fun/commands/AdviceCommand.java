@@ -22,6 +22,6 @@ public class AdviceCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Advice")
                 .setDescription(object.get("slip").getAsJsonObject().get("advice").getAsString());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 }

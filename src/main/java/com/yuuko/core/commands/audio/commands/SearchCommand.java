@@ -30,13 +30,13 @@ public class SearchCommand extends Command {
                 if(e.getParameters().equalsIgnoreCase("cancel")) {
                     audioSearchResults.remove(e.getAuthor().getId());
                     EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     return;
                 }
 
                 if(!Sanitiser.isNumber(e.getParameters())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     return;
                 }
 
@@ -48,7 +48,7 @@ public class SearchCommand extends Command {
                     audioSearchResults.remove(e.getAuthor().getId());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
                 return;
             }
@@ -64,7 +64,7 @@ public class SearchCommand extends Command {
                 }
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There was an issue processing your request.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 

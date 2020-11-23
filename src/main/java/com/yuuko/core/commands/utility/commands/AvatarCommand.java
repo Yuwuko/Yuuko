@@ -30,6 +30,6 @@ public class AvatarCommand extends Command {
                 .setTitle(user.getName() + "#" + user.getDiscriminator() + "'s Avatar")
                 .setImage(user.getEffectiveAvatarUrl() + "?size=256&.gif")
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 }

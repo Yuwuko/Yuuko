@@ -31,7 +31,7 @@ public class YouTubeSearchHandler {
     public static List<SearchResult> search(MessageEvent e) {
         if(!api.isAvailable()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Google API key missing, unable to use YouTube search features.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return null;
         }
 
@@ -63,7 +63,7 @@ public class YouTubeSearchHandler {
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Service Error: " + ex.getDetails().getCode())
                     .setDescription(ex.getDetails().getMessage());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         } catch (IOException cx) {
             log.error("There was an IO error: " + cx.getCause());
         }

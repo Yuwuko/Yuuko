@@ -54,7 +54,7 @@ public final class Sanitiser {
         if(minimumParameters > 0 && !e.hasParameters()) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **0**.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return false;
         }
@@ -64,7 +64,7 @@ public final class Sanitiser {
             if(commandParameters.length < minimumParameters) {
                 if(feedback) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
                 return false;
             }
@@ -84,7 +84,7 @@ public final class Sanitiser {
         if(!e.getGuild().getSelfMember().canInteract(member)) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Target").setDescription("I cannot interact with that user because they have an equal or a higher role in the hierarchy to me.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return false;
         }
@@ -92,7 +92,7 @@ public final class Sanitiser {
         if(!e.getMember().canInteract(member)) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Target").setDescription("You cannot `" + reason + "` someone with a higher or equal role in the hierarchy to yourself.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return false;
         }

@@ -32,7 +32,7 @@ public class UKParliamentPetitionCommand extends Command {
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     return;
                 }
 
@@ -61,14 +61,14 @@ public class UKParliamentPetitionCommand extends Command {
                         .addField("Government Response Summary", governmentResponse, false)
                         .setTimestamp(Instant.now())
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             } else {
 
                 JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json").getJsonObject();
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("There was a problem retrieving the main set of petitions.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     return;
                 }
 
@@ -89,7 +89,7 @@ public class UKParliamentPetitionCommand extends Command {
                     }
                 }
 
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

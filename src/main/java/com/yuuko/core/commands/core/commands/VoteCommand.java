@@ -25,6 +25,6 @@ public class VoteCommand extends Command {
                 )
                 .addField("discordbots.org", "[link](https://discordbots.org/bot/420682957007880223/vote)", true)
                 .addField("discordbotlist.com", "[link](https://discordbotlist.com/bots/420682957007880223/upvote)", true);
-        MessageHandler.sendMessage(e, about.build());
+        MessageHandler.reply(e, about.build());
     }
 }

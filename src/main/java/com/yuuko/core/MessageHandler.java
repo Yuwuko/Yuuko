@@ -134,6 +134,22 @@ public final class MessageHandler {
     }
 
     /**
+     * Sends an embedded reply to the given message.
+     *
+     * @param event {@link MessageEvent}
+     * @param embed {@link MessageEmbed}
+     */
+    public static void reply(MessageEvent event, MessageEmbed embed) {
+        try {
+            if(hasEmbedSendPermission(event)) {
+                event.getMessage().reply(embed).queue();
+            }
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Sends a message to a supplied channel.
      *
      * @param event {@link GenericGuildEvent}

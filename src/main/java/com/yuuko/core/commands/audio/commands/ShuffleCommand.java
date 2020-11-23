@@ -23,12 +23,12 @@ public class ShuffleCommand extends Command {
 
             if(manager.getScheduler().queue.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There aren't any tracks to shuffle.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shuffling").setDescription("The queue has been shuffled.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             manager.getScheduler().shuffle();
 
         } catch(Exception ex) {

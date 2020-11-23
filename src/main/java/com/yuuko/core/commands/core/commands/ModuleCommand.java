@@ -28,7 +28,7 @@ public class ModuleCommand extends Command {
 
             if(!Config.MODULES.containsKey(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -36,16 +36,16 @@ public class ModuleCommand extends Command {
             if(Config.LOCKED_MODULES.contains(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
                         .setDescription("The `" + Config.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
             if(ModuleFunctions.toggleModule(guild, module)) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + module + "_ was enabled on this server!");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("_" + module + "_ was disabled on this server!");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
         } else {
             ArrayList<ArrayList<String>> settings = ModuleFunctions.getModuleSettings(e.getGuild().getId());

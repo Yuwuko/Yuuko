@@ -20,7 +20,7 @@ public class ReloadApiCommand extends Command {
         try {
             Config.API_MANAGER = new ApiManager();
             EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded ApiManager.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

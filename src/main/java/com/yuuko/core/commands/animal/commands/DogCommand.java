@@ -23,7 +23,7 @@ public class DogCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Dog")
                 .setImage(object.get("message").getAsString());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

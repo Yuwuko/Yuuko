@@ -23,7 +23,7 @@ public class FoxCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Fox")
                 .setImage(object.get("image").getAsString());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

@@ -19,13 +19,13 @@ public class PrefixSetting extends Command {
     public void onCommand(MessageEvent e) {
         if(e.getParameters().length() < 1 || e.getParameters().length() > 5) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Input must have a minimum length of `1` and a maximum length of `5` characters.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
         if(GuildFunctions.setGuildSettings("prefix", e.getParameters(), e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to `" + e.getParameters() + "`");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         }
     }
 }

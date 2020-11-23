@@ -27,7 +27,7 @@ public class KitsuCommand extends Command {
 
             if(json == null || json.getAsJsonArray("data").size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -57,7 +57,7 @@ public class KitsuCommand extends Command {
                     .addField("Start Date", startDate, true)
                     .addField("End Date", endDate, true)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

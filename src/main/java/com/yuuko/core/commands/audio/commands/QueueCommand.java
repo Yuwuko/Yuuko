@@ -26,7 +26,7 @@ public class QueueCommand extends Command {
             synchronized(manager.getScheduler().queue) {
                 if(manager.getScheduler().queue.size() < 1) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains `0` tracks.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     return;
                 }
 

@@ -31,7 +31,7 @@ public class RestartCommand extends Command {
         if(Sanitiser.isNumber(e.getParameters())) {
             DatabaseFunctions.triggerRestartSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shard: " + e.getParameters());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -41,7 +41,7 @@ public class RestartCommand extends Command {
                 DatabaseFunctions.triggerShutdownSignal(i);
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shards: " + e.getParameters());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -51,7 +51,7 @@ public class RestartCommand extends Command {
                 DatabaseFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shards: " + e.getParameters());
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         }
     }
 

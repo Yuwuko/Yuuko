@@ -53,7 +53,7 @@ public class NationalGeographicCommand extends Command {
             embed.addField(title + " - " + author, description,false);
         }
 
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

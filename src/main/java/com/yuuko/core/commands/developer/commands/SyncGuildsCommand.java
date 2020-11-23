@@ -20,7 +20,7 @@ public class SyncGuildsCommand extends Command {
         try {
             e.getJDA().getGuildCache().forEach(GuildFunctions::verifyIntegrity);
             EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds updated.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

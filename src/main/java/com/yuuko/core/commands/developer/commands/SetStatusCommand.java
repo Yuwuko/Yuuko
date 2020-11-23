@@ -26,7 +26,7 @@ public class SetStatusCommand extends Command {
             default -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
         }
         EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

@@ -59,7 +59,7 @@ public class HelpCommand extends Command {
                         .addField("Binds", BindFunctions.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
                         .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             });
         }
     }

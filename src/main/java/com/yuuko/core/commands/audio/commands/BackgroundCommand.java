@@ -28,7 +28,7 @@ public class BackgroundCommand extends Command {
 
         if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Removing").setDescription("The background track has been removed.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             manager.getScheduler().setBackground(null);
             return;
         }
@@ -41,7 +41,7 @@ public class BackgroundCommand extends Command {
         List<SearchResult> results = YouTubeSearchHandler.search(e);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
         String trackId = "https://www.youtube.com/watch?v=" + results.get(0).getId().getVideoId();

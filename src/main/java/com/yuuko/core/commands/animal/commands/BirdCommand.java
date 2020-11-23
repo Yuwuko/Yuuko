@@ -23,7 +23,7 @@ public class BirdCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Bird")
                 .setImage(object.get(0).getAsString());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 
 }

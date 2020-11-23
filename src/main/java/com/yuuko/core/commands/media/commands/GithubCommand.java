@@ -33,7 +33,7 @@ public class GithubCommand extends Command {
 
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -60,6 +60,6 @@ public class GithubCommand extends Command {
                 .addField("Commits", commits, true)
                 .addField("Size", size,true)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 }

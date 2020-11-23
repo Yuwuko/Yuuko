@@ -47,7 +47,7 @@ public final class MessageUtilities {
         if(e.getMessage().mentionsEveryone()) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return null;
         }
@@ -55,7 +55,7 @@ public final class MessageUtilities {
         if(mentioned.size() < 1) {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("There were no mentioned users found.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return null;
         }
@@ -78,7 +78,7 @@ public final class MessageUtilities {
             return modifiableMentioned;
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return null;
         }
     }

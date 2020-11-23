@@ -58,7 +58,7 @@ public class LondonUndergroundCommand extends Command {
 
                 embed.addBlankField(true);
                 embed.addField("", reasons.toString(), false);
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             } else {
 
                 if(goodServices == 11) {
@@ -72,7 +72,7 @@ public class LondonUndergroundCommand extends Command {
                         .addField("", reasons.toString(), false)
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
 
         } catch(Exception ex) {

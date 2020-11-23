@@ -19,7 +19,7 @@ public class PauseCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("The player has been paused.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().setPaused(true);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

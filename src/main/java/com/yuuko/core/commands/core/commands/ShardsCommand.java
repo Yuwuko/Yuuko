@@ -51,6 +51,6 @@ public class ShardsCommand extends Command {
             }
         }
 
-        MessageHandler.sendMessage(e, shardEmbed.build());
+        MessageHandler.reply(e, shardEmbed.build());
     }
 }

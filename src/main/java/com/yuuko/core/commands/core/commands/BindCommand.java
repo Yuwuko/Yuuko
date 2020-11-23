@@ -27,7 +27,7 @@ public class BindCommand extends Command {
 
             if(!params[0].equals("*") && !Config.MODULES.containsKey(params[0])) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "help** command.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
                 return;
             }
 
@@ -38,7 +38,7 @@ public class BindCommand extends Command {
 
                 if(channels.size() < 1) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Expected at least **1** \\#tagged channel to bind, found **0**.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                     return;
                 }
 
@@ -50,16 +50,16 @@ public class BindCommand extends Command {
                 TextUtilities.removeLast(boundChannels, ", ");
 
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + module + "** on **" + boundChannels.toString() + "**.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             } else {
                 final int res = BindFunctions.toggleBind(e.getGuild().getId(), e.getChannel().getId(), module);
 
                 if(res == 0) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + e.getChannel().getName() + "**.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 } else if(res == 1) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + e.getChannel().getName() + "**.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
             }
         } else {
@@ -67,7 +67,7 @@ public class BindCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Bound Modules")
                         .setDescription(BindFunctions.getGuildBinds(e.getGuild(), "\n"));
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             } catch(Exception ex) {
                 //
             }

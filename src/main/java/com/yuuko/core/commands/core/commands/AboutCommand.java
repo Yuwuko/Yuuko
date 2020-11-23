@@ -65,6 +65,6 @@ public class AboutCommand extends Command {
                 .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
                 .addField("Ping", MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms)",true)
                 .addField("Latest Updates", latestUpdates.toString(), false);
-        MessageHandler.sendMessage(e, about.build());
+        MessageHandler.reply(e, about.build());
     }
 }

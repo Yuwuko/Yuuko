@@ -46,6 +46,6 @@ public class EightBallCommand extends Command {
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
                 .setFooter(Config.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.sendMessage(e, embed.build());
+        MessageHandler.reply(e, embed.build());
     }
 }

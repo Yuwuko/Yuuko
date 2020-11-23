@@ -32,7 +32,7 @@ public class StarboardSetting extends Command {
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription(status)
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
@@ -41,7 +41,7 @@ public class StarboardSetting extends Command {
                 channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                    MessageHandler.sendMessage(e, embed.build());
+                    MessageHandler.reply(e, embed.build());
                 }
             });
             return;
@@ -51,14 +51,14 @@ public class StarboardSetting extends Command {
         if(channel != null) {
             if(GuildFunctions.setGuildSettings("starboard", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been set to **" + channel.getAsMention() + "**.");
-                MessageHandler.sendMessage(e, embed.build());
+                MessageHandler.reply(e, embed.build());
             }
             return;
         }
 
         if(GuildFunctions.setGuildSettings("starboard", null, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been unset, thus deactivating the starboard.");
-            MessageHandler.sendMessage(e, embed.build());
+            MessageHandler.reply(e, embed.build());
         }
     }
 
