@@ -39,9 +39,14 @@ public final class DiscordUtilities {
 
         for(Role role: guild.getRoles()) {
             if(role.getName().equals("Muted")) {
+                if(!guild.getSelfMember().canInteract(role)) {
+                    return null;
+                }
                 return role;
             }
         }
+
+
 
         // max number of roles in guild is 250
         if(!guild.getSelfMember().hasPermission(Permission.MANAGE_ROLES) || guild.getRoleCache().size() == 250) {

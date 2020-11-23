@@ -37,6 +37,8 @@ public class MuteCommand extends Command {
 
         Role muted = DiscordUtilities.getOrSetupMutedRole(e.getGuild());
         if(muted == null) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Mute (Setup)").setDescription("Unable to successfully set up `mute` role. Either the role is equal/higher on the hierarchy to/than me, or the server has the maximum (250) number of roles.");
+            MessageHandler.reply(e, embed.build());
             return;
         }
 
