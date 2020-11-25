@@ -7,6 +7,6 @@ public class PruneMetricsTask implements Task {
 
     @Override
     public void run() {
-        MetricsManager.pruneMetrics();
+        MetricsManager.DatabaseInterface.pruneMetrics();
     }
 }

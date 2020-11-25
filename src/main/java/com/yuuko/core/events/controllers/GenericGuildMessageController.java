@@ -5,8 +5,8 @@ import com.yuuko.core.Config;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.CommandLogSetting;
 import com.yuuko.core.commands.utility.commands.ReactionRoleCommand;
-import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.utilities.Sanitiser;
 import com.yuuko.core.utilities.Utilities;
 import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
@@ -60,7 +60,7 @@ public class GenericGuildMessageController {
             new CommandExecutor(event);
             execTime = (System.nanoTime() - execTime)/1000000.0;
 
-            DatabaseFunctions.updateCommandLog(event, execTime);
+            MetricsManager.DatabaseInterface.updateCommandMetric(event, execTime);
             CommandLogSetting.execute(event, execTime);
 
         } catch(Exception ex) {

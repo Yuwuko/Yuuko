@@ -6,9 +6,10 @@ import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.lavalink.LavalinkManager;
+import com.yuuko.core.commands.core.commands.BindCommand;
 import com.yuuko.core.database.connection.DatabaseConnection;
-import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
+import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
@@ -43,6 +44,7 @@ public class Config {
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
+    public static boolean LOG_METRICS;
     public static String BOT_ID;
     private static String BOT_TOKEN;
     public static int SHARDS_TOTAL = 0;
@@ -63,7 +65,7 @@ public class Config {
             "Requested by "
     );
 
-    public static boolean LOG_METRICS = true;
+
 
     /**
      * Loads all of the bots configurations. (Order DOES matter)
@@ -108,6 +110,7 @@ public class Config {
                             "author: \"\"" + System.lineSeparator() +
                                     "website: \"\"" + System.lineSeparator() +
                                     "support: \"\"" + System.lineSeparator() +
+                                    "log_metrics: \"false\"" + System.lineSeparator() +
                                     "bot_id: \"\"" + System.lineSeparator() +
                                     "bot_token: \"\"" + System.lineSeparator() +
                                     "shards: \"1\""
@@ -194,6 +197,7 @@ public class Config {
             AUTHOR = config.get("author");
             AUTHOR_WEBSITE = config.get("website");
             SUPPORT_GUILD = config.get("support");
+            LOG_METRICS = Boolean.parseBoolean(config.get("log_metrics"));
             BOT_ID = config.get("bot_id");
             BOT_TOKEN = config.get("bot_token");
             SHARDS_INSTANCE = Integer.parseInt(config.get("shards_instance"));
@@ -209,9 +213,9 @@ public class Config {
      * Must be done before initialiseAudio().
      */
     private void registerShards() {
-        DatabaseFunctions.pruneExpiredShards();
+        ShardFunctions.pruneExpiredShards();
         for(int i = 0; i < SHARDS_INSTANCE; i++) {
-            SHARD_IDS.add(DatabaseFunctions.provideShardId());
+            SHARD_IDS.add(ShardFunctions.provideShardId());
         }
         log.info("Shard ID: {}, Total Shards: {}.", SHARD_IDS, SHARDS_TOTAL);
     }
@@ -313,7 +317,10 @@ public class Config {
      * Synchronizes the database, adding any guilds that added the bot while it was offline.
      */
     private void verifyDatabase() {
-        SHARD_MANAGER.getShards().forEach(shard -> shard.getGuildCache().forEach(GuildFunctions::verifyIntegrity));
+        SHARD_MANAGER.getShards().forEach(shard -> shard.getGuildCache().forEach(guild -> {
+            GuildFunctions.addOrUpdateGuild(guild);
+            BindCommand.DatabaseInterface.verifyBinds(guild);
+        }));
         log.info("Database integrity verified with JDA.");
     }
 
@@ -324,7 +331,6 @@ public class Config {
         new MetricsManager(SHARD_IDS.size());
 
         SHARD_IDS.forEach(shardId -> {
-            MetricsManager.truncateMetrics(shardId);
             MetricsManager.getDiscordMetrics(shardId).update();
         });
         log.info("Initialised metrics.");

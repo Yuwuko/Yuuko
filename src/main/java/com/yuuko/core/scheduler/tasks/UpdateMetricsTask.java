@@ -1,7 +1,6 @@
 package com.yuuko.core.scheduler.tasks;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.Task;
 
@@ -20,7 +19,7 @@ public class UpdateMetricsTask implements Task {
             MetricsManager.getSystemMetrics().update();
             MetricsManager.getAudioMetrics().update();
             MetricsManager.getCacheMetrics().update();
-            DatabaseFunctions.updateMetricsDatabase();
+            MetricsManager.DatabaseInterface.updateMetrics();
         }
     }
 }
