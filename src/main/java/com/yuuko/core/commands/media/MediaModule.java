@@ -10,7 +10,7 @@ import static java.util.Map.entry;
 
 public class MediaModule extends Module {
     private static final Map<String, Class<? extends Command>> commands = Map.ofEntries(
-            entry("kitsu", KitsuCommand.class),
+            entry("anime", AnimeCommand.class),
             entry("osu", OsuCommand.class),
             entry("github", GithubCommand.class),
             entry("underground", LondonUndergroundCommand.class),
