@@ -56,10 +56,10 @@ public class MetricsManager {
          */
         public static void updateMetrics() {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `system_metrics`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `discord_metrics`(`shardId`, `gatewayPing`, `restPing`, `guildCount`) VALUES(?, ?, ?, ?)");
-                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `audio_metrics`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
-                PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `cache_metrics`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `metrics_system`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `metrics_discord`(`shardId`, `gatewayPing`, `restPing`, `guildCount`) VALUES(?, ?, ?, ?)");
+                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
+                PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `metrics_cache`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
 
                 // system metrics will is the same for every shard on an instance - for this reason we only update it once (per instance instead of per shard)
                 stmt.setInt(1, Config.BOT.getJDA().getShardInfo().getShardId());
@@ -99,7 +99,7 @@ public class MetricsManager {
          */
         public static void updateCommandMetric(MessageEvent e, double executionTime) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `command_log`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `metrics_command`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
                 stmt.setInt(1, e.getShardId());
                 stmt.setString(2, e.getGuild().getId());
@@ -117,10 +117,10 @@ public class MetricsManager {
          */
         public static void pruneMetrics() {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `system_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `discord_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-                PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `audio_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-                PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `cache_metrics` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `metrics_system` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+                PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `metrics_discord` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+                PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `metrics_audio` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
+                PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `metrics_cache` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
                 stmt.execute();
                 stmt2.execute();

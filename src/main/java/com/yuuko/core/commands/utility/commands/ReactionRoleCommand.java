@@ -136,7 +136,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static String selectReactionRole(String message, String emote) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT `roleId` FROM `guilds_reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
                 stmt.setString(1, message);
                 stmt.setString(2, emote);
@@ -165,7 +165,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static boolean addReactionRole(Guild guild, String message, String emote, Role role) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `reaction_roles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `guilds_reaction_roles` (`guildId`, `messageId`, `emoteId`, `roleId`) VALUES (?, ?, ?, ?)")) {
 
                 stmt.setString(1, guild.getId());
                 stmt.setString(2, message);
@@ -189,7 +189,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static void updateReactionRole(Guild guild, String oldEmote, String newEmote) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("UPDATE `reaction_roles` SET `emoteId` = ? WHERE `guildId` = ? AND `emoteId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_reaction_roles` SET `emoteId` = ? WHERE `guildId` = ? AND `emoteId` = ?")) {
 
                 stmt.setString(1, newEmote);
                 stmt.setString(2, guild.getId());
@@ -211,7 +211,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static void removeReactionRole(Message message, String emote) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_reaction_roles` WHERE `messageId` = ? AND `emoteId` = ?")) {
 
                 stmt.setString(1, message.getId());
                 stmt.setString(2, emote);
@@ -229,7 +229,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static void removeReactionRole(String messageId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `messageId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_reaction_roles` WHERE `messageId` = ?")) {
 
                 stmt.setString(1, messageId);
                 stmt.execute();
@@ -246,7 +246,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static void removeReactionRole(Emote e) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `emoteId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_reaction_roles` WHERE `emoteId` = ?")) {
 
                 stmt.setString(1, e.getName() + ":" + e.getId());
                 stmt.execute();
@@ -263,7 +263,7 @@ public class ReactionRoleCommand extends Command {
          */
         public static void removeReactionRole(Role e) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `reaction_roles` WHERE `roleId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_reaction_roles` WHERE `roleId` = ?")) {
 
                 stmt.setString(1, e.getId());
                 stmt.execute();

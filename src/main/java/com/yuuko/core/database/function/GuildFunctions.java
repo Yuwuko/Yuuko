@@ -43,7 +43,7 @@ public class GuildFunctions {
             PreparedStatement stmt = conn.prepareStatement("INSERT IGNORE INTO `guilds` (`guildId`) VALUES (?)");
             PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `guildName` = VALUES(`guildName`), `guildRegion` = VALUES(`guildRegion`), `guildIcon` = VALUES(`guildIcon`), `guildSplash` = VALUES(`guildSplash`), `lastUpdated` = CURRENT_TIMESTAMP");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT IGNORE INTO `guilds_settings` (`guildId`) VALUES (?)");
-            PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `module_settings` (`guildId`) VALUES (?)")) {
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `guilds_module_settings` (`guildId`) VALUES (?)")) {
 
             stmt.setString(1, guild.getId());
             if(stmt.execute()) {

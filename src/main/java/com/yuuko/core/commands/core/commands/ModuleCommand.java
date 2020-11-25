@@ -77,7 +77,7 @@ public class ModuleCommand extends Command {
          */
         public static ArrayList<ArrayList<String>> getModuleSettings(String guild) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_settings` WHERE `guildId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_settings` WHERE `guildId` = ?")) {
 
                 stmt.setString(1, guild);
                 ResultSet rs = stmt.executeQuery();
@@ -118,7 +118,7 @@ public class ModuleCommand extends Command {
          */
         public static boolean isEnabled(String guild, String module) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT `" + module + "` FROM `module_settings` WHERE `guildId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT `" + module + "` FROM `guilds_module_settings` WHERE `guildId` = ?")) {
 
                 stmt.setString(1, guild);
                 ResultSet resultSet = stmt.executeQuery();
@@ -140,7 +140,7 @@ public class ModuleCommand extends Command {
          */
         public static boolean toggleModule(String guild, String module) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("UPDATE `module_settings` SET `" + module + "` = NOT `" + module + "` WHERE `guildId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_module_settings` SET `" + module + "` = NOT `" + module + "` WHERE `guildId` = ?")) {
 
                 stmt.setString(1, guild);
                 stmt.execute();

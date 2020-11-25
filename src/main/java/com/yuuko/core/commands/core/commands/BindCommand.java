@@ -91,8 +91,8 @@ public class BindCommand extends Command {
          */
         public static int toggleBind(String guildId, String channel, String module) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `module_bindings`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `guilds_module_binds`(`guildId`, `channelId`, `moduleName`) VALUES (?,?,?)")) {
 
                 stmt.setString(1, guildId);
                 stmt.setString(2, channel);
@@ -125,7 +125,7 @@ public class BindCommand extends Command {
          */
         public static String getGuildBinds(Guild guild, String delimiter) {
             try(Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ? ORDER BY `channelId`")) {
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE `guildId` = ? ORDER BY `channelId`")) {
 
                 stmt.setString(1, guild.getId());
                 ResultSet rs = stmt.executeQuery();
@@ -159,7 +159,7 @@ public class BindCommand extends Command {
          */
         public static String getBindsByModule(Guild guild, String module, String delimiter) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE (`guildId` = ? AND `moduleName` = ?) OR (`guildId` = ? AND `moduleName` = '*')")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE (`guildId` = ? AND `moduleName` = ?) OR (`guildId` = ? AND `moduleName` = '*')")) {
 
                 stmt.setString(1, guild.getId());
                 stmt.setString(2, module);
@@ -196,7 +196,7 @@ public class BindCommand extends Command {
          */
         public static boolean checkBind(String guildId, String channelId, String moduleName) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE (`guildId` = ? AND `moduleName` = ?) OR (`guildId` = ? AND `moduleName` = '*')")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE (`guildId` = ? AND `moduleName` = ?) OR (`guildId` = ? AND `moduleName` = '*')")) {
 
                 stmt.setString(1, guildId);
                 stmt.setString(2, moduleName);
@@ -226,7 +226,7 @@ public class BindCommand extends Command {
          */
         public static void verifyBinds(Guild guild) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `module_bindings` WHERE `guildId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE `guildId` = ?")) {
 
                 stmt.setString(1, guild.getId());
                 ResultSet rs = stmt.executeQuery();
@@ -253,7 +253,7 @@ public class BindCommand extends Command {
          */
         private static boolean clearBind(String guild, String channel, String module) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_module_binds` WHERE `guildId` = ? AND `channelId` = ? AND `moduleName` = ?")) {
 
                 stmt.setString(1, guild);
                 stmt.setString(2, channel);
@@ -280,7 +280,7 @@ public class BindCommand extends Command {
          */
         private static void clearBindByChannel(String channelId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_module_binds` WHERE `channelId` = ?")) {
 
                 stmt.setString(1, channelId);
                 stmt.execute();
@@ -297,7 +297,7 @@ public class BindCommand extends Command {
          */
         public static void cleanupReferences(String channel) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `module_bindings` WHERE `channelId` = ?");
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_module_binds` WHERE `channelId` = ?");
                 PreparedStatement stmt2 = conn.prepareStatement("UPDATE `guilds_settings` SET `starboard` = null WHERE 'starboard' = ?");
                 PreparedStatement stmt3 = conn.prepareStatement("UPDATE `guilds_settings` SET `comLog` = null WHERE 'comLog' = ?");
                 PreparedStatement stmt4 = conn.prepareStatement("UPDATE `guilds_settings` SET `modLog` = null WHERE 'modLog' = ?")) {
