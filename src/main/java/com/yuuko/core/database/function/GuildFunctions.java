@@ -1,6 +1,5 @@
 package com.yuuko.core.database.function;
 
-import com.yuuko.core.commands.core.commands.BindCommand;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import net.dv8tion.jda.api.entities.Guild;
 import org.slf4j.Logger;
@@ -65,21 +64,6 @@ public class GuildFunctions {
             stmt4.execute();
 
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Adds a new guild to the database and initialises it's settings, or updates current guilds if they already exist on the database.
-     * @param guild {@link Guild} object to verify.
-     * @return if the add was successful.
-     */
-    public static void verifyIntegrity(Guild guild) {
-        try {
-            GuildFunctions.addOrUpdateGuild(guild);
-            BindCommand.DatabaseInterface.verifyBinds(guild);
-
-        } catch (Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
@@ -253,6 +237,23 @@ public class GuildFunctions {
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
             return false;
+        }
+    }
+
+    /**
+     * Updates settings from channels that are deleted.
+     * @param setting the setting to cleanup.
+     * @param guildId the guild to cleanup.
+     */
+    public static void cleanupSetting(String setting, String guildId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_settings` SET " + setting + " = null WHERE `guildId` = ?")){
+
+            stmt.setString(1, guildId);
+            stmt.execute();
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
