@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DiscordMetrics implements Metric {
-    public int shardId;
+    public final int shardId;
     public final AtomicInteger GUILD_COUNT = new AtomicInteger();
     public final AtomicInteger GATEWAY_PING = new AtomicInteger();
     public final AtomicInteger REST_PING = new AtomicInteger();
