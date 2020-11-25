@@ -15,26 +15,6 @@ create table if not exists dbyuuko.cache_metrics
 )
     charset=utf8;
 
-create table if not exists dbyuuko.command_log
-(
-    shardId int(3) null,
-    guildId varchar(18) null,
-    command varchar(32) null,
-    executionTime double(8,2) null,
-    dateInserted timestamp default CURRENT_TIMESTAMP null
-)
-    charset=utf8;
-
-create table if not exists dbyuuko.discord_metrics
-(
-    shardId int(3) not null,
-    gatewayPing double(11,1) not null,
-    restPing double(11,1) not null,
-    guildCount int not null,
-    dateInserted timestamp default CURRENT_TIMESTAMP null
-)
-    charset=utf8;
-
 create table if not exists dbyuuko.guilds
 (
     guildId varchar(18) not null,
@@ -138,13 +118,42 @@ create table if not exists dbyuuko.shards
 )
     charset=utf8;
 
+create table if not exists dbyuuko.command_log
+(
+    shardId int(3) null,
+    guildId varchar(18) null,
+    command varchar(32) null,
+    executionTime double(8,2) null,
+    dateInserted timestamp default CURRENT_TIMESTAMP null,
+    constraint command_log_shards_shardId_fk
+        foreign key (shardId) references dbyuuko.shards (shardId)
+            on update cascade on delete cascade
+)
+    charset=utf8;
+
+create table if not exists dbyuuko.discord_metrics
+(
+    shardId int(3) not null,
+    gatewayPing double(11,1) not null,
+    restPing double(11,1) not null,
+    guildCount int not null,
+    dateInserted timestamp default CURRENT_TIMESTAMP null,
+    constraint discord_metrics_shards_shardId_fk
+        foreign key (shardId) references dbyuuko.shards (shardId)
+            on update cascade on delete cascade
+)
+    charset=utf8;
+
 create table if not exists dbyuuko.system_metrics
 (
     shardId int(3) not null,
     uptime bigint(32) not null,
     memoryTotal int not null,
     memoryUsed int not null,
-    dateInserted timestamp default CURRENT_TIMESTAMP null
+    dateInserted timestamp default CURRENT_TIMESTAMP null,
+    constraint system_metrics_shards_shardId_fk
+        foreign key (shardId) references dbyuuko.shards (shardId)
+            on update cascade on delete cascade
 )
     charset=utf8;
 
