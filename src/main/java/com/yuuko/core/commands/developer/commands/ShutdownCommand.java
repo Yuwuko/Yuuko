@@ -3,7 +3,7 @@ package com.yuuko.core.commands.developer.commands;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.database.function.DatabaseFunctions;
+import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -27,7 +27,7 @@ public class ShutdownCommand extends Command {
         }
 
         if(Sanitiser.isNumber(e.getParameters())) {
-            DatabaseFunctions.triggerShutdownSignal(Integer.parseInt(e.getParameters()));
+            ShardFunctions.triggerShutdownSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shard: " + e.getParameters());
             MessageHandler.reply(e, embed.build());
             return;
@@ -36,7 +36,7 @@ public class ShutdownCommand extends Command {
         if(range.matcher(e.getParameters()).matches()) {
             String[] shards = e.getParameters().split("-");
             for(int i = Integer.parseInt(shards[0]); i <= Integer.parseInt(shards[1]); i++) {
-                DatabaseFunctions.triggerShutdownSignal(i);
+                ShardFunctions.triggerShutdownSignal(i);
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
             MessageHandler.reply(e, embed.build());
@@ -46,7 +46,7 @@ public class ShutdownCommand extends Command {
         if(list.matcher(e.getParameters()).matches()) {
             String[] shards = e.getParameters().split(",");
             for(String shard: shards) {
-                DatabaseFunctions.triggerShutdownSignal(Integer.parseInt(shard));
+                ShardFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
             MessageHandler.reply(e, embed.build());

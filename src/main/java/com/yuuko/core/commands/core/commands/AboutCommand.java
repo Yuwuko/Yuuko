@@ -5,8 +5,8 @@ import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.database.function.DatabaseFunctions;
 import com.yuuko.core.database.function.GuildFunctions;
+import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -25,7 +25,7 @@ public class AboutCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         int totalGuilds = 0;
-        for(Shard shard: DatabaseFunctions.getShardStatistics()) {
+        for(Shard shard: ShardFunctions.getShardStatistics()) {
             totalGuilds += shard.getGuildCount();
         }
 

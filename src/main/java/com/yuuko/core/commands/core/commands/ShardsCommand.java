@@ -3,7 +3,7 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageHandler;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.database.function.DatabaseFunctions;
+import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.entity.MessageEvent;
 import lavalink.client.io.LavalinkSocket;
@@ -28,7 +28,7 @@ public class ShardsCommand extends Command {
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
-        for(Shard shard : DatabaseFunctions.getShardStatistics()) {
+        for(Shard shard : ShardFunctions.getShardStatistics()) {
             shards.append("**Yuuko #").append(shard.getId()).append("**")
                     .append("\n").append("Status: ").append(shard.getStatus())
                     .append("\n").append("Guilds: ").append(shard.getGuildCount())
