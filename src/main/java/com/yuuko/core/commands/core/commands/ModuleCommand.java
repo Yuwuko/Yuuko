@@ -65,8 +65,10 @@ public class ModuleCommand extends Command {
         }
     }
 
+    /**
+     * Inner-class container for all database-related functions.
+     */
     public static class DatabaseInterface {
-
         /**
          * Retrieves all of the module settings for a guild and returns them in an arrayList of an arrayList.
          *

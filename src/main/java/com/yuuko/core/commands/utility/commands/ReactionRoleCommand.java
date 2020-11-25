@@ -123,6 +123,9 @@ public class ReactionRoleCommand extends Command {
         }
     }
 
+    /**
+     * Inner-class container for all database-related functions.
+     */
     public static class DatabaseInterface {
         /**
          * Selects a reaction role to the respective database table and returns if the operation was successful. (String)
