@@ -1,20 +1,3 @@
-create table if not exists dbyuuko.metrics_audio
-(
-    players int(3) null,
-    activePlayers int(3) null,
-    queueSize int(4) null,
-    dateInserted timestamp default CURRENT_TIMESTAMP null
-)
-    charset=utf8;
-
-create table if not exists dbyuuko.metrics_cache
-(
-    trackIdMatch int(13) not null,
-    trackIdSize int(13) not null,
-    dateInserted timestamp default CURRENT_TIMESTAMP not null
-)
-    charset=utf8;
-
 create table if not exists dbyuuko.guilds
 (
     guildId varchar(18) not null,
@@ -38,31 +21,13 @@ create table if not exists dbyuuko.guilds_data
 )
     charset=utf8;
 
-create table if not exists dbyuuko.guilds_settings
-(
-    guildId varchar(18) not null,
-    prefix varchar(5) default '-' not null,
-    deleteExecuted tinyint(1) default 0 not null,
-    nowPlaying tinyint(1) default 1 not null,
-    djMode tinyint(1) default 0 not null,
-    starboard varchar(18) null,
-    comLog varchar(18) null,
-    modLog varchar(18) null,
-    lastUpdated timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    primary key (guildId),
-    constraint guilds_settings_guilds_guildId_fk
-        foreign key (guildId) references dbyuuko.guilds (guildId)
-            on update cascade on delete cascade
-)
-    charset=utf8;
-
 create table if not exists dbyuuko.guilds_module_binds
 (
     guildId varchar(18) not null,
     channelId varchar(18) not null,
     moduleName varchar(128) not null,
     dateInserted timestamp default CURRENT_TIMESTAMP null,
-    constraint ModuleBindings_guildId_channelId_moduleName_pk
+    constraint guilds_module_binds_guildId_channelId_moduleName_pk
         unique (guildId, channelId, moduleName),
     constraint guilds_module_binds_guilds_guildId_fk
         foreign key (guildId) references dbyuuko.guilds (guildId)
@@ -100,6 +65,41 @@ create table if not exists dbyuuko.guilds_reaction_roles
     constraint guilds_reaction_roles_guilds_guildId_fk
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
+)
+    charset=utf8;
+
+create table if not exists dbyuuko.guilds_settings
+(
+    guildId varchar(18) not null,
+    prefix varchar(5) default '-' not null,
+    deleteExecuted tinyint(1) default 0 not null,
+    nowPlaying tinyint(1) default 1 not null,
+    djMode tinyint(1) default 0 not null,
+    starboard varchar(18) null,
+    comLog varchar(18) null,
+    modLog varchar(18) null,
+    lastUpdated timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    primary key (guildId),
+    constraint guilds_settings_guilds_guildId_fk
+        foreign key (guildId) references dbyuuko.guilds (guildId)
+            on update cascade on delete cascade
+)
+    charset=utf8;
+
+create table if not exists dbyuuko.metrics_audio
+(
+    players int(3) null,
+    activePlayers int(3) null,
+    queueSize int(4) null,
+    dateInserted timestamp default CURRENT_TIMESTAMP null
+)
+    charset=utf8;
+
+create table if not exists dbyuuko.metrics_cache
+(
+    trackIdMatch int(13) not null,
+    trackIdSize int(13) not null,
+    dateInserted timestamp default CURRENT_TIMESTAMP not null
 )
     charset=utf8;
 
