@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202012r1
++ [~] Updated dependencies.
+
 ## 202011r6
 + [!] Major update of several commands/systems to enable sharding. (Metrics/Database)
 + [+] Added [__restart__] command to allow shards to restart if they have been shutdown.

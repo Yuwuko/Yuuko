@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-project.version = '202011r6'
+project.version = '202012r1'
 sourceCompatibility = 1.15
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -37,9 +37,9 @@ repositories {
 
 ext {
     reflections8                 = '0.11.7'                     // https://mvnrepository.com/artifact/net.oneandone.reflections8/reflections8
-    jda                          = '4.2.0_221'                  // https://mvnrepository.com/artifact/net.dv8tion/JDA
-    lavalinkClient               = '5073e5fd49'                 // https://jitpack.io/#Yuuko-oh/Lavalink-Client
-    lavaplayer                   = '1.3.61'                     // https://github.com/sedmelluq/lavaplayer
+    jda                          = '4.2.0_222'                  // https://mvnrepository.com/artifact/net.dv8tion/JDA
+    lavalinkClient               = 'b307b2ea3e'                 // https://jitpack.io/#Yuuko-oh/Lavalink-Client
+    lavaplayer                   = '1.3.62'                     // https://github.com/sedmelluq/lavaplayer
     jdanas                       = '1.1.0'                      // https://github.com/sedmelluq/jda-nas
     dblJavaWrapper               = '2.0.1'                      // https://github.com/top-gg/DBL-Java-Library
     googleApiServicesYoutube     = 'v3-rev222-1.25.0'           // https://mvnrepository.com/artifact/com.google.apis/google-api-services-youtube

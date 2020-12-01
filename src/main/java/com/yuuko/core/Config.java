@@ -40,7 +40,7 @@ import java.util.*;
 public class Config {
     private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    public static final String VERSION = "202011r6";
+    public static final String VERSION = "202012r1";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -64,8 +64,6 @@ public class Config {
             VERSION + " • Asked by ",
             "Requested by "
     );
-
-
 
     /**
      * Loads all of the bots configurations. (Order DOES matter)
