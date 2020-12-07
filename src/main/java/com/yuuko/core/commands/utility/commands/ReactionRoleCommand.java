@@ -117,9 +117,9 @@ public class ReactionRoleCommand extends Command {
         }
 
         if(e instanceof GuildMessageReactionAddEvent) {
-            e.getGuild().addRoleToMember(e.getMember(), role).queue();
+            e.getGuild().addRoleToMember(e.getUserId(), role).queue();
         } else {
-            e.getGuild().removeRoleFromMember(e.getMember(), role).queue();
+            e.getGuild().removeRoleFromMember(e.getUserId(), role).queue();
         }
     }
 
