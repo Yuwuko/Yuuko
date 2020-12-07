@@ -142,7 +142,7 @@ public final class MessageHandler {
     public static void reply(MessageEvent event, MessageEmbed embed) {
         try {
             if(hasEmbedSendPermission(event)) {
-                event.getMessage().reply(embed).queue();
+                event.getMessage().reply(embed).queue(s -> {}, f -> sendMessage(event, embed));
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
@@ -158,7 +158,7 @@ public final class MessageHandler {
     public static void reply(MessageEvent event, String message) {
         try {
             if(hasEmbedSendPermission(event)) {
-                event.getMessage().reply(message).queue();
+                event.getMessage().reply(message).queue(s -> {}, f -> sendMessage(event, message));
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), ex.getMessage(), ex);
