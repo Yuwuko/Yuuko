@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202012r1
 + [~] Updated dependencies.
++ [~] Fixed very old bug related to embed permissions checking.
 
 ## 202011r6
 + [!] Major update of several commands/systems to enable sharding. (Metrics/Database)

@@ -248,20 +248,20 @@ public final class MessageHandler {
      * Auxiliary hasEmbedSendPermission flow controller
      */
     private static boolean hasEmbedSendPermission(GenericGuildMessageEvent e) {
-        return hasSendPermission(e.getGuild(), e.getChannel());
+        return hasEmbedSendPermission(e.getGuild(), e.getChannel());
     }
 
     /**
      * Auxiliary hasEmbedSendPermission flow controller
      */
     private static boolean hasEmbedSendPermission(GenericGuildMessageEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
+        return hasEmbedSendPermission(e.getGuild(), channel);
     }
 
     /**
      * Auxiliary hasEmbedSendPermission flow controller
      */
     private static boolean hasEmbedSendPermission(GenericGuildEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
+        return hasEmbedSendPermission(e.getGuild(), channel);
     }
 }
