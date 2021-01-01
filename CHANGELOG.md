@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202101r1
++ [!] HAPPY NEW YEAR!
++ [~] Updated dependencies or something.
+
 ## 202012r1
 + [~] Updated dependencies.
 + [~] Fixed very old bug related to embed permissions checking.
