@@ -51,9 +51,10 @@ public class AboutCommand extends Command {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Config.BOT.getName() + "#" + Config.BOT.getDiscriminator(), null, Config.BOT.getAvatarUrl())
                 .setDescription(
-                        Config.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html), using [Gradle](https://gradle.org/) for dependencies.  " +
+                        Config.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html) " +
                         "If you would like me in your guild, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) " +
-                        "If I already am, thank you for your continued support! \n Use `" + e.getPrefix() + "help` for a list of commands, or `" + e.getPrefix() + "vote` if you wish to vote for " + Config.BOT.getName() + "."
+                        "If I already am, thank you for your continued support, and please consider supporting " + Config.BOT.getName() + " on [patreon](https://www.patreon.com/yuwuko/)!" +
+                                "\n Use `" + e.getPrefix() + "help` for a list of commands, or `" + e.getPrefix() + "vote` if you wish to vote for " + Config.BOT.getName() + "."
                 )
                 .addField("Author", "[" + Config.AUTHOR + "](" + Config.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Config.VERSION, true)

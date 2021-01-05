@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202101r1
 + [!] HAPPY NEW YEAR!
++ [!] Added Patreon link to [__about__]. (we can dream)  
 + [~] Updated dependencies or something.
 
 ## 202012r1
