@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.developer.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -29,7 +29,7 @@ public class ShutdownCommand extends Command {
         if(Sanitiser.isNumber(e.getParameters())) {
             ShardFunctions.triggerShutdownSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shard: " + e.getParameters());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -39,7 +39,7 @@ public class ShutdownCommand extends Command {
                 ShardFunctions.triggerShutdownSignal(i);
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -49,7 +49,7 @@ public class ShutdownCommand extends Command {
                 ShardFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 

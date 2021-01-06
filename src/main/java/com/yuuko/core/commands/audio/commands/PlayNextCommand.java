@@ -2,7 +2,7 @@ package com.yuuko.core.commands.audio.commands;
 
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioLoadHandler;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
@@ -29,7 +29,7 @@ public class PlayNextCommand extends Command {
         if(!e.hasParameters()) {
             if(manager.getPlayer().isPaused()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 manager.getPlayer().setPaused(false);
             }
             return;
@@ -43,7 +43,7 @@ public class PlayNextCommand extends Command {
         List<SearchResult> results = YouTubeSearchHandler.search(e);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
         String trackId = "https://www.youtube.com/watch?v=" + results.get(0).getId().getVideoId();

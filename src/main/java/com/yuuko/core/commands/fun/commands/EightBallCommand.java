@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.fun.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -46,6 +46,6 @@ public class EightBallCommand extends Command {
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
                 .setFooter(Config.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 }

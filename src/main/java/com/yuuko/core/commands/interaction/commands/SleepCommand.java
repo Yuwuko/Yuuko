@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -25,6 +25,6 @@ public class SleepCommand extends InteractionCommand {
     @Override
     public void onCommand(MessageEvent e) {
         EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** goes to sleep.").setImage(interactionImage.get(getRandom(interactionImage.size())));
-        MessageHandler.sendMessage(e, embed.build());
+        MessageDispatcher.sendMessage(e, embed.build());
     }
 }

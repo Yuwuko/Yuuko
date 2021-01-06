@@ -1,6 +1,6 @@
 package com.yuuko.core.commands;
 
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -89,7 +89,7 @@ public abstract class Command {
 
             if(timeRemaining > 0) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + e.getCommand().getName() + "** command again.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return false;
             } else {
                 cooldownsList.replace(guildId, System.currentTimeMillis());

@@ -7,7 +7,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
@@ -31,7 +31,7 @@ public class YouTubeSearchHandler {
     public static List<SearchResult> search(MessageEvent e) {
         if(!api.isAvailable()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Google API key missing, unable to use YouTube search features.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return null;
         }
 
@@ -63,7 +63,7 @@ public class YouTubeSearchHandler {
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Service Error: " + ex.getDetails().getCode())
                     .setDescription(ex.getDetails().getMessage());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         } catch (IOException cx) {
             log.error("There was an IO error: " + cx.getCause());
         }

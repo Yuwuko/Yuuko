@@ -2,7 +2,7 @@ package com.yuuko.core.commands.fun.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -22,6 +22,6 @@ public class AdviceCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Advice")
                 .setDescription(object.get("slip").getAsJsonObject().get("advice").getAsString());
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 }

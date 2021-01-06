@@ -1,7 +1,7 @@
 package com.yuuko.core.events.controllers;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
@@ -67,7 +67,7 @@ public class GenericGuildController {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Config.BOT.getAsTag(), null, Config.BOT.getAvatarUrl())
                             .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `-about` to get some general information about me.");
-                    MessageHandler.sendMessage(e, textChannel, about.build());
+                    MessageDispatcher.sendMessage(e, textChannel, about.build());
                 }
             });
         } catch(Exception ex) {

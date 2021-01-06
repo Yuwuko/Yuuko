@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -35,13 +35,13 @@ public class KickCommand extends Command {
         if(params.length < 2) {
             e.getGuild().kick(target).queue(s -> {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Kick").setDescription(target.getEffectiveName() + " has been successfully kicked.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), "None");
             }, f -> e.getMessage().addReaction("❌").queue());
         } else {
             e.getGuild().kick(target, params[1]).queue(s -> {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Mute").setDescription(target.getEffectiveName() + " has been successfully muted, for reason: " + params[1] + ".");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 ModerationLogSetting.execute(e, "Kick", target.getUser(), params[1]);
             }, f -> e.getMessage().addReaction("❌").queue());
         }

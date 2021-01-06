@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -34,7 +34,7 @@ public class ReactionRoleCommand extends Command {
 
         if(params[0].length() < 18) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Message").setDescription("Input did not match any known message id.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -52,11 +52,11 @@ public class ReactionRoleCommand extends Command {
                             s -> {
                                 DatabaseInterface.removeReactionRole(message, emote);
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote + " from message " + message + ".");
-                                MessageHandler.reply(e, embed.build());
+                                MessageDispatcher.reply(e, embed.build());
                             },
                             f -> {
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to remove the reaction from the selected message.");
-                                MessageHandler.reply(e, embed.build());
+                                MessageDispatcher.reply(e, embed.build());
                             });
                 });
                 return;
@@ -65,14 +65,14 @@ public class ReactionRoleCommand extends Command {
             // check if the role exists, is available for use.
             if(!e.getGuild().getRoleCache().asList().contains(role)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("This role is unavailable for use in a reaction role. Make sure that you are using roles from this server.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             // checks if role is lower in the hierarchy than bots highest role.
             if(role.getPositionRaw() >= highestSelfRole.getPositionRaw()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("I cannot assign roles that are higher than or equal to my highest role in the hierarchy.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
@@ -80,19 +80,19 @@ public class ReactionRoleCommand extends Command {
                     s -> {
                         if(DatabaseInterface.addReactionRole(e.getGuild(), message.getId(), emote, role)) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote + " to role " + role.getAsMention() + " for message " + message + ".");
-                            MessageHandler.reply(e, embed.build());
+                            MessageDispatcher.reply(e, embed.build());
                         } else {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Already Exists").setDescription("A reaction role using this message and emote combination already exists.");
-                            MessageHandler.reply(e, embed.build());
+                            MessageDispatcher.reply(e, embed.build());
                         }},
                     f -> {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to add a reaction to the selected message.");
-                        MessageHandler.reply(e, embed.build());
+                        MessageDispatcher.reply(e, embed.build());
                     });
 
         }, failure -> {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to find message with given id, either deleted or isn't in this channel.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         });
     }
 

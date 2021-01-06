@@ -2,7 +2,7 @@ package com.yuuko.core.commands.audio.commands;
 
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -30,13 +30,13 @@ public class SearchCommand extends Command {
                 if(e.getParameters().equalsIgnoreCase("cancel")) {
                     audioSearchResults.remove(e.getAuthor().getId());
                     EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription("Search cancelled.");
-                    MessageHandler.reply(e, embed.build());
+                    MessageDispatcher.reply(e, embed.build());
                     return;
                 }
 
                 if(!Sanitiser.isNumber(e.getParameters())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
-                    MessageHandler.reply(e, embed.build());
+                    MessageDispatcher.reply(e, embed.build());
                     return;
                 }
 
@@ -48,7 +48,7 @@ public class SearchCommand extends Command {
                     audioSearchResults.remove(e.getAuthor().getId());
                 } else {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
-                    MessageHandler.reply(e, embed.build());
+                    MessageDispatcher.reply(e, embed.build());
                 }
                 return;
             }
@@ -64,7 +64,7 @@ public class SearchCommand extends Command {
                 }
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There was an issue processing your request.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
@@ -74,7 +74,7 @@ public class SearchCommand extends Command {
                     .setAuthor("Search results for " + e.getParameters() + ".", null)
                     .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

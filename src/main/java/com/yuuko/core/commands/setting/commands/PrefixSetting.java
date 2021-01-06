@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.setting.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -19,13 +19,13 @@ public class PrefixSetting extends Command {
     public void onCommand(MessageEvent e) {
         if(e.getParameters().length() < 1 || e.getParameters().length() > 5) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Input must have a minimum length of `1` and a maximum length of `5` characters.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
         if(GuildFunctions.setGuildSettings("prefix", e.getParameters(), e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to `" + e.getParameters() + "`");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
@@ -69,7 +69,7 @@ public class UserCommand extends Command {
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.fun.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -29,6 +29,6 @@ public class ChooseCommand extends Command {
                 .addField("Probability", new BigDecimal(100.0/commandParameters.length).setScale(2, RoundingMode.HALF_UP) + "%", true)
                 .setTimestamp(Instant.now())
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 }

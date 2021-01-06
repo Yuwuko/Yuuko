@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -32,7 +32,7 @@ public class NukeCommand extends Command {
                 channel.createCopy().queue(r -> channel.delete().queue(s -> {}, f -> {}));
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("Channels marked as **news** cannot be nuked in this way.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
             return;
         }
@@ -41,7 +41,7 @@ public class NukeCommand extends Command {
         // Also prevents NumberFormatException for parsing the integer later.
         if(e.getParameters().length() > 3 || !Sanitiser.isNumber(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel. e.g. #general");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 

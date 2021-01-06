@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.setting.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -28,7 +28,7 @@ public class CommandLogSetting extends Command {
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription(status)
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -38,12 +38,12 @@ public class CommandLogSetting extends Command {
                     channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
                     if(GuildFunctions.setGuildSettings("comlog", channel.getId(), e.getGuild().getId())) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                        MessageHandler.reply(e, embed.build());
+                        MessageDispatcher.reply(e, embed.build());
                     }
                 });
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `MANAGE_CHANNEL` and `MANAGE_PERMISSIONS` permissions to setup the command log automatically.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
             return;
         }
@@ -52,14 +52,14 @@ public class CommandLogSetting extends Command {
         if(channel != null) {
             if(GuildFunctions.setGuildSettings("comlog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been set to " + channel.getAsMention() + ".");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
             return;
         }
 
         if(GuildFunctions.setGuildSettings("comlog", null, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been unset, deactivating the log.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 
@@ -82,7 +82,7 @@ public class CommandLogSetting extends Command {
                     .addField("Execution Time", new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
                     .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(e, log, embed.build());
+            MessageDispatcher.sendMessage(e, log, embed.build());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -19,7 +19,7 @@ public class PauseCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("The player has been paused.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().setPaused(true);
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

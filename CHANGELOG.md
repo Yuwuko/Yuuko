@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202101r2
++ [~] Refactored MessageHandler to MessageDispather, made all methods return booleans.
+
 ## 202101r1
 + [!] HAPPY NEW YEAR!
 + [!] Added Patreon link to [__about__]. (we can dream)  

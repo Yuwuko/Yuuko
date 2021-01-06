@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.setting.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -31,7 +31,7 @@ public class SettingsCommand extends Command {
                 .addField(e.getPrefix() + "comLog <#channel>", (settingsList.get(5) != null ? e.getGuild().getTextChannelById(settingsList.get(5)).getAsMention() : "`Disabled`") + " - Sends executed commands to a defined log channel.", false)
                 .addField(e.getPrefix() + "modLog <#channel>", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "`Disabled`") + " - Sends moderation events to a defined log channel.", false)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }

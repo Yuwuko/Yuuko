@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.entity.Shard;
@@ -51,6 +51,6 @@ public class ShardsCommand extends Command {
             }
         }
 
-        MessageHandler.reply(e, shardEmbed.build());
+        MessageDispatcher.reply(e, shardEmbed.build());
     }
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
@@ -21,7 +21,7 @@ public class LoopCommand extends Command {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Loop").setDescription("Looping for queue set to `" + !manager.getScheduler().isLooping() + "`");
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
         manager.getScheduler().setLooping(!manager.getScheduler().isLooping());
     }
 

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.fun.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 
@@ -20,6 +20,6 @@ public class SpoilerifyCommand extends Command {
             spoiler.append("||").append(character).append("||");
         }
 
-        MessageHandler.reply(e, "`" + spoiler.toString() + "`");
+        MessageDispatcher.reply(e, "`" + spoiler.toString() + "`");
     }
 }

@@ -58,7 +58,7 @@ public class CommandExecutor {
         // Is the command or module NSFW? If they are, is the channel they're being used in /not/ NSFW?
         if(command.isNSFW() && !event.getChannel().isNSFW()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return;
         }
 
@@ -67,14 +67,14 @@ public class CommandExecutor {
             // Does the bot have the permission?
             if(!bot.hasPermission(command.getPermissions()) && !bot.hasPermission(event.getChannel(), command.getPermissions())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
-                MessageHandler.reply(event, embed.build());
+                MessageDispatcher.reply(event, embed.build());
                 return;
             }
 
             // Does the user have the permission?
             if(!commander.hasPermission(command.getPermissions()) && !commander.hasPermission(event.getChannel(), command.getPermissions())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
-                MessageHandler.reply(event, embed.build());
+                MessageDispatcher.reply(event, embed.build());
                 return;
             }
         }
@@ -105,28 +105,28 @@ public class CommandExecutor {
         // Are there any nodes available?
         if(Config.LAVALINK.getLavalink().getNodes().size() < 1 && requireConnectSpeak.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There are no Lavalink nodes available to handle your request.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
         // Is the member not in a voice channel?
         if(!commanderVoiceState.inVoiceChannel() && !notInVoiceCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
         // Does the bot have permissions to connect to the voice channel? (this check isn't done in normal command execution)
         if(commanderVoiceState.inVoiceChannel() && requireConnectSpeak.contains(command.getName()) && !bot.hasPermission(commanderVoiceState.getChannel(), command.getPermissions())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I don't have the required permissions to do this, make sure I have the `"+ command.getPermissions().toString() +"` permissions and try again!");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
         // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
         if(AudioManagerController.getExistingLink(event.getGuild()) != null && AudioManagerController.getGuildAudioManager(event.getGuild()).getLink().getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
@@ -138,7 +138,7 @@ public class CommandExecutor {
         // Is DJ mode on, if yes does the member lack the DJ role, and if not is the command a DJ mode command?
         if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("djMode", event.getGuild().getId())) && commander.getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !nonDJModeCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
@@ -159,13 +159,13 @@ public class CommandExecutor {
         // Checks if the module is disabled.
         if(!ModuleCommand.DatabaseInterface.isEnabled(event.getGuild().getId(), module.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("`" + module.getName() + "` module is disabled.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
         if(!command.isEnabled()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Command Disabled").setDescription("`" + command.getName() + "` command is disabled.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
@@ -182,7 +182,7 @@ public class CommandExecutor {
             return false;
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindCommand.DatabaseInterface.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
             return true;
         }
     }
@@ -201,7 +201,7 @@ public class CommandExecutor {
             event.getMessage().delete().queue();
         } else {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use `@Yuuko#2525 setting deleteExecuted false`.");
-            MessageHandler.reply(event, embed.build());
+            MessageDispatcher.reply(event, embed.build());
         }
     }
 

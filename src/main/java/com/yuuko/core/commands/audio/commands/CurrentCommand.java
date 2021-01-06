@@ -2,7 +2,7 @@ package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
@@ -26,7 +26,7 @@ public class CurrentCommand extends Command {
 
         if(track == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no track currently playing.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -38,10 +38,10 @@ public class CurrentCommand extends Command {
                 .addField("Channel", track.getInfo().author, true)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         if(e.hasParameters() && e.getParameters().equals("no-reply")) {
-            MessageHandler.sendMessage(e, queuedTrack.build());
+            MessageDispatcher.sendMessage(e, queuedTrack.build());
             return;
         }
-        MessageHandler.reply(e, queuedTrack.build());
+        MessageDispatcher.reply(e, queuedTrack.build());
     }
 
 }

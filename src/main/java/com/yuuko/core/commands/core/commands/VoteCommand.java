@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -25,6 +25,6 @@ public class VoteCommand extends Command {
                 )
                 .addField("discordbots.org", "[link](https://discordbots.org/bot/420682957007880223/vote)", true)
                 .addField("discordbotlist.com", "[link](https://discordbotlist.com/bots/420682957007880223/upvote)", true);
-        MessageHandler.reply(e, about.build());
+        MessageDispatcher.reply(e, about.build());
     }
 }

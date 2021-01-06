@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -48,7 +48,7 @@ public class GuildCommand extends Command {
                     .addField("Roles", guild.getRoles().size()+"", true)
                     .addField("Emotes", emoteString.toString(), false)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         });
     }
 

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,7 +21,7 @@ public class StopCommand extends Command {
         AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
         if(e.getCommand() != null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 

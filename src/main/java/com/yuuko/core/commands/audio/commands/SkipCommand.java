@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
@@ -23,12 +23,12 @@ public class SkipCommand extends Command {
 
             if(manager.getPlayer().getPlayingTrack() == null) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There is no track to skip.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Skipping").setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             manager.getScheduler().nextTrack();
 
         } catch(Exception ex) {

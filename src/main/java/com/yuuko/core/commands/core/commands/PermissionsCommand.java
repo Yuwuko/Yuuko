@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,6 +21,6 @@ public class PermissionsCommand extends Command {
         EmbedBuilder about = new EmbedBuilder().setTitle("Permissions")
                 .setDescription("One of the most common reasons for commands not to work is lack of required permissions. Below are all of the permissions that I current have.")
                 .addField("Granted", permissions, true);
-        MessageHandler.reply(e, about.build());
+        MessageDispatcher.reply(e, about.build());
     }
 }

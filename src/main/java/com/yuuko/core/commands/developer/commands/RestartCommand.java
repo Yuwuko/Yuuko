@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.developer.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -31,7 +31,7 @@ public class RestartCommand extends Command {
         if(Sanitiser.isNumber(e.getParameters())) {
             ShardFunctions.triggerRestartSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shard: " + e.getParameters());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -41,7 +41,7 @@ public class RestartCommand extends Command {
                 ShardFunctions.triggerShutdownSignal(i);
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shards: " + e.getParameters());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -51,7 +51,7 @@ public class RestartCommand extends Command {
                 ShardFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shards: " + e.getParameters());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 

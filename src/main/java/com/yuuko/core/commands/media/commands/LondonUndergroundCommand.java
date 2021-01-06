@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -58,7 +58,7 @@ public class LondonUndergroundCommand extends Command {
 
                 embed.addBlankField(true);
                 embed.addField("", reasons.toString(), false);
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             } else {
 
                 if(goodServices == 11) {
@@ -72,7 +72,7 @@ public class LondonUndergroundCommand extends Command {
                         .addField("", reasons.toString(), false)
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
 
         } catch(Exception ex) {

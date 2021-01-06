@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -32,7 +32,7 @@ public class UKParliamentPetitionCommand extends Command {
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                    MessageHandler.reply(e, embed.build());
+                    MessageDispatcher.reply(e, embed.build());
                     return;
                 }
 
@@ -61,14 +61,14 @@ public class UKParliamentPetitionCommand extends Command {
                         .addField("Government Response Summary", governmentResponse, false)
                         .setTimestamp(Instant.now())
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             } else {
 
                 JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json").getJsonObject();
 
                 if(json.has("error")) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("There was a problem retrieving the main set of petitions.");
-                    MessageHandler.reply(e, embed.build());
+                    MessageDispatcher.reply(e, embed.build());
                     return;
                 }
 
@@ -89,7 +89,7 @@ public class UKParliamentPetitionCommand extends Command {
                     }
                 }
 
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

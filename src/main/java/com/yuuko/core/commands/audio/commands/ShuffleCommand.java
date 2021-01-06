@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
@@ -23,12 +23,12 @@ public class ShuffleCommand extends Command {
 
             if(manager.getScheduler().queue.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("There aren't any tracks to shuffle.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shuffling").setDescription("The queue has been shuffled.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             manager.getScheduler().shuffle();
 
         } catch(Exception ex) {

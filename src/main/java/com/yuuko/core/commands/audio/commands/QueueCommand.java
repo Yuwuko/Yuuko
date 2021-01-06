@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
@@ -26,7 +26,7 @@ public class QueueCommand extends Command {
             synchronized(manager.getScheduler().queue) {
                 if(manager.getScheduler().queue.size() < 1) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains `0` tracks.");
-                    MessageHandler.reply(e, embed.build());
+                    MessageDispatcher.reply(e, embed.build());
                     return;
                 }
 
@@ -51,7 +51,7 @@ public class QueueCommand extends Command {
                         .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
                         .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
                         .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

@@ -3,7 +3,7 @@ package com.yuuko.core.commands.media.commands;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -47,7 +47,7 @@ public class OsuCommand extends Command {
 
             if(json == null || json.size() < 1) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
@@ -55,7 +55,7 @@ public class OsuCommand extends Command {
 
             if(data.get("playcount").isJsonNull()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Total playcount and playtime for **_" + data.get("username").getAsString() + "_** has returned as null, which indicates that they haven't played **" + modeString + "** yet.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
@@ -81,7 +81,7 @@ public class OsuCommand extends Command {
                     .addField("SH Ranks", shRanks, true)
                     .addField("A Ranks", aRanks, true)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);

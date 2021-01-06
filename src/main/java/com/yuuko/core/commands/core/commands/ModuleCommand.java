@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -32,7 +32,7 @@ public class ModuleCommand extends Command {
 
             if(!Config.MODULES.containsKey(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
@@ -40,16 +40,16 @@ public class ModuleCommand extends Command {
             if(Config.LOCKED_MODULES.contains(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
                         .setDescription("The `" + Config.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             if(DatabaseInterface.toggleModule(guild, module)) {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + module + "_ was enabled on this server!");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("_" + module + "_ was disabled on this server!");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
         } else {
             ArrayList<ArrayList<String>> settings = DatabaseInterface.getModuleSettings(e.getGuild().getId());
@@ -61,7 +61,7 @@ public class ModuleCommand extends Command {
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.reply(e, commandModules.build());
+            MessageDispatcher.reply(e, commandModules.build());
         }
     }
 

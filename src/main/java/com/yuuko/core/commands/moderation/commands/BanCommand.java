@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.moderation.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -48,7 +48,7 @@ public class BanCommand extends Command {
             if(delDays.get() > 7) {
                 delDays.set(7);
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Deletion days must be no larger than 7. You input `**" + commandParameters[1] + "**`, so the actual value has been capped at 7.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
         } else {
             e.getGuild().ban(target, 0, commandParameters[1]).queue(s -> { // Case: Ban w/reason, but no delDays.

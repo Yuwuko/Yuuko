@@ -2,7 +2,7 @@ package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -27,13 +27,13 @@ public class UrbanDictionaryCommand extends Command {
 
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Something went wrong when trying to execute that request, please try again.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
         if(json.get("list").getAsJsonArray().size() < 1) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -47,7 +47,7 @@ public class UrbanDictionaryCommand extends Command {
                 .setDescription(data.get("definition").getAsString().replace("[", "").replace("]", ""))
                 .addField("Example", data.get("example").getAsString().replace("[", "").replace("]", ""), false)
                 .setFooter("👍 " + data.get("thumbs_up").getAsString() + " 👎 " + data.get("thumbs_down").getAsString() + " 📌 " + BigDecimal.valueOf((thumbsUp / (thumbsUp + thumbsDown)) * 100).setScale(2, RoundingMode.HALF_UP) + "%", null);
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }

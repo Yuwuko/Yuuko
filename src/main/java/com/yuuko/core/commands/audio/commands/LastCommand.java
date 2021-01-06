@@ -2,7 +2,7 @@ package com.yuuko.core.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManagerController;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -31,10 +31,10 @@ public class LastCommand extends Command {
 						.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
 						.addField("Channel", track.getInfo().author, true)
 						.setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
-				MessageHandler.reply(e, queuedTrack.build());
+				MessageDispatcher.reply(e, queuedTrack.build());
 			} else {
 				EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");
-				MessageHandler.reply(e, embed.build());
+				MessageDispatcher.reply(e, embed.build());
 			}
 
 		} catch(Exception ex) {

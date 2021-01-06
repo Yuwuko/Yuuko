@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.setting.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -29,7 +29,7 @@ public class ModerationLogSetting extends Command {
 
             EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription(status)
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 
@@ -39,12 +39,12 @@ public class ModerationLogSetting extends Command {
                     channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                     if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                        MessageHandler.reply(e, embed.build());
+                        MessageDispatcher.reply(e, embed.build());
                     }
                 });
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the **Manage Channel** and **Manage Permissions** permissions to setup the moderation log automatically.");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
             return;
         }
@@ -53,7 +53,7 @@ public class ModerationLogSetting extends Command {
         if(channel != null) {
             if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been set to " + channel.getAsMention() + ".");
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             }
             return;
 
@@ -61,7 +61,7 @@ public class ModerationLogSetting extends Command {
 
         if(GuildFunctions.setGuildSettings("modlog", null, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been unset, deactivating the log.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 
@@ -79,7 +79,7 @@ public class ModerationLogSetting extends Command {
                     .addField("User", DiscordUtilities.getTag(e.getUser()), true)
                     .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageHandler.sendMessage(e, log, embed.build());
+            MessageDispatcher.sendMessage(e, log, embed.build());
         }
     }
 
@@ -103,7 +103,7 @@ public class ModerationLogSetting extends Command {
                     .addField("Reason", reason, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
-            MessageHandler.sendMessage(e, log, embed.build());
+            MessageDispatcher.sendMessage(e, log, embed.build());
         }
     }
 
@@ -124,7 +124,7 @@ public class ModerationLogSetting extends Command {
                     .addField("Count", messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
                     .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
-            MessageHandler.sendMessage(e, log, embed.build());
+            MessageDispatcher.sendMessage(e, log, embed.build());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.developer.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -26,7 +26,7 @@ public class SetStatusCommand extends Command {
             default -> e.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, "@Yuuko help"));
         }
         EmbedBuilder embed = new EmbedBuilder().setTitle("Status changed successfully.");
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
@@ -23,6 +23,6 @@ public class PingCommand extends Command {
                 .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms.")
                 .setTimestamp(Instant.now())
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 }

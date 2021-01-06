@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -33,7 +33,7 @@ public class HelpCommand extends Command {
             }
 
             if(e.getGuild().getMemberById(Config.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
-                MessageHandler.reply(e, commandInfo.build());
+                MessageDispatcher.reply(e, commandInfo.build());
             } else {
                 e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
             }
@@ -58,7 +58,7 @@ public class HelpCommand extends Command {
                         .addField("Binds", BindCommand.DatabaseInterface.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
                         .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
-                MessageHandler.reply(e, embed.build());
+                MessageDispatcher.reply(e, embed.build());
             });
         }
     }

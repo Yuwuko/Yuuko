@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -53,7 +53,7 @@ public class NationalGeographicCommand extends Command {
             embed.addField(title + " - " + author, description,false);
         }
 
-        MessageHandler.reply(e, embed.build());
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }

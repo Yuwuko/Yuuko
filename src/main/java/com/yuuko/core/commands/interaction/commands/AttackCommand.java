@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -29,7 +29,7 @@ public class AttackCommand extends InteractionCommand {
         Member target = MessageUtilities.getMentionedMember(e, true);
         if(target != null) {
             EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** attacks **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
-            MessageHandler.sendMessage(e, embed.build());
+            MessageDispatcher.sendMessage(e, embed.build());
         }
     }
 }

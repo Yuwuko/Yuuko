@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.developer.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.core.commands.BindCommand;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -24,7 +24,7 @@ public class SyncGuildsCommand extends Command {
                 BindCommand.DatabaseInterface.verifyBinds(guild);
             });
             EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds updated.");
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.nsfw.commands;
 
 import com.yuuko.core.Config;
-import com.yuuko.core.MessageHandler;
+import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -41,7 +41,7 @@ public class EfuktCommand extends Command {
                     .setDescription(doc.baseUri())
                     .setImage(image)
                     .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageHandler.reply(e, embed.build());
+            MessageDispatcher.reply(e, embed.build());
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
