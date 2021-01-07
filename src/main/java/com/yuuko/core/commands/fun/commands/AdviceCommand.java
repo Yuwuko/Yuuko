@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.fun.commands;
 
-import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
@@ -18,10 +17,8 @@ public class AdviceCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonObject object = new RequestHandler("https://api.adviceslip.com/advice").getJsonObject();
-
         EmbedBuilder embed = new EmbedBuilder().setTitle("Advice")
-                .setDescription(object.get("slip").getAsJsonObject().get("advice").getAsString());
+                .setDescription(new RequestHandler("https://api.adviceslip.com/advice").getJsonObject().get("slip").getAsJsonObject().get("advice").getAsString());
         MessageDispatcher.reply(e, embed.build());
     }
 }

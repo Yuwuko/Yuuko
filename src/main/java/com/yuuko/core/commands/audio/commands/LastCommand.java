@@ -20,26 +20,21 @@ public class LastCommand extends Command {
 
 	@Override
 	public void onCommand(MessageEvent e) {
-		try {
-			AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
-
-			if(track != null) {
-				EmbedBuilder queuedTrack = new EmbedBuilder()
-						.setAuthor("Last track")
-						.setTitle(track.getInfo().title, track.getInfo().uri)
-						.setThumbnail(Utilities.getAudioTrackImage(track))
-						.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
-						.addField("Channel", track.getInfo().author, true)
-						.setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
-				MessageDispatcher.reply(e, queuedTrack.build());
-			} else {
-				EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");
-				MessageDispatcher.reply(e, embed.build());
-			}
-
-		} catch(Exception ex) {
-			log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+		AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
+		if(track != null) {
+			EmbedBuilder queuedTrack = new EmbedBuilder()
+					.setAuthor("Last track")
+					.setTitle(track.getInfo().title, track.getInfo().uri)
+					.setThumbnail(Utilities.getAudioTrackImage(track))
+					.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
+					.addField("Channel", track.getInfo().author, true)
+					.setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
+			MessageDispatcher.reply(e, queuedTrack.build());
+			return;
 		}
+
+		EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");
+		MessageDispatcher.reply(e, embed.build());
 	}
 
 }

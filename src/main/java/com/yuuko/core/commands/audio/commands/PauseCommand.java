@@ -17,13 +17,9 @@ public class PauseCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("The player has been paused.");
-            MessageDispatcher.reply(e, embed.build());
-            AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().setPaused(true);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("The player has been paused.");
+        MessageDispatcher.reply(e, embed.build());
+        AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().setPaused(true);
     }
 
 }

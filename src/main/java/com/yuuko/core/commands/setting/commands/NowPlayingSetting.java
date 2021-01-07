@@ -25,16 +25,13 @@ public class NowPlayingSetting extends Command {
     }
 
     public void onCommand(MessageEvent e) {
-        try {
-            if(!e.hasParameters()) {
-                String status = "The `nowPlaying` setting determines whether tracks are announced when they start.";
-
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Now Playing").setDescription(status)
-                        .addField("State", "`nowPlaying` is currently set to `" + (GuildFunctions.getGuildSetting("nowplaying", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
-                        .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-                MessageDispatcher.reply(e, embed.build());
-                return;
-            }
+        if(!e.hasParameters()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Now Playing").setDescription("The `nowPlaying` setting determines whether tracks are announced when they start.")
+                    .addField("State", "`nowPlaying` is currently set to `" + (GuildFunctions.getGuildSetting("nowplaying", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
+                    .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
 
             if(!booleanValues.contains(e.getParameters())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + e.getParameters().toUpperCase() + "_ is not valid. (Valid: TRUE, FALSE)");
@@ -53,8 +50,6 @@ public class NowPlayingSetting extends Command {
                     MessageDispatcher.reply(e, embed.build());
                 }
             }
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+
     }
 }

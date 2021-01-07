@@ -21,39 +21,34 @@ public class Rule34Command extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            Document doc = new RequestHandler(BASE_URL).getDocument();
-            Elements images = doc.getElementsByTag("img");
+        Document doc = new RequestHandler(BASE_URL).getDocument();
+        Elements images = doc.getElementsByTag("img");
 
-            String image = "https://i.imgur.com/YXqsEo6.jpg";
-            for(Element img: images) {
-                if(img.hasAttr("height")) {
-                    image = img.attr("src");
-                    break;
-                }
+        String image = "https://i.imgur.com/YXqsEo6.jpg";
+        for(Element img: images) {
+            if(img.hasAttr("height")) {
+                image = img.attr("src");
+                break;
             }
-
-            // Retrieves character names.
-            Elements characters = doc.getElementById("tag-sidebar").getElementsByClass("tag-type-character");
-            StringBuilder characterString = new StringBuilder();
-            if(characters.size() > 0) {
-                characterString = new StringBuilder(" - ft. ");
-                for(Element tag : characters.get(0).children()) {
-                    if(tag.tagName().equals("a")) {
-                        characterString.append(tag.text()).append(", ");
-                    }
-                }
-            }
-
-            EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Rule 34" + (!characterString.toString().equals("") ? characterString.substring(0, characterString.length() - 2) : ""))
-                    .setImage(image)
-                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
+
+        // Retrieves character names.
+        Elements characters = doc.getElementById("tag-sidebar").getElementsByClass("tag-type-character");
+        StringBuilder characterString = new StringBuilder();
+        if(characters.size() > 0) {
+            characterString = new StringBuilder(" - ft. ");
+            for(Element tag : characters.get(0).children()) {
+                if(tag.tagName().equals("a")) {
+                    characterString.append(tag.text()).append(", ");
+                }
+            }
+        }
+
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Rule 34" + (!characterString.toString().equals("") ? characterString.substring(0, characterString.length() - 2) : ""))
+                .setImage(image)
+                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }

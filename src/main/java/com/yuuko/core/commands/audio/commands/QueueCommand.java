@@ -21,40 +21,36 @@ public class QueueCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
-            synchronized(manager.getScheduler().queue) {
-                if(manager.getScheduler().queue.size() < 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains `0` tracks.");
-                    MessageDispatcher.reply(e, embed.build());
-                    return;
-                }
-
-                StringBuilder queue = new StringBuilder();
-                AtomicLong nextDuration = new AtomicLong();
-                AtomicLong totalDuration = new AtomicLong();
-                AtomicInteger count = new AtomicInteger();
-
-                manager.getScheduler().queue.forEach(audioTrack -> {
-                    if(count.get() < 10) {
-                        count.getAndIncrement();
-                        queue.append("`").append(count.get() + 1).append(":` ").append(audioTrack.getInfo().title).append(" · (").append(TextUtilities.getTimestamp(audioTrack.getInfo().length)).append(") \n");
-                        nextDuration.getAndAdd(audioTrack.getDuration());
-                    }
-                    totalDuration.getAndAdd(audioTrack.getDuration());
-                });
-
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Here are the next " + count.get() + " tracks in the queue:")
-                        .setDescription(queue.toString())
-                        .addField("Queue Length", manager.getScheduler().queue.size() + "", true)
-                        .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
-                        .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
-                        .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
+        synchronized(manager.getScheduler().queue) {
+            if(manager.getScheduler().queue.size() < 1) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains `0` tracks.");
                 MessageDispatcher.reply(e, embed.build());
+                return;
             }
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+
+            StringBuilder queue = new StringBuilder();
+            AtomicLong nextDuration = new AtomicLong();
+            AtomicLong totalDuration = new AtomicLong();
+            AtomicInteger count = new AtomicInteger();
+
+            manager.getScheduler().queue.forEach(audioTrack -> {
+                if(count.get() < 10) {
+                    count.getAndIncrement();
+                    queue.append("`").append(count.get() + 1).append(":` ").append(audioTrack.getInfo().title).append(" · (").append(TextUtilities.getTimestamp(audioTrack.getInfo().length)).append(") \n");
+                    nextDuration.getAndAdd(audioTrack.getDuration());
+                }
+                totalDuration.getAndAdd(audioTrack.getDuration());
+            });
+
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Here are the next " + count.get() + " tracks in the queue:")
+                    .setDescription(queue.toString())
+                    .addField("Queue Length", manager.getScheduler().queue.size() + "", true)
+                    .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
+                    .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(e, embed.build());
         }
     }
 

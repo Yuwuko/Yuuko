@@ -25,11 +25,9 @@ public class SeekCommand extends Command {
         AudioTrack track = manager.getPlayer().getPlayingTrack();
 
         int seek;
-
         if(Sanitiser.isNumber(e.getParameters())) {
             seek = Integer.parseInt(e.getParameters())*1000;
         } else {
-
             String[] timestamp = e.getParameters().split(":", 2);
             if(timestamp.length == 2) {
                 boolean nan = false;
@@ -46,7 +44,6 @@ public class SeekCommand extends Command {
                 MessageDispatcher.reply(e, embed.build());
                 seek = 0;
             }
-
         }
 
         if(track != null) {

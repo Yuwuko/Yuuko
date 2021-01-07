@@ -47,7 +47,6 @@ public class NukeCommand extends Command {
 
         int value = Integer.parseInt(e.getParameters());
         value = value < 2 ? 2 : Math.min(value, 99);
-
         e.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
             // Use Collectors.partitionBy() to generate 2 lists based on a boolean comparison of date.
             OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);

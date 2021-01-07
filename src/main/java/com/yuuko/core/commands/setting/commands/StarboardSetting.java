@@ -29,7 +29,6 @@ public class StarboardSetting extends Command {
         if(!e.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
             String status = (channel == null) ? "There is currently no starboard set." : "The starboard is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();
-
             EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription(status)
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
             MessageDispatcher.reply(e, embed.build());

@@ -16,12 +16,8 @@ public class LogMetricsCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            Config.LOG_METRICS = !Config.LOG_METRICS;
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Metrics Logging").setDescription("Metrics logging has been set to: " + Config.LOG_METRICS);
-            MessageDispatcher.reply(e, embed.build());
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+        Config.LOG_METRICS = !Config.LOG_METRICS;
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Metrics Logging").setDescription("Metrics logging has been set to: " + Config.LOG_METRICS);
+        MessageDispatcher.reply(e, embed.build());
     }
 }

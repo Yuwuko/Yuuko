@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.animal.commands;
 
-import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
@@ -19,10 +18,8 @@ public class DogCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonObject object = new RequestHandler(BASE_URL).getJsonObject();
-
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Dog")
-                .setImage(object.get("message").getAsString());
+                .setImage(new RequestHandler(BASE_URL).getJsonObject().get("message").getAsString());
         MessageDispatcher.reply(e, embed.build());
     }
 

@@ -66,17 +66,13 @@ public class BindCommand extends Command {
                     MessageDispatcher.reply(e, embed.build());
                 }
             }
-        } else {
-            try {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Bound Modules")
-                        .setDescription(DatabaseInterface.getGuildBinds(e.getGuild(), "\n"));
-                MessageDispatcher.reply(e, embed.build());
-            } catch(Exception ex) {
-                //
-            }
+            return;
         }
 
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Bound Modules")
+                .setDescription(DatabaseInterface.getGuildBinds(e.getGuild(), "\n"));
+        MessageDispatcher.reply(e, embed.build());
     }
 
     public static class DatabaseInterface {

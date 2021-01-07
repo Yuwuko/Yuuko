@@ -17,12 +17,8 @@ public class ReloadApiCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            Config.API_MANAGER = new ApiManager();
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded ApiManager.");
-            MessageDispatcher.reply(e, embed.build());
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+        Config.API_MANAGER = new ApiManager();
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded ApiManager.");
+        MessageDispatcher.reply(e, embed.build());
     }
 }

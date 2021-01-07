@@ -25,36 +25,29 @@ public class DeleteExecutedSetting extends Command {
     }
 
     public void onCommand(MessageEvent e) {
-        try {
-            if(!e.hasParameters()) {
-                String status = "The `deleteExecuted` setting determines whether user input for commands are deleted if the command is successfully executed.";
+        if(!e.hasParameters()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Delete Executed").setDescription("The `deleteExecuted` setting determines whether user input for commands are deleted if the command is successfully executed.")
+                    .addField("State", "`deleteExecuted` is currently set to `" + (GuildFunctions.getGuildSetting("deleteexecuted", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
+                    .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
 
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Delete Executed").setDescription(status)
-                        .addField("State", "`deleteExecuted` is currently set to `" + (GuildFunctions.getGuildSetting("deleteexecuted", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
-                        .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
+        if(!booleanValues.contains(e.getParameters())) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("_" + e.getParameters().toUpperCase() + "_ is not valid. (Valid: TRUE, FALSE)");
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
+
+        String intValue = (e.getParameters().equals("true") || e.getParameters().equals("yes")) ? "1" : "0";
+        if(GuildFunctions.setGuildSettings("deleteexecuted", intValue, e.getGuild().getId())) {
+            if(Boolean.parseBoolean(e.getParameters().toUpperCase())) {
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`deleteExecuted` set to `TRUE`.");
                 MessageDispatcher.reply(e, embed.build());
-                return;
-            }
-
-            if(!booleanValues.contains(e.getParameters())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("_" + e.getParameters().toUpperCase() + "_ is not valid. (Valid: TRUE, FALSE)");
+            } else {
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`deleteExecuted` set to `FALSE`.");
                 MessageDispatcher.reply(e, embed.build());
-                return;
             }
-
-            String intValue = (e.getParameters().equals("true") || e.getParameters().equals("yes")) ? "1" : "0";
-
-            if(GuildFunctions.setGuildSettings("deleteexecuted", intValue, e.getGuild().getId())) {
-                if(Boolean.parseBoolean(e.getParameters().toUpperCase())) {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`deleteExecuted` set to `TRUE`.");
-                    MessageDispatcher.reply(e, embed.build());
-                } else {
-                    EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`deleteExecuted` set to `FALSE`.");
-                    MessageDispatcher.reply(e, embed.build());
-                }
-            }
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
     }
 }

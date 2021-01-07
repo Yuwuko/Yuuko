@@ -32,10 +32,7 @@ public class LondonUndergroundCommand extends Command {
     public void onCommand(MessageEvent e) {
         try {
             final String json = new RequestHandler(BASE_URL).getString();
-
             List<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<>(){});
-
-            // Build string for reasons why line doesn't have good service.
             StringBuilder reasons = new StringBuilder();
 
             int goodServices = 11;

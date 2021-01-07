@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.animal.commands;
 
-import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
@@ -19,10 +18,8 @@ public class CatCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonObject object = new RequestHandler(BASE_URL).getJsonArray().get(0).getAsJsonObject();
-
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Cat")
-                .setImage(object.get("url").getAsString());
+                .setImage(new RequestHandler(BASE_URL).getJsonArray().get(0).getAsJsonObject().get("url").getAsString());
         MessageDispatcher.reply(e, embed.build());
     }
 

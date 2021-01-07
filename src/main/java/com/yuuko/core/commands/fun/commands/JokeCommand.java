@@ -22,7 +22,6 @@ public class JokeCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) {
         String joke;
-
         if(!e.hasParameters()) {
             joke = new RequestHandler(BASE_URL).getJsonObject().get("joke").getAsString();
         } else {

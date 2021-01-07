@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.animal.commands;
 
-import com.google.gson.JsonObject;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
@@ -19,10 +18,8 @@ public class FoxCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonObject object = new RequestHandler(BASE_URL).getJsonObject();
-
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Fox")
-                .setImage(object.get("image").getAsString());
+                .setImage(new RequestHandler(BASE_URL).getJsonObject().get("image").getAsString());
         MessageDispatcher.reply(e, embed.build());
     }
 

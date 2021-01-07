@@ -84,7 +84,7 @@ public class CommandExecutor {
             command.onCommand(event);
             messageCleanup();
         } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+            log.error("Something went wrong when executing the {} , message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
             event.getMessage().addReaction("❌").queue();
         }
     }

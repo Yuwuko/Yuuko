@@ -44,6 +44,7 @@ public class BackgroundCommand extends Command {
             MessageDispatcher.reply(e, embed.build());
             return;
         }
+
         String trackId = "https://www.youtube.com/watch?v=" + results.get(0).getId().getVideoId();
         AudioLoadHandler.loadAndPlay(manager, e.setParameters(trackId), AudioLoadHandler.Playback.BACKGROUND);
     }

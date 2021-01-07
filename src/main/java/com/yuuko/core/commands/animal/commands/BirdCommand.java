@@ -1,6 +1,5 @@
 package com.yuuko.core.commands.animal.commands;
 
-import com.google.gson.JsonArray;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
@@ -19,10 +18,8 @@ public class BirdCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        final JsonArray object = new RequestHandler(BASE_URL).getJsonArray();
-
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Bird")
-                .setImage(object.get(0).getAsString());
+                .setImage(new RequestHandler(BASE_URL).getJsonArray().get(0).getAsString());
         MessageDispatcher.reply(e, embed.build());
     }
 

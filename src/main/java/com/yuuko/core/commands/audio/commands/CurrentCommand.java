@@ -37,6 +37,7 @@ public class CurrentCommand extends Command {
                 .addField("Duration", TextUtilities.getTimestamp(manager.getPlayer().getTrackPosition()) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
                 .addField("Channel", track.getInfo().author, true)
                 .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+
         if(e.hasParameters() && e.getParameters().equals("no-reply")) {
             MessageDispatcher.sendMessage(e, queuedTrack.build());
             return;

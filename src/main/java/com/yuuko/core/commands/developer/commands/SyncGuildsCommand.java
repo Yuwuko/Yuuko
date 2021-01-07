@@ -18,16 +18,12 @@ public class SyncGuildsCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) {
-        try {
-            e.getJDA().getGuildCache().forEach(guild -> {
-                GuildFunctions.addOrUpdateGuild(guild);
-                BindCommand.DatabaseInterface.verifyBinds(guild);
-            });
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds updated.");
-            MessageDispatcher.reply(e, embed.build());
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+        e.getJDA().getGuildCache().forEach(guild -> {
+            GuildFunctions.addOrUpdateGuild(guild);
+            BindCommand.DatabaseInterface.verifyBinds(guild);
+        });
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Guilds updated.");
+        MessageDispatcher.reply(e, embed.build());
     }
 
 }
