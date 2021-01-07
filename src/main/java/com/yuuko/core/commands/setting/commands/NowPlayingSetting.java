@@ -24,7 +24,7 @@ public class NowPlayingSetting extends Command {
         super("nowplaying", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-nowplaying", "-nowplaying <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Now Playing").setDescription("The `nowPlaying` setting determines whether tracks are announced when they start.")
                     .addField("State", "`nowPlaying` is currently set to `" + (GuildFunctions.getGuildSetting("nowplaying", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)

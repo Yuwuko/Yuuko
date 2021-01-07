@@ -20,7 +20,7 @@ public class QueueCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
         synchronized(manager.getScheduler().queue) {
             if(manager.getScheduler().queue.size() < 1) {

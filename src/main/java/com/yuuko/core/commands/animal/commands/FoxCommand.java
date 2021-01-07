@@ -17,7 +17,7 @@ public class FoxCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Fox")
                 .setImage(new RequestHandler(BASE_URL).getJsonObject().get("image").getAsString());
         MessageDispatcher.reply(e, embed.build());

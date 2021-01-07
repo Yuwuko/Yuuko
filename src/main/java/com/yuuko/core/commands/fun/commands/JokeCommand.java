@@ -20,7 +20,7 @@ public class JokeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         String joke;
         if(!e.hasParameters()) {
             joke = new RequestHandler(BASE_URL).getJsonObject().get("joke").getAsString();

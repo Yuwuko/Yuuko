@@ -23,7 +23,7 @@ public class SleepCommand extends InteractionCommand {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** goes to sleep.").setImage(interactionImage.get(getRandom(interactionImage.size())));
         MessageDispatcher.sendMessage(e, embed.build());
     }

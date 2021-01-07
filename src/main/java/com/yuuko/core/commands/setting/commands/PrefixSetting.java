@@ -16,7 +16,7 @@ public class PrefixSetting extends Command {
         super("prefix", Config.MODULES.get("setting"), 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(e.getParameters().length() < 1 || e.getParameters().length() > 5) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Input must have a minimum length of `1` and a maximum length of `5` characters.");
             MessageDispatcher.reply(e, embed.build());

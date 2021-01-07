@@ -29,53 +29,47 @@ public class LondonUndergroundCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
-        try {
-            final String json = new RequestHandler(BASE_URL).getString();
-            List<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<>(){});
-            StringBuilder reasons = new StringBuilder();
+    public void onCommand(MessageEvent e) throws Exception {
+        final String json = new RequestHandler(BASE_URL).getString();
+        List<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<>(){});
+        StringBuilder reasons = new StringBuilder();
 
-            int goodServices = 11;
-            for(LineManager manager: lineManager) {
-                if(!manager.getLineStatusString().equals("Good Service")) {
-                    reasons.append(manager.getLineStatusReason()).append("\n");
-                    goodServices--;
-                }
+        int goodServices = 11;
+        for(LineManager manager: lineManager) {
+            if(!manager.getLineStatusString().equals("Good Service")) {
+                reasons.append(manager.getLineStatusReason()).append("\n");
+                goodServices--;
             }
-
-            if(!e.hasParameters()) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("London Underground Status")
-                        .setTimestamp(Instant.now())
-                        .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
-
-                for(LineManager line : lineManager) {
-                    embed.addField(line.getName(), line.getLineStatusString(), true);
-                }
-
-                embed.addBlankField(true);
-                embed.addField("", reasons.toString(), false);
-                MessageDispatcher.reply(e, embed.build());
-            } else {
-
-                if(goodServices == 11) {
-                    reasons.append("GOOD SERVICE on all lines.");
-                } else if(goodServices > 0) {
-                    reasons.append("GOOD SERVICE on all other lines.");
-                }
-
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("London Underground Status (Minified)")
-                        .addField("", reasons.toString(), false)
-                        .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
-                        .setTimestamp(Instant.now());
-                MessageDispatcher.reply(e, embed.build());
-            }
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
 
+        if(!e.hasParameters()) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("London Underground Status")
+                    .setTimestamp(Instant.now())
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+
+            for(LineManager line : lineManager) {
+                embed.addField(line.getName(), line.getLineStatusString(), true);
+            }
+
+            embed.addBlankField(true);
+            embed.addField("", reasons.toString(), false);
+            MessageDispatcher.reply(e, embed.build());
+        } else {
+
+            if(goodServices == 11) {
+                reasons.append("GOOD SERVICE on all lines.");
+            } else if(goodServices > 0) {
+                reasons.append("GOOD SERVICE on all other lines.");
+            }
+
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("London Underground Status (Minified)")
+                    .addField("", reasons.toString(), false)
+                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
+                    .setTimestamp(Instant.now());
+            MessageDispatcher.reply(e, embed.build());
+        }
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

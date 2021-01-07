@@ -17,7 +17,7 @@ public class RollCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!Sanitiser.isNumber(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input.").setDescription("Input must be a non-negative numeric value.");
             MessageDispatcher.reply(e, embed.build());

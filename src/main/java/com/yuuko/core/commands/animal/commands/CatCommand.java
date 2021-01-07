@@ -17,7 +17,7 @@ public class CatCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Cat")
                 .setImage(new RequestHandler(BASE_URL).getJsonArray().get(0).getAsJsonObject().get("url").getAsString());
         MessageDispatcher.reply(e, embed.build());

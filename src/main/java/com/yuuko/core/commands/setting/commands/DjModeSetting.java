@@ -24,7 +24,7 @@ public class DjModeSetting extends Command {
         super("djmode", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-djmode", "-djmode <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode").setDescription("The `djMode` setting determines whether audio commands are locked to people who posses the `DJ` role.")
                     .addField("State", "DJ Mode is currently set to `" + (GuildFunctions.getGuildSetting("djmode", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)

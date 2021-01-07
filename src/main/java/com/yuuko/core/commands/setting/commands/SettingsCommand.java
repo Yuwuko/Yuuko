@@ -17,7 +17,7 @@ public class SettingsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         // Embed displaying all of the current settings for the server, giving information about each setting.
         ArrayList<String> settingsList = GuildFunctions.getGuildSettings(e.getGuild().getId());
         EmbedBuilder embed = new EmbedBuilder()

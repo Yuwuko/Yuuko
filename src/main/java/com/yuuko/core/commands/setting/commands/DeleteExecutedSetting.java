@@ -24,7 +24,7 @@ public class DeleteExecutedSetting extends Command {
         super("delexecuted", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-deleteexecuted", "-deleteexecuted <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Delete Executed").setDescription("The `deleteExecuted` setting determines whether user input for commands are deleted if the command is successfully executed.")
                     .addField("State", "`deleteExecuted` is currently set to `" + (GuildFunctions.getGuildSetting("deleteexecuted", e.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)

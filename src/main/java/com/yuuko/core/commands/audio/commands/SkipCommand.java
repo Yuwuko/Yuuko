@@ -17,7 +17,7 @@ public class SkipCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
         if(manager.getPlayer().getPlayingTrack() == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no track to skip.");

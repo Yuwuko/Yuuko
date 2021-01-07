@@ -23,7 +23,7 @@ public class OsuCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         String[] commandParameters = e.getParameters().split("\\s+", 2);
 
         int mode = 0;

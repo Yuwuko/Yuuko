@@ -25,7 +25,7 @@ public class BindCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(e.hasParameters()) {
             String[] params = e.getParameters().toLowerCase().split("\\s+", 2);
 
@@ -76,7 +76,6 @@ public class BindCommand extends Command {
     }
 
     public static class DatabaseInterface {
-
         /**
          * Binds a particular module to a channel.
          *

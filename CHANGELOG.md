@@ -3,7 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202101r2
-+ [~] Refactored MessageHandler to MessageDispather, made all methods return booleans.
++ [~] Refactored MessageHandler to MessageDispatcher, made all methods return booleans.
 
 ## 202101r1
 + [!] HAPPY NEW YEAR!

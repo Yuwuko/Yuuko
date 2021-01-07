@@ -17,7 +17,7 @@ public class ShuffleCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
         if(manager.getScheduler().queue.size() < 1) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There aren't any tracks to shuffle.");

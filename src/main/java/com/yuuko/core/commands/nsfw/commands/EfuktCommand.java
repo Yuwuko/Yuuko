@@ -20,7 +20,7 @@ public class EfuktCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         try {
             Document doc = new RequestHandler(BASE_URL).getDocument();
             Elements meta = doc.getElementsByTag("meta");

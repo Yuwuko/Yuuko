@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +25,7 @@ public class LyricsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         final String url = "https://api.genius.com/search?q=" + e.getParameters().replace(" ", "%20");
         final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "Bearer " + api.getKey())).getJsonObject();
         int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
@@ -45,20 +44,10 @@ public class LyricsCommand extends Command {
         }
 
         JsonObject data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject();
-        Elements elements = null;
-        try {
-            elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics");
-
-            if(elements.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageDispatcher.reply(e, embed.build());
-                return;
-            }
-        } catch(IOException exception) {
-            log.error("There was a problem when executing the lyrics command, message: {}", exception.getMessage(), exception);
-        }
-
-        if(elements == null) {
+        Elements elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics");
+        if(elements.size() < 1) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+            MessageDispatcher.reply(e, embed.build());
             return;
         }
 

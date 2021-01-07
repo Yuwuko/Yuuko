@@ -20,7 +20,7 @@ public class ShutdownCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             System.exit(0);
             return;

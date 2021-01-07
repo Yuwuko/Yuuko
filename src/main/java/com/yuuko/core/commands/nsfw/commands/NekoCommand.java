@@ -19,7 +19,7 @@ public class NekoCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         final String url = BASE_URL + ((e.hasParameters()) ? Sanitiser.scrub(e.getParameters(), true) : "lewd");
         final JsonObject json = new RequestHandler(url).getJsonObject();
 

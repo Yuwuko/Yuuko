@@ -21,7 +21,7 @@ public class UrbanDictionaryCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true);
         final JsonObject json = new RequestHandler(url).getJsonObject();
 

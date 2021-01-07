@@ -17,7 +17,7 @@ public class SyncGuildsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         e.getJDA().getGuildCache().forEach(guild -> {
             GuildFunctions.addOrUpdateGuild(guild);
             BindCommand.DatabaseInterface.verifyBinds(guild);

@@ -20,7 +20,7 @@ public class CurrentCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
         AudioTrack track = manager.getPlayer().getPlayingTrack();
 

@@ -19,7 +19,7 @@ public class LastCommand extends Command {
 	}
 
 	@Override
-	public void onCommand(MessageEvent e) {
+	public void onCommand(MessageEvent e) throws Exception {
 		AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
 		if(track != null) {
 			EmbedBuilder queuedTrack = new EmbedBuilder()

@@ -25,7 +25,7 @@ public class StarboardSetting extends Command {
         super("starboard", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
             String status = (channel == null) ? "There is currently no starboard set." : "The starboard is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();

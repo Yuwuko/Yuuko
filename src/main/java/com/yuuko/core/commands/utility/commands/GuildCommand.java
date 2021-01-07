@@ -18,7 +18,7 @@ public class GuildCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         Guild guild = e.getGuild();
         StringBuilder emoteString = new StringBuilder();
 

@@ -23,7 +23,7 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         // If audioSearchResults contains the authors user ID and the command matches either 1-10 or "cancel".
         if(audioSearchResults.containsKey(e.getAuthor().getId()) && (e.getParameters().matches("^[0-9]{1,2}$") || e.getParameters().equals("cancel"))) {
             if(e.getParameters().equalsIgnoreCase("cancel")) {

@@ -20,7 +20,7 @@ public class KickCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         String[] params = e.getParameters().split("\\s+", 2);
         Member target = MessageUtilities.getMentionedMember(e, true);
 

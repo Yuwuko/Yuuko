@@ -16,7 +16,7 @@ public class ReloadApiCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         Config.API_MANAGER = new ApiManager();
         EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully reloaded ApiManager.");
         MessageDispatcher.reply(e, embed.build());

@@ -15,7 +15,7 @@ public class VoteCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Config.BOT.getName() + "#" + Config.BOT.getDiscriminator(), null, Config.BOT.getAvatarUrl())
                 .setDescription(

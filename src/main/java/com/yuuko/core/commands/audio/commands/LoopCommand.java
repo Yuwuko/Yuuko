@@ -17,7 +17,7 @@ public class LoopCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
         EmbedBuilder embed = new EmbedBuilder().setTitle("Loop").setDescription("Looping for queue set to `" + !manager.getScheduler().isLooping() + "`");
         MessageDispatcher.reply(e, embed.build());

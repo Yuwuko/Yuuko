@@ -23,7 +23,7 @@ public class MuteCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         String[] params = e.getParameters().split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(e, true);
 

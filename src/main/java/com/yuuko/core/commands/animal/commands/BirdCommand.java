@@ -17,7 +17,7 @@ public class BirdCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder embed = new EmbedBuilder().setTitle("Random Bird")
                 .setImage(new RequestHandler(BASE_URL).getJsonArray().get(0).getAsString());
         MessageDispatcher.reply(e, embed.build());

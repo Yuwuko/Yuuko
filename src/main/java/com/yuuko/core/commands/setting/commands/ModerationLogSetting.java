@@ -22,7 +22,7 @@ public class ModerationLogSetting extends Command {
         super("modlog", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-modlog", "-modlog setup", "-modlog <#channel>", "-modlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
             String status = (channel == null) ? "There is currently no moderation log set." : "The moderation log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();

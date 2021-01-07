@@ -24,7 +24,7 @@ public class UKParliamentPetitionCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(e.hasParameters()) {
             final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + ".json";
             final JsonObject json = new RequestHandler(url).getJsonObject();

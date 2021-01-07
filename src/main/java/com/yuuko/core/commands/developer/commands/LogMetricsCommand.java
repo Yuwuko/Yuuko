@@ -15,7 +15,7 @@ public class LogMetricsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         Config.LOG_METRICS = !Config.LOG_METRICS;
         EmbedBuilder embed = new EmbedBuilder().setTitle("Metrics Logging").setDescription("Metrics logging has been set to: " + Config.LOG_METRICS);
         MessageDispatcher.reply(e, embed.build());

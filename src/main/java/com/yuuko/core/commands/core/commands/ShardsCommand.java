@@ -21,7 +21,7 @@ public class ShardsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(Config.BOT.getName() + "#" + Config.BOT.getDiscriminator() + " - Shards", null, Config.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())

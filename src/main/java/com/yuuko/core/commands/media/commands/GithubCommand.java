@@ -25,7 +25,7 @@ public class GithubCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         String[] commandParameters = e.getParameters().split("\\s+", 2);
 
         final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "/" + Sanitiser.scrub(commandParameters[1], true) + "?access_token=" + api.getKey();

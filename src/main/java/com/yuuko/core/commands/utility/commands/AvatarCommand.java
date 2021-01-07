@@ -18,7 +18,7 @@ public class AvatarCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         Member target = MessageUtilities.getMentionedMember(e, true);
 
         if(target == null) {

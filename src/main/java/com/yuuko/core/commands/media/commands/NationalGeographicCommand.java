@@ -23,7 +23,7 @@ public class NationalGeographicCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         JsonObject json = new RequestHandler(BASE_URL).getJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 

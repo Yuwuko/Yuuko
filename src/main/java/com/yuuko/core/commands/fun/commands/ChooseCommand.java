@@ -19,7 +19,7 @@ public class ChooseCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         String[] commandParameters = e.getParameters().split("\\s*(,)\\s*");
         String choices = (Arrays.asList(commandParameters).toString().length() > 1024) ? Arrays.asList(commandParameters).toString().substring(0, 1021) + "..." : Arrays.asList(commandParameters).toString();
         EmbedBuilder embed = new EmbedBuilder()

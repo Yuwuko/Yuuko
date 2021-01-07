@@ -25,7 +25,7 @@ public class KillCommand extends InteractionCommand {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         Member target = MessageUtilities.getMentionedMember(e, true);
         if(target != null) {
             EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** kills **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));

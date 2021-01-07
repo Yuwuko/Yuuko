@@ -21,7 +21,7 @@ public class CommandLogSetting extends Command {
         super("comlog", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-comlog", "-comlog setup", "-comlog <#channel>", "-comlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("comlog", e.getGuild().getId());
             String status = (channel == null) ? "There is currently no command log set." : "The command log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();

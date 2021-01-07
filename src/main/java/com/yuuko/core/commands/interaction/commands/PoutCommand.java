@@ -25,7 +25,7 @@ public class PoutCommand extends InteractionCommand {
     }
 
     @Override
-    public void onCommand(MessageEvent e) {
+    public void onCommand(MessageEvent e) throws Exception {
         if(MessageUtilities.checkIfUserMentioned(e)) {
             Member target = MessageUtilities.getMentionedMember(e, true);
             if(target != null) {
