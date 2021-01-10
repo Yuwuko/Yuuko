@@ -2,33 +2,30 @@ package com.yuuko.core;
 
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.commands.core.commands.BindCommand;
 import com.yuuko.core.commands.core.commands.ModuleCommand;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
-import lavalink.client.io.Link;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
 
     private static final List<String> constants = Arrays.asList("core", "developer", "setting");
-    private static final List<String> requireConnectSpeak = Arrays.asList("play", "playnext", "search", "background");
     private static final List<String> disconnectedCommands = Arrays.asList("play", "playnext", "search", "background", "lyrics");
     private static final List<String> notInVoiceCommands = Arrays.asList("lyrics", "current", "last", "queue");
     private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last", "lyrics");
+    private static final List<String> requiresDJ = Arrays.asList("play", "playnext", "clear", "background", "loop", "pause", "search", "seek", "shuffle", "skip", "stop");
 
     private MessageEvent event;
     private Module module;
@@ -100,32 +97,23 @@ public class CommandExecutor {
             return true;
         }
 
-        final GuildVoiceState commanderVoiceState = Objects.requireNonNull(commander.getVoiceState());
-
-        // Are there any nodes available?
-        if(Config.LAVALINK.getLavalink().getNodes().size() < 1 && requireConnectSpeak.contains(command.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("There are no Lavalink nodes available to handle your request.");
-            MessageDispatcher.reply(event, embed.build());
-            return false;
-        }
-
         // Is the member not in a voice channel?
-        if(!commanderVoiceState.inVoiceChannel() && !notInVoiceCommands.contains(command.getName())) {
+        if(!commander.getVoiceState().inVoiceChannel() && !notInVoiceCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
             MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
-        // Does the bot have permissions to connect to the voice channel? (this check isn't done in normal command execution)
-        if(commanderVoiceState.inVoiceChannel() && requireConnectSpeak.contains(command.getName()) && !bot.hasPermission(commanderVoiceState.getChannel(), command.getPermissions())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I don't have the required permissions to do this, make sure I have the `"+ command.getPermissions().toString() +"` permissions and try again!");
+        // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
+        if(AudioManager.hasLink(event.getGuild()) && AudioManager.isLinkConnected(event.getGuild()) && !disconnectedCommands.contains(command.getName())) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageDispatcher.reply(event, embed.build());
             return false;
         }
 
-        // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
-        if(AudioManagerController.getExistingLink(event.getGuild()) != null && AudioManagerController.getGuildAudioManager(event.getGuild()).getLink().getState() == Link.State.NOT_CONNECTED && !disconnectedCommands.contains(command.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
+        // Are there any nodes available?
+        if(AudioManager.LAVALINK.getLavalink().getNodes().size() < 1) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("There are no Lavalink nodes available to handle your request.");
             MessageDispatcher.reply(event, embed.build());
             return false;
         }
@@ -136,7 +124,7 @@ public class CommandExecutor {
         }
 
         // Is DJ mode on, if yes does the member lack the DJ role, and if not is the command a DJ mode command?
-        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("djMode", event.getGuild().getId())) && commander.getRoles().stream().noneMatch(role -> role.getName().equals("DJ")) && !nonDJModeCommands.contains(command.getName())) {
+        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("djMode", event.getGuild().getId())) && requiresDJ.contains(command.getName()) && commander.getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
             MessageDispatcher.reply(event, embed.build());
             return false;
@@ -178,30 +166,27 @@ public class CommandExecutor {
      * @return boolean
      */
     private boolean isBound() {
-        if(BindCommand.DatabaseInterface.checkBind(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
-            return false;
-        } else {
+        if(BindCommand.DatabaseInterface.isBound(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindCommand.DatabaseInterface.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
             MessageDispatcher.reply(event, embed.build());
             return true;
         }
+
+        return false;
     }
 
     /**
      * Removes the message that issued the command if the `deleteExecuted` setting is toggled to `on`.
      */
     private void messageCleanup() {
-        // Does the server want the command message /not/ removed?
-        if(!TextUtilities.toBoolean(GuildFunctions.getGuildSetting("deleteExecuted", event.getGuild().getId()))) {
-            return;
-        }
-
-        // Does the bot have permission to remove the message?
-        if(bot.hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
-            event.getMessage().delete().queue();
-        } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use `@Yuuko#2525 setting deleteExecuted false`.");
-            MessageDispatcher.reply(event, embed.build());
+        // Does the server want the command message removed?
+        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("deleteExecuted", event.getGuild().getId()))) {
+            if(bot.hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
+                event.getMessage().delete().queue();
+            } else {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use `@Yuuko#2525 setting deleteExecuted false`.");
+                MessageDispatcher.reply(event, embed.build());
+            }
         }
     }
 
