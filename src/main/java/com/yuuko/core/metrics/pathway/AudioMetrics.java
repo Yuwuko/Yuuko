@@ -1,14 +1,12 @@
 package com.yuuko.core.metrics.pathway;
 
-import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.metrics.Metric;
 import lavalink.client.io.LavalinkSocket;
 import lavalink.client.io.RemoteStats;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static com.yuuko.core.Config.LAVALINK;
 
 public class AudioMetrics implements Metric {
     public final AtomicInteger PLAYERS_TOTAL = new AtomicInteger();
@@ -23,7 +21,7 @@ public class AudioMetrics implements Metric {
         PLAYERS_ACTIVE.set(0);
         QUEUE_SIZE.set(0);
 
-        for(LavalinkSocket node: LAVALINK.getLavalink().getNodes()) {
+        for(LavalinkSocket node: AudioManager.LAVALINK.getLavalink().getNodes()) {
             if(node.isOpen()) {
                 RemoteStats stats = node.getStats();
                 if(stats != null) {
@@ -33,7 +31,7 @@ public class AudioMetrics implements Metric {
             }
         }
 
-        for(GuildAudioManager manager: AudioManagerController.getGuildAudioManagers().values()) {
+        for(GuildAudioManager manager: AudioManager.getGuildAudioManagers().values()) {
             QUEUE_SIZE.getAndAdd(manager.getScheduler().queue.size());
         }
     }

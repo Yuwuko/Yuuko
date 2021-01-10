@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -24,7 +23,7 @@ public class LavalinkManager {
         );
         lavalink.setAutoReconnect(true);
 
-        try(InputStream inputStream = new FileInputStream(new File("./config/lavalink.yaml"))) {
+        try(InputStream inputStream = new FileInputStream("./config/lavalink.yaml")) {
             for(Object object : new Yaml(new Constructor(LavalinkNode.class)).loadAll(inputStream)) {
                 LavalinkNode node = (LavalinkNode) object;
                 lavalink.addNode(node.getURI(), node.getPassword());

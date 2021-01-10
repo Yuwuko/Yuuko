@@ -35,7 +35,7 @@ public class AudioLoadHandler {
         final String param = e.getParameters();
         final String trackUrl = param.startsWith("<") && param.endsWith(">") ? param.substring(1, param.length() - 1) : param;
 
-        AudioManagerController.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
+        AudioManager.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 try {

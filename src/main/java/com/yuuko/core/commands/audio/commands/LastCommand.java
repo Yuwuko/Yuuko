@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
 import com.yuuko.core.utilities.Utilities;
@@ -20,7 +20,7 @@ public class LastCommand extends Command {
 
 	@Override
 	public void onCommand(MessageEvent e) throws Exception {
-		AudioTrack track = AudioManagerController.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
+		AudioTrack track = AudioManager.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
 		if(track != null) {
 			EmbedBuilder queuedTrack = new EmbedBuilder()
 					.setAuthor("Last track")

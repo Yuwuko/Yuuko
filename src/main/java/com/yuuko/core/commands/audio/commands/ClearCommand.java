@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
@@ -24,7 +24,7 @@ public class ClearCommand extends Command {
         if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Clearing").setDescription("The queue has been cleared.");
             MessageDispatcher.reply(e, embed.build());
-            AudioManagerController.getGuildAudioManager(e.getGuild()).getScheduler().queue.clear();
+            AudioManager.getGuildAudioManager(e.getGuild()).getScheduler().queue.clear();
             return;
         }
 
@@ -32,7 +32,7 @@ public class ClearCommand extends Command {
             return;
         }
 
-        GuildAudioManager manager = AudioManagerController.getGuildAudioManager(e.getGuild());
+        GuildAudioManager manager = AudioManager.getGuildAudioManager(e.getGuild());
         LinkedList<AudioTrack> temp = new LinkedList<>();
         int clearPos = Integer.parseInt(e.getParameters());
         int i = 0;

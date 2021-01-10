@@ -8,14 +8,15 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
-import com.yuuko.core.Config;
+import com.yuuko.core.commands.audio.handlers.lavalink.LavalinkManager;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
-public final class AudioManagerController {
-    private final static HashMap<Guild, GuildAudioManager> managers = new HashMap<>();
+public final class AudioManager {
+    public final static LavalinkManager LAVALINK = new LavalinkManager();
+    private final static HashMap<Guild, GuildAudioManager> guildManagers = new HashMap<>();
     private final static AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     /**
@@ -36,10 +37,10 @@ public final class AudioManagerController {
      * @return GuildAudioManager.
      */
     public static GuildAudioManager getGuildAudioManager(Guild guild) {
-        GuildAudioManager manager = managers.get(guild);
+        GuildAudioManager manager = guildManagers.get(guild);
 
         if(manager == null) {
-            synchronized(AudioManagerController.getGuildAudioManagers()) {
+            synchronized(AudioManager.getGuildAudioManagers()) {
                 manager = new GuildAudioManager(guild);
                 addGuildAudioManager(guild, manager);
             }
@@ -53,14 +54,14 @@ public final class AudioManagerController {
      * @return managers.
      */
     public static HashMap<Guild, GuildAudioManager> getGuildAudioManagers() {
-        return managers;
+        return guildManagers;
     }
 
     /**
      * Adds to the GuildAudioManager HashMap.
      */
     private static void addGuildAudioManager(Guild guild, GuildAudioManager manager) {
-        managers.put(guild, manager);
+        guildManagers.put(guild, manager);
     }
 
     /**
@@ -68,7 +69,7 @@ public final class AudioManagerController {
      * @param guild which manager to remove.
      */
     public static void removeGuildAudioManager(Guild guild) {
-        managers.remove(guild);
+        guildManagers.remove(guild);
     }
 
     /**
@@ -79,16 +80,24 @@ public final class AudioManagerController {
         return playerManager;
     }
 
+    public static boolean hasLink(Guild guild) {
+        return LAVALINK.getLavalink().getExistingLink(guild) != null;
+    }
+
     /**
      * Returns a {@link Link} if it exists or null if it doesn't.
      * This method was chosen over {@link lavalink.client.io.Lavalink#getLink(String)} so we don't create links when
-     * they aren't needed, which is the same motivation behind placing this method in {@link AudioManagerController}
+     * they aren't needed, which is the same motivation behind placing this method in {@link AudioManager}
      * instead of placing it in {@link GuildAudioManager} with the similar methods.
      *
      * @param guild {@link Guild}
      * @return {@link Link}
      */
     public static Link getExistingLink(Guild guild) {
-        return Config.LAVALINK.getLavalink().getExistingLink(guild.getId());
+        return LAVALINK.getLavalink().getExistingLink(guild);
+    }
+
+    public static boolean isLinkConnected(Guild guild) {
+        return LAVALINK.getLavalink().getExistingLink(guild).getState() == Link.State.CONNECTED;
     }
 }

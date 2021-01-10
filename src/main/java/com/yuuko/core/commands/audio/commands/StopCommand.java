@@ -3,7 +3,7 @@ package com.yuuko.core.commands.audio.commands;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
-import com.yuuko.core.commands.audio.handlers.AudioManagerController;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -18,7 +18,7 @@ public class StopCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
-        AudioManagerController.getGuildAudioManager(e.getGuild()).destroy();
+        AudioManager.getGuildAudioManager(e.getGuild()).destroy();
         if(e.getCommand() != null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
             MessageDispatcher.reply(e, embed.build());
@@ -31,7 +31,7 @@ public class StopCommand extends Command {
      * @param guild {@link Guild}
      */
     public void onCommand(Guild guild) {
-        AudioManagerController.getGuildAudioManager(guild).destroy();
+        AudioManager.getGuildAudioManager(guild).destroy();
     }
 
 }

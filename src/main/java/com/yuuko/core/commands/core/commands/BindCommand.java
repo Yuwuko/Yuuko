@@ -189,7 +189,7 @@ public class BindCommand extends Command {
          * @param moduleName String
          * @return boolean
          */
-        public static boolean checkBind(String guildId, String channelId, String moduleName) {
+        public static boolean isBound(String guildId, String channelId, String moduleName) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE (`guildId` = ? AND `moduleName` = ?) OR (`guildId` = ? AND `moduleName` = '*')")) {
 
@@ -206,7 +206,7 @@ public class BindCommand extends Command {
                     count++;
                 }
 
-                return count < 1;
+                return count != 0;
 
             } catch(Exception ex) {
                 log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);

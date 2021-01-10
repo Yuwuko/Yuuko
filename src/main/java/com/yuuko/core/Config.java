@@ -4,8 +4,7 @@ import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import com.yuuko.core.api.ApiManager;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
-import com.yuuko.core.commands.audio.handlers.AudioManagerController;
-import com.yuuko.core.commands.audio.handlers.lavalink.LavalinkManager;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.commands.core.commands.BindCommand;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.database.function.GuildFunctions;
@@ -52,7 +51,6 @@ public class Config {
     public static List<Integer> SHARD_IDS = new ArrayList<>();
     public static String GLOBAL_PREFIX;
     public static ApiManager API_MANAGER;
-    public static LavalinkManager LAVALINK;
     public static ShardManager SHARD_MANAGER;
     public static SelfUser BOT;
     public static Map<String, Command> COMMANDS;
@@ -273,8 +271,7 @@ public class Config {
      * MUST be done before buildShardManager(), MUST be done AFTER loadMainConfiguration().
      */
     private void setupAudio() {
-        AudioManagerController.registerSourceManagers();
-        LAVALINK = new LavalinkManager();
+        AudioManager.registerSourceManagers();
         log.info("Initialised Lavalink.");
     }
 
@@ -293,9 +290,9 @@ public class Config {
             )
                     .setToken(BOT_TOKEN)
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS)
-                    .addEventListeners(new GenericEventManager(), LAVALINK.getLavalink())
+                    .addEventListeners(new GenericEventManager(), AudioManager.LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())
-                    .setVoiceDispatchInterceptor(LAVALINK.getLavalink().getVoiceInterceptor())
+                    .setVoiceDispatchInterceptor(AudioManager.LAVALINK.getLavalink().getVoiceInterceptor())
                     .setActivity(Activity.of(Activity.ActivityType.LISTENING, "@Yuuko help"))
                     .setShardsTotal(SHARDS_TOTAL)
                     .setShards(SHARD_IDS)
@@ -327,7 +324,6 @@ public class Config {
      */
     private void setupMetrics() {
         new MetricsManager(SHARD_IDS.size());
-
         SHARD_IDS.forEach(shardId -> {
             MetricsManager.getDiscordMetrics(shardId).update();
         });

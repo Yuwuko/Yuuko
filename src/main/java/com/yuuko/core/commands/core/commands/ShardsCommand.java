@@ -3,6 +3,7 @@ package com.yuuko.core.commands.core.commands;
 import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.commands.Command;
+import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -39,7 +40,7 @@ public class ShardsCommand extends Command {
         }
 
         StringBuilder nodes = new StringBuilder();
-        for(LavalinkSocket socket : Config.LAVALINK.getLavalink().getNodes()) {
+        for(LavalinkSocket socket : AudioManager.LAVALINK.getLavalink().getNodes()) {
             if(socket.getStats() != null) {
                 nodes.append("**Yuuko-").append(socket.getName()).append("**")
                         .append("\n").append("System Load: ").append(BigDecimal.valueOf((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP)).append("%")
