@@ -1,7 +1,6 @@
 package com.yuuko.core.io.entity;
 
 public class RequestProperty {
-
     private final String header;
     private final String directive;
 

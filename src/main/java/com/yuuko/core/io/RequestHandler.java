@@ -24,8 +24,7 @@ public class RequestHandler {
      * @param requestProperties RequestProperty: the optional request properties with default application/json when none are given.
      */
     public RequestHandler(String url, RequestProperty... requestProperties) {
-        Request.Builder builder = new Request.Builder()
-                .url(url);
+        Request.Builder builder = new Request.Builder().url(url);
 
         // if request properties is length 0, ask for json by default
         if(requestProperties.length == 0) {
@@ -43,8 +42,8 @@ public class RequestHandler {
             if(response.code() == 200) {
                 this.content = response.body().string();
             }
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
@@ -66,8 +65,8 @@ public class RequestHandler {
     public JsonObject getJsonObject() throws IllegalStateException {
         try {
             return (content == null) ? null : JsonParser.parseString(content).getAsJsonObject();
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
             return null;
         }
     }
@@ -81,8 +80,8 @@ public class RequestHandler {
     public JsonArray getJsonArray() throws IllegalStateException {
         try {
             return (content == null) ? null : JsonParser.parseString(content).getAsJsonArray();
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
             return null;
         }
     }
@@ -95,8 +94,8 @@ public class RequestHandler {
     public Document getDocument() {
         try {
             return (content == null) ? null : Jsoup.parse(content);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("There was a problem parsing that content, class: {}, message: {}", this, e.getMessage(), e);
             return null;
         }
     }
