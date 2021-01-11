@@ -5,7 +5,6 @@ import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.pathway.AudioMetrics;
-import com.yuuko.core.metrics.pathway.CacheMetrics;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
 import com.yuuko.core.metrics.pathway.SystemMetrics;
 import org.slf4j.Logger;
@@ -21,7 +20,6 @@ public class MetricsManager {
     private static final List<DiscordMetrics> shardedDiscordMetrics = new ArrayList<>();
     private static final SystemMetrics systemMetrics = new SystemMetrics();
     private static final AudioMetrics audioMetrics = new AudioMetrics();
-    private static final CacheMetrics cacheMetrics = new CacheMetrics();
 
     public MetricsManager(int shards) {
         for(int i = 0; i < shards; i++) {
@@ -43,10 +41,6 @@ public class MetricsManager {
         return systemMetrics;
     }
 
-    public static CacheMetrics getCacheMetrics() {
-        return cacheMetrics;
-    }
-
     /**
      * Inner-class container for all database-related functions.
      */
@@ -58,8 +52,7 @@ public class MetricsManager {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO `metrics_system`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `metrics_discord`(`shardId`, `gatewayPing`, `restPing`, `guildCount`) VALUES(?, ?, ?, ?)");
-                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`players`, `activePlayers`, `queueSize`) VALUES(?, ?, ?)");
-                PreparedStatement stmt4 = conn.prepareStatement("INSERT INTO `metrics_cache`(`trackIdMatch`, `trackIdSize`) VALUES(?, ?)")) {
+                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`players`, `activePlayers`, `queueSize`, `trackIdMatch`, `trackIdSize`) VALUES(?, ?, ?, ?, ?)")) {
 
                 // system metrics will is the same for every shard on an instance - for this reason we only update it once (per instance instead of per shard)
                 stmt.setInt(1, Config.BOT.getJDA().getShardInfo().getShardId());
@@ -83,11 +76,9 @@ public class MetricsManager {
                 stmt3.setInt(1, audioMetrics.PLAYERS_TOTAL.get());
                 stmt3.setInt(2, audioMetrics.PLAYERS_ACTIVE.get());
                 stmt3.setInt(3, audioMetrics.QUEUE_SIZE.get());
+                stmt3.setInt(4, audioMetrics.TRACK_ID_CACHE_HITS.get());
+                stmt3.setInt(5, audioMetrics.TRACK_ID_CACHE_SIZE.get());
                 stmt3.execute();
-
-                stmt4.setInt(1, cacheMetrics.TRACK_ID_CACHE_HITS.get());
-                stmt4.setInt(2, cacheMetrics.TRACK_ID_CACHE_SIZE.get());
-                stmt4.execute();
 
             } catch(Exception ex) {
                 log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
@@ -119,13 +110,11 @@ public class MetricsManager {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `metrics_system` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
                 PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM `metrics_discord` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-                PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `metrics_audio` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);");
-                PreparedStatement stmt4 = conn.prepareStatement("DELETE FROM `metrics_cache` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
+                PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM `metrics_audio` WHERE dateInserted < DATE_SUB(NOW(), INTERVAL 6 HOUR);")) {
 
                 stmt.execute();
                 stmt2.execute();
                 stmt3.execute();
-                stmt4.execute();
 
             } catch(Exception ex) {
                 log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);

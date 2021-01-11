@@ -3,10 +3,7 @@ package com.yuuko.core.database.function;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.entity.Shard;
 import com.yuuko.core.metrics.MetricsManager;
-import com.yuuko.core.metrics.pathway.AudioMetrics;
-import com.yuuko.core.metrics.pathway.CacheMetrics;
 import com.yuuko.core.metrics.pathway.DiscordMetrics;
-import com.yuuko.core.metrics.pathway.SystemMetrics;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +15,6 @@ import java.util.ArrayList;
 
 public class ShardFunctions {
     private static final Logger log = LoggerFactory.getLogger(ShardFunctions.class);
-    private static final SystemMetrics system = MetricsManager.getSystemMetrics();
-    private static final AudioMetrics audio = MetricsManager.getAudioMetrics();
-    private static final CacheMetrics cache = MetricsManager.getCacheMetrics();
 
     /**
      * Queries the provisioning database and supplies the next available shard ID.

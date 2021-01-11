@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202101r2
 + [~] Refactored MessageHandler to MessageDispatcher, made all methods return booleans.
++ [~] Merged AudioMetrics and CacheMetrics tables since they relate to the same kind of data.
 
 ## 202101r1
 + [!] HAPPY NEW YEAR!

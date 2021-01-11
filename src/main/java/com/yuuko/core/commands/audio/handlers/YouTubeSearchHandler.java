@@ -53,7 +53,7 @@ public class YouTubeSearchHandler {
                 searchResponse = search.execute();
                 searchCache.put(e.getParameters(), searchResponse);
             } else {
-                MetricsManager.getCacheMetrics().TRACK_ID_CACHE_HITS.getAndIncrement();
+                MetricsManager.getAudioMetrics().TRACK_ID_CACHE_HITS.getAndIncrement();
             }
 
             return searchResponse.getItems();
