@@ -13,6 +13,7 @@ public class DiscordMetrics implements Metric {
     public final AtomicInteger GUILD_COUNT = new AtomicInteger();
     public final AtomicInteger GATEWAY_PING = new AtomicInteger();
     public final AtomicInteger REST_PING = new AtomicInteger();
+    public final AtomicInteger MESSAGE_EVENTS = new AtomicInteger();
 
     public DiscordMetrics(int shardId) {
         this.shardId = shardId;

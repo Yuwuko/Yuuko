@@ -31,6 +31,10 @@ public class GenericGuildMessageController {
 
     private void guildMessageReceivedEvent(GuildMessageReceivedEvent e) {
         try {
+            // Increments message event metric.
+            MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).MESSAGE_EVENTS.getAndIncrement();
+
+            // Don't process messages from bots. (prevents looping)
             if(e.getAuthor().isBot()) {
                 return;
             }

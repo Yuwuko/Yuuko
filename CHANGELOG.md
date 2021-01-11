@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202101r2
++ [+] Added message event metric tracking. (going to be used for website)
 + [~] Refactored MessageHandler to MessageDispatcher, made all methods return booleans.
 + [~] Merged AudioMetrics and CacheMetrics tables since they relate to the same kind of data.
 

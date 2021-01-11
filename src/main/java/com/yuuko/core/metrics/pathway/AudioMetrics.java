@@ -16,7 +16,6 @@ public class AudioMetrics implements Metric {
     public final AtomicInteger TRACK_ID_CACHE_HITS = new AtomicInteger();
     public final AtomicInteger TRACK_ID_CACHE_SIZE = new AtomicInteger();
 
-
     /**
      * Updates all of the system metrics
      */

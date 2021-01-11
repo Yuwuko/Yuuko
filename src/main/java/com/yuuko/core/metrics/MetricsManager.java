@@ -51,7 +51,7 @@ public class MetricsManager {
         public static void updateMetrics() {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO `metrics_system`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `metrics_discord`(`shardId`, `gatewayPing`, `restPing`, `guildCount`) VALUES(?, ?, ?, ?)");
+                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `metrics_discord`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `messageEvents`) VALUES(?, ?, ?, ?, ?)");
                 PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`players`, `activePlayers`, `queueSize`, `trackIdMatch`, `trackIdSize`) VALUES(?, ?, ?, ?, ?)")) {
 
                 // system metrics will is the same for every shard on an instance - for this reason we only update it once (per instance instead of per shard)
@@ -63,10 +63,12 @@ public class MetricsManager {
 
                 Config.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
                     try {
-                        stmt2.setInt(1, shard.getShardInfo().getShardId());
-                        stmt2.setDouble(2, shardedDiscordMetrics.get(shard.getShardInfo().getShardId()).GATEWAY_PING.get());
-                        stmt2.setDouble(3, shardedDiscordMetrics.get(shard.getShardInfo().getShardId()).REST_PING.get());
-                        stmt2.setInt(4, shardedDiscordMetrics.get(shard.getShardInfo().getShardId()).GUILD_COUNT.get());
+                        final int shardId = shard.getShardInfo().getShardId();
+                        stmt2.setInt(1, shardId);
+                        stmt2.setDouble(2, shardedDiscordMetrics.get(shardId).GATEWAY_PING.get());
+                        stmt2.setDouble(3, shardedDiscordMetrics.get(shardId).REST_PING.get());
+                        stmt2.setInt(4, shardedDiscordMetrics.get(shardId).GUILD_COUNT.get());
+                        stmt2.setInt(5, shardedDiscordMetrics.get(shardId).MESSAGE_EVENTS.get());
                         stmt2.execute();
                     } catch(Exception e) {
                         log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
@@ -81,7 +83,7 @@ public class MetricsManager {
                 stmt3.execute();
 
             } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("There was a problem updating metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
             }
         }
 
@@ -99,7 +101,7 @@ public class MetricsManager {
                 stmt.execute();
 
             } catch (Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("There was a problem updating command metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
             }
         }
 
@@ -117,7 +119,7 @@ public class MetricsManager {
                 stmt3.execute();
 
             } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+                log.error("There was a problem pruning metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
             }
         }
     }
