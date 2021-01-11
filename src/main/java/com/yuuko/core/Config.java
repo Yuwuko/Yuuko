@@ -76,9 +76,9 @@ public class Config {
             setupApi();
             setupCommands();
             setupAudio();
+            setupMetrics();
             buildShardManager();
             verifyDatabase();
-            setupMetrics();
             setupScheduler();
             setupBotLists();
 
@@ -276,6 +276,14 @@ public class Config {
     }
 
     /**
+     * Initialises metrics right away instead of waiting for the scheduler.
+     */
+    private void setupMetrics() {
+        new MetricsManager(SHARD_IDS.size());
+        log.info("Initialised metrics.");
+    }
+
+    /**
      * Builds the shard manager and initialises the BOT object.
      * Must be done before synchronizeDatabase().
      */
@@ -317,17 +325,6 @@ public class Config {
             BindCommand.DatabaseInterface.verifyBinds(guild);
         }));
         log.info("Database integrity verified with JDA.");
-    }
-
-    /**
-     * Initialises metrics right away instead of waiting for the scheduler.
-     */
-    private void setupMetrics() {
-        new MetricsManager(SHARD_IDS.size());
-        SHARD_IDS.forEach(shardId -> {
-            MetricsManager.getDiscordMetrics(shardId).update();
-        });
-        log.info("Initialised metrics.");
     }
 
     /**
