@@ -46,6 +46,7 @@ public class GuildAudioManager {
     }
 
     public void destroy() {
+        scheduler.queue.clear();
         link.destroy();
         AudioManager.removeGuildAudioManager(guild);
     }
