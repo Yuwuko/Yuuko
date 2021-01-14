@@ -6,6 +6,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [+] Added message event metric tracking. (going to be used for website)
 + [~] Refactored MessageHandler to MessageDispatcher, made all methods return booleans.
 + [~] Merged AudioMetrics and CacheMetrics tables since they relate to the same kind of data.
++ [~] Fixed issue with bind checks in CommandExecutor
++ [~] Changed possible input for Bind command, removing multi-channel single-command binding.
 
 ## 202101r1
 + [!] HAPPY NEW YEAR!

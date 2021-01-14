@@ -173,12 +173,12 @@ public class BindCommand extends Command {
         }
 
         /**
-         * Checks to see if a bind for a certain channel/module combination exists.
+         * Checks if a command's execution is to be blocked by a binding.
          *
          * @param guildId String
          * @param channelId String
          * @param moduleName String
-         * @return boolean
+         * @return boolean returns false if there are no binds PREVENTING execution, else true.
          */
         public static boolean isBound(String guildId, String channelId, String moduleName) {
             try(Connection conn = DatabaseConnection.getConnection();
@@ -192,7 +192,7 @@ public class BindCommand extends Command {
                 int count = 0;
                 while(rs.next()) {
                     if(rs.getString("channelId").equals(channelId)) {
-                        return true;
+                        return false;
                     }
                     count++;
                 }

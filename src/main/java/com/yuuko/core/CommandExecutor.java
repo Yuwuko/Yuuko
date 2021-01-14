@@ -168,7 +168,7 @@ public class CommandExecutor {
     private boolean isBound() {
         if(BindCommand.DatabaseInterface.isBound(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindCommand.DatabaseInterface.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
-            MessageDispatcher.reply(event, embed.build());
+            MessageDispatcher.sendTempMessage(event, embed.build());
             return true;
         }
 

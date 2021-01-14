@@ -201,7 +201,7 @@ public final class MessageDispatcher {
     }
 
     /**
-     * Sends a message to a supplied channel.
+     * Sends a message to a supplied channel to be deleted after 15 seconds.
      *
      * @param event {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
@@ -221,7 +221,7 @@ public final class MessageDispatcher {
     }
 
     /**
-     * Sends an embedded message to a supplied channel.
+     * Sends an embedded message to a supplied channel to be deleted after 15 seconds.
      *
      * @param event {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
@@ -232,6 +232,25 @@ public final class MessageDispatcher {
             if(hasEmbedSendPermission(event, channel)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 channel.sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
+            }
+            return false;
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Sends an embedded message to a supplied channel to be deleted after 15 seconds.
+     *
+     * @param event {@link GenericGuildMessageEvent}
+     * @param embed {@link MessageEmbed}
+     */
+    public static boolean sendTempMessage(GenericGuildMessageEvent event, MessageEmbed embed) {
+        try {
+            if(hasEmbedSendPermission(event)) {
+                AtomicBoolean success = new AtomicBoolean(false);
+                event.getChannel().sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
             return false;
         } catch(Exception e) {
