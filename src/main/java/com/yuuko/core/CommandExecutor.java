@@ -55,7 +55,7 @@ public class CommandExecutor {
         // Is the command or module NSFW? If they are, is the channel they're being used in /not/ NSFW?
         if(command.isNSFW() && !event.getChannel().isNSFW()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
-            MessageDispatcher.reply(event, embed.build());
+            MessageDispatcher.sendTempMessage(event, embed.build());
             return;
         }
 
@@ -64,14 +64,14 @@ public class CommandExecutor {
             // Does the bot have the permission?
             if(!bot.hasPermission(command.getPermissions()) && !bot.hasPermission(event.getChannel(), command.getPermissions())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
-                MessageDispatcher.reply(event, embed.build());
+                MessageDispatcher.sendTempMessage(event, embed.build());
                 return;
             }
 
             // Does the user have the permission?
             if(!commander.hasPermission(command.getPermissions()) && !commander.hasPermission(event.getChannel(), command.getPermissions())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
-                MessageDispatcher.reply(event, embed.build());
+                MessageDispatcher.sendTempMessage(event, embed.build());
                 return;
             }
         }
@@ -105,7 +105,7 @@ public class CommandExecutor {
         }
 
         // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
-        if(AudioManager.hasLink(event.getGuild()) && AudioManager.isLinkConnected(event.getGuild()) && !disconnectedCommands.contains(command.getName())) {
+        if(AudioManager.hasLink(event.getGuild()) && !AudioManager.isLinkConnected(event.getGuild()) && !disconnectedCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
             MessageDispatcher.reply(event, embed.build());
             return false;
