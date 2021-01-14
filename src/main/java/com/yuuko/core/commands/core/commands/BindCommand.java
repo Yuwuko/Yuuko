@@ -21,7 +21,7 @@ import java.util.List;
 public class BindCommand extends Command {
 
     public BindCommand() {
-        super("bind", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-bind <module>", "-bind <module> #channel..."), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("bind", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-bind <module>", "-bind <module> #channel"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
@@ -36,28 +36,19 @@ public class BindCommand extends Command {
             }
 
             String module = params[0].equals("*") ? "*" : Config.MODULES.get(params[0]).getName();
+            List<TextChannel> channels = e.getMessage().getMentionedChannels();
 
-            if(params.length > 1) {
-                List<TextChannel> channels = e.getMessage().getMentionedChannels();
-
-                if(channels.size() < 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Expected at least **1** \\#tagged channel to bind, found **0**.");
+            if(channels.size() != 0) {
+                final int res = DatabaseInterface.toggleBind(e.getGuild().getId(), channels.get(0).getId(), module);
+                if(res == 0) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + channels.get(0).getName() + "**.");
                     MessageDispatcher.reply(e, embed.build());
-                    return;
+                } else if(res == 1) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + channels.get(0).getName() + "**.");
+                    MessageDispatcher.reply(e, embed.build());
                 }
-
-                StringBuilder boundChannels = new StringBuilder();
-                for(TextChannel channel : channels) {
-                    DatabaseInterface.toggleBind(e.getGuild().getId(), channel.getId(), module);
-                    boundChannels.append(channel.getName()).append(", ");
-                }
-                TextUtilities.removeLast(boundChannels, ", ");
-
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully toggled **" + module + "** on **" + boundChannels.toString() + "**.");
-                MessageDispatcher.reply(e, embed.build());
             } else {
                 final int res = DatabaseInterface.toggleBind(e.getGuild().getId(), e.getChannel().getId(), module);
-
                 if(res == 0) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + e.getChannel().getName() + "**.");
                     MessageDispatcher.reply(e, embed.build());
