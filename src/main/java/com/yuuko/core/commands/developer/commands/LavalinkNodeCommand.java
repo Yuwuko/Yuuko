@@ -20,6 +20,7 @@ public class LavalinkNodeCommand extends Command {
         switch(params[0]) {
             case "add" -> AudioManager.LAVALINK.getLavalink().addNode(URI.create(params[1]), params[2]);
             case "remove" -> AudioManager.LAVALINK.getLavalink().removeNode(Integer.parseInt(params[1]));
+            default -> {}
         }
     }
 }
