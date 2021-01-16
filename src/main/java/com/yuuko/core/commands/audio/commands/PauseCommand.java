@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class PauseCommand extends Command {
 
     public PauseCommand() {
-        super("pause", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-pause"), false, null);
+        super("pause", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-pause"), false, null);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.TextUtilities;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class RolesCommand extends Command {
 
     public RolesCommand() {
-        super("roles", Config.MODULES.get("utility"), 0, -1L, Arrays.asList("-roles"), false, null);
+        super("roles", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-roles"), false, null);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RolesCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(e.getGuild().getName() + " Roles")
                 .setDescription(roles.toString())
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

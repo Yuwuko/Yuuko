@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -21,7 +21,7 @@ public class AngryCommand extends InteractionCommand {
     );
 
     public AngryCommand() {
-        super("angry", Config.MODULES.get("interaction"), 0, -1L, Arrays.asList("-angry", "-angry @user"), false, null);
+        super("angry", Yuuko.MODULES.get("interaction"), 0, -1L, Arrays.asList("-angry", "-angry @user"), false, null);
     }
 
     @Override

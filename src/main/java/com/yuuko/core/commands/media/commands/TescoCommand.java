@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -16,11 +16,11 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class TescoCommand extends Command {
-    private static final Api api = Config.API_MANAGER.getApi("tesco");
+    private static final Api api = Yuuko.API_MANAGER.getApi("tesco");
     private static final String BASE_URL = "https://dev.tescolabs.com/grocery/products/?query=";
 
     public TescoCommand() {
-        super("tesco", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-tesco <product>"), false, null, api.isAvailable());
+        super("tesco", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-tesco <product>"), false, null, api.isAvailable());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TescoCommand extends Command {
                 .addField("Weight", BigDecimal.valueOf(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
                 .addField("Quantity", data.get("UnitOfSale").getAsString() + "", true)
                 .addField("Department", data.get("superDepartment").getAsString() + " (" + data.get("department").getAsString() + ")", true)
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

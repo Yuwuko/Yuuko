@@ -1,6 +1,6 @@
 package com.yuuko.core.metrics;
 
-import com.yuuko.core.Config;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,7 +21,7 @@ public class MetricsManager {
     private static final SystemMetrics systemMetrics = new SystemMetrics();
     private static final AudioMetrics audioMetrics = new AudioMetrics();
 
-    public MetricsManager(int shards) {
+    public static void registerShardedDiscordMetrics(int shards) {
         for(int i = 0; i < shards; i++) {
             shardedDiscordMetrics.add(new DiscordMetrics(i));
         }
@@ -55,13 +55,13 @@ public class MetricsManager {
                 PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`players`, `activePlayers`, `queueSize`, `trackIdMatch`, `trackIdSize`) VALUES(?, ?, ?, ?, ?)")) {
 
                 // system metrics will is the same for every shard on an instance - for this reason we only update it once (per instance instead of per shard)
-                stmt.setInt(1, Config.BOT.getJDA().getShardInfo().getShardId());
+                stmt.setInt(1, Yuuko.BOT.getJDA().getShardInfo().getShardId());
                 stmt.setLong(2, systemMetrics.UPTIME);
                 stmt.setLong(3, systemMetrics.MEMORY_TOTAL);
                 stmt.setLong(4, systemMetrics.MEMORY_USED);
                 stmt.execute();
 
-                Config.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
+                Yuuko.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
                     try {
                         final int shardId = shard.getShardInfo().getShardId();
                         stmt2.setInt(1, shardId);

@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.audio.commands;
 
 import com.google.api.services.youtube.model.SearchResult;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioLoadHandler;
 import com.yuuko.core.commands.audio.handlers.AudioManager;
@@ -18,7 +18,7 @@ import java.util.List;
 public class PlayNextCommand extends Command {
 
     public PlayNextCommand() {
-        super("playnext", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-playnext", "-playnext <url>", "-playnext <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("playnext", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-playnext", "-playnext <url>", "-playnext <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

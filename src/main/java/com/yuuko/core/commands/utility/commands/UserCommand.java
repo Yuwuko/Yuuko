@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.DiscordUtilities;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class UserCommand extends Command {
 
     public UserCommand() {
-        super("user", Config.MODULES.get("utility"), 1, -1L, Arrays.asList("-user @user", "-user <userId>"), false, null);
+        super("user", Yuuko.MODULES.get("utility"), 1, -1L, Arrays.asList("-user @user", "-user <userId>"), false, null);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UserCommand extends Command {
                 .addField("Joined Server", target.getTimeJoined().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

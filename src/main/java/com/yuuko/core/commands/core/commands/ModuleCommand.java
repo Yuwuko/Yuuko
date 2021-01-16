@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("module", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override
@@ -30,16 +30,16 @@ public class ModuleCommand extends Command {
             String module = e.getParameters().split("\\s+", 2)[0].toLowerCase();
             String guild = e.getGuild().getId();
 
-            if(!Config.MODULES.containsKey(module)) {
+            if(!Yuuko.MODULES.containsKey(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             // Prevents locked modules from being disabled (would throw exception anyway)
-            if(Config.LOCKED_MODULES.contains(module)) {
+            if(Yuuko.LOCKED_MODULES.contains(module)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
-                        .setDescription("The `" + Config.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
+                        .setDescription("The `" + Yuuko.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
@@ -60,7 +60,7 @@ public class ModuleCommand extends Command {
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, commandModules.build());
         }
     }
@@ -88,7 +88,7 @@ public class ModuleCommand extends Command {
                 ArrayList<String> disabled = new ArrayList<>();
 
                 if(rs.next()) {
-                    for(int i = 2; i < Config.MODULES.size() - 1; i++) {
+                    for(int i = 2; i < Yuuko.MODULES.size() - 1; i++) {
                         if(rs.getBoolean(i)) {
                             enabled.add(meta.getColumnName(i));
                         } else {

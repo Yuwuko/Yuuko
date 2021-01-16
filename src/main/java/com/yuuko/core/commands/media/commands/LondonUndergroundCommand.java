@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -21,11 +21,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LondonUndergroundCommand extends Command {
-    private static final Api api = Config.API_MANAGER.getApi("transportforlondon");
+    private static final Api api = Yuuko.API_MANAGER.getApi("transportforlondon");
     private static final String BASE_URL = "https://api.tfl.gov.uk/line/mode/tube/status?app_id=" + api.getApplicationId() + "&app_key=" + api.getKey();
 
     public LondonUndergroundCommand() {
-        super("underground", Config.MODULES.get("media"), 0, -1L, Arrays.asList("-underground", "-underground <min>"), false, null, api.isAvailable());
+        super("underground", Yuuko.MODULES.get("media"), 0, -1L, Arrays.asList("-underground", "-underground <min>"), false, null, api.isAvailable());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LondonUndergroundCommand extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("London Underground Status")
                     .setTimestamp(Instant.now())
-                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
             for(LineManager line : lineManager) {
                 embed.addField(line.getName(), line.getLineStatusString(), true);
@@ -66,7 +66,7 @@ public class LondonUndergroundCommand extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("London Underground Status (Minified)")
                     .addField("", reasons.toString(), false)
-                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageDispatcher.reply(e, embed.build());
         }

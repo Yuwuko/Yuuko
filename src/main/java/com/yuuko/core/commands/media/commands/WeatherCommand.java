@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -17,11 +17,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class WeatherCommand extends Command {
-    private static final Api api = Config.API_MANAGER.getApi("openweathermap");
+    private static final Api api = Yuuko.API_MANAGER.getApi("openweathermap");
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     public WeatherCommand() {
-        super("weather", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null, api.isAvailable());
+        super("weather", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null, api.isAvailable());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class WeatherCommand extends Command {
                 .addField("Longitude", data.get("coord").getAsJsonObject().get("lon").getAsString(), true)
                 .addField("Wind Angle", data.get("wind").getAsJsonObject().get("deg").getAsString() + "°", true)
                 .setTimestamp(Instant.now())
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

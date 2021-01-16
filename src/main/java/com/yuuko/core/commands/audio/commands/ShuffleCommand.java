@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.audio.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.commands.audio.handlers.GuildAudioManager;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class ShuffleCommand extends Command {
 
     public ShuffleCommand() {
-        super("shuffle", Config.MODULES.get("audio"), 0, -1L, Arrays.asList("-shuffle"), false, null);
+        super("shuffle", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-shuffle"), false, null);
     }
 
     @Override

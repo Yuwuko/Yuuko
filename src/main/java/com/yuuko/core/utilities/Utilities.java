@@ -1,7 +1,7 @@
 package com.yuuko.core.utilities;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.yuuko.core.Config;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.metrics.MetricsManager;
 import net.dv8tion.jda.api.JDA;
@@ -17,12 +17,12 @@ public final class Utilities {
      * Updates stats for DiscordBotList
      */
     public static void updateDiscordBotList(int shardId) {
-        final int shardCount = Config.SHARDS_TOTAL;
+        final int shardCount = Yuuko.SHARDS_TOTAL;
         final int guildCount = MetricsManager.getDiscordMetrics(shardId).GUILD_COUNT.get();
 
         try {
-            if(Config.BOT_LIST != null) {
-                Config.BOT_LIST.setStats(shardId, shardCount, guildCount);
+            if(Yuuko.BOT_LIST != null) {
+                Yuuko.BOT_LIST.setStats(shardId, shardCount, guildCount);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -52,7 +52,7 @@ public final class Utilities {
      * @return {@link SelfUser}
      */
     public static SelfUser getSelfUser() {
-        for(JDA shard : Config.SHARD_MANAGER.getShards()) {
+        for(JDA shard : Yuuko.SHARD_MANAGER.getShards()) {
             if(shard.getStatus().equals(JDA.Status.CONNECTED)) {
                 return shard.getSelfUser();
             }

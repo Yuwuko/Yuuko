@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -21,7 +21,7 @@ public class BiteCommand extends InteractionCommand {
     );
 
     public BiteCommand() {
-        super("bite", Config.MODULES.get("interaction"), 1, -1L, Arrays.asList("-bite @user"), false, null);
+        super("bite", Yuuko.MODULES.get("interaction"), 1, -1L, Arrays.asList("-bite @user"), false, null);
     }
 
     @Override

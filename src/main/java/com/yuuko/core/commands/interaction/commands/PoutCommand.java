@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -21,7 +21,7 @@ public class PoutCommand extends InteractionCommand {
     );
 
     public PoutCommand() {
-        super("pout", Config.MODULES.get("interaction"), 0, -1L, Arrays.asList("-pout", "-pout @user"), false, null);
+        super("pout", Yuuko.MODULES.get("interaction"), 0, -1L, Arrays.asList("-pout", "-pout @user"), false, null);
     }
 
     @Override

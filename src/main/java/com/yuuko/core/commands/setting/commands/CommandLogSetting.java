@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.setting.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class CommandLogSetting extends Command {
 
     public CommandLogSetting() {
-        super("comlog", Config.MODULES.get("setting"), 0, -1L, Arrays.asList("-comlog", "-comlog setup", "-comlog <#channel>", "-comlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("comlog", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-comlog", "-comlog setup", "-comlog <#channel>", "-comlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {
@@ -80,7 +80,7 @@ public class CommandLogSetting extends Command {
                     .addField("Command", e.getMessage().getContentDisplay(), true)
                     .addField("Channel", e.getMessage().getTextChannel().getAsMention(), true)
                     .addField("Execution Time", new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
-                    .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl())
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageDispatcher.sendMessage(e, log, embed.build());
         }

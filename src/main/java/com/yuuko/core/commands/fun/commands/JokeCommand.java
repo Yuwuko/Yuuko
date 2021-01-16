@@ -2,8 +2,8 @@ package com.yuuko.core.commands.fun.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -16,7 +16,7 @@ public class JokeCommand extends Command {
     private static final String BASE_URL = "https://icanhazdadjoke.com/";
 
     public JokeCommand() {
-        super("joke", Config.MODULES.get("fun"), 0, 1L, Arrays.asList("-joke", "-joke <term>"), false, null);
+        super("joke", Yuuko.MODULES.get("fun"), 0, 1L, Arrays.asList("-joke", "-joke <term>"), false, null);
     }
 
     @Override

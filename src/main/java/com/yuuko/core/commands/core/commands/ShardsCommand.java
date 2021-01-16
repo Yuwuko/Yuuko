@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.database.function.ShardFunctions;
@@ -18,15 +18,15 @@ import java.util.Arrays;
 public class ShardsCommand extends Command {
 
     public ShardsCommand() {
-        super("shards", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-shards"), false, null);
+        super("shards", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-shards"), false, null);
     }
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder shardEmbed = new EmbedBuilder()
-                .setAuthor(Config.BOT.getName() + "#" + Config.BOT.getDiscriminator() + " - Shards", null, Config.BOT.getAvatarUrl())
+                .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator() + " - Shards", null, Yuuko.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
         for(Shard shard : ShardFunctions.getShardStatistics()) {

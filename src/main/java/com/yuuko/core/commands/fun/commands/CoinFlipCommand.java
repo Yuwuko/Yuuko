@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.fun.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -19,7 +19,7 @@ public class CoinFlipCommand extends Command {
     );
 
     public CoinFlipCommand() {
-        super("flip", Config.MODULES.get("fun"), 0, -1L, Arrays.asList("-flip"), false, null);
+        super("flip", Yuuko.MODULES.get("fun"), 0, -1L, Arrays.asList("-flip"), false, null);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CoinFlipCommand extends Command {
                 .setTitle("Coin Flip")
                 .setDescription((rng == 0) ? responses.get(2) : (rng < 5000) ? responses.get(0) : responses.get(1))
                 .setTimestamp(Instant.now())
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

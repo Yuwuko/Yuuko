@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.interaction.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.interaction.InteractionCommand;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
@@ -21,7 +21,7 @@ public class LaughCommand extends InteractionCommand {
     );
 
     public LaughCommand() {
-        super("laugh", Config.MODULES.get("interaction"), 0, -1L, Arrays.asList("-laugh", "-laugh @user"), false, null);
+        super("laugh", Yuuko.MODULES.get("interaction"), 0, -1L, Arrays.asList("-laugh", "-laugh @user"), false, null);
     }
 
     @Override

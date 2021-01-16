@@ -6,8 +6,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.metrics.MetricsManager;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class YouTubeSearchHandler {
     private static final Logger log = LoggerFactory.getLogger(YouTubeSearchHandler.class);
-    private static final Api api = Config.API_MANAGER.getApi("google");
+    private static final Api api = Yuuko.API_MANAGER.getApi("google");
     private static final HashMap<String, SearchListResponse> searchCache = new HashMap<>();
 
     /**

@@ -1,8 +1,8 @@
 package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonObject;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -16,7 +16,7 @@ public class AnimeCommand extends Command {
     private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
 
     public AnimeCommand() {
-        super("anime", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-anime <title>"), false, null);
+        super("anime", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-anime <title>"), false, null);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AnimeCommand extends Command {
                 .addField("Status", status, true)
                 .addField("Start Date", startDate, true)
                 .addField("End Date", endDate, true)
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

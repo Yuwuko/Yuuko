@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.core.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.Module;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", Config.MODULES.get("core"), 0, -1L, Arrays.asList("-help", "-help <command>"), false, null);
+        super("help", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-help", "-help <command>"), false, null);
     }
 
     @Override
@@ -26,13 +26,13 @@ public class HelpCommand extends Command {
                     .setTitle("Have an issue, suggestion, or just want me on your server?")
                     .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! " +
                             "\n Stuck with a command? Use `" + e.getPrefix() + "help <command>` to get the commands usage.")
-                    .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
 
-            for(Module module: Config.MODULES.values()) {
+            for(Module module: Yuuko.MODULES.values()) {
                 commandInfo.addField(module.getName(), module.getCommandsAsString(), false);
             }
 
-            if(e.getGuild().getMemberById(Config.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
+            if(e.getGuild().getMemberById(Yuuko.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
                 MessageDispatcher.reply(e, commandInfo.build());
             } else {
                 e.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
@@ -41,7 +41,7 @@ public class HelpCommand extends Command {
         } else {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
-            Config.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
+            Yuuko.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
                 final String commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
 
                 StringBuilder usages = new StringBuilder();
@@ -51,13 +51,13 @@ public class HelpCommand extends Command {
                 TextUtilities.removeLast(usages, "\n");
 
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setThumbnail(Config.BOT.getAvatarUrl())
+                        .setThumbnail(Yuuko.BOT.getAvatarUrl())
                         .setTitle("Command help for **_" + command.getName() + "_**")
                         .addField("Module", command.getModule().getName(), true)
                         .addField("Required Permissions", commandPermission, true)
                         .addField("Binds", BindCommand.DatabaseInterface.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
                         .addField("Usage", usages.toString(), false)
-                        .setFooter(Config.STANDARD_STRINGS.get(0), Config.BOT.getAvatarUrl());
+                        .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
                 MessageDispatcher.reply(e, embed.build());
             });
         }

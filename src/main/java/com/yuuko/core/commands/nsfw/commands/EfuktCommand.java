@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.nsfw.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
@@ -16,7 +16,7 @@ public class EfuktCommand extends Command {
     private static final String BASE_URL = "https://efukt.com/random.php";
 
     public EfuktCommand() {
-        super("efukt", Config.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-efukt"), true, null);
+        super("efukt", Yuuko.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-efukt"), true, null);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class EfuktCommand extends Command {
                     .setTitle(doc.title().substring(0, Math.min(doc.title().length(), 256)))
                     .setDescription(doc.baseUri())
                     .setImage(image)
-                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
 
         } catch(Exception ex) {

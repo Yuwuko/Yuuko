@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.database.connection.DatabaseConnection;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class ReactionRoleCommand extends Command {
 
     public ReactionRoleCommand() {
-        super("reactrole", Config.MODULES.get("utility"), 2, -1L, Arrays.asList("-reactrole <message_id> clear", "-reactrole <message_id> <:emote:>", "-reactrole <message_id> <:emote:> <@role>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
+        super("reactrole", Yuuko.MODULES.get("utility"), 2, -1L, Arrays.asList("-reactrole <message_id> clear", "-reactrole <message_id> <:emote:>", "-reactrole <message_id> <:emote:> <@role>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
     }
 
     @Override

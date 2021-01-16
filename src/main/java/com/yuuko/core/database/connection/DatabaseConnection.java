@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public final class DatabaseConnection {
+public class DatabaseConnection {
     private static final Logger log = LoggerFactory.getLogger(DatabaseConnection.class);
     private static HikariDataSource connectionPool;
 

@@ -2,8 +2,8 @@ package com.yuuko.core.commands.media.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -15,11 +15,11 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.Arrays;
 
 public class OsuCommand extends Command {
-    private static final Api api = Config.API_MANAGER.getApi("osu");
+    private static final Api api = Yuuko.API_MANAGER.getApi("osu");
     private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=" + api.getKey() + "&u=";
 
     public OsuCommand() {
-        super("osu", Config.MODULES.get("media"), 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null, api.isAvailable());
+        super("osu", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null, api.isAvailable());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class OsuCommand extends Command {
                 .addField("S Ranks", sRanks, true)
                 .addField("SH Ranks", shRanks, true)
                 .addField("A Ranks", aRanks, true)
-                .setFooter(Config.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.developer.commands;
 
-import com.yuuko.core.Config;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.audio.handlers.AudioManager;
 import com.yuuko.core.events.entity.MessageEvent;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class LavalinkNodeCommand extends Command {
 
     public LavalinkNodeCommand() {
-        super("lavalink", Config.MODULES.get("developer"), 2, -1L, Arrays.asList("-lavalink <action> <node> <secret>"), false, null);
+        super("lavalink", Yuuko.MODULES.get("developer"), 2, -1L, Arrays.asList("-lavalink <action> <node> <secret>"), false, null);
     }
 
     @Override

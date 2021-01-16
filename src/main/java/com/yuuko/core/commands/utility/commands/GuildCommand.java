@@ -1,7 +1,7 @@
 package com.yuuko.core.commands.utility.commands;
 
-import com.yuuko.core.Config;
 import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class GuildCommand extends Command {
 
     public GuildCommand() {
-        super("guild", Config.MODULES.get("utility"), 0, -1L, Arrays.asList("-guild"), false, null);
+        super("guild", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-guild"), false, null);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class GuildCommand extends Command {
                     .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
                     .addField("Roles", guild.getRoles().size()+"", true)
                     .addField("Emotes", emoteString.toString(), false)
-                    .setFooter(Config.STANDARD_STRINGS.get(1) + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
         });
     }

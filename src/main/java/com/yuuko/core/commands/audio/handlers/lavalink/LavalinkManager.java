@@ -1,6 +1,6 @@
 package com.yuuko.core.commands.audio.handlers.lavalink;
 
-import com.yuuko.core.Config;
+import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.audio.handlers.lavalink.entity.LavalinkNode;
 import lavalink.client.io.jda.JdaLavalink;
 import org.slf4j.Logger;
@@ -17,9 +17,9 @@ public class LavalinkManager {
 
     public LavalinkManager() {
         lavalink = new JdaLavalink(
-                Config.BOT_ID,
-                Config.SHARDS_TOTAL,
-                shardId -> Config.SHARD_MANAGER.getShardById(shardId)
+                Yuuko.BOT_ID,
+                Yuuko.SHARDS_TOTAL,
+                shardId -> Yuuko.SHARD_MANAGER.getShardById(shardId)
         );
         lavalink.setAutoReconnect(true);
 
