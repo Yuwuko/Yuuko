@@ -51,7 +51,7 @@ public class GuildFunctions {
             }
 
             stmt2.setString(1, guild.getId());
-            stmt2.setString(2, Base64.getEncoder().encodeToString(guild.getName().getBytes())); // Encodes all server names to base64 to prevent special characters messing things up. (obv not for encryption)
+            stmt2.setString(2, guild.getName());
             stmt2.setString(3, guild.getRegion().getName());
             stmt2.setString(4, guild.getIconUrl());
             stmt2.setString(5, guild.getSplashUrl());
@@ -160,13 +160,13 @@ public class GuildFunctions {
             ArrayList<String> settings = new ArrayList<>();
             while(rs.next()) {
                 settings.add(rs.getString("prefix"));
-                settings.add(rs.getBoolean("deleteExecuted") ? "Enabled" : "Disabled");
-                settings.add(rs.getBoolean("nowPlaying") ? "Enabled" : "Disabled");
-                settings.add(rs.getBoolean("djMode") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("deleteexecuted") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("nowplaying") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("djmode") ? "Enabled" : "Disabled");
                 settings.add(rs.getString("starboard"));
-                settings.add(rs.getString("comLog"));
-                settings.add(rs.getString("modLog"));
-                settings.add(rs.getString("events"));
+                settings.add(rs.getString("commandlog"));
+                settings.add(rs.getString("moderationlog"));
+                settings.add(rs.getString("eventchannel"));
             }
 
             return settings;
