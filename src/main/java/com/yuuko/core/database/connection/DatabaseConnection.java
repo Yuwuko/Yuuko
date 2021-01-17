@@ -19,6 +19,7 @@ public class DatabaseConnection {
      */
     public static void setupDatabase() {
         HikariConfig config = new HikariConfig("./config/hikari/externaldb.properties");
+        config.setConnectionInitSql("SET NAMES utf8mb4");
         connectionPool = new HikariDataSource(config);
 
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseConnection.class.getClassLoader().getResourceAsStream("db.sql")))) {
