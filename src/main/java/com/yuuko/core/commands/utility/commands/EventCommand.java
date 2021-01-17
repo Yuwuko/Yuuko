@@ -24,7 +24,7 @@ public class EventCommand extends Command {
     private static final HashMap<String, ScheduledEvent> inProgressEmbeds = new HashMap<>();
 
     public EventCommand() {
-        super("event", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-event", "-event channel #channel", "-event new", "-event title <value>", "-event desc <value>", "-event time <yyyy-MM-dd HH:mm>", "-event slots <value>", "-event notify <boolean>", "-event publish", "-event cancel | <value>"), false, null);
+        super("event", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-event", "-event new", "-event title <value>", "-event desc <value>", "-event time <yyyy-MM-dd HH:mm>", "-event slots <value>", "-event notify <boolean>", "-event publish", "-event cancel | <value>"), false, null);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class EventCommand extends Command {
      */
     private void createEvent(MessageEvent e) {
         if(inProgressEmbeds.containsKey(e.getAuthor().getId())) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Event Creating Failed")
+            EmbedBuilder about = new EmbedBuilder().setTitle("Event Creation Failed")
                     .setDescription("You already have an event in construction. Please cancel or publish that event before creating a new event!");
             MessageDispatcher.reply(e, about.build());
             return;
@@ -226,7 +226,7 @@ public class EventCommand extends Command {
         }
 
         DatabaseInterface.removeEvent(messageId);
-        String channelId = GuildFunctions.getGuildSetting("events", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("eventchannel", e.getGuild().getId());
         if(channelId != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(channelId);
             if(textChannel != null) {
@@ -245,10 +245,10 @@ public class EventCommand extends Command {
      * @param e {@link MessageEvent}
      */
     private void publishEvent(MessageEvent e) {
-        String channelId = GuildFunctions.getGuildSetting("events", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("eventchannel", e.getGuild().getId());
         if(channelId == null) {
             EmbedBuilder about = new EmbedBuilder().setTitle("Publish Failed")
-                    .setDescription("Unable to find events channel, set it by using `" + e.getPrefix() + "event channel #channel`.");
+                    .setDescription("Unable to find events channel, set it by using `" + e.getPrefix() + "eventchannel #channel`.");
             MessageDispatcher.reply(e, about.build());
             return;
         }
@@ -306,7 +306,7 @@ public class EventCommand extends Command {
             if(scheduledEvent.notify && scheduledEvent.timestamp.getTime() <= TEN_MINUTES_FUTURE) {
                 Guild guild = Yuuko.BOT.getJDA().getGuildById(scheduledEvent.guildId);
                 if(guild != null) {
-                    String channelId = GuildFunctions.getGuildSetting("events", scheduledEvent.guildId);
+                    String channelId = GuildFunctions.getGuildSetting("eventchannel", scheduledEvent.guildId);
                     if(channelId != null) {
                         TextChannel textChannel = guild.getTextChannelById(channelId);
                         if(textChannel != null) {
