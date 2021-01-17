@@ -217,7 +217,7 @@ public class EventCommand extends Command {
             return;
         }
 
-        String messageId = DatabaseInterface.getEventMessage(Integer.parseInt(params[1]));
+        String messageId = DatabaseInterface.getEventMessage(e.getGuild().getId(), Integer.parseInt(params[1]));
         if(messageId == null) {
             EmbedBuilder about = new EmbedBuilder().setTitle("Unknown Event")
                     .setDescription("Unable to find event matching that ID.");
@@ -225,7 +225,7 @@ public class EventCommand extends Command {
             return;
         }
 
-        DatabaseInterface.removeEvent(messageId);
+        DatabaseInterface.removeEvent(e.getGuild().getId(), messageId);
         String channelId = GuildFunctions.getGuildSetting("eventchannel", e.getGuild().getId());
         if(channelId != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(channelId);
@@ -326,7 +326,7 @@ public class EventCommand extends Command {
             }
             // Purge expired events
             if(scheduledEvent.timestamp.getTime() < System.currentTimeMillis()) {
-                DatabaseInterface.removeEvent(scheduledEvent.id);
+                DatabaseInterface.removeEvent(scheduledEvent.guildId, scheduledEvent.id);
             }
         });
     }
@@ -457,15 +457,17 @@ public class EventCommand extends Command {
         }
 
         /**
-         * Returns an event using eventId.
-         * @param eventId String
+         * Returns an event using eventId. guildId is used as a guard against people trying to cancel arbitrary events.
+         * @param guildId String
+         * @param eventId int
          * @return String
          */
-        public static String getEventMessage(int eventId) {
+        public static String getEventMessage(String guildId, int eventId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_events` WHERE `eventId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_events` WHERE `guildId` = ? AND eventId` = ?")) {
 
-                stmt.setInt(1, eventId);
+                stmt.setString(1, guildId);
+                stmt.setInt(2, eventId);
                 ResultSet resultSet = stmt.executeQuery();
 
                 if(resultSet.next()) {
@@ -480,11 +482,16 @@ public class EventCommand extends Command {
             }
         }
 
-        public static int getEventSlots(String messageId) {
+        /**
+         * Returns number of event slots for the given eventId.
+         * @param eventId int
+         * @return int
+         */
+        public static int getEventSlots(int eventId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT `eventSlots` FROM `guilds_events` WHERE `messageId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT `eventSlots` FROM `guilds_events` WHERE `eventId` = ?")) {
 
-                stmt.setString(1, messageId);
+                stmt.setInt(1, eventId);
                 ResultSet resultSet = stmt.executeQuery();
 
                 if(resultSet.next()) {
@@ -534,14 +541,16 @@ public class EventCommand extends Command {
         }
 
         /**
-         * Removes an event from the database using the given eventId.
+         * Removes an event from the database using the given guildId & eventId.
+         * @param guildId String
          * @param eventId int
          */
-        public static void removeEvent(int eventId) {
+        public static void removeEvent(String guildId, int eventId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_events` WHERE `eventId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_events` WHERE `guildId` = ? AND `eventId` = ?")) {
 
-                stmt.setInt(1, eventId);
+                stmt.setString(1, guildId);
+                stmt.setInt(2, eventId);
                 stmt.execute();
 
             } catch(Exception e) {
@@ -550,14 +559,16 @@ public class EventCommand extends Command {
         }
 
         /**
-         * Removes an event from the database using the given messageId.
+         * Removes an event from the database using the given guildId & messageId.
+         * @param guildId String
          * @param messageId String
          */
-        public static void removeEvent(String messageId) {
+        public static void removeEvent(String guildId, String messageId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_events` WHERE `messageId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_events` WHERE `guildId` = ? AND `messageId` = ?")) {
 
-                stmt.setString(1, messageId);
+                stmt.setString(1, guildId);
+                stmt.setString(2, messageId);
                 stmt.execute();
 
             } catch(Exception e) {

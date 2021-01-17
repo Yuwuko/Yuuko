@@ -75,7 +75,7 @@ public class GenericGuildMessageController {
 
     private void guildMessageDeleteEvent(GuildMessageDeleteEvent e) {
         ReactionRoleCommand.DatabaseInterface.removeReactionRole(e.getMessageId());
-        EventCommand.DatabaseInterface.removeEvent(e.getMessageId());
+        EventCommand.DatabaseInterface.removeEvent(e.getGuild().getId(), e.getMessageId());
     }
 
 }
