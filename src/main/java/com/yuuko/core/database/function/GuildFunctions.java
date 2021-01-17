@@ -166,6 +166,7 @@ public class GuildFunctions {
                 settings.add(rs.getString("starboard"));
                 settings.add(rs.getString("comLog"));
                 settings.add(rs.getString("modLog"));
+                settings.add(rs.getString("events"));
             }
 
             return settings;
