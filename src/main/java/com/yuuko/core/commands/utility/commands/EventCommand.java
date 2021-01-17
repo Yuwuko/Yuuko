@@ -130,11 +130,11 @@ public class EventCommand extends Command {
                 if(booleans.contains(params[1])) {
                     scheduledEvent.notify = true;
                     scheduledEvent.embedBuilder.getFields().remove(2);
-                    scheduledEvent.embedBuilder.getFields().add(2, new MessageEmbed.Field("Notify?", "TRUE", true));
+                    scheduledEvent.embedBuilder.getFields().add(2, new MessageEmbed.Field("Notify?", "`true`", true));
                 } else {
                     scheduledEvent.notify = false;
                     scheduledEvent.embedBuilder.getFields().remove(2);
-                    scheduledEvent.embedBuilder.getFields().add(2, new MessageEmbed.Field("Notify?", "FALSE", true));
+                    scheduledEvent.embedBuilder.getFields().add(2, new MessageEmbed.Field("Notify?", "`false`", true));
                 }
                 scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
             }
