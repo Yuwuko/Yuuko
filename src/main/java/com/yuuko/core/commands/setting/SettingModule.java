@@ -12,11 +12,12 @@ public class SettingModule extends Module {
     private static final Map<String, Class<? extends Command>> commands = Map.ofEntries(
             entry("prefix", PrefixSetting.class),
             entry("starboard", StarboardSetting.class),
-            entry("comlog", CommandLogSetting.class),
-            entry("modlog", ModerationLogSetting.class),
+            entry("commandlog", CommandLogSetting.class),
+            entry("moderationlog", ModerationLogSetting.class),
             entry("djmode", DjModeSetting.class),
             entry("nowplaying", NowPlayingSetting.class),
-            entry("delexecuted", DeleteExecutedSetting.class)
+            entry("delexecuted", DeleteExecutedSetting.class),
+            entry("eventchannel", EventChannelSetting.class)
     );
 
     public SettingModule() {

@@ -4,6 +4,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202101r3
 + [!] Added version 1 of [__event__] command, allowing users to setup future events. (bugs expected)
++ [+] Added [__eventchannel__] command to allow for easy setup of the event channel.
++ [~] Modified [__commandlog__] and [__moderationlog__] changing invocation and internal logic.
 
 ## 202101r2
 + [+] Added message event metric tracking. (going to be used for website)

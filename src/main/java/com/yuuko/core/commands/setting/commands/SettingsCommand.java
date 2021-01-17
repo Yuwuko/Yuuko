@@ -25,12 +25,12 @@ public class SettingsCommand extends Command {
                 .setDescription("Settings can be changed by typing one of the commands listed below using the specified data type, e.g. `<boolean>` which you would replace with either `true` or `false`.")
                 .addField(e.getPrefix() + "prefix <string>", "`" + settingsList.get(0) + "` - The message prefix used to symbolise a command.", false)
                 .addField(e.getPrefix() + "deleteExecuted <boolean>", "`" + settingsList.get(1) + "` - Deletes the users command string when it is executed.", false)
-                .addField(e.getPrefix() + "nowPlaying <boolean>", "`" + settingsList.get(2) + "` - Sends information of the current track when it changes.", false)
-                .addField(e.getPrefix() + "djMode <boolean>", "`" + settingsList.get(3) + "` - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
-                .addField(e.getPrefix() + "starboard <#channel>", (settingsList.get(4) != null ? e.getGuild().getTextChannelById(settingsList.get(4)).getAsMention() : "`Disabled`") + " - Where any messages reacted to with a ⭐ will be sent.", false)
-                .addField(e.getPrefix() + "comLog <#channel>", (settingsList.get(5) != null ? e.getGuild().getTextChannelById(settingsList.get(5)).getAsMention() : "`Disabled`") + " - Sends executed commands to a defined log channel.", false)
-                .addField(e.getPrefix() + "modLog <#channel>", (settingsList.get(6) != null ? e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention() : "`Disabled`") + " - Sends moderation events to a defined log channel.", false)
-                .addField(e.getPrefix() + "events channel <#channel>", (settingsList.get(7) != null ? e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention() : "`Disabled`") + " - Where published events will be sent.", false)
+                .addField(e.getPrefix() + "nowplaying <boolean>", "`" + settingsList.get(2) + "` - Sends information of the current track when it changes.", false)
+                .addField(e.getPrefix() + "djmode <boolean>", "`" + settingsList.get(3) + "` - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
+                .addField(e.getPrefix() + "starboard <#channel>", (settingsList.get(4) == null ? "`Disabled`" : e.getGuild().getTextChannelById(settingsList.get(4)).getAsMention()) + " - Where any messages reacted to with a ⭐ will be sent.", false)
+                .addField(e.getPrefix() + "commandlog <#channel>", (settingsList.get(5) == null ? "`Disabled`" : e.getGuild().getTextChannelById(settingsList.get(5)).getAsMention() ) + " - Sends executed commands to a defined log channel.", false)
+                .addField(e.getPrefix() + "moderationlog <#channel>", (settingsList.get(6) == null ? "`Disabled`" :  e.getGuild().getTextChannelById(settingsList.get(6)).getAsMention()) + " - Sends moderation events to a defined log channel.", false)
+                .addField(e.getPrefix() + "eventchannel <#channel>", (settingsList.get(7) == null ? "`Disabled`" : e.getGuild().getTextChannelById(settingsList.get(7)).getAsMention()) + " - Where published events will be sent.", false)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }

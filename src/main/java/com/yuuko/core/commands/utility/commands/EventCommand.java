@@ -58,10 +58,6 @@ public class EventCommand extends Command {
                 publishEvent(e);
                 return;
             }
-            case "channel" -> {
-                setChannel(e);
-                return;
-            }
         }
 
         // Parameter checking - everything past here requires at least 2 parameters (action, value)
@@ -268,24 +264,6 @@ public class EventCommand extends Command {
                 message.addReaction("✅").queue();
             });
         }
-    }
-
-    /**
-     * Sets the channel in which all published events will be sent. If this channel is deleted, all events are also removed.
-     * @param e {@link MessageEvent}
-     */
-    private void setChannel(MessageEvent e) {
-        if(e.getMessage().getMentionedChannels().size() < 1) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Missing Channel")
-                    .setDescription("You need to mention a channel, e.g: " + e.getChannel().getAsMention());
-            MessageDispatcher.reply(e, about.build());
-            return;
-        }
-
-        GuildFunctions.setGuildSettings("events", e.getMessage().getMentionedChannels().get(0).getId(), e.getGuild().getId());
-        EmbedBuilder about = new EmbedBuilder().setTitle("Events")
-                .setDescription("The events channel has been set to " + e.getMessage().getMentionedChannels().get(0).getAsMention());
-        MessageDispatcher.reply(e, about.build());
     }
 
     /**

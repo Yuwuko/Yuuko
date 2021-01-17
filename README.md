@@ -63,7 +63,7 @@ Take full advantage of Yuuko's event system, with modifiable title, description,
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
 
 * **Setting** <br>
-`settings` `prefix` `starboard` `comlog` `modlog` `djmode` `delexecuted` `nowplaying`
+`settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `delexecuted` `nowplaying` `eventchannel`
 
 ---
 
