@@ -15,7 +15,8 @@ public class UtilityModule extends Module {
             entry("avatar", AvatarCommand.class),
             entry("roles", RolesCommand.class),
             entry("ping", PingCommand.class),
-            entry("reactrole", ReactionRoleCommand.class)
+            entry("reactrole", ReactionRoleCommand.class),
+            entry("event", EventCommand.class)
     );
 
     public UtilityModule() {
