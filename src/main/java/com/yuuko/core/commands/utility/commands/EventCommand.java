@@ -293,27 +293,28 @@ public class EventCommand extends Command {
      * @param e {@link GenericGuildMessageReactionEvent}
      */
     public static void processReaction(GenericGuildMessageReactionEvent e) {
-        final String emote = e.getReactionEmote().getAsReactionCode();
-        if(emote.equals("✅")) {
+        if(e.getReactionEmote().getAsReactionCode().equals("✅")) {
             HashMap<String, String> event = DatabaseInterface.getEvent(e.getMessageId());
-            e.getChannel().retrieveMessageById(e.getMessageId()).queue(message -> {
-                Optional<MessageReaction> reaction = message.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("✅")).findAny();
-                reaction.ifPresent(messageReaction -> messageReaction.retrieveUsers().queue(users -> {
-                    users.remove(Yuuko.BOT); // remove bot from users list
+            if(!event.isEmpty()) {
+                e.getChannel().retrieveMessageById(e.getMessageId()).queue(message -> {
+                    Optional<MessageReaction> reaction = message.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("✅")).findAny();
+                    reaction.ifPresent(messageReaction -> messageReaction.retrieveUsers().queue(users -> {
+                        users.remove(Yuuko.BOT); // remove bot from users list
 
-                    StringBuilder participantString = new StringBuilder();
-                    users.stream().limit(10).forEach(user -> participantString.append("`").append(user.getAsTag()).append("`\n"));
+                        StringBuilder participantString = new StringBuilder();
+                        users.stream().limit(10).forEach(user -> participantString.append("`").append(user.getAsTag()).append("`\n"));
 
-                    EmbedBuilder embed = new EmbedBuilder()
-                            .setTitle(event.get("title"))
-                            .setDescription(event.get("description"))
-                            .addField("Scheduled", "`" + Timestamp.valueOf(event.get("scheduled")).toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
-                            .addField("Participants " + (event.get("slots").equals("-1") ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.get("slots") + ")"), participantString.toString(), true)
-                            .addField("Notify?", "`" + event.get("notify") + "`", true)
-                            .setFooter("ID: " + event.get("id"));
-                    e.getChannel().editMessageById(e.getMessageId(), embed.build()).queue();
-                }));
-            });
+                        EmbedBuilder embed = new EmbedBuilder()
+                                .setTitle(event.get("title"))
+                                .setDescription(event.get("description"))
+                                .addField("Scheduled", "`" + Timestamp.valueOf(event.get("scheduled")).toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
+                                .addField("Participants " + (event.get("slots").equals("-1") ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.get("slots") + ")"), participantString.toString(), true)
+                                .addField("Notify?", "`" + event.get("notify") + "`", true)
+                                .setFooter("ID: " + event.get("id"));
+                        e.getChannel().editMessageById(e.getMessageId(), embed.build()).queue();
+                    }));
+                });
+            }
         }
     }
 
