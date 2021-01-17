@@ -59,7 +59,7 @@ public class GithubCommand extends Command {
                 .addField("Pull Requests", pullRequests, true)
                 .addField("Commits", commits, true)
                 .addField("Size", size,true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

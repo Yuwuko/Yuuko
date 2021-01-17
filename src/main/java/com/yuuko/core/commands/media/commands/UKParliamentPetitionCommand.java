@@ -59,7 +59,7 @@ public class UKParliamentPetitionCommand extends Command {
                     .addBlankField(true)
                     .addField("Government Response Summary", governmentResponse, false)
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
         } else {
 
@@ -76,7 +76,7 @@ public class UKParliamentPetitionCommand extends Command {
                     .setTitle("UK Parliament Petitions", "https://petition.parliament.uk/petitions")
                     .setDescription("Here is a list of the top ten open petitions, use `" + Utilities.getServerPrefix(e.getGuild()) + "petition <id>` to get more information about a specific petition.")
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
             int i = 0; // We only need 10 results,
             for(JsonElement element: data) {

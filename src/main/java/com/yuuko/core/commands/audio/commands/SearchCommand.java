@@ -71,7 +71,7 @@ public class SearchCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setAuthor("Search results for " + e.getParameters() + ".", null)
                 .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

@@ -52,7 +52,7 @@ public class WeatherCommand extends Command {
                 .addField("Longitude", data.get("coord").getAsJsonObject().get("lon").getAsString(), true)
                 .addField("Wind Angle", data.get("wind").getAsJsonObject().get("deg").getAsString() + "°", true)
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

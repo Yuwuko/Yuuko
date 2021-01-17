@@ -25,7 +25,7 @@ public class RollCommand extends Command {
         }
 
         int roll = Math.max(1, Integer.parseInt(e.getParameters()));
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getMember().getEffectiveName() + "` rolled a `d" + roll + "` and got `" + (ThreadLocalRandom.current().nextInt(roll) + 1) + "`.");
+        EmbedBuilder embed = new EmbedBuilder().setTitle("Roll").setDescription("`" + e.getAuthor().getAsTag() + "` rolled a `d" + roll + "` and got `" + (ThreadLocalRandom.current().nextInt(roll) + 1) + "`.");
         MessageDispatcher.reply(e, embed.build());
     }
 

@@ -71,7 +71,7 @@ public class LyricsCommand extends Command {
                     .setTitle(data.get("full_title").getAsString())
                     .setThumbnail(data.get("header_image_url").getAsString())
                     .setDescription(lyrics)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
         } else {
             for(int i = 0; i < lyricsList.size(); i++) {

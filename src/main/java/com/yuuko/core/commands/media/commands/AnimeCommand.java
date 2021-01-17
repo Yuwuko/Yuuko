@@ -53,7 +53,7 @@ public class AnimeCommand extends Command {
                 .addField("Status", status, true)
                 .addField("Start Date", startDate, true)
                 .addField("End Date", endDate, true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

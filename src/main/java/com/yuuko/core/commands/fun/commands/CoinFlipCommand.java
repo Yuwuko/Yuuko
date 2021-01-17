@@ -29,7 +29,7 @@ public class CoinFlipCommand extends Command {
                 .setTitle("Coin Flip")
                 .setDescription((rng == 0) ? responses.get(2) : (rng < 5000) ? responses.get(0) : responses.get(1))
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

@@ -45,7 +45,7 @@ public class EightBallCommand extends Command {
                 .setTitle("8ball, " + (e.getParameters() + (e.getParameters().endsWith("?") ? "" : "?")))
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(2) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(2) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

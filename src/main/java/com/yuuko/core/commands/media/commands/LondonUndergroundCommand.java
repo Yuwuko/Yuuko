@@ -46,7 +46,7 @@ public class LondonUndergroundCommand extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("London Underground Status")
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
             for(LineManager line : lineManager) {
                 embed.addField(line.getName(), line.getLineStatusString(), true);
@@ -66,7 +66,7 @@ public class LondonUndergroundCommand extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("London Underground Status (Minified)")
                     .addField("", reasons.toString(), false)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl())
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageDispatcher.reply(e, embed.build());
         }

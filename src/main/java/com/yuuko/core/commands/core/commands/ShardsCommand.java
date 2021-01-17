@@ -26,7 +26,7 @@ public class ShardsCommand extends Command {
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator() + " - Shards", null, Yuuko.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
         StringBuilder shards = new StringBuilder();
         for(Shard shard : ShardFunctions.getShardStatistics()) {

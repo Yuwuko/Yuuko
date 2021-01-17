@@ -36,7 +36,7 @@ public class CurrentCommand extends Command {
                 .setThumbnail(Utilities.getAudioTrackImage(track))
                 .addField("Duration", TextUtilities.getTimestamp(manager.getPlayer().getTrackPosition()) + "/" + TextUtilities.getTimestamp(track.getDuration()), true)
                 .addField("Channel", track.getInfo().author, true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
         if(e.hasParameters() && e.getParameters().equals("no-reply")) {
             MessageDispatcher.sendMessage(e, queuedTrack.build());

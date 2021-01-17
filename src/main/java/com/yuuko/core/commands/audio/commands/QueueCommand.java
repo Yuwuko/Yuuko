@@ -49,7 +49,7 @@ public class QueueCommand extends Command {
                     .addField("Queue Length", manager.getScheduler().queue.size() + "", true)
                     .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
                     .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
         }
     }

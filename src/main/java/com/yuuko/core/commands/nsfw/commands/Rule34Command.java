@@ -47,7 +47,7 @@ public class Rule34Command extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Rule 34" + (!characterString.toString().equals("") ? characterString.substring(0, characterString.length() - 2) : ""))
                 .setImage(image)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 

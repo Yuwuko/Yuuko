@@ -76,7 +76,7 @@ public class OsuCommand extends Command {
                 .addField("S Ranks", sRanks, true)
                 .addField("SH Ranks", shRanks, true)
                 .addField("A Ranks", aRanks, true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
 }

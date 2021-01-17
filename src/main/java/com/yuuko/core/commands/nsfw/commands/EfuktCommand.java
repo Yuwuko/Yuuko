@@ -40,7 +40,7 @@ public class EfuktCommand extends Command {
                     .setTitle(doc.title().substring(0, Math.min(doc.title().length(), 256)))
                     .setDescription(doc.baseUri())
                     .setImage(image)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
 
         } catch(Exception ex) {

@@ -32,7 +32,7 @@ public class NationalGeographicCommand extends Command {
                 .setDescription("Reporting our world daily: original nature and science news from [National Geographic](https://news.nationalgeographic.com). Powered by NewsAPI. \n\u200b")
                 .setThumbnail(articles.get(0).getAsJsonObject().get("urlToImage").getAsString())
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getMember().getEffectiveName(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
         for(JsonElement article: articles) {
             JsonObject articleAsJsonObject = article.getAsJsonObject();
