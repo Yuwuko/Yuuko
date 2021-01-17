@@ -286,7 +286,8 @@ public class BindCommand extends Command {
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_module_binds` WHERE `channelId` = ?");
                 PreparedStatement stmt2 = conn.prepareStatement("UPDATE `guilds_settings` SET `starboard` = null WHERE 'starboard' = ?");
                 PreparedStatement stmt3 = conn.prepareStatement("UPDATE `guilds_settings` SET `comLog` = null WHERE 'comLog' = ?");
-                PreparedStatement stmt4 = conn.prepareStatement("UPDATE `guilds_settings` SET `modLog` = null WHERE 'modLog' = ?")) {
+                PreparedStatement stmt4 = conn.prepareStatement("UPDATE `guilds_settings` SET `modLog` = null WHERE 'modLog' = ?");
+                PreparedStatement stmt5 = conn.prepareStatement("UPDATE `guilds_settings` SET `events` = null WHERE 'events' = ?")) {
 
                 stmt.setString(1, channel);
                 stmt.execute();
@@ -296,6 +297,8 @@ public class BindCommand extends Command {
                 stmt3.execute();
                 stmt4.setString(1, channel);
                 stmt4.execute();
+                stmt5.setString(1, channel);
+                stmt5.execute();
 
             } catch(Exception ex) {
                 log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
