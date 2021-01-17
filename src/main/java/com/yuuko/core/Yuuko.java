@@ -15,10 +15,7 @@ import com.yuuko.core.database.function.ShardFunctions;
 import com.yuuko.core.events.GenericEventManager;
 import com.yuuko.core.metrics.MetricsManager;
 import com.yuuko.core.scheduler.ScheduleHandler;
-import com.yuuko.core.scheduler.jobs.OneHourlyJob;
-import com.yuuko.core.scheduler.jobs.TenSecondlyJob;
-import com.yuuko.core.scheduler.jobs.ThirtySecondlyJob;
-import com.yuuko.core.scheduler.jobs.TwelveHourlyJob;
+import com.yuuko.core.scheduler.jobs.*;
 import com.yuuko.core.utilities.Utilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.JDA;
@@ -109,7 +106,6 @@ public class Yuuko {
             boolean mustEdit = new File("./config").mkdirs();
             new File("./config/api").mkdirs();
             new File("./config/hikari").mkdirs();
-            new File("./data").mkdirs();
 
             if(new File("./config/config.yaml").createNewFile()) {
                 log.warn("Created configuration file: ./config/config.yaml");
@@ -350,6 +346,7 @@ public class Yuuko {
     private void setupScheduler() {
         ScheduleHandler.registerJob(new TenSecondlyJob());
         ScheduleHandler.registerJob(new ThirtySecondlyJob());
+        ScheduleHandler.registerJob(new OneMinutelyJob());
         ScheduleHandler.registerJob(new OneHourlyJob());
         ScheduleHandler.registerJob(new TwelveHourlyJob());
 
