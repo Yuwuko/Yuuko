@@ -33,7 +33,7 @@ public class CommandLogSetting extends Command {
 
         if(e.getParameters().equalsIgnoreCase("setup")) {
             e.getGuild().createTextChannel("command-log").queue(channel -> {
-                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
+                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("commandlog", channel.getId(), e.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
                     MessageDispatcher.reply(e, embed.build());
