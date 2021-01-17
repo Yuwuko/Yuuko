@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202101r3
++ [!] Added version 1 of [__event__] command, allowing users to setup future events. (bugs expected)
+
 ## 202101r2
 + [+] Added message event metric tracking. (going to be used for website)
 + [~] Refactored MessageHandler to MessageDispatcher, made all methods return booleans.

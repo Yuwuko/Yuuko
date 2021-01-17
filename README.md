@@ -10,7 +10,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 202101r2
+# Yuuko 202101r3
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
 
@@ -25,7 +25,10 @@ Liven up your Discord server with music from a number of sources including YouTu
 Want your users to be able to select roles simply by reacting to a message? With the reaction role feature you can assign server roles to reacts on messages!
 
 #### Interaction
-Have you ever wanted to spice up your chatting experience with interactions. Yuuko has a range of different interaction commands available that allows you to express yourself in more than just words.
+Have you ever wanted to spice up your chatting experience with interactions? Yuuko has a range of different interaction commands available that allows you to express yourself in more than just words.
+
+#### Events
+Take full advantage of Yuuko's event system, with modifiable title, description, scheduled time and number of slots, plan events and get an optional reminder 10 minutes before it starts.
 
 ## Commands
 
@@ -45,7 +48,7 @@ Have you ever wanted to spice up your chatting experience with interactions. Yuu
 `pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`
 
 * **Utility** <br>
-`guild` `ping` `roles` `avatar` `user` `reactrole`
+`guild` `ping` `roles` `avatar` `user` `reactrole` `event`
 
 * **Developer** <br>
 `setstatus` `reloadapi` `lavalink` `syncguilds` `restart` `shutdown` `logmetrics`

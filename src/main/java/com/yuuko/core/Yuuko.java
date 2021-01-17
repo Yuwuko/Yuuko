@@ -40,7 +40,7 @@ import java.util.*;
 
 public class Yuuko {
     private static final Logger log = LoggerFactory.getLogger(Yuuko.class);
-    public static final String VERSION = "202101r2";
+    public static final String VERSION = "202101r3";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
