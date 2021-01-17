@@ -24,7 +24,7 @@ public class EventCommand extends Command {
     private static final HashMap<String, ScheduledEvent> inProgressEmbeds = new HashMap<>();
 
     public EventCommand() {
-        super("event", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-event", "-event channel #channel", "-event new", "-event title <value>", "-event desc <value>", "-event time <yyyy-MM-dd HH:mm>", "-event places <value>", "-event notify <boolean>", "-event publish", "-event cancel | <value>"), false, null);
+        super("event", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-event", "-event channel #channel", "-event new", "-event title <value>", "-event desc <value>", "-event time <yyyy-MM-dd HH:mm>", "-event slots <value>", "-event notify <boolean>", "-event publish", "-event cancel | <value>"), false, null);
     }
 
     @Override
@@ -104,17 +104,17 @@ public class EventCommand extends Command {
                         .setDescription("The timestamp entered isn't valid, ensure the format is `yyyy-MM-dd HH:mm`");
                 MessageDispatcher.reply(e, about.build());
             }
-            case "places" -> {
+            case "slots" -> {
                 if(Sanitiser.isNumber(params[1])) {
-                    scheduledEvent.places = Integer.parseInt(params[1]);
+                    scheduledEvent.slots = Integer.parseInt(params[1]);
                     scheduledEvent.embedBuilder.getFields().remove(1);
-                    scheduledEvent.embedBuilder.getFields().add(1, new MessageEmbed.Field("Participants (0/" + scheduledEvent.places + ")", "`None`", true));
+                    scheduledEvent.embedBuilder.getFields().add(1, new MessageEmbed.Field("Participants (0/" + scheduledEvent.slots + ")", "`None`", true));
                     scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
                     return;
                 }
 
                 if(params[1].equals("-1")) {
-                    scheduledEvent.places = -1;
+                    scheduledEvent.slots = -1;
                     scheduledEvent.embedBuilder.getFields().remove(1);
                     scheduledEvent.embedBuilder.getFields().add(1, new MessageEmbed.Field("Participants (0)", "", true));
                     scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
@@ -152,7 +152,7 @@ public class EventCommand extends Command {
         public EmbedBuilder embedBuilder;
         public String title = "Event";
         public String description = "";
-        public int places = -1;
+        public int slots = -1;
         public Timestamp timestamp = Timestamp.from(Instant.now().plusSeconds(86400));
         public boolean notify = false;
 
@@ -181,12 +181,12 @@ public class EventCommand extends Command {
                         "\n`" + e.getPrefix() + "event title <value>` to set the title." +
                         "\n`" + e.getPrefix() + "event desc <value>` to set the description. (this message will be replaced)" +
                         "\n`" + e.getPrefix() + "event time <yyyy-MM-dd HH:mm>` to set the date/time of this event." +
-                        "\n`" + e.getPrefix() + "event places <value>` to set a number of places. (default unlimited)" +
+                        "\n`" + e.getPrefix() + "event slots <value>` to set a number of slots. (default unlimited)" +
                         "\n`" + e.getPrefix() + "event notify <boolean>` to notify participants (default false)." +
                         "\n`" + e.getPrefix() + "event publish` to publish this event." +
                         "\n`" + e.getPrefix() + "event cancel` to cancel this event.")
                 .addField("Scheduled", "`" + Timestamp.from(Instant.now().plusSeconds(86400)).toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
-                .addField("Participants", "`None`", true)
+                .addField("Participants (0)", "`None`", true)
                 .addField("Notify?", "`false`", true)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         e.getChannel().sendMessage(embed.build()).queue(s -> inProgressEmbeds.put(e.getAuthor().getId(), new ScheduledEvent(s, embed)));
@@ -308,7 +308,7 @@ public class EventCommand extends Command {
                             .setTitle(event.get("title"))
                             .setDescription(event.get("description"))
                             .addField("Scheduled", "`" + Timestamp.valueOf(event.get("scheduled")).toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
-                            .addField("Participants " + (event.get("places").equals("-1") ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.get("places") + ")"), participantString.toString(), true)
+                            .addField("Participants " + (event.get("slots").equals("-1") ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.get("slots") + ")"), participantString.toString(), true)
                             .addField("Notify?", "`" + event.get("notify") + "`", true)
                             .setFooter("ID: " + event.get("id"));
                     e.getChannel().editMessageById(e.getMessageId(), embed.build()).queue();
@@ -337,7 +337,7 @@ public class EventCommand extends Command {
                                     users.remove(Yuuko.BOT); // remove bot from users list
                                     StringBuilder notificationString = new StringBuilder();
                                     notificationString.append(scheduledEvent.title).append(" `id: ").append(scheduledEvent.id).append("` is starting soon!\n\n");
-                                    users.stream().limit(scheduledEvent.places).forEach(user -> notificationString.append(user.getAsMention()).append(" "));
+                                    users.stream().limit(scheduledEvent.slots).forEach(user -> notificationString.append(user.getAsMention()).append(" "));
                                     textChannel.sendMessage(notificationString.toString()).queue(success -> DatabaseInterface.disableNotify(scheduledEvent.id));
                                 }));
                             });
@@ -360,14 +360,14 @@ public class EventCommand extends Command {
          */
         public static int newEvent(MessageEvent messageEvent, ScheduledEvent scheduledEvent) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `guilds_events`(`guildId`, `messageId`, `eventTitle`, `eventDescription`, `eventPlaces`, `eventScheduled`, `eventNotify`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO `guilds_events`(`guildId`, `messageId`, `eventTitle`, `eventDescription`, `eventSlots`, `eventScheduled`, `eventNotify`) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM `guilds_events` WHERE `guildId` = ? AND `messageId` = ?")) {
 
                 stmt.setString(1, messageEvent.getGuild().getId());
                 stmt.setString(2, scheduledEvent.message.getId());
                 stmt.setString(3, scheduledEvent.title);
                 stmt.setString(4, scheduledEvent.description);
-                stmt.setInt(5, scheduledEvent.places);
+                stmt.setInt(5, scheduledEvent.slots);
                 stmt.setTimestamp(6, scheduledEvent.timestamp);
                 stmt.setBoolean(7, scheduledEvent.notify);
                 stmt.execute();
@@ -464,7 +464,7 @@ public class EventCommand extends Command {
                     event.put("id", resultSet.getString("eventId"));
                     event.put("title", resultSet.getString("eventTitle"));
                     event.put("description", resultSet.getString("eventDescription"));
-                    event.put("places", resultSet.getInt("eventPlaces")+"");
+                    event.put("slots", resultSet.getInt("eventSlots")+"");
                     event.put("scheduled", resultSet.getTimestamp("eventScheduled").toString()+"");
                     event.put("notify", resultSet.getBoolean("eventNotify")+"");
                 }
@@ -501,15 +501,15 @@ public class EventCommand extends Command {
             }
         }
 
-        public static int getEventPlaces(String messageId) {
+        public static int getEventSlots(String messageId) {
             try(Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT `eventPlaces` FROM `guilds_events` WHERE `messageId` = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT `eventSlots` FROM `guilds_events` WHERE `messageId` = ?")) {
 
                 stmt.setString(1, messageId);
                 ResultSet resultSet = stmt.executeQuery();
 
                 if(resultSet.next()) {
-                    return resultSet.getInt("eventPlaces");
+                    return resultSet.getInt("eventSlots");
                 }
 
                 return -1;
