@@ -5,6 +5,7 @@ import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -144,6 +145,21 @@ public final class Sanitiser {
                 return Integer.parseInt(strings[0]) <= 30;
             }
         } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks to see if the given timestamp is valid. I know using try/catch is bad practice in this case but whatcha gonna do?
+     *
+     * @param string {@link String}
+     * @return boolean
+     */
+    public static boolean isTimestamp(String string) {
+        try {
+            Timestamp.valueOf(string);
+            return true;
+        } catch(IllegalArgumentException e) {
             return false;
         }
     }
