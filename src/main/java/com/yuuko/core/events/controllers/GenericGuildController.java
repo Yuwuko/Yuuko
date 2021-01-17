@@ -66,10 +66,12 @@ public class GenericGuildController {
                 if(bot.hasPermission(messagePermissions) && bot.hasPermission(textChannel, messagePermissions)) {
                     EmbedBuilder about = new EmbedBuilder()
                             .setAuthor(Yuuko.BOT.getAsTag(), null, Yuuko.BOT.getAvatarUrl())
-                            .setDescription("Automatic setup successful, use `-help` to see a full list of commands, or `-about` to get some general information about me.");
+                            .setDescription("Automatic setup successful, use `-help` to see a full list of commands, `-settings` to see available settings or `-about` to get some general information about me.");
                     MessageDispatcher.sendMessage(e, textChannel, about.build());
                 }
+
             });
+
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
         }
