@@ -18,46 +18,40 @@ import java.util.Arrays;
 public class CommandLogSetting extends Command {
 
     public CommandLogSetting() {
-        super("comlog", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-comlog", "-comlog setup", "-comlog <#channel>", "-comlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("commandlog", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-commandlog", "-commandlog setup", "-commandlog <#channel>", "-commandlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
-            String channel = GuildFunctions.getGuildSetting("comlog", e.getGuild().getId());
-            String status = (channel == null) ? "There is currently no command log set." : "The command log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();
-
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription(status)
+            String channel = GuildFunctions.getGuildSetting("commandlog", e.getGuild().getId());
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log")
+                    .setDescription((channel == null) ? "There is currently no command log set." : "The command log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention())
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
             MessageDispatcher.reply(e, embed.build());
             return;
         }
 
         if(e.getParameters().equalsIgnoreCase("setup")) {
-            if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
-                e.getGuild().createTextChannel("com-log").queue(channel -> {
-                    channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
-                    if(GuildFunctions.setGuildSettings("comlog", channel.getId(), e.getGuild().getId())) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                        MessageDispatcher.reply(e, embed.build());
-                    }
-                });
-            } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `MANAGE_CHANNEL` and `MANAGE_PERMISSIONS` permissions to setup the command log automatically.");
-                MessageDispatcher.reply(e, embed.build());
-            }
+            e.getGuild().createTextChannel("command-log").queue(channel -> {
+                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE).queue();
+                if(GuildFunctions.setGuildSettings("commandlog", channel.getId(), e.getGuild().getId())) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
+                    MessageDispatcher.reply(e, embed.build());
+                }
+            });
             return;
         }
 
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
-            if(GuildFunctions.setGuildSettings("comlog", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("commandlog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been set to " + channel.getAsMention() + ".");
                 MessageDispatcher.reply(e, embed.build());
             }
             return;
         }
 
-        if(GuildFunctions.setGuildSettings("comlog", null, e.getGuild().getId())) {
+        if(GuildFunctions.setGuildSettings("commandlog", null, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been unset, deactivating the log.");
             MessageDispatcher.reply(e, embed.build());
         }
@@ -70,7 +64,7 @@ public class CommandLogSetting extends Command {
      * @param executionTimeMs long
      */
     public static void execute(MessageEvent e, double executionTimeMs) {
-        String channelId = GuildFunctions.getGuildSetting("comlog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("commandlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()

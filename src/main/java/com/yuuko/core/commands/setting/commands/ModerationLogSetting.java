@@ -19,47 +19,40 @@ import java.util.Arrays;
 public class ModerationLogSetting extends Command {
 
     public ModerationLogSetting() {
-        super("modlog", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-modlog", "-modlog setup", "-modlog <#channel>", "-modlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("moderationlog", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-moderationlog", "-moderationlog setup", "-moderationlog <#channel>", "-moderationlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
-            String channel = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
-            String status = (channel == null) ? "There is currently no moderation log set." : "The moderation log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention();
-
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription(status)
+            String channel = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log")
+                    .setDescription((channel == null) ? "There is currently no moderation log set." : "The moderation log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention())
                     .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
             MessageDispatcher.reply(e, embed.build());
             return;
         }
 
         if(e.getParameters().equalsIgnoreCase("setup")) {
-            if(e.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS)) {
-                e.getGuild().createTextChannel("moderation-log").queue(channel -> {
-                    channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
-                    if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                        MessageDispatcher.reply(e, embed.build());
-                    }
-                });
-            } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the **Manage Channel** and **Manage Permissions** permissions to setup the moderation log automatically.");
-                MessageDispatcher.reply(e, embed.build());
-            }
+            e.getGuild().createTextChannel("moderation-log").queue(channel -> {
+                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
+                if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), e.getGuild().getId())) {
+                    EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
+                    MessageDispatcher.reply(e, embed.build());
+                }
+            });
             return;
         }
 
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
         if(channel != null) {
-            if(GuildFunctions.setGuildSettings("modlog", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), e.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been set to " + channel.getAsMention() + ".");
                 MessageDispatcher.reply(e, embed.build());
             }
             return;
-
         }
 
-        if(GuildFunctions.setGuildSettings("modlog", null, e.getGuild().getId())) {
+        if(GuildFunctions.setGuildSettings("moderationlog", null, e.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been unset, deactivating the log.");
             MessageDispatcher.reply(e, embed.build());
         }
@@ -71,7 +64,7 @@ public class ModerationLogSetting extends Command {
      * @param e GuildUnbanEvent
      */
     public static void execute(GuildUnbanEvent e) {
-        String channelId = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
@@ -92,7 +85,7 @@ public class ModerationLogSetting extends Command {
      * @param reason String
      */
     public static void execute(MessageEvent e, String action, User target, String reason) {
-        String channelId = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
@@ -113,7 +106,7 @@ public class ModerationLogSetting extends Command {
      * @param e MessageEvent
      */
     public static void execute(MessageEvent e, int messagesDeleted) {
-        String channelId = GuildFunctions.getGuildSetting("modlog", e.getGuild().getId());
+        String channelId = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
         if(channelId != null) {
             TextChannel log = e.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
