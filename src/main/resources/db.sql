@@ -3,7 +3,7 @@ create table if not exists dbyuuko.guilds
     guildId varchar(18) not null,
     primary key (guildId)
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.guilds_data
 (
@@ -19,7 +19,30 @@ create table if not exists dbyuuko.guilds_data
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
+
+create table if not exists dbyuuko.guilds_events
+(
+    guildId varchar(18) not null,
+    eventId int auto_increment,
+    messageId varchar(18) not null,
+    eventTitle varchar(256) default 'Event' not null,
+    eventDescription varchar(2048) default ' ' null,
+    eventSlots int default -1 not null,
+    eventScheduled timestamp default CURRENT_TIMESTAMP not null,
+    eventNotify tinyint default 0 not null,
+    constraint guilds_events_pk
+        unique (eventId),
+    constraint guilds_events_pk_messageId
+        unique (messageId),
+    constraint guilds_events_guilds_guildId_fk
+        foreign key (guildId) references dbyuuko.guilds (guildId)
+            on update cascade on delete cascade
+)
+    collate=utf8mb4_unicode_ci;
+
+alter table dbyuuko.guilds_events
+    add primary key (eventId);
 
 create table if not exists dbyuuko.guilds_module_binds
 (
@@ -33,7 +56,7 @@ create table if not exists dbyuuko.guilds_module_binds
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.guilds_module_settings
 (
@@ -52,7 +75,7 @@ create table if not exists dbyuuko.guilds_module_settings
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.guilds_reaction_roles
 (
@@ -60,13 +83,13 @@ create table if not exists dbyuuko.guilds_reaction_roles
     messageId varchar(18) not null,
     emoteId varchar(64) not null,
     roleId varchar(18) not null,
-    constraint message
+    constraint guilds_reaction_roles_messageId_emoteId_uindex
         unique (messageId, emoteId),
     constraint guilds_reaction_roles_guilds_guildId_fk
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.guilds_settings
 (
@@ -78,30 +101,25 @@ create table if not exists dbyuuko.guilds_settings
     starboard varchar(18) null,
     comLog varchar(18) null,
     modLog varchar(18) null,
+    events varchar(18) null,
     lastUpdated timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
     primary key (guildId),
     constraint guilds_settings_guilds_guildId_fk
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.metrics_audio
 (
-    players int(3) null,
-    activePlayers int(3) null,
-    queueSize int(4) null,
+    players int default 0 null,
+    activePlayers int default 0 null,
+    queueSize int default 0 null,
+    trackIdMatch int default 0 null,
+    trackIdSize int default 0 null,
     dateInserted timestamp default CURRENT_TIMESTAMP null
 )
-    charset=utf8;
-
-create table if not exists dbyuuko.metrics_cache
-(
-    trackIdMatch int(13) not null,
-    trackIdSize int(13) not null,
-    dateInserted timestamp default CURRENT_TIMESTAMP not null
-)
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.shards
 (
@@ -116,11 +134,11 @@ create table if not exists dbyuuko.shards
     constraint shardId
         unique (shardId)
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.metrics_command
 (
-    shardId int(3) null,
+    shardId int null,
     guildId varchar(18) null,
     command varchar(32) null,
     executionTime double(8,2) null,
@@ -129,25 +147,26 @@ create table if not exists dbyuuko.metrics_command
         foreign key (shardId) references dbyuuko.shards (shardId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.metrics_discord
 (
-    shardId int(3) not null,
-    gatewayPing double(11,1) not null,
-    restPing double(11,1) not null,
-    guildCount int not null,
+    shardId int default 0 not null,
+    gatewayPing double(11,1) default -1.0 not null,
+    restPing double(11,1) default -1.0 not null,
+    guildCount int default 0 not null,
+    messageEvents int default 0 null,
     dateInserted timestamp default CURRENT_TIMESTAMP null,
     constraint metrics_discord_shards_shardId_fk
         foreign key (shardId) references dbyuuko.shards (shardId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
 create table if not exists dbyuuko.metrics_system
 (
-    shardId int(3) not null,
-    uptime bigint(32) not null,
+    shardId int not null,
+    uptime bigint not null,
     memoryTotal int not null,
     memoryUsed int not null,
     dateInserted timestamp default CURRENT_TIMESTAMP null,
@@ -155,5 +174,5 @@ create table if not exists dbyuuko.metrics_system
         foreign key (shardId) references dbyuuko.shards (shardId)
             on update cascade on delete cascade
 )
-    charset=utf8;
+    collate=utf8mb4_unicode_ci;
 
