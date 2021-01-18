@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class EventCommand extends Command {
+    private static final List<String> eventParameters = Arrays.asList("new", "title", "desc", "time", "slots", "notify", "publish", "cancel");
     private static final HashMap<String, ScheduledEvent> inProgressEmbeds = new HashMap<>();
 
     public EventCommand() {
@@ -30,12 +31,11 @@ public class EventCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) throws Exception {
         if(!e.hasParameters()) {
-            ArrayList<ScheduledEvent> scheduledEvents = DatabaseInterface.getEvents(e.getGuild().getId());
             StringBuilder eventsString = new StringBuilder();
+            ArrayList<ScheduledEvent> scheduledEvents = DatabaseInterface.getEvents(e.getGuild().getId());
             for(ScheduledEvent scheduledEvent : scheduledEvents) {
                 eventsString.append("ID: `").append(scheduledEvent.id).append("` - ").append(scheduledEvent.title).append(" ~ `").append(scheduledEvent.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy"))).append(" (").append(TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY))).append(")`\n");
             }
-
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Events (" + scheduledEvents.size() + ")")
                     .setDescription(eventsString.toString())
@@ -45,116 +45,70 @@ public class EventCommand extends Command {
         }
 
         String[] params = e.getParameters().split("\\s+", 2);
-        switch(params[0].toLowerCase()) {
-            case "new" -> {
-                createEvent(e);
-                return;
-            }
-            case "cancel" -> {
-                cancelEvent(e, params);
-                return;
-            }
-            case "publish" -> {
-                publishEvent(e);
-                return;
-            }
-        }
+        params[0] = params[0].toLowerCase(); // make it lowercase now so we don't have to later
 
-        // Parameter checking - everything past here requires at least 2 parameters (action, value)
-        if(params.length < 2) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Missing Parameters")
-                    .setDescription("That command requires more parameters than you provided.");
-            MessageDispatcher.reply(e, about.build());
+        // Silently fail if the user enters a parameter we don't handle.
+        if(!eventParameters.contains(params[0])) {
             return;
         }
 
-        if(!inProgressEmbeds.containsKey(e.getAuthor().getId())) {
+        // Only case where scheduled event isn't called at all.
+        if(params[0].equals("new")) {
+            createEvent(e);
+            return;
+        }
+
+        // Only case which can accept both 1 and 2 parameters.
+        if(params[0].equals("cancel")) {
+            cancelEvent(e, params);
+            return;
+        }
+
+        // Everything past here requires a pre-existing scheduled event.
+        ScheduledEvent scheduledEvent = inProgressEmbeds.getOrDefault(e.getAuthor().getId(), null);
+        if(scheduledEvent == null) {
             EmbedBuilder about = new EmbedBuilder().setTitle("Missing Event")
                     .setDescription("There is no event to manipulate, use `" + e.getPrefix() + "event new` to get started!");
             MessageDispatcher.reply(e, about.build());
             return;
         }
 
-        ScheduledEvent scheduledEvent = inProgressEmbeds.get(e.getAuthor().getId());
-        switch(params[0].toLowerCase()) {
-            case "title" -> {
-                scheduledEvent.title = params[1].length() > 256 ? params[1].substring(0, 255) : params[1];
-                scheduledEvent.embedBuilder.setTitle(scheduledEvent.title);
-                scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
-            }
-            case "desc" -> {
-                scheduledEvent.description = params[1].length() > 2048 ? params[1].substring(0, 2047) : params[1];
-                scheduledEvent.embedBuilder.setDescription(scheduledEvent.description);
-                scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
-            }
+        // Only case where scheduled event is needed, but only 1 parameter
+        if(params[0].equals("publish")) {
+            publishEvent(e);
+            return;
+        }
+
+        // Parameter checking - everything past here requires at least 2 parameters (action, value)
+        if(params.length < 2) {
+            EmbedBuilder about = new EmbedBuilder().setTitle("Missing Parameters")
+                    .setDescription("That function requires more parameters than you provided. Use `" + e.getPrefix() + "help event` if you get stuck.");
+            MessageDispatcher.reply(e, about.build());
+            return;
+        }
+
+        switch(params[0]) {
+            case "title" -> scheduledEvent.setTitle(params[1]).submitEdit();
+            case "desc" -> scheduledEvent.setDescription(params[1]).submitEdit();
+            case "notify" -> scheduledEvent.setNotify(Sanitiser.isBoolean(params[1])).submitEdit();
             case "time" -> {
-                if(Sanitiser.isTimestamp(params[1]+":00")) {
-                    scheduledEvent.timestamp = Timestamp.valueOf(params[1]+":00");
-                    scheduledEvent.embedBuilder.getFields().remove(0);
-                    scheduledEvent.embedBuilder.getFields().add(0, new MessageEmbed.Field("Scheduled", "`" + scheduledEvent.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false));
-                    scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
+                if(!Sanitiser.isTimestamp(params[1]+":00")) {
+                    EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
+                            .setDescription("The timestamp entered isn't valid, ensure the format is `yyyy-MM-dd HH:mm`");
+                    MessageDispatcher.reply(e, about.build());
                     return;
                 }
-
-                EmbedBuilder about = new EmbedBuilder().setTitle("Incorrect Format")
-                        .setDescription("The timestamp entered isn't valid, ensure the format is `yyyy-MM-dd HH:mm`");
-                MessageDispatcher.reply(e, about.build());
+                scheduledEvent.setTimestamp(Timestamp.valueOf(params[1]+":00")).submitEdit();
             }
             case "slots" -> {
-                if(Sanitiser.isNumber(params[1])) {
-                    scheduledEvent.slots = Integer.parseInt(params[1]);
-                    scheduledEvent.embedBuilder.getFields().remove(1);
-                    scheduledEvent.embedBuilder.getFields().add(1, new MessageEmbed.Field("Participants (0/" + scheduledEvent.slots + ")", "`None`", true));
-                    scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
+                if(!Sanitiser.isNumber(params[1])) {
+                    EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
+                            .setDescription("The input isn't valid, ensure you supply a non-negative integer, or 0, removing the limit.");
+                    MessageDispatcher.reply(e, about.build());
                     return;
                 }
-
-                if(params[1].equals("-1")) {
-                    scheduledEvent.slots = -1;
-                    scheduledEvent.embedBuilder.getFields().remove(1);
-                    scheduledEvent.embedBuilder.getFields().add(1, new MessageEmbed.Field("Participants (0)", "", true));
-                    scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
-                    return;
-                }
-
-                EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
-                        .setDescription("The input value isn't valid, ensure you give a valid non-negative integer or `-1` to remove the limit.");
-                MessageDispatcher.reply(e, about.build());
+                scheduledEvent.setSlots(Integer.parseInt(params[1])).submitEdit();
             }
-            case "notify" -> {
-                List<String> booleans = Arrays.asList("yes", "true", "1");
-                if(booleans.contains(params[1])) {
-                    scheduledEvent.notify = true;
-                    scheduledEvent.embedBuilder.getFields().remove(2);
-                    scheduledEvent.embedBuilder.getFields().add(2, new MessageEmbed.Field("Notify?", "`true`", true));
-                } else {
-                    scheduledEvent.notify = false;
-                    scheduledEvent.embedBuilder.getFields().remove(2);
-                    scheduledEvent.embedBuilder.getFields().add(2, new MessageEmbed.Field("Notify?", "`false`", true));
-                }
-                scheduledEvent.message.editMessage(scheduledEvent.embedBuilder.build()).queue();
-            }
-        }
-    }
-
-    /**
-     * Subclass which contains all information for a given event - this class makes manipulation of events trivial before/after database retrieval.
-     */
-    private static class ScheduledEvent {
-        public int id;
-        public String guildId;
-        public Message message;
-        public String messageId;
-        public EmbedBuilder embedBuilder;
-        public String title = "Event";
-        public String description = "";
-        public int slots = -1;
-        public Timestamp timestamp = Timestamp.from(Instant.now().plusSeconds(86400));
-        public boolean notify = false;
-
-        public ScheduledEvent(Message message, EmbedBuilder embedBuilder) {
-            this.message = message;
-            this.embedBuilder = embedBuilder;
         }
     }
 
@@ -171,21 +125,21 @@ public class EventCommand extends Command {
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder()
+        ScheduledEvent scheduledEvent = new ScheduledEvent()
                 .setTitle("Event")
                 .setDescription("This is your new event! Below are commands you can now use. " +
                         "\n`" + e.getPrefix() + "event title <value>` to set the title." +
                         "\n`" + e.getPrefix() + "event desc <value>` to set the description. (this message will be replaced)" +
                         "\n`" + e.getPrefix() + "event time <yyyy-MM-dd HH:mm>` to set the date/time of this event." +
-                        "\n`" + e.getPrefix() + "event slots <value>` to set a number of slots. (default unlimited)" +
+                        "\n`" + e.getPrefix() + "event slots <value>` to set a number of slots. (default 0 [unlimited])" +
                         "\n`" + e.getPrefix() + "event notify <boolean>` to notify participants (default false)." +
                         "\n`" + e.getPrefix() + "event publish` to publish this event." +
                         "\n`" + e.getPrefix() + "event cancel` to cancel this event.")
-                .addField("Scheduled", "`" + Timestamp.from(Instant.now().plusSeconds(86400)).toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
-                .addField("Participants (0)", "`None`", true)
-                .addField("Notify?", "`false`", true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        e.getChannel().sendMessage(embed.build()).queue(s -> inProgressEmbeds.put(e.getAuthor().getId(), new ScheduledEvent(s, embed)));
+                .setTimestamp(Timestamp.from(Instant.now().plusSeconds(86400)))
+                .setSlots(0)
+                .setNotify(false)
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag());
+        e.getChannel().sendMessage(scheduledEvent.getEmbed()).queue(s -> inProgressEmbeds.put(e.getAuthor().getId(), scheduledEvent.setMessage(s)));
     }
 
     /**
@@ -198,7 +152,7 @@ public class EventCommand extends Command {
         if(params.length == 1) {
             if(!inProgressEmbeds.containsKey(e.getAuthor().getId())) {
                 EmbedBuilder about = new EmbedBuilder().setTitle("Unknown Event")
-                        .setDescription("Unable to find event matching that ID.");
+                        .setDescription("Unable to find event.");
                 MessageDispatcher.reply(e, about.build());
                 return;
             }
@@ -257,12 +211,18 @@ public class EventCommand extends Command {
         if(textChannel != null) {
             ScheduledEvent scheduledEvent = inProgressEmbeds.get(e.getAuthor().getId());
             int eventId = DatabaseInterface.newEvent(e, scheduledEvent);
-            scheduledEvent.embedBuilder.setFooter("ID: " + eventId);
-            textChannel.sendMessage(scheduledEvent.embedBuilder.build()).queue(message -> {
-                scheduledEvent.message.delete().queue(x -> inProgressEmbeds.remove(e.getAuthor().getId()));
-                DatabaseInterface.updateEventMessage(eventId, message.getId());
-                message.addReaction("✅").queue();
-            });
+            if(eventId != -1) {
+                scheduledEvent.setFooter("ID: " + eventId);
+                textChannel.sendMessage(scheduledEvent.getEmbed()).queue(message -> {
+                    scheduledEvent.message.delete().queue(x -> inProgressEmbeds.remove(e.getAuthor().getId()));
+                    DatabaseInterface.updateEventMessage(eventId, message.getId());
+                    message.addReaction("✅").queue();
+                });
+                return;
+            }
+            EmbedBuilder about = new EmbedBuilder().setTitle("Publish Failed")
+                    .setDescription("There was an issue publishing your event... if this happens again please contact developer.");
+            MessageDispatcher.reply(e, about.build());
         }
     }
 
@@ -272,23 +232,21 @@ public class EventCommand extends Command {
      */
     public static void processReaction(GenericGuildMessageReactionEvent e) {
         if(e.getReactionEmote().getAsReactionCode().equals("✅")) {
-            HashMap<String, String> event = DatabaseInterface.getEvent(e.getMessageId());
-            if(!event.isEmpty()) {
+            ScheduledEvent event = DatabaseInterface.getEvent(e.getMessageId());
+            if(event.timestamp != null) {
                 e.getChannel().retrieveMessageById(e.getMessageId()).queue(message -> {
                     Optional<MessageReaction> reaction = message.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("✅")).findAny();
                     reaction.ifPresent(messageReaction -> messageReaction.retrieveUsers().queue(users -> {
                         users.remove(Yuuko.BOT); // remove bot from users list
-
                         StringBuilder participantString = new StringBuilder();
                         users.stream().limit(10).forEach(user -> participantString.append("`").append(user.getAsTag()).append("`\n"));
-
                         EmbedBuilder embed = new EmbedBuilder()
-                                .setTitle(event.get("title"))
-                                .setDescription(event.get("description"))
-                                .addField("Scheduled", "`" + Timestamp.valueOf(event.get("scheduled")).toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
-                                .addField("Participants " + (event.get("slots").equals("-1") ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.get("slots") + ")"), participantString.toString(), true)
-                                .addField("Notify?", "`" + event.get("notify") + "`", true)
-                                .setFooter("ID: " + event.get("id"));
+                                .setTitle(event.title)
+                                .setDescription(event.description)
+                                .addField("Scheduled", "`" + event.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
+                                .addField("Participants " + ((event.slots == 0) ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.slots + ")"), participantString.toString(), true)
+                                .addField("Notify?", "`" + event.notify + "`", true)
+                                .setFooter("ID: " + event.id);
                         e.getChannel().editMessageById(e.getMessageId(), embed.build()).queue();
                     }));
                 });
@@ -329,6 +287,87 @@ public class EventCommand extends Command {
                 DatabaseInterface.removeEvent(scheduledEvent.guildId, scheduledEvent.id);
             }
         });
+    }
+
+    /**
+     * Subclass which contains all information for a given event - this class makes manipulation of events trivial before/after database retrieval.
+     */
+    private static class ScheduledEvent {
+        private int id;
+        private String guildId;
+        private Message message;
+        private String messageId;
+        private String title;
+        private String description;
+        private Timestamp timestamp;
+        private int slots;
+        private boolean notify = false;
+        private String footer;
+
+        public ScheduledEvent setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public ScheduledEvent setGuildId(String guildId) {
+            this.guildId = guildId;
+            return this;
+        }
+
+        public ScheduledEvent setMessage(Message message) {
+            this.message = message;
+            this.messageId = message.getId();
+            return this;
+        }
+
+        public ScheduledEvent setMessageId(String messageId) {
+            this.messageId = messageId;
+            return this;
+        }
+
+        public ScheduledEvent setTitle(String title) {
+            this.title = (title.length() > 256) ? title.substring(0, 255) : title; // 256 max length of embed title
+            return this;
+        }
+
+        public ScheduledEvent setDescription(String description) {
+            this.description = (description.length() > 2048) ? description.substring(0, 2047) : description; // 2048 max length of embed description
+            return this;
+        }
+
+        public ScheduledEvent setTimestamp(Timestamp timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        public ScheduledEvent setSlots(int slots) {
+            this.slots = Math.max(slots, 0); // anything less than 1 equals infinite
+            return this;
+        }
+
+        public ScheduledEvent setNotify(boolean notify) {
+            this.notify = notify;
+            return this;
+        }
+
+        public ScheduledEvent setFooter(String footer) {
+            this.footer = (footer.length() > 2048) ? footer.substring(0, 2047) : footer; // 2048 max length of embed footer
+            return this;
+        }
+
+        public void submitEdit() {
+            message.editMessage(getEmbed()).queue();
+        }
+
+        public MessageEmbed getEmbed() {
+            return new EmbedBuilder().setTitle(title)
+                    .setDescription(description)
+                    .addField("Scheduled", "`" + timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
+                    .addField("Participants" + ((slots == 0) ? "(0)" : "(0/" + slots + ")"), "`none`", true)
+                    .addField("Notify?", "`" + notify + "`", true)
+                    .setFooter(footer)
+                    .build();
+        }
     }
 
     public static class DatabaseInterface {
@@ -379,13 +418,13 @@ public class EventCommand extends Command {
 
                 ArrayList<ScheduledEvent> scheduledEvents = new ArrayList<>();
                 while(resultSet.next()) {
-                    ScheduledEvent scheduledEvent = new ScheduledEvent(null, null);
-                    scheduledEvent.guildId = resultSet.getString("guildId");
-                    scheduledEvent.messageId = resultSet.getString("messageId");
-                    scheduledEvent.title = resultSet.getString("eventTitle");
-                    scheduledEvent.timestamp = resultSet.getTimestamp("eventScheduled");
-                    scheduledEvent.id = resultSet.getInt("eventId");
-                    scheduledEvent.notify = resultSet.getBoolean("eventNotify");
+                    ScheduledEvent scheduledEvent = new ScheduledEvent()
+                            .setId(resultSet.getInt("eventId"))
+                            .setGuildId(resultSet.getString("guildId"))
+                            .setMessageId(resultSet.getString("messageId"))
+                            .setTitle(resultSet.getString("eventTitle"))
+                            .setTimestamp(resultSet.getTimestamp("eventScheduled"))
+                            .setNotify(resultSet.getBoolean("eventNotify"));
                     scheduledEvents.add(scheduledEvent);
                 }
 
@@ -411,10 +450,10 @@ public class EventCommand extends Command {
 
                 ArrayList<ScheduledEvent> scheduledEvents = new ArrayList<>();
                 while(resultSet.next()) {
-                    ScheduledEvent scheduledEvent = new ScheduledEvent(null, null);
-                    scheduledEvent.title = resultSet.getString("eventTitle");
-                    scheduledEvent.timestamp = resultSet.getTimestamp("eventScheduled");
-                    scheduledEvent.id = resultSet.getInt("eventId");
+                    ScheduledEvent scheduledEvent = new ScheduledEvent()
+                            .setId(resultSet.getInt("eventId"))
+                            .setTitle(resultSet.getString("eventTitle"))
+                            .setTimestamp(resultSet.getTimestamp("eventScheduled"));
                     scheduledEvents.add(scheduledEvent);
                 }
 
@@ -429,30 +468,30 @@ public class EventCommand extends Command {
         /**
          * Returns an ArrayList of an event for that guild.
          * @param messageId String
-         * @return {@link ArrayList}
+         * @return {@link ScheduledEvent}
          */
-        public static HashMap<String, String> getEvent(String messageId) {
+        public static ScheduledEvent getEvent(String messageId) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_events` WHERE `messageId` = ?")) {
 
                 stmt.setString(1, messageId);
                 ResultSet resultSet = stmt.executeQuery();
 
-                HashMap<String, String> event = new HashMap<>();
+                ScheduledEvent event = new ScheduledEvent();
                 if(resultSet.next()) {
-                    event.put("id", resultSet.getString("eventId"));
-                    event.put("title", resultSet.getString("eventTitle"));
-                    event.put("description", resultSet.getString("eventDescription"));
-                    event.put("slots", resultSet.getInt("eventSlots")+"");
-                    event.put("scheduled", resultSet.getTimestamp("eventScheduled").toString()+"");
-                    event.put("notify", resultSet.getBoolean("eventNotify")+"");
+                    event.setId(resultSet.getInt("eventId"))
+                            .setTitle(resultSet.getString("eventTitle"))
+                            .setDescription(resultSet.getString("eventDescription"))
+                            .setSlots(resultSet.getInt("eventSlots"))
+                            .setTimestamp(resultSet.getTimestamp("eventScheduled"))
+                            .setNotify(resultSet.getBoolean("eventNotify"));
                 }
 
                 return event;
 
             } catch(Exception e) {
                 log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
-                return new HashMap<>();
+                return new ScheduledEvent();
             }
         }
 
@@ -498,11 +537,11 @@ public class EventCommand extends Command {
                     return resultSet.getInt("eventSlots");
                 }
 
-                return -1;
+                return 0;
 
             } catch(Exception e) {
                 log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
-                return -1;
+                return 0;
             }
         }
 
