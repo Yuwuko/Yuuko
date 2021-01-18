@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public final class Sanitiser {
@@ -112,41 +111,12 @@ public final class Sanitiser {
     }
 
     /**
-     * Checks to see if the given date is a valid date of the format dd/MM/yyyy.
-     *
-     * @param string {@link String}
+     * Checks if the given string is a valid boolean, more-so, is that boolean true?
+     * @param string String
      * @return boolean
      */
-    public static boolean isDate(String string) {
-        String[] strings = string.split("/");
-
-        if(string.length() < 3) {
-            return false;
-        }
-
-        for(String stringy : strings) {
-            if(!isNumber(stringy)) {
-                return false;
-            }
-        }
-
-        int month = Integer.parseInt(strings[1]);
-
-        if(month <= 12) {
-            if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
-                return Integer.parseInt(strings[0]) <= 31;
-            } else if(month == 2) {
-                if(LocalDateTime.now().getYear() % 4 != 0) { // Leap Year
-                    return Integer.parseInt(strings[0]) <= 28;
-                } else {
-                    return Integer.parseInt(strings[0]) <= 29;
-                }
-            } else {
-                return Integer.parseInt(strings[0]) <= 30;
-            }
-        } else {
-            return false;
-        }
+    public static boolean isBoolean(String string) {
+        return (string.equalsIgnoreCase("true") || string.equalsIgnoreCase("yes") || string.equalsIgnoreCase("1"));
     }
 
     /**
@@ -173,7 +143,6 @@ public final class Sanitiser {
      */
     public static String scrub(String string, boolean encodeBlank) {
         string = string.replaceAll("[!@#$%^&*(),.?\":{}|<>]", "");
-
         return encodeBlank ? string.replace(" ", "%20") : string;
     }
 }
