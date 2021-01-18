@@ -3,7 +3,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%gray%d{HH:mm:ss.SSS}] %green([%thread]) [%higherlight(%level)] %logger{50} - %higherlight(%msg) %n</pattern>
+            <pattern>%gray%d{dd-MM-yy HH:mm:ss} %green([%thread]) %higherlight(%level) %logger{50} - %higherlight(%msg) %n</pattern>
         </encoder>
     </appender>
     <root level="info">

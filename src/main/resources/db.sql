@@ -113,13 +113,6 @@ create table if not exists dbyuuko.metrics_audio
     dateInserted timestamp default CURRENT_TIMESTAMP null
 );
 
-create table if not exists dbyuuko.metrics_cache
-(
-    trackIdMatch int not null,
-    trackIdSize int not null,
-    dateInserted timestamp default CURRENT_TIMESTAMP not null
-);
-
 create table if not exists dbyuuko.shards
 (
     shardId int not null,
