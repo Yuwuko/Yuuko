@@ -113,6 +113,13 @@ public class EventCommand extends Command {
     }
 
     /**
+     * Clears inProgressEmbeds which are over an hour old - chances are they have been abandoned and are wasting memory.
+     */
+    public static void pruneEvents() {
+        inProgressEmbeds.values().removeIf(scheduledEvent ->  (System.currentTimeMillis() - scheduledEvent.creationTime.getTime()) >= 3600000);
+    }
+
+    /**
      * Creates a new event using the template, this event isn't the final event but merely a visualisation of an event.
      * Once the user publishes an event, this event will no longer be accessible.
      * @param e {@link MessageEvent}
@@ -303,6 +310,7 @@ public class EventCommand extends Command {
         private int slots;
         private boolean notify = false;
         private String footer;
+        private final Timestamp creationTime = Timestamp.from(Instant.now()); // used to purge abandoned events from cache
 
         public ScheduledEvent setId(int id) {
             this.id = id;
