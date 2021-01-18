@@ -102,7 +102,7 @@ public abstract class Command {
     }
 
     // I want a method to be able to purge lists on demand - reducing memory usage in a predictable way.
-    public void clearCooldowns() {
+    public void pruneCooldowns() {
         HashMap<String, Long> cooldownsTempList = new HashMap<>();
         cooldownsList.keySet().forEach(key -> {
             long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(key));

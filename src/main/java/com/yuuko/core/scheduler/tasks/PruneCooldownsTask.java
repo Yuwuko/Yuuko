@@ -7,6 +7,6 @@ public class PruneCooldownsTask implements Task {
 
     @Override
     public void run() {
-        Yuuko.COMMANDS.keySet().forEach(key -> Yuuko.COMMANDS.get(key).clearCooldowns());
+        Yuuko.COMMANDS.keySet().forEach(key -> Yuuko.COMMANDS.get(key).pruneCooldowns());
     }
 }
