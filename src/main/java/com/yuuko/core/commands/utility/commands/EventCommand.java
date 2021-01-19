@@ -9,6 +9,7 @@ import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
 
@@ -278,11 +279,16 @@ public class EventCommand extends Command {
                             textChannel.retrieveMessageById(scheduledEvent.messageId).queue(message -> {
                                 Optional<MessageReaction> reaction = message.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("✅")).findAny();
                                 reaction.ifPresent(messageReaction -> messageReaction.retrieveUsers().queue(users -> {
-                                    users.remove(Yuuko.BOT); // remove bot from users list
                                     StringBuilder notificationString = new StringBuilder();
-                                    notificationString.append(scheduledEvent.title).append(" `id: ").append(scheduledEvent.id).append("` is starting soon!\n\n");
-                                    users.stream().limit(scheduledEvent.slots).forEach(user -> notificationString.append(user.getAsMention()).append(" "));
-                                    textChannel.sendMessage(notificationString.toString()).queue(success -> DatabaseInterface.disableNotify(scheduledEvent.id));
+                                    users.stream().filter(user -> user != Yuuko.BOT).limit((scheduledEvent.slots == 0) ? users.size() : scheduledEvent.slots).forEach(user -> {
+                                        if((notificationString.length() + user.getAsMention().length() + 1) < 2048) {
+                                            notificationString.append(user.getAsMention()).append(" ");
+                                        }
+                                    });
+                                    MessageBuilder messageBuilder = new MessageBuilder()
+                                            .setContent(notificationString.toString())
+                                            .setEmbed(new EmbedBuilder().setTitle(scheduledEvent.title).setDescription("Starting in 10 minutes!").build());
+                                    message.reply(messageBuilder.build()).queue(success -> DatabaseInterface.disableNotify(scheduledEvent.id));
                                 }));
                             });
                         }
