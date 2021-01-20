@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", Yuuko.MODULES.get("moderation"),1, 5000L, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
+        super("nuke", Yuuko.MODULES.get("moderation"),1, 10000L, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
     }
 
     @Override
