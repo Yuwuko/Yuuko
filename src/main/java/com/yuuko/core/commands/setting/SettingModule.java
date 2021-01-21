@@ -15,8 +15,8 @@ public class SettingModule extends Module {
             entry("commandlog", CommandLogSetting.class),
             entry("moderationlog", ModerationLogSetting.class),
             entry("djmode", DjModeSetting.class),
-            entry("nowplaying", NowPlayingSetting.class),
-            entry("delexecuted", DeleteExecutedSetting.class),
+            entry("playnotifications", PlayNotificationsSetting.class),
+            entry("cleanupcommands", CleanupCommandsSetting.class),
             entry("eventchannel", EventChannelSetting.class)
     );
 
