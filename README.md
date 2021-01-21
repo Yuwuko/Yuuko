@@ -3,7 +3,6 @@
 ![Status](https://top.gg/api/widget/status/420682957007880223.svg)
 ![Servers](https://top.gg/api/widget/servers/420682957007880223.svg)
 ![Servers](https://top.gg/api/widget/upvotes/420682957007880223.svg)
-![Library](https://top.gg/api/widget/lib/420682957007880223.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/yuwuko/yuuko/badge)](https://www.codefactor.io/repository/github/yuwuko/yuuko)
 [![GitHub release](https://img.shields.io/github/release/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko)
 [![GitHub stars](https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/stargazers)
