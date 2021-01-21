@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 public class Rule34Command extends Command {
     private static final String BASE_URL = "https://rule34.xxx/index.php?page=post&s=random";
+    private String image = "https://i.imgur.com/YXqsEo6.jpg";
 
     public Rule34Command() {
         super("rule34", Yuuko.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-rule34"), true, null);
@@ -23,9 +24,7 @@ public class Rule34Command extends Command {
     public void onCommand(MessageEvent e) throws Exception {
         Document doc = new RequestHandler(BASE_URL).getDocument();
         Elements images = doc.getElementsByTag("img");
-
-        String image = "https://i.imgur.com/YXqsEo6.jpg";
-        for(Element img: images) {
+        for(Element img : images) {
             if(img.hasAttr("height")) {
                 image = img.attr("src");
                 break;
