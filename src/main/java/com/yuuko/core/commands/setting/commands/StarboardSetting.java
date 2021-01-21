@@ -7,9 +7,9 @@ import com.yuuko.core.database.function.GuildFunctions;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 
@@ -17,9 +17,9 @@ import java.awt.*;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class StarboardSetting extends Command {
-    private static final List<String> fileTypes = Arrays.asList("mp4", "mov", "avi");
 
     public StarboardSetting() {
         super("starboard", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
@@ -63,66 +63,66 @@ public class StarboardSetting extends Command {
 
     /**
      * Executes starboard setting.
-     *
      * @param e GuildMessageReactionAddEvent
      */
     public static void execute(GuildMessageReactionAddEvent e) {
         String channelId = GuildFunctions.getGuildSetting("starboard", e.getGuild().getId());
-
-        if(channelId != null) {
-            TextChannel starboard = e.getGuild().getTextChannelById(channelId);
-            Message starred = e.getChannel().retrieveMessageById(e.getMessageId()).complete();
-
-            // If the channel doesn't exist, remove the database record of it existing.
-            if(starboard == null) {
-                GuildFunctions.setGuildSettings("starboard", null, e.getGuild().getId());
-                return;
-            }
-
-            // Cannot starboard embedded messages.
-            if(starred.getEmbeds().size() > 0) {
-                return;
-            }
-
-            // Cannot starboard not image/video attachments.
-            if(starred.getAttachments().size() > 0 && !starred.getAttachments().get(0).isImage()) {
-                return;
-            }
-
-            List<Message> history = starboard.getIterableHistory().complete();
-            for(Message message: history) {
-                if(message.getContentRaw().contains(starred.getId())) {
-                    for(MessageReaction reaction: starred.getReactions()) {
-                        if(reaction.getReactionEmote().getName().equals("⭐")) {
-                            String content = message.getContentRaw();
-                            int emoteCount = Integer.parseInt(content.substring(1, content.indexOf("`", 1)));
-
-                            if(emoteCount != reaction.getCount()) {
-                                message.editMessage("`"+ reaction.getCount() +"`⭐ - " + e.getChannel().getAsMention() + " `<" + starred.getId() + ">`" ).queue();
-                                return;
-                            }
-                        }
-                    }
-                    return;
-                }
-            }
-
-            // Check video formats to post without embed.
-            if(starred.getAttachments().size() > 0) {
-                String attachment = starred.getAttachments().get(0).getProxyUrl();
-                if(fileTypes.contains(attachment.substring(attachment.length()-3))) {
-                    starboard.sendMessage("`1`⭐ - " + e.getChannel().getAsMention() + " `<" + e.getMessageId() + ">`").queue(message -> starboard.sendMessage(attachment).queue());
-                    return;
-                }
-            }
-
-            EmbedBuilder starredEmbed = new EmbedBuilder()
-                    .setColor(Color.ORANGE)
-                    .setAuthor(starred.getMember().getEffectiveName(), null, starred.getAuthor().getEffectiveAvatarUrl())
-                    .setDescription(starred.getContentDisplay())
-                    .setImage(starred.getAttachments().size() > 0 ? starred.getAttachments().get(0).getProxyUrl() : null)
-                    .setTimestamp(Instant.now());
-            starboard.sendMessage("`1`⭐ - " + e.getChannel().getAsMention() + " `<" + e.getMessageId() + ">`").queue(message -> starboard.sendMessage(starredEmbed.build()).queue());
+        if(channelId == null) {
+            return;
         }
+
+        // If the channel doesn't exist, remove the database record of it existing.
+        TextChannel starboard = e.getGuild().getTextChannelById(channelId);
+        if(starboard == null) {
+            GuildFunctions.setGuildSettings("starboard", null, e.getGuild().getId());
+            return;
+        }
+
+        // Update star-count and return if found, else create new entry.
+        Message starred = e.retrieveMessage().complete();
+        AtomicBoolean found = new AtomicBoolean(false);
+        starboard.getIterableHistory().limit(25).complete().stream()
+                .filter(message -> message.getContentStripped().contains(starred.getId()) || message.getId().equals(starred.getId()))
+                .findFirst()
+                .ifPresent(message -> message.getReactions().stream()
+                        .filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("⭐"))
+                        .findFirst()
+                        .ifPresent(messageReaction -> {
+                            int emoteCount = Integer.parseInt(message.getContentRaw().substring(1, message.getContentRaw().indexOf("`", 1)));
+                            if(emoteCount != messageReaction.getCount()) {
+                                MessageBuilder messagebuilder = new MessageBuilder()
+                                        .setContent("`"+ messageReaction.getCount() +"`⭐ - " + e.getChannel().getAsMention() + " `<" + starred.getId() + ">`" )
+                                        .setEmbed((message.getEmbeds().size() != 0) ? message.getEmbeds().get(0) : null);
+                                message.editMessage(messagebuilder.build()).queue();
+                            }
+                            found.set(true);
+                        }));
+        if(found.get()) {
+            return;
+        }
+
+        // Create and send new starboard entry. (embed)
+        if(starred.getEmbeds().size() != 0) {
+            MessageBuilder messageBuilder = new MessageBuilder()
+                    .setContent("`1`⭐ - " + e.getChannel().getAsMention() + " `" + e.getMessageId() + "`\n")
+                    .setEmbed(starred.getEmbeds().get(0));
+            starboard.sendMessage(messageBuilder.build()).queue(message -> message.addReaction("⭐").queue());
+            return;
+        }
+
+        // Create and send new starboard entry. (non-embed)
+        List<Message.Attachment> attachments = starred.getAttachments();
+        MessageBuilder messageBuilder = new MessageBuilder()
+                .setContent("`1`⭐ - " + e.getChannel().getAsMention() + " `" + e.getMessageId() + "`")
+                .setEmbed(new EmbedBuilder()
+                        .setColor(Color.ORANGE)
+                        .setAuthor(starred.getAuthor().getAsTag(), null, starred.getAuthor().getEffectiveAvatarUrl())
+                        .setDescription(starred.getContentDisplay() + ((attachments.size() != 0) ? "\n" + attachments.get(0).getProxyUrl() : ""))
+                        .setImage(attachments.size() != 0 && attachments.get(0).isImage() ? attachments.get(0).getProxyUrl() : null)
+                        .setTimestamp(Instant.now())
+                        .build()
+                );
+        starboard.sendMessage(messageBuilder.build()).queue(message -> message.addReaction("⭐").queue());
     }
+
 }
