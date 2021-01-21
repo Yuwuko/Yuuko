@@ -91,7 +91,7 @@ public class EventCommand extends Command {
         switch(params[0]) {
             case "title" -> scheduledEvent.setTitle(params[1]).submitEdit();
             case "desc" -> scheduledEvent.setDescription(params[1]).submitEdit();
-            case "notify" -> scheduledEvent.setNotify(Sanitiser.isBoolean(params[1])).submitEdit();
+            case "notify" -> scheduledEvent.setNotify(Sanitiser.isBooleanTrue(params[1])).submitEdit();
             case "time" -> {
                 if(!Sanitiser.isTimestamp(params[1]+":00")) {
                     EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")

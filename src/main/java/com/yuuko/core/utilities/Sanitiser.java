@@ -115,7 +115,7 @@ public final class Sanitiser {
      * @param string String
      * @return boolean
      */
-    public static boolean isBoolean(String string) {
+    public static boolean isBooleanTrue(String string) {
         return (string.equalsIgnoreCase("true") || string.equalsIgnoreCase("yes") || string.equalsIgnoreCase("1"));
     }
 
