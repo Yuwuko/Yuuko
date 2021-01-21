@@ -7,11 +7,13 @@ import com.yuuko.core.api.entity.Api;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.io.RequestHandler;
-import com.yuuko.core.utilities.Sanitiser;
+import com.yuuko.core.io.entity.RequestProperty;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -26,11 +28,9 @@ public class GithubCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
-        String[] commandParameters = e.getParameters().split("\\s+", 2);
-
-        final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "/" + Sanitiser.scrub(commandParameters[1], true) + "?access_token=" + api.getKey();
-        final JsonObject json = new RequestHandler(url).getJsonObject();
-
+        String[] params = e.getParameters().split("\\s+", 2);
+        final String url = BASE_URL + URLEncoder.encode(params[0], StandardCharsets.UTF_8).replace("+", "%20") + "/" + URLEncoder.encode(params[1], StandardCharsets.UTF_8).replace("+", "%20");
+        final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "token " + api.getKey())).getJsonObject();
         if(json == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
             MessageDispatcher.reply(e, embed.build());
@@ -53,12 +53,12 @@ public class GithubCommand extends Command {
                 .setDescription(json.get("description").getAsString() + " " + license)
                 .addField("Language", language,true)
                 .addField("Latest Push", latestPush,true)
+                .addField("Size", size,true)
                 .addField("Stars", stars,true)
                 .addField("Forks", forks,true)
                 .addField("Open Issues", openIssues,true)
-                .addField("Pull Requests", pullRequests, true)
                 .addField("Commits", commits, true)
-                .addField("Size", size,true)
+                .addField("Pull Requests", pullRequests, true)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
