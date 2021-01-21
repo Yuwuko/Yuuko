@@ -52,7 +52,7 @@ public class MetricsManager {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO `metrics_system`(`shardId`, `uptime`, `memoryTotal`, `memoryUsed`) VALUES(?, ?, ?, ?)");
                 PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `metrics_discord`(`shardId`, `gatewayPing`, `restPing`, `guildCount`, `messageEvents`) VALUES(?, ?, ?, ?, ?)");
-                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`players`, `activePlayers`, `queueSize`, `trackIdMatch`, `trackIdSize`) VALUES(?, ?, ?, ?, ?)")) {
+                PreparedStatement stmt3 = conn.prepareStatement("INSERT INTO `metrics_audio`(`shardId`, `players`, `activePlayers`, `queueSize`, `trackIdMatch`, `trackIdSize`) VALUES(?, ?, ?, ?, ?, ?)")) {
 
                 // system metrics will is the same for every shard on an instance - for this reason we only update it once (per instance instead of per shard)
                 stmt.setInt(1, Yuuko.BOT.getJDA().getShardInfo().getShardId());
@@ -64,23 +64,25 @@ public class MetricsManager {
                 Yuuko.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
                     try {
                         final int shardId = shard.getShardInfo().getShardId();
+
                         stmt2.setInt(1, shardId);
                         stmt2.setDouble(2, shardedDiscordMetrics.get(shardId).GATEWAY_PING.get());
                         stmt2.setDouble(3, shardedDiscordMetrics.get(shardId).REST_PING.get());
                         stmt2.setInt(4, shardedDiscordMetrics.get(shardId).GUILD_COUNT.get());
                         stmt2.setInt(5, shardedDiscordMetrics.get(shardId).MESSAGE_EVENTS.get());
                         stmt2.execute();
+
+                        stmt3.setInt(1, shardId);
+                        stmt3.setInt(2, audioMetrics.PLAYERS_TOTAL.get());
+                        stmt3.setInt(3, audioMetrics.PLAYERS_ACTIVE.get());
+                        stmt3.setInt(4, audioMetrics.QUEUE_SIZE.get());
+                        stmt3.setInt(5, audioMetrics.TRACK_ID_CACHE_HITS.get());
+                        stmt3.setInt(6, audioMetrics.TRACK_ID_CACHE_SIZE.get());
+                        stmt3.execute();
                     } catch(Exception e) {
-                        log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
+                        log.error("An error occurred while updating shard metrics, class {} , message: {}", ShardFunctions.class.getSimpleName(), e.getMessage());
                     }
                 });
-
-                stmt3.setInt(1, audioMetrics.PLAYERS_TOTAL.get());
-                stmt3.setInt(2, audioMetrics.PLAYERS_ACTIVE.get());
-                stmt3.setInt(3, audioMetrics.QUEUE_SIZE.get());
-                stmt3.setInt(4, audioMetrics.TRACK_ID_CACHE_HITS.get());
-                stmt3.setInt(5, audioMetrics.TRACK_ID_CACHE_SIZE.get());
-                stmt3.execute();
 
             } catch(Exception ex) {
                 log.error("There was a problem updating metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
