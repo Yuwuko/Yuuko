@@ -180,11 +180,11 @@ public class CommandExecutor {
      */
     private void messageCleanup() {
         // Does the server want the command message removed?
-        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("deleteExecuted", event.getGuild().getId()))) {
+        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("cleanupcommands", event.getGuild().getId()))) {
             if(bot.hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
                 event.getMessage().delete().queue();
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'deleteExecuted' setting. If this setting is active by mistake, use `@Yuuko#2525 setting deleteExecuted false`.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'cleanupcommands' setting. If this setting is active by mistake, use `@Yuuko#2525 setting cleanupcommands false`.");
                 MessageDispatcher.reply(event, embed.build());
             }
         }
