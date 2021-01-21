@@ -11,9 +11,9 @@
 
 # Yuuko 202101r3
 
-Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) using [Gradle](https://gradle.org/) for dependencies, utilising the [JDAv4](https://github.com/DV8FromTheWorld/JDA) wrapper and [Lavalink](https://github.com/sedmelluq/lavaplayer) for audio.
+Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) way back in mid-2018. Slowly growing into what is has become today. This project always was, and always will be a labour of love.
 
-If you want Yuuko on your server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her... be sure to give all the appropriate permissions, or you will likely run into issues.
+If you want Yuuko on your server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her... be sure to give all the appropriate permissions, to not run into issues. Visit the [website](https://yuwuko.github.io) if you need support or you want to support Yuuko on pateron.
 
 ## Key Features
 
@@ -62,7 +62,7 @@ Take full advantage of Yuuko's event system, with modifiable title, description,
 `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
 
 * **Setting** <br>
-`settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `delexecuted` `nowplaying` `eventchannel`
+`settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `cleanupcommands` `playnotifications` `eventchannel`
 
 ---
 
