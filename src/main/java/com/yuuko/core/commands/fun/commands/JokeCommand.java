@@ -21,26 +21,24 @@ public class JokeCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
-        String joke;
         if(!e.hasParameters()) {
-            joke = new RequestHandler(BASE_URL).getJsonObject().get("joke").getAsString();
-        } else {
-            JsonObject object = new RequestHandler(BASE_URL + "/search?limit=30&term=" + e.getParameters().replace(" ", "%20")).getJsonObject();
-
-            if(object.getAsJsonArray("results").size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("No Results")
-                        .setDescription("Search for `" + e.getParameters() + "` produced no results.");
-                MessageDispatcher.reply(e, embed.build());
-                return;
-            }
-
-            JsonArray array = object.getAsJsonArray("results");
-            int index = ThreadLocalRandom.current().nextInt(array.size());
-            joke = array.get(index).getAsJsonObject().get("joke").getAsString();
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setDescription(new RequestHandler(BASE_URL).getJsonObject().get("joke").getAsString());
+            MessageDispatcher.reply(e, embed.build());
+            return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setDescription(joke);
+        JsonObject object = new RequestHandler(BASE_URL + "/search?limit=30&term=" + e.getParameters().replace(" ", "%20")).getJsonObject();
+        if(object.getAsJsonArray("results").size() < 1) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("No Results")
+                    .setDescription("Search for `" + e.getParameters() + "` produced no results.");
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
+
+        final JsonArray jokes = object.getAsJsonArray("results");
+        EmbedBuilder embed = new EmbedBuilder().setDescription(jokes.get(ThreadLocalRandom.current().nextInt(jokes.size())).getAsJsonObject().get("joke").getAsString());
         MessageDispatcher.reply(e, embed.build());
     }
 
