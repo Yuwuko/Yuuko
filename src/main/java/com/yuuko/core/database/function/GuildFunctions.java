@@ -160,8 +160,8 @@ public class GuildFunctions {
             ArrayList<String> settings = new ArrayList<>();
             while(rs.next()) {
                 settings.add(rs.getString("prefix"));
-                settings.add(rs.getBoolean("deleteexecuted") ? "Enabled" : "Disabled");
-                settings.add(rs.getBoolean("nowplaying") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("cleanupcommands") ? "Enabled" : "Disabled");
+                settings.add(rs.getBoolean("playnotifications") ? "Enabled" : "Disabled");
                 settings.add(rs.getBoolean("djmode") ? "Enabled" : "Disabled");
                 settings.add(rs.getString("starboard"));
                 settings.add(rs.getString("commandlog"));
