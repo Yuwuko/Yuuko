@@ -26,7 +26,7 @@ create table if not exists dbyuuko.guilds_events
     messageId varchar(18) not null,
     eventTitle varchar(256) default 'Event' not null,
     eventDescription varchar(2048) default ' ' null,
-    eventSlots int default -1 not null,
+    eventSlots int default 0 not null,
     eventScheduled timestamp default CURRENT_TIMESTAMP not null,
     eventNotify tinyint default 0 not null,
     constraint guilds_events_pk
@@ -89,8 +89,8 @@ create table if not exists dbyuuko.guilds_settings
 (
     guildId varchar(18) not null,
     prefix varchar(5) default '-' not null,
-    deleteexecuted tinyint(1) default 0 not null,
-    nowplaying tinyint(1) default 1 not null,
+    cleanupcommands tinyint(1) default 0 not null,
+    playnotifications tinyint(1) default 1 not null,
     djmode tinyint(1) default 0 not null,
     starboard varchar(18) null,
     commandlog varchar(18) null,
@@ -101,16 +101,6 @@ create table if not exists dbyuuko.guilds_settings
     constraint guilds_settings_guilds_guildId_fk
         foreign key (guildId) references dbyuuko.guilds (guildId)
             on update cascade on delete cascade
-);
-
-create table if not exists dbyuuko.metrics_audio
-(
-    players int default 0 null,
-    activePlayers int default 0 null,
-    queueSize int default 0 null,
-    trackIdMatch int default 0 null,
-    trackIdSize int default 0 null,
-    dateInserted timestamp default CURRENT_TIMESTAMP null
 );
 
 create table if not exists dbyuuko.shards
@@ -127,9 +117,23 @@ create table if not exists dbyuuko.shards
         unique (shardId)
 );
 
+create table if not exists dbyuuko.metrics_audio
+(
+    shardId int default 0 not null,
+    players int default 0 null,
+    activePlayers int default 0 null,
+    queueSize int default 0 null,
+    trackIdMatch int default 0 null,
+    trackIdSize int default 0 null,
+    dateInserted timestamp default CURRENT_TIMESTAMP null,
+    constraint metrics_audio_shards_shardId_fk
+        foreign key (shardId) references dbyuuko.shards (shardId)
+            on update cascade on delete cascade
+);
+
 create table if not exists dbyuuko.metrics_command
 (
-    shardId int null,
+    shardId int default 0 not null,
     guildId varchar(18) null,
     command varchar(32) null,
     executionTime double(8,2) null,
