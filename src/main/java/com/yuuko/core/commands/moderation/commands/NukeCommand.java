@@ -29,7 +29,7 @@ public class NukeCommand extends Command {
         if(channels.size() > 0) {
             TextChannel channel = channels.get(0);
             if(!channel.isNews()) {
-                channel.createCopy().queue(r -> channel.delete().queue(s -> {}, f -> {}));
+                channel.createCopy().setPosition(channel.getPosition()).queue(r -> channel.delete().queue(s -> {}, f -> {}));
             } else {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("Channels marked as **news** cannot be nuked in this way.");
                 MessageDispatcher.reply(e, embed.build());
