@@ -23,7 +23,7 @@ public class AnimeCommand extends Command {
     public void onCommand(MessageEvent e) throws Exception {
         final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + "&page[limit]=1";
         JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.api+json"), new RequestProperty("Content-Type","application/vnd.api+json")).getJsonObject();
-        if(json == null || json.getAsJsonArray("data").size() < 1) {
+        if(json == null || json.isJsonNull() || json.getAsJsonArray("data").size() < 1) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
             MessageDispatcher.reply(e, embed.build());
             return;
