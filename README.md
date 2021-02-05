@@ -9,7 +9,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 202101r3
+# Yuuko 202102r1
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) way back in mid-2018. Slowly growing into what is has become today. This project always was, and always will be a labour of love.
 

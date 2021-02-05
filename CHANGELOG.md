@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 202102r1
++ [~] Update dependencies.
+
 ## 202101r3
 + [!] Added version 1 of [__event__] command, allowing users to setup future events. (bugs expected)
 + [+] Added [__eventchannel__] command to allow for easy setup of the event channel.
