@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 202102r1
++ [+] Re-implemented [__osrs__] command for all of your old school runescape stat needs.
 + [~] Update dependencies.
 
 ## 202101r3

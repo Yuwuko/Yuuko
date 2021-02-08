@@ -115,6 +115,16 @@ public final class TextUtilities {
     }
 
     /**
+     * formatInteger flow controller
+     *
+     * @param integer integer to be formatted.
+     * @return formatted string
+     */
+    public static String formatInteger(int integer) {
+        return formatInteger(integer + "");
+    }
+
+    /**
      * Takes a String and GuildMemberJoinEvent and resolves tokens within the string.
      *
      * @param e {@link GuildMemberJoinEvent}

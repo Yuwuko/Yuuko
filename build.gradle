@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko.core'
-project.version = '202101r3'
+project.version = '202102r1'
 sourceCompatibility = 1.15
 mainClassName = 'com.yuuko.core.Yuuko'
 
@@ -53,6 +53,7 @@ ext {
     hikaricp                     = '4.0.1'                      // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     slf4jApi                     = '2.0.0-alpha1'               // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     logback                      = '1.3.0-alpha5'               // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    runeapi                      = '0.4.3'                      // https://github.com/BasketBandit/RuneAPI.java
 }
 
 dependencies {
@@ -73,4 +74,5 @@ dependencies {
     compile group: 'com.zaxxer', name: 'HikariCP', version: hikaricp
     compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jApi
     compile group: 'ch.qos.logback', name: 'logback-classic', version: logback
+    compile group: 'com.github.BasketBandit', name: 'RuneAPI.java', version: runeapi
 }

@@ -18,7 +18,8 @@ public class MediaModule extends Module {
             entry("tesco", TescoCommand.class),
             entry("natgeo", NationalGeographicCommand.class),
             entry("petition", UKParliamentPetitionCommand.class),
-            entry("urban", UrbanDictionaryCommand.class)
+            entry("urban", UrbanDictionaryCommand.class),
+            entry("osrs", RuneScapeCommand.class)
     );
 
     public MediaModule() {

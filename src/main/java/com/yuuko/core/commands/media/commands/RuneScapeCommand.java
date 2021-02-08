@@ -1,0 +1,71 @@
+package com.yuuko.core.commands.media.commands;
+
+import com.baseketbandit.runeapi.RuneAPI;
+import com.baseketbandit.runeapi.entity.Skill;
+import com.baseketbandit.runeapi.entity.Skills;
+import com.yuuko.core.MessageDispatcher;
+import com.yuuko.core.Yuuko;
+import com.yuuko.core.commands.Command;
+import com.yuuko.core.events.entity.MessageEvent;
+import com.yuuko.core.utilities.TextUtilities;
+import net.dv8tion.jda.api.EmbedBuilder;
+
+import java.util.Arrays;
+import java.util.Map;
+
+public class RuneScapeCommand extends Command {
+
+    public RuneScapeCommand() {
+        super("osrs", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-osrs <user>", "-osrs <user>, <skill>"), false, null, true);
+    }
+
+    @Override
+    public void onCommand(MessageEvent e) throws Exception {
+        String[] params = e.getParameters().split("\\s*,\\s*");
+
+        if(params.length == 1) {
+            // added fields manually to mimic in-game ordering
+            Map<String, Skill> skills = RuneAPI.getStats(e.getParameters());
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(e.getParameters())
+                    .addField("```    Attack    ```", skills.get("Attack").getLevel() + "", true)
+                    .addField("```  Hitpoints   ```", skills.get("Hitpoints").getLevel() + "", true)
+                    .addField("```    Mining    ```", skills.get("Mining").getLevel() + "", true)
+                    .addField("```   Strength   ```", skills.get("Strength").getLevel() + "", true)
+                    .addField("```   Agility    ```", skills.get("Agility").getLevel() + "", true)
+                    .addField("```   Smithing   ```", skills.get("Smithing").getLevel() + "", true)
+                    .addField("```   Defence    ```", skills.get("Defence").getLevel() + "", true)
+                    .addField("```   Herblore   ```", skills.get("Herblore").getLevel() + "", true)
+                    .addField("```   Fishing    ```", skills.get("Fishing").getLevel() + "", true)
+                    .addField("```    Ranged    ```", skills.get("Ranged").getLevel() + "", true)
+                    .addField("```   Thieving   ```", skills.get("Thieving").getLevel() + "", true)
+                    .addField("```   Cooking    ```", skills.get("Cooking").getLevel() + "", true)
+                    .addField("```    Prayer    ```", skills.get("Prayer").getLevel() + "", true)
+                    .addField("```   Crafting   ```", skills.get("Crafting").getLevel() + "", true)
+                    .addField("```  Firemaking  ```", skills.get("Firemaking").getLevel() + "", true)
+                    .addField("```    Magic     ```", skills.get("Magic").getLevel() + "", true)
+                    .addField("```  Fletching   ```", skills.get("Fletching").getLevel() + "", true)
+                    .addField("``` Woodcutting  ```", skills.get("Woodcutting").getLevel() + "", true)
+                    .addField("```  Runecraft   ```", skills.get("Runecraft").getLevel() + "", true)
+                    .addField("```    Slayer    ```", skills.get("Slayer").getLevel() + "", true)
+                    .addField("```   Farming    ```", skills.get("Farming").getLevel() + "", true)
+                    .addField("``` Construction ```", skills.get("Construction").getLevel() + "", true)
+                    .addField("```    Hunter    ```", skills.get("Hunter").getLevel() + "", true)
+                    .addField("```   Overall    ```", skills.get("Overall").getLevel() + "", true);
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
+
+        Map<String, Skill> skills = RuneAPI.getStats(params[0]);
+        Skills.asList.forEach(s -> {
+            if(s.equalsIgnoreCase(params[1])) {
+                Skill skill = skills.get(s);
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(params[0] + "'s " + skill.getName() + " level is " + skill.getLevel() + ".")
+                        .addField("```    Rank    ```", TextUtilities.formatInteger(skill.getRank()) + "", true)
+                        .addField("``` Experience ```", TextUtilities.formatInteger(skill.getExperience()) + "", true);
+                MessageDispatcher.reply(e, embed.build());
+            }
+        });
+    }
+}

@@ -1,6 +1,5 @@
 ![Yuuko Banner](https://i.imgur.com/3Aihicb.jpg)
 
-![Status](https://top.gg/api/widget/status/420682957007880223.svg)
 ![Servers](https://top.gg/api/widget/servers/420682957007880223.svg)
 ![Servers](https://top.gg/api/widget/upvotes/420682957007880223.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/yuwuko/yuuko/badge)](https://www.codefactor.io/repository/github/yuwuko/yuuko)
@@ -41,7 +40,7 @@ Take full advantage of Yuukos event system, with modifiable title, description, 
 | Utility     | `guild` `ping` `roles` `avatar` `user` `reactrole` `event`                                                                      |
 | Developer   | `setstatus` `reloadapi` `lavalink` `syncguilds` `restart` `shutdown` `logmetrics`                                               |
 | Audio       | `play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue` |
-| Media       | `osu` `github` `anime` `natgeo` `underground` `petition` `weather` `tesco` `urban`                                              |
+| Media       | `osu` `github` `anime` `natgeo` `underground` `petition` `weather` `tesco` `urban` `osrs`                                       |
 | Fun         | `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`                                                         |
 | Setting     | `settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `cleanupcommands` `playnotifications` `eventchannel`      |
 
@@ -114,6 +113,7 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 | [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.1            |
 | [SLF4J-Api](https://github.com/qos-ch/slf4j)                    | 2.0.0-alpha1     |
 | [logback](https://github.com/qos-ch/logback)                    | 1.3.0-alpha5     |
+| [RuneAPI.java](https://github.com/BasketBandit/RuneAPI.java)    | 0.4.3            |
 
 ---
 
