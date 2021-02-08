@@ -71,8 +71,6 @@ Take full advantage of Yuuko's event system, with modifiable title, description,
 
 Like Yuuko but want to host her yourself, or simply want a private music bot? Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possible to self-host. Below are instructions on how you can do just that.
 
-## Self-hosting
-
 ### Quick Start Requirements [No APIs] [No Music]
 - Java 15+ ~ [download link](https://jdk.java.net/15/)
 - Yuuko.jar ~ [download link](https://github.com/Yuuko-oh/Yuuko/raw/master/out/artifacts/yuuko/Yuuko.jar)
