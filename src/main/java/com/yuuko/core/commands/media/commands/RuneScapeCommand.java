@@ -22,16 +22,15 @@ public class RuneScapeCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) throws Exception {
         String[] params = e.getParameters().split("\\s*,\\s*");
+        Map<String, Skill> skills = RuneAPI.getStats(params[0]);
+        if(skills == null || skills.isEmpty()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Unable to retrieve stats for that user, are you sure the username is correct?");
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
 
         if(params.length == 1) {
             // added fields manually to mimic in-game ordering
-            Map<String, Skill> skills = RuneAPI.getStats(e.getParameters());
-            if(skills == null || skills.isEmpty()) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Unable to retrieve stats for that user, are you sure the username is correct?");
-                MessageDispatcher.reply(e, embed.build());
-                return;
-            }
-
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(e.getParameters())
                     .addField("```    Attack    ```", skills.get("Attack").getLevel() + "", true)
@@ -58,13 +57,6 @@ public class RuneScapeCommand extends Command {
                     .addField("``` Construction ```", skills.get("Construction").getLevel() + "", true)
                     .addField("```    Hunter    ```", skills.get("Hunter").getLevel() + "", true)
                     .addField("```   Overall    ```", skills.get("Overall").getLevel() + "", true);
-            MessageDispatcher.reply(e, embed.build());
-            return;
-        }
-
-        Map<String, Skill> skills = RuneAPI.getStats(params[0]);
-        if(skills == null || skills.isEmpty()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Unable to retrieve stats for that user, are you sure the username is correct?");
             MessageDispatcher.reply(e, embed.build());
             return;
         }
