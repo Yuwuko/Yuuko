@@ -26,6 +26,12 @@ public class RuneScapeCommand extends Command {
         if(params.length == 1) {
             // added fields manually to mimic in-game ordering
             Map<String, Skill> skills = RuneAPI.getStats(e.getParameters());
+            if(skills == null || skills.isEmpty()) {
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Unable to retrieve stats for that user, are you sure the username is correct?");
+                MessageDispatcher.reply(e, embed.build());
+                return;
+            }
+
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(e.getParameters())
                     .addField("```    Attack    ```", skills.get("Attack").getLevel() + "", true)
@@ -57,6 +63,12 @@ public class RuneScapeCommand extends Command {
         }
 
         Map<String, Skill> skills = RuneAPI.getStats(params[0]);
+        if(skills == null || skills.isEmpty()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Unable to retrieve stats for that user, are you sure the username is correct?");
+            MessageDispatcher.reply(e, embed.build());
+            return;
+        }
+
         Skills.asList.forEach(s -> {
             if(s.equalsIgnoreCase(params[1])) {
                 Skill skill = skills.get(s);
