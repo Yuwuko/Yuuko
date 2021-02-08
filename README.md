@@ -27,51 +27,31 @@ Want your users to be able to select roles simply by reacting to a message? With
 Have you ever wanted to spice up your chatting experience with interactions? Yuuko has a range of different interaction commands available that allows you to express yourself in more than just words.
 
 #### Events
-Take full advantage of Yuuko's event system, with modifiable title, description, scheduled time and number of slots, plan events and get an optional reminder 10 minutes before it starts.
+Take full advantage of Yuukos event system, with modifiable title, description, scheduled time and number of slots, plan events and get an optional reminder 10 minutes before it starts.
 
 ## Commands
 
-* **Core** <br>
-`help` `shards` `module` `about` `vote` `permissions` `bind`
-
-* **Animal** <br>
-`cat` `fox` `dog` `bird`
-
-* **NSFW** <br>
-`efukt` `neko` `rule34`
-
-* **Moderation** <br>
-`nuke` `kick` `mute` `ban`
-
-* **Interaction** <br>
-`pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`
-
-* **Utility** <br>
-`guild` `ping` `roles` `avatar` `user` `reactrole` `event`
-
-* **Developer** <br>
-`setstatus` `reloadapi` `lavalink` `syncguilds` `restart` `shutdown` `logmetrics`
-
-* **Audio** <br>
-`play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue`
-
-* **Media** <br>
-`osu` `github` `anime` `natgeo` `underground` `petition` `weather` `tesco` `urban`
-
-* **Fun** <br>
-`8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`
-
-* **Setting** <br>
-`settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `cleanupcommands` `playnotifications` `eventchannel`
-
----
+| Module      | Commands                                                                                                                        | 
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Core        | `help` `shards` `module` `about` `vote` `permissions` `bind`                                                                    |
+| Animal      | `cat` `fox` `dog` `bird`                                                                                                        |
+| NSFW        | `efukt` `neko` `rule34`                                                                                                         |
+| Moderation  | `nuke` `kick` `mute` `ban`                                                                                                      |
+| Interaction | `pout` `shrug` `angry` `cry` `kiss` `poke` `sleep` `attack` `bite` `blush` `hug` `laugh` `tickle` `pet` `pat` `kill` `dance`    |
+| Utility     | `guild` `ping` `roles` `avatar` `user` `reactrole` `event`                                                                      |
+| Developer   | `setstatus` `reloadapi` `lavalink` `syncguilds` `restart` `shutdown` `logmetrics`                                               |
+| Audio       | `play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue` |
+| Media       | `osu` `github` `anime` `natgeo` `underground` `petition` `weather` `tesco` `urban`                                              |
+| Fun         | `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`                                                         |
+| Setting     | `settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `cleanupcommands` `playnotifications` `eventchannel`      |
 
 ## Self-host 
+
 ***[THIS GUIDE MAY BE INCOMPLETE]***
 
-Like Yuuko but want to host her yourself, or simply want a private music bot? Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possible to self-host. Below are instructions on how you can do just that.
+Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possible to self-host. Below are instructions on how you can do just that. Basic setup excludes music and commands that rely on API keys however these can be setup with
 
-### Quick Start Requirements [No APIs] [No Music]
+### Requirements
 - Java 15+ ~ [download link](https://jdk.java.net/15/)
 - Yuuko.jar ~ [download link](https://github.com/Yuuko-oh/Yuuko/raw/master/out/artifacts/yuuko/Yuuko.jar)
 - Discord Application ~ [create here](https://discord.com/developers/applications)
@@ -113,9 +93,31 @@ Like Yuuko but want to host her yourself, or simply want a private music bot? Wo
 
 ---
 
+## Dependencies
+
+| Name                                                            | Version          |
+| --------------------------------------------------------------- | ---------------- |
+| [reflections8](https://github.com/aschoerk/reflections8)        | 0.11.7           |
+| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_227        |
+| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | ad528c2505       |
+| [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.67           |
+| [JDA-NAS](https://github.com/sedmelluq/jda-nas)                 | 1.1.0            |
+| [DBL-Java-Library](https://github.com/top-gg/java-sdk)          | 2.0.1            |
+| [Google-Api-Youtube](https://github.com/googleapis)             | v3-rev222-1.25.0 |
+| [Gson](https://github.com/google/gson)                          | 2.8.6            |
+| [Jackson-Annotations](https://github.com/FasterXML/jackson)     | 2.12.1           |
+| [Jackson-Databind](https://github.com/FasterXML/jackson)        | 2.12.1           |
+| [SnakeYAML](https://github.com/asomov/snakeyaml)                | 1.27             |
+| [OkHttp](https://github.com/square/okhttp)                      | 5.0.0-alpha.2    |
+| [jsoup](https://github.com/jhy/jsoup)                           | 1.13.1           |
+| [MySQL Connector/J](https://github.com/mysql/mysql-connector-j) | 8.0.23           |
+| [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.1            |
+| [SLF4J-Api](https://github.com/qos-ch/slf4j)                    | 2.0.0-alpha1     |
+| [logback](https://github.com/qos-ch/logback)                    | 1.3.0-alpha5     |
+
+---
+
 <p align="center">
   <a href="https://discord.gg/VsM25fN"><img src="https://discordapp.com/api/guilds/368094427089993729/widget.png?style=banner3" alt="Discord Server"></a>
   <br>Support server: <a href="https://discord.gg/VsM25fN">https://discord.gg/VsM25fN</a>
 </p>
-
----
