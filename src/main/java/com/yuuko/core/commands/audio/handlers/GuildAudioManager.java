@@ -41,11 +41,7 @@ public class GuildAudioManager {
         link.connect(channel);
     }
 
-    public void closeConnection(Guild guild) {
-        link.disconnect();
-    }
-
-    public void destroy() {
+    public void destroyConnection() {
         scheduler.queue.clear();
         link.resetPlayer();
         link.destroy();

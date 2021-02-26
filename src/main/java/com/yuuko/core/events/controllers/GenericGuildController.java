@@ -78,7 +78,7 @@ public class GenericGuildController {
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
-        AudioManager.getGuildAudioManager(e.getGuild()).destroy();
+        AudioManager.getGuildAudioManager(e.getGuild()).destroyConnection();
         GuildFunctions.cleanup(e.getGuild().getId());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
         Utilities.updateDiscordBotList(e.getJDA().getShardInfo().getShardId());
