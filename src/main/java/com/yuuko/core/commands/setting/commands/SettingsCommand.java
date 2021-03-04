@@ -25,25 +25,25 @@ public class SettingsCommand extends Command {
         String starboard = "`Disabled` - React with a ⭐ to `star` messages and send them to this channel.";
         if(settingsList.get(4) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(4));
-            starboard = textChannel != null ? textChannel.getAsMention() : "Unable to find starboard.";
+            starboard = textChannel != null ? textChannel.getAsMention() : "`Unable to find starboard, please reset channel.`";
         }
 
         String commandlog = "`Disabled` - Sends executed commands to the defined log channel.";
         if(settingsList.get(5) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(5));
-            commandlog = textChannel != null ? textChannel.getAsMention() : "Unable to find commandlog, please reset channel.";
+            commandlog = textChannel != null ? textChannel.getAsMention() : "`Unable to find commandlog, please reset channel.`";
         }
 
         String moderationlog = "`Disabled` - Sends moderation events to the defined log channel.";
         if(settingsList.get(6) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(6));
-            moderationlog = textChannel != null ? textChannel.getAsMention() : "Unable to find moderationlog, please reset channel.";
+            moderationlog = textChannel != null ? textChannel.getAsMention() : "`Unable to find moderationlog, please reset channel.`";
         }
 
         String eventchannel = "`Disabled` - Where published events will be stored.";
         if(settingsList.get(7) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(7));
-            eventchannel = textChannel != null ? textChannel.getAsMention() : "Unable to find eventchannel, please reset channel.";
+            eventchannel = textChannel != null ? textChannel.getAsMention() : "`Unable to find eventchannel, please reset channel.`";
         }
 
         EmbedBuilder embed = new EmbedBuilder()
