@@ -41,7 +41,7 @@ public class AnimeCommand extends Command {
         final String endDate = data.get("endDate").isJsonNull() ? "Unknown" : data.get("endDate").getAsString();
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), data.get("youtubeVideoId").isJsonNull() ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").toString())
+                .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), data.get("youtubeVideoId").isJsonNull() ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").getAsString())
                 .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
                 .setDescription(data.get("synopsis").getAsString())
                 .addField("Age Rating", ageRating, true)
