@@ -2,9 +2,13 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w09a
++ [!] Changed version numbering (again) to the nicer minecraft snapshot format "YYwWWr"
++ [~] Updated dependencies.
+
 ## 202102r1
 + [+] Re-implemented [__osrs__] command for all of your old school runescape stat needs.
-+ [~] Update dependencies.
++ [~] Updated dependencies.
 
 ## 202101r3
 + [!] Added version 1 of [__event__] command, allowing users to setup future events. (bugs expected)
