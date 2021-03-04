@@ -22,28 +22,28 @@ public class SettingsCommand extends Command {
         // Embed displaying all of the current settings for the server, giving information about each setting.
         ArrayList<String> settingsList = GuildFunctions.getGuildSettings(e.getGuild().getId());
 
-        String starboard = "Disabled";
+        String starboard = "`Disabled` - React with a ⭐ to `star` messages and send them to this channel.";
         if(settingsList.get(4) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(4));
-            starboard = textChannel != null ? textChannel.getAsMention() : "Unable to find starboard, please reset.";
+            starboard = textChannel != null ? textChannel.getAsMention() : "Unable to find starboard.";
         }
 
-        String commandlog = "Disabled";
+        String commandlog = "`Disabled` - Sends executed commands to the defined log channel.";
         if(settingsList.get(5) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(5));
-            commandlog = textChannel != null ? textChannel.getAsMention() : "Unable to find commandlog, please reset.";
+            commandlog = textChannel != null ? textChannel.getAsMention() : "Unable to find commandlog, please reset channel.";
         }
 
-        String moderationlog = "Disabled";
+        String moderationlog = "`Disabled` - Sends moderation events to the defined log channel.";
         if(settingsList.get(6) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(6));
-            moderationlog = textChannel != null ? textChannel.getAsMention() : "Unable to find moderationlog, please reset.";
+            moderationlog = textChannel != null ? textChannel.getAsMention() : "Unable to find moderationlog, please reset channel.";
         }
 
-        String eventchannel = "Disabled";
+        String eventchannel = "`Disabled` - Where published events will be stored.";
         if(settingsList.get(7) != null) {
             TextChannel textChannel = e.getGuild().getTextChannelById(settingsList.get(7));
-            eventchannel = textChannel != null ? textChannel.getAsMention() : "Unable to find eventchannel, please reset.";
+            eventchannel = textChannel != null ? textChannel.getAsMention() : "Unable to find eventchannel, please reset channel.";
         }
 
         EmbedBuilder embed = new EmbedBuilder()
@@ -53,10 +53,10 @@ public class SettingsCommand extends Command {
                 .addField(e.getPrefix() + "cleanupcommands <boolean>", "`" + settingsList.get(1) + "` - Deletes the users command when it is executed.", false)
                 .addField(e.getPrefix() + "playnotifications <boolean>", "`" + settingsList.get(2) + "` - Sends information of the mew track when it changes.", false)
                 .addField(e.getPrefix() + "djmode <boolean>", "`" + settingsList.get(3) + "` - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
-                .addField(e.getPrefix() + "starboard <#channel>",  starboard + " - Where any messages reacted to with a ⭐ will be sent.", false)
-                .addField(e.getPrefix() + "commandlog <#channel>", commandlog + " - Sends executed commands to a defined log channel.", false)
-                .addField(e.getPrefix() + "moderationlog <#channel>", moderationlog + " - Sends moderation events to a defined log channel.", false)
-                .addField(e.getPrefix() + "eventchannel <#channel>", eventchannel + " - Where published events will be sent.", false)
+                .addField(e.getPrefix() + "starboard <#channel>",  starboard, false)
+                .addField(e.getPrefix() + "commandlog <#channel>", commandlog, false)
+                .addField(e.getPrefix() + "moderationlog <#channel>", moderationlog, false)
+                .addField(e.getPrefix() + "eventchannel <#channel>", eventchannel, false)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }
