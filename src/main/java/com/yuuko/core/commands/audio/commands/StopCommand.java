@@ -18,7 +18,7 @@ public class StopCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
-        AudioManager.getGuildAudioManager(e.getGuild()).destroyConnection();
+        AudioManager.destroyGuildAudioManager(e.getGuild());
         if(e.getCommand() != null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Stopping").setDescription("Audio connection closed.");
             MessageDispatcher.reply(e, embed.build());
@@ -31,7 +31,7 @@ public class StopCommand extends Command {
      * @param guild {@link Guild}
      */
     public void onCommand(Guild guild) {
-        AudioManager.getGuildAudioManager(guild).destroyConnection();
+        AudioManager.destroyGuildAudioManager(guild);
     }
 
 }

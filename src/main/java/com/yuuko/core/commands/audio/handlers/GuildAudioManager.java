@@ -12,10 +12,10 @@ public class GuildAudioManager {
     private final TrackScheduler scheduler;
 
     /**
-     * Creates a player and a track scheduler.
-     * Without this class, trying to get persistent players, schedules, ect,
+     * Creates a {@link LavalinkPlayer} and a {@link TrackScheduler}.
+     * Without this class, trying to get persistent players, schedules
      * over an instanced module based bot would be pretty difficult.
-     * @param guild the guild to create a player for.
+     * @param guild {@link Guild}
      */
     public GuildAudioManager(Guild guild) {
         this.guild = guild;
@@ -41,11 +41,12 @@ public class GuildAudioManager {
         link.connect(channel);
     }
 
-    public void destroyConnection() {
+    protected void destroyConnection() {
         scheduler.queue.clear();
+        player.stopTrack();
+        player.removeListener(scheduler);
         link.resetPlayer();
         link.destroy();
-        AudioManager.removeGuildAudioManager(guild);
     }
 
     public TrackScheduler getScheduler() {

@@ -12,6 +12,8 @@ import lavalink.client.player.IPlayer;
 import lavalink.client.player.LavalinkPlayer;
 import lavalink.client.player.event.PlayerEventListenerAdapter;
 import net.dv8tion.jda.api.entities.Guild;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -20,13 +22,14 @@ import java.util.Queue;
 import java.util.concurrent.ScheduledFuture;
 
 public class TrackScheduler extends PlayerEventListenerAdapter {
+    private static final Logger log = LoggerFactory.getLogger(TrackScheduler.class);
     private final Guild guild;
     private AudioTrack background = null;
     private AudioTrack lastTrack = null;
     private boolean looping = false;
     private final LavalinkPlayer player;
     public final Queue<AudioTrack> queue;
-    private ScheduledFuture<?> timeout;
+    private ScheduledFuture<?> timeout; // If nothing is playing for 5 minutes, remove bot from voice channel to save resources.
 
     TrackScheduler(Guild guild, LavalinkPlayer player) {
         this.guild = guild;
@@ -73,26 +76,16 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                     return;
                 }
 
-                if(player.getPlayingTrack() != null) {
-                    player.stopTrack();
-                }
-
                 timeout = ScheduleHandler.registerUniqueJob(new VoiceTimeoutJob(guild));
                 return;
             }
 
-            if(timeout != null) {
-                timeout.cancel(true);
-                timeout = null;
-            }
+            // Not sure what this code actually did/does so removing until something breaks! (seems unnecessary?)
+            // if(player.getPlayingTrack() != null) {
+            //    player.stopTrack();
+            // }
 
             player.playTrack(track);
-
-            MessageEvent e = (MessageEvent) player.getPlayingTrack().getUserData();
-            if(e != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("playnotifications", e.getGuild().getId()))) {
-                new CurrentCommand().onCommand(e.setParameters("no-reply"));
-            }
-
         } catch(Exception ex) {
             // This exception occurs 99% of the time on repeating tracks.
         }
@@ -100,7 +93,20 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
     @Override
     public void onTrackStart(IPlayer player, AudioTrack track) {
-        super.onTrackStart(player, track);
+        try {
+            // Cancel timeout onStart if it is currently set
+            if(timeout != null) {
+                timeout.cancel(true);
+                timeout = null;
+            }
+
+            MessageEvent e = (MessageEvent) track.getUserData();
+            if(e != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("playnotifications", e.getGuild().getId()))) {
+                new CurrentCommand().onCommand(e.setParameters("no-reply"));
+            }
+        }  catch(Exception exception) {
+            log.debug(exception.getMessage());
+        }
     }
 
     /**
@@ -139,7 +145,10 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
     @Override
     public void onTrackStuck(IPlayer player, AudioTrack track, long thresholdMs) {
-        super.onTrackStuck(player, track, thresholdMs);
+        Queue<AudioTrack> temp = new LinkedList<>();
+        temp.add(track.makeClone());
+        temp.addAll(queue);
+        AudioManager.resetStuckGuildAudioManager(guild, temp);
     }
 
     /**

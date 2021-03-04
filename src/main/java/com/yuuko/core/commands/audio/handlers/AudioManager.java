@@ -8,11 +8,13 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.core.commands.audio.handlers.lavalink.LavalinkManager;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
+import java.util.Queue;
 
 public final class AudioManager {
     public final static LavalinkManager LAVALINK = new LavalinkManager();
@@ -34,7 +36,8 @@ public final class AudioManager {
 
     /**
      * Finds and sets the guild's handlers manager.
-     * @return GuildAudioManager.
+     * @param guild {@link Guild}
+     * @return {@link GuildAudioManager}
      */
     public static GuildAudioManager getGuildAudioManager(Guild guild) {
         GuildAudioManager manager = guildManagers.get(guild);
@@ -51,7 +54,7 @@ public final class AudioManager {
 
     /**
      * Returns full MusicManager HashMap.
-     * @return managers.
+     * @return {@link HashMap<>} key {@link HashMap<>} value {@link GuildAudioManager}
      */
     public static HashMap<Guild, GuildAudioManager> getGuildAudioManagers() {
         return guildManagers;
@@ -59,16 +62,29 @@ public final class AudioManager {
 
     /**
      * Adds to the GuildAudioManager HashMap.
+     * @param guild {@link Guild}
+     * @param manager {@link GuildAudioManager}
      */
     private static void addGuildAudioManager(Guild guild, GuildAudioManager manager) {
         guildManagers.put(guild, manager);
     }
 
     /**
-     * Removes a guild audio manager, stopping players from just laying dormant.
-     * @param guild which manager to remove.
+     * Resets stuck GuildAudioManager by destroying and reinitialising it.
+     * @param guild {@link Guild}
+     * @param queue {@link Queue<AudioTrack>}
      */
-    public static void removeGuildAudioManager(Guild guild) {
+    public static void resetStuckGuildAudioManager(Guild guild, Queue<AudioTrack> queue) {
+        destroyGuildAudioManager(guild);
+        getGuildAudioManager(guild).getScheduler().queue.addAll(queue);
+    }
+
+    /**
+     * Removes/Destroys a guild audio manager, stopping players from just laying dormant and using resources.
+     * @param guild {@link Guild}
+     */
+    public static void destroyGuildAudioManager(Guild guild) {
+        guildManagers.get(guild).destroyConnection();
         guildManagers.remove(guild);
     }
 
@@ -80,6 +96,11 @@ public final class AudioManager {
         return playerManager;
     }
 
+    /**
+     * Checks to see if Lavalink contains an existing link.
+     * @param guild {@link Guild}
+     * @return boolean
+     */
     public static boolean hasLink(Guild guild) {
         return LAVALINK.getLavalink().getExistingLink(guild) != null;
     }
@@ -97,6 +118,11 @@ public final class AudioManager {
         return LAVALINK.getLavalink().getExistingLink(guild);
     }
 
+    /**
+     * Checks if {@link Link} is connected or not.
+     * @param guild {@link Guild}
+     * @return boolean
+     */
     public static boolean isLinkConnected(Guild guild) {
         return LAVALINK.getLavalink().getExistingLink(guild).getState() == Link.State.CONNECTED;
     }
