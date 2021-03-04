@@ -206,7 +206,7 @@ public class Yuuko {
             BOT_TOKEN = config.get("bot_token");
             SHARDS_INSTANCE = Integer.parseInt(config.get("shards_instance"));
             SHARDS_TOTAL = Integer.parseInt(config.get("shards_total"));
-            GLOBAL_PREFIX = "<@!" + BOT_ID + "> ";
+            GLOBAL_PREFIX = config.get("global_prefix");
         } catch(IOException ex) {
             log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), ex.getMessage(), ex);
         }
