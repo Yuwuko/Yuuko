@@ -4,6 +4,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w09a
 + [!] Changed version numbering (again) to the nicer minecraft snapshot format "YYwWWr"
++ [~] Potential fix for multiple audio related problems. (playlist silence/hanging players)
 + [~] Updated dependencies.
 
 ## 202102r1

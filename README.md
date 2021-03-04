@@ -97,23 +97,23 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 | Name                                                            | Version          |
 | --------------------------------------------------------------- | ---------------- |
 | [reflections8](https://github.com/aschoerk/reflections8)        | 0.11.7           |
-| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_227        |
-| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | ad528c2505       |
-| [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.67           |
+| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_231        |
+| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 7bc7eb97a3       |
+| [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.72           |
 | [JDA-NAS](https://github.com/sedmelluq/jda-nas)                 | 1.1.0            |
 | [DBL-Java-Library](https://github.com/top-gg/java-sdk)          | 2.0.1            |
 | [Google-Api-Youtube](https://github.com/googleapis)             | v3-rev222-1.25.0 |
 | [Gson](https://github.com/google/gson)                          | 2.8.6            |
-| [Jackson-Annotations](https://github.com/FasterXML/jackson)     | 2.12.1           |
-| [Jackson-Databind](https://github.com/FasterXML/jackson)        | 2.12.1           |
-| [SnakeYAML](https://github.com/asomov/snakeyaml)                | 1.27             |
+| [Jackson-Annotations](https://github.com/FasterXML/jackson)     | 2.12.2           |
+| [Jackson-Databind](https://github.com/FasterXML/jackson)        | 2.12.2           |
+| [SnakeYAML](https://github.com/asomov/snakeyaml)                | 1.28             |
 | [OkHttp](https://github.com/square/okhttp)                      | 5.0.0-alpha.2    |
 | [jsoup](https://github.com/jhy/jsoup)                           | 1.13.1           |
 | [MySQL Connector/J](https://github.com/mysql/mysql-connector-j) | 8.0.23           |
-| [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.1            |
+| [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.2            |
 | [SLF4J-Api](https://github.com/qos-ch/slf4j)                    | 2.0.0-alpha1     |
 | [logback](https://github.com/qos-ch/logback)                    | 1.3.0-alpha5     |
-| [RuneAPI.java](https://github.com/BasketBandit/RuneAPI.java)    | 0.4.3            |
+| [RuneAPI.java](https://github.com/BasketBandit/RuneAPI.java)    | 0.4.4            |
 
 ---
 
