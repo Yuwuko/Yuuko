@@ -84,8 +84,10 @@ public final class AudioManager {
      * @param guild {@link Guild}
      */
     public static void destroyGuildAudioManager(Guild guild) {
-        guildManagers.get(guild).destroyConnection();
-        guildManagers.remove(guild);
+        if(guildManagers.containsKey(guild)) {
+            guildManagers.get(guild).destroyConnection();
+            guildManagers.remove(guild);
+        }
     }
 
     /**
