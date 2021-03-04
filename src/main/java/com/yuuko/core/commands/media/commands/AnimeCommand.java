@@ -30,18 +30,18 @@ public class AnimeCommand extends Command {
         }
 
         JsonObject data = json.getAsJsonArray("data").get(0).getAsJsonObject().get("attributes").getAsJsonObject(); // It's important to find the item in the array where the data is stored.
-        final String ageRating = data.get("ageRating").getAsString() + ": " + data.get("ageRatingGuide").getAsString();
-        final String episodes = data.get("episodeCount").getAsString();
-        final String episodeLength = data.get("episodeLength").getAsString() + " minutes";
-        final String totalLength = data.get("totalLength").getAsInt()/60 + " hours";
-        final String type = data.get("showType").getAsString();
-        final String approvalRating = data.get("averageRating").getAsString() + "%";
-        final String status = data.get("status").getAsString();
-        final String startDate = data.get("startDate").getAsString();
-        final String endDate = data.get("endDate").getAsString();
+        final String ageRating = data.get("ageRating").isJsonNull() ? "Unknown" : data.get("ageRating").getAsString() + ": " + data.get("ageRatingGuide").getAsString();
+        final String episodes = data.get("episodeCount").isJsonNull() ? "Unknown" : data.get("episodeCount").getAsString();
+        final String episodeLength = data.get("episodeLength").isJsonNull() ? "Unknown" : data.get("episodeLength").getAsString() + " minutes";
+        final String totalLength = (data.get("episodeLength").isJsonNull() || data.get("episodeCount").isJsonNull()) ? "Unknown" : ((data.get("episodeLength").getAsInt()*data.get("episodeCount").getAsInt())/60) + " hours";
+        final String type = data.get("showType").isJsonNull() ? "Unknown" : data.get("showType").getAsString();
+        final String approvalRating = data.get("averageRating").isJsonNull() ? "Unknown" : data.get("averageRating").getAsString() + "%";
+        final String status = data.get("status").isJsonNull() ? "Unknown" : data.get("status").getAsString();
+        final String startDate = data.get("startDate").isJsonNull() ? "Unknown" : data.get("startDate").getAsString();
+        final String endDate = data.get("endDate").isJsonNull() ? "Unknown" : data.get("endDate").getAsString();
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), (data.get("youtubeVideoId").isJsonNull()) ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").toString())
+                .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), data.get("youtubeVideoId").isJsonNull() ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").toString())
                 .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
                 .setDescription(data.get("synopsis").getAsString())
                 .addField("Age Rating", ageRating, true)

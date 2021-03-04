@@ -3,8 +3,9 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w09a
-+ [!] Changed version numbering (again) to the nicer minecraft snapshot format "YYwWWr"
++ [!] Changed version numbering (again) to the nicer minecraft snapshot format "YYwWWr".
 + [~] Potential fix for multiple audio related problems. (playlist silence/hanging players)
++ [~] Fix for [__anime__] command not being able to parse currently airing anime.
 + [~] Added global_prefix to config.yml  
 + [~] Updated dependencies.
 
