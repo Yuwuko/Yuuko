@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
 [![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
 
-# Yuuko 21w09a
+# Yuuko 21w11a
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) way back in mid-2018. Slowly growing into what is has become today. This project always was, and always will be a labour of love.
 
@@ -97,9 +97,9 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 | Name                                                            | Version          |
 | --------------------------------------------------------------- | ---------------- |
 | [reflections8](https://github.com/aschoerk/reflections8)        | 0.11.7           |
-| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_231        |
-| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 7bc7eb97a3       |
-| [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.72           |
+| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_241        |
+| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 9db9b0df8f       |
+| [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.73           |
 | [JDA-NAS](https://github.com/sedmelluq/jda-nas)                 | 1.1.0            |
 | [DBL-Java-Library](https://github.com/top-gg/java-sdk)          | 2.0.1            |
 | [Google-Api-Youtube](https://github.com/googleapis)             | v3-rev222-1.25.0 |
@@ -110,7 +110,7 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 | [OkHttp](https://github.com/square/okhttp)                      | 5.0.0-alpha.2    |
 | [jsoup](https://github.com/jhy/jsoup)                           | 1.13.1           |
 | [MySQL Connector/J](https://github.com/mysql/mysql-connector-j) | 8.0.23           |
-| [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.2            |
+| [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.3            |
 | [SLF4J-Api](https://github.com/qos-ch/slf4j)                    | 2.0.0-alpha1     |
 | [logback](https://github.com/qos-ch/logback)                    | 1.3.0-alpha5     |
 | [RuneAPI.java](https://github.com/BasketBandit/RuneAPI.java)    | 0.4.4            |

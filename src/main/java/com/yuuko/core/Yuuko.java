@@ -36,11 +36,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Yuuko {
     private static final Logger log = LoggerFactory.getLogger(Yuuko.class);
-    public static final String VERSION = "21w09a";
+    public static final String VERSION = new SimpleDateFormat("yy'w'w").format(Calendar.getInstance().getTime()) + "a";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;

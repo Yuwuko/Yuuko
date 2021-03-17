@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w11a
++ [~] Fix for [__UKParliamentPetition__] command where json is null.
++ [~] Updated dependencies.
+
 ## 21w09a
 + [!] Changed version numbering (again) to the nicer minecraft snapshot format "YYwWWr".
 + [~] Potential fix for multiple audio related problems. (playlist silence/hanging players)
