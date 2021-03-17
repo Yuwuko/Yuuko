@@ -29,7 +29,7 @@ public class UKParliamentPetitionCommand extends Command {
             final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + ".json";
             final JsonObject json = new RequestHandler(url).getJsonObject();
 
-            if(json.has("error")) {
+            if(json == null || json.isJsonNull() || json.has("error")) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
                 MessageDispatcher.reply(e, embed.build());
                 return;
