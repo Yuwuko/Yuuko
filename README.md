@@ -26,7 +26,7 @@ Want your users to be able to select roles simply by reacting to a message? With
 Have you ever wanted to spice up your chatting experience with interactions? Yuuko has a range of different interaction commands available that allows you to express yourself in more than just words.
 
 #### Events
-Take full advantage of Yuukos event system, with modifiable title, description, scheduled time and number of slots, plan events and get an optional reminder 10 minutes before it starts.
+Take full advantage of Yuuko's event system, with modifiable title, description, scheduled time and number of slots, plan events and get an optional reminder 10 minutes before it starts.
 
 ## Commands
 
@@ -70,7 +70,7 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 
 5) Also in the `config` directory, open the `hikari` directory and edit `externaldb.yaml` and replace the relevant credentials if necessary.
 
-6) Go back to the a command prompt and run the original `java -jar Yuuko.jar` command again, and the bot should spring to life... albeit with slightly reduced functionality.
+6) Go back to the command prompt and run the original `java -jar Yuuko.jar` command again, and the bot should spring to life... albeit with slightly reduced functionality.
 
 ### Adding API Keys
 
