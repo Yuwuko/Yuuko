@@ -45,6 +45,7 @@ public class Yuuko {
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
+    public static long LOG_ERROR;
     public static boolean LOG_METRICS;
     public static String BOT_ID;
     private static String BOT_TOKEN;
@@ -115,10 +116,13 @@ public class Yuuko {
                             "author: \"\"" + System.lineSeparator() +
                             "website: \"\"" + System.lineSeparator() +
                             "support: \"\"" + System.lineSeparator() +
+                            "log_error: \"\"" + System.lineSeparator() +
                             "log_metrics: \"false\"" + System.lineSeparator() +
                             "bot_id: \"\"" + System.lineSeparator() +
                             "bot_token: \"\"" + System.lineSeparator() +
-                            "shards: \"1\""
+                            "global_prefix: \"\"" + System.lineSeparator() +
+                            "shards_instance: \"1\"" + System.lineSeparator() +
+                            "shards_total: \"1\""
                     );
                 }
             }
@@ -202,6 +206,7 @@ public class Yuuko {
             AUTHOR = config.get("author");
             AUTHOR_WEBSITE = config.get("website");
             SUPPORT_GUILD = config.get("support");
+            LOG_ERROR = Long.parseLong(config.get("error_channel"));
             LOG_METRICS = Boolean.parseBoolean(config.get("log_metrics"));
             BOT_ID = config.get("bot_id");
             BOT_TOKEN = config.get("bot_token");
