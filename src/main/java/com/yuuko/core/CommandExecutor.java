@@ -80,8 +80,8 @@ public class CommandExecutor {
             log.trace("Invoking {}#onCommand()", command.getClass().getSimpleName());
             command.onCommand(event);
             messageCleanup();
-        } catch(Exception ex) {
-            log.error("Something went wrong when executing the {} , message: {}", command.getClass().getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("Something went wrong when executing the {} command, message: {}", command.getName(), e.getMessage(), e);
             event.getMessage().addReaction("❌").queue();
         }
     }
