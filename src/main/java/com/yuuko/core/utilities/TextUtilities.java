@@ -1,8 +1,5 @@
 package com.yuuko.core.utilities;
 
-import com.yuuko.core.events.entity.MessageEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -123,51 +120,4 @@ public final class TextUtilities {
     public static String formatInteger(int integer) {
         return formatInteger(integer + "");
     }
-
-    /**
-     * Takes a String and GuildMemberJoinEvent and resolves tokens within the string.
-     *
-     * @param e {@link GuildMemberJoinEvent}
-     * @param message String
-     * @return resolved string
-     */
-    public static String untokenizeString(GuildMemberJoinEvent e, String message) {
-        message = message.replace("%user%", e.getMember().getAsMention());
-        message = message.replace("%guild%", e.getGuild().getName());
-        return message;
-    }
-
-    /**
-     * Takes a String and MessageEvent and resolves tokens within the string.
-     *
-     * @param e {@link MessageEvent}
-     * @param message String
-     * @return resolved string
-     */
-    public static String untokenizeString(MessageEvent e, String message) {
-        message = message.replace("%user%", e.getMember().getAsMention());
-        message = message.replace("%guild%", e.getGuild().getName());
-        return message;
-    }
-
-    /**
-     * Takes an array.toString(), and converts it to a list of those objects separated by a new line.
-     *
-     * @param array String
-     * @return formattedString
-     */
-    public static String formatArray(String array) {
-        return array.replace(",","\n").replaceAll("[\\[\\]]", "");
-    }
-
-    /**
-     * Prepends and appends backticks to a string to reduce code duplication within methods.
-     *
-     * @param string input to backtick
-     * @return backticked string
-     */
-    public static String backtick(String string) {
-        return "```" + string + "```";
-    }
-
 }

@@ -5,15 +5,14 @@ import com.yuuko.core.Yuuko;
 import com.yuuko.core.commands.Command;
 import com.yuuko.core.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.core.events.entity.MessageEvent;
-import com.yuuko.core.utilities.DiscordUtilities;
 import com.yuuko.core.utilities.MessageUtilities;
 import com.yuuko.core.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class MuteCommand extends Command {
@@ -35,7 +34,7 @@ public class MuteCommand extends Command {
             return;
         }
 
-        Role muted = DiscordUtilities.getOrSetupMutedRole(e.getGuild());
+        Role muted = getMutedRole(e.getGuild());
         if(muted == null) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Mute (Setup)").setDescription("Unable to successfully set up `mute` role. Either the role is equal/higher on the hierarchy to/than me, or the server has the maximum (250) number of roles.");
             MessageDispatcher.reply(e, embed.build());
@@ -56,6 +55,41 @@ public class MuteCommand extends Command {
                 ModerationLogSetting.execute(e, "Unmute", target.getUser(), (params.length < 2) ? "None" : params[1]);
             }, failure);
         }
+    }
+
+    /**
+     * Creates the muted role to correctly mute people.
+     *
+     * @param guild {@link Guild}
+     * @return Role
+     */
+    public static Role getMutedRole(Guild guild) {
+        List<TextChannel> channels = guild.getTextChannels();
+        List<VoiceChannel> voiceChannels = guild.getVoiceChannels();
+
+        for(Role role: guild.getRoles()) {
+            if(role.getName().equals("Muted")) {
+                if(!guild.getSelfMember().canInteract(role)) {
+                    return null;
+                }
+                return role;
+            }
+        }
+
+        // max number of roles in guild is 250
+        if(!guild.getSelfMember().hasPermission(Permission.MANAGE_ROLES) || guild.getRoleCache().size() == 250) {
+            return null;
+        }
+
+        Role muted = guild.createRole().setName("Muted").complete();
+        for(TextChannel channel: channels) {
+            channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE, Permission.MESSAGE_ADD_REACTION).queue();
+        }
+        for(VoiceChannel channel: voiceChannels) {
+            channel.createPermissionOverride(muted).setDeny(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK).queue();
+        }
+
+        return muted;
     }
 
 }
