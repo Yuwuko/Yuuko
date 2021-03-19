@@ -2,14 +2,14 @@ package com.yuuko.core.commands.interaction.commands;
 
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.Yuuko;
-import com.yuuko.core.commands.interaction.InteractionCommand;
+import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class BlushCommand extends InteractionCommand {
+public class BlushCommand extends Command {
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/I3apoUB.gif",
             "https://i.imgur.com/0lfLa2Z.gif",

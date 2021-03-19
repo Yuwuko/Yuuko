@@ -2,7 +2,7 @@ package com.yuuko.core.commands.interaction.commands;
 
 import com.yuuko.core.MessageDispatcher;
 import com.yuuko.core.Yuuko;
-import com.yuuko.core.commands.interaction.InteractionCommand;
+import com.yuuko.core.commands.Command;
 import com.yuuko.core.events.entity.MessageEvent;
 import com.yuuko.core.utilities.MessageUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.Member;
 import java.util.Arrays;
 import java.util.List;
 
-public class PoutCommand extends InteractionCommand {
+public class PoutCommand extends Command {
     private static final List<String> interactionImage = Arrays.asList(
             "https://i.imgur.com/WdQgoDb.gif",
             "https://i.imgur.com/FgsaLup.gif",

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Command {
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
@@ -112,6 +113,15 @@ public abstract class Command {
         });
         cooldownsList.clear();
         cooldownsList.putAll(cooldownsTempList);
+    }
+
+    /**
+     * Get a random number using the given bound
+     * @param bound int
+     * @return int
+     */
+    public int getRandom(int bound) {
+        return ThreadLocalRandom.current().nextInt(bound);
     }
 
     // Abstract method signature to ensure method is implemented.
