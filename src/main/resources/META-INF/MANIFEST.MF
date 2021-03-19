@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: com.yuuko.core.Yuuko
+Main-Class: com.yuuko.Yuuko

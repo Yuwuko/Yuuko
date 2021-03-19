@@ -5,10 +5,10 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'idea'
 
-group = 'com.yuuko.core'
-project.version = '21w11a'
+group = 'com.yuuko'
+project.version = '21w11b'
 sourceCompatibility = 1.15
-mainClassName = 'com.yuuko.core.Yuuko'
+mainClassName = 'com.yuuko.Yuuko'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
