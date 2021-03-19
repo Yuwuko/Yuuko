@@ -206,7 +206,7 @@ public class Yuuko {
             AUTHOR = config.get("author");
             AUTHOR_WEBSITE = config.get("website");
             SUPPORT_GUILD = config.get("support");
-            LOG_ERROR = Long.parseLong(config.get("error_channel"));
+            LOG_ERROR = Long.parseLong(config.get("log_error"));
             LOG_METRICS = Boolean.parseBoolean(config.get("log_metrics"));
             BOT_ID = config.get("bot_id");
             BOT_TOKEN = config.get("bot_token");
