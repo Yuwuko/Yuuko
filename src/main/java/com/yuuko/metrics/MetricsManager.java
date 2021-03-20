@@ -35,7 +35,9 @@ public class MetricsManager {
         return shardedDiscordMetrics.get(shardId);
     }
 
-    public static AudioMetrics getAudioMetrics() { return audioMetrics; }
+    public static AudioMetrics getAudioMetrics() {
+        return audioMetrics;
+    }
 
     public static SystemMetrics getSystemMetrics() {
         return systemMetrics;
