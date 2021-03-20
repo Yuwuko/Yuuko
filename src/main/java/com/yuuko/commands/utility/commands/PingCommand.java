@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PingCommand extends Command {
 
     public PingCommand() {
-        super("ping", Yuuko.MODULES.get("utility"), 0, -1L, Arrays.asList("-ping"), false, null);
+        super("ping", 0, -1L, Arrays.asList("-ping"), false, null);
     }
 
     @Override

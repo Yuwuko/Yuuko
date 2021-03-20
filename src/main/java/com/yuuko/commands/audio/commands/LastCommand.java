@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class LastCommand extends Command {
 
 	public LastCommand() {
-		super("last", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-last"), false, null);
+		super("last", 0, -1L, Arrays.asList("-last"), false, null);
 	}
 
 	@Override

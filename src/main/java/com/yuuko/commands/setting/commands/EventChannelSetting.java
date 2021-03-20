@@ -1,7 +1,6 @@
 package com.yuuko.commands.setting.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 public class EventChannelSetting extends Command {
 
     public EventChannelSetting() {
-        super("eventchannel", Yuuko.MODULES.get("setting"), 1, -1L, Arrays.asList("-eventchannel <#channel>", "-eventchannel setup", "-eventchannel unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("eventchannel", 1, -1L, Arrays.asList("-eventchannel <#channel>", "-eventchannel setup", "-eventchannel unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {

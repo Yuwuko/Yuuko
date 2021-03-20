@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-help", "-help <command>"), false, null);
+        super("help", 0, -1L, Arrays.asList("-help", "-help <command>"), false, null);
     }
 
     @Override

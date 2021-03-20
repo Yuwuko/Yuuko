@@ -1,7 +1,6 @@
 package com.yuuko.commands.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.MessageUtilities;
@@ -21,7 +20,7 @@ public class HugCommand extends Command {
     );
 
     public HugCommand() {
-        super("hug", Yuuko.MODULES.get("interaction"), 1, -1L, Arrays.asList("-hug @user"), false, null);
+        super("hug", 1, -1L, Arrays.asList("-hug @user"), false, null);
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class CommandLogSetting extends Command {
 
     public CommandLogSetting() {
-        super("commandlog", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-commandlog", "-commandlog setup", "-commandlog <#channel>", "-commandlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("commandlog", 0, -1L, Arrays.asList("-commandlog", "-commandlog setup", "-commandlog <#channel>", "-commandlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {

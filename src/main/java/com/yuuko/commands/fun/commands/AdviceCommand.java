@@ -1,7 +1,6 @@
 package com.yuuko.commands.fun.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.io.RequestHandler;
@@ -12,7 +11,7 @@ import java.util.Arrays;
 public class AdviceCommand extends Command {
 
     public AdviceCommand() {
-        super("advice", Yuuko.MODULES.get("fun"), 0, -1L, Arrays.asList("-advice"), false, null);
+        super("advice", 0, -1L, Arrays.asList("-advice"), false, null);
     }
 
     @Override

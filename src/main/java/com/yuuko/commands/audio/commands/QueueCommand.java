@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class QueueCommand extends Command {
 
     public QueueCommand() {
-        super("queue", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-queue"), false, null);
+        super("queue", 0, -1L, Arrays.asList("-queue"), false, null);
     }
 
     @Override

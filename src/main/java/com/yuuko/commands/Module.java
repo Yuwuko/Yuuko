@@ -2,29 +2,37 @@ package com.yuuko.commands;
 
 import org.reflections8.Reflections;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class Module {
     private final String name;
     private final boolean nsfw;
-    private final Map<String, Class<? extends Command>> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     public Module(String name, boolean isNSFW) {
         this.name = name;
         this.nsfw = isNSFW;
         new Reflections("com.yuuko.commands." + name)
                 .getSubTypesOf(Command.class)
-                .forEach(aClass -> commands.putIfAbsent(aClass.getName(), aClass));
+                .forEach(clazz -> {
+                    try {
+                        Command command = clazz.getConstructor().newInstance();
+                        command.setModule(this);
+                        commands.putIfAbsent(command.getName(), command);
+                    } catch(InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Class<? extends Command>> getCommands() {
-        return List.copyOf(commands.values());
+    public Map<String, Command> getCommands() {
+        return commands;
     }
 
     public String getCommandsAsString() {

@@ -2,7 +2,6 @@ package com.yuuko.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.commands.audio.handlers.GuildAudioManager;
@@ -16,7 +15,7 @@ import java.util.Arrays;
 public class SeekCommand extends Command {
 
     public SeekCommand() {
-        super("seek", Yuuko.MODULES.get("audio"), 1, -1L, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
+        super("seek", 1, -1L, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
     }
 
     @Override

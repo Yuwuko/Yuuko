@@ -1,7 +1,6 @@
 package com.yuuko.commands.setting.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 public class PlayNotificationsSetting extends Command {
 
     public PlayNotificationsSetting() {
-        super("playnotifications", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-playnotifications", "-playnotifications <boolean>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("playnotifications", 0, -1L, Arrays.asList("-playnotifications", "-playnotifications <boolean>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {

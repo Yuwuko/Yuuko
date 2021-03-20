@@ -16,7 +16,7 @@ public class AnimeCommand extends Command {
     private static final String BASE_URL = "https://kitsu.io/api/edge/anime?filter[text]=";
 
     public AnimeCommand() {
-        super("anime", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-anime <title>"), false, null);
+        super("anime", 1, -1L, Arrays.asList("-anime <title>"), false, null);
     }
 
     @Override

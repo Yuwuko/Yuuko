@@ -1,7 +1,6 @@
 package com.yuuko.commands.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.MessageUtilities;
@@ -21,7 +20,7 @@ public class KillCommand extends Command {
     );
 
     public KillCommand() {
-        super("kill", Yuuko.MODULES.get("interaction"), 1, 1L, Arrays.asList("-kill @user"), false, null);
+        super("kill", 1, 1L, Arrays.asList("-kill @user"), false, null);
     }
 
     @Override

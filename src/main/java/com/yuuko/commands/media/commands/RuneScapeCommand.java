@@ -4,7 +4,6 @@ import com.baseketbandit.runeapi.RuneAPI;
 import com.baseketbandit.runeapi.entity.Skill;
 import com.baseketbandit.runeapi.entity.Skills;
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.TextUtilities;
@@ -16,7 +15,7 @@ import java.util.Map;
 public class RuneScapeCommand extends Command {
 
     public RuneScapeCommand() {
-        super("osrs", Yuuko.MODULES.get("media"), 1, -1L, Arrays.asList("-osrs <user>", "-osrs <user>, <skill>"), false, null, true);
+        super("osrs", 1, -1L, Arrays.asList("-osrs <user>", "-osrs <user>, <skill>"), false, null, true);
     }
 
     @Override

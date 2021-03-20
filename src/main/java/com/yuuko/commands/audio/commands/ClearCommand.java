@@ -2,7 +2,6 @@ package com.yuuko.commands.audio.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.commands.audio.handlers.GuildAudioManager;
@@ -16,7 +15,7 @@ import java.util.LinkedList;
 public class ClearCommand extends Command {
 
     public ClearCommand() {
-        super("clear", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-clear", "-clear <position>"), false, null);
+        super("clear", 0, -1L, Arrays.asList("-clear", "-clear <position>"), false, null);
     }
 
     @Override

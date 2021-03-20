@@ -56,8 +56,8 @@ public class Yuuko {
     public static ApiManager API_MANAGER;
     public static ShardManager SHARD_MANAGER;
     public static SelfUser BOT;
-    public static Map<String, Command> COMMANDS;
-    public static Map<String, Module> MODULES;
+    public static Map<String, Module> MODULES = new HashMap<>();
+    public static Map<String, Command> COMMANDS = new HashMap<>();
     public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting", "developer");
     public static DiscordBotListAPI BOT_LIST;
     public static final List<String> STANDARD_STRINGS = Arrays.asList(VERSION,
@@ -246,31 +246,17 @@ public class Yuuko {
      * Initialises both the commands and the modules encapsulating those commands.
      */
     private void setupCommands() {
-        Reflections reflections = new Reflections("com.yuuko.commands");
-        Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
-        Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
-        MODULES = new HashMap<>(modules.size());
-        COMMANDS = new HashMap<>(commands.size());
-
         try {
-            for(Class<? extends Module> module : modules) {
-                if(!Modifier.isAbstract(module.getModifiers())) {
-                    Module obj = module.getConstructor().newInstance();
-                    MODULES.put(obj.getName(), obj);
+            for(Class<? extends Module> obj : new Reflections("com.yuuko.commands").getSubTypesOf(Module.class)) {
+                if(!Modifier.isAbstract(obj.getModifiers())) {
+                    Module module = obj.getConstructor().newInstance();
+                    MODULES.put(module.getName(), module);
+                    COMMANDS.putAll(module.getCommands());
                 }
             }
         } catch(InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            log.error("There was a problem reflecting modules/commands, message: {}", e.getMessage(), e);
         }
-
-        MODULES.values().forEach(m -> m.getCommands().forEach(c -> {
-            try {
-                Command command = c.getConstructor().newInstance();
-                COMMANDS.put(command.getName(), command);
-            } catch(InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-        }));
 
         log.info("Loaded {} modules, containing {} commands.", MODULES.size(), COMMANDS.size());
     }

@@ -2,7 +2,6 @@ package com.yuuko.commands.fun.commands;
 
 import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.io.RequestHandler;
@@ -29,7 +28,7 @@ public class HoroscopeCommand extends Command {
     );
 
     public HoroscopeCommand() {
-        super("horoscope", Yuuko.MODULES.get("fun"), 1, -1L, Arrays.asList("-horoscope <sign>"), false, null);
+        super("horoscope", 1, -1L, Arrays.asList("-horoscope <sign>"), false, null);
     }
 
     @Override

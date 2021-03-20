@@ -1,7 +1,6 @@
 package com.yuuko.commands.fun.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.Sanitiser;
@@ -13,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RollCommand extends Command {
 
     public RollCommand() {
-        super("roll", Yuuko.MODULES.get("fun"), 1, -1L, Arrays.asList("-roll <number>"), false, null);
+        super("roll", 1, -1L, Arrays.asList("-roll <number>"), false, null);
     }
 
     @Override

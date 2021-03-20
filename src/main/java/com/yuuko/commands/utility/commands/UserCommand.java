@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class UserCommand extends Command {
 
     public UserCommand() {
-        super("user", Yuuko.MODULES.get("utility"), 1, -1L, Arrays.asList("-user @user", "-user <userId>"), false, null);
+        super("user", 1, -1L, Arrays.asList("-user @user", "-user <userId>"), false, null);
     }
 
     @Override

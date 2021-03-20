@@ -1,7 +1,6 @@
 package com.yuuko.commands.moderation.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.events.entity.MessageEvent;
@@ -16,7 +15,7 @@ import java.util.Arrays;
 public class KickCommand extends Command {
 
     public KickCommand() {
-        super("kick", Yuuko.MODULES.get("moderation"),1, -1L, Arrays.asList("-kick @user", "-kick @user <reason>"), false, Arrays.asList(Permission.KICK_MEMBERS));
+        super("kick",1, -1L, Arrays.asList("-kick @user", "-kick @user <reason>"), false, Arrays.asList(Permission.KICK_MEMBERS));
     }
 
     @Override

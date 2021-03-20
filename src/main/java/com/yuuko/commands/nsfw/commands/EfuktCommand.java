@@ -17,7 +17,7 @@ public class EfuktCommand extends Command {
     private String image = "https://i.imgur.com/YXqsEo6.jpg";
 
     public EfuktCommand() {
-        super("efukt", Yuuko.MODULES.get("nsfw"), 0, -1L, Arrays.asList("-efukt"), true, null);
+        super("efukt", 0, -1L, Arrays.asList("-efukt"), true, null);
     }
 
     @Override

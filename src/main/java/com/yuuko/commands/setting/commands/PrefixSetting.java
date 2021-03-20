@@ -1,7 +1,6 @@
 package com.yuuko.commands.setting.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
@@ -13,7 +12,7 @@ import java.util.Arrays;
 public class PrefixSetting extends Command {
 
     public PrefixSetting() {
-        super("prefix", Yuuko.MODULES.get("setting"), 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("prefix", 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {

@@ -1,7 +1,6 @@
 package com.yuuko.commands.setting.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 public class CleanupCommandsSetting extends Command {
 
     public CleanupCommandsSetting() {
-        super("cleanupcommands", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-cleanupcommands", "-cleanupcommands <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("cleanupcommands", 0, -1L, Arrays.asList("-cleanupcommands", "-cleanupcommands <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {

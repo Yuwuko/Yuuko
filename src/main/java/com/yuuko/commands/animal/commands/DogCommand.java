@@ -1,7 +1,6 @@
 package com.yuuko.commands.animal.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.io.RequestHandler;
@@ -13,7 +12,7 @@ public class DogCommand extends Command {
     private static final String BASE_URL = "https://dog.ceo/api/breeds/image/random";
 
     public DogCommand() {
-        super("dog", Yuuko.MODULES.get("animal"), 0, -1L, Arrays.asList("-dog"), false, null);
+        super("dog", 0, -1L, Arrays.asList("-dog"), false, null);
     }
 
     @Override

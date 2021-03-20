@@ -1,7 +1,6 @@
 package com.yuuko.commands.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.MessageUtilities;
@@ -21,7 +20,7 @@ public class PatCommand extends Command {
     );
 
     public PatCommand() {
-        super("pat", Yuuko.MODULES.get("interaction"), 1, -1L, Arrays.asList("-pat @user"), false, null);
+        super("pat", 1, -1L, Arrays.asList("-pat @user"), false, null);
     }
 
     @Override

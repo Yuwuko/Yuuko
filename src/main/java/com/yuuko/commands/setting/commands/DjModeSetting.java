@@ -1,7 +1,6 @@
 package com.yuuko.commands.setting.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
@@ -21,7 +20,7 @@ public class DjModeSetting extends Command {
     );
 
     public DjModeSetting() {
-        super("djmode", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-djmode", "-djmode <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("djmode", 0, -1L, Arrays.asList("-djmode", "-djmode <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent e) throws Exception {

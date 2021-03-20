@@ -1,7 +1,6 @@
 package com.yuuko.commands.developer.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -12,7 +11,7 @@ import java.util.Arrays;
 public class SetStatusCommand extends Command {
 
     public SetStatusCommand() {
-        super("setstatus", Yuuko.MODULES.get("developer"), 1, -1L, Arrays.asList("-setstatus <type> <status>"), false, null);
+        super("setstatus", 1, -1L, Arrays.asList("-setstatus <type> <status>"), false, null);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.yuuko.commands.developer.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.events.entity.MessageEvent;
@@ -16,7 +15,7 @@ public class RestartCommand extends Command {
     private final Pattern list = Pattern.compile("([0-9]+\\s*,\\s*)+[0-9]+");
 
     public RestartCommand() {
-        super("restart", Yuuko.MODULES.get("developer"), 0, -1L, Arrays.asList("-restart <shard_id>"), false, null);
+        super("restart", 0, -1L, Arrays.asList("-restart <shard_id>"), false, null);
     }
 
     @Override

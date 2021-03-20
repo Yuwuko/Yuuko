@@ -1,7 +1,6 @@
 package com.yuuko.commands.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -19,7 +18,7 @@ public class SleepCommand extends Command {
     );
 
     public SleepCommand() {
-        super("sleep", Yuuko.MODULES.get("interaction"), 0, -1L, Arrays.asList("-sleep"), false, null);
+        super("sleep", 0, -1L, Arrays.asList("-sleep"), false, null);
     }
 
     @Override

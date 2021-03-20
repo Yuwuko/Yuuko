@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class AboutCommand extends Command {
 
     public AboutCommand() {
-        super("about", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-about"), false, null);
+        super("about", 0, -1L, Arrays.asList("-about"), false, null);
     }
 
     @Override

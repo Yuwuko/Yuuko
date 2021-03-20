@@ -20,7 +20,7 @@ public class UKParliamentPetitionCommand extends Command {
     private static final String BASE_URL = "https://petition.parliament.uk/petitions/";
 
     public UKParliamentPetitionCommand() {
-        super("petition", Yuuko.MODULES.get("media"), 0, -1L, Arrays.asList("-petition <id>"), false, null);
+        super("petition", 0, -1L, Arrays.asList("-petition <id>"), false, null);
     }
 
     @Override

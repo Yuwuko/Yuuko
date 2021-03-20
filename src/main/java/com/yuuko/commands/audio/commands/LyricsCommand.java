@@ -21,7 +21,7 @@ public class LyricsCommand extends Command {
     private static final Api api = Yuuko.API_MANAGER.getApi("genius");
 
     public LyricsCommand() {
-        super("lyrics", Yuuko.MODULES.get("audio"), 1, -1L, Arrays.asList("-lyrics <song|artist>"), false, null, api.isAvailable());
+        super("lyrics", 1, -1L, Arrays.asList("-lyrics <song|artist>"), false, null, api.isAvailable());
     }
 
     @Override

@@ -23,7 +23,7 @@ public class GithubCommand extends Command {
     private static final String BASE_URL = "https://api.github.com/repos/";
 
     public GithubCommand() {
-        super("github", Yuuko.MODULES.get("media"), 2, -1L, Arrays.asList("-github <user> <repository>"), false, null, api.isAvailable());
+        super("github", 2, -1L, Arrays.asList("-github <user> <repository>"), false, null, api.isAvailable());
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class CurrentCommand extends Command {
 
     public CurrentCommand() {
-        super("current", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-current"), false, null);
+        super("current", 0, -1L, Arrays.asList("-current"), false, null);
     }
 
     @Override

@@ -15,7 +15,7 @@ public abstract class Command {
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
 
     private final String name;
-    private final Module module;
+    private Module module;
     private final int minimumParameters;
     private final long cooldownDurationMilliseconds;
     private final HashMap<String, Long> cooldownsList;
@@ -24,9 +24,8 @@ public abstract class Command {
     private final boolean nsfw;
     private boolean enabled = true;
 
-    public Command(String name, Module module, int minimumParameters, long cooldownDurationMilliseconds, List<String> usage, boolean nsfw, List<Permission> permissions, boolean... commandEnabled) {
+    public Command(String name, int minimumParameters, long cooldownDurationMilliseconds, List<String> usage, boolean nsfw, List<Permission> permissions, boolean... commandEnabled) {
         this.name = name;
-        this.module = module;
         this.minimumParameters = minimumParameters;
         this.cooldownDurationMilliseconds = cooldownDurationMilliseconds;
         this.cooldownsList = new HashMap<>();
@@ -41,6 +40,10 @@ public abstract class Command {
             }
         }
     }
+
+    void setModule(Module module) {
+        this.module = module;
+    } // only used during reflection process at startup
 
     public String getName() {
         return name;

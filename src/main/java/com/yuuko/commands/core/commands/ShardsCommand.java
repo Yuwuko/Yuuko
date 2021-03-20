@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class ShardsCommand extends Command {
 
     public ShardsCommand() {
-        super("shards", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-shards"), false, null);
+        super("shards", 0, -1L, Arrays.asList("-shards"), false, null);
     }
 
     @Override

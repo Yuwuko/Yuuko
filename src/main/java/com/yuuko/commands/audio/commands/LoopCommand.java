@@ -1,7 +1,6 @@
 package com.yuuko.commands.audio.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.commands.audio.handlers.GuildAudioManager;
@@ -13,7 +12,7 @@ import java.util.Arrays;
 public class LoopCommand extends Command {
 
     public LoopCommand() {
-        super("loop", Yuuko.MODULES.get("audio"), 0, -1L, Arrays.asList("-loop"), false, null);
+        super("loop", 0, -1L, Arrays.asList("-loop"), false, null);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.yuuko.commands.moderation.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.commands.setting.commands.ModerationLogSetting;
 import com.yuuko.events.entity.MessageEvent;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke", Yuuko.MODULES.get("moderation"),1, 10000L, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
+        super("nuke",1, 10000L, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
     }
 
     @Override

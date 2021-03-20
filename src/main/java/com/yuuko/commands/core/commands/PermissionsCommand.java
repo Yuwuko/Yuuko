@@ -1,7 +1,6 @@
 package com.yuuko.commands.core.commands;
 
 import com.yuuko.MessageDispatcher;
-import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.events.entity.MessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,7 +10,7 @@ import java.util.Arrays;
 public class PermissionsCommand extends Command {
 
     public PermissionsCommand() {
-        super("permissions", Yuuko.MODULES.get("core"), 0, -1L, Arrays.asList("-permissions"), false, null);
+        super("permissions", 0, -1L, Arrays.asList("-permissions"), false, null);
     }
 
     @Override

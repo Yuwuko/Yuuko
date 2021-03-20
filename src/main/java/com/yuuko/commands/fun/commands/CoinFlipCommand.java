@@ -19,7 +19,7 @@ public class CoinFlipCommand extends Command {
     );
 
     public CoinFlipCommand() {
-        super("flip", Yuuko.MODULES.get("fun"), 0, -1L, Arrays.asList("-flip"), false, null);
+        super("flip", 0, -1L, Arrays.asList("-flip"), false, null);
     }
 
     @Override

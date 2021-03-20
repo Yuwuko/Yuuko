@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class SettingsCommand extends Command {
 
     public SettingsCommand() {
-        super("settings", Yuuko.MODULES.get("setting"), 0, -1L, Arrays.asList("-settings"), false, null);
+        super("settings", 0, -1L, Arrays.asList("-settings"), false, null);
     }
 
     @Override
