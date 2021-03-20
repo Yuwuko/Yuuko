@@ -22,7 +22,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends a message, saving those precious bytes.
-     *
      * @param event {@link MessageEvent}
      * @param message {@link String}
      */
@@ -42,7 +41,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends a file via message channel.
-     *
      * @param event {@link MessageEvent}
      * @param file {@link File}
      */
@@ -62,7 +60,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends a file via message channel.
-     *
      * @param event {@link MessageEvent}
      * @param bytes byte[]
      * @param fileName String
@@ -83,7 +80,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends a message to the provided channel.
-     *
      * @param event {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param message {@link String}
@@ -104,7 +100,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded message.
-     *
      * @param event {@link MessageEvent}
      * @param embed {@link MessageEmbed}
      */
@@ -124,7 +119,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded message to a supplied channel.
-     *
      * @param event {@link MessageEvent}
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
@@ -145,7 +139,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded message to a supplied channel.
-     *
      * @param event {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
@@ -166,7 +159,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded reply to the given message.
-     *
      * @param event {@link MessageEvent}
      * @param embed {@link MessageEmbed}
      */
@@ -185,7 +177,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded reply to the given message.
-     *
      * @param event {@link MessageEvent}
      * @param message {@link MessageEmbed}
      */
@@ -204,7 +195,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends a message to a supplied channel to be deleted after 15 seconds.
-     *
      * @param event {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param message {@link MessageEmbed}
@@ -224,7 +214,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded message to a supplied channel to be deleted after 15 seconds.
-     *
      * @param event {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
@@ -244,7 +233,6 @@ public final class MessageDispatcher {
 
     /**
      * Sends an embedded message to a supplied channel to be deleted after 15 seconds.
-     *
      * @param event {@link GenericGuildMessageEvent}
      * @param embed {@link MessageEmbed}
      */
@@ -263,7 +251,6 @@ public final class MessageDispatcher {
 
     /**
      * Checks to see if the bot has permission to write messages in the given server/channel. This prevents JDA throwing exceptions.
-
      * @param guild {@link Guild}
      * @param channel {@link TextChannel}
      * @return boolean
