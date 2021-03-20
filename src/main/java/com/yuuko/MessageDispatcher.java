@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class MessageDispatcher {
     private static final Logger log = LoggerFactory.getLogger(MessageDispatcher.class);
+    private static final Permission[] sendMessagePermissions = {Permission.MESSAGE_READ, Permission.MESSAGE_WRITE};
+    private static final Permission[] sendEmbedPermissions = {Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS};
 
     /**
      * Sends a message, saving those precious bytes.
@@ -108,7 +110,7 @@ public final class MessageDispatcher {
      */
     public static boolean sendMessage(MessageEvent event, MessageEmbed embed) {
         try {
-            if(hasEmbedSendPermission(event)) {
+            if(hasEmbedPermission(event)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 event.getChannel().sendMessage(embed).queue(s -> success.set(true), f -> success.set(false));
                 return success.get();
@@ -129,7 +131,7 @@ public final class MessageDispatcher {
      */
     public static boolean sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            if(hasEmbedSendPermission(event, channel)) {
+            if(hasEmbedPermission(event, channel)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 channel.sendMessage(embed).queue(s -> success.set(true), f -> success.set(false));
                 return success.get();
@@ -150,7 +152,7 @@ public final class MessageDispatcher {
      */
     public static boolean sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            if(hasEmbedSendPermission(event, channel)) {
+            if(hasEmbedPermission(event, channel)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 channel.sendMessage(embed).queue(s -> success.set(true), f -> success.set(false));
                 return success.get();
@@ -170,7 +172,7 @@ public final class MessageDispatcher {
      */
     public static boolean reply(MessageEvent event, MessageEmbed embed) {
         try {
-            if(hasEmbedSendPermission(event)) {
+            if(hasEmbedPermission(event)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 event.getMessage().reply(embed).queue(s -> success.set(true), f -> success.set(sendMessage(event, embed)));
             }
@@ -189,7 +191,7 @@ public final class MessageDispatcher {
      */
     public static boolean reply(MessageEvent event, String message) {
         try {
-            if(hasEmbedSendPermission(event)) {
+            if(hasEmbedPermission(event)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 event.getMessage().reply(message).queue(s -> success.set(true), f -> success.set(sendMessage(event, message)));
             }
@@ -229,7 +231,7 @@ public final class MessageDispatcher {
      */
     public static boolean sendTempMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
-            if(hasEmbedSendPermission(event, channel)) {
+            if(hasEmbedPermission(event, channel)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 channel.sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
@@ -248,7 +250,7 @@ public final class MessageDispatcher {
      */
     public static boolean sendTempMessage(GenericGuildMessageEvent event, MessageEmbed embed) {
         try {
-            if(hasEmbedSendPermission(event)) {
+            if(hasEmbedPermission(event)) {
                 AtomicBoolean success = new AtomicBoolean(false);
                 event.getChannel().sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
@@ -267,8 +269,9 @@ public final class MessageDispatcher {
      * @return boolean
      */
     private static boolean hasSendPermission(Guild guild, TextChannel channel) {
-        return guild.getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)
-                && guild.getSelfMember().hasPermission(channel, Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
+        return guild != null && channel != null
+                && guild.getSelfMember().hasPermission(sendMessagePermissions)
+                && guild.getSelfMember().hasPermission(channel, sendMessagePermissions);
     }
 
     /**
@@ -299,29 +302,30 @@ public final class MessageDispatcher {
      * @param channel {@link TextChannel}
      * @return boolean
      */
-    private static boolean hasEmbedSendPermission(Guild guild, TextChannel channel) {
-        return guild.getSelfMember().hasPermission(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
-                && guild.getSelfMember().hasPermission(channel, Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS);
+    private static boolean hasEmbedPermission(Guild guild, TextChannel channel) {
+        return guild != null && channel != null
+                && guild.getSelfMember().hasPermission(sendMessagePermissions)
+                && guild.getSelfMember().hasPermission(channel, sendMessagePermissions);
     }
 
     /**
-     * Auxiliary hasEmbedSendPermission flow controller
+     * Auxiliary hasEmbedPermission flow controller
      */
-    private static boolean hasEmbedSendPermission(GenericGuildMessageEvent e) {
-        return hasEmbedSendPermission(e.getGuild(), e.getChannel());
+    private static boolean hasEmbedPermission(GenericGuildMessageEvent e) {
+        return hasEmbedPermission(e.getGuild(), e.getChannel());
     }
 
     /**
-     * Auxiliary hasEmbedSendPermission flow controller
+     * Auxiliary hasEmbedPermission flow controller
      */
-    private static boolean hasEmbedSendPermission(GenericGuildMessageEvent e, TextChannel channel) {
-        return hasEmbedSendPermission(e.getGuild(), channel);
+    private static boolean hasEmbedPermission(GenericGuildMessageEvent e, TextChannel channel) {
+        return hasEmbedPermission(e.getGuild(), channel);
     }
 
     /**
-     * Auxiliary hasEmbedSendPermission flow controller
+     * Auxiliary hasEmbedPermission flow controller
      */
-    private static boolean hasEmbedSendPermission(GenericGuildEvent e, TextChannel channel) {
-        return hasEmbedSendPermission(e.getGuild(), channel);
+    private static boolean hasEmbedPermission(GenericGuildEvent e, TextChannel channel) {
+        return hasEmbedPermission(e.getGuild(), channel);
     }
 }
