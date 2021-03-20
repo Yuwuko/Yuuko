@@ -80,13 +80,14 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                 return;
             }
 
-            // Not sure what this code actually did/does so removing until something breaks! (seems unnecessary?)
-            // if(player.getPlayingTrack() != null) {
-            //    player.stopTrack();
-            // }
+            // If skip is used and nothing else is in the queue, we want to stop the track anyway.
+            if(player.getPlayingTrack() != null) {
+                player.stopTrack();
+            }
 
             player.playTrack(track);
-        } catch(Exception ex) {
+        } catch(Exception e) {
+            log.warn("TrackScheduler issue detected: {}", e.getMessage(), e);
             // This exception occurs 99% of the time on repeating tracks.
         }
     }
