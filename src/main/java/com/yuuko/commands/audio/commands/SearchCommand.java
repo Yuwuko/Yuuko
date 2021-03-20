@@ -7,7 +7,6 @@ import com.yuuko.commands.Command;
 import com.yuuko.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.Sanitiser;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
@@ -70,7 +69,7 @@ public class SearchCommand extends Command {
         audioSearchResults.put(e.getAuthor().getId(), results);
         EmbedBuilder embed = new EmbedBuilder()
                 .setAuthor("Search results for " + e.getParameters() + ".", null)
-                .setDescription("Type `" + Utilities.getServerPrefix(e.getGuild()) + "search <value>` to play the track of the given value or `" + Utilities.getServerPrefix(e.getGuild()) + "search cancel` to stop me waiting for a response. \n\n" + resultString)
+                .setDescription("Type `" + e.getPrefix() + "search <value>` to play the track of the given value or `" + e.getPrefix() + "search cancel` to stop me waiting for a response. \n\n" + resultString)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }

@@ -16,7 +16,6 @@ import com.yuuko.events.GenericEventManager;
 import com.yuuko.metrics.MetricsManager;
 import com.yuuko.scheduler.ScheduleHandler;
 import com.yuuko.scheduler.jobs.*;
-import com.yuuko.utilities.Utilities;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
@@ -305,7 +304,13 @@ public class Yuuko {
                 Thread.sleep(100); // I want the thread to be blocked
             }
 
-            BOT = Utilities.getSelfUser();
+            for(JDA shard : Yuuko.SHARD_MANAGER.getShards()) {
+                if(shard.getStatus().equals(JDA.Status.CONNECTED)) {
+                    BOT = shard.getSelfUser();
+                    break;
+                }
+            }
+
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), ex.getMessage(), ex);
         }

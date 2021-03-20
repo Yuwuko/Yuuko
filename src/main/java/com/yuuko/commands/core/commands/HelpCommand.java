@@ -6,7 +6,6 @@ import com.yuuko.commands.Command;
 import com.yuuko.commands.Module;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.TextUtilities;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
@@ -42,7 +41,7 @@ public class HelpCommand extends Command {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
             Yuuko.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
-                final String commandPermission = (command.getPermissions() == null) ? "None" : Utilities.getCommandPermissions(command.getPermissions());
+                final String commandPermission = (command.getPermissions() == null) ? "None" : command.getPermissions().toString();
 
                 StringBuilder usages = new StringBuilder();
                 for(String usage: command.getUsage()) {

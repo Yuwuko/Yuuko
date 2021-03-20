@@ -5,7 +5,6 @@ import com.yuuko.Yuuko;
 import com.yuuko.commands.Command;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
@@ -56,7 +55,7 @@ public class ModuleCommand extends Command {
 
             EmbedBuilder commandModules = new EmbedBuilder()
                     .setTitle("Below are the lists of my enabled/disabled modules!")
-                    .setDescription("Each module can be toggled on or off by using the '" + Utilities.getServerPrefix(e.getGuild()) + "module <module>' command.")
+                    .setDescription("Each module can be toggled on or off by using the '" + e.getPrefix() + "module <module>' command.")
                     .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())

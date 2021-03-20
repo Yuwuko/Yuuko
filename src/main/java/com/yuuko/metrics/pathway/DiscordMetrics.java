@@ -25,8 +25,13 @@ public class DiscordMetrics implements Metric {
     public void update() {
         JDA jda = Yuuko.SHARD_MANAGER.getShardById(shardId);
         if(jda != null) {
-            List<Guild> guilds = jda.getGuildCache().asList();
+            List<Guild> guilds = jda.getGuilds();
             GUILD_COUNT.set(guilds.size());
+        }
+
+        // Update DiscordBotListAPI at the same time.
+        if(Yuuko.BOT_LIST != null) {
+            Yuuko.BOT_LIST.setStats(shardId, Yuuko.SHARDS_TOTAL, GUILD_COUNT.get());
         }
     }
 

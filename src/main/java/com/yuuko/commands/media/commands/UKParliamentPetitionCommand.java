@@ -10,7 +10,6 @@ import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.utilities.Sanitiser;
 import com.yuuko.utilities.TextUtilities;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.time.Instant;
@@ -74,7 +73,7 @@ public class UKParliamentPetitionCommand extends Command {
             JsonArray data = json.get("data").getAsJsonArray();
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("UK Parliament Petitions", "https://petition.parliament.uk/petitions")
-                    .setDescription("Here is a list of the top ten open petitions, use `" + Utilities.getServerPrefix(e.getGuild()) + "petition <id>` to get more information about a specific petition.")
+                    .setDescription("Here is a list of the top ten open petitions, use `" + e.getPrefix() + "petition <id>` to get more information about a specific petition.")
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 

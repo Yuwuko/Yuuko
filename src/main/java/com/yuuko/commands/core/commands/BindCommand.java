@@ -6,7 +6,6 @@ import com.yuuko.commands.Command;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.TextUtilities;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -30,7 +29,7 @@ public class BindCommand extends Command {
             String[] params = e.getParameters().toLowerCase().split("\\s+", 2);
 
             if(!params[0].equals("*") && !Yuuko.MODULES.containsKey(params[0])) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + Utilities.getServerPrefix(e.getGuild()) + "help** command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + e.getPrefix() + "help** command.");
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }

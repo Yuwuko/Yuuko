@@ -5,7 +5,6 @@ import com.yuuko.Yuuko;
 import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.metrics.MetricsManager;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -56,7 +55,6 @@ public class GenericGuildController {
     private void guildJoinEvent(GuildJoinEvent e) {
         GuildFunctions.addOrUpdateGuild(e.getGuild());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
-        Utilities.updateDiscordBotList(e.getJDA().getShardInfo().getShardId());
 
         try {
             e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
@@ -81,7 +79,6 @@ public class GenericGuildController {
         AudioManager.destroyGuildAudioManager(e.getGuild());
         GuildFunctions.cleanup(e.getGuild().getId());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
-        Utilities.updateDiscordBotList(e.getJDA().getShardInfo().getShardId());
     }
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent e) {

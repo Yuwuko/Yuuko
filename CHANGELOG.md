@@ -4,8 +4,11 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w11b
 + [!] Repackaged project from com.yuuko.core.* to com.yuuko.*
-+ [~] Updated Module to detect commands automatically
-+ [~] Removed InteractionCommand abstraction layer as it fairly unnecessary.
++ [~] Updated Module to detect commands automatically.
++ [~] Improve use of reflection on startup, making explicit module declaration redundant.
++ [~] Removed InteractionCommand abstraction layer as it is fairly unnecessary.
++ [~] Fix old bug where channel level permissions weren't being respected.
++ [~] Removed redundant utility functions.
 
 ## 21w11a
 + [~] Fix for [__UKParliamentPetition__] command where json is null.

@@ -6,10 +6,10 @@ import com.yuuko.commands.Command;
 import com.yuuko.commands.setting.commands.CommandLogSetting;
 import com.yuuko.commands.utility.commands.EventCommand;
 import com.yuuko.commands.utility.commands.ReactionRoleCommand;
+import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.metrics.MetricsManager;
 import com.yuuko.utilities.Sanitiser;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -40,7 +40,7 @@ public class GenericGuildMessageController {
                 return;
             }
 
-            String prefix = Utilities.getServerPrefix(e.getGuild());
+            String prefix = GuildFunctions.getGuildSetting("prefix", e.getGuild().getId());
             final String message = e.getMessage().getContentRaw();
 
             // Checks null because the first few messages before the bot has fully initialised will cause exceptions.

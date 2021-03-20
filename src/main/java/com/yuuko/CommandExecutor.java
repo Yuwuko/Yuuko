@@ -8,7 +8,6 @@ import com.yuuko.commands.core.commands.ModuleCommand;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.utilities.TextUtilities;
-import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -64,7 +63,7 @@ public class CommandExecutor {
             // Does the bot have the permission?
             if(bot.hasPermission(command.getPermissions()) && !bot.hasPermission(event.getChannel(), command.getPermissions())
                     || !bot.hasPermission(command.getPermissions()) && !bot.hasPermission(event.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `" + command.getPermissions().toString() + "` permissions to use that command.");
                 MessageDispatcher.reply(event, embed.build());
                 return;
             }
@@ -72,7 +71,7 @@ public class CommandExecutor {
             // Does the user have the permission?
             if(commander.hasPermission(command.getPermissions()) && !commander.hasPermission(event.getChannel(), command.getPermissions())
                     || !commander.hasPermission(command.getPermissions()) && !commander.hasPermission(event.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the `" + Utilities.getCommandPermissions(command.getPermissions()) + "` permissions to use that command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the `" + command.getPermissions().toString() + "` permissions to use that command.");
                 MessageDispatcher.reply(event, embed.build());
                 return;
             }
