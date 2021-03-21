@@ -13,7 +13,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Command {
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
-
     private final String name;
     private Module module;
     private final int minimumParameters;

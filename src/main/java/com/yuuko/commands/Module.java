@@ -1,12 +1,15 @@
 package com.yuuko.commands;
 
 import org.reflections8.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Module {
+    protected static final Logger log = LoggerFactory.getLogger(Module.class);
     private final String name;
     private final boolean nsfw;
     private final Map<String, Command> commands = new HashMap<>();
@@ -22,7 +25,7 @@ public abstract class Module {
                         command.setModule(this);
                         commands.putIfAbsent(command.getName(), command);
                     } catch(InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                        e.printStackTrace();
+                        log.error("Something went wrong during the reflection process, message: {}", e.getMessage(), e);
                     }
                 });
     }
@@ -35,6 +38,10 @@ public abstract class Module {
         return commands;
     }
 
+    public boolean isNSFW() {
+        return nsfw;
+    }
+
     public String getCommandsAsString() {
         StringBuilder string = new StringBuilder();
         for(String name : commands.keySet()) {
@@ -43,7 +50,5 @@ public abstract class Module {
         return string.toString();
     }
 
-    public boolean isNSFW() {
-        return nsfw;
-    }
+
 }
