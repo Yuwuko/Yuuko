@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class MessageDispatcher {
     private static final Logger log = LoggerFactory.getLogger(MessageDispatcher.class);
@@ -26,17 +25,13 @@ public final class MessageDispatcher {
      * @param event {@link MessageEvent}
      * @param message {@link String}
      */
-    public static boolean sendMessage(MessageEvent event, String message) {
+    public static void sendMessage(MessageEvent event, String message) {
         try {
             if(hasSendPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                event.getChannel().sendMessage(message).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                event.getChannel().sendMessage(message).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -45,17 +40,13 @@ public final class MessageDispatcher {
      * @param event {@link MessageEvent}
      * @param file {@link File}
      */
-    public static boolean sendMessage(MessageEvent event, File file) {
+    public static void sendMessage(MessageEvent event, File file) {
         try {
             if(hasSendPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                event.getChannel().sendFile(file).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                event.getChannel().sendFile(file).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -65,17 +56,13 @@ public final class MessageDispatcher {
      * @param bytes byte[]
      * @param fileName String
      */
-    public static boolean sendMessage(MessageEvent event, byte[] bytes, String fileName) {
+    public static void sendMessage(MessageEvent event, byte[] bytes, String fileName) {
         try {
             if(hasSendPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                event.getChannel().sendFile(bytes, fileName).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                event.getChannel().sendFile(bytes, fileName).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -85,17 +72,13 @@ public final class MessageDispatcher {
      * @param channel {@link TextChannel}
      * @param message {@link String}
      */
-    public static boolean sendMessage(GenericGuildEvent event, TextChannel channel, String message) {
+    public static void sendMessage(GenericGuildEvent event, TextChannel channel, String message) {
         try {
             if(hasSendPermission(event, channel)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                channel.sendMessage(message).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                channel.sendMessage(message).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -104,17 +87,13 @@ public final class MessageDispatcher {
      * @param event {@link MessageEvent}
      * @param embed {@link MessageEmbed}
      */
-    public static boolean sendMessage(MessageEvent event, MessageEmbed embed) {
+    public static void sendMessage(MessageEvent event, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                event.getChannel().sendMessage(embed).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                event.getChannel().sendMessage(embed).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -124,17 +103,13 @@ public final class MessageDispatcher {
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
      */
-    public static boolean sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(event, channel)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                channel.sendMessage(embed).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                channel.sendMessage(embed).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -144,17 +119,13 @@ public final class MessageDispatcher {
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
      */
-    public static boolean sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(event, channel)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                channel.sendMessage(embed).queue(s -> success.set(true), f -> success.set(false));
-                return success.get();
+                channel.sendMessage(embed).queue();
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -163,16 +134,13 @@ public final class MessageDispatcher {
      * @param event {@link MessageEvent}
      * @param embed {@link MessageEmbed}
      */
-    public static boolean reply(MessageEvent event, MessageEmbed embed) {
+    public static void reply(MessageEvent event, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                event.getMessage().reply(embed).queue(s -> success.set(true), f -> success.set(sendMessage(event, embed)));
+                event.getMessage().reply(embed).queue(s -> {}, f -> sendMessage(event, embed));
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -181,16 +149,13 @@ public final class MessageDispatcher {
      * @param event {@link MessageEvent}
      * @param message {@link MessageEmbed}
      */
-    public static boolean reply(MessageEvent event, String message) {
+    public static void reply(MessageEvent event, String message) {
         try {
             if(hasEmbedPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
-                event.getMessage().reply(message).queue(s -> success.set(true), f -> success.set(sendMessage(event, message)));
+                event.getMessage().reply(message).queue(s -> {}, f -> sendMessage(event, message));
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -200,16 +165,13 @@ public final class MessageDispatcher {
      * @param channel {@link TextChannel}
      * @param message {@link MessageEmbed}
      */
-    public static boolean sendTempMessage(GenericGuildEvent event, TextChannel channel, String message) {
+    public static void sendTempMessage(GenericGuildEvent event, TextChannel channel, String message) {
         try {
             if(hasSendPermission(event, channel)) {
-                AtomicBoolean success = new AtomicBoolean(false);
                 channel.sendMessage(message).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -219,16 +181,13 @@ public final class MessageDispatcher {
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
      */
-    public static boolean sendTempMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendTempMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(event, channel)) {
-                AtomicBoolean success = new AtomicBoolean(false);
                 channel.sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
@@ -237,16 +196,13 @@ public final class MessageDispatcher {
      * @param event {@link GenericGuildMessageEvent}
      * @param embed {@link MessageEmbed}
      */
-    public static boolean sendTempMessage(GenericGuildMessageEvent event, MessageEmbed embed) {
+    public static void sendTempMessage(GenericGuildMessageEvent event, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(event)) {
-                AtomicBoolean success = new AtomicBoolean(false);
                 event.getChannel().sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
-            return false;
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
-            return false;
         }
     }
 
