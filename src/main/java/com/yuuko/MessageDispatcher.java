@@ -5,6 +5,7 @@ import com.yuuko.scheduler.ScheduleHandler;
 import com.yuuko.scheduler.jobs.MessageDeleteJob;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
@@ -256,9 +257,10 @@ public final class MessageDispatcher {
      * @return boolean
      */
     private static boolean hasSendPermission(Guild guild, TextChannel channel) {
-        return guild != null && channel != null
-                && guild.getSelfMember().hasPermission(sendMessagePermissions)
-                && guild.getSelfMember().hasPermission(channel, sendMessagePermissions);
+        Member bot = guild.getSelfMember();
+        return channel != null
+                && ((bot.hasPermission(sendMessagePermissions) && bot.hasPermission(channel, sendMessagePermissions))
+                || (!bot.hasPermission(sendMessagePermissions) && bot.hasPermission(channel, sendMessagePermissions)));
     }
 
     /**
@@ -290,9 +292,10 @@ public final class MessageDispatcher {
      * @return boolean
      */
     private static boolean hasEmbedPermission(Guild guild, TextChannel channel) {
-        return guild != null && channel != null
-                && guild.getSelfMember().hasPermission(sendMessagePermissions)
-                && guild.getSelfMember().hasPermission(channel, sendMessagePermissions);
+        Member bot = guild.getSelfMember();
+        return channel != null
+                && ((bot.hasPermission(sendEmbedPermissions) && bot.hasPermission(channel, sendEmbedPermissions))
+                || (!bot.hasPermission(sendEmbedPermissions) && bot.hasPermission(channel, sendEmbedPermissions)));
     }
 
     /**
