@@ -9,6 +9,8 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Removed InteractionCommand abstraction layer as it is fairly unnecessary.
 + [~] Fix old bug where channel level permissions weren't being respected.
 + [~] Removed redundant utility functions.
++ [~] Update [__about__] to give more useful information regarding the bot.
++ [~] Change the guild on-join message to a non-embedded format to catch edge cases without permissions.
 
 ## 21w11a
 + [~] Fix for [__UKParliamentPetition__] command where json is null.
