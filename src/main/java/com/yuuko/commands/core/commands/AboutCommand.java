@@ -57,7 +57,7 @@ public class AboutCommand extends Command {
                         Use `%shelp` for a full list of commands. 
                         Use `%ssettings` for a full list of settings.
                         Please consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!
-                        """.formatted(e.getPrefix(), e.getPrefix(), Yuuko.SUPPORT_GUILD)
+                        """.formatted(Yuuko.SUPPORT_GUILD, e.getPrefix(), e.getPrefix())
                 )
                 .addField("Author", "[" + Yuuko.AUTHOR + "](" + Yuuko.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Yuuko.VERSION, true)
