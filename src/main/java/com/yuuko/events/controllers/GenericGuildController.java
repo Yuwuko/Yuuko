@@ -5,7 +5,8 @@ import com.yuuko.Yuuko;
 import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.metrics.MetricsManager;
-import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
@@ -54,10 +55,29 @@ public class GenericGuildController {
         GuildFunctions.addOrUpdateGuild(e.getGuild());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
 
-        EmbedBuilder about = new EmbedBuilder()
-                .setAuthor(Yuuko.BOT.getAsTag(), Yuuko.AUTHOR_WEBSITE, Yuuko.BOT.getAvatarUrl())
-                .setDescription("Automatic setup successful, use `-help` to see a full list of commands, `-settings` to see available settings or `-about` to get some general information about me.");
-        MessageDispatcher.sendMessage(e, e.getGuild().getDefaultChannel(), about.build());
+        // possible that a guild has no text channels
+        if(e.getGuild().getDefaultChannel() != null) {
+            Member bot = e.getGuild().getSelfMember();
+
+            String embedPermission = "It appears that I already have the `MESSAGE_EMEBED_LINKS` permission... thanks!";
+            if(!bot.hasPermission(Permission.MESSAGE_EMBED_LINKS) && !bot.hasPermission(e.getGuild().getDefaultChannel(), Permission.MESSAGE_EMBED_LINKS)) {
+                embedPermission = "It appears that I haven't been given the `MESSAGE_EMEBED_LINKS` permission globally or in this channel...";
+            } else if(bot.hasPermission(Permission.MESSAGE_EMBED_LINKS) && !bot.hasPermission(e.getGuild().getDefaultChannel(), Permission.MESSAGE_EMBED_LINKS)) {
+                embedPermission = "It appears that I haven't been given the `MESSAGE_EMEBED_LINKS` permission in this channel, it would be great if I could get it...";
+            } else if(!bot.hasPermission(Permission.MESSAGE_EMBED_LINKS) && bot.hasPermission(e.getGuild().getDefaultChannel(), Permission.MESSAGE_EMBED_LINKS)) {
+                embedPermission = "It appears that although I have the `MESSAGE_EMEBED_LINKS` permission in this channel I don't have it globally... it would be great if I could get it!";
+            }
+
+            MessageDispatcher.sendMessage(e, e.getGuild().getDefaultChannel(),
+                    """
+                            **Automatic setup complete!**\s
+                            _A few things:_\s
+                            \t * %s Lots of my commands depend on it! :)\s
+                            \t * For information about me use `-about`, for a list of commands use `-help`, and for a list of settings use `-settings`.\s
+                            \t * If you need any other assistance, please do not hesitate to join the support server: %s
+                            """.formatted(embedPermission, Yuuko.SUPPORT_GUILD)
+            );
+        }
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
