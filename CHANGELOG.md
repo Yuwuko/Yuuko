@@ -2,6 +2,9 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w12a
++ [!] Update Gradle to version 6.8.3
+
 ## 21w11b
 + [!] Repackaged project from com.yuuko.core.* to com.yuuko.*
 + [~] Updated Module to detect commands automatically.

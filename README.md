@@ -19,7 +19,7 @@
     <a href="https://github.com/Yuuko-oh/Yuuko/issues">
         <img alt="GitHubIssues" src="https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg">
     </a>
-    <a href="ttps://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE">
+    <a href="https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE">
         <img alt="GitHubLicense" src="https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg">
     </a>
 </p>
