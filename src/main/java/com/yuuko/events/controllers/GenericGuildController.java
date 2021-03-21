@@ -6,8 +6,6 @@ import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.metrics.MetricsManager;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
@@ -56,23 +54,10 @@ public class GenericGuildController {
         GuildFunctions.addOrUpdateGuild(e.getGuild());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
 
-        try {
-            e.getGuild().getTextChannels().stream().filter(textChannel -> textChannel.getName().toLowerCase().contains("general")).findFirst().ifPresent(textChannel -> {
-                Member bot = e.getGuild().getSelfMember();
-
-                Permission[] messagePermissions = new Permission[]{Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS};
-                if(bot.hasPermission(messagePermissions) && bot.hasPermission(textChannel, messagePermissions)) {
-                    EmbedBuilder about = new EmbedBuilder()
-                            .setAuthor(Yuuko.BOT.getAsTag(), null, Yuuko.BOT.getAvatarUrl())
-                            .setDescription("Automatic setup successful, use `-help` to see a full list of commands, `-settings` to see available settings or `-about` to get some general information about me.");
-                    MessageDispatcher.sendMessage(e, textChannel, about.build());
-                }
-
-            });
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
-        }
+        EmbedBuilder about = new EmbedBuilder()
+                .setAuthor(Yuuko.BOT.getAsTag(), Yuuko.AUTHOR_WEBSITE, Yuuko.BOT.getAvatarUrl())
+                .setDescription("Automatic setup successful, use `-help` to see a full list of commands, `-settings` to see available settings or `-about` to get some general information about me.");
+        MessageDispatcher.sendMessage(e, e.getGuild().getDefaultChannel(), about.build());
     }
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
