@@ -51,10 +51,13 @@ public class AboutCommand extends Command {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator(), null, Yuuko.BOT.getAvatarUrl())
                 .setDescription(
-                        Yuuko.BOT.getName() + ", programmed in [Java](https://www.oracle.com/uk/java/index.html) " +
-                        "If you would like me in your guild, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) " +
-                        "If I already am, thank you for your continued support, and please consider supporting " + Yuuko.BOT.getName() + " on [patreon](https://www.patreon.com/yuwuko/)!" +
-                                "\n Use `" + e.getPrefix() + "help` for a list of commands, or `" + e.getPrefix() + "vote` if you wish to vote for " + Yuuko.BOT.getName() + "."
+                        """
+                        If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot)
+                        If you need any assistance, don't hesitate to ask [here!](%s)
+                        Use `%shelp` for a full list of commands. 
+                        Use `%ssettings` for a full list of settings.
+                        Please consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!
+                        """.formatted(e.getPrefix(), e.getPrefix(), Yuuko.SUPPORT_GUILD)
                 )
                 .addField("Author", "[" + Yuuko.AUTHOR + "](" + Yuuko.AUTHOR_WEBSITE + ")", true)
                 .addField("Version", Yuuko.VERSION, true)
