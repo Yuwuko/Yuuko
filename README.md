@@ -1,12 +1,33 @@
 ![Yuuko Banner](https://i.imgur.com/3Aihicb.jpg)
 
-![Servers](https://top.gg/api/widget/servers/420682957007880223.svg)
-![Servers](https://top.gg/api/widget/upvotes/420682957007880223.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/yuwuko/yuuko/badge)](https://www.codefactor.io/repository/github/yuwuko/yuuko)
-[![GitHub release](https://img.shields.io/github/release/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko)
-[![GitHub stars](https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/issues)
-[![GitHub license](https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg)](https://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE)
+<p align="center">
+    <a href="https://github.com/Yuwuko/Yuuko/actions/workflows/gradle.yml">
+        <img alt="Build" src="https://github.com/Yuwuko/Yuuko/actions/workflows/gradle.yml/badge.svg">
+    </a>
+    <a href="https://www.codefactor.io/repository/github/yuwuko/yuuko">
+        <img alt="CodeFactor" src="https://www.codefactor.io/repository/github/yuwuko/yuuko/badge">
+    </a>
+    <a href="https://github.com/Yuuko-oh/Yuuko">
+        <img alt="GitHubRelease" src="https://img.shields.io/github/release/Yuuko-oh/Yuuko.svg">
+    </a>
+    <a href="https://github.com/Yuuko-oh/Yuuko/stargazers">
+        <img alt="GitHubStars" src="https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg">
+    </a>
+    <a href="https://github.com/Yuuko-oh/Yuuko/forks">
+        <img alt="GitHubStars" src="https://img.shields.io/github/forks/Yuuko-oh/Yuuko.svg">
+    </a>
+    <a href="https://github.com/Yuuko-oh/Yuuko/issues">
+        <img alt="GitHubIssues" src="https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg">
+    </a>
+    <a href="ttps://github.com/Yuuko-oh/Yuuko/blob/master/LICENSE">
+        <img alt="GitHubLicense" src="https://img.shields.io/github/license/Yuuko-oh/Yuuko.svg">
+    </a>
+</p>
+
+<p align="center">
+    <img alt="Servers" src="https://top.gg/api/widget/servers/420682957007880223.svg">
+    <img alt="Upvotes" src="https://top.gg/api/widget/upvotes/420682957007880223.svg">
+</p>
 
 # Yuuko 21w11b
 
