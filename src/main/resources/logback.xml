@@ -6,6 +6,22 @@
             <pattern>%gray%d{dd-MM-yy HH:mm:ss} %green([%thread]) %higherlight(%level) %logger{50} - %higherlight(%msg) %n</pattern>
         </encoder>
     </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.home}/yuuko.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>yuuko.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{dd-MM-yy HH:mm:ss} [%thread] %level %logger{50} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="trace">
+        <appender-ref ref="FILE" />
+    </root>
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
