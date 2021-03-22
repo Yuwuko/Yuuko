@@ -75,14 +75,13 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                     player.playTrack(background);
                     return;
                 }
-
                 timeout = ScheduleHandler.registerUniqueJob(new VoiceTimeoutJob(guild));
-                return;
-            }
 
-            // If skip is used and nothing else is in the queue, we want to stop the track anyway.
-            if(player.getPlayingTrack() != null) {
-                player.stopTrack();
+                // If skip is used and nothing else is in the queue, we want to stop the track anyway.
+                if(player.getPlayingTrack() != null) {
+                    player.stopTrack();
+                }
+                return;
             }
 
             player.playTrack(track);
