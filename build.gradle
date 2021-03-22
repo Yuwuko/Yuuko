@@ -5,13 +5,19 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'idea'
 
+project.version = '21w12a'
 group = 'com.yuuko'
-project.version = '21w11b'
-sourceCompatibility = 1.15
 mainClassName = 'com.yuuko.Yuuko'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(15)
+        vendor = JvmVendorSpec.ADOPTOPENJDK
+    }
 }
 
 jar {
@@ -26,13 +32,6 @@ jar {
             }
         }
     }
-}
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-    jcenter()
-    maven { url = 'https://jitpack.io' }
 }
 
 ext {
