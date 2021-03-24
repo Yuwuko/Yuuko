@@ -5,9 +5,9 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'idea'
 
-project.version = '21w12a'
 group = 'com.yuuko'
 mainClassName = 'com.yuuko.Yuuko'
+project.version = '21w12a'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -15,22 +15,8 @@ tasks.withType(JavaCompile) {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(15)
+        languageVersion = JavaLanguageVersion.of(16)
         vendor = JvmVendorSpec.ADOPTOPENJDK
-    }
-}
-
-jar {
-    doFirst {
-        manifest {
-            if(!configurations.compile.isEmpty()) {
-                attributes(
-                        'Class-Path': configurations.compile.collect { it.toURI().toString() }.join(' '),
-                        'Main-Class': mainClassName,
-                        'Implementation-Version': project.version
-                )
-            }
-        }
     }
 }
 
@@ -56,22 +42,22 @@ ext {
 }
 
 dependencies {
-    compile group: 'net.oneandone.reflections8', name: 'reflections8', version: reflections8
-    compile group: 'net.dv8tion', name: 'JDA', version: jda
-    compile group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: lavalinkClient
-    compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer
-    compile group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
-    compile group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
-    compile group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutube
-    compile group: 'com.google.code.gson', name: 'gson', version: gson
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotations
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDatabind
-    compile group: 'org.yaml', name: 'snakeyaml', version: snakeYaml
-    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp
-    compile group: 'org.jsoup', name: 'jsoup', version: jsoup
-    compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJava
-    compile group: 'com.zaxxer', name: 'HikariCP', version: hikaricp
-    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jApi
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: logback
-    compile group: 'com.github.BasketBandit', name: 'RuneAPI.java', version: runeapi
+    implementation group: 'net.oneandone.reflections8', name: 'reflections8', version: reflections8
+    implementation group: 'net.dv8tion', name: 'JDA', version: jda
+    implementation group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: lavalinkClient
+    implementation group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer
+    implementation group: 'com.sedmelluq', name: 'jda-nas', version: jdanas
+    implementation group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper
+    implementation group: 'com.google.apis', name: 'google-api-services-youtube', version: googleApiServicesYoutube
+    implementation group: 'com.google.code.gson', name: 'gson', version: gson
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonAnnotations
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDatabind
+    implementation group: 'org.yaml', name: 'snakeyaml', version: snakeYaml
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp
+    implementation group: 'org.jsoup', name: 'jsoup', version: jsoup
+    implementation group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJava
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: hikaricp
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4jApi
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logback
+    implementation group: 'com.github.BasketBandit', name: 'RuneAPI.java', version: runeapi
 }

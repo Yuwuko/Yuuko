@@ -3,7 +3,8 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w12a
-+ [!] Update Gradle to version 6.8.3
++ [!] Update Gradle to version 7.0-rc-1
++ [!] Update Java to version 16
 
 ## 21w11b
 + [!] Repackaged project from com.yuuko.core.* to com.yuuko.*
