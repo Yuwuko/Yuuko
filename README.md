@@ -29,7 +29,7 @@
     <img alt="Upvotes" src="https://top.gg/api/widget/upvotes/420682957007880223.svg">
 </p>
 
-# Yuuko 21w11b
+# Yuuko 21w12a
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) way back in mid-2018. Slowly growing into what is has become today. This project always was, and always will be a labour of love.
 
@@ -72,7 +72,7 @@ Take full advantage of Yuuko's event system, with modifiable title, description,
 Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possible to self-host. Below are instructions on how you can do just that. Basic setup excludes music and commands that rely on API keys however these can be setup with
 
 ### Requirements
-- Java 15+ ~ [download link](https://jdk.java.net/15/)
+- Java 16+ ~ [download link](https://jdk.java.net/16/)
 - Yuuko.jar ~ [download link](https://github.com/Yuuko-oh/Yuuko/raw/master/out/artifacts/yuuko/Yuuko.jar)
 - Discord Application ~ [create here](https://discord.com/developers/applications)
 - MySQL Database ~ [local xampp for testing](https://www.apachefriends.org/download.html)
