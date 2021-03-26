@@ -294,6 +294,7 @@ public class Yuuko {
                     .addEventListeners(new GenericEventManager(), AudioManager.LAVALINK.getLavalink())
                     .setAudioSendFactory(new NativeAudioSendFactory())
                     .setVoiceDispatchInterceptor(AudioManager.LAVALINK.getLavalink().getVoiceInterceptor())
+                    .setBulkDeleteSplittingEnabled(false) // not sure why this is enable by default
                     .setActivity(Activity.of(Activity.ActivityType.LISTENING, "@Yuuko help"))
                     .setShardsTotal(SHARDS_TOTAL)
                     .setShards(SHARD_IDS)
