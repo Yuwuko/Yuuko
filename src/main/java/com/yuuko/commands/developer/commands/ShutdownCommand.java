@@ -25,7 +25,7 @@ public class ShutdownCommand extends Command {
             return;
         }
 
-        if(Sanitiser.isNumber(e.getParameters())) {
+        if(Sanitiser.isNumeric(e.getParameters())) {
             ShardFunctions.triggerShutdownSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shard: " + e.getParameters());
             MessageDispatcher.reply(e, embed.build());

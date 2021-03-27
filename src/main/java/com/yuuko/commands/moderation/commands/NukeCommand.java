@@ -38,7 +38,7 @@ public class NukeCommand extends Command {
 
         // Checks length of parameters since the command doesn't take a value greater than 3 digits
         // Also prevents NumberFormatException for parsing the integer later.
-        if(e.getParameters().length() > 3 || !Sanitiser.isNumber(e.getParameters())) {
+        if(e.getParameters().length() > 3 || !Sanitiser.isNumeric(e.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel. e.g. #general");
             MessageDispatcher.reply(e, embed.build());
             return;

@@ -106,7 +106,7 @@ public final class Sanitiser {
      * @param string {@link String}
      * @return boolean
      */
-    public static boolean isNumber(String string) {
+    public static boolean isNumeric(String string) {
         return Arrays.stream(string.split("")).allMatch(character -> Character.isDigit(character.charAt(0)));
     }
 

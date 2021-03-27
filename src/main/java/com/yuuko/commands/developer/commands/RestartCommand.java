@@ -27,7 +27,7 @@ public class RestartCommand extends Command {
             return;
         }
 
-        if(Sanitiser.isNumber(e.getParameters())) {
+        if(Sanitiser.isNumeric(e.getParameters())) {
             ShardFunctions.triggerRestartSignal(Integer.parseInt(e.getParameters()));
             EmbedBuilder embed = new EmbedBuilder().setTitle("Restart").setDescription("Attempted to set restart trigger for shard: " + e.getParameters());
             MessageDispatcher.reply(e, embed.build());

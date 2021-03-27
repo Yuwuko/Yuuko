@@ -32,7 +32,7 @@ public class SearchCommand extends Command {
                 return;
             }
 
-            if(!Sanitiser.isNumber(e.getParameters())) {
+            if(!Sanitiser.isNumeric(e.getParameters())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Search input must be a number between `1` and `10`, or `cancel`.");
                 MessageDispatcher.reply(e, embed.build());
                 return;

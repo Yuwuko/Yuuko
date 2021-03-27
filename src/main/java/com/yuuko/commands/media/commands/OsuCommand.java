@@ -27,7 +27,7 @@ public class OsuCommand extends Command {
         String[] commandParameters = e.getParameters().split("\\s+", 2);
 
         int mode = 0;
-        if(commandParameters.length > 1 && Sanitiser.isNumber(commandParameters[1])) {
+        if(commandParameters.length > 1 && Sanitiser.isNumeric(commandParameters[1])) {
             mode = Integer.parseInt(commandParameters[1]);
         }
 

@@ -42,7 +42,7 @@ public class BanCommand extends Command {
 
         AtomicInteger delDays = new AtomicInteger();
 
-        if(Sanitiser.isNumber(commandParameters[1])) {
+        if(Sanitiser.isNumeric(commandParameters[1])) {
             delDays.set(Integer.parseInt(commandParameters[1]));
             if(delDays.get() > 7) {
                 delDays.set(7);

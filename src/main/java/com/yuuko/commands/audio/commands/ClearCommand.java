@@ -27,7 +27,7 @@ public class ClearCommand extends Command {
             return;
         }
 
-        if(!Sanitiser.isNumber(e.getParameters())) {
+        if(!Sanitiser.isNumeric(e.getParameters())) {
             return;
         }
 

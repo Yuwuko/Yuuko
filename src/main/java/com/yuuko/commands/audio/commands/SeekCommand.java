@@ -24,14 +24,14 @@ public class SeekCommand extends Command {
         AudioTrack track = manager.getPlayer().getPlayingTrack();
 
         int seek;
-        if(Sanitiser.isNumber(e.getParameters())) {
+        if(Sanitiser.isNumeric(e.getParameters())) {
             seek = Integer.parseInt(e.getParameters())*1000;
         } else {
             String[] timestamp = e.getParameters().split(":", 2);
             if(timestamp.length == 2) {
                 boolean nan = false;
                 for(String time : timestamp) {
-                    if(!Sanitiser.isNumber(time)) {
+                    if(!Sanitiser.isNumeric(time)) {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The position you selected was invalid, time value was set to `0`.");
                         MessageDispatcher.reply(e, embed.build());
                         nan = true;

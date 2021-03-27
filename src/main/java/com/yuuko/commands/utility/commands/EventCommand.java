@@ -102,7 +102,7 @@ public class EventCommand extends Command {
                 scheduledEvent.setTimestamp(Timestamp.valueOf(params[1]+":00")).submitEdit();
             }
             case "slots" -> {
-                if(!Sanitiser.isNumber(params[1])) {
+                if(!Sanitiser.isNumeric(params[1])) {
                     EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
                             .setDescription("The input isn't valid, ensure you supply a non-negative integer, or 0, removing the limit.");
                     MessageDispatcher.reply(e, about.build());
@@ -172,7 +172,7 @@ public class EventCommand extends Command {
             return;
         }
 
-        if(!Sanitiser.isNumber(params[1])) {
+        if(!Sanitiser.isNumeric(params[1])) {
             EmbedBuilder about = new EmbedBuilder().setTitle("Incorrect Format")
                     .setDescription("Event IDs must be non-negative integers, e.g: `12`");
             MessageDispatcher.reply(e, about.build());

@@ -39,7 +39,7 @@ public final class MessageUtilities {
      * @return {@link Member}
      */
     public static Member getMentionedMember(MessageEvent e, boolean feedback) {
-        if(e.hasParameters() && e.getParameters().length() == 18 && Sanitiser.isNumber(e.getParameters())) {
+        if(e.hasParameters() && e.getParameters().length() == 18 && Sanitiser.isNumeric(e.getParameters())) {
             return e.getGuild().getMemberById(e.getParameters());
         }
 
