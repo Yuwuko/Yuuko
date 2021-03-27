@@ -110,6 +110,8 @@ public class EventCommand extends Command {
                 }
                 scheduledEvent.setSlots(Integer.parseInt(params[1])).submitEdit();
             }
+            default -> {
+            }
         }
     }
 
