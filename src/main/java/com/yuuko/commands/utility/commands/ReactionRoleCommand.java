@@ -4,6 +4,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.commands.Command;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emote;
@@ -31,8 +32,8 @@ public class ReactionRoleCommand extends Command {
         final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : null;
         final String emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0).getName() + ":" + e.getMessage().getEmotes().get(0).getId() : params[1];
 
-        if(params[0].length() < 18) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Message").setDescription("Input did not match any known message id.");
+        if(params[0].length() < 18 || params[0].length() > 20 || Sanitiser.isNumeric(params[0])) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Incorrect Input").setDescription("Input needs to be a valid message ID, e.g. 775074171709161484");
             MessageDispatcher.reply(e, embed.build());
             return;
         }
