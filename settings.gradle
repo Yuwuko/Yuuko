@@ -4,7 +4,13 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         mavenLocal()
-        jcenter()
-        maven { url = 'https://jitpack.io' }
+        jcenter() //TODO: Sunsetting May 2021, Check Dependencies - LavaPlayer, etc
+        maven {
+            name = 'm2-dv8tion'
+            url = 'https://m2.dv8tion.net/releases'
+        }
+        maven {
+            url = 'https://jitpack.io'
+        }
     }
 }

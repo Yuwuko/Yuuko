@@ -3,8 +3,9 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w12a
-+ [!] Update Gradle to version 7.0-rc-1
-+ [!] Update Java to version 16
++ [!] Updated Gradle to version 7.0-rc-1
++ [!] Updated Java to version 16
++ [~] Updated dependencies -> JDA 4.2.0_250
 
 ## 21w11b
 + [!] Repackaged project from com.yuuko.core.* to com.yuuko.*
@@ -13,7 +14,7 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 + [~] Removed InteractionCommand abstraction layer as it is fairly unnecessary.
 + [~] Fix old bug where channel level permissions weren't being respected.
 + [~] Removed redundant utility functions.
-+ [~] Update [__about__] to give more useful information regarding the bot.
++ [~] Updated [__about__] to give more useful information regarding the bot.
 + [~] Change the guild on-join message to a non-embedded format to catch edge cases without permissions.
 
 ## 21w11a
