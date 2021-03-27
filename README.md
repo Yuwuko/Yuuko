@@ -118,7 +118,7 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 | Name                                                            | Version          |
 | --------------------------------------------------------------- | ---------------- |
 | [reflections8](https://github.com/aschoerk/reflections8)        | 0.11.7           |
-| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_244        |
+| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_250        |
 | [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 9db9b0df8f       |
 | [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.73           |
 | [JDA-NAS](https://github.com/sedmelluq/jda-nas)                 | 1.1.0            |
