@@ -1,12 +1,12 @@
 package com.yuuko;
 
-import com.yuuko.commands.Command;
-import com.yuuko.commands.Module;
-import com.yuuko.commands.audio.handlers.AudioManager;
-import com.yuuko.commands.core.commands.BindCommand;
-import com.yuuko.commands.core.commands.ModuleCommand;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.modules.Command;
+import com.yuuko.modules.Module;
+import com.yuuko.modules.audio.handlers.AudioManager;
+import com.yuuko.modules.core.commands.BindCommand;
+import com.yuuko.modules.core.commands.ModuleCommand;
 import com.yuuko.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;

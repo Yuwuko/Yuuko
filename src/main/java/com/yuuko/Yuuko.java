@@ -5,15 +5,15 @@ package com.yuuko;
 
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import com.yuuko.api.ApiManager;
-import com.yuuko.commands.Command;
-import com.yuuko.commands.Module;
-import com.yuuko.commands.audio.handlers.AudioManager;
-import com.yuuko.commands.core.commands.BindCommand;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.events.GenericEventManager;
 import com.yuuko.metrics.MetricsManager;
+import com.yuuko.modules.Command;
+import com.yuuko.modules.Module;
+import com.yuuko.modules.audio.handlers.AudioManager;
+import com.yuuko.modules.core.commands.BindCommand;
 import com.yuuko.scheduler.ScheduleHandler;
 import com.yuuko.scheduler.jobs.*;
 import lavalink.client.io.Link;
@@ -168,9 +168,9 @@ public class Yuuko {
                         try(FileWriter w = new FileWriter("./config/api/" + api + ".yaml")) {
                             w.write(
                                     "!!com.yuuko.core.api.entity.Api" + System.lineSeparator() +
-                                            "name: \"" + api + "\"" + System.lineSeparator() +
-                                            "applicationId: \"\"" + System.lineSeparator() +
-                                            "apiKey: \"\""
+                                    "name: \"" + api + "\"" + System.lineSeparator() +
+                                    "applicationId: \"\"" + System.lineSeparator() +
+                                    "apiKey: \"\""
                             );
                         }
                     }
@@ -245,7 +245,7 @@ public class Yuuko {
      */
     private void setupCommands() {
         try {
-            for(Class<? extends Module> obj : new Reflections("com.yuuko.commands").getSubTypesOf(Module.class)) {
+            for(Class<? extends Module> obj : new Reflections("com.yuuko.modules").getSubTypesOf(Module.class)) {
                 if(!Modifier.isAbstract(obj.getModifiers())) {
                     Module module = obj.getConstructor().newInstance();
                     MODULES.put(module.getName(), module);

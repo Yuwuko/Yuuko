@@ -2,13 +2,13 @@ package com.yuuko.events.controllers;
 
 import com.yuuko.CommandExecutor;
 import com.yuuko.Yuuko;
-import com.yuuko.commands.Command;
-import com.yuuko.commands.setting.commands.CommandLogSetting;
-import com.yuuko.commands.utility.commands.EventCommand;
-import com.yuuko.commands.utility.commands.ReactionRoleCommand;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.metrics.MetricsManager;
+import com.yuuko.modules.Command;
+import com.yuuko.modules.setting.commands.CommandLogSetting;
+import com.yuuko.modules.utility.commands.EventCommand;
+import com.yuuko.modules.utility.commands.ReactionRoleCommand;
 import com.yuuko.utilities.Sanitiser;
 import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;

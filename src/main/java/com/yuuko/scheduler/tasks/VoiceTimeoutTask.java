@@ -1,6 +1,6 @@
 package com.yuuko.scheduler.tasks;
 
-import com.yuuko.commands.audio.commands.StopCommand;
+import com.yuuko.modules.audio.commands.StopCommand;
 import com.yuuko.scheduler.Task;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildVoiceState;

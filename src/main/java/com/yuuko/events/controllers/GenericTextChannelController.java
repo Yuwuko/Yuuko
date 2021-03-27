@@ -1,6 +1,6 @@
 package com.yuuko.events.controllers;
 
-import com.yuuko.commands.core.commands.BindCommand;
+import com.yuuko.modules.core.commands.BindCommand;
 import net.dv8tion.jda.api.events.channel.text.GenericTextChannelEvent;
 import net.dv8tion.jda.api.events.channel.text.TextChannelDeleteEvent;
 

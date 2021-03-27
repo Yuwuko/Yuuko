@@ -6,7 +6,6 @@ public class Api {
     private String apiKey;
 
     public Api() {
-
     }
 
     public Api(String name, String applicationId, String key) {

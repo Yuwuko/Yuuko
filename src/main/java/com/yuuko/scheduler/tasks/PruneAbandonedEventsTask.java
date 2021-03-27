@@ -1,6 +1,6 @@
 package com.yuuko.scheduler.tasks;
 
-import com.yuuko.commands.utility.commands.EventCommand;
+import com.yuuko.modules.utility.commands.EventCommand;
 import com.yuuko.scheduler.Task;
 
 public class PruneAbandonedEventsTask implements Task {

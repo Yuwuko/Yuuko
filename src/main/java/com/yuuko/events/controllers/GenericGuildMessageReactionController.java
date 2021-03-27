@@ -1,8 +1,8 @@
 package com.yuuko.events.controllers;
 
-import com.yuuko.commands.setting.commands.StarboardSetting;
-import com.yuuko.commands.utility.commands.EventCommand;
-import com.yuuko.commands.utility.commands.ReactionRoleCommand;
+import com.yuuko.modules.setting.commands.StarboardSetting;
+import com.yuuko.modules.utility.commands.EventCommand;
+import com.yuuko.modules.utility.commands.ReactionRoleCommand;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;

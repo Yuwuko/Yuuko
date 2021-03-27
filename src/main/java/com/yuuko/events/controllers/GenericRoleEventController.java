@@ -1,6 +1,6 @@
 package com.yuuko.events.controllers;
 
-import com.yuuko.commands.utility.commands.ReactionRoleCommand;
+import com.yuuko.modules.utility.commands.ReactionRoleCommand;
 import net.dv8tion.jda.api.events.role.GenericRoleEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import org.slf4j.Logger;

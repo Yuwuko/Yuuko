@@ -2,9 +2,9 @@ package com.yuuko.events.controllers;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
-import com.yuuko.commands.audio.handlers.AudioManager;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.metrics.MetricsManager;
+import com.yuuko.modules.audio.handlers.AudioManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;

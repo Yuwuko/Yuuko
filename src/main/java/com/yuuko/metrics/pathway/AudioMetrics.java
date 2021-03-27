@@ -1,9 +1,9 @@
 package com.yuuko.metrics.pathway;
 
-import com.yuuko.commands.audio.handlers.AudioManager;
-import com.yuuko.commands.audio.handlers.GuildAudioManager;
-import com.yuuko.commands.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.metrics.Metric;
+import com.yuuko.modules.audio.handlers.AudioManager;
+import com.yuuko.modules.audio.handlers.GuildAudioManager;
+import com.yuuko.modules.audio.handlers.YouTubeSearchHandler;
 import lavalink.client.io.LavalinkSocket;
 import lavalink.client.io.RemoteStats;
 

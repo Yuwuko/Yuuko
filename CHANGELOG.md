@@ -3,9 +3,12 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w12a
-+ [!] Updated Gradle to version 7.0-rc-1
-+ [!] Updated Java to version 16
-+ [~] Updated dependencies -> JDA 4.2.0_250
++ [!] Repackaged com.yuuko.commands.* to com.yuuko.modules.*
++ [!] Updated Gradle to version 7.0-rc-1.
++ [!] Updated Java to version 16.
++ [~] Updated dependencies -> JDA 4.2.0_250.
++ [~] Refactor isNumber() to isNumeric() in Sanitiser.
++ [~] Fix small bug with [__reactionrole__].
 
 ## 21w11b
 + [!] Repackaged project from com.yuuko.core.* to com.yuuko.*

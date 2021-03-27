@@ -1,6 +1,6 @@
 package com.yuuko.events.controllers;
 
-import com.yuuko.commands.audio.commands.StopCommand;
+import com.yuuko.modules.audio.commands.StopCommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.events.guild.voice.GenericGuildVoiceEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
