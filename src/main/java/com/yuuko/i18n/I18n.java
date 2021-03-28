@@ -1,5 +1,6 @@
 package com.yuuko.i18n;
 
+import com.yuuko.events.entity.MessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -28,8 +29,8 @@ public class I18n {
         }
     }
 
-    public String getText(String language, String command, String text) {
-        return languages.get(language).getCommands().get(command).getText().get(text);
+    public static String getText(MessageEvent e,String text) {
+        return languages.get(e.getLanguage()).getCommands().get(e.getCommand().getName()).getText().get(text);
     }
 
     /**
