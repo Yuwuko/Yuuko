@@ -126,7 +126,7 @@ commands:
 
   about:
     text:
-      description: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
+      desc: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
       author: "Author"
       version: "Version"
       prefix: "prefix"
