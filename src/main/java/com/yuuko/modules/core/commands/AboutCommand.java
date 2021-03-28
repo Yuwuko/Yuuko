@@ -8,6 +8,7 @@ import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.entity.Shard;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.metrics.MetricsManager;
 import com.yuuko.modules.Command;
@@ -35,7 +36,6 @@ public class AboutCommand extends Command {
 
         for(int i = 0; i < 5; i++) {
             JsonObject obj = git.get(i).getAsJsonObject();
-
             String sha = obj.get("sha").getAsString();
             String message = obj.get("commit").getAsJsonObject().get("message").getAsString();
             String truncatedMessage = (message.length() > 59) ? message.substring(0,56) + "..." : message;
@@ -50,25 +50,17 @@ public class AboutCommand extends Command {
 
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator(), null, Yuuko.BOT.getAvatarUrl())
-                .setDescription(
-                        """
-                        If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot)
-                        If you need any assistance, don't hesitate to ask [here!](%s)
-                        Use `%shelp` for a full list of commands. 
-                        Use `%ssettings` for a full list of settings.
-                        Please consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!
-                        """.formatted(Yuuko.SUPPORT_GUILD, e.getPrefix(), e.getPrefix())
-                )
-                .addField("Author", "[" + Yuuko.AUTHOR + "](" + Yuuko.AUTHOR_WEBSITE + ")", true)
-                .addField("Version", Yuuko.VERSION, true)
-                .addField("Prefix", Yuuko.GLOBAL_PREFIX + ", " + GuildFunctions.getGuildSetting("prefix", e.getGuild().getId()), true)
-                .addField("Shard ID", e.getShardId() + "", true)
-                .addField("Shard Guilds", MetricsManager.getDiscordMetrics(e.getShardId()).GUILD_COUNT + "", true)
-                .addField("Total Guilds", totalGuilds + "", true)
-                .addField("Commands", Yuuko.COMMANDS.size() + "", true)
-                .addField("Uptime", TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                .addField("Ping", MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms)",true)
-                .addField("Latest Updates", latestUpdates.toString(), false);
+                .setDescription(I18n.getText(e, "description").formatted(Yuuko.SUPPORT_GUILD, e.getPrefix(), e.getPrefix()))
+                .addField(I18n.getText(e, "author_label"), "[" + Yuuko.AUTHOR + "](" + Yuuko.AUTHOR_WEBSITE + ")", true)
+                .addField(I18n.getText(e, "version_label"), Yuuko.VERSION, true)
+                .addField(I18n.getText(e, "prefix_lavel"), Yuuko.GLOBAL_PREFIX + ", " + GuildFunctions.getGuildSetting("prefix", e.getGuild().getId()), true)
+                .addField(I18n.getText(e, "shard_id_label"), e.getShardId() + "", true)
+                .addField(I18n.getText(e, "shard_guilds_label"), MetricsManager.getDiscordMetrics(e.getShardId()).GUILD_COUNT + "", true)
+                .addField(I18n.getText(e, "shard_guilds_total_label"), totalGuilds + "", true)
+                .addField(I18n.getText(e, "commands_label"), Yuuko.COMMANDS.size() + "", true)
+                .addField(I18n.getText(e, "uptime_label"), TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
+                .addField(I18n.getText(e, "ping_label"), MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms)",true)
+                .addField(I18n.getText(e, "latest_updates_label"), latestUpdates.toString(), false);
         MessageDispatcher.reply(e, about.build());
     }
 }
