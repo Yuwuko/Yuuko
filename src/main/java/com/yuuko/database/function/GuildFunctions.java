@@ -145,6 +145,25 @@ public class GuildFunctions {
     }
 
     /**
+     * Return the langauge setting for the guild.
+     * @param guildId String
+     * @return String
+     */
+    public static String getGuildLanguage(String guildId) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT `language` FROM `guilds_settings` WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guildId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getString("language") : "en";
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            return "en";
+        }
+    }
+
+    /**
      * Returns all of the guild settings for the given guild.
      * ** Doesn't close connection or resultset is lost **
      * @param guildId the guild to get the settings for.
