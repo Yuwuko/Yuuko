@@ -137,3 +137,21 @@ commands:
       uptime: "Uptime"
       ping: "Ping"
       latest_updates: "Latest Updates"
+
+auxiliary:
+  audio_load:
+    text:
+      duration: "Duration"
+      channel: "Channel"
+      position: "Position in queue"
+      play: "%s added to the queue!"
+      playnext: "%s added to the front of the queue!"
+      background: "%s set the background track!"
+      default: "%s did something!"
+      playlist_load: "Adding `%s` tracks to the queue from playlist: `%`"
+      playlist_next: "Adding `%s` tracks to the front of the queue from playlist: `%`"
+    error:
+      no_support: "Playlist as a background is currently not supported!"
+      invalid_param: "No Matches found using that parameter."
+      load_fail_title: "Loading failed: %s"
+      load_fail_desc: "One of the most common causes for this error is trying to play age-restricted content. If the problem persists, please join the support server and let us know."

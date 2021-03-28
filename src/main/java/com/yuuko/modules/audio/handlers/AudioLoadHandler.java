@@ -7,6 +7,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.utilities.TextUtilities;
 import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -43,16 +44,16 @@ public class AudioLoadHandler {
 
                     EmbedBuilder embed = new EmbedBuilder().setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(Utilities.getAudioTrackImage(track))
-                            .addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
-                            .addField("Channel", track.getInfo().author, true)
-                            .addField("Position in queue", manager.getScheduler().queue.size() + "", false)
+                            .addField(I18n.getText(e, "audio_load", "duration"), TextUtilities.getTimestamp(track.getDuration()), true)
+                            .addField(I18n.getText(e, "audio_load", "channel"), track.getInfo().author, true)
+                            .addField(I18n.getText(e, "audio_load", "position"), manager.getScheduler().queue.size() + "", false)
                             .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
                     switch(type) {
-                        case PLAY -> embed.setAuthor(e.getAuthor().getAsTag() + " added to the queue!", null, e.getAuthor().getAvatarUrl());
-                        case PLAYNEXT -> embed.setAuthor(e.getAuthor().getAsTag() + " added to the front of the queue!", null, e.getAuthor().getAvatarUrl());
-                        case BACKGROUND -> embed.setAuthor(e.getAuthor().getAsTag() + " set the background track!",null, e.getAuthor().getAvatarUrl());
-                        default -> embed.setAuthor(e.getAuthor().getAsTag() + " did something!",null, e.getAuthor().getAvatarUrl());
+                        case PLAY -> embed.setAuthor(I18n.getText(e, "audio_load", "play").formatted(e.getAuthor().getAsTag()), null, e.getAuthor().getAvatarUrl());
+                        case PLAYNEXT -> embed.setAuthor(I18n.getText(e, "audio_load", "playnext").formatted(e.getAuthor().getAsTag()), null, e.getAuthor().getAvatarUrl());
+                        case BACKGROUND -> embed.setAuthor(I18n.getText(e, "audio_load", "background").formatted(e.getAuthor().getAsTag()),null, e.getAuthor().getAvatarUrl());
+                        default -> embed.setAuthor(I18n.getText(e, "audio_load", "default").formatted(e.getAuthor().getAsTag()),null, e.getAuthor().getAvatarUrl());
                     }
                     MessageDispatcher.reply(e, embed.build());
 
@@ -85,7 +86,7 @@ public class AudioLoadHandler {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     if(type == Playback.PLAY) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to queue from playlist: `" + playlist.getName() + "`");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "playlist_load").formatted(playlist.getTracks().size(), playlist.getName()));
                         MessageDispatcher.reply(e, embed.build());
 
                         List<AudioTrack> tracks = playlist.getTracks();
@@ -97,7 +98,7 @@ public class AudioLoadHandler {
                     }
 
                     if(type == Playback.PLAYNEXT) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Adding `" + playlist.getTracks().size() + "` tracks to the front of the queue from playlist: `" + playlist.getName() + "`");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "playlist_next").formatted(playlist.getTracks().size(), playlist.getName()));
                         MessageDispatcher.reply(e, embed.build());
 
                         ArrayList<AudioTrack> tempQueue = new ArrayList<>(manager.getScheduler().queue);
@@ -112,7 +113,7 @@ public class AudioLoadHandler {
                     }
 
                     if(type == Playback.BACKGROUND) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Playlist as background currently not supported!");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "audio_load", "no_support"));
                         MessageDispatcher.reply(e, embed.build());
                     }
 
@@ -123,14 +124,14 @@ public class AudioLoadHandler {
 
             @Override
             public void noMatches() {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No matches found using that parameter.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "audio_load", "invalid_param"));
                 MessageDispatcher.reply(e, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException ex) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Loading failed: " + ex.getMessage())
-                        .setDescription("The most common cause for this error is trying to play age-restricted content. If the problem persists, please contact " + Yuuko.AUTHOR + ".");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "audio_load", "load_fail_title").formatted(ex.getMessage()))
+                        .setDescription(I18n.getError(e, "audio_load", "load_fail_desc").formatted(Yuuko.AUTHOR));
                 MessageDispatcher.reply(e, embed.build());
             }
         });
