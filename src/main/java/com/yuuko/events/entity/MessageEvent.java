@@ -6,11 +6,16 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class MessageEvent extends GuildMessageReceivedEvent {
     private Command command;
+    private String language;
     private String prefix;
     private String parameters;
 
     public MessageEvent(GuildMessageReceivedEvent event) {
         super(event.getJDA(), event.getResponseNumber(), event.getMessage());
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
     public String getPrefix() {
@@ -31,6 +36,18 @@ public class MessageEvent extends GuildMessageReceivedEvent {
 
     public int getShardId() {
         return getJDA().getShardInfo().getShardId();
+    }
+
+    /**
+     * Sets language associated with the message event.
+     * Returns MessageEvent object so method can be used as a parameter.
+     *
+     * @param language value to assign to lang field.
+     * @return MessageEvent
+     */
+    public MessageEvent setLanguage(String language) {
+        this.language = language;
+        return this;
     }
 
     /**

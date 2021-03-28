@@ -52,9 +52,10 @@ public class GenericGuildMessageController {
             final String[] cmd = message.substring(prefix.length()).split("\\s+", 2);
             final String parameters = (cmd.length > 1) ? cmd[1] : null;
             final Command command = Yuuko.COMMANDS.get(cmd[0].toLowerCase());
+            final String lang = GuildFunctions.getGuildLanguage(e.getGuild().getId());
 
             // Creates message event object, setting the event, prefix, command and parameters.
-            MessageEvent event = new MessageEvent(e).setPrefix(prefix).setCommand(command).setParameters(parameters);
+            MessageEvent event = new MessageEvent(e).setLanguage(lang).setPrefix(prefix).setCommand(command).setParameters(parameters);
 
             // fail-fast
             if(!Sanitiser.checks(event)) {
