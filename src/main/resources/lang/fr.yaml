@@ -1,0 +1,16 @@
+!!com.yuuko.i18n.I18n$Language
+commands:
+  about:
+    text:
+      description: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
+      author_label: "Author"
+      version_label: "Version"
+      prefix_lavel: "prefix"
+      shard_id_label: "Shard ID"
+      shard_guilds_label: "Shard Guilds"
+      shard_guilds_total_label: "Total Guilds"
+      uptime_label: "Uptime"
+      ping_label: "Ping"
+      latest_update_label: "Latest Updates"
+    error:
+      exception: "Something went wrong :("

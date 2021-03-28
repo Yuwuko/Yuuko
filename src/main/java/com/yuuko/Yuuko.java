@@ -9,6 +9,7 @@ import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.events.GenericEventManager;
+import com.yuuko.i18n.I18n;
 import com.yuuko.metrics.MetricsManager;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.Module;
@@ -81,6 +82,7 @@ public class Yuuko {
             // This order DOES matter.
             setupFiles();
             setupDatabase();
+            loadI18n();
             loadConfiguration();
             registerShards();
             setupApi();
@@ -192,6 +194,13 @@ public class Yuuko {
      */
     private void setupDatabase() {
         DatabaseConnection.setupDatabase();
+    }
+
+    /**
+     * Loads lang files to be parsed for use in commands/etc.
+     */
+    private void loadI18n() {
+        new I18n();
     }
 
     /**
