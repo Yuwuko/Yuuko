@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 
 public class GuildFunctions {
     private static final Logger log = LoggerFactory.getLogger(GuildFunctions.class);
@@ -169,30 +169,31 @@ public class GuildFunctions {
      * @param guildId the guild to get the settings for.
      * @return ResultSet
      */
-    public static ArrayList<String> getGuildSettings(String guildId) {
+    public static HashMap<String, String> getGuildSettings(String guildId) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_settings` WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildId);
             ResultSet rs = stmt.executeQuery();
 
-            ArrayList<String> settings = new ArrayList<>();
+            HashMap<String, String> settings = new HashMap<>();
             while(rs.next()) {
-                settings.add(rs.getString("prefix"));
-                settings.add(rs.getBoolean("cleanupcommands") ? "Enabled" : "Disabled");
-                settings.add(rs.getBoolean("playnotifications") ? "Enabled" : "Disabled");
-                settings.add(rs.getBoolean("djmode") ? "Enabled" : "Disabled");
-                settings.add(rs.getString("starboard"));
-                settings.add(rs.getString("commandlog"));
-                settings.add(rs.getString("moderationlog"));
-                settings.add(rs.getString("eventchannel"));
+                settings.put("language", rs.getString("language"));
+                settings.put("prefix", rs.getString("prefix"));
+                settings.put("cleanupcommands", rs.getBoolean("cleanupcommands") ? "Enabled" : "Disabled");
+                settings.put("playnotifications", rs.getBoolean("playnotifications") ? "Enabled" : "Disabled");
+                settings.put("djmode", rs.getBoolean("djmode") ? "Enabled" : "Disabled");
+                settings.put("starboard", rs.getString("starboard"));
+                settings.put("commandlog", rs.getString("commandlog"));
+                settings.put("moderationlog", rs.getString("moderationlog"));
+                settings.put("eventchannel", rs.getString("eventchannel"));
             }
 
             return settings;
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-            return new ArrayList<>();
+            return new HashMap<>();
         }
     }
 
