@@ -39,13 +39,23 @@ public class I18n {
     }
 
     /**
-     * Returns localised text based on given language and required text-part
+     * Returns localised text based on given language
      * @param e {@link MessageEvent}
      * @param text {@link String}
      * @return {@link String}
      */
     public static String getText(MessageEvent e, String text) {
         return languages.get(e.getLanguage()).getCommands().get(e.getCommand().getName()).getText().get(text);
+    }
+
+    /**
+     * Returns localised error based on given language
+     * @param e {@link MessageEvent}
+     * @param text {@link String}
+     * @return {@link String}
+     */
+    public static String getError(MessageEvent e, String text) {
+        return languages.get(e.getLanguage()).getCommands().get(e.getCommand().getName()).getError().get(text);
     }
 
     /**
