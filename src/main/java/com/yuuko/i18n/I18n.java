@@ -7,7 +7,6 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -22,7 +21,6 @@ public class I18n {
             while(reader.ready()) {
                 String langFile = reader.readLine();
                 Language langData = yaml.load(getClass().getClassLoader().getResourceAsStream("lang/"+langFile));
-                System.out.println(Arrays.toString(langData.getCommands().values().toArray()));
                 languages.put(langFile.split("\\.")[0], langData);
             }
         } catch(Exception e) {
