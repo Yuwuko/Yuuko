@@ -6,6 +6,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -30,23 +31,15 @@ public class LyricsCommand extends Command {
         final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "Bearer " + api.getKey())).getJsonObject();
         int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
 
-        if(response != 200) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-            MessageDispatcher.reply(e, embed.build());
-            return;
-        }
+        JsonArray hits;
+        JsonObject data;
+        Elements elements;
 
-        JsonArray hits = json.get("response").getAsJsonObject().get("hits").getAsJsonArray();
-        if(hits.size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
-            MessageDispatcher.reply(e, embed.build());
-            return;
-        }
-
-        JsonObject data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject();
-        Elements elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics");
-        if(elements.size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+        if(response != 200
+                || (hits = json.get("response").getAsJsonObject().get("hits").getAsJsonArray()).size() < 1
+                || (data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject()) == null || data.isJsonNull()
+                || (elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics")).size() < 1) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_results").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
@@ -67,7 +60,7 @@ public class LyricsCommand extends Command {
 
         if(lyricsList.isEmpty()) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setAuthor("Lyrics")
+                    .setAuthor(I18n.getText(e, "lyrics"))
                     .setTitle(data.get("full_title").getAsString())
                     .setThumbnail(data.get("header_image_url").getAsString())
                     .setDescription(lyrics)
@@ -76,7 +69,7 @@ public class LyricsCommand extends Command {
         } else {
             for(int i = 0; i < lyricsList.size(); i++) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setAuthor("Lyrics")
+                        .setAuthor(I18n.getText(e, "lyrics"))
                         .setTitle(data.get("full_title").getAsString() + " (" + (i+1) + "/" + lyricsList.size() + ")")
                         .setThumbnail(data.get("header_image_url").getAsString())
                         .setDescription(lyricsList.get(i));

@@ -3,6 +3,7 @@ package com.yuuko.modules.audio.commands;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import com.yuuko.modules.audio.handlers.GuildAudioManager;
@@ -32,14 +33,14 @@ public class SeekCommand extends Command {
                 boolean nan = false;
                 for(String time : timestamp) {
                     if(!Sanitiser.isNumeric(time)) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The position you selected was invalid, time value was set to `0`.");
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "invalid_param")).setDescription(I18n.getError(e, "invalid_position"));
                         MessageDispatcher.reply(e, embed.build());
                         nan = true;
                     }
                 }
                 seek = (nan) ? 0 : ((Integer.parseInt(timestamp[0])*60) + Integer.parseInt(timestamp[1])) * 1000;
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("The timestamp you selected was invalid, position value was set to `0`. Correct timestamps are formatted `2:10` for example.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "invalid_param")).setDescription(I18n.getError(e, "invalid_timestamp"));
                 MessageDispatcher.reply(e, embed.build());
                 seek = 0;
             }
@@ -48,14 +49,14 @@ public class SeekCommand extends Command {
         if(track != null) {
             if(track.isSeekable()) {
                 manager.getPlayer().seekTo((seek < track.getInfo().length) ? seek : track.getInfo().length);
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Seeking").setDescription("The track position has been set to `" + TextUtilities.getTimestamp(seek) + "`.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc").formatted(TextUtilities.getTimestamp(seek)));
                 MessageDispatcher.reply(e, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Unseekable").setDescription("Sorry, but this track is currently unseekable.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "unseekable")).setDescription(I18n.getError(e, "unseekable_desc"));
                 MessageDispatcher.reply(e, embed.build());
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a track currently playing.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_track"));
             MessageDispatcher.reply(e, embed.build());
         }
     }

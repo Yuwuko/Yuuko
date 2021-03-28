@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import com.yuuko.utilities.TextUtilities;
@@ -21,20 +22,21 @@ public class LastCommand extends Command {
 	@Override
 	public void onCommand(MessageEvent e) throws Exception {
 		AudioTrack track = AudioManager.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
-		if(track != null) {
-			EmbedBuilder queuedTrack = new EmbedBuilder()
-					.setAuthor("Last track")
-					.setTitle(track.getInfo().title, track.getInfo().uri)
-					.setThumbnail(Utilities.getAudioTrackImage(track))
-					.addField("Duration", TextUtilities.getTimestamp(track.getDuration()), true)
-					.addField("Channel", track.getInfo().author, true)
-					.setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
-			MessageDispatcher.reply(e, queuedTrack.build());
+
+		if(track == null) {
+			EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_track"));
+			MessageDispatcher.reply(e, embed.build());
 			return;
 		}
 
-		EmbedBuilder embed = new EmbedBuilder().setTitle("There isn't a previous track to return.");
-		MessageDispatcher.reply(e, embed.build());
+		EmbedBuilder queuedTrack = new EmbedBuilder()
+				.setAuthor(I18n.getText(e, "author"))
+				.setTitle(track.getInfo().title, track.getInfo().uri)
+				.setThumbnail(Utilities.getAudioTrackImage(track))
+				.addField(I18n.getText(e, "duration"), TextUtilities.getTimestamp(track.getDuration()), true)
+				.addField(I18n.getText(e, "channel"), track.getInfo().author, true)
+				.setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
+		MessageDispatcher.reply(e, queuedTrack.build());
 	}
 
 }

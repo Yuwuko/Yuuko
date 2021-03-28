@@ -3,6 +3,7 @@ package com.yuuko.modules.audio.commands;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import com.yuuko.modules.audio.handlers.GuildAudioManager;
@@ -24,7 +25,7 @@ public class QueueCommand extends Command {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(e.getGuild());
         synchronized(manager.getScheduler().queue) {
             if(manager.getScheduler().queue.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Queue").setDescription("The queue currently contains `0` tracks.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "empty_title")).setDescription(I18n.getText(e, "desc"));
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
@@ -34,21 +35,19 @@ public class QueueCommand extends Command {
             AtomicLong totalDuration = new AtomicLong();
             AtomicInteger count = new AtomicInteger();
 
-            manager.getScheduler().queue.forEach(audioTrack -> {
-                if(count.get() < 10) {
-                    count.getAndIncrement();
-                    queue.append("`").append(count.get() + 1).append(":` ").append(audioTrack.getInfo().title).append(" · (").append(TextUtilities.getTimestamp(audioTrack.getInfo().length)).append(") \n");
-                    nextDuration.getAndAdd(audioTrack.getDuration());
-                }
+            manager.getScheduler().queue.stream().limit(10).forEach(audioTrack -> {
+                count.getAndIncrement();
+                queue.append("`").append(count.get() + 1).append(":` ").append(audioTrack.getInfo().title).append(" · (").append(TextUtilities.getTimestamp(audioTrack.getInfo().length)).append(") \n");
+                nextDuration.getAndAdd(audioTrack.getDuration());
                 totalDuration.getAndAdd(audioTrack.getDuration());
             });
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Here are the next " + count.get() + " tracks in the queue:")
+                    .setTitle(I18n.getText(e, "full_title").formatted(count.get()))
                     .setDescription(queue.toString())
-                    .addField("Queue Length", manager.getScheduler().queue.size() + "", true)
-                    .addField("Next " + count.get() + " Duration", TextUtilities.getTimestamp(nextDuration.get()), true)
-                    .addField("Total Duration", TextUtilities.getTimestamp(totalDuration.get()), true)
+                    .addField(I18n.getText(e, "queue_length"), manager.getScheduler().queue.size() + "", true)
+                    .addField(I18n.getText(e, "next_duration").formatted(count.get()), TextUtilities.getTimestamp(nextDuration.get()), true)
+                    .addField(I18n.getText(e, "total_duration"), TextUtilities.getTimestamp(totalDuration.get()), true)
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
         }

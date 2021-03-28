@@ -2,6 +2,7 @@ package com.yuuko.modules.audio.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -16,7 +17,7 @@ public class PauseCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Pausing").setDescription("The player has been paused.");
+        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc"));
         MessageDispatcher.reply(e, embed.build());
         AudioManager.getGuildAudioManager(e.getGuild()).getPlayer().setPaused(true);
     }

@@ -3,6 +3,7 @@ package com.yuuko.modules.audio.commands;
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioLoadHandler;
 import com.yuuko.modules.audio.handlers.AudioManager;
@@ -27,7 +28,7 @@ public class PlayCommand extends Command {
 
         if(!e.hasParameters()) {
             if(manager.getPlayer().isPaused()) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Resuming").setDescription("The player has been resumed.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc"));
                 MessageDispatcher.reply(e, embed.build());
                 manager.getPlayer().setPaused(false);
             }
@@ -41,7 +42,7 @@ public class PlayCommand extends Command {
 
         List<SearchResult> results = YouTubeSearchHandler.search(e);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Those search parameters failed to return a result.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_results"));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

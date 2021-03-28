@@ -2,26 +2,138 @@
 commands:
   bird:
     text:
-      embed_title: "Random Bird"
+      title: "Random Bird"
+
   cat:
     text:
-      embed_title: "Random Cat"
+      title: "Random Cat"
+
   dog:
     text:
-      embed_title: "Random Dog"
+      title: "Random Dog"
+
   fox:
     text:
-      embed_title: "Random Fox"
+      title: "Random Fox"
+
+  background:
+    text:
+      title: "Removing"
+      desc: "The background track has been removed."
+    error:
+      params_failed: "Those search parameters failed to return a result."
+
+  clear:
+    text:
+      title: "Clearing"
+      desc: "The queue has been cleared."
+      desc_formatted: "`%s` has been cleared from the queue."
+
+  current:
+    text:
+      title: "Now Playing"
+      duration: "Duration"
+      channel: "Channel"
+    error:
+      no_track: "There is no track currently playing."
+
+  last:
+    text:
+      author: "Last Track"
+      duration: "Duration"
+      channel: "Channel"
+    error:
+      no_track: "There is no previous track."
+
+  loop:
+    text:
+     title: "Loop"
+     desc: "Looping for queue set to `%s`"
+
+  lyrics:
+    text:
+      lyrics: "Lyrics"
+    error:
+      no_results: "Search for `%s` produced no results."
+
+  pause:
+    text:
+      title: "Pausing"
+      desc: "The player has been paused."
+
+  play:
+    text:
+      title: "Resuming"
+      desc: "The player has been resumed."
+    error:
+      no_results: "Those search parameters failed to return a result."
+
+  playnext:
+    text:
+      title: "Resuming"
+      desc: "The player has been resumed."
+    error:
+      no_results: "Those search parameters failed to return a result."
+
+  queue:
+    text:
+      empty_title: "Queue"
+      desc: "The queue currently contains `0` tracks."
+      full_title: "Here are the next %s tracks in the queue:"
+      queue_length: "Queue Length"
+      next_duration: "Next %s Duration"
+      total_duration: "Total Duration"
+
+  search:
+    text:
+      cancelled: "Search cancelled."
+      results: "Search results for %s."
+      desc: "Type `%ssearch <value>` to play the track of the given value or `%ssearch cancel` to stop me waiting for a response. \n\n%s"
+    error:
+      invalid_input_title: "Invalid Input"
+      invalid_input_desc: "Search input must be a number between `1` and `10`, or `cancel`."
+      error_processing: "There was an issue processing your request."
+
+  seek:
+    text:
+      title: "Seeking"
+      desc: "The track position has been set to `%s`."
+    error:
+      invalid_param: "Invalid Parameter"
+      invalid_position: "The position you selected was invalid, time value set to `0`."
+      invalid_timestamp: "The timestamp you selected was invalid, position value was set to `0`. Correct timestamps are formatted `2:10` for example."
+      unseekable: "Unseekable"
+      unseekable_desc: "Sorry, but this track is currently unseekable."
+      no_track: "There isn't a track currently playing."
+
+  shuffle:
+    text:
+      title: "Shuffling"
+      desc: "The queue has been shuffled."
+    error:
+      no_track: "There aren't any tracks to shuffle."
+
+  skip:
+    text:
+      title: "Skipping"
+    error:
+      no_track: "There is no track to skip."
+
+  stop:
+    text:
+      title: "Stopping"
+      desc: "Audio connection closed."
+
   about:
     text:
       description: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
-      author_label: "Author"
-      version_label: "Version"
-      prefix_lavel: "prefix"
-      shard_id_label: "Shard ID"
-      shard_guilds_label: "Shard Guilds"
-      shard_guilds_total_label: "Total Guilds"
-      commands_label: "Commands"
-      uptime_label: "Uptime"
-      ping_label: "Ping"
-      latest_updates_label: "Latest Updates"
+      author: "Author"
+      version: "Version"
+      prefix: "prefix"
+      shard_id: "Shard ID"
+      shard_guilds: "Shard Guilds"
+      shard_guilds_total: "Total Guilds"
+      commands: "Commands"
+      uptime: "Uptime"
+      ping: "Ping"
+      latest_updates: "Latest Updates"
