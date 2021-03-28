@@ -2,15 +2,14 @@
 commands:
   about:
     text:
-      description: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
-      author_label: "Author"
+      description: "Si vous me voulez sur votre serveur, [invitez-moi!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nSi vous avez besoin d'aide, n'hésitez pas à demander [ici!](%s) \nUtilisez `%shelp` pour une liste complète des commandes. \nUtilisez `%ssettings` pour une liste complète des paramètres. \nVeuillez envisager de me soutenir sur [patreon](https://www.patreon.com/yuwuko/)!"
+      author_label: "L' auteur"
       version_label: "Version"
-      prefix_lavel: "prefix"
-      shard_id_label: "Shard ID"
-      shard_guilds_label: "Shard Guilds"
-      shard_guilds_total_label: "Total Guilds"
-      uptime_label: "Uptime"
+      prefix_lavel: "Préfixe"
+      shard_id_label: "Identifiant du fragment"
+      shard_guilds_label: "Guildes de fragments"
+      shard_guilds_total_label: "Guildes au total"
+      commands_label: "Commandes"
+      uptime_label: "Disponibilité"
       ping_label: "Ping"
-      latest_update_label: "Latest Updates"
-    error:
-      exception: "Something went wrong :("
+      latest_updates_label: "Dernières mises à jour"

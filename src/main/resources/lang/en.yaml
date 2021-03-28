@@ -9,8 +9,7 @@ commands:
       shard_id_label: "Shard ID"
       shard_guilds_label: "Shard Guilds"
       shard_guilds_total_label: "Total Guilds"
+      commands_label: "Commands"
       uptime_label: "Uptime"
       ping_label: "Ping"
-      latest_update_label: "Latest Updates"
-    error:
-      exception: "Something went wrong :("
+      latest_updates_label: "Latest Updates"
