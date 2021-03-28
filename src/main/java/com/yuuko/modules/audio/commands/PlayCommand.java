@@ -42,7 +42,7 @@ public class PlayCommand extends Command {
 
         List<SearchResult> results = YouTubeSearchHandler.search(e);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_results"));
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results"));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

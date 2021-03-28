@@ -1,5 +1,8 @@
 !!com.yuuko.i18n.I18n$Language
 commands:
+
+  # Animal
+
   bird:
     text:
       title: "Random Bird"
@@ -16,11 +19,12 @@ commands:
     text:
       title: "Random Fox"
 
+  # Audio
+
   background:
     text:
       title: "Removing"
       desc: "The background track has been removed."
-    error:
       params_failed: "Those search parameters failed to return a result."
 
   clear:
@@ -34,7 +38,6 @@ commands:
       title: "Now Playing"
       duration: "Duration"
       channel: "Channel"
-    error:
       no_track: "There is no track currently playing."
 
   last:
@@ -42,7 +45,6 @@ commands:
       author: "Last Track"
       duration: "Duration"
       channel: "Channel"
-    error:
       no_track: "There is no previous track."
 
   loop:
@@ -53,7 +55,6 @@ commands:
   lyrics:
     text:
       lyrics: "Lyrics"
-    error:
       no_results: "Search for `%s` produced no results."
 
   pause:
@@ -65,14 +66,12 @@ commands:
     text:
       title: "Resuming"
       desc: "The player has been resumed."
-    error:
       no_results: "Those search parameters failed to return a result."
 
   playnext:
     text:
       title: "Resuming"
       desc: "The player has been resumed."
-    error:
       no_results: "Those search parameters failed to return a result."
 
   queue:
@@ -89,7 +88,6 @@ commands:
       cancelled: "Search cancelled."
       results: "Search results for %s."
       desc: "Type `%ssearch <value>` to play the track of the given value or `%ssearch cancel` to stop me waiting for a response. \n\n%s"
-    error:
       invalid_input_title: "Invalid Input"
       invalid_input_desc: "Search input must be a number between `1` and `10`, or `cancel`."
       error_processing: "There was an issue processing your request."
@@ -98,7 +96,6 @@ commands:
     text:
       title: "Seeking"
       desc: "The track position has been set to `%s`."
-    error:
       invalid_param: "Invalid Parameter"
       invalid_position: "The position you selected was invalid, time value set to `0`."
       invalid_timestamp: "The timestamp you selected was invalid, position value was set to `0`. Correct timestamps are formatted `2:10` for example."
@@ -110,19 +107,19 @@ commands:
     text:
       title: "Shuffling"
       desc: "The queue has been shuffled."
-    error:
       no_track: "There aren't any tracks to shuffle."
 
   skip:
     text:
       title: "Skipping"
-    error:
       no_track: "There is no track to skip."
 
   stop:
     text:
       title: "Stopping"
       desc: "Audio connection closed."
+
+  # Core
 
   about:
     text:
@@ -138,6 +135,31 @@ commands:
       ping: "Ping"
       latest_updates: "Latest Updates"
 
+  bind:
+    text:
+      bind_channel: "Successfully bound `%s` to `%s`."
+      unbind_channel: "Successfully unbound `%s` from `%s`."
+      bound: "Bound Modules"
+      invalid_input_title: "Invalid Input"
+      invalid_intpu_desc: "`%s` isn't a valid module. A list of valid modules can be found by using the `%shelp` command."
+
+  help:
+    text:
+      help_title: "Have an issue, suggestion, or just want me on your server?"
+      help_desc: "Click [here](%s) to send me an invite, or [here](%s) to join the support server! \n Stuck with a command? Use `%shelp <command>` to get the commands usage."
+      title: "Command help for **_%s_**"
+      module: "Module"
+      perms: "Required Permissions"
+      binds: "Binds"
+      usage: "Usage"
+      none: "None"
+
+  module:
+    text:
+      invalid_module: "`%s` is not a valid module"
+      core_title: "Invalid Module"
+      core_desc: "The `%s` modules cannot be toggled."
+
 auxiliary:
   audio_load:
     text:
@@ -150,7 +172,6 @@ auxiliary:
       default: "%s did something!"
       playlist_load: "Adding `%s` tracks to the queue from playlist: `%`"
       playlist_next: "Adding `%s` tracks to the front of the queue from playlist: `%`"
-    error:
       no_support: "Playlist as a background is currently not supported!"
       invalid_param: "No Matches found using that parameter."
       load_fail_title: "Loading failed: %s"

@@ -43,7 +43,7 @@ public class BackgroundCommand extends Command {
         // Set background via search
         List<SearchResult> results = YouTubeSearchHandler.search(e);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "params_failed"));
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "params_failed"));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

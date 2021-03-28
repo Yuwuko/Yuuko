@@ -113,7 +113,7 @@ public class AudioLoadHandler {
                     }
 
                     if(type == Playback.BACKGROUND) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "audio_load", "no_support"));
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "no_support"));
                         MessageDispatcher.reply(e, embed.build());
                     }
 
@@ -124,14 +124,14 @@ public class AudioLoadHandler {
 
             @Override
             public void noMatches() {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "audio_load", "invalid_param"));
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "invalid_param"));
                 MessageDispatcher.reply(e, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException ex) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "audio_load", "load_fail_title").formatted(ex.getMessage()))
-                        .setDescription(I18n.getError(e, "audio_load", "load_fail_desc").formatted(Yuuko.AUTHOR));
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "load_fail_title").formatted(ex.getMessage()))
+                        .setDescription(I18n.getText(e, "audio_load", "load_fail_desc").formatted(Yuuko.AUTHOR));
                 MessageDispatcher.reply(e, embed.build());
             }
         });

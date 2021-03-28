@@ -20,7 +20,7 @@ public class ShuffleCommand extends Command {
     public void onCommand(MessageEvent e) throws Exception {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(e.getGuild());
         if(manager.getScheduler().queue.size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_track"));
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_track"));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

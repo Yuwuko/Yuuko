@@ -58,27 +58,6 @@ public class I18n {
     }
 
     /**
-     * Returns localised error based on given language
-     * @param e {@link MessageEvent}
-     * @param text {@link String}
-     * @return {@link String}
-     */
-    public static String getError(MessageEvent e, String text) {
-        return languages.get(e.getLanguage()).getCommands().get(e.getCommand().getName()).getError().get(text);
-    }
-
-    /**
-     * Returns localised error based on given language
-     * @param e {@link MessageEvent}
-     * @param aux {@link String}
-     * @param text {@link String}
-     * @return {@link String}
-     */
-    public static String getError(MessageEvent e, String aux, String text) {
-        return languages.get(e.getLanguage()).getAuxiliary().get(aux).getError().get(text);
-    }
-
-    /**
      * Language class used when parsing lang/ YAML files to create usable objects.
      * Command and Auxiliary are functionally the same but Auxiliary is used for non-command based feedback.
      */
@@ -104,7 +83,6 @@ public class I18n {
 
         public static class Command {
             private HashMap<String, String> text;
-            private HashMap<String, String> error;
 
             public Command() {
             }
@@ -112,20 +90,13 @@ public class I18n {
             public HashMap<String, String> getText() {
                 return text;
             }
-            public HashMap<String, String> getError() {
-                return error;
-            }
             public void setText(HashMap<String, String> text) {
                 this.text = text;
-            }
-            public void setError(HashMap<String, String> error) {
-                this.error = error;
             }
         }
 
         public static class Auxiliary {
             private HashMap<String, String> text;
-            private HashMap<String, String> error;
 
             public Auxiliary() {
             }
@@ -133,14 +104,8 @@ public class I18n {
             public HashMap<String, String> getText() {
                 return text;
             }
-            public HashMap<String, String> getError() {
-                return error;
-            }
             public void setText(HashMap<String, String> text) {
                 this.text = text;
-            }
-            public void setError(HashMap<String, String> error) {
-                this.error = error;
             }
         }
     }

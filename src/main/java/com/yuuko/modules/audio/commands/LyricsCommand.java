@@ -39,7 +39,7 @@ public class LyricsCommand extends Command {
                 || (hits = json.get("response").getAsJsonObject().get("hits").getAsJsonArray()).size() < 1
                 || (data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject()) == null || data.isJsonNull()
                 || (elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics")).size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_results").formatted(e.getParameters()));
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

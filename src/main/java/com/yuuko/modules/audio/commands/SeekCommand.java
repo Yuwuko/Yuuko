@@ -33,14 +33,14 @@ public class SeekCommand extends Command {
                 boolean nan = false;
                 for(String time : timestamp) {
                     if(!Sanitiser.isNumeric(time)) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "invalid_param")).setDescription(I18n.getError(e, "invalid_position"));
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_param")).setDescription(I18n.getText(e, "invalid_position"));
                         MessageDispatcher.reply(e, embed.build());
                         nan = true;
                     }
                 }
                 seek = (nan) ? 0 : ((Integer.parseInt(timestamp[0])*60) + Integer.parseInt(timestamp[1])) * 1000;
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "invalid_param")).setDescription(I18n.getError(e, "invalid_timestamp"));
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_param")).setDescription(I18n.getText(e, "invalid_timestamp"));
                 MessageDispatcher.reply(e, embed.build());
                 seek = 0;
             }
@@ -52,11 +52,11 @@ public class SeekCommand extends Command {
                 EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc").formatted(TextUtilities.getTimestamp(seek)));
                 MessageDispatcher.reply(e, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "unseekable")).setDescription(I18n.getError(e, "unseekable_desc"));
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "unseekable")).setDescription(I18n.getText(e, "unseekable_desc"));
                 MessageDispatcher.reply(e, embed.build());
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getError(e, "no_track"));
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_track"));
             MessageDispatcher.reply(e, embed.build());
         }
     }
