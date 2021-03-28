@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class I18n {
     private static final Logger log = LoggerFactory.getLogger(I18n.class);
@@ -29,7 +30,21 @@ public class I18n {
         }
     }
 
-    public static String getText(MessageEvent e,String text) {
+    /**
+     * Get a list of supported languages by language code.
+     * @return {@link Set<String>}
+     */
+    public static Set<String> getSupportedLanguages() {
+        return languages.keySet();
+    }
+
+    /**
+     * Returns localised text based on given language and required text-part
+     * @param e {@link MessageEvent}
+     * @param text {@link String}
+     * @return {@link String}
+     */
+    public static String getText(MessageEvent e, String text) {
         return languages.get(e.getLanguage()).getCommands().get(e.getCommand().getName()).getText().get(text);
     }
 
