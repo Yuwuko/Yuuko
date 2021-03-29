@@ -3,6 +3,7 @@ package com.yuuko.modules.developer.commands;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -27,7 +28,7 @@ public class ShutdownCommand extends Command {
 
         if(Sanitiser.isNumeric(e.getParameters())) {
             ShardFunctions.triggerShutdownSignal(Integer.parseInt(e.getParameters()));
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shard: " + e.getParameters());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
@@ -37,7 +38,7 @@ public class ShutdownCommand extends Command {
             for(int i = Integer.parseInt(shards[0]); i <= Integer.parseInt(shards[1]); i++) {
                 ShardFunctions.triggerShutdownSignal(i);
             }
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
@@ -47,7 +48,7 @@ public class ShutdownCommand extends Command {
             for(String shard: shards) {
                 ShardFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Shutdown").setDescription("Attempted to set shutdown trigger for shards: " + e.getParameters());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
         }
     }

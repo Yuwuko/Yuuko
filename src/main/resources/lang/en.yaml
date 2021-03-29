@@ -182,6 +182,38 @@ commands:
     text:
       desc: "To help with growth, I am listed on some of the popular Discord bot lists, here you can find links on where to vote for me. Voting is an important part of this growth because with more votes comes more exposure and thus more people who will use me. I have chosen not to lock any of my features behind a vote wall, but ask you kindly to vote (up to every 12 hours) for me on your favourite list(s)!"
 
+  # Developer
+
+  lavalink:
+    text:
+
+  logmetrics:
+    text:
+      title: "Metrics Logging"
+      desc: "Metrics logging has been set to `%s`."
+
+  reloadapi:
+    text:
+      success: "Successfully reloaded ApiManager."
+
+  restart:
+    text:
+      title: "Restart"
+      desc: "Attempted to set restart trigger for shards: %s"
+
+  setstatus:
+    text:
+      success: "Status changed successfully."
+
+  shudown:
+    text:
+      title: "Shutdown"
+      desc: "Attempted to set shutdown trigger for shards %s"
+
+  syncguilds:
+    text:
+      success: "Guilds updated!"
+
 auxiliary:
   audio_load:
     text:
