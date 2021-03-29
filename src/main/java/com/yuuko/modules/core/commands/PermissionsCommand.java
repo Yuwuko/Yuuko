@@ -2,6 +2,7 @@ package com.yuuko.modules.core.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -16,9 +17,9 @@ public class PermissionsCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) throws Exception {
         String permissions = e.getGuild().getSelfMember().getPermissions().toString().replace("[", "").replace("]", "").replace(",", "\n");
-        EmbedBuilder about = new EmbedBuilder().setTitle("Permissions")
-                .setDescription("One of the most common reasons for commands not to work is lack of required permissions. Below are all of the permissions that I current have.")
-                .addField("Granted", permissions, true);
+        EmbedBuilder about = new EmbedBuilder().setTitle(I18n.getText(e, "title"))
+                .setDescription(I18n.getText(e, "desc"))
+                .addField(I18n.getText(e, "granted"), permissions, true);
         MessageDispatcher.reply(e, about.build());
     }
 }

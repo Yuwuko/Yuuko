@@ -3,6 +3,7 @@ package com.yuuko.modules.core.commands;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.Module;
 import com.yuuko.utilities.TextUtilities;
@@ -22,9 +23,8 @@ public class HelpCommand extends Command {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(!e.hasParameters()) {
             EmbedBuilder commandInfo = new EmbedBuilder()
-                    .setTitle("Have an issue, suggestion, or just want me on your server?")
-                    .setDescription("Click [here](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) to send me an invite, or [here](https://discord.gg/VsM25fN) to join the support server! " +
-                            "\n Stuck with a command? Use `" + e.getPrefix() + "help <command>` to get the commands usage.")
+                    .setTitle(I18n.getText(e, "help_title"))
+                    .setDescription(I18n.getText(e, "help_desc").formatted("https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot", Yuuko.SUPPORT_GUILD, e.getPrefix()))
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
 
             for(Module module: Yuuko.MODULES.values()) {
@@ -41,7 +41,7 @@ public class HelpCommand extends Command {
             // Loop through the list of commands until the name of the command matches the help commands parameter given.
             // Once it matches, start to gather the information necessary for the Embed message to be returned to the user.
             Yuuko.COMMANDS.values().stream().filter(command -> command.getName().equalsIgnoreCase(e.getParameters())).findFirst().ifPresent(command -> {
-                final String commandPermission = (command.getPermissions() == null) ? "None" : command.getPermissions().toString();
+                final String commandPermission = (command.getPermissions() == null) ? I18n.getText(e, "none") : command.getPermissions().toString();
 
                 StringBuilder usages = new StringBuilder();
                 for(String usage: command.getUsage()) {
@@ -51,11 +51,11 @@ public class HelpCommand extends Command {
 
                 EmbedBuilder embed = new EmbedBuilder()
                         .setThumbnail(Yuuko.BOT.getAvatarUrl())
-                        .setTitle("Command help for **_" + command.getName() + "_**")
-                        .addField("Module", command.getModule().getName(), true)
-                        .addField("Required Permissions", commandPermission, true)
-                        .addField("Binds", BindCommand.DatabaseInterface.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
-                        .addField("Usage", usages.toString(), false)
+                        .setTitle(I18n.getText(e, "title").formatted(command.getName()))
+                        .addField(I18n.getText(e, "module"), command.getModule().getName(), true)
+                        .addField(I18n.getText(e, "perms"), commandPermission, true)
+                        .addField(I18n.getText(e, "binds"), BindCommand.DatabaseInterface.getBindsByModule(e.getGuild(), command.getModule().getName(), ", "), true)
+                        .addField(I18n.getText(e, "usage"), usages.toString(), false)
                         .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
                 MessageDispatcher.reply(e, embed.build());
             });

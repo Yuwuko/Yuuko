@@ -5,6 +5,7 @@ import com.yuuko.Yuuko;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.entity.Shard;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import lavalink.client.io.LavalinkSocket;
@@ -24,31 +25,21 @@ public class ShardsCommand extends Command {
     @Override
     public void onCommand(MessageEvent e) throws Exception {
         EmbedBuilder shardEmbed = new EmbedBuilder()
-                .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator() + " - Shards", null, Yuuko.BOT.getAvatarUrl())
+                .setAuthor(I18n.getText(e, "title").formatted(Yuuko.BOT.getName(), Yuuko.BOT.getDiscriminator()), null, Yuuko.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-
-        StringBuilder shards = new StringBuilder();
         for(Shard shard : ShardFunctions.getShardStatistics()) {
-            shards.append("**Yuuko #").append(shard.getId()).append("**")
-                    .append("\n").append("Status: ").append(shard.getStatus())
-                    .append("\n").append("Guilds: ").append(shard.getGuildCount())
-                    .append("\n").append("Gateway Ping: ").append(shard.getGatewayPing()).append("ms")
-                    .append("\n").append("Rest Ping: ").append(shard.getRestPing()).append("ms");
-            shardEmbed.addField("", shards.toString(), true);
-            shards = new StringBuilder();
+            shardEmbed.addField("", I18n.getText(e, "shard").formatted(shard.getId(), shard.getStatus(), shard.getGuildCount(), shard.getGatewayPing(), shard.getRestPing()), true);
         }
 
         StringBuilder nodes = new StringBuilder();
         for(LavalinkSocket socket : AudioManager.LAVALINK.getLavalink().getNodes()) {
             if(socket.getStats() != null) {
-                nodes.append("**Yuuko-").append(socket.getName()).append("**")
-                        .append("\n").append("System Load: ").append(BigDecimal.valueOf((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP)).append("%")
-                        .append("\n").append("Memory Used: ").append(BigDecimal.valueOf(socket.getStats().getMemUsed() / 1000000.0).setScale(2, RoundingMode.HALF_UP)).append("MB")
-                        .append("\n").append("Players: ").append(socket.getStats().getPlayers())
-                        .append("\n").append("Active: ").append(socket.getStats().getPlayingPlayers());
-                shardEmbed.addField("", nodes.toString(), true);
-                nodes = new StringBuilder();
+                shardEmbed.addField("", I18n.getText(e, "lavalink").formatted(socket.getName(),
+                        BigDecimal.valueOf((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP),
+                        BigDecimal.valueOf(socket.getStats().getMemUsed() / 1000000.0).setScale(2, RoundingMode.HALF_UP),
+                        socket.getStats().getPlayers(),
+                        socket.getStats().getPlayingPlayers()), true);
             }
         }
 

@@ -4,6 +4,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -30,34 +31,33 @@ public class ModuleCommand extends Command {
             String guild = e.getGuild().getId();
 
             if(!Yuuko.MODULES.containsKey(module)) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("_" + module + "_ is not a valid module.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_module").formatted(module));
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             // Prevents locked modules from being disabled (would throw exception anyway)
             if(Yuuko.LOCKED_MODULES.contains(module)) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Module")
-                        .setDescription("The `" + Yuuko.LOCKED_MODULES.toString() + "` modules cannot be toggled.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e,"core_title"))
+                        .setDescription(I18n.getText(e, "core_desc").formatted(Yuuko.LOCKED_MODULES.toString()));
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             if(DatabaseInterface.toggleModule(guild, module)) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("_" + module + "_ was enabled on this server!");
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(I18n.getText(e,"enabled").formatted(module));
                 MessageDispatcher.reply(e, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("_" + module + "_ was disabled on this server!");
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(I18n.getText(e,"disabled").formatted(module));
                 MessageDispatcher.reply(e, embed.build());
             }
         } else {
             ArrayList<ArrayList<String>> settings = DatabaseInterface.getModuleSettings(e.getGuild().getId());
-
             EmbedBuilder commandModules = new EmbedBuilder()
-                    .setTitle("Below are the lists of my enabled/disabled modules!")
-                    .setDescription("Each module can be toggled on or off by using the '" + e.getPrefix() + "module <module>' command.")
-                    .addField("Enabled Modules (" + settings.get(0).size() + ")", settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
-                    .addField("Disabled Modules (" + settings.get(1).size() + ")", settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
+                    .setTitle(I18n.getText(e, "title"))
+                    .setDescription(I18n.getText(e, "desc").formatted(e.getPrefix()))
+                    .addField(I18n.getText(e,"enabled_modules").formatted(settings.get(0).size()), settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
+                    .addField(I18n.getText(e,"enabled_disabled").formatted(settings.get(1).size()), settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, commandModules.build());

@@ -156,9 +156,31 @@ commands:
 
   module:
     text:
+      enabled: "`%s` was enabled!"
+      disabled: "`%s` was disabled!"
+      title: "Below are the lists of my enabled/disabled modules!"
+      desc: "Each module can be toggled on or off by using the `%smodule <module>` command."
+      enabled_modules: "Enabled Modules (%s)"
+      disabled_modules: "Disabled Modules (%s)"
       invalid_module: "`%s` is not a valid module"
       core_title: "Invalid Module"
       core_desc: "The `%s` modules cannot be toggled."
+
+  permissions:
+    text:
+      title: "Permissions"
+      desc: "One of the most common reasons for commands not to work is lack of required permissions. Below are all of the permissions that I current have."
+      granted: "Granted"
+
+  shards:
+    text:
+      title: "%s#%s - Shards"
+      shard: "**Yuuko#%s**\nStatus: %s\nGuilds: %s\nGateway Ping: %sms\nRest Ping: %sms"
+      lavalink: "**Yuuko-%s**\nSystem Load: %s%\nMemory Used: %sMB\nPlayers: %s\nActive: %s"
+
+  vote:
+    text:
+      desc: "To help with growth, I am listed on some of the popular Discord bot lists, here you can find links on where to vote for me. Voting is an important part of this growth because with more votes comes more exposure and thus more people who will use me. I have chosen not to lock any of my features behind a vote wall, but ask you kindly to vote (up to every 12 hours) for me on your favourite list(s)!"
 
 auxiliary:
   audio_load:

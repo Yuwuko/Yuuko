@@ -4,6 +4,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -29,7 +30,7 @@ public class BindCommand extends Command {
             String[] params = e.getParameters().toLowerCase().split("\\s+", 2);
 
             if(!params[0].equals("*") && !Yuuko.MODULES.containsKey(params[0])) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("**" + params[0] + "** isn't a valid module. A list of valid module can be found by using the **" + e.getPrefix() + "help** command.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_input_title")).setDescription(I18n.getText(e, "invalid_input_desc").formatted(params[0], e.getPrefix()));
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
@@ -40,19 +41,19 @@ public class BindCommand extends Command {
             if(channels.size() != 0) {
                 final int res = DatabaseInterface.toggleBind(e.getGuild().getId(), channels.get(0).getId(), module);
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + channels.get(0).getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "bind_channel").formatted(module, channels.get(0).getName()));
                     MessageDispatcher.reply(e, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + channels.get(0).getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "unbind_channel").formatted(module, channels.get(0).getName()));
                     MessageDispatcher.reply(e, embed.build());
                 }
             } else {
                 final int res = DatabaseInterface.toggleBind(e.getGuild().getId(), e.getChannel().getId(), module);
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully bound **" + module + "** to **" + e.getChannel().getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "bind_channel").formatted(module, e.getChannel().getName()));
                     MessageDispatcher.reply(e, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Successfully removed binding of **" + module + "** from **" + e.getChannel().getName() + "**.");
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "unbind_channel").formatted(module, e.getChannel().getName()));
                     MessageDispatcher.reply(e, embed.build());
                 }
             }
@@ -60,7 +61,7 @@ public class BindCommand extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Bound Modules")
+                .setTitle(I18n.getText(e, "bound"))
                 .setDescription(DatabaseInterface.getGuildBinds(e.getGuild(), "\n"));
         MessageDispatcher.reply(e, embed.build());
     }
