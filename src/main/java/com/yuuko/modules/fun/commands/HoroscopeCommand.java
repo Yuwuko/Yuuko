@@ -3,6 +3,7 @@ package com.yuuko.modules.fun.commands;
 import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -42,7 +43,7 @@ public class HoroscopeCommand extends Command {
         }
 
         if(selectedSign == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input.").setDescription("`" + e.getParameters() + "` is not as a valid sign. Select from `" + starsigns.toString() + "`");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_title")).setDescription(I18n.getText(e, "invalid_desc").formatted(e.getParameters(), starsigns.toString()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

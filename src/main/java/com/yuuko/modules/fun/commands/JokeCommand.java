@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -30,8 +31,8 @@ public class JokeCommand extends Command {
         JsonObject object = new RequestHandler(BASE_URL + "/search?limit=30&term=" + e.getParameters().replace(" ", "%20")).getJsonObject();
         if(object.getAsJsonArray("results").size() < 1) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("No Results")
-                    .setDescription("Search for `" + e.getParameters() + "` produced no results.");
+                    .setTitle(I18n.getText(e, "no_results_title"))
+                    .setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

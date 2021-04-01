@@ -214,6 +214,48 @@ commands:
     text:
       success: "Guilds updated!"
 
+  # Fun
+
+  advice:
+    text:
+      title: "Advice"
+
+  choose:
+    text:
+      choices: "Choices (%s)"
+      selected: "Selected"
+      probability: "Probability"
+
+  flip:
+    text:
+      title: "Coin Flip"
+      heads: "Heads"
+      tails: "Tails"
+      edge: "Edge"
+
+  8ball:
+    text:
+
+  horoscope:
+    text:
+      invalid_title: "Invalid Input"
+      invalid_desc: "`%s` is not a valid sign. Select from `%s`"
+
+  joke:
+    text:
+      no_results_title: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+
+  roll:
+    text:
+      invalid_input: "Invalid Input"
+      invalid_input_desc: "Input must be a non-negative numeric value."
+      roll: "Roll"
+      roll_desc: "`%s` rolled a `d%s` and got `%s`."
+
+  spoilerify:
+    text:
+
 auxiliary:
   audio_load:
     text:
