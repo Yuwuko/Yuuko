@@ -1,6 +1,5 @@
 package com.yuuko.i18n;
 
-import com.yuuko.events.entity.MessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -38,23 +37,24 @@ public class I18n {
 
     /**
      * Returns localised text based on given language
-     * @param e {@link MessageEvent}
-     * @param text {@link String}
+     * @param language {@link String}
+     * @param command {@link String}
+     * @param key {@link String}
      * @return {@link String}
      */
-    public static String getText(MessageEvent e, String text) {
-        return languages.get(e.getLanguage()).getCommands().get(e.getCommand().getName()).getText().get(text);
+    public static String get(String language, String command, String key) {
+        return languages.getOrDefault(language, languages.get("en")).getCommands().get(command).getText().get(key);
     }
 
     /**
      * Returns localised text based on given language
-     * @param e {@link MessageEvent}
-     * @param aux {@link String}
-     * @param text {@link String}
+     * @param language {@link String}
+     * @param auxiliary {@link String}
+     * @param key {@link String}
      * @return {@link String}
      */
-    public static String getText(MessageEvent e, String aux, String text) {
-        return languages.get(e.getLanguage()).getAuxiliary().get(aux).getText().get(text);
+    public static String get(String language, String auxiliary, String key, boolean... flag) {
+        return languages.getOrDefault(language, languages.get("en")).getAuxiliary().get(auxiliary).getText().get(key);
     }
 
     /**

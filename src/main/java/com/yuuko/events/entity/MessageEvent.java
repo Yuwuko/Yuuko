@@ -1,5 +1,6 @@
 package com.yuuko.events.entity;
 
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.Module;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -39,11 +40,27 @@ public class MessageEvent extends GuildMessageReceivedEvent {
     }
 
     /**
+     * Gets a localised string using the given key.
+     * @param key {@link String}
+     * @return {@link String}
+     */
+    public String i18n(String key) {
+        return I18n.get(language, command.getName(), key);
+    }
+
+    /**
+     * Gets a localised string using the given key and class.
+     * @param key {@link String}
+     * @return {@link String}
+     */
+    public String i18n(String key, String auxiliary) {
+        return I18n.get(language, auxiliary, key, true);
+    }
+
+    /**
      * Sets language associated with the message event.
-     * Returns MessageEvent object so method can be used as a parameter.
-     *
      * @param language value to assign to lang field.
-     * @return MessageEvent
+     * @return {@link MessageEvent}
      */
     public MessageEvent setLanguage(String language) {
         this.language = language;
@@ -52,10 +69,8 @@ public class MessageEvent extends GuildMessageReceivedEvent {
 
     /**
      * Sets prefix associated with the message event.
-     * Returns MessageEvent object so method can be used as a parameter.
-     *
      * @param prefix value to assign to prefix field.
-     * @return MessageEvent
+     * @return {@link MessageEvent}
      */
     public MessageEvent setPrefix(String prefix) {
         this.prefix = prefix;
@@ -64,10 +79,8 @@ public class MessageEvent extends GuildMessageReceivedEvent {
 
     /**
      * Sets command associated with the message event.
-     * Returns MessageEvent object so method can be used as a parameter.
-     *
      * @param command value to assign to command field.
-     * @return MessageEvent
+     * @return {@link MessageEvent}
      */
     public MessageEvent setCommand(Command command) {
         this.command = command;
@@ -76,10 +89,8 @@ public class MessageEvent extends GuildMessageReceivedEvent {
 
     /**
      * Sets parameters associated with the message event.
-     * Returns MessageEvent object so method can be used as a parameter.
-     *
      * @param parameters value to assign to parameters field.
-     * @return MessageEvent
+     * @return {@link MessageEvent}
      */
     public MessageEvent setParameters(String parameters) {
         this.parameters = parameters;
@@ -89,7 +100,6 @@ public class MessageEvent extends GuildMessageReceivedEvent {
     /**
      * Checks if the event command has parameters by checking if the
      * parameters field contains a value other than null.
-     *
      * @return boolean
      */
     public boolean hasParameters() {
