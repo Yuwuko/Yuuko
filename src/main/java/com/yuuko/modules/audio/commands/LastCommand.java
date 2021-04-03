@@ -4,7 +4,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import com.yuuko.utilities.TextUtilities;
@@ -20,23 +19,23 @@ public class LastCommand extends Command {
 	}
 
 	@Override
-	public void onCommand(MessageEvent e) throws Exception {
-		AudioTrack track = AudioManager.getGuildAudioManager(e.getGuild()).getPlayer().getPlayingTrack();
+	public void onCommand(MessageEvent context) throws Exception {
+		AudioTrack track = AudioManager.getGuildAudioManager(context.getGuild()).getPlayer().getPlayingTrack();
 
 		if(track == null) {
-			EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_track"));
-			MessageDispatcher.reply(e, embed.build());
+			EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_track"));
+			MessageDispatcher.reply(context, embed.build());
 			return;
 		}
 
 		EmbedBuilder queuedTrack = new EmbedBuilder()
-				.setAuthor(I18n.getText(e, "author"))
+				.setAuthor(context.i18n( "author"))
 				.setTitle(track.getInfo().title, track.getInfo().uri)
 				.setThumbnail(Utilities.getAudioTrackImage(track))
-				.addField(I18n.getText(e, "duration"), TextUtilities.getTimestamp(track.getDuration()), true)
-				.addField(I18n.getText(e, "channel"), track.getInfo().author, true)
+				.addField(context.i18n( "duration"), TextUtilities.getTimestamp(track.getDuration()), true)
+				.addField(context.i18n( "channel"), track.getInfo().author, true)
 				.setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl());
-		MessageDispatcher.reply(e, queuedTrack.build());
+		MessageDispatcher.reply(context, queuedTrack.build());
 	}
 
 }

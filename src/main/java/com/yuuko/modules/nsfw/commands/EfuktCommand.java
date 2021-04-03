@@ -21,7 +21,7 @@ public class EfuktCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         Document doc = new RequestHandler(BASE_URL).getDocument();
         if(doc.baseUri().startsWith("https://efukt.com/view.gif.php")) {
             image = doc.getElementsByClass("image_content").attr("src");
@@ -38,8 +38,8 @@ public class EfuktCommand extends Command {
                 .setTitle(doc.title().substring(0, Math.min(doc.title().length(), 256)))
                 .setDescription(doc.baseUri())
                 .setImage(image)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

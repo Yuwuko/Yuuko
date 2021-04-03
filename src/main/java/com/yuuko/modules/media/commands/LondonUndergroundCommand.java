@@ -10,7 +10,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.TextUtilities;
@@ -30,7 +29,7 @@ public class LondonUndergroundCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         final String json = new RequestHandler(BASE_URL).getString();
         List<LineManager> lineManager = new ObjectMapper().readValue(json, new TypeReference<>(){});
         StringBuilder reasons = new StringBuilder();
@@ -43,11 +42,11 @@ public class LondonUndergroundCommand extends Command {
             }
         }
 
-        if(!e.hasParameters()) {
+        if(!context.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(I18n.getText(e, "title"))
+                    .setTitle(context.i18n( "title"))
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
 
             for(LineManager line : lineManager) {
                 embed.addField(line.getName(), line.getLineStatusString(), true);
@@ -55,21 +54,21 @@ public class LondonUndergroundCommand extends Command {
 
             embed.addBlankField(true);
             embed.addField("", reasons.toString(), false);
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
         } else {
 
             if(goodServices == 11) {
-                reasons.append(I18n.getText(e, "good_service"));
+                reasons.append(context.i18n( "good_service"));
             } else if(goodServices > 0) {
-                reasons.append(I18n.getText(e, "good_service_other"));
+                reasons.append(context.i18n( "good_service_other"));
             }
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(I18n.getText(e, "title"))
+                    .setTitle(context.i18n( "title"))
                     .addField("", reasons.toString(), false)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl())
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 

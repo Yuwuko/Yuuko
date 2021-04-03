@@ -17,39 +17,39 @@ public class EventChannelSetting extends Command {
         super("eventchannel", 1, -1L, Arrays.asList("-eventchannel <#channel>", "-eventchannel setup", "-eventchannel unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) throws Exception {
-        if(!e.hasParameters()) {
-            String channel = GuildFunctions.getGuildSetting("eventchannel", e.getGuild().getId());
+    public void onCommand(MessageEvent context) throws Exception {
+        if(!context.hasParameters()) {
+            String channel = GuildFunctions.getGuildSetting("eventchannel", context.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder().setTitle("Events")
-                    .setDescription((channel == null) ? "There is currently no event channel." : "The event channel is currently set to " + e.getGuild().getTextChannelById(channel).getAsMention())
-                    .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-            MessageDispatcher.reply(e, embed.build());
+                    .setDescription((channel == null) ? "There is currently no event channel." : "The event channel is currently set to " + context.getGuild().getTextChannelById(channel).getAsMention())
+                    .addField("Help", "Use `" + context.getPrefix() + "help " + context.getCommand().getName() + "` to get information on how to use this command.", true);
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        if(e.getParameters().equalsIgnoreCase("setup")) {
-            e.getGuild().createTextChannel("events").queue(channel -> {
-                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
-                if(GuildFunctions.setGuildSettings("eventchannel", channel.getId(), e.getGuild().getId())) {
+        if(context.getParameters().equalsIgnoreCase("setup")) {
+            context.getGuild().createTextChannel("events").queue(channel -> {
+                channel.createPermissionOverride(context.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
+                if(GuildFunctions.setGuildSettings("eventchannel", channel.getId(), context.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Events").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                    MessageDispatcher.reply(e, embed.build());
+                    MessageDispatcher.reply(context, embed.build());
                 }
             });
             return;
         }
 
-        TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
+        TextChannel channel = MessageUtilities.getFirstMentionedChannel(context);
         if(channel != null) {
-            if(GuildFunctions.setGuildSettings("eventchannel", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("eventchannel", channel.getId(), context.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Events").setDescription("The event channel has been set to " + channel.getAsMention() + ".");
-                MessageDispatcher.reply(e, embed.build());
+                MessageDispatcher.reply(context, embed.build());
             }
             return;
         }
 
-        if(GuildFunctions.setGuildSettings("eventchannel", null, e.getGuild().getId())) {
+        if(GuildFunctions.setGuildSettings("eventchannel", null, context.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Events").setDescription("The events channel has been unset.");
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 }

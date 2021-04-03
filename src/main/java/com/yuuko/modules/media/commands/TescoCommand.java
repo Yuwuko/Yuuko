@@ -5,7 +5,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -25,14 +24,14 @@ public class TescoCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + "&offset=0&limit=1";
+    public void onCommand(MessageEvent context) throws Exception {
+        final String url = BASE_URL + Sanitiser.scrub(context.getParameters(), true) + "&offset=0&limit=1";
         final JsonObject json = new RequestHandler(url, new RequestProperty("Ocp-Apim-Subscription-Key", api.getKey())).getJsonObject();
         final JsonObject preData = json.get("uk").getAsJsonObject().get("ghs").getAsJsonObject().get("products").getAsJsonObject();
 
         if(preData.get("results").getAsJsonArray().size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -41,12 +40,12 @@ public class TescoCommand extends Command {
                 .setTitle(data.get("name").getAsString())
                 .setThumbnail(data.get("image").getAsString())
                 .setDescription(((data.has("description") && data.get("description").getAsJsonArray().size() > 0) ? data.get("description").getAsJsonArray().get(0).toString() : "No description available."))
-                .addField(I18n.getText(e, "price"), "£" + BigDecimal.valueOf(data.get("price").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + " (£" + BigDecimal.valueOf(data.get("unitprice").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + "/" + data.get("UnitQuantity").getAsString() + ")", true)
-                .addField(I18n.getText(e, "weight"), BigDecimal.valueOf(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
-                .addField(I18n.getText(e, "quantity"), data.get("UnitOfSale").getAsString() + "", true)
-                .addField(I18n.getText(e, "department"), data.get("superDepartment").getAsString() + " (" + data.get("department").getAsString() + ")", true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .addField(context.i18n( "price"), "£" + BigDecimal.valueOf(data.get("price").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + " (£" + BigDecimal.valueOf(data.get("unitprice").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + "/" + data.get("UnitQuantity").getAsString() + ")", true)
+                .addField(context.i18n( "weight"), BigDecimal.valueOf(data.get("ContentsQuantity").getAsDouble()).setScale(2, RoundingMode.HALF_UP) + data.get("ContentsMeasureType").getAsString(), true)
+                .addField(context.i18n( "quantity"), data.get("UnitOfSale").getAsString() + "", true)
+                .addField(context.i18n( "department"), data.get("superDepartment").getAsString() + " (" + data.get("department").getAsString() + ")", true)
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

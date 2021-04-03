@@ -127,5 +127,5 @@ public abstract class Command {
     }
 
     // Abstract method signature to ensure method is implemented.
-    public abstract void onCommand(MessageEvent e) throws Exception;
+    public abstract void onCommand(MessageEvent context) throws Exception;
 }

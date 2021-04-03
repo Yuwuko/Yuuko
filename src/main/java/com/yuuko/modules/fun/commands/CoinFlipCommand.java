@@ -3,7 +3,6 @@ package com.yuuko.modules.fun.commands;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -18,13 +17,13 @@ public class CoinFlipCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         final int rng = new Random().nextInt(10000);
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(I18n.getText(e, "title"))
-                .setDescription((rng == 0) ? I18n.getText(e, "edge") : (rng < 5000) ? I18n.getText(e, "heads") : I18n.getText(e, "tails"))
+                .setTitle(context.i18n( "title"))
+                .setDescription((rng == 0) ? context.i18n( "edge") : (rng < 5000) ? context.i18n( "heads") : context.i18n( "tails"))
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

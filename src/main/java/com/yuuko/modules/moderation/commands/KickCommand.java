@@ -19,30 +19,30 @@ public class KickCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        String[] params = e.getParameters().split("\\s+", 2);
-        Member target = MessageUtilities.getMentionedMember(e, true);
+    public void onCommand(MessageEvent context) throws Exception {
+        String[] params = context.getParameters().split("\\s+", 2);
+        Member target = MessageUtilities.getMentionedMember(context, true);
 
         if(target == null) {
             return;
         }
 
-        if(!Sanitiser.canInteract(e, target, "kick", true)) {
+        if(!Sanitiser.canInteract(context, target, "kick", true)) {
             return;
         }
 
         if(params.length < 2) {
-            e.getGuild().kick(target).queue(s -> {
+            context.getGuild().kick(target).queue(s -> {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Kick").setDescription(target.getEffectiveName() + " has been successfully kicked.");
-                MessageDispatcher.reply(e, embed.build());
-                ModerationLogSetting.execute(e, "Kick", target.getUser(), "None");
-            }, f -> e.getMessage().addReaction("❌").queue());
+                MessageDispatcher.reply(context, embed.build());
+                ModerationLogSetting.execute(context, "Kick", target.getUser(), "None");
+            }, f -> context.getMessage().addReaction("❌").queue());
         } else {
-            e.getGuild().kick(target, params[1]).queue(s -> {
+            context.getGuild().kick(target, params[1]).queue(s -> {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Mute").setDescription(target.getEffectiveName() + " has been successfully muted, for reason: " + params[1] + ".");
-                MessageDispatcher.reply(e, embed.build());
-                ModerationLogSetting.execute(e, "Kick", target.getUser(), params[1]);
-            }, f -> e.getMessage().addReaction("❌").queue());
+                MessageDispatcher.reply(context, embed.build());
+                ModerationLogSetting.execute(context, "Kick", target.getUser(), params[1]);
+            }, f -> context.getMessage().addReaction("❌").queue());
         }
     }
 

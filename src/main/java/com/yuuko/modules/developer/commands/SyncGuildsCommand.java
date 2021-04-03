@@ -3,7 +3,6 @@ package com.yuuko.modules.developer.commands;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.core.commands.BindCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,13 +16,13 @@ public class SyncGuildsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        e.getJDA().getGuildCache().forEach(guild -> {
+    public void onCommand(MessageEvent context) throws Exception {
+        context.getJDA().getGuildCache().forEach(guild -> {
             GuildFunctions.addOrUpdateGuild(guild);
             BindCommand.DatabaseInterface.verifyBinds(guild);
         });
-        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "success"));
-        MessageDispatcher.reply(e, embed.build());
+        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "success"));
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

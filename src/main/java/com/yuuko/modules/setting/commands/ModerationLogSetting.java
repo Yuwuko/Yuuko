@@ -21,39 +21,39 @@ public class ModerationLogSetting extends Command {
         super("moderationlog", 0, -1L, Arrays.asList("-moderationlog", "-moderationlog setup", "-moderationlog <#channel>", "-moderationlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) throws Exception {
-        if(!e.hasParameters()) {
-            String channel = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
+    public void onCommand(MessageEvent context) throws Exception {
+        if(!context.hasParameters()) {
+            String channel = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log")
-                    .setDescription((channel == null) ? "There is currently no moderation log set." : "The moderation log is currently set to use " + e.getGuild().getTextChannelById(channel).getAsMention())
-                    .addField("Help", "Use `" + e.getPrefix() + "help " + e.getCommand().getName() + "` to get information on how to use this command.", true);
-            MessageDispatcher.reply(e, embed.build());
+                    .setDescription((channel == null) ? "There is currently no moderation log set." : "The moderation log is currently set to use " + context.getGuild().getTextChannelById(channel).getAsMention())
+                    .addField("Help", "Use `" + context.getPrefix() + "help " + context.getCommand().getName() + "` to get information on how to use this command.", true);
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        if(e.getParameters().equalsIgnoreCase("setup")) {
-            e.getGuild().createTextChannel("moderation-log").queue(channel -> {
-                channel.createPermissionOverride(e.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
-                if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), e.getGuild().getId())) {
+        if(context.getParameters().equalsIgnoreCase("setup")) {
+            context.getGuild().createTextChannel("moderation-log").queue(channel -> {
+                channel.createPermissionOverride(context.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
+                if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), context.getGuild().getId())) {
                     EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
-                    MessageDispatcher.reply(e, embed.build());
+                    MessageDispatcher.reply(context, embed.build());
                 }
             });
             return;
         }
 
-        TextChannel channel = MessageUtilities.getFirstMentionedChannel(e);
+        TextChannel channel = MessageUtilities.getFirstMentionedChannel(context);
         if(channel != null) {
-            if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), e.getGuild().getId())) {
+            if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), context.getGuild().getId())) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been set to " + channel.getAsMention() + ".");
-                MessageDispatcher.reply(e, embed.build());
+                MessageDispatcher.reply(context, embed.build());
             }
             return;
         }
 
-        if(GuildFunctions.setGuildSettings("moderationlog", null, e.getGuild().getId())) {
+        if(GuildFunctions.setGuildSettings("moderationlog", null, context.getGuild().getId())) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been unset, deactivating the log.");
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 

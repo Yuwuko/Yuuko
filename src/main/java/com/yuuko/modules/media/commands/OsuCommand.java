@@ -6,7 +6,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.Sanitiser;
@@ -24,8 +23,8 @@ public class OsuCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        String[] commandParameters = e.getParameters().split("\\s+", 2);
+    public void onCommand(MessageEvent context) throws Exception {
+        String[] commandParameters = context.getParameters().split("\\s+", 2);
 
         int mode = 0;
         if(commandParameters.length > 1 && Sanitiser.isNumeric(commandParameters[1])) {
@@ -44,15 +43,15 @@ public class OsuCommand extends Command {
         final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
         final JsonArray json = new RequestHandler(url).getJsonArray();
         if(json == null || json.size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         JsonObject data = json.get(0).getAsJsonObject();
         if(data.get("playcount").isJsonNull()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_ext").formatted(data.get("username").getAsString(), modeString));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_ext").formatted(data.get("username").getAsString(), modeString));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -68,16 +67,16 @@ public class OsuCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(data.get("username").getAsString() + " (" + data.get("country").getAsString() + ") | " + modeString)
                 .setThumbnail("https://vignette.wikia.nocookie.net/logopedia/images/d/d3/Osu%21Logo_%282015%29.png")
-                .setDescription(I18n.getText(e, "created").formatted(data.get("join_date").getAsString(), data.get("playcount").getAsString(), (data.get("total_seconds_played").getAsInt()/60)/60, data.get("pp_raw").getAsString()))
-                .addField(I18n.getText(e, "world_rank"), worldRank, true)
-                .addField(I18n.getText(e, "country_rank"), countryRank, true)
-                .addField(I18n.getText(e, "accuracy"), accuracy, true)
-                .addField(I18n.getText(e, "ss_ranks"), ssRanks, true)
-                .addField(I18n.getText(e, "ssh_ranks"), sshRanks, true)
-                .addField(I18n.getText(e, "s_ranks"), sRanks, true)
-                .addField(I18n.getText(e, "sh_ranks"), shRanks, true)
-                .addField(I18n.getText(e, "a_ranks"), aRanks, true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setDescription(context.i18n( "created").formatted(data.get("join_date").getAsString(), data.get("playcount").getAsString(), (data.get("total_seconds_played").getAsInt()/60)/60, data.get("pp_raw").getAsString()))
+                .addField(context.i18n( "world_rank"), worldRank, true)
+                .addField(context.i18n( "country_rank"), countryRank, true)
+                .addField(context.i18n( "accuracy"), accuracy, true)
+                .addField(context.i18n( "ss_ranks"), ssRanks, true)
+                .addField(context.i18n( "ssh_ranks"), sshRanks, true)
+                .addField(context.i18n( "s_ranks"), sRanks, true)
+                .addField(context.i18n( "sh_ranks"), shRanks, true)
+                .addField(context.i18n( "a_ranks"), aRanks, true)
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

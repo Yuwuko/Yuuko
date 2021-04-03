@@ -17,12 +17,12 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Pong!")
-                .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms.")
+                .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics(context.getShardId()).GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics(context.getShardId()).REST_PING + "ms.")
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

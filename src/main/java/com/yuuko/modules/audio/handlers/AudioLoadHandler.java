@@ -7,7 +7,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.utilities.TextUtilities;
 import com.yuuko.utilities.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -30,32 +29,32 @@ public class AudioLoadHandler {
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
      *
      * @param manager {@link GuildAudioManager}
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      */
-    public static void loadAndPlay(GuildAudioManager manager, MessageEvent e, Playback type) {
-        final String param = e.getParameters();
+    public static void loadAndPlay(GuildAudioManager manager, MessageEvent context, Playback type) {
+        final String param = context.getParameters();
         final String trackUrl = param.startsWith("<") && param.endsWith(">") ? param.substring(1, param.length() - 1) : param;
 
         AudioManager.getPlayerManager().loadItemOrdered(manager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 try {
-                    track.setUserData(e);
+                    track.setUserData(context);
 
                     EmbedBuilder embed = new EmbedBuilder().setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(Utilities.getAudioTrackImage(track))
-                            .addField(I18n.getText(e, "audio_load", "duration"), TextUtilities.getTimestamp(track.getDuration()), true)
-                            .addField(I18n.getText(e, "audio_load", "channel"), track.getInfo().author, true)
-                            .addField(I18n.getText(e, "audio_load", "position"), manager.getScheduler().queue.size() + "", false)
-                            .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
+                            .addField(context.i18n("duration", "audio_load"), TextUtilities.getTimestamp(track.getDuration()), true)
+                            .addField(context.i18n("channel", "audio_load"), track.getInfo().author, true)
+                            .addField(context.i18n("position", "audio_load"), manager.getScheduler().queue.size() + "", false)
+                            .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
 
                     switch(type) {
-                        case PLAY -> embed.setAuthor(I18n.getText(e, "audio_load", "play").formatted(e.getAuthor().getAsTag()), null, e.getAuthor().getAvatarUrl());
-                        case PLAYNEXT -> embed.setAuthor(I18n.getText(e, "audio_load", "playnext").formatted(e.getAuthor().getAsTag()), null, e.getAuthor().getAvatarUrl());
-                        case BACKGROUND -> embed.setAuthor(I18n.getText(e, "audio_load", "background").formatted(e.getAuthor().getAsTag()),null, e.getAuthor().getAvatarUrl());
-                        default -> embed.setAuthor(I18n.getText(e, "audio_load", "default").formatted(e.getAuthor().getAsTag()),null, e.getAuthor().getAvatarUrl());
+                        case PLAY -> embed.setAuthor(context.i18n("play", "audio_load").formatted(context.getAuthor().getAsTag()), null, context.getAuthor().getAvatarUrl());
+                        case PLAYNEXT -> embed.setAuthor(context.i18n("playnext","audio_load").formatted(context.getAuthor().getAsTag()), null, context.getAuthor().getAvatarUrl());
+                        case BACKGROUND -> embed.setAuthor(context.i18n("background", "audio_load").formatted(context.getAuthor().getAsTag()),null, context.getAuthor().getAvatarUrl());
+                        default -> embed.setAuthor(context.i18n("default", "audio_load").formatted(context.getAuthor().getAsTag()),null, context.getAuthor().getAvatarUrl());
                     }
-                    MessageDispatcher.reply(e, embed.build());
+                    MessageDispatcher.reply(context, embed.build());
 
 
                     if(type == Playback.PLAY) {
@@ -86,26 +85,26 @@ public class AudioLoadHandler {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     if(type == Playback.PLAY) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "playlist_load").formatted(playlist.getTracks().size(), playlist.getName()));
-                        MessageDispatcher.reply(e, embed.build());
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("playlist_load", "audio_load").formatted(playlist.getTracks().size(), playlist.getName()));
+                        MessageDispatcher.reply(context, embed.build());
 
                         List<AudioTrack> tracks = playlist.getTracks();
                         for(AudioTrack track : tracks) {
-                            track.setUserData(e);
+                            track.setUserData(context);
                             manager.getScheduler().queue(track);
                         }
                         return;
                     }
 
                     if(type == Playback.PLAYNEXT) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "playlist_next").formatted(playlist.getTracks().size(), playlist.getName()));
-                        MessageDispatcher.reply(e, embed.build());
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("playlist_next", "audio_load").formatted(playlist.getTracks().size(), playlist.getName()));
+                        MessageDispatcher.reply(context, embed.build());
 
                         ArrayList<AudioTrack> tempQueue = new ArrayList<>(manager.getScheduler().queue);
                         manager.getScheduler().queue.clear();
                         List<AudioTrack> tracks = playlist.getTracks();
                         for(AudioTrack track: tracks) {
-                            track.setUserData(e);
+                            track.setUserData(context);
                             manager.getScheduler().queue(track);
                         }
                         manager.getScheduler().queue.addAll(tempQueue);
@@ -113,8 +112,8 @@ public class AudioLoadHandler {
                     }
 
                     if(type == Playback.BACKGROUND) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "no_support"));
-                        MessageDispatcher.reply(e, embed.build());
+                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("no_support", "audio_load"));
+                        MessageDispatcher.reply(context, embed.build());
                     }
 
                 } catch(Exception ex) {
@@ -124,15 +123,15 @@ public class AudioLoadHandler {
 
             @Override
             public void noMatches() {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "invalid_param"));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("invalid_param", "audio_load"));
+                MessageDispatcher.reply(context, embed.build());
             }
 
             @Override
             public void loadFailed(FriendlyException ex) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "audio_load", "load_fail_title").formatted(ex.getMessage()))
-                        .setDescription(I18n.getText(e, "audio_load", "load_fail_desc").formatted(Yuuko.AUTHOR));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("load_fail_title", "audio_load").formatted(ex.getMessage()))
+                        .setDescription(context.i18n("load_fail_desc", "audio_load").formatted(Yuuko.AUTHOR));
+                MessageDispatcher.reply(context, embed.build());
             }
         });
     }

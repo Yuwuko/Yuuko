@@ -21,7 +21,7 @@ public class Rule34Command extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         Document doc = new RequestHandler(BASE_URL).getDocument();
         Elements images = doc.getElementsByTag("img");
         for(Element img : images) {
@@ -46,8 +46,8 @@ public class Rule34Command extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Rule 34" + (!characterString.toString().equals("") ? characterString.substring(0, characterString.length() - 2) : ""))
                 .setImage(image)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

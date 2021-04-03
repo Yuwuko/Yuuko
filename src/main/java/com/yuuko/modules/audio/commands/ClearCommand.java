@@ -3,7 +3,6 @@ package com.yuuko.modules.audio.commands;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import com.yuuko.modules.audio.handlers.GuildAudioManager;
@@ -20,25 +19,25 @@ public class ClearCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         // Clear entire queue
-        if(!e.hasParameters()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc"));
-            MessageDispatcher.reply(e, embed.build());
-            AudioManager.getGuildAudioManager(e.getGuild()).getScheduler().queue.clear();
+        if(!context.hasParameters()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+            MessageDispatcher.reply(context, embed.build());
+            AudioManager.getGuildAudioManager(context.getGuild()).getScheduler().queue.clear();
             return;
         }
 
         // Clear specific track
-        if(Sanitiser.isNumeric(e.getParameters())) {
-            GuildAudioManager manager = AudioManager.getGuildAudioManager(e.getGuild());
+        if(Sanitiser.isNumeric(context.getParameters())) {
+            GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
             LinkedList<AudioTrack> temp = new LinkedList<>();
-            int clear = Integer.parseInt(e.getParameters()) - 1;
+            int clear = Integer.parseInt(context.getParameters()) - 1;
             int i = 0;
             for(AudioTrack track: manager.getScheduler().queue) {
                 if(clear == i++) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc_formatted").formatted(track.getInfo().title));
-                    MessageDispatcher.reply(e, embed.build());
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc_formatted").formatted(track.getInfo().title));
+                    MessageDispatcher.reply(context, embed.build());
                     continue; // if we find the track we want to skip - continue loop to skip adding to temp list
                 }
                 temp.addLast(track);

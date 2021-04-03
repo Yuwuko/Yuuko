@@ -5,7 +5,6 @@ import com.yuuko.Yuuko;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.entity.Shard;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import lavalink.client.io.LavalinkSocket;
@@ -23,19 +22,19 @@ public class ShardsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         EmbedBuilder shardEmbed = new EmbedBuilder()
-                .setAuthor(I18n.getText(e, "title").formatted(Yuuko.BOT.getName(), Yuuko.BOT.getDiscriminator()), null, Yuuko.BOT.getAvatarUrl())
+                .setAuthor(context.i18n( "title").formatted(Yuuko.BOT.getName(), Yuuko.BOT.getDiscriminator()), null, Yuuko.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
         for(Shard shard : ShardFunctions.getShardStatistics()) {
-            shardEmbed.addField("", I18n.getText(e, "shard").formatted(shard.getId(), shard.getStatus(), shard.getGuildCount(), shard.getGatewayPing(), shard.getRestPing()), true);
+            shardEmbed.addField("", context.i18n( "shard").formatted(shard.getId(), shard.getStatus(), shard.getGuildCount(), shard.getGatewayPing(), shard.getRestPing()), true);
         }
 
         StringBuilder nodes = new StringBuilder();
         for(LavalinkSocket socket : AudioManager.LAVALINK.getLavalink().getNodes()) {
             if(socket.getStats() != null) {
-                shardEmbed.addField("", I18n.getText(e, "lavalink").formatted(socket.getName(),
+                shardEmbed.addField("", context.i18n( "lavalink").formatted(socket.getName(),
                         BigDecimal.valueOf((socket.getStats().getSystemLoad() * 100) / 100.0).setScale(2, RoundingMode.HALF_UP),
                         BigDecimal.valueOf(socket.getStats().getMemUsed() / 1000000.0).setScale(2, RoundingMode.HALF_UP),
                         socket.getStats().getPlayers(),
@@ -43,6 +42,6 @@ public class ShardsCommand extends Command {
             }
         }
 
-        MessageDispatcher.reply(e, shardEmbed.build());
+        MessageDispatcher.reply(context, shardEmbed.build());
     }
 }

@@ -8,7 +8,6 @@ import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.database.function.ShardFunctions;
 import com.yuuko.entity.Shard;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.metrics.MetricsManager;
 import com.yuuko.modules.Command;
@@ -24,7 +23,7 @@ public class AboutCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         int totalGuilds = 0;
         for(Shard shard: ShardFunctions.getShardStatistics()) {
             totalGuilds += shard.getGuildCount();
@@ -50,17 +49,17 @@ public class AboutCommand extends Command {
 
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator(), null, Yuuko.BOT.getAvatarUrl())
-                .setDescription(I18n.getText(e, "desc").formatted(Yuuko.SUPPORT_GUILD, e.getPrefix(), e.getPrefix()))
-                .addField(I18n.getText(e, "author"), "[" + Yuuko.AUTHOR + "](" + Yuuko.AUTHOR_WEBSITE + ")", true)
-                .addField(I18n.getText(e, "version"), Yuuko.VERSION, true)
-                .addField(I18n.getText(e, "prefix"), Yuuko.GLOBAL_PREFIX + ", " + GuildFunctions.getGuildSetting("prefix", e.getGuild().getId()), true)
-                .addField(I18n.getText(e, "shard_id"), e.getShardId() + "", true)
-                .addField(I18n.getText(e, "shard_guilds"), MetricsManager.getDiscordMetrics(e.getShardId()).GUILD_COUNT + "", true)
-                .addField(I18n.getText(e, "shard_guilds_total"), totalGuilds + "", true)
-                .addField(I18n.getText(e, "commands"), Yuuko.COMMANDS.size() + "", true)
-                .addField(I18n.getText(e, "uptime"), TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
-                .addField(I18n.getText(e, "ping"), MetricsManager.getDiscordMetrics(e.getShardId()).GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics(e.getShardId()).REST_PING + "ms)",true)
-                .addField(I18n.getText(e, "latest_updates"), latestUpdates.toString(), false);
-        MessageDispatcher.reply(e, about.build());
+                .setDescription(context.i18n( "desc").formatted(Yuuko.SUPPORT_GUILD, context.getPrefix(), context.getPrefix()))
+                .addField(context.i18n( "author"), "[" + Yuuko.AUTHOR + "](" + Yuuko.AUTHOR_WEBSITE + ")", true)
+                .addField(context.i18n( "version"), Yuuko.VERSION, true)
+                .addField(context.i18n( "prefix"), Yuuko.GLOBAL_PREFIX + ", " + GuildFunctions.getGuildSetting("prefix", context.getGuild().getId()), true)
+                .addField(context.i18n( "shard_id"), context.getShardId() + "", true)
+                .addField(context.i18n( "shard_guilds"), MetricsManager.getDiscordMetrics(context.getShardId()).GUILD_COUNT + "", true)
+                .addField(context.i18n( "shard_guilds_total"), totalGuilds + "", true)
+                .addField(context.i18n( "commands"), Yuuko.COMMANDS.size() + "", true)
+                .addField(context.i18n( "uptime"), TextUtilities.getTimestamp(MetricsManager.getSystemMetrics().UPTIME), true)
+                .addField(context.i18n( "ping"), MetricsManager.getDiscordMetrics(context.getShardId()).GATEWAY_PING + "ms (" + MetricsManager.getDiscordMetrics(context.getShardId()).REST_PING + "ms)",true)
+                .addField(context.i18n( "latest_updates"), latestUpdates.toString(), false);
+        MessageDispatcher.reply(context, about.build());
     }
 }

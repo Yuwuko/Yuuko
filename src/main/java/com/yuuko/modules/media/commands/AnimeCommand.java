@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -21,12 +20,12 @@ public class AnimeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + "&page[limit]=1";
+    public void onCommand(MessageEvent context) throws Exception {
+        final String url = BASE_URL + Sanitiser.scrub(context.getParameters(), true) + "&page[limit]=1";
         JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.api+json"), new RequestProperty("Content-Type","application/vnd.api+json")).getJsonObject();
         if(json == null || json.isJsonNull() || json.getAsJsonArray("data").size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -45,17 +44,17 @@ public class AnimeCommand extends Command {
                 .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), data.get("youtubeVideoId").isJsonNull() ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").getAsString())
                 .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
                 .setDescription(data.get("synopsis").getAsString())
-                .addField(I18n.getText(e, "age"), ageRating, true)
-                .addField(I18n.getText(e, "episodes"), episodes, true)
-                .addField(I18n.getText(e, "episode_length"), episodeLength, true)
-                .addField(I18n.getText(e, "total_length"), totalLength, true)
-                .addField(I18n.getText(e, "type"), type, true)
-                .addField(I18n.getText(e, "approval"), approvalRating, true)
-                .addField(I18n.getText(e, "status"), status, true)
-                .addField(I18n.getText(e, "start"), startDate, true)
-                .addField(I18n.getText(e, "end"), endDate, true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .addField(context.i18n( "age"), ageRating, true)
+                .addField(context.i18n( "episodes"), episodes, true)
+                .addField(context.i18n( "episode_length"), episodeLength, true)
+                .addField(context.i18n( "total_length"), totalLength, true)
+                .addField(context.i18n( "type"), type, true)
+                .addField(context.i18n( "approval"), approvalRating, true)
+                .addField(context.i18n( "status"), status, true)
+                .addField(context.i18n( "start"), startDate, true)
+                .addField(context.i18n( "end"), endDate, true)
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

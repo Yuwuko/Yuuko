@@ -4,7 +4,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -25,42 +24,42 @@ public class ModuleCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        if(e.hasParameters()) {
-            String module = e.getParameters().split("\\s+", 2)[0].toLowerCase();
-            String guild = e.getGuild().getId();
+    public void onCommand(MessageEvent context) throws Exception {
+        if(context.hasParameters()) {
+            String module = context.getParameters().split("\\s+", 2)[0].toLowerCase();
+            String guild = context.getGuild().getId();
 
             if(!Yuuko.MODULES.containsKey(module)) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_module").formatted(module));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_module").formatted(module));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             // Prevents locked modules from being disabled (would throw exception anyway)
             if(Yuuko.LOCKED_MODULES.contains(module)) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e,"core_title"))
-                        .setDescription(I18n.getText(e, "core_desc").formatted(Yuuko.LOCKED_MODULES.toString()));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("core_title"))
+                        .setDescription(context.i18n( "core_desc").formatted(Yuuko.LOCKED_MODULES.toString()));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             if(DatabaseInterface.toggleModule(guild, module)) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(I18n.getText(e,"enabled").formatted(module));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(context.i18n("enabled").formatted(module));
+                MessageDispatcher.reply(context, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(I18n.getText(e,"disabled").formatted(module));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(context.i18n("disabled").formatted(module));
+                MessageDispatcher.reply(context, embed.build());
             }
         } else {
-            ArrayList<ArrayList<String>> settings = DatabaseInterface.getModuleSettings(e.getGuild().getId());
+            ArrayList<ArrayList<String>> settings = DatabaseInterface.getModuleSettings(context.getGuild().getId());
             EmbedBuilder commandModules = new EmbedBuilder()
-                    .setTitle(I18n.getText(e, "title"))
-                    .setDescription(I18n.getText(e, "desc").formatted(e.getPrefix()))
-                    .addField(I18n.getText(e,"enabled_modules").formatted(settings.get(0).size()), settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
-                    .addField(I18n.getText(e,"enabled_disabled").formatted(settings.get(1).size()), settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc").formatted(context.getPrefix()))
+                    .addField(context.i18n("enabled_modules").formatted(settings.get(0).size()), settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
+                    .addField(context.i18n("enabled_disabled").formatted(settings.get(1).size()), settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, commandModules.build());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, commandModules.build());
         }
     }
 

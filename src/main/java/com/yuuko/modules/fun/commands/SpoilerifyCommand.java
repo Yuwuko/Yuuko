@@ -13,12 +13,12 @@ public class SpoilerifyCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         StringBuilder spoiler = new StringBuilder();
-        for(char character: e.getParameters().toCharArray()) {
+        for(char character: context.getParameters().toCharArray()) {
             spoiler.append("||").append(character).append("||");
         }
 
-        MessageDispatcher.reply(e, "`" + spoiler.toString() + "`");
+        MessageDispatcher.reply(context, "`" + spoiler.toString() + "`");
     }
 }

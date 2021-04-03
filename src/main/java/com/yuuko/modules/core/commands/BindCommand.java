@@ -4,7 +4,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -25,45 +24,45 @@ public class BindCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        if(e.hasParameters()) {
-            String[] params = e.getParameters().toLowerCase().split("\\s+", 2);
+    public void onCommand(MessageEvent context) throws Exception {
+        if(context.hasParameters()) {
+            String[] params = context.getParameters().toLowerCase().split("\\s+", 2);
 
             if(!params[0].equals("*") && !Yuuko.MODULES.containsKey(params[0])) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_input_title")).setDescription(I18n.getText(e, "invalid_input_desc").formatted(params[0], e.getPrefix()));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_input_title")).setDescription(context.i18n( "invalid_input_desc").formatted(params[0], context.getPrefix()));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             String module = params[0].equals("*") ? "*" : Yuuko.MODULES.get(params[0]).getName();
-            List<TextChannel> channels = e.getMessage().getMentionedChannels();
+            List<TextChannel> channels = context.getMessage().getMentionedChannels();
 
             if(channels.size() != 0) {
-                final int res = DatabaseInterface.toggleBind(e.getGuild().getId(), channels.get(0).getId(), module);
+                final int res = DatabaseInterface.toggleBind(context.getGuild().getId(), channels.get(0).getId(), module);
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "bind_channel").formatted(module, channels.get(0).getName()));
-                    MessageDispatcher.reply(e, embed.build());
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "bind_channel").formatted(module, channels.get(0).getName()));
+                    MessageDispatcher.reply(context, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "unbind_channel").formatted(module, channels.get(0).getName()));
-                    MessageDispatcher.reply(e, embed.build());
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "unbind_channel").formatted(module, channels.get(0).getName()));
+                    MessageDispatcher.reply(context, embed.build());
                 }
             } else {
-                final int res = DatabaseInterface.toggleBind(e.getGuild().getId(), e.getChannel().getId(), module);
+                final int res = DatabaseInterface.toggleBind(context.getGuild().getId(), context.getChannel().getId(), module);
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "bind_channel").formatted(module, e.getChannel().getName()));
-                    MessageDispatcher.reply(e, embed.build());
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "bind_channel").formatted(module, context.getChannel().getName()));
+                    MessageDispatcher.reply(context, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "unbind_channel").formatted(module, e.getChannel().getName()));
-                    MessageDispatcher.reply(e, embed.build());
+                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "unbind_channel").formatted(module, context.getChannel().getName()));
+                    MessageDispatcher.reply(context, embed.build());
                 }
             }
             return;
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(I18n.getText(e, "bound"))
-                .setDescription(DatabaseInterface.getGuildBinds(e.getGuild(), "\n"));
-        MessageDispatcher.reply(e, embed.build());
+                .setTitle(context.i18n( "bound"))
+                .setDescription(DatabaseInterface.getGuildBinds(context.getGuild(), "\n"));
+        MessageDispatcher.reply(context, embed.build());
     }
 
     public static class DatabaseInterface {

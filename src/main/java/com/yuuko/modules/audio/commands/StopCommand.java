@@ -2,7 +2,6 @@ package com.yuuko.modules.audio.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,11 +16,11 @@ public class StopCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        AudioManager.destroyGuildAudioManager(e.getGuild());
-        if(e.getCommand() != null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc"));
-            MessageDispatcher.reply(e, embed.build());
+    public void onCommand(MessageEvent context) throws Exception {
+        AudioManager.destroyGuildAudioManager(context.getGuild());
+        if(context.getCommand() != null) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 

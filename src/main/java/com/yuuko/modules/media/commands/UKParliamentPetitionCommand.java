@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.Sanitiser;
@@ -24,14 +23,14 @@ public class UKParliamentPetitionCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        if(e.hasParameters()) {
-            final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + ".json";
+    public void onCommand(MessageEvent context) throws Exception {
+        if(context.hasParameters()) {
+            final String url = BASE_URL + Sanitiser.scrub(context.getParameters(), true) + ".json";
             final JsonObject json = new RequestHandler(url).getJsonObject();
 
             if(json == null || json.isJsonNull() || json.has("error")) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
@@ -45,38 +44,38 @@ public class UKParliamentPetitionCommand extends Command {
             String governmentResponse = !attributes.get("government_response").isJsonNull() ? attributes.get("government_response").getAsJsonObject().get("summary").getAsString() : "None";
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setAuthor(I18n.getText(e, "title").formatted(data.get("id").getAsString(), attributes.get("state").getAsString()))
+                    .setAuthor(context.i18n( "title").formatted(data.get("id").getAsString(), attributes.get("state").getAsString()))
                     .setTitle(attributes.get("action").getAsString(), "https://petition.parliament.uk/petitions/" + data.get("id").getAsString())
                     .setDescription(attributes.get("background").getAsString())
-                    .addField(I18n.getText(e, "opened"), TextUtilities.formatDate(attributes.get("opened_at").getAsString()), true)
-                    .addField(I18n.getText(e, "count"), TextUtilities.formatInteger(attributes.get("signature_count").getAsString()), true)
+                    .addField(context.i18n( "opened"), TextUtilities.formatDate(attributes.get("opened_at").getAsString()), true)
+                    .addField(context.i18n( "count"), TextUtilities.formatInteger(attributes.get("signature_count").getAsString()), true)
                     .addBlankField(true)
-                    .addField(I18n.getText(e, "response_threshold"), responseThreshold, true)
-                    .addField(I18n.getText(e, "response_date"), responseDate, true)
+                    .addField(context.i18n( "response_threshold"), responseThreshold, true)
+                    .addField(context.i18n( "response_date"), responseDate, true)
                     .addBlankField(true)
-                    .addField(I18n.getText(e, "debate_threshold"), debateThreshold, true)
-                    .addField(I18n.getText(e, "debate_date"), debateDate, true)
+                    .addField(context.i18n( "debate_threshold"), debateThreshold, true)
+                    .addField(context.i18n( "debate_date"), debateDate, true)
                     .addBlankField(true)
-                    .addField(I18n.getText(e, "gov_response"), governmentResponse, false)
+                    .addField(context.i18n( "gov_response"), governmentResponse, false)
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, embed.build());
         } else {
 
             JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json").getJsonObject();
 
             if(json.has("error")) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             JsonArray data = json.get("data").getAsJsonArray();
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(I18n.getText(e, "title_ex"), "https://petition.parliament.uk/petitions")
-                    .setDescription(I18n.getText(e, "desc").formatted(e.getPrefix()))
+                    .setTitle(context.i18n( "title_ex"), "https://petition.parliament.uk/petitions")
+                    .setDescription(context.i18n( "desc").formatted(context.getPrefix()))
                     .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
 
             int i = 0; // We only need 10 results,
             for(JsonElement element: data) {
@@ -87,7 +86,7 @@ public class UKParliamentPetitionCommand extends Command {
                 }
             }
 
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 }

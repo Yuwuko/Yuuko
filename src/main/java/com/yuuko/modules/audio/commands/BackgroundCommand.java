@@ -3,7 +3,6 @@ package com.yuuko.modules.audio.commands;
 import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioLoadHandler;
 import com.yuuko.modules.audio.handlers.AudioManager;
@@ -22,32 +21,32 @@ public class BackgroundCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        GuildAudioManager manager = AudioManager.getGuildAudioManager(e.getGuild());
-        manager.openConnection(e.getMember().getVoiceState().getChannel());
+    public void onCommand(MessageEvent context) throws Exception {
+        GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
+        manager.openConnection(context.getMember().getVoiceState().getChannel());
 
         // Remove background
-        if(!e.hasParameters()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e,"desc"));
-            MessageDispatcher.reply(e, embed.build());
+        if(!context.hasParameters()) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n("desc"));
+            MessageDispatcher.reply(context, embed.build());
             manager.getScheduler().setBackground(null);
             return;
         }
 
         // Set background via URL
-        if(e.getParameters().startsWith("https://") || e.getParameters().startsWith("http://")) {
-            AudioLoadHandler.loadAndPlay(manager, e, AudioLoadHandler.Playback.BACKGROUND);
+        if(context.getParameters().startsWith("https://") || context.getParameters().startsWith("http://")) {
+            AudioLoadHandler.loadAndPlay(manager, context, AudioLoadHandler.Playback.BACKGROUND);
             return;
         }
 
         // Set background via search
-        List<SearchResult> results = YouTubeSearchHandler.search(e);
+        List<SearchResult> results = YouTubeSearchHandler.search(context);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "params_failed"));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "params_failed"));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
         String trackId = "https://www.youtube.com/watch?v=" + results.get(0).getId().getVideoId();
-        AudioLoadHandler.loadAndPlay(manager, e.setParameters(trackId), AudioLoadHandler.Playback.BACKGROUND);
+        AudioLoadHandler.loadAndPlay(manager, context.setParameters(trackId), AudioLoadHandler.Playback.BACKGROUND);
     }
 }

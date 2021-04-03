@@ -20,21 +20,21 @@ public class NekoCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        final String url = BASE_URL + ((e.hasParameters() && ENDPOINTS.contains(e.getParameters().toLowerCase())) ? e.getParameters().toLowerCase() : "lewd");
+    public void onCommand(MessageEvent context) throws Exception {
+        final String url = BASE_URL + ((context.hasParameters() && ENDPOINTS.contains(context.getParameters().toLowerCase())) ? context.getParameters().toLowerCase() : "lewd");
 
         final JsonObject json = new RequestHandler(url).getJsonObject();
         if(json != null && !json.has("msg")) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Neko: " + json.get("url").getAsString())
                     .setImage(json.get("url").getAsString())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription(Arrays.toString(ENDPOINTS.toArray()));
-        MessageDispatcher.reply(e, embed.build());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

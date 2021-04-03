@@ -30,22 +30,22 @@ public class EventCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        if(!e.hasParameters()) {
+    public void onCommand(MessageEvent context) throws Exception {
+        if(!context.hasParameters()) {
             StringBuilder eventsString = new StringBuilder();
-            ArrayList<ScheduledEvent> scheduledEvents = DatabaseInterface.getEvents(e.getGuild().getId());
+            ArrayList<ScheduledEvent> scheduledEvents = DatabaseInterface.getEvents(context.getGuild().getId());
             for(ScheduledEvent scheduledEvent : scheduledEvents) {
                 eventsString.append("ID: `").append(scheduledEvent.id).append("` - ").append(scheduledEvent.title).append(" ~ `").append(scheduledEvent.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy"))).append(" (").append(TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY))).append(")`\n");
             }
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Events (" + scheduledEvents.size() + ")")
                     .setDescription(eventsString.toString())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        String[] params = e.getParameters().split("\\s+", 2);
+        String[] params = context.getParameters().split("\\s+", 2);
         params[0] = params[0].toLowerCase(); // make it lowercase now so we don't have to later
 
         // Silently fail if the user enters a parameter we don't handle.
@@ -55,36 +55,36 @@ public class EventCommand extends Command {
 
         // Only case where scheduled event isn't called at all.
         if(params[0].equals("new")) {
-            createEvent(e);
+            createEvent(context);
             return;
         }
 
         // Only case which can accept both 1 and 2 parameters.
         if(params[0].equals("cancel")) {
-            cancelEvent(e, params);
+            cancelEvent(context, params);
             return;
         }
 
         // Everything past here requires a pre-existing scheduled event.
-        ScheduledEvent scheduledEvent = inProgressEmbeds.getOrDefault(e.getAuthor().getId(), null);
+        ScheduledEvent scheduledEvent = inProgressEmbeds.getOrDefault(context.getAuthor().getId(), null);
         if(scheduledEvent == null) {
             EmbedBuilder about = new EmbedBuilder().setTitle("Missing Event")
-                    .setDescription("There is no event to manipulate, use `" + e.getPrefix() + "event new` to get started!");
-            MessageDispatcher.reply(e, about.build());
+                    .setDescription("There is no event to manipulate, use `" + context.getPrefix() + "event new` to get started!");
+            MessageDispatcher.reply(context, about.build());
             return;
         }
 
         // Only case where scheduled event is needed, but only 1 parameter
         if(params[0].equals("publish")) {
-            publishEvent(e);
+            publishEvent(context);
             return;
         }
 
         // Parameter checking - everything past here requires at least 2 parameters (action, value)
         if(params.length < 2) {
             EmbedBuilder about = new EmbedBuilder().setTitle("Missing Parameters")
-                    .setDescription("That function requires more parameters than you provided. Use `" + e.getPrefix() + "help event` if you get stuck.");
-            MessageDispatcher.reply(e, about.build());
+                    .setDescription("That function requires more parameters than you provided. Use `" + context.getPrefix() + "help event` if you get stuck.");
+            MessageDispatcher.reply(context, about.build());
             return;
         }
 
@@ -96,7 +96,7 @@ public class EventCommand extends Command {
                 if(!Sanitiser.isTimestamp(params[1]+":00")) {
                     EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
                             .setDescription("The timestamp entered isn't valid, ensure the format is `yyyy-MM-dd HH:mm`");
-                    MessageDispatcher.reply(e, about.build());
+                    MessageDispatcher.reply(context, about.build());
                     return;
                 }
                 scheduledEvent.setTimestamp(Timestamp.valueOf(params[1]+":00")).submitEdit();
@@ -105,7 +105,7 @@ public class EventCommand extends Command {
                 if(!Sanitiser.isNumeric(params[1])) {
                     EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
                             .setDescription("The input isn't valid, ensure you supply a non-negative integer, or 0, removing the limit.");
-                    MessageDispatcher.reply(e, about.build());
+                    MessageDispatcher.reply(context, about.build());
                     return;
                 }
                 scheduledEvent.setSlots(Integer.parseInt(params[1])).submitEdit();

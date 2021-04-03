@@ -6,7 +6,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -26,8 +25,8 @@ public class LyricsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        final String url = "https://api.genius.com/search?q=" + e.getParameters().replace(" ", "%20");
+    public void onCommand(MessageEvent context) throws Exception {
+        final String url = "https://api.genius.com/search?q=" + context.getParameters().replace(" ", "%20");
         final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "Bearer " + api.getKey())).getJsonObject();
         int response = json.get("meta").getAsJsonObject().get("status").getAsInt();
 
@@ -39,8 +38,8 @@ public class LyricsCommand extends Command {
                 || (hits = json.get("response").getAsJsonObject().get("hits").getAsJsonArray()).size() < 1
                 || (data = hits.get(0).getAsJsonObject().get("result").getAsJsonObject()) == null || data.isJsonNull()
                 || (elements = Jsoup.connect(data.get("url").getAsString()).get().getElementsByClass("lyrics")).size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results").formatted(e.getParameters()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results").formatted(context.getParameters()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -60,20 +59,20 @@ public class LyricsCommand extends Command {
 
         if(lyricsList.isEmpty()) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setAuthor(I18n.getText(e, "lyrics"))
+                    .setAuthor(context.i18n( "lyrics"))
                     .setTitle(data.get("full_title").getAsString())
                     .setThumbnail(data.get("header_image_url").getAsString())
                     .setDescription(lyrics)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, embed.build());
         } else {
             for(int i = 0; i < lyricsList.size(); i++) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setAuthor(I18n.getText(e, "lyrics"))
+                        .setAuthor(context.i18n( "lyrics"))
                         .setTitle(data.get("full_title").getAsString() + " (" + (i+1) + "/" + lyricsList.size() + ")")
                         .setThumbnail(data.get("header_image_url").getAsString())
                         .setDescription(lyricsList.get(i));
-                MessageDispatcher.reply(e, embed.build());
+                MessageDispatcher.reply(context, embed.build());
             }
         }
     }

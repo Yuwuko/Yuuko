@@ -18,8 +18,8 @@ public class UserCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        Member target = MessageUtilities.getMentionedMember(e, true);
+    public void onCommand(MessageEvent context) throws Exception {
+        Member target = MessageUtilities.getMentionedMember(context, true);
 
         if(target == null) {
             return;
@@ -67,8 +67,8 @@ public class UserCommand extends Command {
                 .addField("Joined Server", target.getTimeJoined().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
                 .addField("Bot?", target.getUser().isBot() + "", true)
                 .addField("Roles", roleString.toString(), true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

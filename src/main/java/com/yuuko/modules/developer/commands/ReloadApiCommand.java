@@ -4,7 +4,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.ApiManager;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -17,9 +16,9 @@ public class ReloadApiCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         Yuuko.API_MANAGER = new ApiManager();
-        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "success"));
-        MessageDispatcher.reply(e, embed.build());
+        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "success"));
+        MessageDispatcher.reply(context, embed.build());
     }
 }

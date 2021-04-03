@@ -17,13 +17,13 @@ public class RolesCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         StringBuilder roles = new StringBuilder();
 
-        if(!e.getGuild().getRoleCache().isEmpty()) {
+        if(!context.getGuild().getRoleCache().isEmpty()) {
             int characterCount = 0;
 
-            for(Role role : e.getGuild().getRoleCache()) {
+            for(Role role : context.getGuild().getRoleCache()) {
                 if(characterCount + role.getAsMention().length() + 2 < 2048) {
                     roles.append(role.getAsMention()).append("\n");
                     characterCount += role.getAsMention().length() + 1;
@@ -35,9 +35,9 @@ public class RolesCommand extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(e.getGuild().getName() + " Roles")
+                .setTitle(context.getGuild().getName() + " Roles")
                 .setDescription(roles.toString())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

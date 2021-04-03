@@ -15,16 +15,16 @@ public class PrefixSetting extends Command {
         super("prefix", 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent e) throws Exception {
-        if(e.getParameters().length() < 1 || e.getParameters().length() > 5) {
+    public void onCommand(MessageEvent context) throws Exception {
+        if(context.getParameters().length() < 1 || context.getParameters().length() > 5) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Input must have a minimum length of `1` and a maximum length of `5` characters.");
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        if(GuildFunctions.setGuildSettings("prefix", e.getParameters(), e.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to `" + e.getParameters() + "`");
-            MessageDispatcher.reply(e, embed.build());
+        if(GuildFunctions.setGuildSettings("prefix", context.getParameters(), context.getGuild().getId())) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to `" + context.getParameters() + "`");
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 }

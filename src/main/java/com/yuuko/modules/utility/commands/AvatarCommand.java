@@ -18,8 +18,8 @@ public class AvatarCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        Member target = MessageUtilities.getMentionedMember(e, true);
+    public void onCommand(MessageEvent context) throws Exception {
+        Member target = MessageUtilities.getMentionedMember(context, true);
 
         if(target == null) {
             return;
@@ -29,7 +29,7 @@ public class AvatarCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(user.getName() + "#" + user.getDiscriminator() + "'s Avatar")
                 .setImage(user.getEffectiveAvatarUrl() + "?size=256&.gif")
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

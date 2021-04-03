@@ -3,7 +3,6 @@ package com.yuuko.modules.audio.commands;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import com.yuuko.modules.audio.handlers.GuildAudioManager;
@@ -21,12 +20,12 @@ public class QueueCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        GuildAudioManager manager = AudioManager.getGuildAudioManager(e.getGuild());
+    public void onCommand(MessageEvent context) throws Exception {
+        GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
         synchronized(manager.getScheduler().queue) {
             if(manager.getScheduler().queue.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "empty_title")).setDescription(I18n.getText(e, "desc"));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "empty_title")).setDescription(context.i18n( "desc"));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
@@ -43,13 +42,13 @@ public class QueueCommand extends Command {
             });
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(I18n.getText(e, "full_title").formatted(count.get()))
+                    .setTitle(context.i18n( "full_title").formatted(count.get()))
                     .setDescription(queue.toString())
-                    .addField(I18n.getText(e, "queue_length"), manager.getScheduler().queue.size() + "", true)
-                    .addField(I18n.getText(e, "next_duration").formatted(count.get()), TextUtilities.getTimestamp(nextDuration.get()), true)
-                    .addField(I18n.getText(e, "total_duration"), TextUtilities.getTimestamp(totalDuration.get()), true)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
+                    .addField(context.i18n( "queue_length"), manager.getScheduler().queue.size() + "", true)
+                    .addField(context.i18n( "next_duration").formatted(count.get()), TextUtilities.getTimestamp(nextDuration.get()), true)
+                    .addField(context.i18n( "total_duration"), TextUtilities.getTimestamp(totalDuration.get()), true)
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, embed.build());
         }
     }
 

@@ -3,7 +3,6 @@ package com.yuuko.modules.fun.commands;
 import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -33,24 +32,24 @@ public class HoroscopeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         String selectedSign = null;
         for(String sign: starsigns) {
-            if(sign.contains(e.getParameters().toLowerCase())) {
+            if(sign.contains(context.getParameters().toLowerCase())) {
                 selectedSign = sign;
                 break;
             }
         }
 
         if(selectedSign == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_title")).setDescription(I18n.getText(e, "invalid_desc").formatted(e.getParameters(), starsigns.toString()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_title")).setDescription(context.i18n( "invalid_desc").formatted(context.getParameters(), starsigns.toString()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         final JsonObject object = new RequestHandler(BASE_URL + selectedSign).getJsonObject();
         EmbedBuilder embed = new EmbedBuilder().setTitle("Horoscope - " + selectedSign + " - " + object.get("date").getAsString())
                 .setDescription(object.get("horoscope").getAsString());
-        MessageDispatcher.reply(e, embed.build());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

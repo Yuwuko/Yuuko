@@ -2,7 +2,6 @@ package com.yuuko.modules.fun.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,16 +16,16 @@ public class RollCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        if(!Sanitiser.isNumeric(e.getParameters())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "invalid_input")).setDescription(I18n.getText(e, "invalid_input_desc"));
-            MessageDispatcher.reply(e, embed.build());
+    public void onCommand(MessageEvent context) throws Exception {
+        if(!Sanitiser.isNumeric(context.getParameters())) {
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_input")).setDescription(context.i18n( "invalid_input_desc"));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        int roll = Math.max(1, Integer.parseInt(e.getParameters()));
-        EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "roll")).setDescription(I18n.getText(e, "roll_desc").formatted(e.getAuthor().getAsTag(), roll, (ThreadLocalRandom.current().nextInt(roll) + 1)));
-        MessageDispatcher.reply(e, embed.build());
+        int roll = Math.max(1, Integer.parseInt(context.getParameters()));
+        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "roll")).setDescription(context.i18n( "roll_desc").formatted(context.getAuthor().getAsTag(), roll, (ThreadLocalRandom.current().nextInt(roll) + 1)));
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

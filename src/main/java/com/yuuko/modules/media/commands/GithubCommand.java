@@ -5,7 +5,6 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -28,13 +27,13 @@ public class GithubCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        String[] params = e.getParameters().split("\\s+", 2);
+    public void onCommand(MessageEvent context) throws Exception {
+        String[] params = context.getParameters().split("\\s+", 2);
         final String url = BASE_URL + URLEncoder.encode(params[0], StandardCharsets.UTF_8).replace("+", "%20") + "/" + URLEncoder.encode(params[1], StandardCharsets.UTF_8).replace("+", "%20");
         final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "token " + api.getKey())).getJsonObject();
         if(json == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -52,15 +51,15 @@ public class GithubCommand extends Command {
                 .setTitle("GitHub: " + json.get("full_name").getAsString(), json.get("html_url").getAsString())
                 .setThumbnail(json.get("owner").getAsJsonObject().get("avatar_url").getAsString())
                 .setDescription(json.get("description").getAsString() + " " + license)
-                .addField(I18n.getText(e, "language"), language,true)
-                .addField(I18n.getText(e, "latest_push"), latestPush,true)
-                .addField(I18n.getText(e, "size"), size,true)
-                .addField(I18n.getText(e, "stars"), stars,true)
-                .addField(I18n.getText(e, "forks"), forks,true)
-                .addField(I18n.getText(e, "issues"), openIssues,true)
-                .addField(I18n.getText(e, "commits"), commits, true)
-                .addField(I18n.getText(e, "pull_requests"), pullRequests, true)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .addField(context.i18n( "language"), language,true)
+                .addField(context.i18n( "latest_push"), latestPush,true)
+                .addField(context.i18n( "size"), size,true)
+                .addField(context.i18n( "stars"), stars,true)
+                .addField(context.i18n( "forks"), forks,true)
+                .addField(context.i18n( "issues"), openIssues,true)
+                .addField(context.i18n( "commits"), commits, true)
+                .addField(context.i18n( "pull_requests"), pullRequests, true)
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

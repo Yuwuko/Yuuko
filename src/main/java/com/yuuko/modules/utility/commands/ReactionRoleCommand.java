@@ -26,73 +26,73 @@ public class ReactionRoleCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        final String[] params = e.getParameters().split("\\s+");
-        final Role highestSelfRole = e.getGuild().getSelfMember().getRoles().get(0); // Role list is ordered from highest to lowest
-        final Role role = (e.getMessage().getMentionedRoles().size() > 0) ? e.getMessage().getMentionedRoles().get(0) : null;
-        final String emote = (e.getMessage().getEmotes().size() > 0) ? e.getMessage().getEmotes().get(0).getName() + ":" + e.getMessage().getEmotes().get(0).getId() : params[1];
+    public void onCommand(MessageEvent context) throws Exception {
+        final String[] params = context.getParameters().split("\\s+");
+        final Role highestSelfRole = context.getGuild().getSelfMember().getRoles().get(0); // Role list is ordered from highest to lowest
+        final Role role = (context.getMessage().getMentionedRoles().size() > 0) ? context.getMessage().getMentionedRoles().get(0) : null;
+        final String emote = (context.getMessage().getEmotes().size() > 0) ? context.getMessage().getEmotes().get(0).getName() + ":" + context.getMessage().getEmotes().get(0).getId() : params[1];
 
         if(params[0].length() < 18 || params[0].length() > 20 || Sanitiser.isNumeric(params[0])) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Incorrect Input").setDescription("Input needs to be a valid message ID, e.g. 775074171709161484");
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         // removes all react roles from message
         if(params[1].equalsIgnoreCase("clear")) {
-            DatabaseInterface.removeReactionRole(e.getMessage().getId());
+            DatabaseInterface.removeReactionRole(context.getMessage().getId());
             return;
         }
 
         // uses consumer .queue() instead of .complete() since .complete() will throw an exception rather than return null :)))
-        e.getChannel().retrieveMessageById(params[0]).queue(message -> {
+        context.getChannel().retrieveMessageById(params[0]).queue(message -> {
             if(role == null) {
                 message.getReactions().stream().filter(m -> m.getReactionEmote().getAsReactionCode().equals(emote)).forEach(reaction -> {
                     reaction.removeReaction().queue(
                             s -> {
                                 DatabaseInterface.removeReactionRole(message, emote);
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote + " from message " + message + ".");
-                                MessageDispatcher.reply(e, embed.build());
+                                MessageDispatcher.reply(context, embed.build());
                             },
                             f -> {
                                 EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to remove the reaction from the selected message.");
-                                MessageDispatcher.reply(e, embed.build());
+                                MessageDispatcher.reply(context, embed.build());
                             });
                 });
                 return;
             }
 
             // check if the role exists, is available for use.
-            if(!e.getGuild().getRoleCache().asList().contains(role)) {
+            if(!context.getGuild().getRoleCache().asList().contains(role)) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("This role is unavailable for use in a reaction role. Make sure that you are using roles from this server.");
-                MessageDispatcher.reply(e, embed.build());
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             // checks if role is lower in the hierarchy than bots highest role.
             if(role.getPositionRaw() >= highestSelfRole.getPositionRaw()) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("I cannot assign roles that are higher than or equal to my highest role in the hierarchy.");
-                MessageDispatcher.reply(e, embed.build());
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             message.addReaction(emote).queue(
                     s -> {
-                        if(DatabaseInterface.addReactionRole(e.getGuild(), message.getId(), emote, role)) {
+                        if(DatabaseInterface.addReactionRole(context.getGuild(), message.getId(), emote, role)) {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote + " to role " + role.getAsMention() + " for message " + message + ".");
-                            MessageDispatcher.reply(e, embed.build());
+                            MessageDispatcher.reply(context, embed.build());
                         } else {
                             EmbedBuilder embed = new EmbedBuilder().setTitle("Already Exists").setDescription("A reaction role using this message and emote combination already exists.");
-                            MessageDispatcher.reply(e, embed.build());
+                            MessageDispatcher.reply(context, embed.build());
                         }},
                     f -> {
                         EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to add a reaction to the selected message.");
-                        MessageDispatcher.reply(e, embed.build());
+                        MessageDispatcher.reply(context, embed.build());
                     });
 
         }, failure -> {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to find message with given id, either deleted or isn't in this channel.");
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
         });
     }
 

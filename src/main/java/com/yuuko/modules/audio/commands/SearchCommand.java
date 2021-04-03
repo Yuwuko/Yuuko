@@ -4,7 +4,6 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.audio.handlers.YouTubeSearchHandler;
 import com.yuuko.utilities.Sanitiser;
@@ -23,34 +22,34 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         // If audioSearchResults contains the authors user ID and the command matches either 1-10 or "cancel".
-        if((audioSearchResults.containsKey(e.getAuthor().getId()) && Sanitiser.isNumeric(e.getParameters())) || e.getParameters().equals("cancel")) {
-            if(e.getParameters().equalsIgnoreCase("cancel")) {
-                audioSearchResults.remove(e.getAuthor().getId());
-                EmbedBuilder embed = new EmbedBuilder().setTitle(e.getAuthor().getName()).setDescription(I18n.getText(e, "cancelled"));
-                MessageDispatcher.reply(e, embed.build());
+        if((audioSearchResults.containsKey(context.getAuthor().getId()) && Sanitiser.isNumeric(context.getParameters())) || context.getParameters().equals("cancel")) {
+            if(context.getParameters().equalsIgnoreCase("cancel")) {
+                audioSearchResults.remove(context.getAuthor().getId());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.getAuthor().getName()).setDescription(context.i18n( "cancelled"));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
-            final int value = Integer.parseInt(e.getParameters());
+            final int value = Integer.parseInt(context.getParameters());
             if(value < 0 || value > 10) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "title")).setDescription(I18n.getText(e, "desc"));
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
-            String videoId = audioSearchResults.get(e.getAuthor().getId()).get(value == 0 ? 0 : value - 1).getId().getVideoId();
-            MessageEvent event = new MessageEvent(e).setCommand(new PlayCommand()).setParameters("https://www.youtube.com/watch?v=" + videoId);
+            String videoId = audioSearchResults.get(context.getAuthor().getId()).get(value == 0 ? 0 : value - 1).getId().getVideoId();
+            MessageEvent event = new MessageEvent(context).setCommand(new PlayCommand()).setParameters("https://www.youtube.com/watch?v=" + videoId);
             event.getCommand().onCommand(event);
-            audioSearchResults.remove(e.getAuthor().getId());
+            audioSearchResults.remove(context.getAuthor().getId());
             return;
         }
 
-        List<SearchResult> results = YouTubeSearchHandler.search(e);
+        List<SearchResult> results = YouTubeSearchHandler.search(context);
         if(results == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "error_processing"));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "error_processing"));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -61,12 +60,12 @@ public class SearchCommand extends Command {
             i++;
         }
 
-        audioSearchResults.put(e.getAuthor().getId(), results);
+        audioSearchResults.put(context.getAuthor().getId(), results);
         EmbedBuilder embed = new EmbedBuilder()
-                .setAuthor(I18n.getText(e, "results").formatted(e.getParameters()), null)
-                .setDescription(I18n.getText(e, "desc").formatted(e.getPrefix(), e.getPrefix(), resultString))
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setAuthor(context.i18n( "results").formatted(context.getParameters()), null)
+                .setDescription(context.i18n( "desc").formatted(context.getPrefix(), context.getPrefix(), resultString))
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 
 }

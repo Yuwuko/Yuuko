@@ -18,8 +18,8 @@ public class GuildCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        Guild guild = e.getGuild();
+    public void onCommand(MessageEvent context) throws Exception {
+        Guild guild = context.getGuild();
         StringBuilder emoteString = new StringBuilder();
 
         if(!guild.getEmoteCache().isEmpty()) {
@@ -47,8 +47,8 @@ public class GuildCommand extends Command {
                     .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
                     .addField("Roles", guild.getRoles().size()+"", true)
                     .addField("Emotes", emoteString.toString(), false)
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl());
-            MessageDispatcher.reply(e, embed.build());
+                    .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getName() + "#" + context.getAuthor().getDiscriminator(), context.getAuthor().getEffectiveAvatarUrl());
+            MessageDispatcher.reply(context, embed.build());
         });
     }
 

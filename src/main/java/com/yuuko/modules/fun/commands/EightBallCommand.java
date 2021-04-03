@@ -40,12 +40,12 @@ public class EightBallCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
+    public void onCommand(MessageEvent context) throws Exception {
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("8ball, " + (e.getParameters() + (e.getParameters().endsWith("?") ? "" : "?")))
+                .setTitle("8ball, " + (context.getParameters() + (context.getParameters().endsWith("?") ? "" : "?")))
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))
                 .setTimestamp(Instant.now())
-                .setFooter(Yuuko.STANDARD_STRINGS.get(2) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
-        MessageDispatcher.reply(e, embed.build());
+                .setFooter(Yuuko.STANDARD_STRINGS.get(2) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
+        MessageDispatcher.reply(context, embed.build());
     }
 }

@@ -2,7 +2,6 @@ package com.yuuko.modules.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -23,8 +22,8 @@ public class BlushCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        EmbedBuilder embed = new EmbedBuilder().setDescription(I18n.getText(e, "self").formatted(e.getMember().getEffectiveName())).setImage(interactionImage.get(getRandom(interactionImage.size())));
-        MessageDispatcher.sendMessage(e, embed.build());
+    public void onCommand(MessageEvent context) throws Exception {
+        EmbedBuilder embed = new EmbedBuilder().setDescription(context.i18n( "self").formatted(context.getMember().getEffectiveName())).setImage(interactionImage.get(getRandom(interactionImage.size())));
+        MessageDispatcher.sendMessage(context, embed.build());
     }
 }

@@ -5,7 +5,6 @@ import com.baseketbandit.runeapi.entity.Skill;
 import com.baseketbandit.runeapi.entity.Skills;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -20,19 +19,19 @@ public class RuneScapeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent e) throws Exception {
-        String[] params = e.getParameters().split("\\s*,\\s*");
+    public void onCommand(MessageEvent context) throws Exception {
+        String[] params = context.getParameters().split("\\s*,\\s*");
         Map<String, Skill> skills = RuneAPI.getStats(params[0]);
         if(skills == null || skills.isEmpty()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results")).setDescription(context.i18n( "no_results_desc").formatted(context.getParameters()));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         if(params.length == 1) {
             // added fields manually to mimic in-game ordering
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(e.getParameters())
+                    .setTitle(context.getParameters())
                     .addField("```    Attack    ```", skills.get("Attack").getLevel() + "", true)
                     .addField("```  Hitpoints   ```", skills.get("Hitpoints").getLevel() + "", true)
                     .addField("```    Mining    ```", skills.get("Mining").getLevel() + "", true)
@@ -57,7 +56,7 @@ public class RuneScapeCommand extends Command {
                     .addField("``` Construction ```", skills.get("Construction").getLevel() + "", true)
                     .addField("```    Hunter    ```", skills.get("Hunter").getLevel() + "", true)
                     .addField("```   Overall    ```", skills.get("Overall").getLevel() + "", true);
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
@@ -68,7 +67,7 @@ public class RuneScapeCommand extends Command {
                         .setTitle(params[0] + "'s " + skill.getName() + " level is " + skill.getLevel() + ".")
                         .addField("```    Rank    ```", TextUtilities.formatInteger(skill.getRank()) + "", true)
                         .addField("``` Experience ```", TextUtilities.formatInteger(skill.getExperience()) + "", true);
-                MessageDispatcher.reply(e, embed.build());
+                MessageDispatcher.reply(context, embed.build());
             }
         });
     }
