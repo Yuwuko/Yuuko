@@ -6,6 +6,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.Sanitiser;
@@ -43,14 +44,14 @@ public class OsuCommand extends Command {
         final String url = BASE_URL + Sanitiser.scrub(commandParameters[0], true) + "&m=" + mode;
         final JsonArray json = new RequestHandler(url).getJsonArray();
         if(json == null || json.size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
 
         JsonObject data = json.get(0).getAsJsonObject();
         if(data.get("playcount").isJsonNull()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Total playcount and playtime for **_" + data.get("username").getAsString() + "_** has returned as null, which indicates that they haven't played **" + modeString + "** yet.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_ext").formatted(data.get("username").getAsString(), modeString));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
@@ -67,15 +68,15 @@ public class OsuCommand extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(data.get("username").getAsString() + " (" + data.get("country").getAsString() + ") | " + modeString)
                 .setThumbnail("https://vignette.wikia.nocookie.net/logopedia/images/d/d3/Osu%21Logo_%282015%29.png")
-                .setDescription("Account created **" + data.get("join_date").getAsString() + "**, amassing a total playcount of **" + data.get("playcount").getAsString() + "** over the course of **" + (data.get("total_seconds_played").getAsInt()/60)/60 + "** hours. In that time, also obtaining **" + data.get("pp_raw").getAsString() + "** of that delicious pp.")
-                .addField("World Rank", worldRank, true)
-                .addField("Country Rank", countryRank, true)
-                .addField("Accuracy", accuracy, true)
-                .addField("SS Ranks", ssRanks, true)
-                .addField("SSH Ranks", sshRanks, true)
-                .addField("S Ranks", sRanks, true)
-                .addField("SH Ranks", shRanks, true)
-                .addField("A Ranks", aRanks, true)
+                .setDescription(I18n.getText(e, "created").formatted(data.get("join_date").getAsString(), data.get("playcount").getAsString(), (data.get("total_seconds_played").getAsInt()/60)/60, data.get("pp_raw").getAsString()))
+                .addField(I18n.getText(e, "world_rank"), worldRank, true)
+                .addField(I18n.getText(e, "country_rank"), countryRank, true)
+                .addField(I18n.getText(e, "accuracy"), accuracy, true)
+                .addField(I18n.getText(e, "ss_ranks"), ssRanks, true)
+                .addField(I18n.getText(e, "ssh_ranks"), sshRanks, true)
+                .addField(I18n.getText(e, "s_ranks"), sRanks, true)
+                .addField(I18n.getText(e, "sh_ranks"), shRanks, true)
+                .addField(I18n.getText(e, "a_ranks"), aRanks, true)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }

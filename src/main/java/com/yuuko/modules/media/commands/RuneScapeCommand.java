@@ -5,6 +5,7 @@ import com.baseketbandit.runeapi.entity.Skill;
 import com.baseketbandit.runeapi.entity.Skills;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -23,7 +24,7 @@ public class RuneScapeCommand extends Command {
         String[] params = e.getParameters().split("\\s*,\\s*");
         Map<String, Skill> skills = RuneAPI.getStats(params[0]);
         if(skills == null || skills.isEmpty()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Unable to retrieve stats for that user, are you sure the username is correct?");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }

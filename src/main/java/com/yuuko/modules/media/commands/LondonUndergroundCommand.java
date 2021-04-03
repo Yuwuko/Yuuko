@@ -10,6 +10,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.TextUtilities;
@@ -44,7 +45,7 @@ public class LondonUndergroundCommand extends Command {
 
         if(!e.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("London Underground Status")
+                    .setTitle(I18n.getText(e, "title"))
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 
@@ -58,13 +59,13 @@ public class LondonUndergroundCommand extends Command {
         } else {
 
             if(goodServices == 11) {
-                reasons.append("GOOD SERVICE on all lines.");
+                reasons.append(I18n.getText(e, "good_service"));
             } else if(goodServices > 0) {
-                reasons.append("GOOD SERVICE on all other lines.");
+                reasons.append(I18n.getText(e, "good_service_other"));
             }
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("London Underground Status (Minified)")
+                    .setTitle(I18n.getText(e, "title"))
                     .addField("", reasons.toString(), false)
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl())
                     .setTimestamp(Instant.now());

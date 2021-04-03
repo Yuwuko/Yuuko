@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.Sanitiser;
@@ -29,7 +30,7 @@ public class UKParliamentPetitionCommand extends Command {
             final JsonObject json = new RequestHandler(url).getJsonObject();
 
             if(json == null || json.isJsonNull() || json.has("error")) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
@@ -44,19 +45,19 @@ public class UKParliamentPetitionCommand extends Command {
             String governmentResponse = !attributes.get("government_response").isJsonNull() ? attributes.get("government_response").getAsJsonObject().get("summary").getAsString() : "None";
 
             EmbedBuilder embed = new EmbedBuilder()
-                    .setAuthor("UK Parliament Petition #" + data.get("id").getAsString() + " (" + attributes.get("state").getAsString() + ")")
+                    .setAuthor(I18n.getText(e, "title").formatted(data.get("id").getAsString(), attributes.get("state").getAsString()))
                     .setTitle(attributes.get("action").getAsString(), "https://petition.parliament.uk/petitions/" + data.get("id").getAsString())
                     .setDescription(attributes.get("background").getAsString())
-                    .addField("Petition Opened", TextUtilities.formatDate(attributes.get("opened_at").getAsString()), true)
-                    .addField("Signature Count", TextUtilities.formatInteger(attributes.get("signature_count").getAsString()), true)
+                    .addField(I18n.getText(e, "opened"), TextUtilities.formatDate(attributes.get("opened_at").getAsString()), true)
+                    .addField(I18n.getText(e, "count"), TextUtilities.formatInteger(attributes.get("signature_count").getAsString()), true)
                     .addBlankField(true)
-                    .addField("Response Threshold", responseThreshold, true)
-                    .addField("Response Date", responseDate, true)
+                    .addField(I18n.getText(e, "response_threshold"), responseThreshold, true)
+                    .addField(I18n.getText(e, "response_date"), responseDate, true)
                     .addBlankField(true)
-                    .addField("Debate Threshold", debateThreshold, true)
-                    .addField("Debate Date", debateDate, true)
+                    .addField(I18n.getText(e, "debate_threshold"), debateThreshold, true)
+                    .addField(I18n.getText(e, "debate_date"), debateDate, true)
                     .addBlankField(true)
-                    .addField("Government Response Summary", governmentResponse, false)
+                    .addField(I18n.getText(e, "gov_response"), governmentResponse, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(e, embed.build());
@@ -65,15 +66,15 @@ public class UKParliamentPetitionCommand extends Command {
             JsonObject json = new RequestHandler("https://petition.parliament.uk/petitions.json").getJsonObject();
 
             if(json.has("error")) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("There was a problem retrieving the main set of petitions.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
                 MessageDispatcher.reply(e, embed.build());
                 return;
             }
 
             JsonArray data = json.get("data").getAsJsonArray();
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("UK Parliament Petitions", "https://petition.parliament.uk/petitions")
-                    .setDescription("Here is a list of the top ten open petitions, use `" + e.getPrefix() + "petition <id>` to get more information about a specific petition.")
+                    .setTitle(I18n.getText(e, "title_ex"), "https://petition.parliament.uk/petitions")
+                    .setDescription(I18n.getText(e, "desc").formatted(e.getPrefix()))
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
 

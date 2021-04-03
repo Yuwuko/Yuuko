@@ -333,6 +333,195 @@ commands:
 
   # Media
 
+  anime:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      age: "Age Rating"
+      episodes: "Episodes"
+      episode_length: "Episode Length"
+      total_length: "Total Length"
+      type: "Type"
+      approval: "Kitsu Approval Rating"
+      status: "Status"
+      start: "Start Date"
+      end: "End Date"
+
+  github:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      language: "Language"
+      latest_push: "Latest Push"
+      size: "Size"
+      stars: "Stars"
+      forks: "Forks"
+      issues: "Open Issues"
+      commits: "Commits"
+      pull_requests: "Pull Requests"
+
+  underground:
+    text:
+      title: "London Underground Status"
+      good_service: "Good service on all lines."
+      good_service_other: "Good service on all other lines."
+
+  natgeo:
+    text:
+      title: "Top headlines from National Geographic"
+      desc: "Reporting our world daily: original nature and science news from"
+
+  osu:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      no_results_ext: "Total playcount and playtime for **_%s_** has returned as null, which indicates that they haven't played **%s** yet."
+      created: "Account created **%s**, amassing a total playcount of **%s** over the course of **%s** hours. In that time, also obtaining **%s** of that delicious pp."
+      world_rank: "World Rank"
+      country_rank: "Country Rank"
+      accuracy: "Accuracy"
+      ss_ranks: "SS Ranks"
+      ssh_ranks: "SSH Ranks"
+      s_ranks: "S Ranks"
+      sh_ranks: "SH Ranks"
+      a_ranks: "A Ranks"
+
+  osrs:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+
+  tesco:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      price: "Price"
+      weight: "Weight"
+      quantity: "Quantity"
+      department: "Department"
+
+  petition:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      title: "UK Parliament Petition #%s (%s)"
+      title_ex: "UK Parliament Petitions"
+      desc: "Here is a list of the top ten open petitions, use `%spetition <id>` to get more information about a specific petition."
+      opened: "Petition Opened"
+      count: "Signature Count"
+      response_threshold: "Response Threshold"
+      response_date: "Response Date"
+      debate_threshold: "Debate Threshold"
+      debate date: "Debate Date"
+      gov_repsonse: "Government Response Summary"
+
+  urban:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      example: "Example"
+
+  weather:
+    text:
+      no_results: "No Results"
+      no_results_desc: "Search for `%s` produced no results."
+      title: "Weather information for: %s, %s."
+      desc: "Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server."
+      id: "ID"
+      visibility: "Visibility"
+      humidity: "Humidity"
+      temp: "Temperature"
+      max_temp: "Max Temperature"
+      min_temp: "Min Temperature"
+      sunrise: "Sunrise"
+      latitude: "Latitude"
+      wind_speed: "Wind Speed"
+      sunset: "Sunset"
+      longitude: "Longitude"
+      wind_angle: "Wind Angle"
+
+  # Moderation
+
+  ban:
+    text:
+
+  kick:
+    text:
+
+  mute:
+    text:
+
+  nuke:
+    text:
+
+  # NSFW
+
+  efukt:
+    text:
+
+  neko:
+    text:
+
+  rule34:
+    text:
+
+  # Settings
+
+  cleanupcommands:
+    text:
+
+  commandlog:
+    text:
+
+  djmode:
+    text:
+
+  eventchannel:
+    text:
+
+  language:
+    text:
+
+  moderationlog:
+    text:
+
+  playnotifications:
+    text:
+
+  prefix:
+    text:
+
+  settings:
+    text:
+
+  starboard:
+    text:
+
+  # Utility
+
+  avatar:
+    text:
+
+  event:
+    text:
+
+  guild:
+    text:
+
+  ping:
+    text:
+
+  reactrole:
+    text:
+
+  roles:
+    text:
+
+  user:
+    text:
+
+  # AUX
+
 auxiliary:
   audio_load:
     text:

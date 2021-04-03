@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -24,7 +25,7 @@ public class AnimeCommand extends Command {
         final String url = BASE_URL + Sanitiser.scrub(e.getParameters(), true) + "&page[limit]=1";
         JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.api+json"), new RequestProperty("Content-Type","application/vnd.api+json")).getJsonObject();
         if(json == null || json.isJsonNull() || json.getAsJsonArray("data").size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
@@ -44,15 +45,15 @@ public class AnimeCommand extends Command {
                 .setTitle(data.get("canonicalTitle").getAsString() + " | " + data.get("titles").getAsJsonObject().get("ja_jp").getAsString(), data.get("youtubeVideoId").isJsonNull() ? "" : "https://www.youtube.com/watch?v=" + data.get("youtubeVideoId").getAsString())
                 .setImage(data.get("posterImage").getAsJsonObject().get("medium").getAsString())
                 .setDescription(data.get("synopsis").getAsString())
-                .addField("Age Rating", ageRating, true)
-                .addField("Episodes", episodes, true)
-                .addField("Episode Length", episodeLength, true)
-                .addField("Total Length", totalLength, true)
-                .addField("Type", type, true)
-                .addField("Kitsu Approval Rating", approvalRating, true)
-                .addField("Status", status, true)
-                .addField("Start Date", startDate, true)
-                .addField("End Date", endDate, true)
+                .addField(I18n.getText(e, "age"), ageRating, true)
+                .addField(I18n.getText(e, "episodes"), episodes, true)
+                .addField(I18n.getText(e, "episode_length"), episodeLength, true)
+                .addField(I18n.getText(e, "total_length"), totalLength, true)
+                .addField(I18n.getText(e, "type"), type, true)
+                .addField(I18n.getText(e, "approval"), approvalRating, true)
+                .addField(I18n.getText(e, "status"), status, true)
+                .addField(I18n.getText(e, "start"), startDate, true)
+                .addField(I18n.getText(e, "end"), endDate, true)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }

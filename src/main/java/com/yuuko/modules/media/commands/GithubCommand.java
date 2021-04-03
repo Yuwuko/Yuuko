@@ -5,6 +5,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.io.entity.RequestProperty;
 import com.yuuko.modules.Command;
@@ -32,7 +33,7 @@ public class GithubCommand extends Command {
         final String url = BASE_URL + URLEncoder.encode(params[0], StandardCharsets.UTF_8).replace("+", "%20") + "/" + URLEncoder.encode(params[1], StandardCharsets.UTF_8).replace("+", "%20");
         final JsonObject json = new RequestHandler(url, new RequestProperty("Authorization", "token " + api.getKey())).getJsonObject();
         if(json == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("No Results").setDescription("Search for `" + e.getParameters() + "` produced no results.");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(I18n.getText(e, "no_results")).setDescription(I18n.getText(e, "no_results_desc").formatted(e.getParameters()));
             MessageDispatcher.reply(e, embed.build());
             return;
         }
@@ -51,14 +52,14 @@ public class GithubCommand extends Command {
                 .setTitle("GitHub: " + json.get("full_name").getAsString(), json.get("html_url").getAsString())
                 .setThumbnail(json.get("owner").getAsJsonObject().get("avatar_url").getAsString())
                 .setDescription(json.get("description").getAsString() + " " + license)
-                .addField("Language", language,true)
-                .addField("Latest Push", latestPush,true)
-                .addField("Size", size,true)
-                .addField("Stars", stars,true)
-                .addField("Forks", forks,true)
-                .addField("Open Issues", openIssues,true)
-                .addField("Commits", commits, true)
-                .addField("Pull Requests", pullRequests, true)
+                .addField(I18n.getText(e, "language"), language,true)
+                .addField(I18n.getText(e, "latest_push"), latestPush,true)
+                .addField(I18n.getText(e, "size"), size,true)
+                .addField(I18n.getText(e, "stars"), stars,true)
+                .addField(I18n.getText(e, "forks"), forks,true)
+                .addField(I18n.getText(e, "issues"), openIssues,true)
+                .addField(I18n.getText(e, "commits"), commits, true)
+                .addField(I18n.getText(e, "pull_requests"), pullRequests, true)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(e, embed.build());
     }

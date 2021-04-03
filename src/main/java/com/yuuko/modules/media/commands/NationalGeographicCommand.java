@@ -7,6 +7,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.api.entity.Api;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.io.RequestHandler;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -28,8 +29,8 @@ public class NationalGeographicCommand extends Command {
         JsonArray articles = json.get("articles").getAsJsonArray();
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Top headlines from National Geographic")
-                .setDescription("Reporting our world daily: original nature and science news from [National Geographic](https://news.nationalgeographic.com). Powered by NewsAPI. \n\u200b")
+                .setTitle(I18n.getText(e, "title"))
+                .setDescription(I18n.getText(e, "desc") + " [National Geographic](https://news.nationalgeographic.com). Powered by NewsAPI. \n\u200b")
                 .setThumbnail(articles.get(0).getAsJsonObject().get("urlToImage").getAsString())
                 .setTimestamp(Instant.now())
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag(), e.getAuthor().getEffectiveAvatarUrl());
