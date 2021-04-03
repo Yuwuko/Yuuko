@@ -2,6 +2,7 @@ package com.yuuko.modules.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -23,7 +24,7 @@ public class CryCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent e) throws Exception {
-        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** cries.").setImage(interactionImage.get(getRandom(interactionImage.size())));
+        EmbedBuilder embed = new EmbedBuilder().setDescription(I18n.getText(e, "self").formatted(e.getMember().getEffectiveName())).setImage(interactionImage.get(getRandom(interactionImage.size())));
         MessageDispatcher.sendMessage(e, embed.build());
     }
 }

@@ -256,6 +256,83 @@ commands:
   spoilerify:
     text:
 
+  # Interaction
+
+  angry:
+    text:
+      self: "**%s** is angry."
+      target: "**%s** is angry at **%s**."
+
+  attack:
+    text:
+      target: "**%s** attacks **%s**."
+
+  bite:
+    text:
+      target: "**%s** bites **%s**."
+
+  blush:
+    text:
+      self: "**%s** blushes."
+
+  cry:
+    text:
+      self: "**%s** cries."
+
+  dance:
+    text:
+      self: "**%s** dances."
+      target: "**%s** dances with **%s**."
+
+  hug:
+    text:
+      target: "**%s** hugs **%s**."
+
+  kill:
+    text:
+      target: "**%s** kills **%s**."
+
+  kiss:
+    text:
+      target: "**%s** kisses **%s**."
+
+  laugh:
+    text:
+      self: "**%s** laughs."
+      target: "**%s** laughs at **%s**."
+
+  pat:
+    text:
+      target: "**%s** pats **%s**."
+
+  pet:
+    text:
+      target: "**%s** pets **%s**."
+
+  poke:
+    text:
+      target: "**%s** pokes **%s**."
+
+  pout:
+    text:
+      self: "**%s** pouts."
+      target: "**%s** pouts at **%s**."
+
+  shrug:
+    text:
+      self: "**%s** shrugs."
+      target: "**%s** shrugs at **%s**."
+
+  sleep:
+    text:
+      self: "**%s** sleeps."
+
+  tickle:
+    text:
+      target: "**%s** tickles **%s**."
+
+  # Media
+
 auxiliary:
   audio_load:
     text:

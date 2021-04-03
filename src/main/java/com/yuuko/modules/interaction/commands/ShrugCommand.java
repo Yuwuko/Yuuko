@@ -2,6 +2,7 @@ package com.yuuko.modules.interaction.commands;
 
 import com.yuuko.MessageDispatcher;
 import com.yuuko.events.entity.MessageEvent;
+import com.yuuko.i18n.I18n;
 import com.yuuko.modules.Command;
 import com.yuuko.utilities.MessageUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -28,13 +29,13 @@ public class ShrugCommand extends Command {
         if(MessageUtilities.checkIfUserMentioned(e)) {
             Member target = MessageUtilities.getMentionedMember(e, true);
             if(target != null) {
-                EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs at **" + target.getEffectiveName() + "**.").setImage(interactionImage.get(getRandom(interactionImage.size())));
+                EmbedBuilder embed = new EmbedBuilder().setDescription(I18n.getText(e, "target").formatted(e.getMember().getEffectiveName(), target.getEffectiveName())).setImage(interactionImage.get(getRandom(interactionImage.size())));
                 MessageDispatcher.sendMessage(e, embed.build());
             }
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setDescription("**" + e.getMember().getEffectiveName() + "** shrugs.").setImage(interactionImage.get(getRandom(interactionImage.size())));
+        EmbedBuilder embed = new EmbedBuilder().setDescription(I18n.getText(e, "self").formatted(e.getMember().getEffectiveName())).setImage(interactionImage.get(getRandom(interactionImage.size())));
         MessageDispatcher.sendMessage(e, embed.build());
     }
 }
