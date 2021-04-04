@@ -1,524 +1,529 @@
 !!com.yuuko.i18n.I18n$Language
-commands:
-
-  # Animal
-
-  bird:
-    text:
-      title: "Random Bird"
-
-  cat:
-    text:
-      title: "Random Cat"
-
-  dog:
-    text:
-      title: "Random Dog"
-
-  fox:
-    text:
-      title: "Random Fox"
-
-  # Audio
-
-  background:
-    text:
-      title: "Removing"
-      desc: "The background track has been removed."
-      params_failed: "Those search parameters failed to return a result."
-
-  clear:
-    text:
-      title: "Clearing"
-      desc: "The queue has been cleared."
-      desc_formatted: "`%s` has been cleared from the queue."
-
-  current:
-    text:
-      title: "Now Playing"
-      duration: "Duration"
-      channel: "Channel"
-      no_track: "There is no track currently playing."
-
-  last:
-    text:
-      author: "Last Track"
-      duration: "Duration"
-      channel: "Channel"
-      no_track: "There is no previous track."
-
-  loop:
-    text:
-     title: "Loop"
-     desc: "Looping for queue set to `%s`"
-
-  lyrics:
-    text:
-      lyrics: "Lyrics"
-      no_results: "Search for `%s` produced no results."
-
-  pause:
-    text:
-      title: "Pausing"
-      desc: "The player has been paused."
-
-  play:
-    text:
-      title: "Resuming"
-      desc: "The player has been resumed."
-      no_results: "Those search parameters failed to return a result."
-
-  playnext:
-    text:
-      title: "Resuming"
-      desc: "The player has been resumed."
-      no_results: "Those search parameters failed to return a result."
-
-  queue:
-    text:
-      empty_title: "Queue"
-      desc: "The queue currently contains `0` tracks."
-      full_title: "Here are the next %s tracks in the queue:"
-      queue_length: "Queue Length"
-      next_duration: "Next %s Duration"
-      total_duration: "Total Duration"
-
-  search:
-    text:
-      cancelled: "Search cancelled."
-      results: "Search results for %s."
-      desc: "Type `%ssearch <value>` to play the track of the given value or `%ssearch cancel` to stop me waiting for a response. \n\n%s"
-      invalid_input_title: "Invalid Input"
-      invalid_input_desc: "Search input must be a number between `1` and `10`, or `cancel`."
-      error_processing: "There was an issue processing your request."
-
-  seek:
-    text:
-      title: "Seeking"
-      desc: "The track position has been set to `%s`."
-      invalid_param: "Invalid Parameter"
-      invalid_position: "The position you selected was invalid, time value set to `0`."
-      invalid_timestamp: "The timestamp you selected was invalid, position value was set to `0`. Correct timestamps are formatted `2:10` for example."
-      unseekable: "Unseekable"
-      unseekable_desc: "Sorry, but this track is currently unseekable."
-      no_track: "There isn't a track currently playing."
-
-  shuffle:
-    text:
-      title: "Shuffling"
-      desc: "The queue has been shuffled."
-      no_track: "There aren't any tracks to shuffle."
-
-  skip:
-    text:
-      title: "Skipping"
-      no_track: "There is no track to skip."
-
-  stop:
-    text:
-      title: "Stopping"
-      desc: "Audio connection closed."
-
-  # Core
-
-  about:
-    text:
-      desc: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
-      author: "Author"
-      version: "Version"
-      prefix: "prefix"
-      shard_id: "Shard ID"
-      shard_guilds: "Shard Guilds"
-      shard_guilds_total: "Total Guilds"
-      commands: "Commands"
-      uptime: "Uptime"
-      ping: "Ping"
-      latest_updates: "Latest Updates"
-
-  bind:
-    text:
-      bind_channel: "Successfully bound `%s` to `%s`."
-      unbind_channel: "Successfully unbound `%s` from `%s`."
-      bound: "Bound Modules"
-      invalid_input_title: "Invalid Input"
-      invalid_intpu_desc: "`%s` isn't a valid module. A list of valid modules can be found by using the `%shelp` command."
-
-  help:
-    text:
-      help_title: "Have an issue, suggestion, or just want me on your server?"
-      help_desc: "Click [here](%s) to send me an invite, or [here](%s) to join the support server! \n Stuck with a command? Use `%shelp <command>` to get the commands usage."
-      title: "Command help for **_%s_**"
-      module: "Module"
-      perms: "Required Permissions"
-      binds: "Binds"
-      usage: "Usage"
-      none: "None"
-
-  module:
-    text:
-      enabled: "`%s` was enabled!"
-      disabled: "`%s` was disabled!"
-      title: "Below are the lists of my enabled/disabled modules!"
-      desc: "Each module can be toggled on or off by using the `%smodule <module>` command."
-      enabled_modules: "Enabled Modules (%s)"
-      disabled_modules: "Disabled Modules (%s)"
-      invalid_module: "`%s` is not a valid module"
-      core_title: "Invalid Module"
-      core_desc: "The `%s` modules cannot be toggled."
-
-  permissions:
-    text:
-      title: "Permissions"
-      desc: "One of the most common reasons for commands not to work is lack of required permissions. Below are all of the permissions that I current have."
-      granted: "Granted"
-
-  shards:
-    text:
-      title: "%s#%s - Shards"
-      shard: "**Yuuko#%s**\nStatus: %s\nGuilds: %s\nGateway Ping: %sms\nRest Ping: %sms"
-      lavalink: "**Yuuko-%s**\nSystem Load: %s%\nMemory Used: %sMB\nPlayers: %s\nActive: %s"
-
-  vote:
-    text:
-      desc: "To help with growth, I am listed on some of the popular Discord bot lists, here you can find links on where to vote for me. Voting is an important part of this growth because with more votes comes more exposure and thus more people who will use me. I have chosen not to lock any of my features behind a vote wall, but ask you kindly to vote (up to every 12 hours) for me on your favourite list(s)!"
-
-  # Developer
-
-  lavalink:
-    text:
-
-  logmetrics:
-    text:
-      title: "Metrics Logging"
-      desc: "Metrics logging has been set to `%s`."
-
-  reloadapi:
-    text:
-      success: "Successfully reloaded ApiManager."
-
-  restart:
-    text:
-      title: "Restart"
-      desc: "Attempted to set restart trigger for shards: %s"
-
-  setstatus:
-    text:
-      success: "Status changed successfully."
-
-  shudown:
-    text:
-      title: "Shutdown"
-      desc: "Attempted to set shutdown trigger for shards %s"
-
-  syncguilds:
-    text:
-      success: "Guilds updated!"
-
-  # Fun
-
-  advice:
-    text:
-      title: "Advice"
-
-  choose:
-    text:
-      choices: "Choices (%s)"
-      selected: "Selected"
-      probability: "Probability"
-
-  flip:
-    text:
-      title: "Coin Flip"
-      heads: "Heads"
-      tails: "Tails"
-      edge: "Edge"
-
-  8ball:
-    text:
-
-  horoscope:
-    text:
-      invalid_title: "Invalid Input"
-      invalid_desc: "`%s` is not a valid sign. Select from `%s`"
-
-  joke:
-    text:
-      no_results_title: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-
-  roll:
-    text:
-      invalid_input: "Invalid Input"
-      invalid_input_desc: "Input must be a non-negative numeric value."
-      roll: "Roll"
-      roll_desc: "`%s` rolled a `d%s` and got `%s`."
-
-  spoilerify:
-    text:
-
-  # Interaction
-
-  angry:
-    text:
-      self: "**%s** is angry."
-      target: "**%s** is angry at **%s**."
-
-  attack:
-    text:
-      target: "**%s** attacks **%s**."
-
-  bite:
-    text:
-      target: "**%s** bites **%s**."
-
-  blush:
-    text:
-      self: "**%s** blushes."
-
-  cry:
-    text:
-      self: "**%s** cries."
-
-  dance:
-    text:
-      self: "**%s** dances."
-      target: "**%s** dances with **%s**."
-
-  hug:
-    text:
-      target: "**%s** hugs **%s**."
-
-  kill:
-    text:
-      target: "**%s** kills **%s**."
-
-  kiss:
-    text:
-      target: "**%s** kisses **%s**."
-
-  laugh:
-    text:
-      self: "**%s** laughs."
-      target: "**%s** laughs at **%s**."
-
-  pat:
-    text:
-      target: "**%s** pats **%s**."
-
-  pet:
-    text:
-      target: "**%s** pets **%s**."
-
-  poke:
-    text:
-      target: "**%s** pokes **%s**."
-
-  pout:
-    text:
-      self: "**%s** pouts."
-      target: "**%s** pouts at **%s**."
-
-  shrug:
-    text:
-      self: "**%s** shrugs."
-      target: "**%s** shrugs at **%s**."
-
-  sleep:
-    text:
-      self: "**%s** sleeps."
-
-  tickle:
-    text:
-      target: "**%s** tickles **%s**."
-
-  # Media
-
-  anime:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      age: "Age Rating"
-      episodes: "Episodes"
-      episode_length: "Episode Length"
-      total_length: "Total Length"
-      type: "Type"
-      approval: "Kitsu Approval Rating"
-      status: "Status"
-      start: "Start Date"
-      end: "End Date"
-
-  github:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      language: "Language"
-      latest_push: "Latest Push"
-      size: "Size"
-      stars: "Stars"
-      forks: "Forks"
-      issues: "Open Issues"
-      commits: "Commits"
-      pull_requests: "Pull Requests"
-
-  underground:
-    text:
-      title: "London Underground Status"
-      good_service: "Good service on all lines."
-      good_service_other: "Good service on all other lines."
-
-  natgeo:
-    text:
-      title: "Top headlines from National Geographic"
-      desc: "Reporting our world daily: original nature and science news from"
-
-  osu:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      no_results_ext: "Total playcount and playtime for **_%s_** has returned as null, which indicates that they haven't played **%s** yet."
-      created: "Account created **%s**, amassing a total playcount of **%s** over the course of **%s** hours. In that time, also obtaining **%s** of that delicious pp."
-      world_rank: "World Rank"
-      country_rank: "Country Rank"
-      accuracy: "Accuracy"
-      ss_ranks: "SS Ranks"
-      ssh_ranks: "SSH Ranks"
-      s_ranks: "S Ranks"
-      sh_ranks: "SH Ranks"
-      a_ranks: "A Ranks"
-
-  osrs:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-
-  tesco:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      price: "Price"
-      weight: "Weight"
-      quantity: "Quantity"
-      department: "Department"
-
-  petition:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      title: "UK Parliament Petition #%s (%s)"
-      title_ex: "UK Parliament Petitions"
-      desc: "Here is a list of the top ten open petitions, use `%spetition <id>` to get more information about a specific petition."
-      opened: "Petition Opened"
-      count: "Signature Count"
-      response_threshold: "Response Threshold"
-      response_date: "Response Date"
-      debate_threshold: "Debate Threshold"
-      debate date: "Debate Date"
-      gov_repsonse: "Government Response Summary"
-
-  urban:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      example: "Example"
-
-  weather:
-    text:
-      no_results: "No Results"
-      no_results_desc: "Search for `%s` produced no results."
-      title: "Weather information for: %s, %s."
-      desc: "Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server."
-      id: "ID"
-      visibility: "Visibility"
-      humidity: "Humidity"
-      temp: "Temperature"
-      max_temp: "Max Temperature"
-      min_temp: "Min Temperature"
-      sunrise: "Sunrise"
-      latitude: "Latitude"
-      wind_speed: "Wind Speed"
-      sunset: "Sunset"
-      longitude: "Longitude"
-      wind_angle: "Wind Angle"
-
-  # Moderation
-
-  ban:
-    text:
-
-  kick:
-    text:
-
-  mute:
-    text:
-
-  nuke:
-    text:
-
-  # NSFW
-
-  efukt:
-    text:
-
-  neko:
-    text:
-
-  rule34:
-    text:
-
-  # Settings
-
-  cleanupcommands:
-    text:
-
-  commandlog:
-    text:
-
-  djmode:
-    text:
-
-  eventchannel:
-    text:
-
-  language:
-    text:
-
-  moderationlog:
-    text:
-
-  playnotifications:
-    text:
-
-  prefix:
-    text:
-
-  settings:
-    text:
-
-  starboard:
-    text:
-
-  # Utility
-
-  avatar:
-    text:
-
-  event:
-    text:
-
-  guild:
-    text:
-
-  ping:
-    text:
-
-  reactrole:
-    text:
-
-  roles:
-    text:
-
-  user:
-    text:
+modules:
+  animal:
+    commands:
+
+      bird:
+        values:
+          title: "Random Bird"
+
+      cat:
+        values:
+          title: "Random Cat"
+
+      dog:
+        values:
+          title: "Random Dog"
+
+      fox:
+        values:
+          title: "Random Fox"
+
+  audio:
+    commands:
+
+      background:
+        values:
+          title: "Removing"
+          desc: "The background track has been removed."
+          params_failed: "Those search parameters failed to return a result."
+
+      clear:
+        values:
+          title: "Clearing"
+          desc: "The queue has been cleared."
+          desc_formatted: "`%s` has been cleared from the queue."
+
+      current:
+        values:
+          title: "Now Playing"
+          duration: "Duration"
+          channel: "Channel"
+          no_track: "There is no track currently playing."
+
+      last:
+        values:
+          author: "Last Track"
+          duration: "Duration"
+          channel: "Channel"
+          no_track: "There is no previous track."
+
+      loop:
+        values:
+         title: "Loop"
+         desc: "Looping for queue set to `%s`"
+
+      lyrics:
+        values:
+          lyrics: "Lyrics"
+          no_results: "Search for `%s` produced no results."
+
+      pause:
+        values:
+          title: "Pausing"
+          desc: "The player has been paused."
+
+      play:
+        values:
+          title: "Resuming"
+          desc: "The player has been resumed."
+          no_results: "Those search parameters failed to return a result."
+
+      playnext:
+        values:
+          title: "Resuming"
+          desc: "The player has been resumed."
+          no_results: "Those search parameters failed to return a result."
+
+      queue:
+        values:
+          empty_title: "Queue"
+          desc: "The queue currently contains `0` tracks."
+          full_title: "Here are the next %s tracks in the queue:"
+          queue_length: "Queue Length"
+          next_duration: "Next %s Duration"
+          total_duration: "Total Duration"
+
+      search:
+        values:
+          cancelled: "Search cancelled."
+          results: "Search results for %s."
+          desc: "Type `%ssearch <value>` to play the track of the given value or `%ssearch cancel` to stop me waiting for a response. \n\n%s"
+          invalid_input_title: "Invalid Input"
+          invalid_input_desc: "Search input must be a number between `1` and `10`, or `cancel`."
+          error_processing: "There was an issue processing your request."
+
+      seek:
+        values:
+          title: "Seeking"
+          desc: "The track position has been set to `%s`."
+          invalid_param: "Invalid Parameter"
+          invalid_position: "The position you selected was invalid, time value set to `0`."
+          invalid_timestamp: "The timestamp you selected was invalid, position value was set to `0`. Correct timestamps are formatted `2:10` for example."
+          unseekable: "Unseekable"
+          unseekable_desc: "Sorry, but this track is currently unseekable."
+          no_track: "There isn't a track currently playing."
+
+      shuffle:
+        values:
+          title: "Shuffling"
+          desc: "The queue has been shuffled."
+          no_track: "There aren't any tracks to shuffle."
+
+      skip:
+        values:
+          title: "Skipping"
+          no_track: "There is no track to skip."
+
+      stop:
+        values:
+          title: "Stopping"
+          desc: "Audio connection closed."
+
+  core:
+    commands:
+
+      about:
+        values:
+          desc: "If you want me on your server, [invite me!](https://discordapp.com/api/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) \nIf you need any assistance, don't hesitate to ask [here!](%s) \nUse `%shelp` for a full list of commands. \nUse `%ssettings` for a full list of settings. \nPlease consider supporting me on [patreon](https://www.patreon.com/yuwuko/)!"
+          author: "Author"
+          version: "Version"
+          prefix: "prefix"
+          shard_id: "Shard ID"
+          shard_guilds: "Shard Guilds"
+          shard_guilds_total: "Total Guilds"
+          commands: "Commands"
+          uptime: "Uptime"
+          ping: "Ping"
+          latest_updates: "Latest Updates"
+
+      bind:
+        values:
+          bind_channel: "Successfully bound `%s` to `%s`."
+          unbind_channel: "Successfully unbound `%s` from `%s`."
+          bound: "Bound Modules"
+          invalid_input_title: "Invalid Input"
+          invalid_intpu_desc: "`%s` isn't a valid module. A list of valid modules can be found by using the `%shelp` command."
+
+      help:
+        values:
+          help_title: "Have an issue, suggestion, or just want me on your server?"
+          help_desc: "Click [here](%s) to send me an invite, or [here](%s) to join the support server! \n Stuck with a command? Use `%shelp <command>` to get the commands usage."
+          title: "Command help for **_%s_**"
+          module: "Module"
+          perms: "Required Permissions"
+          binds: "Binds"
+          usage: "Usage"
+          none: "None"
+
+      module:
+        values:
+          enabled: "`%s` was enabled!"
+          disabled: "`%s` was disabled!"
+          title: "Below are the lists of my enabled/disabled modules!"
+          desc: "Each module can be toggled on or off by using the `%smodule <module>` command."
+          enabled_modules: "Enabled Modules (%s)"
+          disabled_modules: "Disabled Modules (%s)"
+          invalid_module: "`%s` is not a valid module"
+          core_title: "Invalid Module"
+          core_desc: "The `%s` modules cannot be toggled."
+
+      permissions:
+        values:
+          title: "Permissions"
+          desc: "One of the most common reasons for commands not to work is lack of required permissions. Below are all of the permissions that I current have."
+          granted: "Granted"
+
+      shards:
+        values:
+          title: "%s#%s - Shards"
+          shard: "**Yuuko#%s**\nStatus: %s\nGuilds: %s\nGateway Ping: %sms\nRest Ping: %sms"
+          lavalink: "**Yuuko-%s**\nSystem Load: %s%\nMemory Used: %sMB\nPlayers: %s\nActive: %s"
+
+      vote:
+        values:
+          desc: "To help with growth, I am listed on some of the popular Discord bot lists, here you can find links on where to vote for me. Voting is an important part of this growth because with more votes comes more exposure and thus more people who will use me. I have chosen not to lock any of my features behind a vote wall, but ask you kindly to vote (up to every 12 hours) for me on your favourite list(s)!"
+
+  developer:
+    commands:
+
+      lavalink:
+        values:
+
+      logmetrics:
+        values:
+          title: "Metrics Logging"
+          desc: "Metrics logging has been set to `%s`."
+
+      reloadapi:
+        values:
+          success: "Successfully reloaded ApiManager."
+
+      restart:
+        values:
+          title: "Restart"
+          desc: "Attempted to set restart trigger for shards: %s"
+
+      setstatus:
+        values:
+          success: "Status changed successfully."
+
+      shudown:
+        values:
+          title: "Shutdown"
+          desc: "Attempted to set shutdown trigger for shards %s"
+
+      syncguilds:
+        values:
+          success: "Guilds updated!"
+
+  fun:
+    commands:
+
+      advice:
+        values:
+          title: "Advice"
+
+      choose:
+        values:
+          choices: "Choices (%s)"
+          selected: "Selected"
+          probability: "Probability"
+
+      flip:
+        values:
+          title: "Coin Flip"
+          heads: "Heads"
+          tails: "Tails"
+          edge: "Edge"
+
+      8ball:
+        values:
+
+      horoscope:
+        values:
+          invalid_title: "Invalid Input"
+          invalid_desc: "`%s` is not a valid sign. Select from `%s`"
+
+      joke:
+        values:
+          no_results_title: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+
+      roll:
+        values:
+          invalid_input: "Invalid Input"
+          invalid_input_desc: "Input must be a non-negative numeric value."
+          roll: "Roll"
+          roll_desc: "`%s` rolled a `d%s` and got `%s`."
+
+      spoilerify:
+        values:
+
+  interaction:
+    commands:
+
+      angry:
+        values:
+          self: "**%s** is angry."
+          target: "**%s** is angry at **%s**."
+
+      attack:
+        values:
+          target: "**%s** attacks **%s**."
+
+      bite:
+        values:
+          target: "**%s** bites **%s**."
+
+      blush:
+        values:
+          self: "**%s** blushes."
+
+      cry:
+        values:
+          self: "**%s** cries."
+
+      dance:
+        values:
+          self: "**%s** dances."
+          target: "**%s** dances with **%s**."
+
+      hug:
+        values:
+          target: "**%s** hugs **%s**."
+
+      kill:
+        values:
+          target: "**%s** kills **%s**."
+
+      kiss:
+        values:
+          target: "**%s** kisses **%s**."
+
+      laugh:
+        values:
+          self: "**%s** laughs."
+          target: "**%s** laughs at **%s**."
+
+      pat:
+        values:
+          target: "**%s** pats **%s**."
+
+      pet:
+        values:
+          target: "**%s** pets **%s**."
+
+      poke:
+        values:
+          target: "**%s** pokes **%s**."
+
+      pout:
+        values:
+          self: "**%s** pouts."
+          target: "**%s** pouts at **%s**."
+
+      shrug:
+        values:
+          self: "**%s** shrugs."
+          target: "**%s** shrugs at **%s**."
+
+      sleep:
+        values:
+          self: "**%s** sleeps."
+
+      tickle:
+        values:
+          target: "**%s** tickles **%s**."
+
+  media:
+    commands:
+      anime:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          age: "Age Rating"
+          episodes: "Episodes"
+          episode_length: "Episode Length"
+          total_length: "Total Length"
+          type: "Type"
+          approval: "Kitsu Approval Rating"
+          status: "Status"
+          start: "Start Date"
+          end: "End Date"
+      github:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          language: "Language"
+          latest_push: "Latest Push"
+          size: "Size"
+          stars: "Stars"
+          forks: "Forks"
+          issues: "Open Issues"
+          commits: "Commits"
+          pull_requests: "Pull Requests"
+      underground:
+        values:
+          title: "London Underground Status"
+          good_service: "Good service on all lines."
+          good_service_other: "Good service on all other lines."
+      natgeo:
+        values:
+          title: "Top headlines from National Geographic"
+          desc: "Reporting our world daily: original nature and science news from"
+      osu:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          no_results_ext: "Total playcount and playtime for **_%s_** has returned as null, which indicates that they haven't played **%s** yet."
+          created: "Account created **%s**, amassing a total playcount of **%s** over the course of **%s** hours. In that time, also obtaining **%s** of that delicious pp."
+          world_rank: "World Rank"
+          country_rank: "Country Rank"
+          accuracy: "Accuracy"
+          ss_ranks: "SS Ranks"
+          ssh_ranks: "SSH Ranks"
+          s_ranks: "S Ranks"
+          sh_ranks: "SH Ranks"
+          a_ranks: "A Ranks"
+
+      osrs:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+
+      tesco:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          price: "Price"
+          weight: "Weight"
+          quantity: "Quantity"
+          department: "Department"
+
+      petition:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          title: "UK Parliament Petition #%s (%s)"
+          title_ex: "UK Parliament Petitions"
+          desc: "Here is a list of the top ten open petitions, use `%spetition <id>` to get more information about a specific petition."
+          opened: "Petition Opened"
+          count: "Signature Count"
+          response_threshold: "Response Threshold"
+          response_date: "Response Date"
+          debate_threshold: "Debate Threshold"
+          debate date: "Debate Date"
+          gov_repsonse: "Government Response Summary"
+
+      urban:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          example: "Example"
+
+      weather:
+        values:
+          no_results: "No Results"
+          no_results_desc: "Search for `%s` produced no results."
+          title: "Weather information for: %s, %s."
+          desc: "Please note that timezones given are GMT+0 between November/March and BST between April/October due to system time on the server."
+          id: "ID"
+          visibility: "Visibility"
+          humidity: "Humidity"
+          temp: "Temperature"
+          max_temp: "Max Temperature"
+          min_temp: "Min Temperature"
+          sunrise: "Sunrise"
+          latitude: "Latitude"
+          wind_speed: "Wind Speed"
+          sunset: "Sunset"
+          longitude: "Longitude"
+          wind_angle: "Wind Angle"
+
+  moderation:
+    commands:
+
+      ban:
+        values:
+
+      kick:
+        values:
+
+      mute:
+        values:
+
+      nuke:
+        values:
+
+  nsfw:
+    commands:
+
+      efukt:
+        values:
+
+      neko:
+        values:
+
+      rule34:
+        values:
+
+  setting:
+    commands:
+
+      cleanupcommands:
+        values:
+
+      commandlog:
+        values:
+
+      djmode:
+        values:
+
+      eventchannel:
+        values:
+
+      language:
+        values:
+
+      moderationlog:
+        values:
+
+      playnotifications:
+        values:
+
+      prefix:
+        values:
+
+      settings:
+        values:
+
+      starboard:
+        values:
+
+  utility:
+    commands:
+
+      avatar:
+        values:
+
+      event:
+        values:
+
+      guild:
+        values:
+
+      ping:
+        values:
+
+      reactrole:
+        values:
+
+      roles:
+        values:
+
+      user:
+        values:
 
   # AUX
 

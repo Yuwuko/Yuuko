@@ -45,7 +45,7 @@ public class MessageEvent extends GuildMessageReceivedEvent {
      * @return {@link String}
      */
     public String i18n(String key) {
-        return I18n.get(language, command.getName(), key);
+        return I18n.get(language, command.getModule().getName(), command.getName(), key);
     }
 
     /**
