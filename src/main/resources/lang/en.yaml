@@ -489,33 +489,113 @@ modules:
 
       cleanupcommands:
         values:
+          title: "Cleanup Commands"
+          desc: "The `cleanupcommands` setting determines whether user input for commands are deleted if the command is successfully executed."
+          state: "State"
+          state_desc: "`cleanupcommands` is currently set to `%s`"
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
 
       commandlog:
         values:
+          title: "Command Log"
+          setup: "The % channel has been setup correctly."
+          set_success: "The command log has been set to %s."
+          unset_success: "The command log has been unset."
+          set: "The command log is currently set to use %s"
+          not_set: "There is currently no command log set."
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
+          command: "Command"
+          user: "User"
+          channel: "Channel"
+          execution: "Execution Time"
 
       djmode:
         values:
+          title: "DJ Mode"
+          desc: "The `djMode` setting determines whether audio commands are locked to people who posses the `DJ` role."
+          state: "State"
+          state_desc: "`djmode` is currently set to `%s`"
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
 
       eventchannel:
         values:
+          title: "Events"
+          setup: "The % channel has been setup correctly."
+          set_success: "The event channel has been set to %s."
+          unset_success: "The events channel has been unset."
+          set: "The event channel is currently set to use %s"
+          not_set: "There is currently no event channel set."
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
 
       language:
         values:
+          invalid_lang: "Invalid Language"
+          invalid_lang_desc: "Only the following languages are fully or partially supported: %s"
+          lang_changed: "Language Changed"
+          lang_changed_desc: "The language on this server has been changed to `%s`"
 
       moderationlog:
         values:
+          title: "Moderation Log"
+          setup: "The % channel has been setup correctly."
+          set_success: "The moderation log has been set to %s."
+          unset_success: "The moderation log has been unset."
+          set: "The moderation log is currently set to use %s"
+          not_set: "There is currently no moderation log set."
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
+          deleted: "Message Deleted"
+          user: "User"
+          moderation: "Moderation"
+          reason: "Reason"
+          channel: "Channel"
+          count: "Count"
 
       playnotifications:
         values:
+          title: "Play Notifications"
+          desc: "The `playnotifications` setting determines whether tracks are announced when they start."
+          state: "State"
+          state_desc: "`playnotifications` is currently set to `%s`"
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
 
       prefix:
         values:
+          invalid_param: "Invalid Parameter"
+          invalid_param_desc: "Input must have a minimum length of `1` and a maximum length of `5` characters."
+          prefix: "Prefix Changed"
+          prefix_desc: "The prefix used for this guild has been set to `%s`"
 
       settings:
         values:
+          starboard_disabled: "`Disabled` - React with a ⭐ to `star` messages and send them to this channel."
+          commandlog_disabled: "`Disabled` - Sends executed commands to the defined log channel."
+          moderationlog_disabled: "`Disabled` - Sends moderation events to the defined log channel."
+          eventchannel_disabled: "`Disabled` - Where published events will be stored."
+          missing: "`Unable to find channel, please reset.`"
+          title: "Settings for `%`"
+          desc: "Settings can be changed by typing one of the commands listed below using the specified data type, e.g. `<boolean>` which you would replace with either `true` or `false`."
+          language_desc: "The language used when displaying output."
+          prefix_desc: "The message prefix used to symbolise a command."
+          cleanupcommands_desc: "Deletes the users command when it is executed."
+          playnotifications_desc: "Sends information of the mew track when it changes."
+          djmode_desc: "Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands."
 
       starboard:
         values:
+          title: "Starboard"
+          setup: "The % channel has been setup correctly."
+          set_success: "The starboard has been set to %s."
+          unset_success: "The starboard has been unset."
+          set: "The starboard is currently set to use %s"
+          not_set: "There is currently no starboard set."
+          help: "Help"
+          help_desc: "Use `%shelp %s`to get information on how to use this command."
 
   utility:
     commands:

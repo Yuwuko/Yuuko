@@ -4,6 +4,7 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.modules.Command;
+import com.yuuko.utilities.Sanitiser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 
@@ -25,26 +26,22 @@ public class DjModeSetting extends Command {
 
     public void onCommand(MessageEvent context) throws Exception {
         if(!context.hasParameters()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode").setDescription("The `djMode` setting determines whether audio commands are locked to people who posses the `DJ` role.")
-                    .addField("State", "DJ Mode is currently set to `" + (GuildFunctions.getGuildSetting("djmode", context.getGuild().getId()).equals("1") ? "TRUE" : "FALSE") + "`", true)
-                    .addField("Help", "Use `" + context.getPrefix() + "help " + context.getCommand().getName() + "` to get information on how to use this command.", true);
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription(context.i18n("desc"))
+                    .addField(context.i18n("state"), context.i18n("state_desc").formatted(GuildFunctions.getGuildSettingBoolean("djmode", context.getGuild().getId())), true)
+                    .addField(context.i18n("help"), context.i18n("help_desc").formatted(context.getPrefix(), context.getCommand().getName()), false);
             MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        if(!booleanValues.contains(context.getParameters())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("_" + context.getParameters().toUpperCase() + "_ is not valid. (Valid: TRUE, FALSE)");
-            MessageDispatcher.reply(context, embed.build());
-            return;
-        }
-
-        String intValue = (context.getParameters().equals("true") || context.getParameters().equals("yes")) ? "1" : "0";
+        String intValue = (Sanitiser.isBooleanTrue(context.getParameters())) ? "1" : "0";
         if(GuildFunctions.setGuildSettings("djmode", intValue, context.getGuild().getId())) {
             if(Boolean.parseBoolean(context.getParameters().toUpperCase())) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`djMode` set to `TRUE`.");
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`djMode` => `true`.");
                 MessageDispatcher.reply(context, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`djMode` set to `FALSE`.");
+                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`djMode` => `false`.");
                 MessageDispatcher.reply(context, embed.build());
             }
         }

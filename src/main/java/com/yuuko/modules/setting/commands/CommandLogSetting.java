@@ -24,9 +24,10 @@ public class CommandLogSetting extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("commandlog", context.getGuild().getId());
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log")
-                    .setDescription((channel == null) ? "There is currently no command log set." : "The command log is currently set to use " + context.getGuild().getTextChannelById(channel).getAsMention())
-                    .addField("Help", "Use `" + context.getPrefix() + "help " + context.getCommand().getName() + "` to get information on how to use this command.", true);
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription((channel == null) ? context.i18n("not_set") : context.i18n("set").formatted(context.getGuild().getTextChannelById(channel).getAsMention()))
+                    .addField(context.i18n("help"), context.i18n("help_desc").formatted(context.getPrefix(), context.getCommand().getName()), false);
             MessageDispatcher.reply(context, embed.build());
             return;
         }
@@ -35,7 +36,9 @@ public class CommandLogSetting extends Command {
             context.getGuild().createTextChannel("command-log").queue(channel -> {
                 channel.createPermissionOverride(context.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("commandlog", channel.getId(), context.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n("title"))
+                            .setDescription(context.i18n("setup").formatted(channel.getAsMention()));
                     MessageDispatcher.reply(context, embed.build());
                 }
             });
@@ -45,14 +48,18 @@ public class CommandLogSetting extends Command {
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(context);
         if(channel != null) {
             if(GuildFunctions.setGuildSettings("commandlog", channel.getId(), context.getGuild().getId())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been set to " + channel.getAsMention() + ".");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("title"))
+                        .setDescription(context.i18n("set_success").formatted(channel.getAsMention()));
                 MessageDispatcher.reply(context, embed.build());
             }
             return;
         }
 
         if(GuildFunctions.setGuildSettings("commandlog", null, context.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Log").setDescription("The command log has been unset, deactivating the log.");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription(context.i18n("unset_success"));
             MessageDispatcher.reply(context, embed.build());
         }
     }
@@ -60,23 +67,23 @@ public class CommandLogSetting extends Command {
     /**
      * Executes the command logging function if it is enabled.
      *
-     * @param e MessageEvent
+     * @param context MessageEvent
      * @param executionTimeMs long
      */
-    public static void execute(MessageEvent e, double executionTimeMs) {
-        String channelId = GuildFunctions.getGuildSetting("commandlog", e.getGuild().getId());
+    public static void execute(MessageEvent context, double executionTimeMs) {
+        String channelId = GuildFunctions.getGuildSetting("commandlog", context.getGuild().getId());
         if(channelId != null) {
-            TextChannel log = e.getGuild().getTextChannelById(channelId);
+            TextChannel log = context.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Command")
-                    .setThumbnail(e.getAuthor().getAvatarUrl())
-                    .addField("User", e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), true)
-                    .addField("Command", e.getMessage().getContentDisplay(), true)
-                    .addField("Channel", e.getMessage().getTextChannel().getAsMention(), true)
-                    .addField("Execution Time", new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
+                    .setTitle(context.i18n("command"))
+                    .setThumbnail(context.getAuthor().getAvatarUrl())
+                    .addField(context.i18n("user"), context.getAuthor().getName() + "#" + context.getAuthor().getDiscriminator(), true)
+                    .addField(context.i18n("command"), context.getMessage().getContentDisplay(), true)
+                    .addField(context.i18n("channel"), context.getMessage().getTextChannel().getAsMention(), true)
+                    .addField(context.i18n("execution"), new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
-            MessageDispatcher.sendMessage(e, log, embed.build());
+            MessageDispatcher.sendMessage(context, log, embed.build());
         }
     }
 }

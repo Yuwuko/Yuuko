@@ -19,13 +19,17 @@ public class LanguageSetting extends Command {
     @Override
     public void onCommand(MessageEvent context) throws Exception {
         if(!I18n.getSupportedLanguages().contains(context.getParameters())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Language").setDescription("Only the following languages are fully or partially supported: " + Arrays.toString(I18n.getSupportedLanguages().toArray()));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("invalid_lang"))
+                    .setDescription(context.i18n("invalid_lang_desc").formatted(Arrays.toString(I18n.getSupportedLanguages().toArray())));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         if(GuildFunctions.setGuildSettings("language", context.getParameters(), context.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Language Changed").setDescription("The language has been successfully changed to `" + context.getParameters() + "`");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("lang_changed"))
+                    .setDescription(context.i18n("lang_changed_desc").formatted(context.getParameters()));
             MessageDispatcher.reply(context, embed.build());
         }
     }

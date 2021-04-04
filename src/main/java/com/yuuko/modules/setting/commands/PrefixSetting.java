@@ -17,13 +17,17 @@ public class PrefixSetting extends Command {
 
     public void onCommand(MessageEvent context) throws Exception {
         if(context.getParameters().length() < 1 || context.getParameters().length() > 5) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription("Input must have a minimum length of `1` and a maximum length of `5` characters.");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("invalid_param"))
+                    .setDescription("invalid_param_desc");
             MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         if(GuildFunctions.setGuildSettings("prefix", context.getParameters(), context.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Prefix Changed").setDescription("The prefix used for this guild has been set to `" + context.getParameters() + "`");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("prefix"))
+                    .setDescription(context.i18n("prefix_desc").formatted(context.getParameters()));
             MessageDispatcher.reply(context, embed.build());
         }
     }

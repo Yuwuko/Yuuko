@@ -24,9 +24,10 @@ public class ModerationLogSetting extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log")
-                    .setDescription((channel == null) ? "There is currently no moderation log set." : "The moderation log is currently set to use " + context.getGuild().getTextChannelById(channel).getAsMention())
-                    .addField("Help", "Use `" + context.getPrefix() + "help " + context.getCommand().getName() + "` to get information on how to use this command.", true);
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription((channel == null) ? context.i18n("not_set") : context.i18n("set").formatted(context.getGuild().getTextChannelById(channel).getAsMention()))
+                    .addField(context.i18n("help"), context.i18n("help_desc").formatted(context.getPrefix(), context.getCommand().getName()), false);
             MessageDispatcher.reply(context, embed.build());
             return;
         }
@@ -35,7 +36,9 @@ public class ModerationLogSetting extends Command {
             context.getGuild().createTextChannel("moderation-log").queue(channel -> {
                 channel.createPermissionOverride(context.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), context.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n("title"))
+                            .setDescription(context.i18n("setup").formatted(channel.getAsMention()));
                     MessageDispatcher.reply(context, embed.build());
                 }
             });
@@ -45,31 +48,35 @@ public class ModerationLogSetting extends Command {
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(context);
         if(channel != null) {
             if(GuildFunctions.setGuildSettings("moderationlog", channel.getId(), context.getGuild().getId())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been set to " + channel.getAsMention() + ".");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("title"))
+                        .setDescription(context.i18n("set_success").formatted(channel.getAsMention()));
                 MessageDispatcher.reply(context, embed.build());
             }
             return;
         }
 
         if(GuildFunctions.setGuildSettings("moderationlog", null, context.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Moderation Log").setDescription("The moderation log has been unset, deactivating the log.");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription(context.i18n("unset_success"));
             MessageDispatcher.reply(context, embed.build());
         }
     }
 
     /**
      * Add new entry to mod-log on unban event.
-     * @param e {@link GuildUnbanEvent}
+     * @param context {@link GuildUnbanEvent}
      */
-    public static void execute(GuildUnbanEvent e) {
-        String channelId = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
+    public static void execute(GuildUnbanEvent context) {
+        String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
         if(channelId != null) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Unban")
-                    .addField("User", e.getUser().getAsTag(), true)
+                    .addField("User", context.getUser().getAsTag(), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
-            MessageDispatcher.sendMessage(e, e.getGuild().getTextChannelById(channelId), embed.build());
+            MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());
         }
     }
 
@@ -85,9 +92,9 @@ public class ModerationLogSetting extends Command {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n("action"))
                     .setThumbnail(target.getEffectiveAvatarUrl())
-                    .addField("User", target.getAsTag(), true)
-                    .addField("Moderator", context.getMember().getUser().getAsTag(), true)
-                    .addField("Reason", reason, false)
+                    .addField(context.i18n("user"), target.getAsTag(), true)
+                    .addField(context.i18n("moderator"), context.getMember().getUser().getAsTag(), true)
+                    .addField(context.i18n("reason"), reason, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
             MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());
@@ -103,11 +110,11 @@ public class ModerationLogSetting extends Command {
         String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
         if(channelId != null) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Message Deleted")
+                    .setTitle(context.i18n("deleted"))
                     .setThumbnail(context.getAuthor().getEffectiveAvatarUrl())
-                    .addField("Moderator", context.getMember().getUser().getAsTag(), true)
-                    .addField("Channel", context.getChannel().getAsMention(), true)
-                    .addField("Count", messagesDeleted + "", false)
+                    .addField(context.i18n("moderator"), context.getMember().getUser().getAsTag(), true)
+                    .addField(context.i18n("channel"), context.getChannel().getAsMention(), true)
+                    .addField(context.i18n("count"), messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
             MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());

@@ -22,38 +22,38 @@ public class SettingsCommand extends Command {
         // Embed displaying all of the current settings for the server, giving information about each setting.
         HashMap<String, String> settings = GuildFunctions.getGuildSettings(context.getGuild().getId());
 
-        String starboard = "`Disabled` - React with a ⭐ to `star` messages and send them to this channel.";
+        String starboard = context.i18n("starboard_disabled");
         if(settings.get("starboard") != null) {
             TextChannel textChannel = context.getGuild().getTextChannelById(settings.get("starboard"));
-            starboard = textChannel != null ? textChannel.getAsMention() : "`Unable to find starboard, please reset channel.`";
+            starboard = textChannel != null ? textChannel.getAsMention() : context.i18n("missing");
         }
 
-        String commandlog = "`Disabled` - Sends executed commands to the defined log channel.";
+        String commandlog = context.i18n("commandlog_disabled");
         if(settings.get("commandlog") != null) {
             TextChannel textChannel = context.getGuild().getTextChannelById(settings.get("commandlog"));
-            commandlog = textChannel != null ? textChannel.getAsMention() : "`Unable to find commandlog, please reset channel.`";
+            commandlog = textChannel != null ? textChannel.getAsMention() : context.i18n("missing");
         }
 
-        String moderationlog = "`Disabled` - Sends moderation events to the defined log channel.";
+        String moderationlog = context.i18n("moderationlog_disabled");
         if(settings.get("moderationlog") != null) {
             TextChannel textChannel = context.getGuild().getTextChannelById(settings.get("moderationlog"));
-            moderationlog = textChannel != null ? textChannel.getAsMention() : "`Unable to find moderationlog, please reset channel.`";
+            moderationlog = textChannel != null ? textChannel.getAsMention() : context.i18n("missing");
         }
 
-        String eventchannel = "`Disabled` - Where published events will be stored.";
+        String eventchannel = context.i18n("eventchannel_disabled");
         if(settings.get("eventchannel") != null) {
             TextChannel textChannel = context.getGuild().getTextChannelById(settings.get("eventchannel"));
-            eventchannel = textChannel != null ? textChannel.getAsMention() : "`Unable to find eventchannel, please reset channel.`";
+            eventchannel = textChannel != null ? textChannel.getAsMention() : context.i18n("missing");
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Settings for `" + context.getGuild().getName() + "`")
-                .setDescription("Settings can be changed by typing one of the commands listed below using the specified data type, e.g. `<boolean>` which you would replace with either `true` or `false`.")
-                .addField(context.getPrefix() + "language <string>", "`" + settings.get("language") + "` - The language used when displaying output.", false)
-                .addField(context.getPrefix() + "prefix <string>", "`" + settings.get("prefix") + "` - The message prefix used to symbolise a command.", false)
-                .addField(context.getPrefix() + "cleanupcommands <boolean>", "`" + settings.get("cleanupcommands") + "` - Deletes the users command when it is executed.", false)
-                .addField(context.getPrefix() + "playnotifications <boolean>", "`" + settings.get("playnotifications") + "` - Sends information of the mew track when it changes.", false)
-                .addField(context.getPrefix() + "djmode <boolean>", "`" + settings.get("djmode") + "` - Defines if DJ mode is on, meaning only users with the role 'DJ' can use certain audio commands.", false)
+                .setTitle(context.i18n("title").formatted(context.getGuild().getName()))
+                .setDescription(context.i18n("desc"))
+                .addField(context.getPrefix() + "language <string>", "`" + settings.get("language") + "` - " + context.i18n("language_desc"), false)
+                .addField(context.getPrefix() + "prefix <string>", "`" + settings.get("prefix") + "` - " + context.i18n("prefix_desc"), false)
+                .addField(context.getPrefix() + "cleanupcommands <boolean>", "`" + settings.get("cleanupcommands") + "` - " + context.i18n("cleanupcommands_desc"), false)
+                .addField(context.getPrefix() + "playnotifications <boolean>", "`" + settings.get("playnotifications") + "` - " + context.i18n("playnotifications_desc"), false)
+                .addField(context.getPrefix() + "djmode <boolean>", "`" + settings.get("djmode") + "` - " + context.i18n("djmode_desc"), false)
                 .addField(context.getPrefix() + "starboard <#channel>",  starboard, false)
                 .addField(context.getPrefix() + "commandlog <#channel>", commandlog, false)
                 .addField(context.getPrefix() + "moderationlog <#channel>", moderationlog, false)

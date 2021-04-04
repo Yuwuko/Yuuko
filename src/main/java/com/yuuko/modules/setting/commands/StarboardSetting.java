@@ -27,9 +27,10 @@ public class StarboardSetting extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("starboard", context.getGuild().getId());
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard")
-                    .setDescription((channel == null) ? "There is currently no starboard set." : "The starboard is currently set to use " + context.getGuild().getTextChannelById(channel).getAsMention())
-                    .addField("Help", "Use `" + context.getPrefix() + "help " + context.getCommand().getName() + "` to get information on how to use this command.", true);
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription((channel == null) ? context.i18n("not_set") : context.i18n("set").formatted(context.getGuild().getTextChannelById(channel).getAsMention()))
+                    .addField(context.i18n("help"), context.i18n("help_desc").formatted(context.getPrefix(), context.getCommand().getName()), false);
             MessageDispatcher.reply(context, embed.build());
             return;
         }
@@ -38,7 +39,9 @@ public class StarboardSetting extends Command {
             context.getGuild().createTextChannel("starboard").queue(channel -> {
                 channel.createPermissionOverride(context.getGuild().getSelfMember()).setAllow(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS).queue();
                 if(GuildFunctions.setGuildSettings("starboard", channel.getId(), context.getGuild().getId())) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The " + channel.getAsMention() + " channel has been setup correctly.");
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n("title"))
+                            .setDescription(context.i18n("setup").formatted(channel.getAsMention()));
                     MessageDispatcher.reply(context, embed.build());
                 }
             });
@@ -48,14 +51,18 @@ public class StarboardSetting extends Command {
         TextChannel channel = MessageUtilities.getFirstMentionedChannel(context);
         if(channel != null) {
             if(GuildFunctions.setGuildSettings("starboard", channel.getId(), context.getGuild().getId())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been set to **" + channel.getAsMention() + "**.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("title"))
+                        .setDescription(context.i18n("set_success").formatted(channel.getAsMention()));
                 MessageDispatcher.reply(context, embed.build());
             }
             return;
         }
 
         if(GuildFunctions.setGuildSettings("starboard", null, context.getGuild().getId())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Starboard").setDescription("The starboard channel has been unset, thus deactivating the starboard.");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("title"))
+                    .setDescription(context.i18n("unset_success"));
             MessageDispatcher.reply(context, embed.build());
         }
     }
