@@ -33,7 +33,7 @@ public class NekoCommand extends Command {
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameter").setDescription(Arrays.toString(ENDPOINTS.toArray()));
+        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(Arrays.toString(ENDPOINTS.toArray()));
         MessageDispatcher.reply(context, embed.build());
     }
 

@@ -479,6 +479,7 @@ modules:
 
       neko:
         values:
+          bad_input: "Bad Input"
 
       rule34:
         values:
