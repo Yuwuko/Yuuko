@@ -111,7 +111,7 @@ public class I18n {
             }
 
             public String getValue(String key) {
-                return values.getOrDefault(key, "");
+                return values.getOrDefault(key, null);
             }
             public HashMap<String, String> getValues() {
                 return values;
