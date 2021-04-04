@@ -75,43 +75,42 @@ public class ModerationLogSetting extends Command {
 
     /**
      * Add new entry to mod-log on from the given action command.
-     * @param e {@link MessageEvent}
-     * @param action String
+     * @param context {@link MessageEvent}
      * @param target {@link User}
      * @param reason String
      */
-    public static void execute(MessageEvent e, String action, User target, String reason) {
-        String channelId = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
+    public static void execute(MessageEvent context, User target, String reason) {
+        String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
         if(channelId != null) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(action)
+                    .setTitle(context.i18n("action"))
                     .setThumbnail(target.getEffectiveAvatarUrl())
                     .addField("User", target.getAsTag(), true)
-                    .addField("Moderator", e.getMember().getUser().getAsTag(), true)
+                    .addField("Moderator", context.getMember().getUser().getAsTag(), true)
                     .addField("Reason", reason, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
-            MessageDispatcher.sendMessage(e, e.getGuild().getTextChannelById(channelId), embed.build());
+            MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());
         }
     }
 
     /**
      * Add new entry to mod-log from use of the nuke command.
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param messagesDeleted int
      */
-    public static void execute(MessageEvent e, int messagesDeleted) {
-        String channelId = GuildFunctions.getGuildSetting("moderationlog", e.getGuild().getId());
+    public static void execute(MessageEvent context, int messagesDeleted) {
+        String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
         if(channelId != null) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Message Deleted")
-                    .setThumbnail(e.getAuthor().getEffectiveAvatarUrl())
-                    .addField("Moderator", e.getMember().getUser().getAsTag(), true)
-                    .addField("Channel", e.getChannel().getAsMention(), true)
+                    .setThumbnail(context.getAuthor().getEffectiveAvatarUrl())
+                    .addField("Moderator", context.getMember().getUser().getAsTag(), true)
+                    .addField("Channel", context.getChannel().getAsMention(), true)
                     .addField("Count", messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
-            MessageDispatcher.sendMessage(e, e.getGuild().getTextChannelById(channelId), embed.build());
+            MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());
         }
     }
 }

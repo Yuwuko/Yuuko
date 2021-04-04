@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class MuteCommand extends Command {
 
@@ -24,35 +23,28 @@ public class MuteCommand extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         String[] params = context.getParameters().split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(context, true);
+        Role muted; // Set below
 
-        if(target == null) {
+        if(target == null || !Sanitiser.canInteract(context, target, "mute", true) || (muted = getMutedRole(context.getGuild())) == null) {
             return;
         }
 
-        if(!Sanitiser.canInteract(context, target, "mute", true)) {
-            return;
-        }
-
-        Role muted = getMutedRole(context.getGuild());
-        if(muted == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Mute (Setup)").setDescription("Unable to successfully set up `mute` role. Either the role is equal/higher on the hierarchy to/than me, or the server has the maximum (250) number of roles.");
-            MessageDispatcher.reply(context, embed.build());
-            return;
-        }
-
-        Consumer<Throwable> failure = f -> context.getMessage().addReaction("❌").queue();
         if(target.getRoles().stream().noneMatch((role) -> role.getName().equalsIgnoreCase("Muted"))) {
             context.getGuild().addRoleToMember(target, muted).queue(s -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Mute").setDescription(target.getEffectiveName() + " has been successfully muted.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("action"))
+                        .setDescription(context.i18n("success").formatted(target.getEffectiveName()));
                 MessageDispatcher.reply(context, embed.build());
-                ModerationLogSetting.execute(context, "Mute", target.getUser(), (params.length < 2) ? "None" : params[1]);
-            }, failure);
+                ModerationLogSetting.execute(context, target.getUser(), (params.length < 2) ? "None" : params[1]);
+            }, f -> context.getMessage().addReaction("❌").queue());
         } else {
             context.getGuild().removeRoleFromMember(target, muted).queue(s -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Unmute").setDescription(target.getEffectiveName() + " has been successfully unmuted.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("action"))
+                        .setDescription(context.i18n("success_reverse").formatted(target.getEffectiveName()));
                 MessageDispatcher.reply(context, embed.build());
-                ModerationLogSetting.execute(context, "Unmute", target.getUser(), (params.length < 2) ? "None" : params[1]);
-            }, failure);
+                ModerationLogSetting.execute(context, target.getUser(), (params.length < 2) ? "None" : params[1]);
+            }, f -> context.getMessage().addReaction("❌").queue());
         }
     }
 

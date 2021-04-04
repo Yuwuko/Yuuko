@@ -24,18 +24,14 @@ public class BanCommand extends Command {
         String[] commandParameters = context.getParameters().split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(context, true);
 
-        if(target == null) {
-            return;
-        }
-
-        if(!Sanitiser.canInteract(context, target, "ban", true)) {
+        if(target == null || !Sanitiser.canInteract(context, target, "ban", true)) {
             return;
         }
 
         if(commandParameters.length == 1) { // Case: Ban w/o reason and delDays.
             context.getGuild().ban(target, 0).queue(s -> {
                 context.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(context, "Ban", target.getUser(), "None");
+                ModerationLogSetting.execute(context, target.getUser(), context.i18n("no_reason"));
             }, f -> context.getMessage().addReaction("❌").queue());
             return;
         }
@@ -46,13 +42,13 @@ public class BanCommand extends Command {
             delDays.set(Integer.parseInt(commandParameters[1]));
             if(delDays.get() > 7) {
                 delDays.set(7);
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Deletion days must be no larger than 7. You input `**" + commandParameters[1] + "**`, so the actual value has been capped at 7.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(context.i18n("bad_input_desc").formatted(commandParameters[1]));
                 MessageDispatcher.reply(context, embed.build());
             }
         } else {
             context.getGuild().ban(target, 0, commandParameters[1]).queue(s -> { // Case: Ban w/reason, but no delDays.
                 context.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(context, "Ban", target.getUser(), commandParameters[1]);
+                ModerationLogSetting.execute(context, target.getUser(), commandParameters[1]);
             }, f -> context.getMessage().addReaction("❌").queue());
             return;
         }
@@ -60,12 +56,12 @@ public class BanCommand extends Command {
         if(commandParameters.length < 3) {
             context.getGuild().ban(target, delDays.get()).queue(s -> { // Case: Ban w/delDays, but no reason.
                 context.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(context, "Ban", target.getUser(), "None");
+                ModerationLogSetting.execute(context, target.getUser(), context.i18n("no_reason"));
             }, f -> context.getMessage().addReaction("❌").queue());
         } else {
             context.getGuild().ban(target, delDays.get(), commandParameters[2]).queue(s -> { // Case: Ban w/reason and delDays.
                 context.getMessage().addReaction("✅").queue();
-                ModerationLogSetting.execute(context, "Ban", target.getUser(), commandParameters[2]);
+                ModerationLogSetting.execute(context, target.getUser(), commandParameters[2]);
             }, f -> context.getMessage().addReaction("❌").queue());
         }
     }

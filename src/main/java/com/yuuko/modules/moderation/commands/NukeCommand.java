@@ -30,7 +30,7 @@ public class NukeCommand extends Command {
             if(!channel.isNews()) {
                 channel.createCopy().setPosition(channel.getPosition()).queue(r -> channel.delete().queue(s -> {}, f -> {}));
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("Channels marked as **news** cannot be nuked in this way.");
+                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(context.i18n("bad_input_tag"));
                 MessageDispatcher.reply(context, embed.build());
             }
             return;
@@ -39,14 +39,13 @@ public class NukeCommand extends Command {
         // Checks length of parameters since the command doesn't take a value greater than 3 digits
         // Also prevents NumberFormatException for parsing the integer later.
         if(context.getParameters().length() > 3 || !Sanitiser.isNumeric(context.getParameters())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Input").setDescription("Input must be a positive integer between **2** and **100** or a tagged channel. e.g. #general");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(context.i18n("bad_input_int"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         int value = Integer.parseInt(context.getParameters());
-        value = value < 2 ? 2 : Math.min(value, 99);
-        context.getChannel().getHistory().retrievePast(value+1).queue(messages -> {
+        context.getChannel().getHistory().retrievePast(value < 2 ? 2 : Math.min(value, 99)+1).queue(messages -> {
             // Use Collectors.partitionBy() to generate 2 lists based on a boolean comparison of date.
             OffsetDateTime past = OffsetDateTime.now().minusWeeks(2);
             Map<Boolean, List<Message>> sortedMessages = messages.stream().collect(Collectors.partitioningBy(message -> message.getTimeCreated().isBefore(past)));

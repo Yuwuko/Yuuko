@@ -446,15 +446,30 @@ modules:
 
       ban:
         values:
+          bad_input: "Bad Input"
+          bad_input_desc: "Deletion days must be no larger than 7. You input `**%s**`, so the actual value has been capped at 7."
+          action: "Ban"
+          no_reason: "None"
 
       kick:
         values:
+          action: "Kick"
+          no_reason: "None"
+          success: "%s has been kicked."
+          success_reason: "%s has been successfully kicked for `%s`."
 
       mute:
         values:
+          action: "Mute"
+          no_reason: "None"
+          success: "%s has been muted."
+          success_reverse: "%s has been unmuted."
 
       nuke:
         values:
+          bad_input: "Bad Input"
+          bad_input_tag: "Channels marked as **news** cannot be nuked in this way."
+          bad_input_int: "Input must be a positive integer between **2** and **100** or a tagged channel. e.g. #general"
 
   nsfw:
     commands:

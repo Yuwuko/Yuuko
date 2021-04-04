@@ -23,25 +23,25 @@ public class KickCommand extends Command {
         String[] params = context.getParameters().split("\\s+", 2);
         Member target = MessageUtilities.getMentionedMember(context, true);
 
-        if(target == null) {
-            return;
-        }
-
-        if(!Sanitiser.canInteract(context, target, "kick", true)) {
+        if(target == null || !Sanitiser.canInteract(context, target, "kick", true)) {
             return;
         }
 
         if(params.length < 2) {
             context.getGuild().kick(target).queue(s -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Kick").setDescription(target.getEffectiveName() + " has been successfully kicked.");
+                EmbedBuilder embed = new EmbedBuilder().
+                        setTitle("Kick")
+                        .setDescription(context.i18n("success").formatted(target.getEffectiveName()));
                 MessageDispatcher.reply(context, embed.build());
-                ModerationLogSetting.execute(context, "Kick", target.getUser(), "None");
+                ModerationLogSetting.execute(context, target.getUser(), context.i18n("no_reason"));
             }, f -> context.getMessage().addReaction("❌").queue());
         } else {
             context.getGuild().kick(target, params[1]).queue(s -> {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Mute").setDescription(target.getEffectiveName() + " has been successfully muted, for reason: " + params[1] + ".");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("action"))
+                        .setDescription(context.i18n("success_reason").formatted(target.getEffectiveName(),params[1]));
                 MessageDispatcher.reply(context, embed.build());
-                ModerationLogSetting.execute(context, "Kick", target.getUser(), params[1]);
+                ModerationLogSetting.execute(context, target.getUser(), params[1]);
             }, f -> context.getMessage().addReaction("❌").queue());
         }
     }
