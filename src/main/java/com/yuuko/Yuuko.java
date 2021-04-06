@@ -3,7 +3,6 @@
 
 package com.yuuko;
 
-import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import com.yuuko.api.ApiManager;
 import com.yuuko.database.connection.DatabaseConnection;
 import com.yuuko.database.function.GuildFunctions;
@@ -40,7 +39,7 @@ import java.util.*;
 
 public class Yuuko {
     private static final Logger log = LoggerFactory.getLogger(Yuuko.class);
-    public static final String VERSION = "21w12a";
+    public static final String VERSION = "21w14a";
     public static String AUTHOR;
     public static String AUTHOR_WEBSITE;
     public static String SUPPORT_GUILD;
@@ -169,7 +168,7 @@ public class Yuuko {
                         log.warn("Created configuration file: ./config/api/{}.yaml", api);
                         try(FileWriter w = new FileWriter("./config/api/" + api + ".yaml")) {
                             w.write(
-                                    "!!com.yuuko.core.api.entity.Api" + System.lineSeparator() +
+                                    "!!com.yuuko.api.entity.Api" + System.lineSeparator() +
                                     "name: \"" + api + "\"" + System.lineSeparator() +
                                     "applicationId: \"\"" + System.lineSeparator() +
                                     "apiKey: \"\""
@@ -301,7 +300,6 @@ public class Yuuko {
                     .setToken(BOT_TOKEN)
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS)
                     .addEventListeners(new GenericEventManager(), AudioManager.LAVALINK.getLavalink())
-                    .setAudioSendFactory(new NativeAudioSendFactory())
                     .setVoiceDispatchInterceptor(AudioManager.LAVALINK.getLavalink().getVoiceInterceptor())
                     .setBulkDeleteSplittingEnabled(false) // not sure why this is enable by default
                     .setActivity(Activity.of(Activity.ActivityType.LISTENING, "@Yuuko help"))
