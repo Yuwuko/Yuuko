@@ -31,10 +31,14 @@ public class PlayNotificationsSetting extends Command {
         String boolIntValue = Sanitiser.isBooleanTrue(context.getParameters()) ? "1" : "0";
         if(GuildFunctions.setGuildSettings("playnotifications", boolIntValue, context.getGuild().getId())) {
             if(Sanitiser.isBooleanTrue(context.getParameters())) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`playnotifications` => `true`.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setColor(Color.GREEN)
+                        .setTitle("`playnotifications` => `true`.");
                 MessageDispatcher.reply(context, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`playnotifications` => `false`.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setColor(Color.RED)
+                        .setTitle("`playnotifications` => `false`.");
                 MessageDispatcher.reply(context, embed.build());
             }
         }

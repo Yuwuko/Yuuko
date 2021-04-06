@@ -38,10 +38,14 @@ public class DjModeSetting extends Command {
         String intValue = (Sanitiser.isBooleanTrue(context.getParameters())) ? "1" : "0";
         if(GuildFunctions.setGuildSettings("djmode", intValue, context.getGuild().getId())) {
             if(Boolean.parseBoolean(context.getParameters().toUpperCase())) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle("`djMode` => `true`.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setColor(Color.GREEN)
+                        .setTitle("`djMode` => `true`.");
                 MessageDispatcher.reply(context, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle("`djMode` => `false`.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setColor(Color.RED)
+                        .setTitle("`djMode` => `false`.");
                 MessageDispatcher.reply(context, embed.build());
             }
         }
