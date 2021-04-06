@@ -602,24 +602,79 @@ modules:
 
       avatar:
         values:
+          title: "%s's Avatar"
 
       event:
         values:
+          event: "Event"
+          event_desc: "This is your new event! Below are commands you can now use."
+          events: "Events (%s)"
+          missing_event: "Missing Event"
+          missing_event_desc: "There is no event to manipulate, use `%sevent new` to get started!"
+          missing_parameters: "Missing Parameters"
+          missing_parameters_desc: "That function requires more parameters than you provided. Use `%shelp event` if you get stuck."
+          invalid_id: "Event IDs must be non-negative integers, e.g: `12`"
+          invalid_value: "Invalid Value"
+          invalid_timestamp: "The timestamp entered isn't valid, ensure the format is `yyyy-MM-dd HH:mm`"
+          invalid_integer: "The input isn't valid, ensure you supply a non-negative integer, or 0, removing the limit."
+          creation_failed: "Event Creation Failed"
+          creation_failed_desc: "You already have an event in construction. Please cancel or publish that event before creating a new event!"
+          unknown_event: "Unknown Event"
+          event_cancelled: "Event Cancelled"
+          event_cancelled_desc: "You have successfully cancelled event, `%s`"
+          publish_fail: "Publish Failed"
+          publish_fail_desc_channel: "Unable to find events channel, set it by using `%seventchannel #channel`."
+          publish_fail_desc: "There was an issue publishing your event... if this happens again please contact developer."
 
       guild:
         values:
+          none: "None Available"
+          title: "Guild information for `%s`"
+          owner: "Owner"
+          id: "ID"
+          created: "Created"
+          region: "Region"
+          users: "Users"
+          text: "Text Channels"
+          voice: "Voice Channels"
+          roles: "Roles"
+          emotes: "Emotes"
 
       ping:
         values:
 
       reactrole:
         values:
+          invalid_input: "Invalid Input"
+          invalid_input_desc: "Input needs to be a valid message ID, e.g. 775074171709161484"
+          success: "Success"
+          success_desc: "Successfully paired emote %s to role %s for message %s."
+          failure: "Failure"
+          failure_desc: "Unable to add a reaction to the selected message."
+          failure_missing: "Unable to find message with given id, either deleted or isn't in this channel."
+          exists: "Already Exists"
+          exists_desc: "A reaction role using this message and emote combination already exists."
+          removed: "Successfully removed reaction role %s from message %s."
+          removed_fail: "Unable to remove the reaction from the selected message."
+          role_unavailable: "This role is unavailable for use in a reaction role. Make sure that you are using roles from this server."
+          role_higher: "I cannot assign roles that are higher than or equal to my highest role in the hierarchy."
 
       roles:
         values:
+          title: "%s Roles"
+          none: "None Available"
 
       user:
         values:
+          none: "None"
+          title: "Information about **%s**"
+          desc: "**%s** is currently **%s** %s"
+          user: "Username"
+          user_id: "ID"
+          created: "Account Created"
+          joined: "Joined Server"
+          bot: "Bot?"
+          roles: "Roles"
 
   # AUX
 

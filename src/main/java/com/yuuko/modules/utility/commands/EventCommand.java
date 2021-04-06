@@ -38,7 +38,7 @@ public class EventCommand extends Command {
                 eventsString.append("ID: `").append(scheduledEvent.id).append("` - ").append(scheduledEvent.title).append(" ~ `").append(scheduledEvent.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy"))).append(" (").append(TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY))).append(")`\n");
             }
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Events (" + scheduledEvents.size() + ")")
+                    .setTitle(context.i18n("events").formatted(scheduledEvents.size()))
                     .setDescription(eventsString.toString())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(context, embed.build());
@@ -68,8 +68,9 @@ public class EventCommand extends Command {
         // Everything past here requires a pre-existing scheduled event.
         ScheduledEvent scheduledEvent = inProgressEmbeds.getOrDefault(context.getAuthor().getId(), null);
         if(scheduledEvent == null) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Missing Event")
-                    .setDescription("There is no event to manipulate, use `" + context.getPrefix() + "event new` to get started!");
+            EmbedBuilder about = new EmbedBuilder()
+                    .setTitle(context.i18n("missing_event"))
+                    .setDescription(context.i18n("missing_event_desc").formatted(context.getPrefix()));
             MessageDispatcher.reply(context, about.build());
             return;
         }
@@ -82,8 +83,9 @@ public class EventCommand extends Command {
 
         // Parameter checking - everything past here requires at least 2 parameters (action, value)
         if(params.length < 2) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Missing Parameters")
-                    .setDescription("That function requires more parameters than you provided. Use `" + context.getPrefix() + "help event` if you get stuck.");
+            EmbedBuilder about = new EmbedBuilder()
+                    .setTitle(context.i18n("missing_parameters"))
+                    .setDescription(context.i18n("missing_parameters_desc").formatted(context.getPrefix()));
             MessageDispatcher.reply(context, about.build());
             return;
         }
@@ -94,8 +96,9 @@ public class EventCommand extends Command {
             case "notify" -> scheduledEvent.setNotify(Sanitiser.isBooleanTrue(params[1])).submitEdit();
             case "time" -> {
                 if(!Sanitiser.isTimestamp(params[1]+":00")) {
-                    EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
-                            .setDescription("The timestamp entered isn't valid, ensure the format is `yyyy-MM-dd HH:mm`");
+                    EmbedBuilder about = new EmbedBuilder()
+                            .setTitle(context.i18n("invalid_value"))
+                            .setDescription(context.i18n("invalid_timestamp"));
                     MessageDispatcher.reply(context, about.build());
                     return;
                 }
@@ -103,8 +106,9 @@ public class EventCommand extends Command {
             }
             case "slots" -> {
                 if(!Sanitiser.isNumeric(params[1])) {
-                    EmbedBuilder about = new EmbedBuilder().setTitle("Invalid Value")
-                            .setDescription("The input isn't valid, ensure you supply a non-negative integer, or 0, removing the limit.");
+                    EmbedBuilder about = new EmbedBuilder()
+                            .setTitle(context.i18n("invalid_value"))
+                            .setDescription(context.i18n("invalid_integer"));
                     MessageDispatcher.reply(context, about.build());
                     return;
                 }
@@ -125,114 +129,117 @@ public class EventCommand extends Command {
     /**
      * Creates a new event using the template, this event isn't the final event but merely a visualisation of an event.
      * Once the user publishes an event, this event will no longer be accessible.
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      */
-    private void createEvent(MessageEvent e) {
-        if(inProgressEmbeds.containsKey(e.getAuthor().getId())) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Event Creation Failed")
-                    .setDescription("You already have an event in construction. Please cancel or publish that event before creating a new event!");
-            MessageDispatcher.reply(e, about.build());
+    private void createEvent(MessageEvent context) {
+        if(inProgressEmbeds.containsKey(context.getAuthor().getId())) {
+            EmbedBuilder about = new EmbedBuilder()
+                    .setTitle(context.i18n("creation_failed"))
+                    .setDescription(context.i18n("creation_failed_desc"));
+            MessageDispatcher.reply(context, about.build());
             return;
         }
 
         ScheduledEvent scheduledEvent = new ScheduledEvent()
-                .setTitle("Event")
-                .setDescription("This is your new event! Below are commands you can now use. " +
-                        "\n`" + e.getPrefix() + "event title <value>` to set the title." +
-                        "\n`" + e.getPrefix() + "event desc <value>` to set the description. (this message will be replaced)" +
-                        "\n`" + e.getPrefix() + "event time <yyyy-MM-dd HH:mm>` to set the date/time of this event." +
-                        "\n`" + e.getPrefix() + "event slots <value>` to set a number of slots. (default 0 [unlimited])" +
-                        "\n`" + e.getPrefix() + "event notify <boolean>` to notify participants (default false)." +
-                        "\n`" + e.getPrefix() + "event publish` to publish this event." +
-                        "\n`" + e.getPrefix() + "event cancel` to cancel this event.")
+                .setTitle(context.i18n("event"))
+                .setDescription(context.i18n("event_desc") +
+                        "\n`" + context.getPrefix() + "event title <value>`" +
+                        "\n`" + context.getPrefix() + "event desc <value>`" +
+                        "\n`" + context.getPrefix() + "event time <yyyy-MM-dd HH:mm>`" +
+                        "\n`" + context.getPrefix() + "event slots <value>`" +
+                        "\n`" + context.getPrefix() + "event notify <boolean>`" +
+                        "\n`" + context.getPrefix() + "event publish`" +
+                        "\n`" + context.getPrefix() + "event cancel`")
                 .setTimestamp(Timestamp.from(Instant.now().plusSeconds(86400)))
                 .setSlots(0)
                 .setNotify(false)
-                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + e.getAuthor().getAsTag());
-        e.getChannel().sendMessage(scheduledEvent.getEmbed()).queue(s -> inProgressEmbeds.put(e.getAuthor().getId(), scheduledEvent.setMessage(s)));
+                .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag());
+        context.getChannel().sendMessage(scheduledEvent.getEmbed()).queue(s -> inProgressEmbeds.put(context.getAuthor().getId(), scheduledEvent.setMessage(s)));
     }
 
     /**
      * Cancels an event, if params size is only 1 and there is an event in construction, that will be cancelled.
      * If params is size of 2, the database will be searched and the event will be cancelled if it exists.
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param params String[]
      */
-    private void cancelEvent(MessageEvent e, String[] params) {
+    private void cancelEvent(MessageEvent context, String[] params) {
         if(params.length == 1) {
-            if(!inProgressEmbeds.containsKey(e.getAuthor().getId())) {
-                EmbedBuilder about = new EmbedBuilder().setTitle("Unknown Event")
-                        .setDescription("Unable to find event.");
-                MessageDispatcher.reply(e, about.build());
+            if(!inProgressEmbeds.containsKey(context.getAuthor().getId())) {
+                EmbedBuilder about = new EmbedBuilder()
+                        .setTitle(context.i18n("unknown_event"));
+                MessageDispatcher.reply(context, about.build());
                 return;
             }
 
-            EmbedBuilder about = new EmbedBuilder().setTitle("Event Cancelled");
-            MessageDispatcher.reply(e, about.build());
-            inProgressEmbeds.get(e.getAuthor().getId()).message.delete().queue();
-            inProgressEmbeds.remove(e.getAuthor().getId());
+            EmbedBuilder about = new EmbedBuilder()
+                    .setTitle(context.i18n("event_cancelled"));
+            MessageDispatcher.reply(context, about.build());
+            inProgressEmbeds.get(context.getAuthor().getId()).message.delete().queue();
+            inProgressEmbeds.remove(context.getAuthor().getId());
             return;
         }
 
         if(!Sanitiser.isNumeric(params[1])) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Incorrect Format")
-                    .setDescription("Event IDs must be non-negative integers, e.g: `12`");
-            MessageDispatcher.reply(e, about.build());
+            EmbedBuilder about = new EmbedBuilder()
+                    .setTitle(context.i18n("invalid_value"))
+                    .setDescription(context.i18n("invalid_id"));
+            MessageDispatcher.reply(context, about.build());
             return;
         }
 
-        String messageId = DatabaseInterface.getEventMessage(e.getGuild().getId(), Integer.parseInt(params[1]));
+        String messageId = DatabaseInterface.getEventMessage(context.getGuild().getId(), Integer.parseInt(params[1]));
         if(messageId == null) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Unknown Event")
-                    .setDescription("Unable to find event matching that ID.");
-            MessageDispatcher.reply(e, about.build());
+            EmbedBuilder about = new EmbedBuilder()
+                    .setTitle(context.i18n("unknown_event"));
+            MessageDispatcher.reply(context, about.build());
             return;
         }
 
-        DatabaseInterface.removeEvent(e.getGuild().getId(), messageId);
-        String channelId = GuildFunctions.getGuildSetting("eventchannel", e.getGuild().getId());
+        DatabaseInterface.removeEvent(context.getGuild().getId(), messageId);
+        String channelId = GuildFunctions.getGuildSetting("eventchannel", context.getGuild().getId());
         if(channelId != null) {
-            TextChannel textChannel = e.getGuild().getTextChannelById(channelId);
+            TextChannel textChannel = context.getGuild().getTextChannelById(channelId);
             if(textChannel != null) {
                 textChannel.deleteMessageById(messageId).queue();
             }
         }
 
-        EmbedBuilder about = new EmbedBuilder().setTitle("Event Cancelled")
-                .setDescription("You have successfully cancelled event, `ID: " + params[1] + "`");
-        MessageDispatcher.reply(e, about.build());
+        EmbedBuilder about = new EmbedBuilder().setTitle(context.i18n("event_cancelled"))
+                .setDescription(context.i18n("event_cancelled_desc").formatted(params[1]));
+        MessageDispatcher.reply(context, about.build());
     }
 
     /**
      * Publishes an event to the set events channel. If there is no events channel, it will encourage the user to set one.
      * Also deletes the temporary visualisation created by the previous createEvent() function.
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      */
-    private void publishEvent(MessageEvent e) {
-        String channelId = GuildFunctions.getGuildSetting("eventchannel", e.getGuild().getId());
+    private void publishEvent(MessageEvent context) {
+        String channelId = GuildFunctions.getGuildSetting("eventchannel", context.getGuild().getId());
         if(channelId == null) {
-            EmbedBuilder about = new EmbedBuilder().setTitle("Publish Failed")
-                    .setDescription("Unable to find events channel, set it by using `" + e.getPrefix() + "eventchannel #channel`.");
-            MessageDispatcher.reply(e, about.build());
+            EmbedBuilder about = new EmbedBuilder().setTitle(context.i18n("publish_fail"))
+                    .setDescription(context.i18n("publish_fail_desc_channel").formatted(context.getPrefix()));
+            MessageDispatcher.reply(context, about.build());
             return;
         }
 
-        TextChannel textChannel = e.getGuild().getTextChannelById(channelId);
+        TextChannel textChannel = context.getGuild().getTextChannelById(channelId);
         if(textChannel != null) {
-            ScheduledEvent scheduledEvent = inProgressEmbeds.get(e.getAuthor().getId());
-            int eventId = DatabaseInterface.newEvent(e, scheduledEvent);
+            ScheduledEvent scheduledEvent = inProgressEmbeds.get(context.getAuthor().getId());
+            int eventId = DatabaseInterface.newEvent(context, scheduledEvent);
             if(eventId != -1) {
                 scheduledEvent.setFooter("ID: " + eventId);
                 textChannel.sendMessage(scheduledEvent.getEmbed()).queue(message -> {
-                    scheduledEvent.message.delete().queue(x -> inProgressEmbeds.remove(e.getAuthor().getId()));
+                    scheduledEvent.message.delete().queue(x -> inProgressEmbeds.remove(context.getAuthor().getId()));
                     DatabaseInterface.updateEventMessage(eventId, message.getId());
                     message.addReaction("✅").queue();
                 });
                 return;
             }
-            EmbedBuilder about = new EmbedBuilder().setTitle("Publish Failed")
-                    .setDescription("There was an issue publishing your event... if this happens again please contact developer.");
-            MessageDispatcher.reply(e, about.build());
+            EmbedBuilder about = new EmbedBuilder().setTitle(context.i18n("publish_fail"))
+                    .setDescription(context.i18n("publish_fail_desc"));
+            MessageDispatcher.reply(context, about.build());
         }
     }
 

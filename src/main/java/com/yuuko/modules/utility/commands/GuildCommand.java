@@ -31,22 +31,22 @@ public class GuildCommand extends Command {
                 }
             }
         } else {
-            emoteString.append("None Available");
+            emoteString.append(context.i18n("none"));
         }
 
         guild.retrieveOwner().queue(s -> {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Guild information for: " + guild.getName(), null)
+                    .setTitle(context.i18n("title").formatted(guild.getName()), null)
                     .setThumbnail(guild.getIconUrl())
-                    .addField("Owner", s.getUser().getName() + "#" + s.getUser().getDiscriminator(), true)
-                    .addField("ID", guild.getId(), true)
-                    .addField("Created", guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
-                    .addField("Region", guild.getRegion().getName(), true)
-                    .addField("Users", "Unknown (Missing Intent)", true)
-                    .addField("Text Channels", guild.getTextChannelCache().size()+"", true)
-                    .addField("Voice Channels", guild.getVoiceChannelCache().size()+"", true)
-                    .addField("Roles", guild.getRoles().size()+"", true)
-                    .addField("Emotes", emoteString.toString(), false)
+                    .addField(context.i18n("owner"), s.getUser().getName() + "#" + s.getUser().getDiscriminator(), true)
+                    .addField(context.i18n("id"), guild.getId(), true)
+                    .addField(context.i18n("created"), guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
+                    .addField(context.i18n("region"), guild.getRegion().getName(), true)
+                    .addField(context.i18n("users"), "Unknown (Missing Intent)", true)
+                    .addField(context.i18n("text"), guild.getTextChannelCache().size()+"", true)
+                    .addField(context.i18n("voice"), guild.getVoiceChannelCache().size()+"", true)
+                    .addField(context.i18n("roles"), guild.getRoles().size()+"", true)
+                    .addField(context.i18n("emotes"), emoteString.toString(), false)
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getName() + "#" + context.getAuthor().getDiscriminator(), context.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(context, embed.build());
         });

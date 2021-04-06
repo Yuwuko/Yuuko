@@ -31,11 +31,11 @@ public class RolesCommand extends Command {
             }
             TextUtilities.removeLast(roles, "\n");
         } else {
-            roles.append("None Available");
+            roles.append(context.i18n("none"));
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(context.getGuild().getName() + " Roles")
+                .setTitle(context.i18n("title").formatted(context.getGuild().getName()))
                 .setDescription(roles.toString())
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(context, embed.build());

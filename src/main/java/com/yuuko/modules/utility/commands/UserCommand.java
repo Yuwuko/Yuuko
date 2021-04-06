@@ -31,7 +31,7 @@ public class UserCommand extends Command {
             target.getRoles().forEach(role -> roleString.append(role.getName()).append(", "));
             roleString.replace(roleString.lastIndexOf(", "), roleString.length() - 1, "");
         } else {
-            roleString.append("None");
+            roleString.append(context.i18n("none"));
         }
 
         String presence = "";
@@ -58,15 +58,15 @@ public class UserCommand extends Command {
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Information about **" + target.getEffectiveName() + "**")
-                .setDescription("**" + target.getEffectiveName() + "** is currently **" + target.getOnlineStatus().name().toLowerCase() + "** " + presence)
+                .setTitle(context.i18n("title").formatted(target.getEffectiveName()))
+                .setDescription(context.i18n("desc").formatted(target.getEffectiveName(), target.getOnlineStatus().name().toLowerCase(), presence))
                 .setThumbnail(target.getUser().getAvatarUrl())
-                .addField("Username", target.getUser().getAsTag(), true)
-                .addField("User ID", target.getUser().getId(), true)
-                .addField("Account Created", target.getUser().getTimeCreated().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
-                .addField("Joined Server", target.getTimeJoined().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
-                .addField("Bot?", target.getUser().isBot() + "", true)
-                .addField("Roles", roleString.toString(), true)
+                .addField(context.i18n("user"), target.getUser().getAsTag(), true)
+                .addField(context.i18n("user_id"), target.getUser().getId(), true)
+                .addField(context.i18n("created"), target.getUser().getTimeCreated().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
+                .addField(context.i18n("joined"), target.getTimeJoined().format(DateTimeFormatter.ofPattern("d MMM yyyy  hh:mma")), true)
+                .addField(context.i18n("bot"), target.getUser().isBot() + "", true)
+                .addField(context.i18n("roles"), roleString.toString(), true)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
         MessageDispatcher.reply(context, embed.build());
     }

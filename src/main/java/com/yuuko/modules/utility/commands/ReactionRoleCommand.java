@@ -33,7 +33,7 @@ public class ReactionRoleCommand extends Command {
         final String emote = (context.getMessage().getEmotes().size() > 0) ? context.getMessage().getEmotes().get(0).getName() + ":" + context.getMessage().getEmotes().get(0).getId() : params[1];
 
         if(params[0].length() < 18 || params[0].length() > 20 || Sanitiser.isNumeric(params[0])) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Incorrect Input").setDescription("Input needs to be a valid message ID, e.g. 775074171709161484");
+            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("invalid_input")).setDescription(context.i18n("invalid_input_desc"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
@@ -51,11 +51,15 @@ public class ReactionRoleCommand extends Command {
                     reaction.removeReaction().queue(
                             s -> {
                                 DatabaseInterface.removeReactionRole(message, emote);
-                                EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully removed reaction role " + emote + " from message " + message + ".");
+                                EmbedBuilder embed = new EmbedBuilder()
+                                        .setTitle(context.i18n("success"))
+                                        .setDescription(context.i18n("removed").formatted(emote, message));
                                 MessageDispatcher.reply(context, embed.build());
                             },
                             f -> {
-                                EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to remove the reaction from the selected message.");
+                                EmbedBuilder embed = new EmbedBuilder()
+                                        .setTitle(context.i18n("failure"))
+                                        .setDescription(context.i18n("removed_fail"));
                                 MessageDispatcher.reply(context, embed.build());
                             });
                 });
@@ -64,14 +68,18 @@ public class ReactionRoleCommand extends Command {
 
             // check if the role exists, is available for use.
             if(!context.getGuild().getRoleCache().asList().contains(role)) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("This role is unavailable for use in a reaction role. Make sure that you are using roles from this server.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_input"))
+                        .setDescription(context.i18n("role_unavailable"));
                 MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             // checks if role is lower in the hierarchy than bots highest role.
             if(role.getPositionRaw() >= highestSelfRole.getPositionRaw()) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Role").setDescription("I cannot assign roles that are higher than or equal to my highest role in the hierarchy.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_input"))
+                        .setDescription(context.i18n("role_higher"));
                 MessageDispatcher.reply(context, embed.build());
                 return;
             }
@@ -79,40 +87,42 @@ public class ReactionRoleCommand extends Command {
             message.addReaction(emote).queue(
                     s -> {
                         if(DatabaseInterface.addReactionRole(context.getGuild(), message.getId(), emote, role)) {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Success").setDescription("Successfully paired emote " + emote + " to role " + role.getAsMention() + " for message " + message + ".");
+                            EmbedBuilder embed = new EmbedBuilder()
+                                    .setTitle(context.i18n("success"))
+                                    .setDescription(context.i18n("success_desc").formatted(emote, role.getAsMention(), message));
                             MessageDispatcher.reply(context, embed.build());
                         } else {
-                            EmbedBuilder embed = new EmbedBuilder().setTitle("Already Exists").setDescription("A reaction role using this message and emote combination already exists.");
+                            EmbedBuilder embed = new EmbedBuilder()
+                                    .setTitle(context.i18n("exists"))
+                                    .setDescription(context.i18n("exists_desc"));
                             MessageDispatcher.reply(context, embed.build());
                         }},
                     f -> {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to add a reaction to the selected message.");
+                        EmbedBuilder embed = new EmbedBuilder()
+                                .setTitle(context.i18n("failure"))
+                                .setDescription(context.i18n("failure_desc"));
                         MessageDispatcher.reply(context, embed.build());
                     });
 
         }, failure -> {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Failure").setDescription("Unable to find message with given id, either deleted or isn't in this channel.");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("failure"))
+                    .setDescription(context.i18n("failure_missing"));
             MessageDispatcher.reply(context, embed.build());
         });
     }
 
     /**
      * Process GenericGuildMessageReactionEvent events to apply or remove roles from users.
-     *
      * @param e GenericGuildMessageReactionEvent
      */
     public static void processReaction(GenericGuildMessageReactionEvent e) {
         final String message = e.getMessageId();
         final String emote = e.getReactionEmote().getAsReactionCode();
         final String roleId = DatabaseInterface.selectReactionRole(message, emote);
+        final Role role;
 
-        if(roleId == null) {
-            return;
-        }
-
-        final Role role = e.getGuild().getRoleById(roleId);
-
-        if(role == null) {
+        if(roleId == null || (role = e.getGuild().getRoleById(roleId)) == null) {
             return;
         }
 
@@ -129,7 +139,6 @@ public class ReactionRoleCommand extends Command {
     public static class DatabaseInterface {
         /**
          * Selects a reaction role to the respective database table and returns if the operation was successful. (String)
-         *
          * @param message message the reaction role is attached to.
          * @param emote emote the reaction role is invoked by.
          * @return boolean if the operation was successful.
@@ -156,7 +165,6 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Adds a reaction role to the database and returns if the operation was successful.
-         *
          * @param guild {@link Guild} the reaction role is attached to.
          * @param message message the reaction role is attached to.
          * @param emote the emote the reaction role is invoked by.
@@ -182,7 +190,6 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Updates a reaction role emote name.
-         *
          * @param guild {@link Guild}
          * @param oldEmote string of old emote name.
          * @param newEmote string of new emote name.
@@ -204,7 +211,6 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Removes a reaction role from the database and returns if the operation was successful.
-         *
          * @param message {@link Message} the reaction role is attached to.
          * @param emote the emote the reaction role is invoked by.
          * @return boolean if the operation was successful.
@@ -224,7 +230,6 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Removes all reaction roles from the given messageId.
-         *
          * @param messageId messageId.
          */
         public static void removeReactionRole(String messageId) {
@@ -241,7 +246,6 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Removes all reaction roles from the given emote.
-         *
          * @param e {@link Emote}.
          */
         public static void removeReactionRole(Emote e) {
@@ -258,7 +262,6 @@ public class ReactionRoleCommand extends Command {
 
         /**
          * Removes all reaction roles from the given role.
-         *
          * @param e {@link Role}.
          */
         public static void removeReactionRole(Role e) {
