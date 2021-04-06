@@ -121,10 +121,8 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 | Name                                                            | Version          |
 | --------------------------------------------------------------- | ---------------- |
 | [reflections8](https://github.com/aschoerk/reflections8)        | 0.11.7           |
-| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.0_250        |
-| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 9db9b0df8f       |
-| [LavaPlayer](https://github.com/sedmelluq/lavaplayer)           | 1.3.73           |
-| [JDA-NAS](https://github.com/sedmelluq/jda-nas)                 | 1.1.0            |
+| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.1_254        |
+| [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 0409d4cf2b       |
 | [DBL-Java-Library](https://github.com/top-gg/java-sdk)          | 2.0.1            |
 | [Google-Api-Youtube](https://github.com/googleapis)             | v3-rev222-1.25.0 |
 | [Gson](https://github.com/google/gson)                          | 2.8.6            |
