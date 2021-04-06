@@ -44,10 +44,14 @@ public class ModuleCommand extends Command {
             }
 
             if(DatabaseInterface.toggleModule(guild, module)) {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN).setTitle(context.i18n("enabled").formatted(module));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setColor(Color.GREEN)
+                        .setTitle(context.i18n("enabled").formatted(module));
                 MessageDispatcher.reply(context, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED).setTitle(context.i18n("disabled").formatted(module));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setColor(Color.RED)
+                        .setTitle(context.i18n("disabled").formatted(module));
                 MessageDispatcher.reply(context, embed.build());
             }
         } else {
@@ -56,7 +60,7 @@ public class ModuleCommand extends Command {
                     .setTitle(context.i18n( "title"))
                     .setDescription(context.i18n( "desc").formatted(context.getPrefix()))
                     .addField(context.i18n("enabled_modules").formatted(settings.get(0).size()), settings.get(0).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
-                    .addField(context.i18n("enabled_disabled").formatted(settings.get(1).size()), settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
+                    .addField(context.i18n("disabled_modules").formatted(settings.get(1).size()), settings.get(1).toString().replace(",","\n").replaceAll("[\\[\\] ]", "").toLowerCase(), true)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag(), context.getAuthor().getEffectiveAvatarUrl());
             MessageDispatcher.reply(context, commandModules.build());
