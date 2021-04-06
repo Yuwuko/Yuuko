@@ -53,8 +53,8 @@ public class MessageEvent extends GuildMessageReceivedEvent {
      * @param key {@link String}
      * @return {@link String}
      */
-    public String i18n(String key, String auxiliary) {
-        return I18n.get(language, auxiliary, key, true);
+    public String i18n(String key, String mod) {
+        return I18n.get(language, mod, key, true);
     }
 
     /**
