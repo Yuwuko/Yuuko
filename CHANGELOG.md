@@ -2,6 +2,14 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w14a
++ [!] Started adding i18n (internationalisation) support.
++ [!] Stripped out LavaPlayer/NAS. (I think they're unnecessary due to LavaLink)
++ [+] Partial support for French language.
++ [+] Added [__language__] setting to allow uses to switch between languages - default English.
++ [+] Updated dependencies.
++ [-] Removed jcenter as known deps have updated now.
+
 ## 21w12a
 + [!] Repackaged com.yuuko.commands.* to com.yuuko.modules.*
 + [!] Updated Gradle to version 7.0-rc-1.

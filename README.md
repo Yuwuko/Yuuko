@@ -14,7 +14,7 @@
         <img alt="GitHubStars" src="https://img.shields.io/github/stars/Yuuko-oh/Yuuko.svg">
     </a>
     <a href="https://github.com/Yuuko-oh/Yuuko/forks">
-        <img alt="GitHubStars" src="https://img.shields.io/github/forks/Yuuko-oh/Yuuko.svg">
+        <img alt="GitHubForks" src="https://img.shields.io/github/forks/Yuuko-oh/Yuuko.svg">
     </a>
     <a href="https://github.com/Yuuko-oh/Yuuko/issues">
         <img alt="GitHubIssues" src="https://img.shields.io/github/issues/Yuuko-oh/Yuuko.svg">
@@ -29,13 +29,16 @@
     <img alt="Upvotes" src="https://top.gg/api/widget/upvotes/420682957007880223.svg">
 </p>
 
-# Yuuko 21w12a
+# Yuuko 21w14a
 
 Yuuko, programmed in [Java](https://www.oracle.com/uk/java/index.html) way back in mid-2018. Slowly growing into what is has become today. This project always was, and always will be a labour of love.
 
 If you want Yuuko on your server, follow [this](https://discordapp.com/oauth2/authorize?client_id=420682957007880223&permissions=8&scope=bot) link to invite her... be sure to give all the appropriate permissions, to not run into issues. Visit the [website](https://yuwuko.github.io) if you need support or you want to support Yuuko on pateron.
 
 ## Key Features
+
+#### Language
+Yuuko currently fully supports English and (very) partially supports French (bad google translation). If you want your language implemented, let me know by joining the support server. Any help with translation will be greatly appreciated!
 
 #### Music
 Liven up your Discord server with music from a number of sources including YouTube, Twitch, SoundCloud or any HTTP source of audio such as online radio stations.
@@ -63,7 +66,7 @@ Take full advantage of Yuuko's event system, with modifiable title, description,
 | Audio       | `play` `playnext` `last` `clear` `skip` `seek` `pause` `search` `current` `stop` `background` `loop` `shuffle` `lyrics` `queue` |
 | Media       | `osu` `github` `anime` `natgeo` `underground` `petition` `weather` `tesco` `urban` `osrs`                                       |
 | Fun         | `8ball` `spoilerify` `roll` `choose` `flip` `advice` `joke` `horoscope`                                                         |
-| Setting     | `settings` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `cleanupcommands` `playnotifications` `eventchannel`      |
+| Setting     | `settings` `language` `prefix` `starboard` `commandlog` `moderationlog` `djmode` `cleanupcommands` `playnotifications` `eventchannel`      |
 
 ## Self-host 
 
