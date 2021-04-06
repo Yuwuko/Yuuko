@@ -40,31 +40,35 @@ public final class Sanitiser {
     /**
      * Checks a command to ensure all parameters are present.
      *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param feedback boolean
      * @return boolean
      */
-    public static boolean meetsParameterMinimum(MessageEvent e, boolean feedback, int... override) {
-        int minimumParameters = e.getCommand().getMinimumParameters();
+    public static boolean meetsParameterMinimum(MessageEvent context, boolean feedback, int... override) {
+        int minimumParameters = context.getCommand().getMinimumParameters();
 
         if(override != null && override.length > 0) {
             minimumParameters = override[0];
         }
 
-        if(minimumParameters > 0 && !e.hasParameters()) {
+        if(minimumParameters > 0 && !context.hasParameters()) {
             if(feedback) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **0**.");
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("missing_param", "sanitiser"))
+                        .setDescription(context.i18n("missing_count_zero", "sanitiser"));
+                MessageDispatcher.reply(context, embed.build());
             }
             return false;
         }
 
         if(minimumParameters > 1) {
-            String[] commandParameters = e.getParameters().split("\\s+", minimumParameters);
+            String[] commandParameters = context.getParameters().split("\\s+", minimumParameters);
             if(commandParameters.length < minimumParameters) {
                 if(feedback) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("Command expected **" + minimumParameters + "** or more parameters and you provided **" + commandParameters.length + "**.");
-                    MessageDispatcher.reply(e, embed.build());
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n("missing_param", "sanitiser"))
+                            .setDescription(context.i18n("missing_count_num", "sanitiser").formatted(minimumParameters, commandParameters.length));
+                    MessageDispatcher.reply(context, embed.build());
                 }
                 return false;
             }
@@ -76,23 +80,27 @@ public final class Sanitiser {
     /**
      * Checks to see if the command executor can interact with the command target.
      *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param member {@link Member}
      * @return boolean
      */
-    public static boolean canInteract(MessageEvent e, Member member, String reason, boolean feedback) {
-        if(!e.getGuild().getSelfMember().canInteract(member)) {
+    public static boolean canInteract(MessageEvent context, Member member, String reason, boolean feedback) {
+        if(!context.getGuild().getSelfMember().canInteract(member)) {
             if(feedback) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Target").setDescription("I cannot interact with that user because they have an equal or a higher role in the hierarchy to me.");
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_target", "sanitiser"))
+                        .setDescription(context.i18n("invalid_bot", "sanitiser"));
+                MessageDispatcher.reply(context, embed.build());
             }
             return false;
         }
 
-        if(!e.getMember().canInteract(member)) {
+        if(!context.getMember().canInteract(member)) {
             if(feedback) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Target").setDescription("You cannot `" + reason + "` someone with a higher or equal role in the hierarchy to yourself.");
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_target", "sanitiser"))
+                        .setDescription(context.i18n("invalid_user", "sanitiser").formatted(reason));
+                MessageDispatcher.reply(context, embed.build());
             }
             return false;
         }

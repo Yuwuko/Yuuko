@@ -35,27 +35,31 @@ public final class MessageUtilities {
     /**
      * Returns the first mentioned user from a given message.
      *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return {@link Member}
      */
-    public static Member getMentionedMember(MessageEvent e, boolean feedback) {
-        if(e.hasParameters() && e.getParameters().length() == 18 && Sanitiser.isNumeric(e.getParameters())) {
-            return e.getGuild().getMemberById(e.getParameters());
+    public static Member getMentionedMember(MessageEvent context, boolean feedback) {
+        if(context.hasParameters() && context.getParameters().length() == 18 && Sanitiser.isNumeric(context.getParameters())) {
+            return context.getGuild().getMemberById(context.getParameters());
         }
 
-        List<Member> mentioned = getMutableMembersCollection(e);
-        if(e.getMessage().mentionsEveryone()) {
+        List<Member> mentioned = getMutableMembersCollection(context);
+        if(context.getMessage().mentionsEveryone()) {
             if(feedback) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_param", "message_utils"))
+                        .setDescription(context.i18n("invalid_self", "message_utils"));
+                MessageDispatcher.reply(context, embed.build());
             }
             return null;
         }
 
         if(mentioned.size() < 1) {
             if(feedback) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Parameters").setDescription("There were no mentioned users found.");
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_param", "message_utils"))
+                        .setDescription(context.i18n("invalid_none", "message_utils"));
+                MessageDispatcher.reply(context, embed.build());
             }
             return null;
         }
@@ -66,19 +70,21 @@ public final class MessageUtilities {
     /**
      * Returns a list of mentioned users from a given message.
      *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return {@link List<Member>}
      */
-    public static List<Member> getMentionedMembers(MessageEvent e) {
-        List<Member> mentioned = e.getMessage().getMentionedMembers();
+    public static List<Member> getMentionedMembers(MessageEvent context) {
+        List<Member> mentioned = context.getMessage().getMentionedMembers();
         ArrayList<Member> modifiableMentioned = new ArrayList<>(mentioned);
-        modifiableMentioned.remove(e.getGuild().getMember(Yuuko.BOT));
+        modifiableMentioned.remove(context.getGuild().getMember(Yuuko.BOT));
 
-        if(!e.getMessage().mentionsEveryone()) {
+        if(!context.getMessage().mentionsEveryone()) {
             return modifiableMentioned;
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Parameters").setDescription("You cannot do _that_ to everyone.");
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("invalid_param", "message_utils"))
+                    .setDescription(context.i18n("invalid_self", "message_utils"));
+            MessageDispatcher.reply(context, embed.build());
             return null;
         }
     }

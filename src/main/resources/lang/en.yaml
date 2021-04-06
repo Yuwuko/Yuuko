@@ -694,3 +694,18 @@ auxiliary:
       invalid_param: "No Matches found using that parameter."
       load_fail_title: "Loading failed: %s"
       load_fail_desc: "One of the most common causes for this error is trying to play age-restricted content. If the problem persists, please join the support server and let us know."
+
+  message_utils:
+    text:
+      invalid_param: "Invalid Parameter"
+      invalid_self: "You cannot do _that_ to everyone..."
+      invalid_none: "There were no mentioned users found."
+
+  sanitiser:
+    text:
+      missing_param: "Missing Parameters"
+      missing_count_zero: "Command expected **%s** or more parameters and you provided **0**."
+      missing_count_num: "Command expected **%s** or more parameters and you provided **%s**."
+      invalid_target: "Invalid Target"
+      invalid_bot: "I cannot interact with that user because they have an equal or a higher role in the hierarchy to me."
+      invalid_user: "You cannot `%s` someone with a higher or equal role in the hierarchy to yourself."
