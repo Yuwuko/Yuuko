@@ -26,64 +26,70 @@ public class CommandExecutor {
     private static final List<String> nonDJModeCommands = Arrays.asList("queue", "current", "last", "lyrics");
     private static final List<String> requiresDJ = Arrays.asList("play", "playnext", "clear", "background", "loop", "pause", "search", "seek", "shuffle", "skip", "stop");
 
-    private MessageEvent event;
+    private MessageEvent context;
     private Module module;
     private Command command;
     private Member bot;
     private Member commander;
 
-    public CommandExecutor(MessageEvent event) {
-        // Is the event null? (Runtime setup for module reflection)
-        if(event == null) {
+    public CommandExecutor(MessageEvent context) {
+        // Is the context null? (Runtime setup for module reflection)
+        if(context == null) {
             return;
         }
 
-        this.event = event;
-        this.module = event.getModule();
-        this.command = event.getCommand();
-        this.bot = event.getGuild().getSelfMember();
-        this.commander = event.getMember();
+        this.context = context;
+        this.module = context.getModule();
+        this.command = context.getCommand();
+        this.bot = context.getGuild().getSelfMember();
+        this.commander = context.getMember();
 
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
         // Is the command on cooldown?
-        if(command == null || !isEnabled() || isBound() || !isValidAudio() || !command.isCooling(event)) {
+        if(command == null || !isEnabled() || isBound() || !isValidAudio() || !command.isCooling(context)) {
             return;
         }
 
         // Is the command or module NSFW? If they are, is the channel they're being used in /not/ NSFW?
-        if(command.isNSFW() && !event.getChannel().isNSFW()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Invalid Channel").setDescription("That command can only be used in NSFW marked channels.");
-            MessageDispatcher.reply(event, embed.build());
+        if(command.isNSFW() && !context.getChannel().isNSFW()) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("invalid_channel", "cmd"))
+                    .setDescription(context.i18n("nsfw", "cmd"));
+            MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         // Does the command have any permissions?
         if(command.getPermissions() != null) {
             // Does the bot have the permission?
-            if(bot.hasPermission(command.getPermissions()) && !bot.hasPermission(event.getChannel(), command.getPermissions())
-                    || !bot.hasPermission(command.getPermissions()) && !bot.hasPermission(event.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I require the `" + command.getPermissions().toString() + "` permissions to use that command.");
-                MessageDispatcher.reply(event, embed.build());
+            if(bot.hasPermission(command.getPermissions()) && !bot.hasPermission(context.getChannel(), command.getPermissions())
+                    || !bot.hasPermission(command.getPermissions()) && !bot.hasPermission(context.getChannel(), command.getPermissions())) {
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("missing_permission", "cmd"))
+                        .setDescription(context.i18n("missing_permission_bot", "cmd").formatted(command.getPermissions().toString()));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
 
             // Does the user have the permission?
-            if(commander.hasPermission(command.getPermissions()) && !commander.hasPermission(event.getChannel(), command.getPermissions())
-                    || !commander.hasPermission(command.getPermissions()) && !commander.hasPermission(event.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("You require the `" + command.getPermissions().toString() + "` permissions to use that command.");
-                MessageDispatcher.reply(event, embed.build());
+            if(commander.hasPermission(command.getPermissions()) && !commander.hasPermission(context.getChannel(), command.getPermissions())
+                    || !commander.hasPermission(command.getPermissions()) && !commander.hasPermission(context.getChannel(), command.getPermissions())) {
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("missing_permission", "cmd"))
+                        .setDescription(context.i18n("missing_permission_user", "cmd").formatted(command.getPermissions().toString()));
+                MessageDispatcher.reply(context, embed.build());
                 return;
             }
         }
 
         try {
             log.trace("Invoking {}#onCommand()", command.getClass().getSimpleName());
-            command.onCommand(event);
+            command.onCommand(context);
             messageCleanup();
         } catch(Exception e) {
             log.error("Something went wrong when executing the {} command, message: {}", command.getName(), e.getMessage(), e);
-            event.getMessage().addReaction("❌").queue();
+            context.getMessage().addReaction("❌").queue();
         }
     }
 
@@ -100,22 +106,25 @@ public class CommandExecutor {
 
         // Is the member not in a voice channel?
         if(!commander.getVoiceState().inVoiceChannel() && !notInVoiceCommands.contains(command.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("This command can only be used while in a voice channel.");
-            MessageDispatcher.reply(event, embed.build());
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("audio_no_channel", "cmd"));
+            MessageDispatcher.reply(context, embed.build());
             return false;
         }
 
         // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
-        if(AudioManager.hasLink(event.getGuild()) && !AudioManager.isLinkConnected(event.getGuild()) && !disconnectedCommands.contains(command.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("There is no active audio connection.");
-            MessageDispatcher.reply(event, embed.build());
+        if(AudioManager.hasLink(context.getGuild()) && !AudioManager.isLinkConnected(context.getGuild()) && !disconnectedCommands.contains(command.getName())) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("There is no active audio connection.");
+            MessageDispatcher.reply(context, embed.build());
             return false;
         }
 
         // Are there any nodes available?
         if(AudioManager.LAVALINK.getLavalink().getNodes().size() < 1) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("There are no Lavalink nodes available to handle your request.");
-            MessageDispatcher.reply(event, embed.build());
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("audio_no_lavalink", "cmd"));
+            MessageDispatcher.reply(context, embed.build());
             return false;
         }
 
@@ -125,9 +134,11 @@ public class CommandExecutor {
         }
 
         // Is DJ mode on, if yes does the member lack the DJ role, and if not is the command a DJ mode command?
-        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("djMode", event.getGuild().getId())) && requiresDJ.contains(command.getName()) && commander.getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("DJ Mode Enabled").setDescription("While DJ mode is active, only a user with the role of 'DJ' can use that command.");
-            MessageDispatcher.reply(event, embed.build());
+        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("djMode", context.getGuild().getId())) && requiresDJ.contains(command.getName()) && commander.getRoles().stream().noneMatch(role -> role.getName().equals("DJ"))) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("djmode_title", "cmd"))
+                    .setDescription(context.i18n("djmode_desc", "cmd"));
+            MessageDispatcher.reply(context, embed.build());
             return false;
         }
 
@@ -146,15 +157,19 @@ public class CommandExecutor {
         }
 
         // Checks if the module is disabled.
-        if(!ModuleCommand.DatabaseInterface.isEnabled(event.getGuild().getId(), module.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Disabled").setDescription("`" + module.getName() + "` module is disabled.");
-            MessageDispatcher.reply(event, embed.build());
+        if(!ModuleCommand.DatabaseInterface.isEnabled(context.getGuild().getId(), module.getName())) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("module_disabled", "cmd"))
+                    .setDescription(context.i18n("module_disabled_desc", "cmd").formatted(module.getName()));
+            MessageDispatcher.reply(context, embed.build());
             return false;
         }
 
         if(!command.isEnabled()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Command Disabled").setDescription("`" + command.getName() + "` command is disabled.");
-            MessageDispatcher.reply(event, embed.build());
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("command_disabled", "cmd"))
+                    .setDescription(context.i18n("command_disabled_desc", "cmd").formatted(command.getName()));
+            MessageDispatcher.reply(context, embed.build());
             return false;
         }
 
@@ -167,9 +182,11 @@ public class CommandExecutor {
      * @return boolean
      */
     private boolean isBound() {
-        if(BindCommand.DatabaseInterface.isBound(event.getGuild().getId(), event.getChannel().getId(), module.getName())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Module Bound").setDescription("The `" + command.getName() + "` command is bound to " + BindCommand.DatabaseInterface.getBindsByModule(event.getGuild(), module.getName(), ", ") + ".");
-            MessageDispatcher.sendTempMessage(event, embed.build());
+        if(BindCommand.DatabaseInterface.isBound(context.getGuild().getId(), context.getChannel().getId(), module.getName())) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("module_bound", "cmd"))
+                    .setDescription(context.i18n("module_bound", "cmd").formatted(command.getName(), BindCommand.DatabaseInterface.getBindsByModule(context.getGuild(), module.getName(), ", ")));
+            MessageDispatcher.sendTempMessage(context, embed.build());
             return true;
         }
 
@@ -181,12 +198,14 @@ public class CommandExecutor {
      */
     private void messageCleanup() {
         // Does the server want the command message removed?
-        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("cleanupcommands", event.getGuild().getId()))) {
+        if(TextUtilities.toBoolean(GuildFunctions.getGuildSetting("cleanupcommands", context.getGuild().getId()))) {
             if(bot.hasPermission(Permission.MESSAGE_MANAGE)) { // Can the bot manage messages?
-                event.getMessage().delete().queue();
+                context.getMessage().delete().queue();
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Missing Permission").setDescription("I am missing the `MESSAGE_MANAGE` permission required to execute the 'cleanupcommands' setting. If this setting is active by mistake, use `@Yuuko#2525 setting cleanupcommands false`.");
-                MessageDispatcher.reply(event, embed.build());
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("missing_permission", "cmd"))
+                        .setDescription(context.i18n("missing_permission_cleanup", "cmd").formatted(context.getPrefix()));
+                MessageDispatcher.reply(context, embed.build());
             }
         }
     }

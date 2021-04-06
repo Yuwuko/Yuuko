@@ -709,3 +709,22 @@ auxiliary:
       invalid_target: "Invalid Target"
       invalid_bot: "I cannot interact with that user because they have an equal or a higher role in the hierarchy to me."
       invalid_user: "You cannot `%s` someone with a higher or equal role in the hierarchy to yourself."
+
+  cmd:
+    text:
+      invalid_channel: "Invalid Channel"
+      missing_permission: "Missing Permission"
+      missing_permission_cleanup: "I am missing the `MESSAGE_MANAGE` permission required to execute the 'cleanupcommands' setting. If this setting is active by mistake, use `%s setting cleanupcommands false`."
+      module_bound: "Module Bound"
+      module_bound_desc: "The `%s` command is bound to %s."
+      module_disbled: "Module Disabled"
+      module_disabled_desc: "`%s` module is disabled."
+      command_disabled: "Command Disabled"
+      command_disalbed_desc: "`%s` command is disabled."
+      nsfw: "That command can only be used in NSFW marked channels."
+      missing_permission_bot: "I require the `%s` permissions to use that command."
+      missing_permission_user: "You require the `%s` permissions to use that command."
+      audio_no_chanel: "This command can only be used while in a voice channel."
+      audio_no_lavalink: "There are no Lavalink nodes available to handle your request."
+      djmode_title: "DJ Mode Enabled"
+      djmode_desc: "While DJ mode is active, only a user with the role of 'DJ' can use that command."
