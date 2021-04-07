@@ -115,7 +115,7 @@ public class CommandExecutor {
         // Does a Lavalink link exist, if so, is the link disconnected and does the command require it to be otherwise?
         if(AudioManager.hasLink(context.getGuild()) && !AudioManager.isLinkConnected(context.getGuild()) && !disconnectedCommands.contains(command.getName())) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("There is no active audio connection.");
+                    .setTitle(context.i18n("audio_no_connection", "cmd"));
             MessageDispatcher.reply(context, embed.build());
             return false;
         }
