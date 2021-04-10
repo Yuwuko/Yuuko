@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +23,13 @@ public class DatabaseConnection {
         config.setConnectionInitSql("SET NAMES utf8mb4");
         connectionPool = new HikariDataSource(config);
 
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseConnection.class.getClassLoader().getResourceAsStream("db.sql")))) {
+        InputStream sqlStream = DatabaseConnection.class.getClassLoader().getResourceAsStream("db.sql");
+        if(sqlStream == null) {
+            log.warn("Unable to locate database startup sql script. - If the database already exists, ignore this message.");
+            return;
+        }
+
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(sqlStream))) {
             StringBuilder string = new StringBuilder();
             reader.lines().forEach(string::append);
             String[] queries = string.toString().split(";");
