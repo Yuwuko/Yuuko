@@ -47,16 +47,16 @@ public class Yuuko {
     public static boolean LOG_METRICS;
     public static String BOT_ID;
     private static String BOT_TOKEN;
+    public static ShardManager SHARD_MANAGER;
     public static int SHARDS_TOTAL = 0;
     public static int SHARDS_INSTANCE = 0;
-    public static List<Integer> SHARD_IDS = new ArrayList<>();
-    public static String GLOBAL_PREFIX;
-    public static ApiManager API_MANAGER;
-    public static ShardManager SHARD_MANAGER;
-    public static SelfUser BOT;
-    public static Map<String, Module> MODULES = new HashMap<>();
-    public static Map<String, Command> COMMANDS = new HashMap<>();
+    public static final List<Integer> SHARD_IDS = new ArrayList<>();
+    public static final Map<String, Module> MODULES = new HashMap<>();
+    public static final Map<String, Command> COMMANDS = new HashMap<>();
     public static final List<String> LOCKED_MODULES = Arrays.asList("core", "setting", "developer");
+    public static ApiManager API_MANAGER;
+    public static String GLOBAL_PREFIX;
+    public static SelfUser BOT;
     public static DiscordBotListAPI BOT_LIST;
     public static final List<String> STANDARD_STRINGS = Arrays.asList(VERSION,
             VERSION + " • Requested by ",
@@ -80,8 +80,8 @@ public class Yuuko {
 
             // This order DOES matter.
             setupFiles();
-            setupDatabase();
-            loadI18n();
+            DatabaseConnection.setupDatabase();
+            I18n.setup();
             loadConfiguration();
             registerShards();
             setupApi();
@@ -186,20 +186,6 @@ public class Yuuko {
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), e.getMessage(), e);
         }
-    }
-
-    /**
-     * Sets up database from properties file. Also handles backup and internal/external usage.
-     */
-    private void setupDatabase() {
-        DatabaseConnection.setupDatabase();
-    }
-
-    /**
-     * Loads lang files to be parsed for use in commands/etc.
-     */
-    private void loadI18n() {
-        new I18n();
     }
 
     /**
@@ -328,7 +314,7 @@ public class Yuuko {
      */
     private void verifyDatabase() {
         SHARD_MANAGER.getShards().forEach(shard -> shard.getGuildCache().forEach(guild -> {
-            GuildFunctions.addOrUpdateGuild(guild);
+            GuildFunctions.addGuild(guild);
             BindCommand.DatabaseInterface.verifyBinds(guild);
         }));
         log.info("Database integrity verified with JDA.");
