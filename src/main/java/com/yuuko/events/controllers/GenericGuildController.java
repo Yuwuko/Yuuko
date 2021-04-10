@@ -52,7 +52,7 @@ public class GenericGuildController {
     }
 
     private void guildJoinEvent(GuildJoinEvent e) {
-        GuildFunctions.addOrUpdateGuild(e.getGuild());
+        GuildFunctions.addGuild(e.getGuild());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
 
         // possible that a guild has no text channels
@@ -82,7 +82,7 @@ public class GenericGuildController {
 
     private void guildLeaveEvent(GuildLeaveEvent e) {
         AudioManager.destroyGuildAudioManager(e.getGuild());
-        GuildFunctions.cleanup(e.getGuild().getId());
+        GuildFunctions.removeGuild(e.getGuild());
         MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).update();
     }
 

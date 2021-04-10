@@ -18,7 +18,7 @@ public class SyncGuildsCommand extends Command {
     @Override
     public void onCommand(MessageEvent context) throws Exception {
         context.getJDA().getGuildCache().forEach(guild -> {
-            GuildFunctions.addOrUpdateGuild(guild);
+            GuildFunctions.addGuild(guild);
             BindCommand.DatabaseInterface.verifyBinds(guild);
         });
         EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "success"));

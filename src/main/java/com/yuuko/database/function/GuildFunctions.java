@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Base64;
 import java.util.HashMap;
 
 public class GuildFunctions {
@@ -38,15 +37,15 @@ public class GuildFunctions {
      * Adds or updates a guild to/on the database.
      * @param guild {@link Guild} that is added/updated to/on the database.
      */
-    public static void addOrUpdateGuild(Guild guild) {
+    public static void addGuild(Guild guild) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT IGNORE INTO `guilds` (`guildId`) VALUES (?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `guildName` = VALUES(`guildName`), `guildRegion` = VALUES(`guildRegion`), `guildIcon` = VALUES(`guildIcon`), `guildSplash` = VALUES(`guildSplash`), `lastUpdated` = CURRENT_TIMESTAMP");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT IGNORE INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT IGNORE INTO `guilds_settings` (`guildId`) VALUES (?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `guilds_module_settings` (`guildId`) VALUES (?)")) {
 
             stmt.setString(1, guild.getId());
-            if(stmt.execute()) {
+            if(!stmt.execute()) {
                 log.info("Guild added: " + guild.getName() + " (" + guild.getId() + ")");
             }
 
@@ -69,6 +68,24 @@ public class GuildFunctions {
     }
 
     /**
+     * Removes up any guild's that ask the bot to leave. (Uses CASCADE)
+     * @param guild the guild's id.
+     */
+    public static void removeGuild(Guild guild) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds` WHERE `guildId` = ?")) {
+
+            stmt.setString(1, guild.getId());
+            if(!stmt.execute()) {
+                log.info("Guild removed: " + guild.getName() + " (" + guild.getId() + ")");
+            }
+
+        } catch(Exception ex) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Updates a guilds name in the database when it is changed.
      * @param guildId String
      * @param guildName String
@@ -77,10 +94,7 @@ public class GuildFunctions {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildName` = ? WHERE `guildId` = ?")) {
 
-            // Encodes all server names to base64 to prevent special characters messing things up. (not for encryption)
-            String encodedName = Base64.getEncoder().encodeToString(guildName.getBytes());
-
-            stmt.setString(1, encodedName);
+            stmt.setString(1, guildName);
             stmt.setString(2, guildId);
             stmt.execute();
 
@@ -275,40 +289,6 @@ public class GuildFunctions {
 
         } catch(Exception ex) {
             log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Cleans up any guild's that ask the bot to leave. (Uses CASCADE)
-     * @param guild the guild's id.
-     */
-    public static void cleanup(String guild) {
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds` WHERE `guildId` = ?")) {
-
-            stmt.setString(1, guild);
-            stmt.execute();
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     * Cleans up any guild's that didn't get synced within 24 hours of the last startup phase.
-     * @return boolean if the purge was successful.
-     */
-    public static void purgeGuilds() {
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT `guildId` FROM `guilds_data` WHERE `lastUpdated` < DATE_SUB(NOW(), INTERVAL 24 HOUR)")) {
-
-            ResultSet resultSet = stmt.executeQuery();
-            while(resultSet.next()) {
-                cleanup(resultSet.getString("guildId"));
-            }
-
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
         }
     }
 
