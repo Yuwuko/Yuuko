@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class GuildAudioManager {
-    private final Guild guild;
     private final JdaLink link;
     private final LavalinkPlayer player;
     private final TrackScheduler scheduler;
@@ -18,7 +17,6 @@ public class GuildAudioManager {
      * @param guild {@link Guild}
      */
     public GuildAudioManager(Guild guild) {
-        this.guild = guild;
         this.link = AudioManager.LAVALINK.getLavalink().getLink(guild);
         this.player = link.getPlayer();
         this.scheduler = new TrackScheduler(guild, player);
