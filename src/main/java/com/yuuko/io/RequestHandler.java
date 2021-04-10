@@ -35,7 +35,7 @@ public class RequestHandler {
         }
 
         for(RequestProperty property : requestProperties) {
-            builder.addHeader(property.getHeader(), property.getDirective());
+            builder.addHeader(property.header(), property.directive());
         }
 
         try(Response response = client.newCall(builder.build()).execute()) {
