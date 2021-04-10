@@ -12,9 +12,9 @@ public class UpdateMetricsTask implements Task {
         if(Yuuko.LOG_METRICS) {
             if(System.currentTimeMillis() - lastUpdated > 29999) {
                 lastUpdated = System.currentTimeMillis();
-                Yuuko.SHARD_MANAGER.getShards().stream().filter(shard -> shard.getStatus().name().equals("CONNECTED")).forEach(shard -> {
-                    MetricsManager.getDiscordMetrics(shard.getShardInfo().getShardId()).updatePing();
-                });
+                Yuuko.SHARD_MANAGER.getShards().stream()
+                        .filter(shard -> shard.getStatus().name().equals("CONNECTED"))
+                        .forEach(shard -> MetricsManager.getDiscordMetrics(shard.getShardInfo().getShardId()).updatePing());
             }
             MetricsManager.getSystemMetrics().update();
             MetricsManager.getAudioMetrics().update();

@@ -21,15 +21,15 @@ public class RestartCommand extends Command {
     @Override
     public void onCommand(MessageEvent context) throws Exception {
         if(!context.hasParameters()) {
-            ShardFunctions.getShardStatistics().forEach(shard -> {
-                ShardFunctions.triggerRestartSignal(shard.getId());
-            });
+            ShardFunctions.getShardStatistics().forEach(shard -> ShardFunctions.triggerRestartSignal(shard.getId()));
             return;
         }
 
         if(Sanitiser.isNumeric(context.getParameters())) {
             ShardFunctions.triggerRestartSignal(Integer.parseInt(context.getParameters()));
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc").formatted(context.getParameters()));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc").formatted(context.getParameters()));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
@@ -39,7 +39,9 @@ public class RestartCommand extends Command {
             for(int i = Integer.parseInt(shards[0]); i <= Integer.parseInt(shards[1]); i++) {
                 ShardFunctions.triggerShutdownSignal(i);
             }
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc").formatted(context.getParameters()));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc").formatted(context.getParameters()));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
@@ -49,7 +51,9 @@ public class RestartCommand extends Command {
             for(String shard: shards) {
                 ShardFunctions.triggerShutdownSignal(Integer.parseInt(shard));
             }
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc").formatted(context.getParameters()));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc").formatted(context.getParameters()));
             MessageDispatcher.reply(context, embed.build());
         }
     }

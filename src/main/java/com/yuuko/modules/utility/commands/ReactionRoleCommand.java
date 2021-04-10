@@ -47,22 +47,22 @@ public class ReactionRoleCommand extends Command {
         // uses consumer .queue() instead of .complete() since .complete() will throw an exception rather than return null :)))
         context.getChannel().retrieveMessageById(params[0]).queue(message -> {
             if(role == null) {
-                message.getReactions().stream().filter(m -> m.getReactionEmote().getAsReactionCode().equals(emote)).forEach(reaction -> {
-                    reaction.removeReaction().queue(
-                            s -> {
-                                DatabaseInterface.removeReactionRole(message, emote);
-                                EmbedBuilder embed = new EmbedBuilder()
-                                        .setTitle(context.i18n("success"))
-                                        .setDescription(context.i18n("removed").formatted(emote, message));
-                                MessageDispatcher.reply(context, embed.build());
-                            },
-                            f -> {
-                                EmbedBuilder embed = new EmbedBuilder()
-                                        .setTitle(context.i18n("failure"))
-                                        .setDescription(context.i18n("removed_fail"));
-                                MessageDispatcher.reply(context, embed.build());
-                            });
-                });
+                message.getReactions().stream()
+                        .filter(m -> m.getReactionEmote().getAsReactionCode().equals(emote))
+                        .forEach(reaction -> reaction.removeReaction().queue(
+                        s -> {
+                            DatabaseInterface.removeReactionRole(message, emote);
+                            EmbedBuilder embed = new EmbedBuilder()
+                                    .setTitle(context.i18n("success"))
+                                    .setDescription(context.i18n("removed").formatted(emote, message));
+                            MessageDispatcher.reply(context, embed.build());
+                        },
+                        f -> {
+                            EmbedBuilder embed = new EmbedBuilder()
+                                    .setTitle(context.i18n("failure"))
+                                    .setDescription(context.i18n("removed_fail"));
+                            MessageDispatcher.reply(context, embed.build());
+                        }));
                 return;
             }
 
