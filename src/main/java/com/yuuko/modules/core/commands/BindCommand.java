@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,9 @@ public class BindCommand extends Command {
             String[] params = context.getParameters().toLowerCase().split("\\s+", 2);
 
             if(!params[0].equals("*") && !Yuuko.MODULES.containsKey(params[0])) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_input_title")).setDescription(context.i18n( "invalid_input_desc").formatted(params[0], context.getPrefix()));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "invalid_input_title"))
+                        .setDescription(context.i18n( "invalid_input_desc").formatted(params[0], context.getPrefix()));
                 MessageDispatcher.reply(context, embed.build());
                 return;
             }
@@ -40,19 +43,23 @@ public class BindCommand extends Command {
             if(channels.size() != 0) {
                 final int res = DatabaseInterface.toggleBind(context.getGuild().getId(), channels.get(0).getId(), module);
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "bind_channel").formatted(module, channels.get(0).getName()));
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n( "bind_channel").formatted(module, channels.get(0).getName()));
                     MessageDispatcher.reply(context, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "unbind_channel").formatted(module, channels.get(0).getName()));
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n( "unbind_channel").formatted(module, channels.get(0).getName()));
                     MessageDispatcher.reply(context, embed.build());
                 }
             } else {
                 final int res = DatabaseInterface.toggleBind(context.getGuild().getId(), context.getChannel().getId(), module);
                 if(res == 0) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "bind_channel").formatted(module, context.getChannel().getName()));
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n( "bind_channel").formatted(module, context.getChannel().getName()));
                     MessageDispatcher.reply(context, embed.build());
                 } else if(res == 1) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "unbind_channel").formatted(module, context.getChannel().getName()));
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n( "unbind_channel").formatted(module, context.getChannel().getName()));
                     MessageDispatcher.reply(context, embed.build());
                 }
             }
@@ -68,7 +75,6 @@ public class BindCommand extends Command {
     public static class DatabaseInterface {
         /**
          * Binds a particular module to a channel.
-         *
          * @param guildId the idLong of the guild.
          * @param channel the idLong of the channel.
          * @param module the name of the module.
@@ -95,15 +101,14 @@ public class BindCommand extends Command {
 
                 return (clearBind(guildId, channel, module)) ? 1 : -1;
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return -1;
             }
         }
 
         /**
          * Returns a formatted string of all of the selected guild's binds.
-         *
          * @param guild a guild object.
          * @param delimiter the delimiter used in the returned string.
          * @return String
@@ -128,15 +133,14 @@ public class BindCommand extends Command {
 
                 return string.toString();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return null;
             }
         }
 
         /**
          * Returns a formatted string of all of the guild's binds, which match a given module.
-         *
          * @param guild Guild
          * @param module String
          * @param delimiter String
@@ -165,15 +169,14 @@ public class BindCommand extends Command {
 
                 return string.toString();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return null;
             }
         }
 
         /**
          * Checks if a command's execution is to be blocked by a binding.
-         *
          * @param guildId String
          * @param channelId String
          * @param moduleName String
@@ -198,18 +201,17 @@ public class BindCommand extends Command {
 
                 return count != 0;
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return false;
             }
         }
 
         /**
          * Verifies all binds, removing any that are no longer valid.
-         *
          * @param guild {@link Guild} object
          */
-        public static void verifyBinds(Guild guild) {
+        public static void verifyBind(Guild guild) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE `guildId` = ?")) {
 
@@ -223,14 +225,42 @@ public class BindCommand extends Command {
                     }
                 }
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
+            }
+        }
+
+        /**
+         * Recursively verifies all binds, removing any that are no longer valid.
+         * @param guildCache {@link SnowflakeCacheView<Guild>} object
+         */
+        public static void verifyBinds(SnowflakeCacheView<Guild> guildCache) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_module_binds` WHERE `guildId` = ?")) {
+
+                guildCache.forEach(guild -> {
+                    try {
+                        stmt.setString(1, guild.getId());
+                        ResultSet rs = stmt.executeQuery();
+
+                        while (rs.next()) {
+                            String channelId = rs.getString("channelId");
+                            if (guild.getTextChannelCache().getElementById(channelId) == null) {
+                                clearBindByChannel(channelId);
+                            }
+                        }
+                    } catch(Exception e) {
+                        log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
+                    }
+                });
+
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
         /**
          * Clears a module bind from the given channel.
-         *
          * @param guild String
          * @param channel String
          * @param module String
@@ -252,15 +282,14 @@ public class BindCommand extends Command {
 
                 return false;
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return false;
             }
         }
 
         /**
          * Clears all binds that are connected to a specific channel.
-         *
          * @param channelId channelId string.
          */
         private static void clearBindByChannel(String channelId) {
@@ -277,7 +306,6 @@ public class BindCommand extends Command {
 
         /**
          * Removes all references of channels that are deleted.
-         *
          * @param channel String id of the channel referenced
          */
         public static void cleanupReferences(String channel) {
@@ -299,8 +327,8 @@ public class BindCommand extends Command {
                 stmt5.setString(1, channel);
                 stmt5.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
     }

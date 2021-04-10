@@ -2,6 +2,7 @@ package com.yuuko.database.function;
 
 import com.yuuko.database.connection.DatabaseConnection;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,16 +27,16 @@ public class GuildFunctions {
             ResultSet resultSet = stmt.executeQuery();
             return resultSet.next();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
 
         return true;
     }
 
     /**
-     * Adds or updates a guild to/on the database.
-     * @param guild {@link Guild} that is added/updated to/on the database.
+     * Adds a guild to the database.
+     * @param guild {@link Guild} that is added to the database.
      */
     public static void addGuild(Guild guild) {
         try(Connection conn = DatabaseConnection.getConnection();
@@ -62,8 +63,47 @@ public class GuildFunctions {
             stmt4.setString(1, guild.getId());
             stmt4.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Recursively adds guilds to the database, reusing existing prepared statements.
+     * @param guildCache {@link SnowflakeCacheView<Guild>} that is added to the database.
+     */
+    public static void addGuilds(SnowflakeCacheView<Guild> guildCache) {
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT IGNORE INTO `guilds` (`guildId`) VALUES (?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT IGNORE INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement stmt3 = conn.prepareStatement("INSERT IGNORE INTO `guilds_settings` (`guildId`) VALUES (?)");
+            PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `guilds_module_settings` (`guildId`) VALUES (?)")) {
+
+            guildCache.forEach(guild -> {
+                try {
+                    stmt.setString(1, guild.getId());
+                    stmt.execute();
+
+                    stmt2.setString(1, guild.getId());
+                    stmt2.setString(2, guild.getName());
+                    stmt2.setString(3, guild.getRegion().getName());
+                    stmt2.setString(4, guild.getIconUrl());
+                    stmt2.setString(5, guild.getSplashUrl());
+                    stmt2.execute();
+
+                    stmt3.setString(1, guild.getId());
+                    stmt3.execute();
+
+                    stmt4.setString(1, guild.getId());
+                    stmt4.execute();
+                } catch(Exception e) {
+                    log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
+                }
+            });
+
+
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -80,8 +120,8 @@ public class GuildFunctions {
                 log.info("Guild removed: " + guild.getName() + " (" + guild.getId() + ")");
             }
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -98,8 +138,8 @@ public class GuildFunctions {
             stmt.setString(2, guildId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -116,8 +156,8 @@ public class GuildFunctions {
             stmt.setString(2, guildId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -134,8 +174,8 @@ public class GuildFunctions {
             stmt.setString(2, guildId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -153,8 +193,8 @@ public class GuildFunctions {
             stmt.execute();
 
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -171,8 +211,8 @@ public class GuildFunctions {
             ResultSet rs = stmt.executeQuery();
             return rs.next() ? rs.getString("language") : "en";
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
             return "en";
         }
     }
@@ -205,8 +245,8 @@ public class GuildFunctions {
 
             return settings;
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
             return new HashMap<>();
         }
     }
@@ -223,11 +263,10 @@ public class GuildFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-
             return resultSet.next() ? resultSet.getString(1) : null;
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
             return null;
         }
     }
@@ -244,11 +283,10 @@ public class GuildFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-
             return resultSet.next() && resultSet.getBoolean(1);
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
             return false;
         }
     }
@@ -266,11 +304,10 @@ public class GuildFunctions {
 
             stmt.setString(1, value);
             stmt.setString(2, guild);
-
             return !stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
             return false;
         }
     }
@@ -287,8 +324,8 @@ public class GuildFunctions {
             stmt.setString(1, guildId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 

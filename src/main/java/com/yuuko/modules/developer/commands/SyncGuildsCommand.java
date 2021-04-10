@@ -6,6 +6,8 @@ import com.yuuko.events.entity.MessageEvent;
 import com.yuuko.modules.Command;
 import com.yuuko.modules.core.commands.BindCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
 
 import java.util.Arrays;
 
@@ -17,11 +19,12 @@ public class SyncGuildsCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent context) throws Exception {
-        context.getJDA().getGuildCache().forEach(guild -> {
-            GuildFunctions.addGuild(guild);
-            BindCommand.DatabaseInterface.verifyBinds(guild);
-        });
-        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "success"));
+        SnowflakeCacheView<Guild> guildCache = context.getJDA().getGuildCache();
+        GuildFunctions.addGuilds(guildCache);
+        BindCommand.DatabaseInterface.verifyBinds(guildCache);
+
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle(context.i18n( "success"));
         MessageDispatcher.reply(context, embed.build());
     }
 

@@ -19,11 +19,13 @@ import com.yuuko.scheduler.jobs.*;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
 import org.discordbots.api.client.DiscordBotListAPI;
 import org.reflections8.Reflections;
 import org.slf4j.Logger;
@@ -313,10 +315,11 @@ public class Yuuko {
      * Synchronizes the database, adding any guilds that added the bot while it was offline.
      */
     private void verifyDatabase() {
-        SHARD_MANAGER.getShards().forEach(shard -> shard.getGuildCache().forEach(guild -> {
-            GuildFunctions.addGuild(guild);
-            BindCommand.DatabaseInterface.verifyBinds(guild);
-        }));
+        SHARD_MANAGER.getShards().forEach(shard -> {
+            SnowflakeCacheView<Guild> guildCache = shard.getGuildCache();
+            GuildFunctions.addGuilds(guildCache);
+            BindCommand.DatabaseInterface.verifyBinds(guildCache);
+        });
         log.info("Database integrity verified with JDA.");
     }
 
