@@ -14,17 +14,24 @@ public class I18n {
     private static final Logger log = LoggerFactory.getLogger(I18n.class);
     private static final HashMap<String, Language> languages = new HashMap<>();
 
-    public I18n() {
+    public static void setup() {
+        File[] files = new File("./config/lang/").listFiles();
+        if(files == null) {
+            log.error("Unable to load language files, exiting.");
+            System.exit(1);
+        }
+
         Yaml yaml = new Yaml();
-        for(File file : new File("./config/lang/").listFiles()) {
+        for(File file : files) {
             try(InputStream inputStream = new FileInputStream(file)) {
                 Language data = yaml.load(inputStream);
                 languages.put(file.getName().replace(".yaml", ""), data);
-                log.info("Successfully loaded language: %s".formatted(file.getName()));
             } catch(Exception e) {
                 log.error("An error occurred while parsing i18n files, message: {}", e.getMessage(), e);
             }
-    }
+        }
+
+        log.info("Successfully loaded lang files: {}", languages.keySet());
     }
 
     /**
