@@ -39,7 +39,6 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
     /**
      * Quick check to see if there is a next track or not.
-     *
      * @return boolean
      */
     public boolean hasNextTrack() {
@@ -49,8 +48,7 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     /**
      * Add the next track to queue or play right away if nothing is in the queue.
      * If the queue is empty play the background handlers if it isn't null.
-     *
-     * @param track The track to play or add to queue.
+     * @param track {@link AudioTrack}
      */
     public void queue(AudioTrack track) {
         if(player.getPlayingTrack() == null || (background != null && player.getPlayingTrack() == background)) {
@@ -100,9 +98,9 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                 timeout = null;
             }
 
-            MessageEvent e = (MessageEvent) track.getUserData();
-            if(e != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("playnotifications", e.getGuild().getId()))) {
-                new CurrentCommand().onCommand(e.setParameters("no-reply"));
+            MessageEvent context = (MessageEvent) track.getUserData();
+            if(context != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("playnotifications", context.getGuild().getId()))) {
+                new CurrentCommand().onCommand(context.setParameters("no-reply"));
             }
         }  catch(Exception exception) {
             log.debug(exception.getMessage());

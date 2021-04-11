@@ -157,8 +157,8 @@ public class ReactionRoleCommand extends Command {
 
                 return null;
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return null;
             }
         }
@@ -182,8 +182,8 @@ public class ReactionRoleCommand extends Command {
 
                 return !stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return false;
             }
         }
@@ -204,8 +204,8 @@ public class ReactionRoleCommand extends Command {
 
                 stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
@@ -223,8 +223,8 @@ public class ReactionRoleCommand extends Command {
                 stmt.setString(2, emote);
                 stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
@@ -239,40 +239,40 @@ public class ReactionRoleCommand extends Command {
                 stmt.setString(1, messageId);
                 stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
         /**
          * Removes all reaction roles from the given emote.
-         * @param e {@link Emote}.
+         * @param emote {@link Emote}.
          */
-        public static void removeReactionRole(Emote e) {
+        public static void removeReactionRole(Emote emote) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_reaction_roles` WHERE `emoteId` = ?")) {
 
-                stmt.setString(1, e.getName() + ":" + e.getId());
+                stmt.setString(1, emote.getName() + ":" + emote.getId());
                 stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
         /**
          * Removes all reaction roles from the given role.
-         * @param e {@link Role}.
+         * @param role {@link Role}.
          */
-        public static void removeReactionRole(Role e) {
+        public static void removeReactionRole(Role role) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM `guilds_reaction_roles` WHERE `roleId` = ?")) {
 
-                stmt.setString(1, e.getId());
+                stmt.setString(1, role.getId());
                 stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ReactionRoleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
     }

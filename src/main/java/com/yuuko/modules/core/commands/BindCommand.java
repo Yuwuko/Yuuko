@@ -299,8 +299,8 @@ public class BindCommand extends Command {
                 stmt.setString(1, channelId);
                 stmt.execute();
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
             }
         }
 

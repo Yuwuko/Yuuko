@@ -27,9 +27,9 @@ public class AudioLoadHandler {
 
     /**
      * Loads a track from a given url and plays it if possible, else adds it to the queue.
-     *
      * @param manager {@link GuildAudioManager}
      * @param context {@link MessageEvent}
+     * @param type {@link Playback}
      */
     public static void loadAndPlay(GuildAudioManager manager, MessageEvent context, Playback type) {
         final String param = context.getParameters();
@@ -76,8 +76,8 @@ public class AudioLoadHandler {
                         }
                         manager.getScheduler().setBackground(track);
                     }
-                } catch(Exception ex) {
-                    log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+                } catch(Exception e) {
+                    log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
                 }
             }
 
@@ -85,7 +85,8 @@ public class AudioLoadHandler {
             public void playlistLoaded(AudioPlaylist playlist) {
                 try {
                     if(type == Playback.PLAY) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("playlist_load", "audio_load").formatted(playlist.getTracks().size(), playlist.getName()));
+                        EmbedBuilder embed = new EmbedBuilder()
+                                .setTitle(context.i18n("playlist_load", "audio_load").formatted(playlist.getTracks().size(), playlist.getName()));
                         MessageDispatcher.reply(context, embed.build());
 
                         List<AudioTrack> tracks = playlist.getTracks();
@@ -97,7 +98,8 @@ public class AudioLoadHandler {
                     }
 
                     if(type == Playback.PLAYNEXT) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("playlist_next", "audio_load").formatted(playlist.getTracks().size(), playlist.getName()));
+                        EmbedBuilder embed = new EmbedBuilder()
+                                .setTitle(context.i18n("playlist_next", "audio_load").formatted(playlist.getTracks().size(), playlist.getName()));
                         MessageDispatcher.reply(context, embed.build());
 
                         ArrayList<AudioTrack> tempQueue = new ArrayList<>(manager.getScheduler().queue);
@@ -112,24 +114,27 @@ public class AudioLoadHandler {
                     }
 
                     if(type == Playback.BACKGROUND) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("no_support", "audio_load"));
+                        EmbedBuilder embed = new EmbedBuilder()
+                                .setTitle(context.i18n("no_support", "audio_load"));
                         MessageDispatcher.reply(context, embed.build());
                     }
 
-                } catch(Exception ex) {
-                    log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+                } catch(Exception e) {
+                    log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
                 }
             }
 
             @Override
             public void noMatches() {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("invalid_param", "audio_load"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("invalid_param", "audio_load"));
                 MessageDispatcher.reply(context, embed.build());
             }
 
             @Override
-            public void loadFailed(FriendlyException ex) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("load_fail_title", "audio_load").formatted(ex.getMessage()))
+            public void loadFailed(FriendlyException e) {
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("load_fail_title", "audio_load").formatted(e.getMessage()))
                         .setDescription(context.i18n("load_fail_desc", "audio_load").formatted(Yuuko.AUTHOR));
                 MessageDispatcher.reply(context, embed.build());
             }

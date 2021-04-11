@@ -19,9 +19,8 @@ public class RequestHandler {
 
     /**
      * RequestHandler method which takes a url and optional arguments as request properties.
-     *
-     * @param url String: the url used for the connection
-     * @param requestProperties RequestProperty: the optional request properties with default application/json when none are given.
+     * @param url String
+     * @param requestProperties {@link RequestProperty}
      */
     public RequestHandler(String url, RequestProperty... requestProperties) {
         Request.Builder builder = new Request.Builder().url(url);
@@ -49,7 +48,6 @@ public class RequestHandler {
 
     /**
      * Retrieves the content as a string, does nothing else to it.
-     *
      * @return String
      */
     public String getString() {
@@ -58,7 +56,6 @@ public class RequestHandler {
 
     /**
      * Retrieves the content as a JsonObject which can be handled and manipulated with the Google Gson package.
-     *
      * @return {@link JsonObject}
      * @throws IllegalStateException IllegalStateException
      */
@@ -73,7 +70,6 @@ public class RequestHandler {
 
     /**
      * Retrieves the content as a JsonArray which can be handled and manipulated with the Google Gson package.
-     *
      * @return {@link JsonArray}
      * @throws IllegalStateException IllegalStateException
      */
@@ -88,7 +84,6 @@ public class RequestHandler {
 
     /**
      * Retrieves the content as a Jsoup Document.
-     *
      * @return {@link Document}
      */
     public Document getDocument() {

@@ -6,14 +6,14 @@ import net.dv8tion.jda.api.events.channel.text.TextChannelDeleteEvent;
 
 public class GenericTextChannelController {
 
-    public GenericTextChannelController(GenericTextChannelEvent e) {
-        if(e instanceof TextChannelDeleteEvent) {
-            textChannelDeleteEvent((TextChannelDeleteEvent)e);
+    public GenericTextChannelController(GenericTextChannelEvent event) {
+        if(event instanceof TextChannelDeleteEvent) {
+            textChannelDeleteEvent((TextChannelDeleteEvent)event);
         }
     }
 
-    private void textChannelDeleteEvent(TextChannelDeleteEvent e) {
-        BindCommand.DatabaseInterface.cleanupReferences(e.getChannel().getId());
+    private void textChannelDeleteEvent(TextChannelDeleteEvent event) {
+        BindCommand.DatabaseInterface.cleanupReferences(event.getChannel().getId());
     }
 }
 

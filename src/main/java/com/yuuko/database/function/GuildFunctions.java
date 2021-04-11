@@ -197,7 +197,7 @@ public class GuildFunctions {
     }
 
     /**
-     * Return the langauge setting for the guild.
+     * Return the language setting for the guild.
      * @param guildId String
      * @return String
      */

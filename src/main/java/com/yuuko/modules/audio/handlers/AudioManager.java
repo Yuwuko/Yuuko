@@ -112,7 +112,6 @@ public final class AudioManager {
      * This method was chosen over {@link lavalink.client.io.Lavalink#getLink(String)} so we don't create links when
      * they aren't needed, which is the same motivation behind placing this method in {@link AudioManager}
      * instead of placing it in {@link GuildAudioManager} with the similar methods.
-     *
      * @param guild {@link Guild}
      * @return {@link Link}
      */

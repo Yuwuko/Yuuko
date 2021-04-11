@@ -19,29 +19,29 @@ import org.slf4j.LoggerFactory;
 public class GenericGuildMessageController {
     private static final Logger log = LoggerFactory.getLogger(GenericGuildMessageController.class);
 
-    public GenericGuildMessageController(GenericGuildMessageEvent e) {
-        if(e instanceof GuildMessageReceivedEvent) {
-            guildMessageReceivedEvent((GuildMessageReceivedEvent)e);
+    public GenericGuildMessageController(GenericGuildMessageEvent event) {
+        if(event instanceof GuildMessageReceivedEvent) {
+            guildMessageReceivedEvent((GuildMessageReceivedEvent)event);
             return;
         }
 
-        if(e instanceof GuildMessageDeleteEvent) {
-            guildMessageDeleteEvent((GuildMessageDeleteEvent)e);
+        if(event instanceof GuildMessageDeleteEvent) {
+            guildMessageDeleteEvent((GuildMessageDeleteEvent)event);
         }
     }
 
-    private void guildMessageReceivedEvent(GuildMessageReceivedEvent e) {
+    private void guildMessageReceivedEvent(GuildMessageReceivedEvent event) {
         try {
             // Increments message event metric.
-            MetricsManager.getDiscordMetrics(e.getJDA().getShardInfo().getShardId()).MESSAGE_EVENTS.getAndIncrement();
+            MetricsManager.getDiscordMetrics(event.getJDA().getShardInfo().getShardId()).MESSAGE_EVENTS.getAndIncrement();
 
             // Don't process messages from bots. (prevents looping)
-            if(e.getAuthor().isBot()) {
+            if(event.getAuthor().isBot()) {
                 return;
             }
 
-            String prefix = GuildFunctions.getGuildSetting("prefix", e.getGuild().getId());
-            final String message = e.getMessage().getContentRaw();
+            String prefix = GuildFunctions.getGuildSetting("prefix", event.getGuild().getId());
+            final String message = event.getMessage().getContentRaw();
 
             // Checks null because the first few messages before the bot has fully initialised will cause exceptions.
             // Uses short-circuiting to set prefix to the variation used in the message or return if neither.
@@ -52,31 +52,31 @@ public class GenericGuildMessageController {
             final String[] cmd = message.substring(prefix.length()).split("\\s+", 2);
             final String parameters = (cmd.length > 1) ? cmd[1] : null;
             final Command command = Yuuko.COMMANDS.get(cmd[0].toLowerCase());
-            final String lang = GuildFunctions.getGuildLanguage(e.getGuild().getId());
+            final String lang = GuildFunctions.getGuildLanguage(event.getGuild().getId());
 
             // Creates message event object, setting the event, prefix, command and parameters.
-            MessageEvent event = new MessageEvent(e).setLanguage(lang).setPrefix(prefix).setCommand(command).setParameters(parameters);
+            MessageEvent context = new MessageEvent(event).setLanguage(lang).setPrefix(prefix).setCommand(command).setParameters(parameters);
 
             // fail-fast
-            if(!Sanitiser.checks(event)) {
+            if(!Sanitiser.checks(context)) {
                 return;
             }
 
             double execTime = System.nanoTime();
-            new CommandExecutor(event);
+            new CommandExecutor(context);
             execTime = (System.nanoTime() - execTime)/1000000.0;
 
-            MetricsManager.DatabaseInterface.updateCommandMetric(event, execTime);
-            CommandLogSetting.execute(event, execTime);
+            MetricsManager.DatabaseInterface.updateCommandMetric(context, execTime);
+            CommandLogSetting.execute(context, execTime);
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}, input: {}", this, ex.getMessage(), e.getMessage().getContentRaw(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}, input: {}", this, e.getMessage(), event.getMessage().getContentRaw(), e);
         }
     }
 
-    private void guildMessageDeleteEvent(GuildMessageDeleteEvent e) {
-        ReactionRoleCommand.DatabaseInterface.removeReactionRole(e.getMessageId());
-        EventCommand.DatabaseInterface.removeEvent(e.getGuild().getId(), e.getMessageId());
+    private void guildMessageDeleteEvent(GuildMessageDeleteEvent event) {
+        ReactionRoleCommand.DatabaseInterface.removeReactionRole(event.getMessageId());
+        EventCommand.DatabaseInterface.removeEvent(event.getGuild().getId(), event.getMessageId());
     }
 
 }

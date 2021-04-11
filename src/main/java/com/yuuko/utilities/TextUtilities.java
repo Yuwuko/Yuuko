@@ -10,7 +10,6 @@ public final class TextUtilities {
 
     /**
      * Replaces the last occurrence of a pattern with nothing.
-     *
      * @param stringBuilder {@link StringBuilder}
      * @param pattern String
      */
@@ -23,7 +22,6 @@ public final class TextUtilities {
 
     /**
      * Converts a string to a boolean value, essentially just converting 1, true or yes to TRUE and anything else to FALSE.
-     *
      * @param value value to convert to boolean
      * @return boolean
      */
@@ -34,8 +32,7 @@ public final class TextUtilities {
 
     /**
      * Gets current songs timeStamp.
-     *
-     * @param milliseconds how many milliseconds of the song has played.
+     * @param milliseconds long
      * @return formatted timeStamp.
      */
     public static String getTimestamp(long milliseconds) {
@@ -55,8 +52,7 @@ public final class TextUtilities {
 
     /**
      * Gets verbose time string from time in milliseconds.
-     *
-     * @param milliseconds amount of time in milliseconds to convert.
+     * @param milliseconds long
      * @return formatted time string.
      */
     public static String getTimestampVerbose(long milliseconds) {
@@ -79,8 +75,7 @@ public final class TextUtilities {
 
     /**
      * Formats the given time string into a dd/MM/yyyy string.
-     *
-     * @param time time string to format.
+     * @param time String
 
      * @return formatted string.
      */
@@ -113,7 +108,6 @@ public final class TextUtilities {
 
     /**
      * formatInteger flow controller
-     *
      * @param integer integer to be formatted.
      * @return formatted string
      */

@@ -86,26 +86,28 @@ public class MetricsManager {
                     }
                 });
 
-            } catch(Exception ex) {
-                log.error("There was a problem updating metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("There was a problem updating metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
         /**
-         * Update command log using given command from {@link MessageEvent} paramater.
+         * Update command log using given command from {@link MessageEvent} parameter.
+         * @param context {@link MessageEvent}
+         * @param executionTime double
          */
-        public static void updateCommandMetric(MessageEvent e, double executionTime) {
+        public static void updateCommandMetric(MessageEvent context, double executionTime) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO `metrics_command`(`shardId`, `guildId`, `command`, `executionTime`) VALUES(?, ?, ?, ?)")) {
 
-                stmt.setInt(1, e.getShardId());
-                stmt.setString(2, e.getGuild().getId());
-                stmt.setString(3, e.getCommand().getName());
+                stmt.setInt(1, context.getShardId());
+                stmt.setString(2, context.getGuild().getId());
+                stmt.setString(3, context.getCommand().getName());
                 stmt.setDouble(4, executionTime);
                 stmt.execute();
 
-            } catch (Exception ex) {
-                log.error("There was a problem updating command metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            } catch (Exception e) {
+                log.error("There was a problem updating command metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             }
         }
 
@@ -122,8 +124,8 @@ public class MetricsManager {
                 stmt2.execute();
                 stmt3.execute();
 
-            } catch(Exception ex) {
-                log.error("There was a problem pruning metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("There was a problem pruning metrics, class: {}, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             }
         }
     }

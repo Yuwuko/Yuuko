@@ -28,15 +28,15 @@ public class YouTubeSearchHandler {
      * Searches youtube using e.getParameters() and returns the first result.
      * @return youtube video url.
      */
-    public static List<SearchResult> search(MessageEvent e) {
+    public static List<SearchResult> search(MessageEvent context) {
         if(!api.isAvailable()) {
             EmbedBuilder embed = new EmbedBuilder().setTitle("Google API key missing, unable to use YouTube search features.");
-            MessageDispatcher.reply(e, embed.build());
+            MessageDispatcher.reply(context, embed.build());
             return null;
         }
 
         try {
-            SearchListResponse searchResponse = searchCache.getOrDefault(e.getParameters(), null);
+            SearchListResponse searchResponse = searchCache.getOrDefault(context.getParameters(), null);
 
             if(searchResponse == null) {
                 YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {})
@@ -45,25 +45,25 @@ public class YouTubeSearchHandler {
 
                 YouTube.Search.List search = youtube.search().list("id,snippet")
                         .setKey(api.getKey())
-                        .setQ(e.getParameters())
+                        .setQ(context.getParameters())
                         .setType("video")
                         .setFields("items(id/videoId,snippet/title)")
                         .setMaxResults(10L);
 
                 searchResponse = search.execute();
-                searchCache.put(e.getParameters(), searchResponse);
+                searchCache.put(context.getParameters(), searchResponse);
             } else {
                 MetricsManager.getAudioMetrics().TRACK_ID_CACHE_HITS.getAndIncrement();
             }
 
             return searchResponse.getItems();
 
-        } catch (GoogleJsonResponseException ex) {
-            log.error("There was a service error: " + ex.getDetails().getCode() + " : " + ex.getDetails().getMessage());
+        } catch (GoogleJsonResponseException e) {
+            log.error("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
 
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Service Error: " + ex.getDetails().getCode())
-                    .setDescription(ex.getDetails().getMessage());
-            MessageDispatcher.reply(e, embed.build());
+            EmbedBuilder embed = new EmbedBuilder().setTitle("Service Error: " + e.getDetails().getCode())
+                    .setDescription(e.getDetails().getMessage());
+            MessageDispatcher.reply(context, embed.build());
         } catch (IOException cx) {
             log.error("There was an IO error: " + cx.getCause());
         }

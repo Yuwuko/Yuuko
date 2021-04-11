@@ -13,33 +13,31 @@ public final class Sanitiser {
     /**
      * Checks method that allows for fail-fast before any further database calls are made,
      * preventing access to the CommandExecutor class where nulls will throw exceptions.
-     *
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return boolean
      */
-    public static boolean checks(MessageEvent event) {
+    public static boolean checks(MessageEvent context) {
         // Is the member null? (this doesn't happen but is a nullable field according to JDA documentation)
-        if(event.getMember() == null) {
+        if(context.getMember() == null) {
             return false;
         }
 
         // Checks if command is null at this point because the next checks require that it does.
-        if(event.getCommand() == null) {
+        if(context.getCommand() == null) {
             return false;
         }
 
         // Is the module accessed the developer module and is the commander not me?
-        if(event.getModule().getName().equals("developer") && event.getMember().getIdLong() != 215161101460045834L) {
+        if(context.getModule().getName().equals("developer") && context.getMember().getIdLong() != 215161101460045834L) {
             return false;
         }
 
         // Does the command contain the minimum number of parameters?
-        return meetsParameterMinimum(event, true);
+        return meetsParameterMinimum(context, true);
     }
 
     /**
      * Checks a command to ensure all parameters are present.
-     *
      * @param context {@link MessageEvent}
      * @param feedback boolean
      * @return boolean
@@ -79,9 +77,10 @@ public final class Sanitiser {
 
     /**
      * Checks to see if the command executor can interact with the command target.
-     *
      * @param context {@link MessageEvent}
      * @param member {@link Member}
+     * @param reason String
+     * @param feedback boolean
      * @return boolean
      */
     public static boolean canInteract(MessageEvent context, Member member, String reason, boolean feedback) {
@@ -110,7 +109,6 @@ public final class Sanitiser {
 
     /**
      * Checks to see if a string is a number or not without the whole Integer.parseInt() exception thang.
-     *
      * @param string {@link String}
      * @return boolean
      */
@@ -129,7 +127,6 @@ public final class Sanitiser {
 
     /**
      * Checks to see if the given timestamp is valid. I know using try/catch is bad practice in this case but whatcha gonna do?
-     *
      * @param string {@link String}
      * @return boolean
      */
@@ -146,7 +143,6 @@ public final class Sanitiser {
      * Takes a string and removes all special characters and replaces spaces with %20s.
      * @param string {@link String}
      * @param encodeBlank boolean.
-     *
      * @return String
      */
     public static String scrub(String string, boolean encodeBlank) {

@@ -96,8 +96,8 @@ public class Yuuko {
             setupBotLists();
 
             log.info("Loading complete... time taken: {} seconds.", (BigDecimal.valueOf((System.nanoTime() - loadStart) / 1000000000.0).setScale(2, RoundingMode.HALF_UP)));
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -207,8 +207,8 @@ public class Yuuko {
             SHARDS_INSTANCE = Integer.parseInt(config.get("shards_instance"));
             SHARDS_TOTAL = Integer.parseInt(config.get("shards_total"));
             GLOBAL_PREFIX = config.get("global_prefix");
-        } catch(IOException ex) {
-            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(IOException e) {
+            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -231,8 +231,8 @@ public class Yuuko {
         try {
             API_MANAGER = new ApiManager();
             log.info("Loaded {} API keys - {}", API_MANAGER.size(), API_MANAGER.getNames().toString());
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -306,8 +306,8 @@ public class Yuuko {
                 }
             }
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", Yuuko.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -348,7 +348,6 @@ public class Yuuko {
 
     /**
      * Checks to see if all shards are connected.
-     *
      * @return boolean
      */
     private boolean isConstructed() {

@@ -50,7 +50,6 @@ public class MuteCommand extends Command {
 
     /**
      * Creates the muted role to correctly mute people.
-     *
      * @param guild {@link Guild}
      * @return Role
      */

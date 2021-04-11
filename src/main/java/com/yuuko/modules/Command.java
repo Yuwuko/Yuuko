@@ -80,19 +80,19 @@ public abstract class Command {
 
     // Rate limiting only works in this context since commands are singleton objects.
     // If command objects were generated dynamically rate limiting would have to be handled externally.
-    public boolean isCooling(MessageEvent e) {
+    public boolean isCooling(MessageEvent context) {
         // Commands with no cooldown will be set to a duration of -1.
         if(cooldownDurationMilliseconds == -1) {
             return true;
         }
 
-        final String guildId = e.getGuild().getId();
+        final String guildId = context.getGuild().getId();
         if(cooldownsList.containsKey(guildId)) {
             long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(guildId));
 
             if(timeRemaining > 0) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + e.getCommand().getName() + "** command again.");
-                MessageDispatcher.reply(e, embed.build());
+                EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + context.getCommand().getName() + "** command again.");
+                MessageDispatcher.reply(context, embed.build());
                 return false;
             } else {
                 cooldownsList.replace(guildId, System.currentTimeMillis());

@@ -95,7 +95,6 @@ public class CommandExecutor {
 
     /**
      * Checks various conditions to see if using certain audio commands are appropriate for the context of the user. Also checks the DJ Mode setting.
-     *
      * @return boolean
      */
     private boolean isValidAudio() {
@@ -147,7 +146,6 @@ public class CommandExecutor {
 
     /**
      * Checks if either the module or command has been disabled.
-     *
      * @return boolean
      */
     private boolean isEnabled() {
@@ -178,7 +176,6 @@ public class CommandExecutor {
 
     /**
      * Checks channel bindings to see if commands are allowed to be executed there.
-     *
      * @return boolean
      */
     private boolean isBound() {

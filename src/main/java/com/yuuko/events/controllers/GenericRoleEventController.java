@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 public class GenericRoleEventController {
     private static final Logger log = LoggerFactory.getLogger(GenericEmoteEventController.class);
 
-    public GenericRoleEventController(GenericRoleEvent e) {
-        if(e instanceof RoleDeleteEvent) {
-            roleDeleteEvent((RoleDeleteEvent) e);
+    public GenericRoleEventController(GenericRoleEvent event) {
+        if(event instanceof RoleDeleteEvent) {
+            roleDeleteEvent((RoleDeleteEvent) event);
         }
     }
 
-    public void roleDeleteEvent(RoleDeleteEvent e) {
-        ReactionRoleCommand.DatabaseInterface.removeReactionRole(e.getRole());
+    public void roleDeleteEvent(RoleDeleteEvent event) {
+        ReactionRoleCommand.DatabaseInterface.removeReactionRole(event.getRole());
     }
 }

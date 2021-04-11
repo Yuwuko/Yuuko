@@ -105,8 +105,8 @@ public class ModuleCommand extends Command {
                 arrayLists.add(disabled);
 
                 return arrayLists;
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ModuleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ModuleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return new ArrayList<>();
             }
         }
@@ -127,8 +127,8 @@ public class ModuleCommand extends Command {
 
                 return resultSet.next() && resultSet.getBoolean(1);
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ModuleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ModuleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return false;
             }
         }
@@ -149,8 +149,8 @@ public class ModuleCommand extends Command {
 
                 return isEnabled(guild, module);
 
-            } catch(Exception ex) {
-                log.error("An error occurred while running the {} class, message: {}", ModuleCommand.DatabaseInterface.class.getSimpleName(), ex.getMessage(), ex);
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", ModuleCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
                 return false;
             }
         }

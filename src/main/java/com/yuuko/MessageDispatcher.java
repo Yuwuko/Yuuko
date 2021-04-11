@@ -22,187 +22,187 @@ public final class MessageDispatcher {
 
     /**
      * Sends a message, saving those precious bytes.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param message {@link String}
      */
-    public static void sendMessage(MessageEvent event, String message) {
+    public static void sendMessage(MessageEvent context, String message) {
         try {
-            if(hasSendPermission(event)) {
-                event.getChannel().sendMessage(message).queue();
+            if(hasSendPermission(context)) {
+                context.getChannel().sendMessage(message).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends a file via message channel.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param file {@link File}
      */
-    public static void sendMessage(MessageEvent event, File file) {
+    public static void sendMessage(MessageEvent context, File file) {
         try {
-            if(hasSendPermission(event)) {
-                event.getChannel().sendFile(file).queue();
+            if(hasSendPermission(context)) {
+                context.getChannel().sendFile(file).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends a file via message channel.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param bytes byte[]
      * @param fileName String
      */
-    public static void sendMessage(MessageEvent event, byte[] bytes, String fileName) {
+    public static void sendMessage(MessageEvent context, byte[] bytes, String fileName) {
         try {
-            if(hasSendPermission(event)) {
-                event.getChannel().sendFile(bytes, fileName).queue();
+            if(hasSendPermission(context)) {
+                context.getChannel().sendFile(bytes, fileName).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends a message to the provided channel.
-     * @param event {@link GenericGuildEvent}
+     * @param context {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param message {@link String}
      */
-    public static void sendMessage(GenericGuildEvent event, TextChannel channel, String message) {
+    public static void sendMessage(GenericGuildEvent context, TextChannel channel, String message) {
         try {
-            if(hasSendPermission(event, channel)) {
+            if(hasSendPermission(context, channel)) {
                 channel.sendMessage(message).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded message.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param embed {@link MessageEmbed}
      */
-    public static void sendMessage(MessageEvent event, MessageEmbed embed) {
+    public static void sendMessage(MessageEvent context, MessageEmbed embed) {
         try {
-            if(hasEmbedPermission(event)) {
-                event.getChannel().sendMessage(embed).queue();
+            if(hasEmbedPermission(context)) {
+                context.getChannel().sendMessage(embed).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded message to a supplied channel.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
      */
-    public static void sendMessage(MessageEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendMessage(MessageEvent context, TextChannel channel, MessageEmbed embed) {
         try {
-            if(hasEmbedPermission(event, channel)) {
+            if(hasEmbedPermission(context, channel)) {
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded message to a supplied channel.
-     * @param event {@link GenericGuildEvent}
+     * @param context {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
      */
-    public static void sendMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendMessage(GenericGuildEvent context, TextChannel channel, MessageEmbed embed) {
         try {
-            if(hasEmbedPermission(event, channel)) {
+            if(hasEmbedPermission(context, channel)) {
                 channel.sendMessage(embed).queue();
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded reply to the given message.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param embed {@link MessageEmbed}
      */
-    public static void reply(MessageEvent event, MessageEmbed embed) {
+    public static void reply(MessageEvent context, MessageEmbed embed) {
         try {
-            if(hasEmbedPermission(event)) {
-                event.getMessage().reply(embed).queue(s -> {}, f -> sendMessage(event, embed));
+            if(hasEmbedPermission(context)) {
+                context.getMessage().reply(embed).queue(s -> {}, f -> sendMessage(context, embed));
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded reply to the given message.
-     * @param event {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @param message {@link MessageEmbed}
      */
-    public static void reply(MessageEvent event, String message) {
+    public static void reply(MessageEvent context, String message) {
         try {
-            if(hasEmbedPermission(event)) {
-                event.getMessage().reply(message).queue(s -> {}, f -> sendMessage(event, message));
+            if(hasEmbedPermission(context)) {
+                context.getMessage().reply(message).queue(s -> {}, f -> sendMessage(context, message));
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends a message to a supplied channel to be deleted after 15 seconds.
-     * @param event {@link GenericGuildEvent}
+     * @param context {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param message {@link MessageEmbed}
      */
-    public static void sendTempMessage(GenericGuildEvent event, TextChannel channel, String message) {
+    public static void sendTempMessage(GenericGuildEvent context, TextChannel channel, String message) {
         try {
-            if(hasSendPermission(event, channel)) {
+            if(hasSendPermission(context, channel)) {
                 channel.sendMessage(message).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded message to a supplied channel to be deleted after 15 seconds.
-     * @param event {@link GenericGuildEvent}
+     * @param context {@link GenericGuildEvent}
      * @param channel {@link TextChannel}
      * @param embed {@link MessageEmbed}
      */
-    public static void sendTempMessage(GenericGuildEvent event, TextChannel channel, MessageEmbed embed) {
+    public static void sendTempMessage(GenericGuildEvent context, TextChannel channel, MessageEmbed embed) {
         try {
-            if(hasEmbedPermission(event, channel)) {
+            if(hasEmbedPermission(context, channel)) {
                 channel.sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
     /**
      * Sends an embedded message to a supplied channel to be deleted after 15 seconds.
-     * @param event {@link GenericGuildMessageEvent}
+     * @param context {@link GenericGuildMessageEvent}
      * @param embed {@link MessageEmbed}
      */
-    public static void sendTempMessage(GenericGuildMessageEvent event, MessageEmbed embed) {
+    public static void sendTempMessage(GenericGuildMessageEvent context, MessageEmbed embed) {
         try {
-            if(hasEmbedPermission(event)) {
-                event.getChannel().sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
+            if(hasEmbedPermission(context)) {
+                context.getChannel().sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
         } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", event.getClass().getSimpleName(), e.getMessage(), e);
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -222,27 +222,26 @@ public final class MessageDispatcher {
     /**
      * Main hasSendPermission flow controller
      */
-    private static boolean hasSendPermission(GenericGuildMessageEvent e) {
-        return hasSendPermission(e.getGuild(), e.getChannel());
+    private static boolean hasSendPermission(GenericGuildMessageEvent event) {
+        return hasSendPermission(event.getGuild(), event.getChannel());
     }
 
     /**
      * Main hasSendPermission flow controller
      */
-    private static boolean hasSendPermission(GenericGuildMessageEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
+    private static boolean hasSendPermission(GenericGuildMessageEvent event, TextChannel channel) {
+        return hasSendPermission(event.getGuild(), channel);
     }
 
     /**
      * Main hasSendPermission flow controller
      */
-    private static boolean hasSendPermission(GenericGuildEvent e, TextChannel channel) {
-        return hasSendPermission(e.getGuild(), channel);
+    private static boolean hasSendPermission(GenericGuildEvent event, TextChannel channel) {
+        return hasSendPermission(event.getGuild(), channel);
     }
 
     /**
      * Checks to see if the bot has extended permission to write embedded messages with links in the given server/channel.
-     *
      * @param guild {@link Guild}
      * @param channel {@link TextChannel}
      * @return boolean
@@ -257,21 +256,21 @@ public final class MessageDispatcher {
     /**
      * Auxiliary hasEmbedPermission flow controller
      */
-    private static boolean hasEmbedPermission(GenericGuildMessageEvent e) {
-        return hasEmbedPermission(e.getGuild(), e.getChannel());
+    private static boolean hasEmbedPermission(GenericGuildMessageEvent event) {
+        return hasEmbedPermission(event.getGuild(), event.getChannel());
     }
 
     /**
      * Auxiliary hasEmbedPermission flow controller
      */
-    private static boolean hasEmbedPermission(GenericGuildMessageEvent e, TextChannel channel) {
-        return hasEmbedPermission(e.getGuild(), channel);
+    private static boolean hasEmbedPermission(GenericGuildMessageEvent event, TextChannel channel) {
+        return hasEmbedPermission(event.getGuild(), channel);
     }
 
     /**
      * Auxiliary hasEmbedPermission flow controller
      */
-    private static boolean hasEmbedPermission(GenericGuildEvent e, TextChannel channel) {
-        return hasEmbedPermission(e.getGuild(), channel);
+    private static boolean hasEmbedPermission(GenericGuildEvent event, TextChannel channel) {
+        return hasEmbedPermission(event.getGuild(), channel);
     }
 }

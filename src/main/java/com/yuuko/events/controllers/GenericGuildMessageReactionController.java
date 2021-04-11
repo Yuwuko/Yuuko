@@ -12,38 +12,38 @@ import org.slf4j.LoggerFactory;
 public class GenericGuildMessageReactionController {
     private static final Logger log = LoggerFactory.getLogger(GenericGuildMessageReactionController.class);
 
-    public GenericGuildMessageReactionController(GenericGuildMessageReactionEvent e) {
-        if(e instanceof GuildMessageReactionAddEvent) {
-            guildMessageReactionEvent(e);
+    public GenericGuildMessageReactionController(GenericGuildMessageReactionEvent event) {
+        if(event instanceof GuildMessageReactionAddEvent) {
+            guildMessageReactionEvent(event);
             return;
         }
 
-        if(e instanceof GuildMessageReactionRemoveEvent) {
-            guildMessageReactionEvent(e);
+        if(event instanceof GuildMessageReactionRemoveEvent) {
+            guildMessageReactionEvent(event);
         }
     }
 
-    private void guildMessageReactionEvent(GenericGuildMessageReactionEvent e) {
+    private void guildMessageReactionEvent(GenericGuildMessageReactionEvent event) {
         try {
             // Prevent null users or bots from triggering reaction events.
-            if(e.getUser() == null || e.getUser().isBot()) {
+            if(event.getUser() == null || event.getUser().isBot()) {
                 return;
             }
 
             // Starboard
-            if(e instanceof GuildMessageReactionAddEvent) {
-                if(e.getReactionEmote().getName().equals("⭐")) {
-                    StarboardSetting.execute((GuildMessageReactionAddEvent) e);
+            if(event instanceof GuildMessageReactionAddEvent) {
+                if(event.getReactionEmote().getName().equals("⭐")) {
+                    StarboardSetting.execute((GuildMessageReactionAddEvent) event);
                 }
             }
 
             // Events
-            EventCommand.processReaction(e);
-
+            EventCommand.processReaction(event);
             // Reaction Role
-            ReactionRoleCommand.processReaction(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            ReactionRoleCommand.processReaction(event);
+
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 

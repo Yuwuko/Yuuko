@@ -40,8 +40,8 @@ public class SearchCommand extends Command {
             }
 
             String videoId = audioSearchResults.get(context.getAuthor().getId()).get(value == 0 ? 0 : value - 1).getId().getVideoId();
-            MessageEvent event = new MessageEvent(context).setCommand(new PlayCommand()).setParameters("https://www.youtube.com/watch?v=" + videoId);
-            event.getCommand().onCommand(event);
+            MessageEvent ctx = new MessageEvent(context).setCommand(new PlayCommand()).setParameters("https://www.youtube.com/watch?v=" + videoId);
+            ctx.getCommand().onCommand(ctx);
             audioSearchResults.remove(context.getAuthor().getId());
             return;
         }

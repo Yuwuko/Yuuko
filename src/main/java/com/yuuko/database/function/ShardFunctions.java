@@ -41,8 +41,8 @@ public class ShardFunctions {
 
             return shard;
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             return -1;
         }
     }
@@ -62,8 +62,8 @@ public class ShardFunctions {
             stmt.setInt(5, shard.getShardInfo().getShardId());
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -77,8 +77,8 @@ public class ShardFunctions {
             stmt.setInt(1, shard);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -92,8 +92,8 @@ public class ShardFunctions {
             stmt.setInt(1, shard);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -114,8 +114,8 @@ public class ShardFunctions {
 
             return shards;
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             return new ArrayList<>();
         }
     }
@@ -129,8 +129,8 @@ public class ShardFunctions {
 
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -145,8 +145,8 @@ public class ShardFunctions {
             stmt.setInt(1, shardId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -161,8 +161,8 @@ public class ShardFunctions {
             stmt.setInt(1, shardId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -184,8 +184,8 @@ public class ShardFunctions {
 
             return false;
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             return false;
         }
     }
@@ -201,8 +201,8 @@ public class ShardFunctions {
             stmt.setInt(1, shardId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -217,8 +217,8 @@ public class ShardFunctions {
             stmt.setInt(1, shardId);
             stmt.execute();
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
@@ -240,8 +240,8 @@ public class ShardFunctions {
 
             return false;
 
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), ex.getMessage(), ex);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", ShardFunctions.class.getSimpleName(), e.getMessage(), e);
             return false;
         }
     }

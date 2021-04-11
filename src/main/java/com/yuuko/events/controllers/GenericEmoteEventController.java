@@ -10,24 +10,24 @@ import org.slf4j.LoggerFactory;
 public class GenericEmoteEventController {
     private static final Logger log = LoggerFactory.getLogger(GenericEmoteEventController.class);
 
-    public GenericEmoteEventController(GenericEmoteEvent e) {
-        if(e instanceof EmoteUpdateNameEvent) {
-            emoteUpdateNameEvent((EmoteUpdateNameEvent) e);
+    public GenericEmoteEventController(GenericEmoteEvent event) {
+        if(event instanceof EmoteUpdateNameEvent) {
+            emoteUpdateNameEvent((EmoteUpdateNameEvent) event);
             return;
         }
 
-        if(e instanceof EmoteRemovedEvent) {
-            emoteRemovedEvent((EmoteRemovedEvent) e);
+        if(event instanceof EmoteRemovedEvent) {
+            emoteRemovedEvent((EmoteRemovedEvent) event);
         }
     }
 
-    public void emoteUpdateNameEvent(EmoteUpdateNameEvent e) {
-        final String oldEmote = e.getOldName() + ":" + e.getEmote().getId();
-        final String newEmote = e.getNewName() + ":" + e.getEmote().getId();
-        ReactionRoleCommand.DatabaseInterface.updateReactionRole(e.getGuild(), oldEmote, newEmote);
+    public void emoteUpdateNameEvent(EmoteUpdateNameEvent event) {
+        final String oldEmote = event.getOldName() + ":" + event.getEmote().getId();
+        final String newEmote = event.getNewName() + ":" + event.getEmote().getId();
+        ReactionRoleCommand.DatabaseInterface.updateReactionRole(event.getGuild(), oldEmote, newEmote);
     }
 
-    public void emoteRemovedEvent(EmoteRemovedEvent e) {
-        ReactionRoleCommand.DatabaseInterface.removeReactionRole(e.getEmote());
+    public void emoteRemovedEvent(EmoteRemovedEvent event) {
+        ReactionRoleCommand.DatabaseInterface.removeReactionRole(event.getEmote());
     }
 }

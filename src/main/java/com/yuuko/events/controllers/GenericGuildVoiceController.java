@@ -8,17 +8,17 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 
 public class GenericGuildVoiceController {
 
-    public GenericGuildVoiceController(GenericGuildVoiceEvent e) {
-        if(e instanceof GuildVoiceLeaveEvent || e instanceof GuildVoiceMoveEvent) {
-            voiceChannelAbandonedCheck(e);
+    public GenericGuildVoiceController(GenericGuildVoiceEvent event) {
+        if(event instanceof GuildVoiceLeaveEvent || event instanceof GuildVoiceMoveEvent) {
+            voiceChannelAbandonedCheck(event);
         }
     }
 
-    private void voiceChannelAbandonedCheck(GenericGuildVoiceEvent e) {
-        GuildVoiceState voiceState = e.getGuild().getSelfMember().getVoiceState();
+    private void voiceChannelAbandonedCheck(GenericGuildVoiceEvent event) {
+        GuildVoiceState voiceState = event.getGuild().getSelfMember().getVoiceState();
 
         if(voiceState != null && voiceState.inVoiceChannel() && voiceState.getChannel().getMembers().size() == 1) {
-            new StopCommand().onCommand(e.getGuild());
+            new StopCommand().onCommand(event.getGuild());
         }
     }
 

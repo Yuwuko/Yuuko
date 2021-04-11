@@ -14,27 +14,24 @@ public final class MessageUtilities {
 
     /**
      * Returns whether or not a user is mentioned in the message.
-     *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return boolean
      */
-    public static boolean checkIfUserMentioned(MessageEvent e) {
-        return e.getMessage().getMentionedMembers().size() > 0;
+    public static boolean checkIfUserMentioned(MessageEvent context) {
+        return context.getMessage().getMentionedMembers().size() > 0;
     }
 
     /**
      * Returns whether or not a channel is mentioned in the message.
-     *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return boolean
      */
-    public static boolean checkIfChannelMentioned(MessageEvent e) {
-        return e.getMessage().getMentionedChannels().size() > 0;
+    public static boolean checkIfChannelMentioned(MessageEvent context) {
+        return context.getMessage().getMentionedChannels().size() > 0;
     }
 
     /**
      * Returns the first mentioned user from a given message.
-     *
      * @param context {@link MessageEvent}
      * @return {@link Member}
      */
@@ -69,7 +66,6 @@ public final class MessageUtilities {
 
     /**
      * Returns a list of mentioned users from a given message.
-     *
      * @param context {@link MessageEvent}
      * @return {@link List<Member>}
      */
@@ -91,25 +87,23 @@ public final class MessageUtilities {
 
     /**
      * Since JDA by default returns unmodifiable collections, we need one that is... (that also removes if the bot is mentioned!)
-     *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return {@link List<Member>}
      */
-    private static List<Member> getMutableMembersCollection(MessageEvent e) {
-        List<Member> unmodifiableMentioned = e.getMessage().getMentionedMembers();
+    private static List<Member> getMutableMembersCollection(MessageEvent context) {
+        List<Member> unmodifiableMentioned = context.getMessage().getMentionedMembers();
         ArrayList<Member> mentioned = new ArrayList<>(unmodifiableMentioned);
-        mentioned.remove(e.getGuild().getMember(Yuuko.BOT));
+        mentioned.remove(context.getGuild().getMember(Yuuko.BOT));
         return mentioned;
     }
 
     /**
      * Returns the first mentioned channel from a given message.
-     *
-     * @param e {@link MessageEvent}
+     * @param context {@link MessageEvent}
      * @return {@link TextChannel}
      */
-    public static TextChannel getFirstMentionedChannel(MessageEvent e) {
-        List<TextChannel> mentioned = e.getMessage().getMentionedChannels();
+    public static TextChannel getFirstMentionedChannel(MessageEvent context) {
+        List<TextChannel> mentioned = context.getMessage().getMentionedChannels();
         return (mentioned.size() > 0) ? mentioned.get(0) : null;
     }
 
