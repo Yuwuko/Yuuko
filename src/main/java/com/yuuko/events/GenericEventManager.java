@@ -17,90 +17,93 @@ public class GenericEventManager extends ListenerAdapter {
     private static final Logger log = LoggerFactory.getLogger(GenericEventManager.class);
 
     /**
-     * Captures and deals with generic guild events.
-     *
-     * @param e GenericGuildEvent
+     * Captures generic guild events.
+     * @param event {@link GenericGuildEvent}
      */
     @Override
-    public void onGenericGuild(@NotNull GenericGuildEvent e) {
+    public void onGenericGuild(@NotNull GenericGuildEvent event) {
         try {
-            new GenericGuildController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericGuildController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
     /**
-     * Captures and deals with generic message events.
-     *
-     * @param e -> GenericMessageEvent.
+     * Captures generic message events.
+     * @param event {@link GenericGuildMessageEvent}
      */
     @Override
-    public void onGenericGuildMessage(@NotNull GenericGuildMessageEvent e) {
+    public void onGenericGuildMessage(@NotNull GenericGuildMessageEvent event) {
         try {
-            new GenericGuildMessageController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericGuildMessageController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
     /**
-     * Captures and deals generic reaction events.
-     *
-     * @param e -> GenericGuildMessageReactionEvent.
+     * Captures generic reaction events.
+     * @param event {@link GenericGuildMessageReactionEvent}
      */
     @Override
-    public void onGenericGuildMessageReaction(@NotNull GenericGuildMessageReactionEvent e) {
+    public void onGenericGuildMessageReaction(@NotNull GenericGuildMessageReactionEvent event) {
         try {
-            new GenericGuildMessageReactionController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericGuildMessageReactionController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
     /**
-     * Captures and deals with generic voice events.
-     *
-     * @param e -> GenericGuildVoiceEvent.
+     * Captures generic voice events.
+     * @param event {@link GenericGuildVoiceEvent}
      */
     @Override
-    public void onGenericGuildVoice(@NotNull GenericGuildVoiceEvent e) {
+    public void onGenericGuildVoice(@NotNull GenericGuildVoiceEvent event) {
         try {
-            new GenericGuildVoiceController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericGuildVoiceController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
     /**
-     * Captures and deals with generic text-channel events.
-     *
-     * @param e -> GenericTextChannelEvent.
+     * Captures generic text-channel events.
+     * @param event {@link GenericTextChannelEvent}
      */
     @Override
-    public void onGenericTextChannel(@NotNull GenericTextChannelEvent e) {
+    public void onGenericTextChannel(@NotNull GenericTextChannelEvent event) {
         try {
-            new GenericTextChannelController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericTextChannelController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
+    /**
+     * Captures generic emote events.
+     * @param event {@link GenericEmoteEvent}
+     */
     @Override
-    public void onGenericEmote(@NotNull GenericEmoteEvent e) {
+    public void onGenericEmote(@NotNull GenericEmoteEvent event) {
         try {
-            new GenericEmoteEventController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericEmoteEventController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 
+    /**
+     * Captures generic role events.
+     * @param event {@link GenericRoleEvent}
+     */
     @Override
-    public void onGenericRole(@NotNull GenericRoleEvent e) {
+    public void onGenericRole(@NotNull GenericRoleEvent event) {
         try {
-            new GenericRoleEventController(e);
-        } catch(Exception ex) {
-            log.error("An error occurred while running the {} class, message: {}", this, ex.getMessage(), ex);
+            new GenericRoleEventController(event);
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", this, e.getMessage(), e);
         }
     }
 }
