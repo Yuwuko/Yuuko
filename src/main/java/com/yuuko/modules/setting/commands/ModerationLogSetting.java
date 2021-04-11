@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.guild.GuildUnbanEvent;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -65,22 +64,6 @@ public class ModerationLogSetting extends Command {
     }
 
     /**
-     * Add new entry to mod-log on unban event.
-     * @param context {@link GuildUnbanEvent}
-     */
-    public static void execute(GuildUnbanEvent context) {
-        String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
-        if(channelId != null) {
-            EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Unban")
-                    .addField("User", context.getUser().getAsTag(), true)
-                    .setTimestamp(Instant.now())
-                    .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
-            MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());
-        }
-    }
-
-    /**
      * Add new entry to mod-log on from the given action command.
      * @param context {@link MessageEvent}
      * @param target {@link User}
@@ -90,11 +73,11 @@ public class ModerationLogSetting extends Command {
         String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
         if(channelId != null) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(context.i18n("action"))
+                    .setTitle(context.i18n("action"), "moderation_log")
                     .setThumbnail(target.getEffectiveAvatarUrl())
-                    .addField(context.i18n("user"), target.getAsTag(), true)
-                    .addField(context.i18n("moderator"), context.getMember().getUser().getAsTag(), true)
-                    .addField(context.i18n("reason"), reason, false)
+                    .addField(context.i18n("user", "moderation_log"), target.getAsTag(), true)
+                    .addField(context.i18n("moderator", "moderation_log"), context.getMember().getUser().getAsTag(), true)
+                    .addField(context.i18n("reason", "moderation_log"), reason, false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
             MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());
@@ -110,11 +93,11 @@ public class ModerationLogSetting extends Command {
         String channelId = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
         if(channelId != null) {
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(context.i18n("deleted"))
+                    .setTitle(context.i18n("deleted", "moderation_log"))
                     .setThumbnail(context.getAuthor().getEffectiveAvatarUrl())
-                    .addField(context.i18n("moderator"), context.getMember().getUser().getAsTag(), true)
-                    .addField(context.i18n("channel"), context.getChannel().getAsMention(), true)
-                    .addField(context.i18n("count"), messagesDeleted + "", false)
+                    .addField(context.i18n("moderator", "moderation_log"), context.getMember().getUser().getAsTag(), true)
+                    .addField(context.i18n("channel", "moderation_log"), context.getChannel().getAsMention(), true)
+                    .addField(context.i18n("count", "moderation_log"), messagesDeleted + "", false)
                     .setTimestamp(Instant.now())
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getEffectiveAvatarUrl());
             MessageDispatcher.sendMessage(context, context.getGuild().getTextChannelById(channelId), embed.build());

@@ -66,7 +66,6 @@ public class CommandLogSetting extends Command {
 
     /**
      * Executes the command logging function if it is enabled.
-     *
      * @param context MessageEvent
      * @param executionTimeMs long
      */
@@ -75,12 +74,12 @@ public class CommandLogSetting extends Command {
         if(channelId != null) {
             TextChannel log = context.getGuild().getTextChannelById(channelId);
             EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(context.i18n("command"))
+                    .setTitle(context.i18n("command", "command_log"))
                     .setThumbnail(context.getAuthor().getAvatarUrl())
-                    .addField(context.i18n("user"), context.getAuthor().getName() + "#" + context.getAuthor().getDiscriminator(), true)
-                    .addField(context.i18n("command"), context.getMessage().getContentDisplay(), true)
-                    .addField(context.i18n("channel"), context.getMessage().getTextChannel().getAsMention(), true)
-                    .addField(context.i18n("execution"), new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
+                    .addField(context.i18n("user", "command_log"), context.getAuthor().getAsTag(), true)
+                    .addField(context.i18n("command", "command_log"), context.getMessage().getContentDisplay(), true)
+                    .addField(context.i18n("channel", "command_log"), context.getMessage().getTextChannel().getAsMention(), true)
+                    .addField(context.i18n("execution", "command_log"), new BigDecimal(executionTimeMs).setScale(2, RoundingMode.HALF_UP) + "ms", true)
                     .setFooter(Yuuko.STANDARD_STRINGS.get(0), Yuuko.BOT.getAvatarUrl())
                     .setTimestamp(Instant.now());
             MessageDispatcher.sendMessage(context, log, embed.build());
