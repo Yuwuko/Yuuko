@@ -29,15 +29,16 @@ public class DatabaseConnection {
             return;
         }
 
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(sqlStream))) {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(sqlStream));
+            Connection connection = getConnection()) {
+
             StringBuilder string = new StringBuilder();
             reader.lines().forEach(string::append);
             String[] queries = string.toString().split(";");
             for(String query : queries) {
-                Connection connection = getConnection();
                 connection.prepareStatement(query).execute();
-                connection.close();
             }
+
         } catch(Exception e) {
             log.error("There was a problem running the startup sql database scripts, message: {}", e.getMessage());
         }

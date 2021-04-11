@@ -101,7 +101,6 @@ public class GuildFunctions {
                 }
             });
 
-
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
         }
@@ -191,7 +190,6 @@ public class GuildFunctions {
             stmt.setString(1, guildSplash);
             stmt.setString(2, guildId);
             stmt.execute();
-
 
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
