@@ -21,7 +21,7 @@ java {
 }
 
 ext {
-    reflections8                 = '0.11.7'                     // https://mvnrepository.com/artifact/net.oneandone.reflections8/reflections8
+    reflections                 = '0.9.12'                      // https://mvnrepository.com/artifact/net.oneandone.reflections8/reflections8
     jda                          = '4.2.1_254'                  // https://mvnrepository.com/artifact/net.dv8tion/JDA
     lavalinkClient               = '0409d4cf2b'                 // https://jitpack.io/#Yuuko-oh/Lavalink-Client
     dblJavaWrapper               = '2.0.1'                      // https://github.com/top-gg/DBL-Java-Library
@@ -40,7 +40,7 @@ ext {
 }
 
 dependencies {
-    implementation group: 'net.oneandone.reflections8', name: 'reflections8', version: reflections8
+    implementation group: 'org.reflections', name: 'reflections', version: reflections
     implementation group: 'net.dv8tion', name: 'JDA', version: jda
     implementation group: 'com.github.Yuuko-oh', name: 'Lavalink-Client', version: lavalinkClient
     implementation group: 'com.github.DiscordBotList', name: 'DBL-Java-Wrapper', version: dblJavaWrapper

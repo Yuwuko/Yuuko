@@ -1,6 +1,6 @@
 package com.yuuko.modules;
 
-import org.reflections8.Reflections;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
