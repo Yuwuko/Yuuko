@@ -286,7 +286,7 @@ public class Yuuko {
                     GatewayIntent.GUILD_VOICE_STATES
             )
                     .setToken(BOT_TOKEN)
-                    .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS)
+                    .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
                     .addEventListeners(new GenericEventManager(), AudioManager.LAVALINK.getLavalink())
                     .setVoiceDispatchInterceptor(AudioManager.LAVALINK.getLavalink().getVoiceInterceptor())
                     .setBulkDeleteSplittingEnabled(false) // not sure why this is enable by default
