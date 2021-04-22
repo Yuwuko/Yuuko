@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class SpoilerifyCommand extends Command {
 
     public SpoilerifyCommand() {
-        super("spoilerify", 1, -1L, Arrays.asList("-spoilerify <string>"), false, null);
+        super("spoilerify", Arrays.asList("-spoilerify <string>"), 1);
     }
 
     @Override
@@ -19,6 +19,6 @@ public class SpoilerifyCommand extends Command {
             spoiler.append("||").append(character).append("||");
         }
 
-        MessageDispatcher.reply(context, "`" + spoiler.toString() + "`");
+        MessageDispatcher.reply(context, "`" + spoiler + "`");
     }
 }

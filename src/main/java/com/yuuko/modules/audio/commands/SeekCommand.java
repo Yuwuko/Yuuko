@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class SeekCommand extends Command {
 
     public SeekCommand() {
-        super("seek", 1, -1L, Arrays.asList("-seek <seconds>", "-seek <timestamp>"), false, null);
+        super("seek", Arrays.asList("-seek <seconds>", "-seek <timestamp>"), 1);
     }
 
     @Override

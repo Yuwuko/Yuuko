@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class PermissionsCommand extends Command {
 
     public PermissionsCommand() {
-        super("permissions", 0, -1L, Arrays.asList("-permissions"), false, null);
+        super("permissions", Arrays.asList("-permissions"));
     }
 
     @Override

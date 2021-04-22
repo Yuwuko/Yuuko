@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class LogMetricsCommand extends Command {
 
     public LogMetricsCommand() {
-        super("logmetrics", 0, -1L, Arrays.asList("-logmetrics"), false, null);
+        super("logmetrics", Arrays.asList("-logmetrics"));
     }
 
     @Override

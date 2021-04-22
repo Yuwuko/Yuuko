@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ModerationLogSetting extends Command {
 
     public ModerationLogSetting() {
-        super("moderationlog", 0, -1L, Arrays.asList("-moderationlog", "-moderationlog setup", "-moderationlog <#channel>", "-moderationlog unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("moderationlog", Arrays.asList("-moderationlog", "-moderationlog setup", "-moderationlog <#channel>", "-moderationlog unset"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent context) throws Exception {

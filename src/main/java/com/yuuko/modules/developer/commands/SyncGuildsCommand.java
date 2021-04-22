@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class SyncGuildsCommand extends Command {
 
     public SyncGuildsCommand() {
-        super("syncguilds", 0, -1L, Arrays.asList("-syncguilds"), false, null);
+        super("syncguilds", Arrays.asList("-syncguilds"));
     }
 
     @Override

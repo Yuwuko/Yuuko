@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class SetStatusCommand extends Command {
 
     public SetStatusCommand() {
-        super("setstatus", 1, -1L, Arrays.asList("-setstatus <type> <status>"), false, null);
+        super("setstatus", Arrays.asList("-setstatus <type> <status>"), 2);
     }
 
     @Override

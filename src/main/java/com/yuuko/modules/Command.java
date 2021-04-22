@@ -13,31 +13,51 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Command {
     protected static final Logger log = LoggerFactory.getLogger(Command.class);
-    private final String name;
     private Module module;
-    private final int minimumParameters;
-    private final long cooldownDurationMilliseconds;
-    private final HashMap<String, Long> cooldownsList;
+    private boolean enabled = true;
+    private final String name;
+    private final int parameters;
+    private final long cooldownDuration; // milliseconds
+    private final HashMap<String, Long> cooldownsList = new HashMap<>();
     private final List<String> usage;
     private final List<Permission> permissions;
     private final boolean nsfw;
-    private boolean enabled = true;
 
-    public Command(String name, int minimumParameters, long cooldownDurationMilliseconds, List<String> usage, boolean nsfw, List<Permission> permissions, boolean... commandEnabled) {
+    public Command(String name, List<String> usage) {
+        this(name, usage, null, false, 0, -1L);
+    }
+
+    public Command(String name, List<String> usage, boolean nsfw) {
+        this(name, usage, null, nsfw, 0, -1L);
+    }
+
+    public Command(String name, List<String> usage, int parameters) {
+        this(name, usage, null, false, parameters, -1L);
+    }
+
+    public Command(String name, List<String> usage, boolean nsfw, int parameters) {
+        this(name, usage, null, nsfw, parameters, -1L);
+    }
+
+    public Command(String name, List<String> usage, List<Permission> permissions) {
+        this(name, usage, permissions, false, 0, -1L);
+    }
+
+    public Command(String name, List<String> usage, List<Permission> permissions, int parameters) {
+        this(name, usage, permissions, false, parameters, -1L);
+    }
+
+    public Command(String name, List<String> usage, List<Permission> permissions, int parameters, long cooldownDuration) {
+        this(name, usage, permissions, false, parameters, cooldownDuration);
+    }
+
+    public Command(String name, List<String> usage, List<Permission> permissions, boolean nsfw, int parameters, long cooldownDuration) {
         this.name = name;
-        this.minimumParameters = minimumParameters;
-        this.cooldownDurationMilliseconds = cooldownDurationMilliseconds;
-        this.cooldownsList = new HashMap<>();
         this.usage = usage;
-        this.nsfw = nsfw;
         this.permissions = permissions;
-
-        if(commandEnabled.length > 0) {
-            enabled = commandEnabled[0];
-            if(!enabled) {
-                log.warn("{} command has been disabled due to missing API information.", name.toUpperCase());
-            }
-        }
+        this.nsfw = nsfw;
+        this.parameters = parameters;
+        this.cooldownDuration = cooldownDuration;
     }
 
     void setModule(Module module) {
@@ -52,8 +72,8 @@ public abstract class Command {
         return module;
     }
 
-    public int getMinimumParameters() {
-        return minimumParameters;
+    public int getParameters() {
+        return parameters;
     }
 
     public List<String> getUsage() {
@@ -73,7 +93,7 @@ public abstract class Command {
     }
 
     // allows commands to be toggled off globally.
-    public void setEnabled(boolean state) {
+    protected void setEnabled(boolean state) {
         enabled = state;
         log.warn("{} command has been {}.", name, state ? "enabled" : "disabled");
     }
@@ -82,13 +102,13 @@ public abstract class Command {
     // If command objects were generated dynamically rate limiting would have to be handled externally.
     public boolean isCooling(MessageEvent context) {
         // Commands with no cooldown will be set to a duration of -1.
-        if(cooldownDurationMilliseconds == -1) {
+        if(cooldownDuration == -1) {
             return true;
         }
 
         final String guildId = context.getGuild().getId();
         if(cooldownsList.containsKey(guildId)) {
-            long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(guildId));
+            long timeRemaining = cooldownDuration - (System.currentTimeMillis() - cooldownsList.get(guildId));
 
             if(timeRemaining > 0) {
                 EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + context.getCommand().getName() + "** command again.");
@@ -108,7 +128,7 @@ public abstract class Command {
     public void pruneCooldowns() {
         HashMap<String, Long> cooldownsTempList = new HashMap<>();
         cooldownsList.keySet().forEach(key -> {
-            long timeRemaining = cooldownDurationMilliseconds - (System.currentTimeMillis() - cooldownsList.get(key));
+            long timeRemaining = cooldownDuration - (System.currentTimeMillis() - cooldownsList.get(key));
             if(timeRemaining > 0) {
                 cooldownsTempList.put(key, cooldownsList.get(key));
             }

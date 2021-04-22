@@ -12,7 +12,7 @@ public class BirdCommand extends Command {
     private static final String BASE_URL = "http://shibe.online/api/birds";
 
     public BirdCommand() {
-        super("bird", 0, -1L, Arrays.asList("-bird"), false, null);
+        super("bird", Arrays.asList("-bird"));
     }
 
     @Override

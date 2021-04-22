@@ -26,7 +26,7 @@ public class EventCommand extends Command {
     private static final HashMap<String, ScheduledEvent> inProgressEmbeds = new HashMap<>();
 
     public EventCommand() {
-        super("event", 0, -1L, Arrays.asList("-event", "-event new", "-event title <value>", "-event desc <value>", "-event time <yyyy-MM-dd HH:mm>", "-event slots <value>", "-event notify <boolean>", "-event publish", "-event cancel | <value>"), false, null);
+        super("event", Arrays.asList("-event", "-event new", "-event title <value>", "-event desc <value>", "-event time <yyyy-MM-dd HH:mm>", "-event slots <value>", "-event notify <boolean>", "-event publish", "-event cancel | <value>"));
     }
 
     @Override

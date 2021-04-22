@@ -15,7 +15,7 @@ import java.util.Map;
 public class RuneScapeCommand extends Command {
 
     public RuneScapeCommand() {
-        super("osrs", 1, -1L, Arrays.asList("-osrs <user>", "-osrs <user>, <skill>"), false, null, true);
+        super("osrs", Arrays.asList("-osrs <user>", "-osrs <user>, <skill>"), 1);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class HugCommand extends Command {
     );
 
     public HugCommand() {
-        super("hug", 1, -1L, Arrays.asList("-hug @user"), false, null);
+        super("hug", Arrays.asList("-hug @user"), 1);
     }
 
     @Override

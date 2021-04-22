@@ -20,7 +20,7 @@ public class PetCommand extends Command {
     );
 
     public PetCommand() {
-        super("pet", 1, -1L, Arrays.asList("-pet @user"), false, null);
+        super("pet", Arrays.asList("-pet @user"), 1);
     }
 
     @Override

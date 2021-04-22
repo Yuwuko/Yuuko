@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PingCommand extends Command {
 
     public PingCommand() {
-        super("ping", 0, -1L, Arrays.asList("-ping"), false, null);
+        super("ping", Arrays.asList("-ping"));
     }
 
     @Override

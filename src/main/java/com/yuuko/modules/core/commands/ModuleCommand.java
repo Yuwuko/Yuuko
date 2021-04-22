@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class ModuleCommand extends Command {
 
     public ModuleCommand() {
-        super("module", 0, -1L, Arrays.asList("-module <module>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("module", Arrays.asList("-module <module>"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     @Override

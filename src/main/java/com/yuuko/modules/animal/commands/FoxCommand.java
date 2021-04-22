@@ -12,7 +12,7 @@ public class FoxCommand extends Command {
     private static final String BASE_URL = "https://randomfox.ca/floof/";
 
     public FoxCommand() {
-        super("fox", 0, -1L, Arrays.asList("-fox"), false, null);
+        super("fox", Arrays.asList("-fox"));
     }
 
     @Override

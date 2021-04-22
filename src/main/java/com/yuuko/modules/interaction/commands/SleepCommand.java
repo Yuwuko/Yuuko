@@ -18,7 +18,7 @@ public class SleepCommand extends Command {
     );
 
     public SleepCommand() {
-        super("sleep", 0, -1L, Arrays.asList("-sleep"), false, null);
+        super("sleep", Arrays.asList("-sleep"));
     }
 
     @Override

@@ -20,7 +20,7 @@ public class KissCommand extends Command {
     );
 
     public KissCommand() {
-        super("kiss", 1, -1L, Arrays.asList("-kiss @user"), false, null);
+        super("kiss", Arrays.asList("-kiss @user"), 1);
     }
 
     @Override

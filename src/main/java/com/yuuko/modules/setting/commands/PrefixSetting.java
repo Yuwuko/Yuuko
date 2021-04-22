@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class PrefixSetting extends Command {
 
     public PrefixSetting() {
-        super("prefix", 1, -1L, Arrays.asList("-prefix <prefix>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("prefix", Arrays.asList("-prefix <prefix>"), Arrays.asList(Permission.MANAGE_SERVER), 1);
     }
 
     public void onCommand(MessageEvent context) throws Exception {

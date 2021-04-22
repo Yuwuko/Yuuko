@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class NukeCommand extends Command {
 
     public NukeCommand() {
-        super("nuke",1, 10000L, Arrays.asList("-nuke <value>", "-nuke #channel"), false, Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY));
+        super("nuke", Arrays.asList("-nuke <value>", "-nuke #channel"), Arrays.asList(Permission.MESSAGE_MANAGE, Permission.MANAGE_CHANNEL, Permission.MESSAGE_HISTORY), 1, 10000L);
     }
 
     @Override

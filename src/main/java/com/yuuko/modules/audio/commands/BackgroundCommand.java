@@ -17,7 +17,7 @@ import java.util.List;
 public class BackgroundCommand extends Command {
 
     public BackgroundCommand() {
-        super("background", 0, -1L, Arrays.asList("-background", "-background <url>", "-background <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("background", Arrays.asList("-background", "-background <url>", "-background <term>"), Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

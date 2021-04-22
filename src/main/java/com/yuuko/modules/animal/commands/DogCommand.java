@@ -12,7 +12,7 @@ public class DogCommand extends Command {
     private static final String BASE_URL = "https://dog.ceo/api/breeds/image/random";
 
     public DogCommand() {
-        super("dog", 0, -1L, Arrays.asList("-dog"), false, null);
+        super("dog", Arrays.asList("-dog"));
     }
 
     @Override

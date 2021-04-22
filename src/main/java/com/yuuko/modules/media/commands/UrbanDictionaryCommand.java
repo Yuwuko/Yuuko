@@ -16,7 +16,7 @@ public class UrbanDictionaryCommand extends Command {
     private static final String BASE_URL = "https://api.urbandictionary.com/v0/define?term=";
 
     public UrbanDictionaryCommand() {
-        super("urban", 1, -1L, Arrays.asList("-urban <term>"), true, null);
+        super("urban", Arrays.asList("-urban <term>"), true, 1);
     }
 
     @Override

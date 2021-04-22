@@ -20,7 +20,7 @@ public class TickleCommand extends Command {
     );
 
     public TickleCommand() {
-        super("tickle", 1, -1L, Arrays.asList("-tickle @user"), false, null);
+        super("tickle", Arrays.asList("-tickle @user"), 1);
     }
 
     @Override

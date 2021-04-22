@@ -20,7 +20,7 @@ public class KillCommand extends Command {
     );
 
     public KillCommand() {
-        super("kill", 1, 1L, Arrays.asList("-kill @user"), false, null);
+        super("kill", Arrays.asList("-kill @user"), 1);
     }
 
     @Override

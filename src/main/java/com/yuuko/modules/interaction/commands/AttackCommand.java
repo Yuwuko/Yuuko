@@ -20,7 +20,7 @@ public class AttackCommand extends Command {
     );
 
     public AttackCommand() {
-        super("attack", 1, -1L, Arrays.asList("-attack @user"), false, null);
+        super("attack", Arrays.asList("-attack @user"), 1);
     }
 
     @Override

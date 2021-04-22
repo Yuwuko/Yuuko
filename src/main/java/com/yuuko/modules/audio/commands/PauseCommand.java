@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class PauseCommand extends Command {
 
     public PauseCommand() {
-        super("pause", 0, -1L, Arrays.asList("-pause"), false, null);
+        super("pause", Arrays.asList("-pause"));
     }
 
     @Override

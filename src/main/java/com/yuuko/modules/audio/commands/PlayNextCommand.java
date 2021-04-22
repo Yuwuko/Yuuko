@@ -17,7 +17,7 @@ import java.util.List;
 public class PlayNextCommand extends Command {
 
     public PlayNextCommand() {
-        super("playnext", 0, -1L, Arrays.asList("-playnext", "-playnext <url>", "-playnext <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("playnext", Arrays.asList("-playnext", "-playnext <url>", "-playnext <term>"), Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

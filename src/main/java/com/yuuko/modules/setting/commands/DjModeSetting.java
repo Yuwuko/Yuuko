@@ -21,7 +21,7 @@ public class DjModeSetting extends Command {
     );
 
     public DjModeSetting() {
-        super("djmode", 0, -1L, Arrays.asList("-djmode", "-djmode <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("djmode", Arrays.asList("-djmode", "-djmode <value>"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent context) throws Exception {

@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class StopCommand extends Command {
 
     public StopCommand() {
-        super("stop", 0, -1L, Arrays.asList("-stop"), false, null);
+        super("stop", Arrays.asList("-stop"));
     }
 
     @Override

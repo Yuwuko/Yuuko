@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class ShardsCommand extends Command {
 
     public ShardsCommand() {
-        super("shards", 0, -1L, Arrays.asList("-shards"), false, null);
+        super("shards", Arrays.asList("-shards"));
     }
 
     @Override

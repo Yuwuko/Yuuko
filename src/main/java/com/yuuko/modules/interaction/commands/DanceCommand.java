@@ -20,7 +20,7 @@ public class DanceCommand extends Command {
     );
 
     public DanceCommand() {
-        super("dance", 0, -1L, Arrays.asList("-dance", "-dance @user"), false, null);
+        super("dance", Arrays.asList("-dance", "-dance @user"));
     }
 
     @Override

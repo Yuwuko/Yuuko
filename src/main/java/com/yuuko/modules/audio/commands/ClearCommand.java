@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public class ClearCommand extends Command {
 
     public ClearCommand() {
-        super("clear", 0, -1L, Arrays.asList("-clear", "-clear <position>"), false, null);
+        super("clear", Arrays.asList("-clear", "-clear <position>"));
     }
 
     @Override

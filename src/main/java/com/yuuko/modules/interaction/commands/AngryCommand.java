@@ -20,7 +20,7 @@ public class AngryCommand extends Command {
     );
 
     public AngryCommand() {
-        super("angry", 0, -1L, Arrays.asList("-angry", "-angry @user"), false, null);
+        super("angry", Arrays.asList("-angry", "-angry @user"));
     }
 
     @Override

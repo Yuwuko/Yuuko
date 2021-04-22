@@ -20,7 +20,7 @@ public class PoutCommand extends Command {
     );
 
     public PoutCommand() {
-        super("pout", 0, -1L, Arrays.asList("-pout", "-pout @user"), false, null);
+        super("pout", Arrays.asList("-pout", "-pout @user"));
     }
 
     @Override

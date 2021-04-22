@@ -43,7 +43,7 @@ public final class Sanitiser {
      * @return boolean
      */
     public static boolean meetsParameterMinimum(MessageEvent context, boolean feedback, int... override) {
-        int minimumParameters = context.getCommand().getMinimumParameters();
+        int minimumParameters = context.getCommand().getParameters();
 
         if(override != null && override.length > 0) {
             minimumParameters = override[0];

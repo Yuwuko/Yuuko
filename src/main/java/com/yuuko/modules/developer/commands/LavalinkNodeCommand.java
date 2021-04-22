@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class LavalinkNodeCommand extends Command {
 
     public LavalinkNodeCommand() {
-        super("lavalink", 2, -1L, Arrays.asList("-lavalink <action> <node> <secret>"), false, null);
+        super("lavalink", Arrays.asList("-lavalink <action> <node> <secret>"), 2);
     }
 
     @Override

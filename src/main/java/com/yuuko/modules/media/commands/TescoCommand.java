@@ -20,7 +20,8 @@ public class TescoCommand extends Command {
     private static final String BASE_URL = "https://dev.tescolabs.com/grocery/products/?query=";
 
     public TescoCommand() {
-        super("tesco", 1, -1L, Arrays.asList("-tesco <product>"), false, null, api.isAvailable());
+        super("tesco", Arrays.asList("-tesco <product>"), 1);
+        setEnabled(api.isAvailable());
     }
 
     @Override

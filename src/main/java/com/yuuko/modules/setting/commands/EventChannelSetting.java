@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class EventChannelSetting extends Command {
 
     public EventChannelSetting() {
-        super("eventchannel", 1, -1L, Arrays.asList("-eventchannel <#channel>", "-eventchannel setup", "-eventchannel unset"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("eventchannel", Arrays.asList("-eventchannel <#channel>", "-eventchannel setup", "-eventchannel unset"), Arrays.asList(Permission.MANAGE_SERVER), 1);
     }
 
     public void onCommand(MessageEvent context) throws Exception {

@@ -13,7 +13,7 @@ import java.util.Random;
 public class CoinFlipCommand extends Command {
 
     public CoinFlipCommand() {
-        super("flip", 0, -1L, Arrays.asList("-flip"), false, null);
+        super("flip", Arrays.asList("-flip"));
     }
 
     @Override

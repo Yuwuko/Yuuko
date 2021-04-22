@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class StarboardSetting extends Command {
 
     public StarboardSetting() {
-        super("starboard", 0, -1L, Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), false, Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
+        super("starboard", Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
     }
 
     public void onCommand(MessageEvent context) throws Exception {

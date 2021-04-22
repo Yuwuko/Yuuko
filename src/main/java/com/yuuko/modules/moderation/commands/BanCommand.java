@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BanCommand extends Command {
 
     public BanCommand() {
-        super("ban",1, -1L, Arrays.asList("-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"), false, Arrays.asList(Permission.BAN_MEMBERS));
+        super("ban", Arrays.asList("-ban @user", "-ban @user <delDays>", "-ban @user <reason>", "-ban @user <delDays> <reason>"), Arrays.asList(Permission.BAN_MEMBERS), 1);
     }
 
     @Override

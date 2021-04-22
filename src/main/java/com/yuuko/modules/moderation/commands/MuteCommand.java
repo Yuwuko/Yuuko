@@ -16,7 +16,7 @@ import java.util.List;
 public class MuteCommand extends Command {
 
     public MuteCommand() {
-        super("mute", 1, -1L, Arrays.asList("-mute @user", "-mute @user <reason>"), false, Arrays.asList(Permission.VOICE_MUTE_OTHERS));
+        super("mute", Arrays.asList("-mute @user", "-mute @user <reason>"), Arrays.asList(Permission.VOICE_MUTE_OTHERS), 1);
     }
 
     @Override

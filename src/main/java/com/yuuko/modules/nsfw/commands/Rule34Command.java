@@ -17,7 +17,7 @@ public class Rule34Command extends Command {
     private String image = "https://i.imgur.com/YXqsEo6.jpg";
 
     public Rule34Command() {
-        super("rule34", 0, -1L, Arrays.asList("-rule34"), true, null);
+        super("rule34", Arrays.asList("-rule34"), true);
     }
 
     @Override

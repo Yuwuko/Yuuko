@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class LoopCommand extends Command {
 
     public LoopCommand() {
-        super("loop", 0, -1L, Arrays.asList("-loop"), false, null);
+        super("loop", Arrays.asList("-loop"));
     }
 
     @Override

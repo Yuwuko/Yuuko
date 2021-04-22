@@ -15,7 +15,7 @@ public class RestartCommand extends Command {
     private final Pattern list = Pattern.compile("([0-9]+\\s*,\\s*)+[0-9]+");
 
     public RestartCommand() {
-        super("restart", 0, -1L, Arrays.asList("-restart <shard_id>"), false, null);
+        super("restart", Arrays.asList("-restart <shard_id>"));
     }
 
     @Override

@@ -18,7 +18,7 @@ public class BlushCommand extends Command {
     );
 
     public BlushCommand() {
-        super("blush", 0, -1L, Arrays.asList("-blush"), false, null);
+        super("blush", Arrays.asList("-blush"));
     }
 
     @Override

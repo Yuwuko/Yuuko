@@ -12,7 +12,7 @@ public class CatCommand extends Command {
     private static final String BASE_URL = "https://api.thecatapi.com/v1/images/search";
 
     public CatCommand() {
-        super("cat", 0, -1L, Arrays.asList("-cat"), false, null);
+        super("cat", Arrays.asList("-cat"));
     }
 
     @Override

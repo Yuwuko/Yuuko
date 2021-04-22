@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ShuffleCommand extends Command {
 
     public ShuffleCommand() {
-        super("shuffle", 0, -1L, Arrays.asList("-shuffle"), false, null);
+        super("shuffle", Arrays.asList("-shuffle"));
     }
 
     @Override

@@ -20,7 +20,7 @@ public class ShrugCommand extends Command {
     );
 
     public ShrugCommand() {
-        super("shrug", 0, -1L, Arrays.asList("-shrug", "-shrug @user"), false, null);
+        super("shrug", Arrays.asList("-shrug", "-shrug @user"));
     }
 
     @Override

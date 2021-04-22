@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class AdviceCommand extends Command {
 
     public AdviceCommand() {
-        super("advice", 0, -1L, Arrays.asList("-advice"), false, null);
+        super("advice", Arrays.asList("-advice"));
     }
 
     @Override

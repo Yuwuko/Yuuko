@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class CleanupCommandsSetting extends Command {
 
     public CleanupCommandsSetting() {
-        super("cleanupcommands", 0, -1L, Arrays.asList("-cleanupcommands", "-cleanupcommands <value>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("cleanupcommands", Arrays.asList("-cleanupcommands", "-cleanupcommands <value>"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent context) throws Exception {

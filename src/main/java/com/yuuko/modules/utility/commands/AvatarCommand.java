@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class AvatarCommand extends Command {
 
     public AvatarCommand() {
-        super("avatar", 1, -1L, Arrays.asList("-avatar @user", "-avatar <userId>"), false, null);
+        super("avatar", Arrays.asList("-avatar @user", "-avatar <userId>"), 1);
     }
 
     @Override

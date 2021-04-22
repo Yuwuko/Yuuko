@@ -20,7 +20,7 @@ public class BiteCommand extends Command {
     );
 
     public BiteCommand() {
-        super("bite", 1, -1L, Arrays.asList("-bite @user"), false, null);
+        super("bite", Arrays.asList("-bite @user"), 1);
     }
 
     @Override

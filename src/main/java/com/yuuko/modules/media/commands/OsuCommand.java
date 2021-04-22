@@ -19,7 +19,8 @@ public class OsuCommand extends Command {
     private static final String BASE_URL = "https://osu.ppy.sh/api/get_user?k=" + api.getKey() + "&u=";
 
     public OsuCommand() {
-        super("osu", 1, -1L, Arrays.asList("-osu <user>", "-osu <user> <mode>"), false, null, api.isAvailable());
+        super("osu", Arrays.asList("-osu <user>", "-osu <user> <mode>"), 1);
+        setEnabled(api.isAvailable());
     }
 
     @Override

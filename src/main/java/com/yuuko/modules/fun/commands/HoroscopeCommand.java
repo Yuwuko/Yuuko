@@ -28,7 +28,7 @@ public class HoroscopeCommand extends Command {
     );
 
     public HoroscopeCommand() {
-        super("horoscope", 1, -1L, Arrays.asList("-horoscope <sign>"), false, null);
+        super("horoscope", Arrays.asList("-horoscope <sign>"), 1);
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class SettingsCommand extends Command {
 
     public SettingsCommand() {
-        super("settings", 0, -1L, Arrays.asList("-settings"), false, null);
+        super("settings", Arrays.asList("-settings"));
     }
 
     @Override

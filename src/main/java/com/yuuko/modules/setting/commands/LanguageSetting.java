@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class LanguageSetting extends Command {
 
     public LanguageSetting() {
-        super("language", 1, -1L, Arrays.asList("-language en", "-language fr"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("language", Arrays.asList("-language en", "-language fr"), Arrays.asList(Permission.MANAGE_SERVER), 1);
     }
 
     @Override

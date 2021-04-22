@@ -20,7 +20,7 @@ public class PatCommand extends Command {
     );
 
     public PatCommand() {
-        super("pat", 1, -1L, Arrays.asList("-pat @user"), false, null);
+        super("pat", Arrays.asList("-pat @user"), 1);
     }
 
     @Override

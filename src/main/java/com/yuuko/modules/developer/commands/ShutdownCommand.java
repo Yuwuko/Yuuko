@@ -15,7 +15,7 @@ public class ShutdownCommand extends Command {
     private final Pattern list = Pattern.compile("([0-9]+\\s*,\\s*)+[0-9]+");
 
     public ShutdownCommand() {
-        super("shutdown", 0, -1L, Arrays.asList("-shutdown"), false, null);
+        super("shutdown", Arrays.asList("-shutdown"));
     }
 
     @Override

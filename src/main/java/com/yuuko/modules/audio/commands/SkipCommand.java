@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class SkipCommand extends Command {
 
     public SkipCommand() {
-        super("skip", 0, -1L, Arrays.asList("-skip"), false, null);
+        super("skip", Arrays.asList("-skip"));
     }
 
     @Override

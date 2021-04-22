@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class VoteCommand extends Command {
 
     public VoteCommand() {
-        super("vote", 0, -1L, Arrays.asList("-vote"), false, null);
+        super("vote", Arrays.asList("-vote"));
     }
 
     @Override

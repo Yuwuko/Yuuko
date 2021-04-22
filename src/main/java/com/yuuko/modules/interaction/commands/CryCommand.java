@@ -18,7 +18,7 @@ public class CryCommand extends Command {
     );
 
     public CryCommand() {
-        super("cry", 0, -1L, Arrays.asList("-cry"), false, null);
+        super("cry", Arrays.asList("-cry"));
     }
 
     @Override

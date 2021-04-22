@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class PlayNotificationsSetting extends Command {
 
     public PlayNotificationsSetting() {
-        super("playnotifications", 0, -1L, Arrays.asList("-playnotifications", "-playnotifications <boolean>"), false, Arrays.asList(Permission.MANAGE_SERVER));
+        super("playnotifications", Arrays.asList("-playnotifications", "-playnotifications <boolean>"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
     public void onCommand(MessageEvent context) throws Exception {

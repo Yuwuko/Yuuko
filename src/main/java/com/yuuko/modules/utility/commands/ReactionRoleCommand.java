@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class ReactionRoleCommand extends Command {
 
     public ReactionRoleCommand() {
-        super("reactrole", 2, -1L, Arrays.asList("-reactrole <message_id> clear", "-reactrole <message_id> <:emote:>", "-reactrole <message_id> <:emote:> <@role>"), false, Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY));
+        super("reactrole", Arrays.asList("-reactrole <message_id> clear", "-reactrole <message_id> <:emote:>", "-reactrole <message_id> <:emote:> <@role>"), Arrays.asList(Permission.MANAGE_ROLES, Permission.MESSAGE_HISTORY), 2);
     }
 
     @Override

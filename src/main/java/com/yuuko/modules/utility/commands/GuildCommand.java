@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class GuildCommand extends Command {
 
     public GuildCommand() {
-        super("guild", 0, -1L, Arrays.asList("-guild"), false, null);
+        super("guild", Arrays.asList("-guild"));
     }
 
     @Override

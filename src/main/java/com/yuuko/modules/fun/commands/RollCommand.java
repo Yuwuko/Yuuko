@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RollCommand extends Command {
 
     public RollCommand() {
-        super("roll", 1, -1L, Arrays.asList("-roll <number>"), false, null);
+        super("roll", Arrays.asList("-roll <number>"), 1);
     }
 
     @Override

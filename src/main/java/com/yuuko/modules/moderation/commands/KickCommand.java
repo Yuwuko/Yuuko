@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class KickCommand extends Command {
 
     public KickCommand() {
-        super("kick",1, -1L, Arrays.asList("-kick @user", "-kick @user <reason>"), false, Arrays.asList(Permission.KICK_MEMBERS));
+        super("kick", Arrays.asList("-kick @user", "-kick @user <reason>"), Arrays.asList(Permission.KICK_MEMBERS), 1);
     }
 
     @Override

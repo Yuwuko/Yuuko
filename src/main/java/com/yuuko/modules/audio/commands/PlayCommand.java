@@ -17,7 +17,7 @@ import java.util.List;
 public class PlayCommand extends Command {
 
     public PlayCommand() {
-        super("play", 0, -1L, Arrays.asList("-play", "-play <url>", "-play <term>"), false, Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
+        super("play", Arrays.asList("-play", "-play <url>", "-play <term>"), Arrays.asList(Permission.VOICE_CONNECT, Permission.VOICE_SPEAK));
     }
 
     @Override

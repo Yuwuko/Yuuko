@@ -21,7 +21,8 @@ public class WeatherCommand extends Command {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     public WeatherCommand() {
-        super("weather", 1, -1L, Arrays.asList("-weather <city>", "-weather <city> <country>"), false, null, api.isAvailable());
+        super("weather", Arrays.asList("-weather <city>", "-weather <city> <country>"), 1);
+        setEnabled(api.isAvailable());
     }
 
     @Override

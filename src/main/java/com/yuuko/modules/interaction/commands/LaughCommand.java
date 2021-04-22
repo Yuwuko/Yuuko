@@ -20,7 +20,7 @@ public class LaughCommand extends Command {
     );
 
     public LaughCommand() {
-        super("laugh", 0, -1L, Arrays.asList("-laugh", "-laugh @user"), false, null);
+        super("laugh", Arrays.asList("-laugh", "-laugh @user"));
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class LastCommand extends Command {
 
 	public LastCommand() {
-		super("last", 0, -1L, Arrays.asList("-last"), false, null);
+		super("last", Arrays.asList("-last"));
 	}
 
 	@Override

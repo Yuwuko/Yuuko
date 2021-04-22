@@ -23,7 +23,8 @@ public class GithubCommand extends Command {
     private static final String BASE_URL = "https://api.github.com/repos/";
 
     public GithubCommand() {
-        super("github", 2, -1L, Arrays.asList("-github <user> <repository>"), false, null, api.isAvailable());
+        super("github", Arrays.asList("-github <user> <repository>"), 2);
+        setEnabled(api.isAvailable());
     }
 
     @Override

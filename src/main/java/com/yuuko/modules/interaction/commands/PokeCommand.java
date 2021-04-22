@@ -20,7 +20,7 @@ public class PokeCommand extends Command {
     );
 
     public PokeCommand() {
-        super("poke", 1, -1L, Arrays.asList("-poke @user"), false, null);
+        super("poke", Arrays.asList("-poke @user"), 1);
     }
 
     @Override
