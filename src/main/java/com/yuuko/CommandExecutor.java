@@ -10,12 +10,15 @@ import com.yuuko.modules.core.commands.ModuleCommand;
 import com.yuuko.utilities.TextUtilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class CommandExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandExecutor.class);
@@ -47,7 +50,12 @@ public class CommandExecutor {
         // Is the module enabled and does the command pass the binding checks?
         // Is module named "audio" and if so, does the user fail any of the checks?
         // Is the command on cooldown?
-        if(command == null || !isEnabled() || isBound() || !isValidAudio() || !command.isCooling(context)) {
+        if(command == null
+                || !isEnabled()
+                || isBound()
+                || !isValidAudio()
+                || !command.isCooling(context)
+                || !hasPermission()) {
             return;
         }
 
@@ -60,29 +68,6 @@ public class CommandExecutor {
             return;
         }
 
-        // Does the command have any permissions?
-        if(command.getPermissions() != null) {
-            // Does the bot have the permission?
-            if(bot.hasPermission(command.getPermissions()) && !bot.hasPermission(context.getChannel(), command.getPermissions())
-                    || !bot.hasPermission(command.getPermissions()) && !bot.hasPermission(context.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle(context.i18n("missing_permission", "cmd"))
-                        .setDescription(context.i18n("missing_permission_bot", "cmd").formatted(command.getPermissions().toString()));
-                MessageDispatcher.reply(context, embed.build());
-                return;
-            }
-
-            // Does the user have the permission?
-            if(commander.hasPermission(command.getPermissions()) && !commander.hasPermission(context.getChannel(), command.getPermissions())
-                    || !commander.hasPermission(command.getPermissions()) && !commander.hasPermission(context.getChannel(), command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle(context.i18n("missing_permission", "cmd"))
-                        .setDescription(context.i18n("missing_permission_user", "cmd").formatted(command.getPermissions().toString()));
-                MessageDispatcher.reply(context, embed.build());
-                return;
-            }
-        }
-
         try {
             log.trace("Invoking {}#onCommand()", command.getClass().getSimpleName());
             command.onCommand(context);
@@ -91,6 +76,31 @@ public class CommandExecutor {
             log.error("Something went wrong when executing the {} command, message: {}", command.getName(), e.getMessage(), e);
             context.getMessage().addReaction("❌").queue();
         }
+    }
+
+    /**
+     * Loops through each channel and member relevant to the context of the given command and checks permissions.
+     * @return boolean
+     */
+    private boolean hasPermission() {
+        if(command.getPermissions() == null) {
+            return true;
+        }
+
+        for(GuildChannel channel: Stream.of(context.getChannel(), commander.getVoiceState().getChannel()).filter(Objects::nonNull).toList()) {
+            for(Member member: Stream.of(bot, commander).filter(Objects::nonNull).toList()) {
+                if(member.hasPermission(command.getPermissions()) && !member.hasPermission(channel, command.getPermissions())
+                        || !member.hasPermission(command.getPermissions()) && !member.hasPermission(channel, command.getPermissions())) {
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n("missing_permission", "cmd"))
+                            .setDescription(context.i18n("missing_permission_member", "cmd").formatted(member.getUser().getAsTag(), command.getPermissions().toString()));
+                    MessageDispatcher.reply(context, embed.build());
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
