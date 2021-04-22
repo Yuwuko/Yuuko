@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w16a
++ [!] Refactor Command superclass to be kinder to its subclasses.
++ [~] Fix permissions bug with connecting to audio channels. 
++ [~] Updated dependencies -> JDA 4.2.1_260, MySQLConnector, Jackson.
+
 ## 21w14a
 + [!] Started adding i18n (internationalisation) support.
 + [!] Stripped out LavaPlayer/NAS. (I think they're unnecessary due to LavaLink)
