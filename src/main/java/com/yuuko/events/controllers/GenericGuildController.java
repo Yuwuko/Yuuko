@@ -4,8 +4,10 @@ import com.yuuko.MessageDispatcher;
 import com.yuuko.Yuuko;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.metrics.MetricsManager;
+import com.yuuko.metrics.pathway.DiscordMetrics;
 import com.yuuko.modules.audio.handlers.AudioManager;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
@@ -27,7 +29,7 @@ public class GenericGuildController {
         }
 
         if(event instanceof GuildLeaveEvent) {
-            guildLeaveEvent((GuildLeaveEvent)event);
+            guildLeaveEvent((GuildLeaveEvent) event);
             return;
         }
 
@@ -53,7 +55,9 @@ public class GenericGuildController {
 
     private void guildJoinEvent(GuildJoinEvent event) {
         GuildFunctions.addGuild(event.getGuild());
-        MetricsManager.getDiscordMetrics(event.getJDA().getShardInfo().getShardId()).update();
+        DiscordMetrics metrics = MetricsManager.getDiscordMetrics(event.getJDA().getShardInfo().getShardId());
+        metrics.update();
+        Yuuko.SHARD_MANAGER.setActivity(Activity.of(Activity.ActivityType.WATCHING, metrics.GUILD_COUNT + " Servers"));
 
         // possible that a guild has no text channels
         if(event.getGuild().getDefaultChannel() != null) {
@@ -83,7 +87,9 @@ public class GenericGuildController {
     private void guildLeaveEvent(GuildLeaveEvent event) {
         AudioManager.destroyGuildAudioManager(event.getGuild());
         GuildFunctions.removeGuild(event.getGuild());
-        MetricsManager.getDiscordMetrics(event.getJDA().getShardInfo().getShardId()).update();
+        DiscordMetrics metrics = MetricsManager.getDiscordMetrics(event.getJDA().getShardInfo().getShardId());
+        metrics.update();
+        Yuuko.SHARD_MANAGER.setActivity(Activity.of(Activity.ActivityType.WATCHING, metrics.GUILD_COUNT + " Servers"));
     }
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent event) {
