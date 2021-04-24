@@ -13,24 +13,6 @@ import java.util.List;
 public final class MessageUtilities {
 
     /**
-     * Returns whether or not a user is mentioned in the message.
-     * @param context {@link MessageEvent}
-     * @return boolean
-     */
-    public static boolean checkIfUserMentioned(MessageEvent context) {
-        return context.getMessage().getMentionedMembers().size() > 0;
-    }
-
-    /**
-     * Returns whether or not a channel is mentioned in the message.
-     * @param context {@link MessageEvent}
-     * @return boolean
-     */
-    public static boolean checkIfChannelMentioned(MessageEvent context) {
-        return context.getMessage().getMentionedChannels().size() > 0;
-    }
-
-    /**
      * Returns the first mentioned user from a given message.
      * @param context {@link MessageEvent}
      * @return {@link Member}
@@ -62,27 +44,6 @@ public final class MessageUtilities {
         }
 
         return mentioned.get(0);
-    }
-
-    /**
-     * Returns a list of mentioned users from a given message.
-     * @param context {@link MessageEvent}
-     * @return {@link List<Member>}
-     */
-    public static List<Member> getMentionedMembers(MessageEvent context) {
-        List<Member> mentioned = context.getMessage().getMentionedMembers();
-        ArrayList<Member> modifiableMentioned = new ArrayList<>(mentioned);
-        modifiableMentioned.remove(context.getGuild().getMember(Yuuko.BOT));
-
-        if(!context.getMessage().mentionsEveryone()) {
-            return modifiableMentioned;
-        } else {
-            EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle(context.i18n("invalid_param", "message_utils"))
-                    .setDescription(context.i18n("invalid_self", "message_utils"));
-            MessageDispatcher.reply(context, embed.build());
-            return null;
-        }
     }
 
     /**
