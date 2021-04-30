@@ -260,7 +260,7 @@ public class EventCommand extends Command {
                         EmbedBuilder embed = new EmbedBuilder()
                                 .setTitle(event.title)
                                 .setDescription(event.description)
-                                .addField("Scheduled", "`" + event.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
+                                .addField("Scheduled", "`" + event.timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("E dd-MMM-yy - HH:mm")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(true, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
                                 .addField("Participants " + ((event.slots == 0) ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.slots + ")"), participantString.toString(), true)
                                 .addField("Notify?", "`" + event.notify + "`", true)
                                 .setFooter("ID: " + event.id);
@@ -383,9 +383,10 @@ public class EventCommand extends Command {
         }
 
         public MessageEmbed getEmbed() {
-            return new EmbedBuilder().setTitle(title)
+            return new EmbedBuilder()
+                    .setTitle(title)
                     .setDescription(description)
-                    .addField("Scheduled", "`" + timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mma E dd MMM yy")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(false, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
+                    .addField("Scheduled", "`" + timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("E dd-MMM-yy - HH:mm")) + " (" + TimeZone.getTimeZone("Europe/London").getDisplayName(true, TimeZone.SHORT, Locale.getDefault(Locale.Category.DISPLAY)) + ")`", false)
                     .addField("Participants " + ((slots == 0) ? "(0)" : "(0/" + slots + ")"), "`none`", true)
                     .addField("Notify?", "`" + notify + "`", true)
                     .setFooter(footer)
