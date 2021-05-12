@@ -6,6 +6,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'com.yuuko'
+mainClassName = 'com.yuuko.Yuuko'
 project.version = '21w19a'
 
 tasks.withType(JavaCompile) {
