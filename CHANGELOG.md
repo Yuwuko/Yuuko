@@ -2,6 +2,10 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w19a
++ [~] Improved [__event__] to include host / better display participants.
++ [~] Updated dependencies -> JDA 4.2.1_262, MySQLConnector (.25).
+
 ## 21w16a
 + [!] Refactor Command superclass to be kinder to its subclasses.
 + [~] Fix permissions bug with connecting to audio channels. 
