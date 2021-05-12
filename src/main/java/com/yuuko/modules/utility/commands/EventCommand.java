@@ -271,16 +271,20 @@ public class EventCommand extends Command {
                         AtomicReference<StringBuilder> participants = new AtomicReference<>(new StringBuilder());
                         AtomicInteger i = new AtomicInteger();
                         AtomicInteger total = new AtomicInteger();
-                        users.stream().limit(40).forEach(user -> {
+                        users.stream().limit(20).forEach(user -> {
                             participants.get().append(user.getAsMention()).append("\n");
                             total.getAndIncrement();
                             if(i.getAndIncrement() == 4 || total.get() == users.size()) {
                                 // only display the participant count heading on the first field
-                                embed.addField(total.get() <= 4 ? "Participants " + ((event.slots == 0) ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.slots + ")") : "", participants.toString(), true);
+                                embed.addField(total.get() <= 5 ? "Participants " + ((event.slots == 0) ? "(" + users.size() + ")" : "(" + users.size() + "/" + event.slots + ")") : "", participants.toString(), true);
                                 i.set(0);
                                 participants.set(new StringBuilder());
                             }
                         });
+
+                        if(users.size() > 20) {
+                            embed.addField("", "And " + (users.size() - 20) + " more...", false);
+                        }
 
                         e.getChannel().editMessageById(e.getMessageId(), embed.build()).queue();
                     }));
