@@ -35,8 +35,8 @@ public class GenericGuildMessageController {
             // Increments message event metric.
             MetricsManager.getDiscordMetrics(event.getJDA().getShardInfo().getShardId()).MESSAGE_EVENTS.getAndIncrement();
 
-            // Don't process messages from bots. (prevents looping)
-            if(event.getAuthor().isBot()) {
+            // Don't process messages from bots, events without members or webhooks. (prevents looping)
+            if(event.getAuthor().isBot() || event.getMember() == null || event.isWebhookMessage()) {
                 return;
             }
 
@@ -50,8 +50,11 @@ public class GenericGuildMessageController {
             }
 
             final String[] cmd = message.substring(prefix.length()).split("\\s+", 2);
+            final Command command;
+            if((command = Yuuko.COMMANDS.get(cmd[0].toLowerCase())) == null) {
+                return; // Checks if command is null on assignment and fail if so.
+            }
             final String parameters = (cmd.length > 1) ? cmd[1] : null;
-            final Command command = Yuuko.COMMANDS.get(cmd[0].toLowerCase());
             final String lang = GuildFunctions.getGuildLanguage(event.getGuild().getId());
 
             // Creates message event object, setting the event, prefix, command and parameters.
@@ -64,7 +67,7 @@ public class GenericGuildMessageController {
 
             double execTime = System.nanoTime();
             new CommandExecutor(context);
-            execTime = (System.nanoTime() - execTime)/1000000.0;
+            execTime = (System.nanoTime() - execTime) / 1000000.0;
 
             MetricsManager.DatabaseInterface.updateCommandMetric(context, execTime);
             CommandLogSetting.execute(context, execTime);
@@ -78,5 +81,4 @@ public class GenericGuildMessageController {
         ReactionRoleCommand.DatabaseInterface.removeReactionRole(event.getMessageId());
         EventCommand.DatabaseInterface.removeEvent(event.getGuild().getId(), event.getMessageId());
     }
-
 }

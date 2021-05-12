@@ -17,16 +17,6 @@ public final class Sanitiser {
      * @return boolean
      */
     public static boolean checks(MessageEvent context) {
-        // Is the member null? (this doesn't happen but is a nullable field according to JDA documentation)
-        if(context.getMember() == null) {
-            return false;
-        }
-
-        // Checks if command is null at this point because the next checks require that it does.
-        if(context.getCommand() == null) {
-            return false;
-        }
-
         // Is the module accessed the developer module and is the commander not me?
         if(context.getModule().getName().equals("developer") && context.getMember().getIdLong() != 215161101460045834L) {
             return false;

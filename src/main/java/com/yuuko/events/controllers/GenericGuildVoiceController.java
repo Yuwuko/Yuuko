@@ -16,10 +16,8 @@ public class GenericGuildVoiceController {
 
     private void voiceChannelAbandonedCheck(GenericGuildVoiceEvent event) {
         GuildVoiceState voiceState = event.getGuild().getSelfMember().getVoiceState();
-
         if(voiceState != null && voiceState.inVoiceChannel() && voiceState.getChannel().getMembers().size() == 1) {
             new StopCommand().onCommand(event.getGuild());
         }
     }
-
 }

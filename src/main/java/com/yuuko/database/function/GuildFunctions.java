@@ -207,7 +207,7 @@ public class GuildFunctions {
 
             stmt.setString(1, guildId);
             ResultSet rs = stmt.executeQuery();
-            return rs.next() ? rs.getString("language") : "en";
+            return rs.next() ? rs.getString("language") : "en"; // if null return en
 
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
@@ -261,7 +261,7 @@ public class GuildFunctions {
 
             stmt.setString(1, guild);
             ResultSet resultSet = stmt.executeQuery();
-            return resultSet.next() ? resultSet.getString(1) : null;
+            return resultSet.next() ? resultSet.getString(1) : "-"; // if null return default prefix
 
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
