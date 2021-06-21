@@ -43,7 +43,7 @@ public final class Sanitiser {
             if(feedback) {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(context.i18n("missing_param", "sanitiser"))
-                        .setDescription(context.i18n("missing_count_zero", "sanitiser"));
+                        .setDescription(context.i18n("missing_count_zero", "sanitiser").formatted(minimumParameters));
                 MessageDispatcher.reply(context, embed.build());
             }
             return false;

@@ -30,7 +30,9 @@ public class NukeCommand extends Command {
             if(!channel.isNews()) {
                 channel.createCopy().setPosition(channel.getPosition()).queue(r -> channel.delete().queue(s -> {}, f -> {}));
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(context.i18n("bad_input_tag"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("bad_input"))
+                        .setDescription(context.i18n("bad_input_tag"));
                 MessageDispatcher.reply(context, embed.build());
             }
             return;
@@ -39,7 +41,9 @@ public class NukeCommand extends Command {
         // Checks length of parameters since the command doesn't take a value greater than 3 digits
         // Also prevents NumberFormatException for parsing the integer later.
         if(context.getParameters().length() > 3 || !Sanitiser.isNumeric(context.getParameters())) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(context.i18n("bad_input_int"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n("bad_input"))
+                    .setDescription(context.i18n("bad_input_int"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }

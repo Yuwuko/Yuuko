@@ -111,7 +111,9 @@ public abstract class Command {
             long timeRemaining = cooldownDuration - (System.currentTimeMillis() - cooldownsList.get(guildId));
 
             if(timeRemaining > 0) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle("Cooldown").setDescription("Please wait " + timeRemaining + "ms before using the **" + context.getCommand().getName() + "** command again.");
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle("Cooldown")
+                        .setDescription("Please wait " + timeRemaining + "ms before using the **" + context.getCommand().getName() + "** command again.");
                 MessageDispatcher.reply(context, embed.build());
                 return false;
             } else {
