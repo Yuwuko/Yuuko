@@ -42,7 +42,9 @@ public class BanCommand extends Command {
             delDays.set(Integer.parseInt(commandParameters[1]));
             if(delDays.get() > 7) {
                 delDays.set(7);
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("bad_input")).setDescription(context.i18n("bad_input_desc").formatted(commandParameters[1]));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n("bad_input"))
+                        .setDescription(context.i18n("bad_input_desc").formatted(commandParameters[1]));
                 MessageDispatcher.reply(context, embed.build());
             }
         } else {

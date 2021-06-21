@@ -42,13 +42,16 @@ public class HoroscopeCommand extends Command {
         }
 
         if(selectedSign == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_title")).setDescription(context.i18n( "invalid_desc").formatted(context.getParameters(), starsigns.toString()));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "invalid_title"))
+                    .setDescription(context.i18n( "invalid_desc").formatted(context.getParameters(), starsigns.toString()));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
 
         final JsonObject object = new RequestHandler(BASE_URL + selectedSign).getJsonObject();
-        EmbedBuilder embed = new EmbedBuilder().setTitle("Horoscope - " + selectedSign + " - " + object.get("date").getAsString())
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Horoscope - " + selectedSign + " - " + object.get("date").getAsString())
                 .setDescription(object.get("horoscope").getAsString());
         MessageDispatcher.reply(context, embed.build());
     }

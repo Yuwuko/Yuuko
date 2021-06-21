@@ -37,7 +37,8 @@ public class JokeCommand extends Command {
         }
 
         final JsonArray jokes = object.getAsJsonArray("results");
-        EmbedBuilder embed = new EmbedBuilder().setDescription(jokes.get(ThreadLocalRandom.current().nextInt(jokes.size())).getAsJsonObject().get("joke").getAsString());
+        EmbedBuilder embed = new EmbedBuilder()
+                .setDescription(jokes.get(ThreadLocalRandom.current().nextInt(jokes.size())).getAsJsonObject().get("joke").getAsString());
         MessageDispatcher.reply(context, embed.build());
     }
 
