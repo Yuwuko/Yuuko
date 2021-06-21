@@ -192,23 +192,14 @@ public class EventCommand extends Command {
             return;
         }
 
-        String messageId = DatabaseInterface.getEventMessage(context.getGuild().getId(), Integer.parseInt(params[1]));
-        if(messageId == null) {
+        if(!DatabaseInterface.eventExists(context, Integer.parseInt(params[1]))) {
             EmbedBuilder about = new EmbedBuilder()
                     .setTitle(context.i18n("unknown_event"));
             MessageDispatcher.reply(context, about.build());
             return;
         }
 
-        DatabaseInterface.removeEvent(context.getGuild().getId(), messageId);
-        String channelId = GuildFunctions.getGuildSetting("eventchannel", context.getGuild().getId());
-        if(channelId != null) {
-            TextChannel textChannel = context.getGuild().getTextChannelById(channelId);
-            if(textChannel != null) {
-                textChannel.deleteMessageById(messageId).queue();
-            }
-        }
-
+        DatabaseInterface.removeEvent(context.getGuild().getId(), Integer.parseInt(params[1]));
         EmbedBuilder about = new EmbedBuilder().setTitle(context.i18n("event_cancelled"))
                 .setDescription(context.i18n("event_cancelled_desc").formatted(params[1]));
         MessageDispatcher.reply(context, about.build());
@@ -423,16 +414,37 @@ public class EventCommand extends Command {
 
     public static class DatabaseInterface {
         /**
+         * Checks to see if an event exists
+         * @param context {@link MessageEvent}
+         * @param eventId int
+         */
+        public static boolean eventExists(MessageEvent context, int eventId) {
+            try(Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `guilds_events` WHERE `guildId` = ? AND `eventId` = ?")) {
+
+                stmt.setString(1, context.getGuild().getId());
+                stmt.setInt(2, eventId);
+                ResultSet resultSet = stmt.executeQuery();
+
+                return resultSet.next();
+
+            } catch(Exception e) {
+                log.error("An error occurred while running the {} class, message: {}", BindCommand.DatabaseInterface.class.getSimpleName(), e.getMessage(), e);
+                return false;
+            }
+        }
+
+        /**
          * Adds a new event to the database.
-         * @param messageEvent {@link MessageEvent}
+         * @param context {@link MessageEvent}
          * @param scheduledEvent {@link ScheduledEvent}
          */
-        public static int newEvent(MessageEvent messageEvent, ScheduledEvent scheduledEvent) {
+        public static int newEvent(MessageEvent context, ScheduledEvent scheduledEvent) {
             try(Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO `guilds_events`(`guildId`, `messageId`, `eventAuthor`, `eventTitle`, `eventDescription`, `eventSlots`, `eventScheduled`, `eventNotify`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                 PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM `guilds_events` WHERE `guildId` = ? AND `messageId` = ?")) {
 
-                stmt.setString(1, messageEvent.getGuild().getId());
+                stmt.setString(1, context.getGuild().getId());
                 stmt.setString(2, scheduledEvent.message.getId());
                 stmt.setString(3, scheduledEvent.author);
                 stmt.setString(4, scheduledEvent.title);
@@ -442,7 +454,7 @@ public class EventCommand extends Command {
                 stmt.setBoolean(8, scheduledEvent.notify);
                 stmt.execute();
 
-                stmt2.setString(1, messageEvent.getGuild().getId());
+                stmt2.setString(1, context.getGuild().getId());
                 stmt2.setString(2, scheduledEvent.message.getId());
                 ResultSet resultSet = stmt2.executeQuery();
 
