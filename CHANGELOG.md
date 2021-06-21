@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w25a
++ [~] Fixed bug with i18n not formatting sanitiser string / typo.
++ [~] Minor formatting changes.
++ [~] Updated dependencies -> JDA 4.3.0_281, gson, snakeyaml.
+
 ## 21w19a
 + [~] Improved [__event__] to include host / better display participants.
 + [~] Updated dependencies -> JDA 4.2.1_262, MySQLConnector (.25).
