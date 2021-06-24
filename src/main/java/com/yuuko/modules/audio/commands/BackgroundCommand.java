@@ -27,7 +27,9 @@ public class BackgroundCommand extends Command {
 
         // Remove background
         if(!context.hasParameters()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n("desc"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n("desc"));
             MessageDispatcher.reply(context, embed.build());
             manager.getScheduler().setBackground(null);
             return;
@@ -42,7 +44,8 @@ public class BackgroundCommand extends Command {
         // Set background via search
         List<SearchResult> results = YouTubeSearchHandler.search(context);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "params_failed"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "params_failed"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }

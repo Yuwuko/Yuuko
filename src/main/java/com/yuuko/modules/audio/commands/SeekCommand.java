@@ -32,14 +32,18 @@ public class SeekCommand extends Command {
                 boolean nan = false;
                 for(String time : timestamp) {
                     if(!Sanitiser.isNumeric(time)) {
-                        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_param")).setDescription(context.i18n( "invalid_position"));
+                        EmbedBuilder embed = new EmbedBuilder()
+                                .setTitle(context.i18n( "invalid_param"))
+                                .setDescription(context.i18n( "invalid_position"));
                         MessageDispatcher.reply(context, embed.build());
                         nan = true;
                     }
                 }
                 seek = (nan) ? 0 : ((Integer.parseInt(timestamp[0])*60) + Integer.parseInt(timestamp[1])) * 1000;
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "invalid_param")).setDescription(context.i18n( "invalid_timestamp"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "invalid_param"))
+                        .setDescription(context.i18n( "invalid_timestamp"));
                 MessageDispatcher.reply(context, embed.build());
                 seek = 0;
             }
@@ -48,14 +52,19 @@ public class SeekCommand extends Command {
         if(track != null) {
             if(track.isSeekable()) {
                 manager.getPlayer().seekTo((seek < track.getInfo().length) ? seek : track.getInfo().length);
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc").formatted(TextUtilities.getTimestamp(seek)));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "title"))
+                        .setDescription(context.i18n( "desc").formatted(TextUtilities.getTimestamp(seek)));
                 MessageDispatcher.reply(context, embed.build());
             } else {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "unseekable")).setDescription(context.i18n( "unseekable_desc"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "unseekable"))
+                        .setDescription(context.i18n( "unseekable_desc"));
                 MessageDispatcher.reply(context, embed.build());
             }
         } else {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_track"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "no_track"));
             MessageDispatcher.reply(context, embed.build());
         }
     }

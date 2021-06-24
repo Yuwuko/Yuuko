@@ -22,7 +22,9 @@ public class ClearCommand extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         // Clear entire queue
         if(!context.hasParameters()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc"));
             MessageDispatcher.reply(context, embed.build());
             AudioManager.getGuildAudioManager(context.getGuild()).getScheduler().queue.clear();
             return;
@@ -36,7 +38,9 @@ public class ClearCommand extends Command {
             int i = 0;
             for(AudioTrack track: manager.getScheduler().queue) {
                 if(clear == i++) {
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc_formatted").formatted(track.getInfo().title));
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(context.i18n( "title"))
+                            .setDescription(context.i18n( "desc_formatted").formatted(track.getInfo().title));
                     MessageDispatcher.reply(context, embed.build());
                     continue; // if we find the track we want to skip - continue loop to skip adding to temp list
                 }

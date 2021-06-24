@@ -19,7 +19,9 @@ public class StopCommand extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         AudioManager.destroyGuildAudioManager(context.getGuild());
         if(context.getCommand() != null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc"));
             MessageDispatcher.reply(context, embed.build());
         }
     }

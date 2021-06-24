@@ -56,7 +56,6 @@ public class AudioLoadHandler {
                     }
                     MessageDispatcher.reply(context, embed.build());
 
-
                     if(type == Playback.PLAY) {
                         manager.getScheduler().queue(track);
                         return;

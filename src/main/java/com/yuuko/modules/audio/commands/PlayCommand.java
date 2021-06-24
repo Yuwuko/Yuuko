@@ -27,7 +27,9 @@ public class PlayCommand extends Command {
 
         if(!context.hasParameters()) {
             if(manager.getPlayer().isPaused()) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "title_resumed"))
+                        .setDescription(context.i18n( "desc_resumed"));
                 MessageDispatcher.reply(context, embed.build());
                 manager.getPlayer().setPaused(false);
             }
@@ -41,7 +43,8 @@ public class PlayCommand extends Command {
 
         List<SearchResult> results = YouTubeSearchHandler.search(context);
         if(results == null || results.size() == 0 || results.get(0).getId().getVideoId().equals("")) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_results"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "no_results"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }

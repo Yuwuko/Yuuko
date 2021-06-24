@@ -24,7 +24,9 @@ public class QueueCommand extends Command {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
         synchronized(manager.getScheduler().queue) {
             if(manager.getScheduler().queue.size() < 1) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "empty_title")).setDescription(context.i18n( "desc"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "empty_title"))
+                        .setDescription(context.i18n( "desc"));
                 MessageDispatcher.reply(context, embed.build());
                 return;
             }

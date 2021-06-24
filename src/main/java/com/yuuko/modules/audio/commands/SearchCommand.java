@@ -34,7 +34,9 @@ public class SearchCommand extends Command {
 
             final int value = Integer.parseInt(context.getParameters());
             if(value < 0 || value > 10) {
-                EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc"));
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle(context.i18n( "title"))
+                        .setDescription(context.i18n( "desc"));
                 MessageDispatcher.reply(context, embed.build());
                 return;
             }
@@ -48,7 +50,8 @@ public class SearchCommand extends Command {
 
         List<SearchResult> results = YouTubeSearchHandler.search(context);
         if(results == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "error_processing"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "error_processing"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }

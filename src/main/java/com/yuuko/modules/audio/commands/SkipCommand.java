@@ -19,12 +19,15 @@ public class SkipCommand extends Command {
     public void onCommand(MessageEvent context) throws Exception {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
         if(manager.getPlayer().getPlayingTrack() == null) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_track"));
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "no_track"));
             MessageDispatcher.reply(context, embed.build());
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle(context.i18n( "title"))
+                .setDescription(manager.getPlayer().getPlayingTrack().getInfo().title);
         MessageDispatcher.reply(context, embed.build());
         manager.getScheduler().nextTrack();
     }

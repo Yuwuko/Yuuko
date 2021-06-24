@@ -23,7 +23,8 @@ public class LastCommand extends Command {
 		AudioTrack track = AudioManager.getGuildAudioManager(context.getGuild()).getPlayer().getPlayingTrack();
 
 		if(track == null) {
-			EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "no_track"));
+			EmbedBuilder embed = new EmbedBuilder()
+					.setTitle(context.i18n( "no_track"));
 			MessageDispatcher.reply(context, embed.build());
 			return;
 		}
