@@ -41,7 +41,8 @@ public class AudioLoadHandler {
                 try {
                     track.setUserData(context);
 
-                    EmbedBuilder embed = new EmbedBuilder().setTitle(track.getInfo().title, trackUrl)
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle(track.getInfo().title, trackUrl)
                             .setThumbnail(Utilities.getAudioTrackImage(track))
                             .addField(context.i18n("duration", "audio_load"), TextUtilities.getTimestamp(track.getDuration()), true)
                             .addField(context.i18n("channel", "audio_load"), track.getInfo().author, true)

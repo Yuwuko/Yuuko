@@ -2,9 +2,9 @@ package com.yuuko.modules.audio.handlers;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import com.yuuko.Yuuko;
 import com.yuuko.database.function.GuildFunctions;
 import com.yuuko.events.entity.MessageEvent;
-import com.yuuko.modules.audio.commands.CurrentCommand;
 import com.yuuko.scheduler.ScheduleHandler;
 import com.yuuko.scheduler.jobs.VoiceTimeoutJob;
 import com.yuuko.utilities.TextUtilities;
@@ -100,7 +100,8 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
             MessageEvent context = (MessageEvent) track.getUserData();
             if(context != null && TextUtilities.toBoolean(GuildFunctions.getGuildSetting("playnotifications", context.getGuild().getId()))) {
-                new CurrentCommand().onCommand(context.setParameters("no-reply"));
+                context.setCommand(Yuuko.COMMANDS.get("current")).setParameters("no-reply");
+                context.getCommand().onCommand(context);
             }
         }  catch(Exception exception) {
             log.debug(exception.getMessage());

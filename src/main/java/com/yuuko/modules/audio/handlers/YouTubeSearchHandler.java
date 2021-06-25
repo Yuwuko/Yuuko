@@ -30,7 +30,8 @@ public class YouTubeSearchHandler {
      */
     public static List<SearchResult> search(MessageEvent context) {
         if(!api.isAvailable()) {
-            EmbedBuilder embed = new EmbedBuilder().setTitle("Google API key missing, unable to use YouTube search features.");
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Google API key missing, unable to use YouTube search features.");
             MessageDispatcher.reply(context, embed.build());
             return null;
         }

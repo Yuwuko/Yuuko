@@ -65,18 +65,12 @@ modules:
 
       play:
         values:
-          title: "Playing"
-          title_resumed: "Resuming"
+          title: "Resuming"
           desc: "The player has been resumed."
-          desc_resumed: "The player has been resumed."
           no_results: "Those search parameters failed to return a result."
 
       playnext:
         values:
-          title: "Playing"
-          title_resumed: "Resuming"
-          desc: "The player has been resumed."
-          desc_resumed: "The player has been resumed."
           no_results: "Those search parameters failed to return a result."
 
       queue:

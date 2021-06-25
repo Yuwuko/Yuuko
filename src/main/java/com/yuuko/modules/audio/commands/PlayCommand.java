@@ -28,8 +28,8 @@ public class PlayCommand extends Command {
         if(!context.hasParameters()) {
             if(manager.getPlayer().isPaused()) {
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle(context.i18n( "title_resumed"))
-                        .setDescription(context.i18n( "desc_resumed"));
+                        .setTitle(context.i18n( "title"))
+                        .setDescription(context.i18n( "desc"));
                 MessageDispatcher.reply(context, embed.build());
                 manager.getPlayer().setPaused(false);
             }
