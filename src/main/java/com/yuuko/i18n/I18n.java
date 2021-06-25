@@ -4,12 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -19,17 +14,15 @@ public class I18n {
 
     public static void setup() {
         try {
-            Path dirPath = Paths.get(I18n.class.getClassLoader().getResource("./lang").toURI());
+            HashMap<String, InputStream> langStreams = new HashMap<>() {{
+                put("en", I18n.class.getClassLoader().getResourceAsStream("lang/en.yaml"));
+                put("fr", I18n.class.getClassLoader().getResourceAsStream("lang/fr.yaml"));
+            }};
             Yaml yaml = new Yaml();
-            Files.list(dirPath).forEach(path -> {
-                File file = path.toFile();
-                try(InputStream inputStream = new FileInputStream(file)) {
-                    Language data = yaml.load(inputStream);
-                    languages.put(file.getName().replace(".yaml", ""), data);
-                } catch(Exception e) {
-                    log.error("An error occurred while parsing i18n files, message: {}", e.getMessage(), e);
-                }
-            });
+            for(String lang : langStreams.keySet()) {
+                Language data = yaml.load(langStreams.get(lang));
+                languages.put(lang, data);
+            }
         } catch(Exception e) {
             log.error("An error occurred while loading language files, error: {}", e.getMessage(), e);
             System.exit(1);
