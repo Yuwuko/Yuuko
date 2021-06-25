@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Collection;
 
 public final class MessageDispatcher {
     private static final Logger log = LoggerFactory.getLogger(MessageDispatcher.class);
@@ -90,7 +91,22 @@ public final class MessageDispatcher {
     public static void sendMessage(MessageEvent context, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(context)) {
-                context.getChannel().sendMessage(embed).queue();
+                context.getChannel().sendMessageEmbeds(embed).queue();
+            }
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Sends an embedded message. (using a collection of embeds)
+     * @param context {@link MessageEvent}
+     * @param embeds {@link MessageEmbed}
+     */
+    public static void sendMessage(MessageEvent context, Collection<MessageEmbed> embeds) {
+        try {
+            if(hasEmbedPermission(context)) {
+                context.getChannel().sendMessageEmbeds(embeds).queue();
             }
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
@@ -106,7 +122,7 @@ public final class MessageDispatcher {
     public static void sendMessage(MessageEvent context, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(context, channel)) {
-                channel.sendMessage(embed).queue();
+                channel.sendMessageEmbeds(embed).queue();
             }
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
@@ -122,7 +138,7 @@ public final class MessageDispatcher {
     public static void sendMessage(GenericGuildEvent context, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(context, channel)) {
-                channel.sendMessage(embed).queue();
+                channel.sendMessageEmbeds(embed).queue();
             }
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
@@ -137,7 +153,22 @@ public final class MessageDispatcher {
     public static void reply(MessageEvent context, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(context)) {
-                context.getMessage().reply(embed).queue(s -> {}, f -> sendMessage(context, embed));
+                context.getMessage().replyEmbeds(embed).queue(s -> {}, f -> sendMessage(context, embed));
+            }
+        } catch(Exception e) {
+            log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Sends an embedded reply to the given message. (using a collection of embeds)
+     * @param context {@link MessageEvent}
+     * @param embeds {@link MessageEmbed}
+     */
+    public static void reply(MessageEvent context, Collection<MessageEmbed> embeds) {
+        try {
+            if(hasEmbedPermission(context)) {
+                context.getMessage().replyEmbeds(embeds).queue(s -> {}, f -> sendMessage(context, embeds));
             }
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
@@ -184,7 +215,7 @@ public final class MessageDispatcher {
     public static void sendTempMessage(GenericGuildEvent context, TextChannel channel, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(context, channel)) {
-                channel.sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
+                channel.sendMessageEmbeds(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
@@ -199,7 +230,7 @@ public final class MessageDispatcher {
     public static void sendTempMessage(GenericGuildMessageEvent context, MessageEmbed embed) {
         try {
             if(hasEmbedPermission(context)) {
-                context.getChannel().sendMessage(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
+                context.getChannel().sendMessageEmbeds(embed).queue(s -> ScheduleHandler.registerUniqueJob(new MessageDeleteJob(s)));
             }
         } catch(Exception e) {
             log.error("An error occurred while running the {} class, message: {}", context.getClass().getSimpleName(), e.getMessage(), e);
