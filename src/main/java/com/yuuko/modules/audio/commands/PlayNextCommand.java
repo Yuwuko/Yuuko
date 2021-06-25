@@ -22,19 +22,12 @@ public class PlayNextCommand extends Command {
 
     @Override
     public void onCommand(MessageEvent context) throws Exception {
-        GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
-        manager.openConnection(context.getMember().getVoiceState().getChannel());
-
         if(!context.hasParameters()) {
-            if(manager.getPlayer().isPaused()) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle(context.i18n( "title_resumed"))
-                        .setDescription(context.i18n( "desc_resumed"));
-                MessageDispatcher.reply(context, embed.build());
-                manager.getPlayer().setPaused(false);
-            }
             return;
         }
+
+        GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
+        manager.openConnection(context.getMember().getVoiceState().getChannel());
 
         if(context.getParameters().startsWith("https://") || context.getParameters().startsWith("http://")) {
             AudioLoadHandler.loadAndPlay(manager, context, AudioLoadHandler.Playback.PLAYNEXT);
