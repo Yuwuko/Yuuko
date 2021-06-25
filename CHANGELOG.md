@@ -4,6 +4,9 @@ Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w25a
 + [!] Migrated language files directly into resources folder to facilitate community translation.
++ [+] Added support for multi-embedded messages.
++ [~] Updated MessageDispatcher to match new JDA standards for embedded messages.
++ [~] Fixed bug with TrackScheduler not displaying correctly on track start.
 + [~] Fixed bug with i18n not formatting sanitiser string / typo.
 + [~] Minor formatting changes.
 + [~] Updated dependencies -> JDA 4.3.0_281, gson, snakeyaml.
