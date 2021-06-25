@@ -7,6 +7,9 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -15,20 +18,21 @@ public class I18n {
     private static final HashMap<String, Language> languages = new HashMap<>();
 
     public static void setup() {
-        File[] files = new File("./config/lang/").listFiles();
-        if(files == null) {
-            log.error("Unable to load language files, exiting.");
+        try {
+            Path dirPath = Paths.get(I18n.class.getClassLoader().getResource("./lang").toURI());
+            Yaml yaml = new Yaml();
+            Files.list(dirPath).forEach(path -> {
+                File file = path.toFile();
+                try(InputStream inputStream = new FileInputStream(file)) {
+                    Language data = yaml.load(inputStream);
+                    languages.put(file.getName().replace(".yaml", ""), data);
+                } catch(Exception e) {
+                    log.error("An error occurred while parsing i18n files, message: {}", e.getMessage(), e);
+                }
+            });
+        } catch(Exception e) {
+            log.error("An error occurred while loading language files, error: {}", e.getMessage(), e);
             System.exit(1);
-        }
-
-        Yaml yaml = new Yaml();
-        for(File file : files) {
-            try(InputStream inputStream = new FileInputStream(file)) {
-                Language data = yaml.load(inputStream);
-                languages.put(file.getName().replace(".yaml", ""), data);
-            } catch(Exception e) {
-                log.error("An error occurred while parsing i18n files, message: {}", e.getMessage(), e);
-            }
         }
 
         log.info("Successfully loaded lang files: {}", languages.keySet());

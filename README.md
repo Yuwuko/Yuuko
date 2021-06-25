@@ -120,18 +120,18 @@ Work has been done **[Nov 2020]** to retroactively make Yuuko as easy as possibl
 
 | Name                                                            | Version          |
 | --------------------------------------------------------------- | ---------------- |
-| [reflections8](https://github.com/aschoerk/reflections8)        | 0.11.7           |
-| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.2.1_260        |
+| [reflections](https://github.com/ronmamo/reflections)           | 0.9.12           |
+| [JDA](https://github.com/DV8FromTheWorld/JDA)                   | 4.3.0_281        |
 | [Lavalink-Client](https://github.com/Yuwuko/Lavalink-Client)    | 0409d4cf2b       |
 | [DBL-Java-Library](https://github.com/top-gg/java-sdk)          | 2.0.1            |
 | [Google-Api-Youtube](https://github.com/googleapis)             | v3-rev222-1.25.0 |
-| [Gson](https://github.com/google/gson)                          | 2.8.6            |
+| [Gson](https://github.com/google/gson)                          | 2.8.7            |
 | [Jackson-Annotations](https://github.com/FasterXML/jackson)     | 2.12.3           |
 | [Jackson-Databind](https://github.com/FasterXML/jackson)        | 2.12.3           |
-| [SnakeYAML](https://github.com/asomov/snakeyaml)                | 1.28             |
+| [SnakeYAML](https://github.com/asomov/snakeyaml)                | 1.29             |
 | [OkHttp](https://github.com/square/okhttp)                      | 5.0.0-alpha.2    |
 | [jsoup](https://github.com/jhy/jsoup)                           | 1.13.1           |
-| [MySQL Connector/J](https://github.com/mysql/mysql-connector-j) | 8.0.24           |
+| [MySQL Connector/J](https://github.com/mysql/mysql-connector-j) | 8.0.25           |
 | [HikariCP](https://github.com/brettwooldridge/HikariCP)         | 4.0.3            |
 | [SLF4J-Api](https://github.com/qos-ch/slf4j)                    | 2.0.0-alpha1     |
 | [logback](https://github.com/qos-ch/logback)                    | 1.3.0-alpha5     |

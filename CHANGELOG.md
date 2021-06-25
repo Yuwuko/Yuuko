@@ -3,6 +3,7 @@
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
 ## 21w25a
++ [!] Migrated language files directly into resources folder to facilitate community translation.
 + [~] Fixed bug with i18n not formatting sanitiser string / typo.
 + [~] Minor formatting changes.
 + [~] Updated dependencies -> JDA 4.3.0_281, gson, snakeyaml.
