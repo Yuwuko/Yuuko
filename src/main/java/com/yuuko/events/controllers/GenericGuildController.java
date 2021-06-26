@@ -14,7 +14,6 @@ import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateIconEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateNameEvent;
-import net.dv8tion.jda.api.events.guild.update.GuildUpdateRegionEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateSplashEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +34,6 @@ public class GenericGuildController {
 
         if(event instanceof GuildUpdateNameEvent) {
             guildUpdateNameEvent((GuildUpdateNameEvent) event);
-            return;
-        }
-
-        if(event instanceof GuildUpdateRegionEvent) {
-            guildUpdateRegionEvent((GuildUpdateRegionEvent) event);
             return;
         }
 
@@ -74,12 +68,12 @@ public class GenericGuildController {
 
             MessageDispatcher.sendMessage(event, event.getGuild().getDefaultChannel(),
                     """
-                            **Automatic setup complete!**\s
-                            _A few things:_\s
-                            \t * %s Lots of my commands depend on it! :)\s
-                            \t * For information about me use `-about`, for a list of commands use `-help`, and for a list of settings use `-settings`.\s
-                            \t * If you need any other assistance, please do not hesitate to join the support server: %s
-                            """.formatted(embedPermission, Yuuko.SUPPORT_GUILD)
+                    **Automatic setup complete!**\s
+                    _A few things:_\s
+                    \t * %s Lots of my commands depend on it! :)\s
+                    \t * For information about me use `-about`, for a list of commands use `-help`, and for a list of settings use `-settings`.\s
+                    \t * If you need any other assistance, please do not hesitate to join the support server: %s
+                    """.formatted(embedPermission, Yuuko.SUPPORT_GUILD)
             );
         }
     }
@@ -94,10 +88,6 @@ public class GenericGuildController {
 
     private void guildUpdateNameEvent(GuildUpdateNameEvent event) {
         GuildFunctions.updateGuildName(event.getGuild().getId(), event.getNewName());
-    }
-
-    private void guildUpdateRegionEvent(GuildUpdateRegionEvent event) {
-        GuildFunctions.updateGuildRegion(event.getGuild().getId(), event.getNewRegion().getName());
     }
 
     private void guildUpdateIconEvent(GuildUpdateIconEvent event) {

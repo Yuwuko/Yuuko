@@ -41,7 +41,7 @@ public class GuildFunctions {
     public static void addGuild(Guild guild) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT IGNORE INTO `guilds` (`guildId`) VALUES (?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT IGNORE INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT IGNORE INTO `guilds_data` (`guildId`, `guildName`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT IGNORE INTO `guilds_settings` (`guildId`) VALUES (?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `guilds_module_settings` (`guildId`) VALUES (?)")) {
 
@@ -52,9 +52,8 @@ public class GuildFunctions {
 
             stmt2.setString(1, guild.getId());
             stmt2.setString(2, guild.getName());
-            stmt2.setString(3, guild.getRegion().getName());
-            stmt2.setString(4, guild.getIconUrl());
-            stmt2.setString(5, guild.getSplashUrl());
+            stmt2.setString(3, guild.getIconUrl());
+            stmt2.setString(4, guild.getSplashUrl());
             stmt2.execute();
 
             stmt3.setString(1, guild.getId());
@@ -75,7 +74,7 @@ public class GuildFunctions {
     public static void addGuilds(SnowflakeCacheView<Guild> guildCache) {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT IGNORE INTO `guilds` (`guildId`) VALUES (?)");
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT IGNORE INTO `guilds_data` (`guildId`, `guildName`, `guildRegion`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT IGNORE INTO `guilds_data` (`guildId`, `guildName`, `guildIcon`, `guildSplash`) VALUES (?, ?, ?, ?)");
             PreparedStatement stmt3 = conn.prepareStatement("INSERT IGNORE INTO `guilds_settings` (`guildId`) VALUES (?)");
             PreparedStatement stmt4 = conn.prepareStatement("INSERT IGNORE INTO `guilds_module_settings` (`guildId`) VALUES (?)")) {
 
@@ -86,9 +85,8 @@ public class GuildFunctions {
 
                     stmt2.setString(1, guild.getId());
                     stmt2.setString(2, guild.getName());
-                    stmt2.setString(3, guild.getRegion().getName());
-                    stmt2.setString(4, guild.getIconUrl());
-                    stmt2.setString(5, guild.getSplashUrl());
+                    stmt2.setString(3, guild.getIconUrl());
+                    stmt2.setString(4, guild.getSplashUrl());
                     stmt2.execute();
 
                     stmt3.setString(1, guild.getId());
@@ -134,24 +132,6 @@ public class GuildFunctions {
             PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildName` = ? WHERE `guildId` = ?")) {
 
             stmt.setString(1, guildName);
-            stmt.setString(2, guildId);
-            stmt.execute();
-
-        } catch(Exception e) {
-            log.error("An error occurred while running the {} class, message: {}", GuildFunctions.class.getSimpleName(), e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Update guild region.
-     * @param guildId String
-     * @param guildRegion String
-     */
-    public static void updateGuildRegion(String guildId, String guildRegion) {
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE `guilds_data` SET `guildRegion` = ? WHERE `guildId` = ?")) {
-
-            stmt.setString(1, guildRegion);
             stmt.setString(2, guildId);
             stmt.execute();
 
