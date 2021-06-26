@@ -2,6 +2,11 @@
 
 Key: [+] added, [-] removed, [~] modified, [!] important.
 
+## 21w25b
++ [~] Changed all deprecated code to match new standards.
++ [~] Attempted to mitigate issues with audio stopping prematurely.
++ [~] Updated dependencies -> JDA 4.3.0_283
+
 ## 21w25a
 + [!] Migrated language files directly into resources folder to facilitate community translation.
 + [+] Added support for multi-embedded messages.

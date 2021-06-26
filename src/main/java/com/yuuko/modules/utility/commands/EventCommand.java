@@ -277,7 +277,7 @@ public class EventCommand extends Command {
                             embed.addField("", "And " + (users.size() - 20) + " more...", false);
                         }
 
-                        e.getChannel().editMessageById(e.getMessageId(), embed.build()).queue();
+                        e.getChannel().editMessageEmbedsById(e.getMessageId(), embed.build()).queue();
                     }));
                 });
             }

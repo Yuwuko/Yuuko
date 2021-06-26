@@ -7,7 +7,7 @@ apply plugin: 'idea'
 
 group = 'com.yuuko'
 mainClassName = 'com.yuuko.Yuuko'
-project.version = '21w25a'
+project.version = '21w25b'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -22,7 +22,7 @@ java {
 
 ext {
     reflections                  = '0.9.12'                     // https://mvnrepository.com/artifact/org.reflections/reflections
-    jda                          = '4.3.0_281'                  // https://mvnrepository.com/artifact/net.dv8tion/JDA
+    jda                          = '4.3.0_283'                  // https://mvnrepository.com/artifact/net.dv8tion/JDA
     lavalinkClient               = '0409d4cf2b'                 // https://jitpack.io/#Yuuko-oh/Lavalink-Client
     dblJavaWrapper               = '2.0.1'                      // https://github.com/top-gg/DBL-Java-Library
     googleApiServicesYoutube     = 'v3-rev222-1.25.0'           // https://mvnrepository.com/artifact/com.google.apis/google-api-services-youtube
