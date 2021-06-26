@@ -15,7 +15,7 @@ public class PauseCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(context.i18n( "title"))
                 .setDescription(context.i18n( "desc"));

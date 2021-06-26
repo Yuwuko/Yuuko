@@ -25,7 +25,7 @@ public class BindCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(context.hasParameters()) {
             String[] params = context.getParameters().toLowerCase().split("\\s+", 2);
 

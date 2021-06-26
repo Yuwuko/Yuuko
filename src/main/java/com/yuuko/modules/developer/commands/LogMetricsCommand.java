@@ -15,7 +15,7 @@ public class LogMetricsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         Yuuko.LOG_METRICS = !Yuuko.LOG_METRICS;
         EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title")).setDescription(context.i18n( "desc").formatted(Yuuko.LOG_METRICS));
         MessageDispatcher.reply(context, embed.build());

@@ -22,7 +22,7 @@ public class ShardsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder shardEmbed = new EmbedBuilder()
                 .setAuthor(context.i18n( "title").formatted(Yuuko.BOT.getName(), Yuuko.BOT.getDiscriminator()), null, Yuuko.BOT.getAvatarUrl())
                 .setTimestamp(Instant.now())

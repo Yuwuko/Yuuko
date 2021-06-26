@@ -17,7 +17,7 @@ public class CleanupCommandsSetting extends Command {
         super("cleanupcommands", Arrays.asList("-cleanupcommands", "-cleanupcommands <value>"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n("title"))

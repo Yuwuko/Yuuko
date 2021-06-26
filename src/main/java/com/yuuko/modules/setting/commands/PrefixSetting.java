@@ -15,7 +15,7 @@ public class PrefixSetting extends Command {
         super("prefix", Arrays.asList("-prefix <prefix>"), Arrays.asList(Permission.MANAGE_SERVER), 1);
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(context.getParameters().length() < 1 || context.getParameters().length() > 5) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n("invalid_param"))

@@ -18,7 +18,7 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         // If command length is smaller than 2 give the regular help DM, else give the command usage embed.
         if(!context.hasParameters()) {
             EmbedBuilder commandInfo = new EmbedBuilder()
@@ -33,7 +33,7 @@ public class HelpCommand extends Command {
             if(context.getGuild().getMemberById(Yuuko.BOT_ID).hasPermission(Permission.MESSAGE_WRITE)) {
                 MessageDispatcher.reply(context, commandInfo.build());
             } else {
-                context.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessage(commandInfo.build()).queue());
+                context.getAuthor().openPrivateChannel().queue((privateChannel) -> privateChannel.sendMessageEmbeds(commandInfo.build()).queue());
             }
 
         } else {

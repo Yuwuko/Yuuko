@@ -17,7 +17,7 @@ public class CoinFlipCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         final int rng = new Random().nextInt(10000);
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(context.i18n( "title"))

@@ -17,7 +17,7 @@ public class RolesCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         StringBuilder roles = new StringBuilder();
 
         if(!context.getGuild().getRoleCache().isEmpty()) {

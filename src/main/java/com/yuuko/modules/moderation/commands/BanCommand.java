@@ -20,7 +20,7 @@ public class BanCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String[] commandParameters = context.getParameters().split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(context, true);
 

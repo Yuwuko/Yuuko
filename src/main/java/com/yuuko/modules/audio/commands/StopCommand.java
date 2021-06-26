@@ -16,7 +16,7 @@ public class StopCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         AudioManager.destroyGuildAudioManager(context.getGuild());
         if(context.getCommand() != null) {
             EmbedBuilder embed = new EmbedBuilder()

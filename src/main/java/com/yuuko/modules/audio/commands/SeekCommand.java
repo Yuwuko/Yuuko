@@ -19,7 +19,7 @@ public class SeekCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
         AudioTrack track = manager.getPlayer().getPlayingTrack();
 

@@ -17,7 +17,7 @@ public class LanguageSetting extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!I18n.getSupportedLanguages().contains(context.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n("invalid_lang"))

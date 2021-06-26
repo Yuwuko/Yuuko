@@ -17,7 +17,7 @@ public class EventChannelSetting extends Command {
         super("eventchannel", Arrays.asList("-eventchannel <#channel>", "-eventchannel setup", "-eventchannel unset"), Arrays.asList(Permission.MANAGE_SERVER), 1);
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("eventchannel", context.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder()

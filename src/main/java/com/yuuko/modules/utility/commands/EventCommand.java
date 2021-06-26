@@ -32,7 +32,7 @@ public class EventCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             StringBuilder eventsString = new StringBuilder();
             ArrayList<ScheduledEvent> scheduledEvents = DatabaseInterface.getEvents(context.getGuild().getId());
@@ -158,7 +158,7 @@ public class EventCommand extends Command {
                 .setSlots(0)
                 .setNotify(false)
                 .setFooter(Yuuko.STANDARD_STRINGS.get(1) + context.getAuthor().getAsTag());
-        context.getChannel().sendMessage(scheduledEvent.getEmbed()).queue(s -> inProgressEmbeds.put(context.getAuthor().getId(), scheduledEvent.setMessage(s)));
+        context.getChannel().sendMessageEmbeds(scheduledEvent.getEmbed()).queue(s -> inProgressEmbeds.put(context.getAuthor().getId(), scheduledEvent.setMessage(s)));
     }
 
     /**
@@ -225,7 +225,7 @@ public class EventCommand extends Command {
             int eventId = DatabaseInterface.newEvent(context, scheduledEvent);
             if(eventId != -1) {
                 scheduledEvent.setFooter("ID: " + eventId + ", Host: " + context.getJDA().getUserById(scheduledEvent.author).getAsTag() + ", Notify: " + scheduledEvent.notify);
-                textChannel.sendMessage(scheduledEvent.getEmbed()).queue(message -> {
+                textChannel.sendMessageEmbeds(scheduledEvent.getEmbed()).queue(message -> {
                     scheduledEvent.message.delete().queue(x -> inProgressEmbeds.remove(context.getAuthor().getId()));
                     DatabaseInterface.updateEventMessage(eventId, message.getId());
                     message.addReaction("✅").queue();
@@ -308,8 +308,7 @@ public class EventCommand extends Command {
                                         }
                                     });
                                     MessageBuilder messageBuilder = new MessageBuilder()
-                                            .setContent(notificationString.toString())
-                                            .setEmbed(new EmbedBuilder().setTitle(scheduledEvent.title).setDescription("Starting in 10 minutes!").build());
+                                            .setContent(notificationString.toString()).setEmbeds(new EmbedBuilder().setTitle(scheduledEvent.title).setDescription("Starting in 10 minutes!").build());
                                     message.reply(messageBuilder.build()).queue(success -> DatabaseInterface.disableNotify(scheduledEvent.id));
                                 }));
                             });
@@ -398,7 +397,7 @@ public class EventCommand extends Command {
         }
 
         public void submitEdit() {
-            message.editMessage(getEmbed()).queue();
+            message.editMessageEmbeds(getEmbed()).queue();
         }
 
         public MessageEmbed getEmbed() {

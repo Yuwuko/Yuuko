@@ -40,7 +40,7 @@ public class EightBallCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("8ball, " + (context.getParameters() + (context.getParameters().endsWith("?") ? "" : "?")))
                 .setDescription(responses.get(new Random().nextInt(responses.size() -1)))

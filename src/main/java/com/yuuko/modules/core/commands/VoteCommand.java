@@ -15,7 +15,7 @@ public class VoteCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder about = new EmbedBuilder()
                 .setAuthor(Yuuko.BOT.getName() + "#" + Yuuko.BOT.getDiscriminator(), null, Yuuko.BOT.getAvatarUrl())
                 .setDescription(context.i18n( "desc"))

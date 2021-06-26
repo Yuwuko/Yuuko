@@ -18,7 +18,7 @@ public class UserCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         Member target = MessageUtilities.getMentionedMember(context, true);
 
         if(target == null) {

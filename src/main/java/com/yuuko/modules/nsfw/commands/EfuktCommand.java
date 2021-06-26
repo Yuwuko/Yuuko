@@ -21,7 +21,7 @@ public class EfuktCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         Document doc = new RequestHandler(BASE_URL).getDocument();
         if(doc.baseUri().startsWith("https://efukt.com/view.gif.php")) {
             image = doc.getElementsByClass("image_content").attr("src");

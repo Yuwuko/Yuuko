@@ -14,7 +14,7 @@ public class PermissionsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String permissions = context.getGuild().getSelfMember().getPermissions().toString().replace("[", "").replace("]", "").replace(",", "\n");
         EmbedBuilder about = new EmbedBuilder().setTitle(context.i18n( "title"))
                 .setDescription(context.i18n( "desc"))

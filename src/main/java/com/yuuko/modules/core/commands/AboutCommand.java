@@ -23,7 +23,7 @@ public class AboutCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         int totalGuilds = 0;
         for(Shard shard: ShardFunctions.getShardStatistics()) {
             totalGuilds += shard.getGuildCount();

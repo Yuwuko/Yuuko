@@ -19,7 +19,7 @@ public class ClearCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         // Clear entire queue
         if(!context.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder()

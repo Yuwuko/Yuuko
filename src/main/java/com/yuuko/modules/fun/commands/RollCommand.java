@@ -16,7 +16,7 @@ public class RollCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!Sanitiser.isNumeric(context.getParameters())) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n( "invalid_input"))

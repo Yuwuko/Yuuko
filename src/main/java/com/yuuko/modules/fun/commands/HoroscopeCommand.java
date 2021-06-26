@@ -32,7 +32,7 @@ public class HoroscopeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String selectedSign = null;
         for(String sign: starsigns) {
             if(sign.contains(context.getParameters().toLowerCase())) {

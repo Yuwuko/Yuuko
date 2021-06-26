@@ -19,7 +19,7 @@ public class RuneScapeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String[] params = context.getParameters().split("\\s*,\\s*");
         Map<String, Skill> skills = RuneAPI.getStats(params[0]);
         if(skills == null || skills.isEmpty()) {

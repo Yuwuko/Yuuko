@@ -24,7 +24,7 @@ public class ModuleCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(context.hasParameters()) {
             String module = context.getParameters().split("\\s+", 2)[0].toLowerCase();
             String guild = context.getGuild().getId();

@@ -18,7 +18,7 @@ public class SettingsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         // Embed displaying all of the current settings for the server, giving information about each setting.
         HashMap<String, String> settings = GuildFunctions.getGuildSettings(context.getGuild().getId());
 

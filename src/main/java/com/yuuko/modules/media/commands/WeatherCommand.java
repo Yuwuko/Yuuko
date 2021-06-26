@@ -26,7 +26,7 @@ public class WeatherCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         final String url = BASE_URL + (Sanitiser.scrub(context.getParameters(), false).replace(" ", "+")) + "&units=metric&APPID=" + api.getKey();
         JsonObject data = new RequestHandler(url).getJsonObject();
 

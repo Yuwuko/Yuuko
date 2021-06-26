@@ -26,7 +26,7 @@ public class ReactionRoleCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         final String[] params = context.getParameters().split("\\s+");
         final Role highestSelfRole = context.getGuild().getSelfMember().getRoles().get(0); // Role list is ordered from highest to lowest
         final Role role = (context.getMessage().getMentionedRoles().size() > 0) ? context.getMessage().getMentionedRoles().get(0) : null;

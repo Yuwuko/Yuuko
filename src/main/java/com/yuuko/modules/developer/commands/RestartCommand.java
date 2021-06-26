@@ -19,7 +19,7 @@ public class RestartCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             ShardFunctions.getShardStatistics().forEach(shard -> ShardFunctions.triggerRestartSignal(shard.getId()));
             return;

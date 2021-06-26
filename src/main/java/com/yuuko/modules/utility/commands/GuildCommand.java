@@ -18,7 +18,7 @@ public class GuildCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         Guild guild = context.getGuild();
         StringBuilder emoteString = new StringBuilder();
 
@@ -41,7 +41,6 @@ public class GuildCommand extends Command {
                     .addField(context.i18n("owner"), s.getUser().getName() + "#" + s.getUser().getDiscriminator(), true)
                     .addField(context.i18n("id"), guild.getId(), true)
                     .addField(context.i18n("created"), guild.getTimeCreated().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mma")), true)
-                    .addField(context.i18n("region"), guild.getRegion().getName(), true)
                     .addField(context.i18n("users"), "Unknown (Missing Intent)", true)
                     .addField(context.i18n("text"), guild.getTextChannelCache().size()+"", true)
                     .addField(context.i18n("voice"), guild.getVoiceChannelCache().size()+"", true)

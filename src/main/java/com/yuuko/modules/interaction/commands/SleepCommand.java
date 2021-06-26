@@ -22,7 +22,7 @@ public class SleepCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setDescription(context.i18n( "self").formatted(context.getMember().getEffectiveName()))
                 .setImage(interactionImage.get(getRandom(interactionImage.size())));

@@ -20,7 +20,7 @@ public class ModerationLogSetting extends Command {
         super("moderationlog", Arrays.asList("-moderationlog", "-moderationlog setup", "-moderationlog <#channel>", "-moderationlog unset"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("moderationlog", context.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder()

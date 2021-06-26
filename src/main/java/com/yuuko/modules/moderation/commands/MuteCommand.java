@@ -20,7 +20,7 @@ public class MuteCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String[] params = context.getParameters().split("\\s+", 3);
         Member target = MessageUtilities.getMentionedMember(context, true);
         Role muted; // Set below

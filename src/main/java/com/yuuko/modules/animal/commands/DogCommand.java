@@ -16,7 +16,7 @@ public class DogCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "title"))
                 .setImage(new RequestHandler(BASE_URL).getJsonObject().get("message").getAsString());
         MessageDispatcher.reply(context, embed.build());

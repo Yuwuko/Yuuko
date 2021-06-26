@@ -17,7 +17,7 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Pong!")
                 .setDescription("GATEWAY PING is currently " + MetricsManager.getDiscordMetrics(context.getShardId()).GATEWAY_PING + "ms. \nREST PING is currently "+ MetricsManager.getDiscordMetrics(context.getShardId()).REST_PING + "ms.")

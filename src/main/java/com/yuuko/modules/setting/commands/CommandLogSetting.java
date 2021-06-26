@@ -21,7 +21,7 @@ public class CommandLogSetting extends Command {
         super("commandlog", Arrays.asList("-commandlog", "-commandlog setup", "-commandlog <#channel>", "-commandlog unset"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("commandlog", context.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder()

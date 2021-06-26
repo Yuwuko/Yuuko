@@ -18,7 +18,7 @@ public class SyncGuildsCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         SnowflakeCacheView<Guild> guildCache = context.getJDA().getGuildCache();
         GuildFunctions.addGuilds(guildCache);
         BindCommand.DatabaseInterface.verifyBinds(guildCache);

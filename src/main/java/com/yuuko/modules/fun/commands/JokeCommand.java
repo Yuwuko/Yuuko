@@ -19,7 +19,7 @@ public class JokeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setDescription(new RequestHandler(BASE_URL).getJsonObject().get("joke").getAsString());

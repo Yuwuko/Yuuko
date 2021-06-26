@@ -20,7 +20,7 @@ public class AnimeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         final String url = BASE_URL + Sanitiser.scrub(context.getParameters(), true) + "&page[limit]=1";
         JsonObject json = new RequestHandler(url, new RequestProperty("Accept", "application/vnd.api+json"), new RequestProperty("Content-Type","application/vnd.api+json")).getJsonObject();
         if(json == null || json.isJsonNull() || json.getAsJsonArray("data").size() < 1) {

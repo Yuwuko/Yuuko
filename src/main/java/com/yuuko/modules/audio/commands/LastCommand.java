@@ -19,7 +19,7 @@ public class LastCommand extends Command {
 	}
 
 	@Override
-	public void onCommand(MessageEvent context) throws Exception {
+	public void onCommand(MessageEvent context) {
 		AudioTrack track = AudioManager.getGuildAudioManager(context.getGuild()).getPlayer().getPlayingTrack();
 
 		if(track == null) {

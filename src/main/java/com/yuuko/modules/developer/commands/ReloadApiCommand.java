@@ -16,7 +16,7 @@ public class ReloadApiCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         Yuuko.API_MANAGER = new ApiManager();
         EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n( "success"));
         MessageDispatcher.reply(context, embed.build());

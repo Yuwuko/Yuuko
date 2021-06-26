@@ -15,7 +15,7 @@ public class SetStatusCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String[] params = context.getParameters().split("\\s+", 3);
         switch (params[0].toLowerCase()) {
             case "playing" -> context.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, params[1]));

@@ -16,7 +16,7 @@ public class LoopCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(context.i18n( "title"))

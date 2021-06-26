@@ -24,7 +24,7 @@ public class StarboardSetting extends Command {
         super("starboard", Arrays.asList("-starboard", "-starboard setup", "-starboard <#channel>", "-starboard unset"), Arrays.asList(Permission.MANAGE_SERVER, Permission.MANAGE_CHANNEL, Permission.MANAGE_PERMISSIONS));
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             String channel = GuildFunctions.getGuildSetting("starboard", context.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder()
@@ -98,7 +98,7 @@ public class StarboardSetting extends Command {
                             if(emoteCount != messageReaction.getCount()) {
                                 MessageBuilder messagebuilder = new MessageBuilder()
                                         .setContent("`"+ messageReaction.getCount() +"`⭐ - " + e.getChannel().getAsMention() + " `<" + starred.getId() + ">`" )
-                                        .setEmbed((message.getEmbeds().size() != 0) ? message.getEmbeds().get(0) : null);
+                                        .setEmbeds((message.getEmbeds().size() != 0) ? message.getEmbeds().get(0) : null);
                                 message.editMessage(messagebuilder.build()).queue();
                             }
                             found.set(true);
@@ -111,7 +111,7 @@ public class StarboardSetting extends Command {
         if(starred.getEmbeds().size() != 0) {
             MessageBuilder messageBuilder = new MessageBuilder()
                     .setContent("`1`⭐ - " + e.getChannel().getAsMention() + " `" + e.getMessageId() + "`\n")
-                    .setEmbed(starred.getEmbeds().get(0));
+                    .setEmbeds(starred.getEmbeds().get(0));
             starboard.sendMessage(messageBuilder.build()).queue(message -> message.addReaction("⭐").queue());
             return;
         }
@@ -120,7 +120,7 @@ public class StarboardSetting extends Command {
         List<Message.Attachment> attachments = starred.getAttachments();
         MessageBuilder messageBuilder = new MessageBuilder()
                 .setContent("`1`⭐ - " + e.getChannel().getAsMention() + " `" + e.getMessageId() + "`")
-                .setEmbed(new EmbedBuilder()
+                .setEmbeds(new EmbedBuilder()
                         .setColor(Color.ORANGE)
                         .setAuthor(starred.getAuthor().getAsTag(), null, starred.getAuthor().getEffectiveAvatarUrl())
                         .setDescription(starred.getContentDisplay() + ((attachments.size() != 0) ? "\n" + attachments.get(0).getProxyUrl() : ""))

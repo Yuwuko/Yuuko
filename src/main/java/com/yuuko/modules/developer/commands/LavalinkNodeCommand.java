@@ -14,7 +14,7 @@ public class LavalinkNodeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         String[] params = context.getParameters().split("\\s+", 3);
         switch(params[0]) {
             case "add" -> AudioManager.LAVALINK.getLavalink().addNode(URI.create(params[1]), params[2]);

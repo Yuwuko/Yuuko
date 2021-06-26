@@ -24,7 +24,7 @@ public class DjModeSetting extends Command {
         super("djmode", Arrays.asList("-djmode", "-djmode <value>"), Arrays.asList(Permission.MANAGE_SERVER));
     }
 
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.hasParameters()) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n("title"))

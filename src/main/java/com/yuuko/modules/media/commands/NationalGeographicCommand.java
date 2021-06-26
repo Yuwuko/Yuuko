@@ -24,7 +24,7 @@ public class NationalGeographicCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         JsonObject json = new RequestHandler(BASE_URL).getJsonObject();
         JsonArray articles = json.get("articles").getAsJsonArray();
 

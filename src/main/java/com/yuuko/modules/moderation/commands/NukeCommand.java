@@ -23,7 +23,7 @@ public class NukeCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         List<TextChannel> channels = context.getMessage().getMentionedChannels();
         if(channels.size() > 0) {
             TextChannel channel = channels.get(0);

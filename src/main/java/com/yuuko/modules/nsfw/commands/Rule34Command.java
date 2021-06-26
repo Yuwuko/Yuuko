@@ -21,7 +21,7 @@ public class Rule34Command extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         Document doc = new RequestHandler(BASE_URL).getDocument();
         Elements images = doc.getElementsByTag("img");
         for(Element img : images) {

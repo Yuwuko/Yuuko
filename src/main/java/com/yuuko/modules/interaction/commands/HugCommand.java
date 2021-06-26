@@ -22,7 +22,7 @@ public class HugCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         if(!context.getMessage().getMentionedMembers().isEmpty()) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setDescription(context.i18n( "target").formatted(context.getMember().getEffectiveName(), context.getMessage().getMentionedMembers().get(0).getEffectiveName()))

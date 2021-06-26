@@ -15,7 +15,7 @@ public class AdviceCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageEvent context) throws Exception {
+    public void onCommand(MessageEvent context) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(context.i18n( "title"))
                 .setDescription(new RequestHandler("https://api.adviceslip.com/advice").getJsonObject().get("slip").getAsJsonObject().get("advice").getAsString());
