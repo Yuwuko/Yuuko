@@ -296,7 +296,7 @@ public class Yuuko {
                     .build();
 
             while(!isConstructed()) {
-                Thread.sleep(100); // I want the thread to be blocked
+                Thread.onSpinWait();
             }
 
             for(JDA shard : Yuuko.SHARD_MANAGER.getShards()) {
