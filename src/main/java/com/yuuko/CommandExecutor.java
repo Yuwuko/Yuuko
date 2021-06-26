@@ -192,11 +192,10 @@ public class CommandExecutor {
         if(BindCommand.DatabaseInterface.isBound(context.getGuild().getId(), context.getChannel().getId(), module.getName())) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(context.i18n("module_bound", "cmd"))
-                    .setDescription(context.i18n("module_bound", "cmd").formatted(command.getName(), BindCommand.DatabaseInterface.getBindsByModule(context.getGuild(), module.getName(), ", ")));
+                    .setDescription(context.i18n("module_bound_desc", "cmd").formatted(command.getName(), BindCommand.DatabaseInterface.getBindsByModule(context.getGuild(), module.getName(), ", ")));
             MessageDispatcher.sendTempMessage(context, embed.build());
             return true;
         }
-
         return false;
     }
 
