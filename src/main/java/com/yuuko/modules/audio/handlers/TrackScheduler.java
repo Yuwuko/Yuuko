@@ -51,13 +51,10 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
      * @param track {@link AudioTrack}
      */
     public void queue(AudioTrack track) {
-        if(player.getPlayingTrack() == null || (background != null && player.getPlayingTrack() == background)) {
-            queue.add(track);
-            nextTrack();
-            return;
-        }
-
         queue.offer(track);
+        if(player.getPlayingTrack() == null || (background != null && player.getPlayingTrack() == background)) {
+            nextTrack();
+        }
     }
 
     /**
@@ -85,7 +82,6 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
             player.playTrack(track);
         } catch(Exception e) {
             log.warn("TrackScheduler issue detected: {}", e.getMessage(), e);
-            // This exception occurs 99% of the time on repeating tracks.
         }
     }
 
@@ -95,7 +91,6 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
             // Cancel timeout onStart if it is currently set
             if(timeout != null) {
                 timeout.cancel(true);
-                timeout = null;
             }
 
             MessageEvent context = (MessageEvent) track.getUserData();
@@ -103,8 +98,8 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
                 context.setCommand(Yuuko.COMMANDS.get("current")).setParameters("no-reply");
                 context.getCommand().onCommand(context);
             }
-        }  catch(Exception exception) {
-            log.debug(exception.getMessage());
+        }  catch(Exception e) {
+            log.debug("There was an issue starting a track: {}", e.getMessage(), e);
         }
     }
 
@@ -117,11 +112,9 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
     @Override
     public void onTrackEnd(IPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         this.lastTrack = track;
-
-        // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
         if(endReason.mayStartNext) {
             if(looping) {
-                queue.add(track);
+                queue.offer(track.makeClone());
             }
             nextTrack();
         }
@@ -144,9 +137,10 @@ public class TrackScheduler extends PlayerEventListenerAdapter {
 
     @Override
     public void onTrackStuck(IPlayer player, AudioTrack track, long thresholdMs) {
-        Queue<AudioTrack> temp = new LinkedList<>();
-        temp.add(track.makeClone());
-        temp.addAll(queue);
+        Queue<AudioTrack> temp = new LinkedList<>() {{
+            add(track.makeClone());
+            addAll(queue);
+        }};
         AudioManager.resetStuckGuildAudioManager(guild, temp);
     }
 

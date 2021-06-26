@@ -18,7 +18,7 @@ import java.util.Queue;
 
 public final class AudioManager {
     public final static LavalinkManager LAVALINK = new LavalinkManager();
-    private final static HashMap<Guild, GuildAudioManager> guildManagers = new HashMap<>();
+    private final static HashMap<String, GuildAudioManager> guildManagers = new HashMap<>();
     private final static AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     /**
@@ -40,15 +40,13 @@ public final class AudioManager {
      * @return {@link GuildAudioManager}
      */
     public static GuildAudioManager getGuildAudioManager(Guild guild) {
-        GuildAudioManager manager = guildManagers.get(guild);
-
+        GuildAudioManager manager = guildManagers.get(guild.getId());
         if(manager == null) {
             synchronized(AudioManager.getGuildAudioManagers()) {
                 manager = new GuildAudioManager(guild);
                 addGuildAudioManager(guild, manager);
             }
         }
-
         return manager;
     }
 
@@ -56,7 +54,7 @@ public final class AudioManager {
      * Returns full MusicManager HashMap.
      * @return {@link HashMap<>} key {@link HashMap<>} value {@link GuildAudioManager}
      */
-    public static HashMap<Guild, GuildAudioManager> getGuildAudioManagers() {
+    public static HashMap<String, GuildAudioManager> getGuildAudioManagers() {
         return guildManagers;
     }
 
@@ -66,7 +64,7 @@ public final class AudioManager {
      * @param manager {@link GuildAudioManager}
      */
     private static void addGuildAudioManager(Guild guild, GuildAudioManager manager) {
-        guildManagers.put(guild, manager);
+        guildManagers.put(guild.getId(), manager);
     }
 
     /**
@@ -84,9 +82,9 @@ public final class AudioManager {
      * @param guild {@link Guild}
      */
     public static void destroyGuildAudioManager(Guild guild) {
-        if(guildManagers.containsKey(guild)) {
-            guildManagers.get(guild).destroyConnection();
-            guildManagers.remove(guild);
+        if(guildManagers.containsKey(guild.getId())) {
+            guildManagers.get(guild.getId()).destroyConnection();
+            guildManagers.remove(guild.getId());
         }
     }
 

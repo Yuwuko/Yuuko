@@ -27,7 +27,6 @@ public class PlayNextCommand extends Command {
         }
 
         GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
-        manager.openConnection(context.getMember().getVoiceState().getChannel());
 
         if(context.getParameters().startsWith("https://") || context.getParameters().startsWith("http://")) {
             AudioLoadHandler.loadAndPlay(manager, context, AudioLoadHandler.Playback.PLAYNEXT);

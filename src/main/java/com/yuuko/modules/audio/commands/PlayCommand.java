@@ -23,16 +23,16 @@ public class PlayCommand extends Command {
     @Override
     public void onCommand(MessageEvent context) throws Exception {
         GuildAudioManager manager = AudioManager.getGuildAudioManager(context.getGuild());
-        manager.openConnection(context.getMember().getVoiceState().getChannel());
+
+        if(manager.getPlayer().isPaused()) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle(context.i18n( "title"))
+                    .setDescription(context.i18n( "desc"));
+            MessageDispatcher.reply(context, embed.build());
+            manager.getPlayer().setPaused(false);
+        }
 
         if(!context.hasParameters()) {
-            if(manager.getPlayer().isPaused()) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle(context.i18n( "title"))
-                        .setDescription(context.i18n( "desc"));
-                MessageDispatcher.reply(context, embed.build());
-                manager.getPlayer().setPaused(false);
-            }
             return;
         }
 

@@ -32,6 +32,10 @@ public class AudioLoadHandler {
      * @param type {@link Playback}
      */
     public static void loadAndPlay(GuildAudioManager manager, MessageEvent context, Playback type) {
+        // make connection to voice channel now since track has been essentially chosen
+        // voice state is set to nullable even though we have CacheFlag.VOICE_STATE enabled. (warning will stay)
+        manager.openConnection(context.getMember().getVoiceState().getChannel());
+
         final String param = context.getParameters();
         final String trackUrl = param.startsWith("<") && param.endsWith(">") ? param.substring(1, param.length() - 1) : param;
 
