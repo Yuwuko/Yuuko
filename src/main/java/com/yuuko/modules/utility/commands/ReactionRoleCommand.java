@@ -32,7 +32,7 @@ public class ReactionRoleCommand extends Command {
         final Role role = (context.getMessage().getMentionedRoles().size() > 0) ? context.getMessage().getMentionedRoles().get(0) : null;
         final String emote = (context.getMessage().getEmotes().size() > 0) ? context.getMessage().getEmotes().get(0).getName() + ":" + context.getMessage().getEmotes().get(0).getId() : params[1];
 
-        if(params[0].length() < 18 || params[0].length() > 20 || Sanitiser.isNumeric(params[0])) {
+        if(params[0].length() < 18 || params[0].length() > 20 || !Sanitiser.isNumeric(params[0])) {
             EmbedBuilder embed = new EmbedBuilder().setTitle(context.i18n("invalid_input")).setDescription(context.i18n("invalid_input_desc"));
             MessageDispatcher.reply(context, embed.build());
             return;

@@ -148,7 +148,7 @@ public class EventCommand extends Command {
                 .setTitle(context.i18n("event"))
                 .setDescription(context.i18n("event_desc") +
                         "\n`" + context.getPrefix() + "event title <value>`" +
-                        "\n`" + context.getPrefix() + "event desc <value>`" +
+                        "\n`" + context.getPrefix() + "event desc <value>` (hint: do this last)" +
                         "\n`" + context.getPrefix() + "event time <yyyy-MM-dd HH:mm>`" +
                         "\n`" + context.getPrefix() + "event slots <value>`" +
                         "\n`" + context.getPrefix() + "event notify <boolean>`" +
